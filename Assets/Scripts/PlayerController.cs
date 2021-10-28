@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         //If right mouse button is pressed the player should dash if they are currently able
         if (Input.GetMouseButtonDown(1))
         {
-            if (CanInput() && playerScript.stamina > 0)
+            if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
             {
                 //They player dashes in whatever direction they were already moving
                 dashDirection = moveDirection.normalized;

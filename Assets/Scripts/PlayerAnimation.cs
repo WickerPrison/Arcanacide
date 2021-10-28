@@ -158,10 +158,10 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.transform.localPosition = backAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         frontAnimator.transform.localPosition = new Vector3(frontOffset, frontAnimator.transform.localPosition.y, frontAnimator.transform.localPosition.z);
-        backAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
-        backAnimator.transform.localPosition = new Vector3(backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
+        backAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
+        backAnimator.transform.localPosition = new Vector3(-backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
         frontSmear.transform.position = away;
-        backSmear.transform.localScale = backSmearScale;
+        backSmear.transform.localScale = new Vector3(-backSmearScale.x, backSmearScale.y, backSmearScale.z);
         backSmear.transform.localRotation = Quaternion.Euler(backSmearRotation.x, backSmearRotation.y, backSmearRotation.z);
         backSmear.transform.localPosition = backSmearPosition;
     }
@@ -172,10 +172,10 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.transform.localPosition = backAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         frontAnimator.transform.localPosition = new Vector3(-frontOffset, frontAnimator.transform.localPosition.y, frontAnimator.transform.localPosition.z);
-        backAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
-        backAnimator.transform.localPosition = new Vector3(-backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
+        backAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
+        backAnimator.transform.localPosition = new Vector3(backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
         frontSmear.transform.position = away;
-        backSmear.transform.localScale = new Vector3(-backSmearScale.x, backSmearScale.y, backSmearScale.z);
+        backSmear.transform.localScale = backSmearScale;
         backSmear.transform.localRotation = Quaternion.Euler(backSmearRotation.x, -backSmearRotation.y, backSmearRotation.z);
         backSmear.transform.localPosition = new Vector3(-backSmearPosition.x, backSmearPosition.y, backSmearPosition.z);
     }
