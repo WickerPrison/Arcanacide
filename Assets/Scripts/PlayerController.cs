@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     float dashSpeed = 15;
     float dashTime = 0;
     float maxDashTime = 0.2f;
-    float attackStaminaCost = 20f;
     float dashStaminaCost = 30f;
 
     // Start is called before the first frame update
@@ -64,7 +63,11 @@ public class PlayerController : MonoBehaviour
         //If left mouse button is pressed they player will attack if they are currently able
         if(Input.GetMouseButtonDown(0))
         {
-            if (CanInput() && playerScript.stamina > 0)
+            if (playerAnimation.attacking)
+            {
+                playerAnimation.ChainAttacks();
+            }
+            else if (CanInput() && playerScript.stamina > 0)
             {
                 Attack();
             }
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        playerScript.LoseStamina(attackStaminaCost);
+        
         playerAnimation.attack = true;
         playerAnimation.attacking = true;
     }

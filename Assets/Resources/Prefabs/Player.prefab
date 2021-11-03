@@ -1124,6 +1124,7 @@ MonoBehaviour:
   frontSmear: {fileID: 3332780866579085864}
   backSmear: {fileID: 3449012118581406211}
   cam: {fileID: 0}
+  playerScript: {fileID: 4614688894240553584}
 --- !u!54 &4614688894240553585
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2853,13 +2854,13 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
     arc:
-      value: 150
+      value: 120
       mode: 1
       spread: 0
       speed:
         serializedVersion: 2
         minMaxState: 0
-        scalar: -5
+        scalar: 5
         minScalar: 1
         maxCurve:
           serializedVersion: 2
@@ -7796,7 +7797,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 0
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 0, y: 0, z: -0.5}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
@@ -7934,7 +7935,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
     arc:
-      value: 150
+      value: 120
       mode: 1
       spread: 0
       speed:

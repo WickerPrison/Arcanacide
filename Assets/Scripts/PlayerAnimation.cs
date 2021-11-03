@@ -18,9 +18,10 @@ public class PlayerAnimation : MonoBehaviour
     public bool attacking;
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
-    [SerializeField] ParticleSystem frontSmear;
-    [SerializeField] ParticleSystem backSmear;
+    public ParticleSystem frontSmear;
+    public ParticleSystem backSmear;
     [SerializeField] Camera cam;
+    [SerializeField] PlayerScript playerScript;
 
     Vector3 frontSmearScale;
     Vector3 frontSmearRotation;
@@ -47,13 +48,15 @@ public class PlayerAnimation : MonoBehaviour
         frontSmearRotation = new Vector3(90, -20, 0);
         frontSmearPosition = new Vector3(-0.32f, 0, 0.32f);
         backSmearScale = backSmear.transform.localScale;
-        backSmearRotation = new Vector3(-90, 30, 0);
+        backSmearRotation = new Vector3(-90, 70, 0);
         backSmearPosition = new Vector3(0.32f, 0, 0.32f);
     }
 
     // Update is called once per frame
     private void Update()
     {
+        StaminaUpdate();
+
         //While attacking the player won't change what direction he is facing. Otherwise he faces the mouse
         if (!attacking)
         {
@@ -79,6 +82,12 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
+    void StaminaUpdate()
+    {
+        frontAnimator.SetFloat("Stamina", playerScript.stamina);
+        backAnimator.SetFloat("Stamina", playerScript.stamina);
+    }
+
     public void DashAnimation()
     {
         frontAnimator.Play("Dash");
@@ -89,6 +98,18 @@ public class PlayerAnimation : MonoBehaviour
     {
         frontSmear.Play();
         backSmear.Play();
+    }
+
+    public void ChainAttacks()
+    {
+        frontAnimator.SetBool("Attacks", true);
+        backAnimator.SetBool("Attacks", true);
+    }
+
+    public void EndChain()
+    {
+        frontAnimator.SetBool("Attacks", false);
+        backAnimator.SetBool("Attacks", false);
     }
 
     void FaceMouse()

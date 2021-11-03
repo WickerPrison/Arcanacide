@@ -9,6 +9,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerController playerController;
     PlayerScript playerScript;
+    float attackStaminaCost = 20f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,8 +20,14 @@ public class PlayerAnimationEvents : MonoBehaviour
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
-    public void AttackHit()
+    public void AttackHit(int smearSpeed)
     {
+        playerScript.LoseStamina(attackStaminaCost);
+        ParticleSystem.ShapeModule smearShapeBack = playerAnimation.backSmear.shape;
+        smearShapeBack.arcSpeed = -smearSpeed;
+        ParticleSystem.ShapeModule smearShapeFront = playerAnimation.frontSmear.shape;
+        smearShapeFront.arcSpeed = smearSpeed;
+        playerAnimation.particleSmear();
         EnemyScript enemyScript;
         Collider[] hitEnemies = Physics.OverlapSphere(playerController.attackPoint.position, 1, playerController.enemyLayers);
         foreach(Collider enemy in hitEnemies)
@@ -30,10 +37,9 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
     }
 
-    public void AttackSmear()
+    public void AttackFalse()
     {
-        //playerAnimation.smearAnimator.Play("smear");
-        playerAnimation.particleSmear();
+        playerAnimation.EndChain();
     }
 
     public void EndAttack()
