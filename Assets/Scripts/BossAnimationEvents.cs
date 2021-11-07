@@ -17,4 +17,19 @@ public class BossAnimationEvents : EnemyAnimationEvents
     {
         bossController.StartFireBlast();
     }
+
+    public void FireTral()
+    {
+        bossController.FireTrail();
+    }
+
+    public override void EnableMovement()
+    {
+        base.EnableMovement();
+        int leftOrRight = Random.Range(1, 3);
+        if(leftOrRight == 1)
+        {
+            bossController.strafeLeftOrRight *= -1;
+        }
+    }
 }

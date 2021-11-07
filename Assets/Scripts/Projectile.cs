@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     public Vector3 direction;
     int spellDamage = 30;
-    int speed = 10;
+    int speed = 12;
 
     private void OnTriggerEnter(Collider collision)
     {

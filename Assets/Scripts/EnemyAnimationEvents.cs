@@ -29,7 +29,7 @@ public class EnemyAnimationEvents : MonoBehaviour
 
     //enabling the navAgent allows the enemy to walk. Once it is enabled here it is controlled
     //in the EnemyController script
-    public void EnableMovement()
+    public virtual void EnableMovement()
     {
         enemyController.navAgent.enabled = true;
     }

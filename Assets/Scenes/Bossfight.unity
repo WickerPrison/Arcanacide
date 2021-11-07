@@ -390,7 +390,10 @@ MonoBehaviour:
   attackPoint: {fileID: 532177045}
   fireBlastFront: {fileID: 2056966435}
   fireBlastBack: {fileID: 1399933471}
+  fireTrailPrefab: {fileID: 8120567399107066, guid: 14c74eaa539125c42aba4c9dd97d78d6, type: 3}
+  bonfirePrefab: {fileID: 6002190749465052700, guid: 06ae8010139dcb943a6c904b708e679f, type: 3}
   fireBlastDamage: 30
+  strafeLeftOrRight: 1
 --- !u!195 &412292985
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -402,7 +405,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 5
-  m_Acceleration: 8
+  m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 8
@@ -914,6 +917,10 @@ PrefabInstance:
       propertyPath: staminabarFill
       value: 
       objectReference: {fileID: 1816008638}
+    - target: {fileID: 4614688894240553585, guid: 603be6d268d8a7c4ca5907a32b359f6e, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4614688894240553594, guid: 603be6d268d8a7c4ca5907a32b359f6e, type: 3}
       propertyPath: m_Name
       value: Player

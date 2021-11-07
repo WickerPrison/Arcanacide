@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public Transform attackPoint;
     public LayerMask enemyLayers;
     public float moveSpeed = 5;
+    public float stunned;
 
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
@@ -74,6 +75,11 @@ public class PlayerController : MonoBehaviour
         }
 
         AttackPointPosition();
+
+        if(stunned > 0)
+        {
+            stunned -= Time.deltaTime;
+        }
     }
 
     void Attack()
@@ -99,6 +105,10 @@ public class PlayerController : MonoBehaviour
             return false;
         }
         if (playerAnimation.attacking)
+        {
+            return false;
+        }
+        if (stunned > 0)
         {
             return false;
         }
@@ -132,7 +142,7 @@ public class PlayerController : MonoBehaviour
             transform.Translate(moveDirection * Time.fixedDeltaTime * moveSpeed);
         }
         //dash if the player has pressed the right mouse button
-        else if(!playerAnimation.attacking)
+        else if(!playerAnimation.attacking && stunned <= 0)
         {
             Dash();
         }
