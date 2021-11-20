@@ -10,7 +10,6 @@ public class FireBlast : MonoBehaviour
     private void Start()
     {
         bossController = GetComponentInParent<BossController>();
-        spellDamage = bossController.fireBlastDamage;
     }
 
     private void OnTriggerEnter(Collider other)

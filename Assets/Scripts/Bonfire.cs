@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class Bonfire : MonoBehaviour
 {
-    [SerializeField] GameObject indicator;
-    ParticleSystem particles;
-    Collider capsuleCollider;
-    float delay = 0.5f;
-    float duration = 1;
+    Transform player;
+    float duration = 5;
     int damage = 20;
+    float speed = 5;
 
     private void Start()
     {
-        particles = GetComponent<ParticleSystem>();
-        capsuleCollider = GetComponent<Collider>();
-        capsuleCollider.enabled = false;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,30 +21,22 @@ public class Bonfire : MonoBehaviour
             PlayerScript playerScript;
             playerScript = other.gameObject.GetComponent<PlayerScript>();
             playerScript.LoseHealth(damage);
+            Destroy(gameObject);
         }
     }
 
     private void Update()
     {
-        if(delay > 0)
-        {
-            indicator.transform.localScale *= 1 + Time.deltaTime * 2;
-        }
-
         duration -= Time.deltaTime;
-        delay -= Time.deltaTime;
-
-        if(delay <= 0)
-        {
-            if (!particles.isPlaying)
-            {
-                particles.Play();
-            }
-            capsuleCollider.enabled = true;
-        }
         if(duration <= 0)
         {
             Destroy(gameObject);
         }
+    }
+
+    void FixedUpdate()
+    {
+        Vector3 direction = player.position - transform.position;
+        transform.Translate(direction.normalized * Time.fixedDeltaTime * speed);
     }
 }

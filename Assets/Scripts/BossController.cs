@@ -5,19 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class BossController : EnemyController
 {
-    [SerializeField] GameObject fireBlastFront;
-    [SerializeField] GameObject fireBlastBack;
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject bonfirePrefab;
-    public int fireBlastDamage = 30;
     public int strafeLeftOrRight = 1;
 
-    Collider fireBlastCollider;
-    ParticleSystem fireBlastFrontParticles;
-    ParticleSystem fireBlastBackParticles;
-    float fireBlastRange = 3f;
-    float fireBlastDuration = 0.5f;
-    float fireBlastTime;
+    float tooClose = 3f;
+    float runAwayTime;
+    float runAwayMaxTime = 1f;
+    float runAwaySpeed = 8f;
     float fireBallCD;
     float fireBallMaxCD = 4;
     float attackCD;
@@ -26,15 +21,11 @@ public class BossController : EnemyController
     float fireTrailTime;
     float bonfireMaxTime = 5;
     float bonfireTime;
-    float tooClose = 3f;
     float strafeSpeed = 5;
 
     public override void Start()
     {
         base.Start();
-        fireBlastCollider = fireBlastFront.GetComponent<Collider>();
-        fireBlastFrontParticles = fireBlastFront.GetComponent<ParticleSystem>();
-        fireBlastBackParticles = fireBlastBack.GetComponent<ParticleSystem>();
         bonfireTime = bonfireMaxTime;
     }
 
@@ -63,9 +54,9 @@ public class BossController : EnemyController
 
                 if (attackCD <= 0)
                 {
-                    if(Vector3.Distance(transform.position, playerController.transform.position) < fireBlastRange)
+                    if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose)
                     {
-                        frontAnimator.SetTrigger("FireBlast");
+                        runAwayTime = runAwayMaxTime;
                     }
                     else if (fireBallCD <= 0)
                     {
@@ -78,6 +69,12 @@ public class BossController : EnemyController
 
         }
 
+        if(runAwayTime > 0)
+        {
+            runAwayTime -= Time.deltaTime;
+            RunAway();
+        }
+
         if (attackCD > 0)
         {
             attackCD -= Time.deltaTime;
@@ -86,15 +83,6 @@ public class BossController : EnemyController
         if(fireBallCD > 0)
         {
             fireBallCD -= Time.deltaTime;
-        }
-
-        if(fireBlastTime > 0)
-        {
-            fireBlastTime -= Time.deltaTime;
-            if(fireBlastTime <= 0)
-            {
-                EndFireBlast();
-            }
         }
 
         if(fireTrailTime < 0)
@@ -107,29 +95,23 @@ public class BossController : EnemyController
             fireTrailTime -= Time.deltaTime;
         }
 
+        /*
         bonfireTime -= Time.deltaTime;
         if(bonfireTime <= 0)
         {
             GameObject bonfire = Instantiate(bonfirePrefab);
             bonfire.transform.position = playerController.transform.position;
-            bonfire.transform.position -= new Vector3(0, playerController.transform.position.y, 0);
+            bonfire.transform.position -= new Vector3(0, 1, 0);
             bonfireTime = bonfireMaxTime;
         }
+        */
     }
 
-    public void StartFireBlast()
-    {
-        fireBlastCollider.enabled = true;
-        fireBlastBackParticles.Play();
-        fireBlastFrontParticles.Play();
-        fireBlastTime = fireBlastDuration;
-    }
 
-    void EndFireBlast()
+    void RunAway()
     {
-        fireBlastCollider.enabled = false;
-        fireBlastBackParticles.Stop();
-        fireBlastFrontParticles.Stop();
+        Vector3 awayDirection = transform.position - playerController.transform.position;
+        navAgent.Move(awayDirection.normalized * Time.deltaTime * runAwaySpeed);
     }
 
     public void FireTrail()
@@ -137,6 +119,10 @@ public class BossController : EnemyController
         GameObject fireTrail;
         fireTrail = Instantiate(fireTrailPrefab);
         fireTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        if(runAwayTime > 0)
+        {
+            fireTrail.transform.localScale = Vector3.Scale(fireTrail.transform.localScale, new Vector3(2f, 1f, 2f));
+        }
     }
 
     void Strafe()

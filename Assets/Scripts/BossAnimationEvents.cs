@@ -13,11 +13,6 @@ public class BossAnimationEvents : EnemyAnimationEvents
         bossController = GetComponentInParent<BossController>();
     }
 
-    public void FireBlast()
-    {
-        bossController.StartFireBlast();
-    }
-
     public void FireTral()
     {
         bossController.FireTrail();
