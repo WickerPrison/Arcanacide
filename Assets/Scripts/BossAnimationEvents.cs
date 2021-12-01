@@ -27,4 +27,19 @@ public class BossAnimationEvents : EnemyAnimationEvents
             bossController.strafeLeftOrRight *= -1;
         }
     }
+
+    public void CanStagger()
+    {
+        bossController.canStagger = true;
+    }
+
+    public void CanNotStagger()
+    {
+        bossController.canStagger = false;
+    }
+
+    public void Bonfire()
+    {
+        bossController.Bonfire();
+    }
 }

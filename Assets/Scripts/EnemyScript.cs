@@ -9,6 +9,7 @@ public class EnemyScript : MonoBehaviour
     public int health;
     [SerializeField] GameObject healthbar;
     [SerializeField] float healthbarScale;
+    EnemyController enemyController;
 
     int maxHealth = 100;
 
@@ -16,12 +17,14 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         health = maxHealth;
+        enemyController = GetComponent<EnemyController>();
     }
 
     public void LoseHealth(int damage)
     {
         health -= damage;
         UpdateHealthbar();
+        enemyController.OnHit();
     }
 
     void UpdateHealthbar()

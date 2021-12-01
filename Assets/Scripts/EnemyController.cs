@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         EnemyAI();
 
@@ -100,5 +100,10 @@ public class EnemyController : MonoBehaviour
             frontAnimator.transform.localScale = new Vector3(-scaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
             frontAnimator.transform.localPosition = new Vector3(-offsetX, frontAnimator.transform.localPosition.y, frontAnimator.transform.localPosition.z);
         }
+    }
+
+    public virtual void OnHit()
+    {
+
     }
 }

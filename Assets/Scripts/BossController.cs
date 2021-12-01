@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class BossController : EnemyController
@@ -19,18 +20,46 @@ public class BossController : EnemyController
     float attackMaxCD = 2;
     float fireTrailMaxTime = 0.2f;
     float fireTrailTime;
-    float bonfireMaxTime = 5;
-    float bonfireTime;
-    float strafeSpeed = 5;
+    float bonfireMaxCD = 15;
+    float bonfireCD;
+    float strafeSpeed = 3;
+    float floatTimer;
+    float floatMaxTime = 1;
+    float floatSpeed = 0.3f;
+    float staggerTimer = 0;
+    float staggerMaxTime = 3;
+    public bool canStagger = false;
+    bool isStaggered = false;
+    int goingUp = 1;
 
     public override void Start()
     {
         base.Start();
-        bonfireTime = bonfireMaxTime;
+        bonfireCD = bonfireMaxCD;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        frontAnimator.SetFloat("Stagger", staggerTimer);
+    }
+
+    void FixedUpdate()
+    {
+        UpAndDown();
     }
 
     public override void EnemyAI()
     {
+        if (staggerTimer > 0)
+        {
+            staggerTimer -= Time.deltaTime;
+            if(staggerTimer <= 0)
+            {
+                EndStagger();
+            }
+        }
+
         if (Vector3.Distance(transform.position, playerController.transform.position) <= detectRange)
         {
             hasSeenPlayer = true;
@@ -52,11 +81,16 @@ public class BossController : EnemyController
                     }
                 }
 
-                if (attackCD <= 0)
+                if (attackCD <= 0 && !isStaggered)
                 {
                     if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose)
                     {
                         runAwayTime = runAwayMaxTime;
+                    }
+                    else if(bonfireCD <= 0)
+                    {
+                        frontAnimator.SetTrigger("Bonfire");
+                        bonfireCD = bonfireMaxCD;
                     }
                     else if (fireBallCD <= 0)
                     {
@@ -85,7 +119,12 @@ public class BossController : EnemyController
             fireBallCD -= Time.deltaTime;
         }
 
-        if(fireTrailTime < 0)
+        if(bonfireCD > 0)
+        {
+            bonfireCD -= Time.deltaTime;
+        }
+
+        if(fireTrailTime < 0 && !isStaggered)
         {
             FireTrail();
             fireTrailTime = fireTrailMaxTime;
@@ -94,19 +133,55 @@ public class BossController : EnemyController
         {
             fireTrailTime -= Time.deltaTime;
         }
-
-        /*
-        bonfireTime -= Time.deltaTime;
-        if(bonfireTime <= 0)
-        {
-            GameObject bonfire = Instantiate(bonfirePrefab);
-            bonfire.transform.position = playerController.transform.position;
-            bonfire.transform.position -= new Vector3(0, 1, 0);
-            bonfireTime = bonfireMaxTime;
-        }
-        */
     }
 
+    void UpAndDown()
+    {
+        if(floatTimer > 0)
+        {
+            floatTimer -= Time.deltaTime;
+            transform.Translate(Vector3.up * goingUp * Time.fixedDeltaTime * floatSpeed);
+        }
+        else
+        {
+            floatTimer = floatMaxTime;
+            goingUp *= -1;
+        }
+    }
+
+    public override void OnHit()
+    {
+        base.OnHit();
+        if (canStagger)
+        {
+            frontAnimator.Play("Stagger");
+            isStaggered = true;
+            staggerTimer = staggerMaxTime;
+        }
+    }
+
+    void EndStagger()
+    {
+        BossAnimationEvents animationEvents = frontAnimator.GetComponent<BossAnimationEvents>();
+        animationEvents.CanNotStagger();
+        animationEvents.EnableMovement();
+        frontAnimator.Play("Idle");
+        isStaggered = false;
+    }
+
+
+    public void Bonfire()
+    {
+        float bonfireSummonRadius = 7;
+        float xPos = Random.Range(-bonfireSummonRadius, bonfireSummonRadius);
+        float zPos = Random.Range(-bonfireSummonRadius, bonfireSummonRadius);
+        Vector3 startPos = transform.position + new Vector3(xPos, -1, zPos);
+        NavMeshHit hit;
+        NavMesh.SamplePosition(startPos, out hit, bonfireSummonRadius + 1, NavMesh.AllAreas);
+        GameObject bonfire = Instantiate(bonfirePrefab);
+        bonfire.transform.position = hit.position;
+        bonfireCD = bonfireMaxCD;
+    }
 
     void RunAway()
     {
