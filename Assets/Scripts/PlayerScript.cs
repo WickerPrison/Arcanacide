@@ -11,27 +11,53 @@ public class PlayerScript : MonoBehaviour
     public int health;
     public int attackPower = 20;
     public float stamina;
+    public float poise;
     [SerializeField] GameObject healbarFill;
     [SerializeField] GameObject staminabarFill;
 
+    PlayerController playerController;
+    PlayerAnimation playerAnimation;
     float maxStamina = 100;
     float maxStaminaDelay = 1f;
     float staminaDelay;
     float staminaRate = 40;
     float healthbarScale = 1.555f;
     int maxHealth = 100;
+    float maxPoise = 100;
+    float poiseRate = 5;
 
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
         stamina = maxStamina;
+        poise = maxPoise;
+        playerController = GetComponent<PlayerController>();
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
 
     public void LoseHealth(int damage)
     {
         health -= damage;
         UpdateHealthbar();
+    }
+
+    public void LosePoise(float poiseDamage)
+    {
+        if(playerController.stagger <= 0)
+        {
+            poise -= poiseDamage;
+        }
+        if(poise <= 0)
+        {
+            playerAnimation.PlayStagger();
+            playerController.stagger = playerController.maxStaggered;
+        }
+    }
+    
+    public void ResetPoise()
+    {
+        poise = maxPoise;
     }
 
     public void LoseStamina(float amount)
@@ -75,5 +101,10 @@ public class PlayerScript : MonoBehaviour
         }
 
         UpdateStaminaBar();
+
+        if(poise < maxPoise)
+        {
+            poise += poiseRate * Time.deltaTime;
+        }
     }
 }

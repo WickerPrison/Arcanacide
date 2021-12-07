@@ -15,8 +15,8 @@ public class EnemyController : MonoBehaviour
     public float attackTime;
     public float detectRange = 10f;
     public float spellRange = 10f;
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] Transform attackPoint;
+    public GameObject projectilePrefab;
+    public Transform attackPoint;
 
     Rigidbody rb;
     float scaleX;
@@ -77,7 +77,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void SpellAttack()
+    public virtual void SpellAttack()
     {
         GameObject projectile;
         Projectile projectileScript;

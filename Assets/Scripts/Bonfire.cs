@@ -7,6 +7,7 @@ public class Bonfire : MonoBehaviour
     Transform player;
     float duration = 5;
     int damage = 20;
+    float poiseDamage = 70;
     float speed = 5;
 
     private void Start()
@@ -21,6 +22,7 @@ public class Bonfire : MonoBehaviour
             PlayerScript playerScript;
             playerScript = other.gameObject.GetComponent<PlayerScript>();
             playerScript.LoseHealth(damage);
+            playerScript.LosePoise(poiseDamage);
             Destroy(gameObject);
         }
     }

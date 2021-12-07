@@ -9,17 +9,19 @@ public class PlayerController : MonoBehaviour
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
-    public float moveSpeed = 5;
-    public float stunned;
+    public float moveSpeed;
+    public float stagger;
+    public float maxStaggered;
 
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
+    Rigidbody rb;
     Vector3 mouseDirection;
     Vector3 moveDirection;
     Vector3 dashDirection;
     float horizontalAxis;
     float verticalAxis;
-    float dashSpeed = 15;
+    float dashSpeed = 1000;
     float dashTime = 0;
     float maxDashTime = 0.2f;
     float dashStaminaCost = 30f;
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
         //Set references to other player scripts
         playerAnimation = GetComponent<PlayerAnimation>();
         playerScript = GetComponent<PlayerScript>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -76,15 +79,20 @@ public class PlayerController : MonoBehaviour
 
         AttackPointPosition();
 
-        if(stunned > 0)
+        if(stagger > 0)
         {
-            stunned -= Time.deltaTime;
+            stagger -= Time.deltaTime;
+            if(stagger <= 0)
+            {
+                playerScript.ResetPoise();
+            }
         }
+
+        playerAnimation.StaggerUpdate(stagger);
     }
 
     void Attack()
     {
-        
         playerAnimation.attack = true;
         playerAnimation.attacking = true;
     }
@@ -98,7 +106,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Returns a bool that is true if the player is currently allowed to give new inputs
-    bool CanInput()
+    public bool CanInput()
     {
         if(dashTime > 0)
         {
@@ -108,7 +116,7 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
-        if (stunned > 0)
+        if (stagger > 0)
         {
             return false;
         }
@@ -120,14 +128,14 @@ public class PlayerController : MonoBehaviour
     //maxDashTime controls how long the dash lasts
     void Dash()
     {
-        transform.Translate(dashDirection * Time.fixedDeltaTime * dashSpeed);
+        rb.velocity = (dashDirection * Time.fixedDeltaTime * dashSpeed);
         dashTime -= Time.fixedDeltaTime;
     }
 
     //FixedUpdate is similar to Update but should always be used when dealing with physics
     private void FixedUpdate()
     {
-        if(moveDirection.magnitude > 0 && !playerAnimation.attacking)
+        if(moveDirection.magnitude > 0 && CanInput())
         {
             playerAnimation.walk = true;
         }
@@ -139,12 +147,17 @@ public class PlayerController : MonoBehaviour
         //move the player if they are not dashing or attacking
         if(CanInput())
         {
-            transform.Translate(moveDirection * Time.fixedDeltaTime * moveSpeed);
+            rb.velocity = new Vector3(moveDirection.x * Time.fixedDeltaTime * moveSpeed, rb.velocity.y , moveDirection.z * Time.fixedDeltaTime * moveSpeed);
         }
         //dash if the player has pressed the right mouse button
-        else if(!playerAnimation.attacking && stunned <= 0)
+        else if(!playerAnimation.attacking && stagger <= 0)
         {
             Dash();
+        }
+
+        if (playerAnimation.attacking)
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 }

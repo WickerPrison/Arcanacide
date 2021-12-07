@@ -368,7 +368,7 @@ Transform:
   - {fileID: 1531663738959607318}
   m_Father: {fileID: 7629407647208685827}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25.478}
 --- !u!1 &1026613688664791949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,7 +1099,9 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  moveSpeed: 5
+  moveSpeed: 300
+  stagger: 0
+  maxStaggered: 3
 --- !u!114 &4614688894240553598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1125,6 +1127,7 @@ MonoBehaviour:
   backSmear: {fileID: 3449012118581406211}
   cam: {fileID: 0}
   playerScript: {fileID: 4614688894240553584}
+  playerController: {fileID: 4614688894240553599}
 --- !u!54 &4614688894240553585
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1156,6 +1159,7 @@ MonoBehaviour:
   health: 0
   attackPower: 20
   stamina: 0
+  poise: 0
   healbarFill: {fileID: 0}
   staminabarFill: {fileID: 0}
 --- !u!1 &4614688895281677858

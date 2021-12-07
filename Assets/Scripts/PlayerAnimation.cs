@@ -22,6 +22,7 @@ public class PlayerAnimation : MonoBehaviour
     public ParticleSystem backSmear;
     [SerializeField] Camera cam;
     [SerializeField] PlayerScript playerScript;
+    [SerializeField] PlayerController playerController;
 
     Vector3 frontSmearScale;
     Vector3 frontSmearRotation;
@@ -58,7 +59,7 @@ public class PlayerAnimation : MonoBehaviour
         StaminaUpdate();
 
         //While attacking the player won't change what direction he is facing. Otherwise he faces the mouse
-        if (!attacking)
+        if (playerController.CanInput())
         {
             FaceMouse();
         }
@@ -86,6 +87,18 @@ public class PlayerAnimation : MonoBehaviour
     {
         frontAnimator.SetFloat("Stamina", playerScript.stamina);
         backAnimator.SetFloat("Stamina", playerScript.stamina);
+    }
+
+    public void PlayStagger()
+    {
+        frontAnimator.Play("Stagger");
+        backAnimator.Play("Stagger");
+    }
+
+    public void StaggerUpdate(float stagger)
+    {
+        frontAnimator.SetFloat("Stagger", stagger);
+        backAnimator.SetFloat("Stagger", stagger);
     }
 
     public void DashAnimation()

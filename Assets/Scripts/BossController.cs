@@ -83,7 +83,7 @@ public class BossController : EnemyController
 
                 if (attackCD <= 0 && !isStaggered)
                 {
-                    if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose)
+                    if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose && !isStaggered)
                     {
                         runAwayTime = runAwayMaxTime;
                     }
@@ -183,10 +183,24 @@ public class BossController : EnemyController
         bonfireCD = bonfireMaxCD;
     }
 
+    public override void SpellAttack()
+    {
+        GameObject projectile;
+        HomingProjectile projectileScript;
+        projectile = Instantiate(projectilePrefab);
+        projectileScript = projectile.GetComponent<HomingProjectile>();
+        projectile.transform.position = attackPoint.position;
+        projectile.transform.LookAt(playerController.transform.position); //+ new Vector3(0, -0.5f, 0));
+        projectileScript.target = playerController.transform;
+    }
+
     void RunAway()
     {
         Vector3 awayDirection = transform.position - playerController.transform.position;
-        navAgent.Move(awayDirection.normalized * Time.deltaTime * runAwaySpeed);
+        if (navAgent.enabled)
+        {
+            navAgent.Move(awayDirection.normalized * Time.deltaTime * runAwaySpeed);
+        }
     }
 
     public void FireTrail()
