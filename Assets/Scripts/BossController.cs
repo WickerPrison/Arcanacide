@@ -8,6 +8,7 @@ public class BossController : EnemyController
 {
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject bonfirePrefab;
+    [SerializeField] GameObject fireWavePrefab;
     public int strafeLeftOrRight = 1;
 
     float tooClose = 3f;
@@ -15,7 +16,7 @@ public class BossController : EnemyController
     float runAwayMaxTime = 1f;
     float runAwaySpeed = 8f;
     float fireBallCD;
-    float fireBallMaxCD = 4;
+    float fireBallMaxCD = 5;
     float attackCD;
     float attackMaxCD = 2;
     float fireTrailMaxTime = 0.2f;
@@ -94,7 +95,15 @@ public class BossController : EnemyController
                     }
                     else if (fireBallCD <= 0)
                     {
-                        frontAnimator.SetTrigger("SpellAttack");
+                        int num = Random.Range(1, 3);
+                        if (num == 1)
+                        {
+                            frontAnimator.SetTrigger("SpellAttack");
+                        }
+                        if(num == 2)
+                        {
+                            frontAnimator.SetTrigger("FireWave");
+                        }
                         fireBallCD = fireBallMaxCD;
                     }
                     attackCD = attackMaxCD;
@@ -183,6 +192,16 @@ public class BossController : EnemyController
         bonfireCD = bonfireMaxCD;
     }
 
+    public void FireWave()
+    {
+        GameObject fireWave;
+        fireWave = Instantiate(fireWavePrefab);
+        fireWave.transform.position = transform.position;
+        FireWave fireWaveScript;
+        fireWaveScript = fireWave.GetComponent<FireWave>();
+        fireWaveScript.target = playerController.transform.position;
+    }
+
     public override void SpellAttack()
     {
         GameObject projectile;
@@ -190,7 +209,7 @@ public class BossController : EnemyController
         projectile = Instantiate(projectilePrefab);
         projectileScript = projectile.GetComponent<HomingProjectile>();
         projectile.transform.position = attackPoint.position;
-        projectile.transform.LookAt(playerController.transform.position); //+ new Vector3(0, -0.5f, 0));
+        projectile.transform.LookAt(playerController.transform.position);
         projectileScript.target = playerController.transform;
     }
 

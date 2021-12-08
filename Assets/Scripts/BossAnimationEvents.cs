@@ -42,4 +42,9 @@ public class BossAnimationEvents : EnemyAnimationEvents
     {
         bossController.Bonfire();
     }
+
+    public void FireWave()
+    {
+        bossController.FireWave();
+    }
 }

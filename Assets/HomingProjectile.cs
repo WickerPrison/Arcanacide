@@ -7,8 +7,8 @@ public class HomingProjectile : MonoBehaviour
     public Transform target;
     public int spellDamage;
     public int poiseDamage;
+    public float turnAngle;
     int speed = 12;
-    float turnAngle = 90;
     float lifetime = 5;
 
     private void OnTriggerEnter(Collider collision)
