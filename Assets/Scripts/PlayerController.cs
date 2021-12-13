@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
 
         if(stagger > 0)
         {
+            rb.velocity = Vector3.zero;
             stagger -= Time.deltaTime;
             if(stagger <= 0)
             {
@@ -110,10 +111,11 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (CanInput() && Input.GetKeyDown(KeyCode.E))
         {
             if (duckCD <= 0)
             {
+                rb.velocity = Vector3.zero;
                 playerAnimation.UseDuck(equippedAbility);
                 switch (equippedAbility)
                 {
@@ -198,7 +200,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(moveDirection.x * Time.fixedDeltaTime * moveSpeed, rb.velocity.y , moveDirection.z * Time.fixedDeltaTime * moveSpeed);
         }
         //dash if the player has pressed the right mouse button
-        else if(!playerAnimation.attacking && stagger <= 0)
+        else if(dashTime > 0)
         {
             Dash();
         }

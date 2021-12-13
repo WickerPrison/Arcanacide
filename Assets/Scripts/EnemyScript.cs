@@ -11,7 +11,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float healthbarScale;
     EnemyController enemyController;
 
-    int maxHealth = 100;
+    [SerializeField] int maxHealth = 100;
 
     // Start is called before the first frame update
     void Start()

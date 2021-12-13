@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
     //such as health and stamina
 
     public int health;
-    public int attackPower = 20;
+    public int attackPower = 10;
     public float stamina;
     public float poise;
     [SerializeField] GameObject healbarFill;
@@ -38,8 +38,11 @@ public class PlayerScript : MonoBehaviour
 
     public void LoseHealth(int damage)
     {
-        health -= damage;
-        UpdateHealthbar();
+        if (!playerController.shield)
+        {
+            health -= damage;
+            UpdateHealthbar();
+        }
     }
 
     public void MaxHeal()
@@ -50,14 +53,17 @@ public class PlayerScript : MonoBehaviour
 
     public void LosePoise(float poiseDamage)
     {
-        if(playerController.stagger <= 0)
+        if (!playerController.shield)
         {
-            poise -= poiseDamage;
-        }
-        if(poise <= 0)
-        {
-            playerAnimation.PlayStagger();
-            playerController.stagger = playerController.maxStaggered;
+            if(playerController.stagger <= 0)
+            {
+                poise -= poiseDamage;
+            }
+            if(poise <= 0)
+            {
+                playerAnimation.PlayStagger();
+                playerController.stagger = playerController.maxStaggered;
+            }
         }
     }
     
