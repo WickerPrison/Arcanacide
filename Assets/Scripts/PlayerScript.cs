@@ -42,6 +42,12 @@ public class PlayerScript : MonoBehaviour
         UpdateHealthbar();
     }
 
+    public void MaxHeal()
+    {
+        health = maxHealth;
+        UpdateHealthbar();
+    }
+
     public void LosePoise(float poiseDamage)
     {
         if(playerController.stagger <= 0)

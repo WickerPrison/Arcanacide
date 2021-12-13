@@ -95,6 +95,12 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.Play("Stagger");
     }
 
+    public void UseDuck(string abilityName)
+    {
+        frontAnimator.Play(abilityName);
+        backAnimator.Play(abilityName);
+    }
+
     public void StaggerUpdate(float stagger)
     {
         frontAnimator.SetFloat("Stagger", stagger);

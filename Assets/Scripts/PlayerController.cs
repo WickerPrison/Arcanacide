@@ -25,6 +25,14 @@ public class PlayerController : MonoBehaviour
     float dashTime = 0;
     float maxDashTime = 0.2f;
     float dashStaminaCost = 30f;
+    public float duckCD;
+    string healString = "Heal";
+    bool hasHealed = false;
+    string blockString = "Block";
+    float blockCD = 3;
+    public string equippedAbility;
+    public bool preventInput = false;
+    public bool shield;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +41,7 @@ public class PlayerController : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerScript = GetComponent<PlayerScript>();
         rb = GetComponent<Rigidbody>();
+        equippedAbility = healString;
     }
 
     // Update is called once per frame
@@ -45,11 +54,6 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector3(horizontalAxis, 0, verticalAxis);
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
 
-        //hold down left shift to sprint
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            moveDirection *= 2;
-        }
 
         //If right mouse button is pressed the player should dash if they are currently able
         if (Input.GetMouseButtonDown(1))
@@ -77,6 +81,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        DuckAbilities();
+
         AttackPointPosition();
 
         if(stagger > 0)
@@ -89,6 +95,43 @@ public class PlayerController : MonoBehaviour
         }
 
         playerAnimation.StaggerUpdate(stagger);
+    }
+
+    void DuckAbilities()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            equippedAbility = healString;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            equippedAbility = blockString;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (duckCD <= 0)
+            {
+                playerAnimation.UseDuck(equippedAbility);
+                switch (equippedAbility)
+                {
+                    case "Heal":
+                        hasHealed = true;
+                        duckCD += 1;
+                        break;
+                    case "Block":
+                        duckCD += blockCD;
+                        break;
+                }
+            }
+        }
+
+        if (!hasHealed && duckCD > 0)
+        {
+            duckCD -= Time.deltaTime;
+        }
     }
 
     void Attack()
@@ -108,6 +151,10 @@ public class PlayerController : MonoBehaviour
     //Returns a bool that is true if the player is currently allowed to give new inputs
     public bool CanInput()
     {
+        if (preventInput)
+        {
+            return false;
+        }
         if(dashTime > 0)
         {
             return false;
@@ -131,6 +178,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = (dashDirection * Time.fixedDeltaTime * dashSpeed);
         dashTime -= Time.fixedDeltaTime;
     }
+
 
     //FixedUpdate is similar to Update but should always be used when dealing with physics
     private void FixedUpdate()

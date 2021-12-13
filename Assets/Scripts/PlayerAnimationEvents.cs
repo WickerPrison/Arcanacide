@@ -59,4 +59,29 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         playerController.gameObject.layer = 3;
     }
+
+    public void StopInput()
+    {
+        playerController.preventInput = true;
+    }
+
+    public void StartInput()
+    {
+        playerController.preventInput = false;
+    }
+
+    public void Heal()
+    {
+        playerScript.MaxHeal();
+    }
+
+    public void StartShield()
+    {
+        playerController.shield = true;
+    }
+
+    public void EndShield()
+    {
+        playerController.shield = false;
+    }
 }
