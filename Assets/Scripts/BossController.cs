@@ -202,17 +202,6 @@ public class BossController : EnemyController
         fireWaveScript.target = playerController.transform.position;
     }
 
-    public override void SpellAttack()
-    {
-        GameObject projectile;
-        HomingProjectile projectileScript;
-        projectile = Instantiate(projectilePrefab);
-        projectileScript = projectile.GetComponent<HomingProjectile>();
-        projectile.transform.position = attackPoint.position;
-        projectile.transform.LookAt(playerController.transform.position);
-        projectileScript.target = playerController.transform;
-    }
-
     void RunAway()
     {
         Vector3 awayDirection = transform.position - playerController.transform.position;

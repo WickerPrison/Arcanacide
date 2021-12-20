@@ -7,7 +7,9 @@ public class EnemyController : MonoBehaviour
 {
     //This script controls the actions of the enemy units. It will likely be inherited by all enemy types
 
+    GameObject player;
     public PlayerController playerController;
+    public PlayerScript playerScript;
     public Animator frontAnimator;
     public NavMeshAgent navAgent;
     public bool hasSeenPlayer = false;
@@ -25,6 +27,9 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
+        playerScript = player.GetComponent<PlayerScript>();
         navAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         scaleX = frontAnimator.transform.localScale.x;
@@ -80,12 +85,17 @@ public class EnemyController : MonoBehaviour
     public virtual void SpellAttack()
     {
         GameObject projectile;
-        Projectile projectileScript;
+        HomingProjectile projectileScript;
         projectile = Instantiate(projectilePrefab);
-        projectileScript = projectile.GetComponent<Projectile>();
+        projectileScript = projectile.GetComponent<HomingProjectile>();
         projectile.transform.position = attackPoint.position;
-        projectile.transform.LookAt(playerController.transform.position + new Vector3(0, -0.5f,0));
-        projectileScript.direction = playerController.transform.position + new Vector3(0, -0.5f, 0) - projectile.transform.position;
+        projectile.transform.LookAt(playerController.transform.position);
+        projectileScript.target = playerController.transform;
+    }
+
+    public virtual void SpellAttack2()
+    {
+
     }
 
     void FacePlayer()

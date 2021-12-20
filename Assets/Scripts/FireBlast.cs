@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FireBlast : MonoBehaviour
 {
-    BossController bossController;
+    EnemyController enemyController;
     int spellDamage;
 
     private void Start()
     {
-        bossController = GetComponentInParent<BossController>();
+        enemyController = GetComponentInParent<BossController>();
     }
 
     private void OnTriggerEnter(Collider other)

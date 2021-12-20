@@ -9,7 +9,7 @@ public class HomingProjectile : MonoBehaviour
     public int poiseDamage;
     public float turnAngle;
     int speed = 12;
-    float lifetime = 5;
+    [SerializeField] float lifetime;
 
     private void OnTriggerEnter(Collider collision)
     {

@@ -21,6 +21,11 @@ public class EnemyAnimationEvents : MonoBehaviour
         enemyController.SpellAttack();
     }
 
+    public void SpellAttack2()
+    {
+        enemyController.SpellAttack2();
+    }
+
     //disabling the navAgent prevents the enemy from being able to walk
     public void DisableMovement()
     {

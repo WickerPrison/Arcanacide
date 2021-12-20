@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float stagger;
     public float maxStaggered;
+    public bool knockback = false;
 
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
@@ -87,10 +88,14 @@ public class PlayerController : MonoBehaviour
 
         if(stagger > 0)
         {
-            rb.velocity = Vector3.zero;
+            if (!knockback)
+            {
+                rb.velocity = Vector3.zero;
+            }
             stagger -= Time.deltaTime;
             if(stagger <= 0)
             {
+                knockback = false;
                 playerScript.ResetPoise();
             }
         }
@@ -111,7 +116,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (CanInput() && Input.GetKeyDown(KeyCode.E))
+        if (CanInput() && Input.GetKeyDown(KeyCode.Space))
         {
             if (duckCD <= 0)
             {
