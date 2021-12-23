@@ -33,7 +33,7 @@ public class FireMageController : EnemyController
                     attackTime = attackMaxTime;
                 }
             }
-            else if (Vector3.Distance(transform.position, playerController.transform.position) < spellRange)
+            else if (Vector3.Distance(transform.position, playerController.transform.position) < attackRange)
             {
                 if (attackTime <= 0)
                 {
@@ -59,7 +59,7 @@ public class FireMageController : EnemyController
         }
     }
 
-    public override void SpellAttack2()
+    public override void SpecialAbility()
     {
         fireRing.Explode();
         if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose)
@@ -69,7 +69,10 @@ public class FireMageController : EnemyController
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
             Vector3 awayVector = playerController.transform.position - transform.position;
             playerController.knockback = true;
-            playerRB.AddForce(awayVector.normalized * 10, ForceMode.VelocityChange);
+            PlayerAnimation playerAnimation = playerController.gameObject.GetComponent<PlayerAnimation>();
+            playerAnimation.attacking = false;
+            playerRB.velocity = Vector3.zero;
+            playerRB.AddForce(awayVector.normalized * 7, ForceMode.VelocityChange);
         }
     }
 }

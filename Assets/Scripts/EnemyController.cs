@@ -10,15 +10,18 @@ public class EnemyController : MonoBehaviour
     GameObject player;
     public PlayerController playerController;
     public PlayerScript playerScript;
+    public PlayerAnimation playerAnimation;
     public Animator frontAnimator;
     public NavMeshAgent navAgent;
     public bool hasSeenPlayer = false;
     public float attackMaxTime = 2;
     public float attackTime;
     public float detectRange = 10f;
-    public float spellRange = 10f;
+    public float attackRange;
+    public bool attacking = false;
     public GameObject projectilePrefab;
     public Transform attackPoint;
+    public bool charging = false;
 
     Rigidbody rb;
     float scaleX;
@@ -30,6 +33,7 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         playerScript = player.GetComponent<PlayerScript>();
+        playerAnimation = player.GetComponent<PlayerAnimation>();
         navAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         scaleX = frontAnimator.transform.localScale.x;
@@ -44,7 +48,10 @@ public class EnemyController : MonoBehaviour
         //the enemy currently only has a front animator, that will change eventually
         frontAnimator.SetFloat("Velocity", navAgent.velocity.magnitude);
 
-        FacePlayer();
+        if (navAgent.enabled)
+        {
+            FacePlayer();
+        }
     }
 
     //This virtual function will likely be overridden by all specific enemy types
@@ -65,7 +72,7 @@ public class EnemyController : MonoBehaviour
                 navAgent.SetDestination(playerController.transform.position);
             }
 
-            if (Vector3.Distance(transform.position, playerController.transform.position) < spellRange)
+            if (Vector3.Distance(transform.position, playerController.transform.position) < attackRange)
             {
                 if (attackTime <= 0)
                 {
@@ -93,7 +100,7 @@ public class EnemyController : MonoBehaviour
         projectileScript.target = playerController.transform;
     }
 
-    public virtual void SpellAttack2()
+    public virtual void SpecialAbility()
     {
 
     }
@@ -115,5 +122,15 @@ public class EnemyController : MonoBehaviour
     public virtual void OnHit()
     {
 
+    }
+
+    public virtual void AttackHit(int smearSpeed)
+    {
+
+    }
+
+    public virtual bool SwordClash()
+    {
+        return false;
     }
 }

@@ -16,6 +16,13 @@ public class FireHands : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = hand.position;
+        if(hand != null)
+        {
+            transform.position = hand.position;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

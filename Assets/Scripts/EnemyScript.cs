@@ -22,9 +22,12 @@ public class EnemyScript : MonoBehaviour
 
     public void LoseHealth(int damage)
     {
-        health -= damage;
-        UpdateHealthbar();
-        enemyController.OnHit();
+        if (!enemyController.SwordClash())
+        {
+            health -= damage;
+            UpdateHealthbar();
+            enemyController.OnHit();
+        }
     }
 
     void UpdateHealthbar()

@@ -1,29 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class EnemyAnimationEvents : MonoBehaviour
+public class MeleeEnemyAnimationEvents : MonoBehaviour
 {
-    //This is the only script that can be called by enemy animations
-    //It will be inherited by the BossAnimationEvents script and many enemy types
-
     EnemyController enemyController;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         enemyController = GetComponentInParent<EnemyController>();
-    }
-
-    public void SpellAttack()
-    {
-        enemyController.SpellAttack();
-    }
-
-    public void SpellAttack2()
-    {
-        enemyController.SpecialAbility();
     }
 
     //disabling the navAgent prevents the enemy from being able to walk
@@ -37,5 +23,16 @@ public class EnemyAnimationEvents : MonoBehaviour
     public virtual void EnableMovement()
     {
         enemyController.navAgent.enabled = true;
+        enemyController.attacking = false;
+    }
+
+    public void AttackHit(int smearSpeed)
+    {
+        enemyController.AttackHit(smearSpeed);
+    }
+
+    public void SpecialAbility()
+    {
+        enemyController.SpecialAbility();
     }
 }

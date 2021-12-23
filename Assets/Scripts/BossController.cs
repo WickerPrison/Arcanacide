@@ -72,7 +72,7 @@ public class BossController : EnemyController
                 navAgent.SetDestination(playerController.transform.position);
             }
 
-            if (Vector3.Distance(transform.position, playerController.transform.position) < spellRange)
+            if (Vector3.Distance(transform.position, playerController.transform.position) < attackRange)
             {
                 if (navAgent.enabled)
                 {
