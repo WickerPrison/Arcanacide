@@ -16,6 +16,7 @@ public class PlayerAnimation : MonoBehaviour
     public bool walk;
     public bool attack;
     public bool attacking;
+    public bool continueBlocking;
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     public ParticleSystem frontSmear;
@@ -81,6 +82,9 @@ public class PlayerAnimation : MonoBehaviour
             frontAnimator.Play("Attack");
             backAnimator.Play("Attack");
         }
+
+        frontAnimator.SetBool("ContinueBlocking", continueBlocking);
+        backAnimator.SetBool("ContinueBlocking", continueBlocking);
     }
 
     void StaminaUpdate()

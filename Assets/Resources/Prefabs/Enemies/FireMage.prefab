@@ -11081,6 +11081,8 @@ MonoBehaviour:
   health: 0
   healthbar: {fileID: 5566665767565311819}
   healthbarScale: 1
+  enemyID: 0
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   maxHealth: 50
 --- !u!114 &5566665768951350949
 MonoBehaviour:
@@ -11096,15 +11098,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
+  playerAnimation: {fileID: 0}
   frontAnimator: {fileID: 5566665767775843289}
   navAgent: {fileID: 5566665768951350948}
   hasSeenPlayer: 0
   attackMaxTime: 3
   attackTime: 0
   detectRange: 10
-  spellRange: 7
+  attackRange: 8
+  attacking: 0
   projectilePrefab: {fileID: 7086795160678116252, guid: 3cedf55e3cd5a214297e811b67b22bee, type: 3}
   attackPoint: {fileID: 5566665767226053794}
+  charging: 0
   fireRing: {fileID: 5257937341476949498}
 --- !u!1 &5566665768970283555
 GameObject:

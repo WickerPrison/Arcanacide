@@ -7,15 +7,28 @@ public class EnemyScript : MonoBehaviour
     //this script controls the automatic workings of the enemy like health 
 
     public int health;
+    GameManager gm;
     [SerializeField] GameObject healthbar;
     [SerializeField] float healthbarScale;
+    [SerializeField] int enemyID;
+    [SerializeField] MapData mapData;
     EnemyController enemyController;
 
     [SerializeField] int maxHealth = 100;
 
+    private void Awake()
+    {
+        if (mapData.deadEnemies.Contains(enemyID))
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gm.numberOfEnemies += 1;
         health = maxHealth;
         enemyController = GetComponent<EnemyController>();
     }
@@ -48,6 +61,8 @@ public class EnemyScript : MonoBehaviour
     {
         if(health <= 0)
         {
+            mapData.deadEnemies.Add(enemyID);
+            gm.numberOfEnemies -= 1;
             Destroy(gameObject);
         }
     }

@@ -8,12 +8,14 @@ public class PlayerScript : MonoBehaviour
     //This script is responsible for things that happen automatically without player input
     //such as health and stamina
 
-    public int health;
+    [SerializeField] PlayerData playerData;
+    [SerializeField] MapData mapData;
     public int attackPower = 10;
     public float stamina;
     public float poise;
     [SerializeField] GameObject healbarFill;
     [SerializeField] GameObject staminabarFill;
+    AltarDirectory altarDirectory;
 
     PlayerController playerController;
     PlayerAnimation playerAnimation;
@@ -22,32 +24,32 @@ public class PlayerScript : MonoBehaviour
     float staminaDelay;
     float staminaRate = 40;
     float healthbarScale = 1.555f;
-    int maxHealth = 100;
     float maxPoise = 100;
     float poiseRate = 5;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        altarDirectory = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AltarDirectory>();
         stamina = maxStamina;
         poise = maxPoise;
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        UpdateHealthbar();
     }
 
     public void LoseHealth(int damage)
     {
         if (!playerController.shield)
         {
-            health -= damage;
+            playerData.health -= damage;
             UpdateHealthbar();
         }
     }
 
     public void MaxHeal()
     {
-        health = maxHealth;
+        playerData.health = playerData.maxHealth;
         UpdateHealthbar();
     }
 
@@ -84,7 +86,7 @@ public class PlayerScript : MonoBehaviour
 
     void UpdateHealthbar()
     {
-        float healthRatio = (float)health / (float)maxHealth;
+        float healthRatio = (float)playerData.health / (float)playerData.maxHealth;
         healbarFill.transform.localScale = new Vector3(healthRatio * healthbarScale, healbarFill.transform.localScale.y, healbarFill.transform.localScale.z);
     }
 
@@ -98,9 +100,9 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         //If the player reaches 0 health, restart the current scene
-        if(health <= 0 || transform.position.y < -20)
+        if(playerData.health <= 0 || transform.position.y < -20)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Death();   
         }
 
         if(staminaDelay > 0)
@@ -118,5 +120,25 @@ public class PlayerScript : MonoBehaviour
         {
             poise += poiseRate * Time.deltaTime;
         }
+    }
+
+    void Death()
+    {
+        MaxHeal();
+        playerData.hasHealed = false;
+        playerData.hasSpawned = false;
+        playerData.duckCD = 0;
+        mapData.doorNumber = 0;
+        string sceneName = altarDirectory.GetSceneName(playerData.lastAltar);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void Rest()
+    {
+        MaxHeal();
+        playerData.duckCD = 0;
+        playerData.hasHealed = false;
+        playerData.hasSpawned = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -1177,10 +1177,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.8
+  m_Radius: 0.6
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!114 &4614688894240553599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1193,6 +1193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e303fd55ae2a4b44929c622309e4777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   attackPoint: {fileID: 4614688895281677861}
   enemyLayers:
     serializedVersion: 2
@@ -1201,8 +1202,6 @@ MonoBehaviour:
   stagger: 0
   maxStaggered: 2
   knockback: 0
-  duckCD: 0
-  equippedAbility: 
   preventInput: 0
   shield: 0
 --- !u!114 &4614688894240553598
@@ -1224,6 +1223,7 @@ MonoBehaviour:
   walk: 0
   attack: 0
   attacking: 0
+  continueBlocking: 0
   frontAnimator: {fileID: 1666347340072118147}
   backAnimator: {fileID: 76812759402500145}
   frontSmear: {fileID: 3332780866579085864}
@@ -1259,7 +1259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1ee0270f9ba0a45acf41deea5dfb15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   attackPower: 10
   stamina: 0
   poise: 0

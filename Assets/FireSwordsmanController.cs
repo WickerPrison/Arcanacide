@@ -6,6 +6,7 @@ using UnityEngine;
 public class FireSwordsmanController : EnemyController
 {
     [SerializeField] ParticleSystem frontSmear;
+    [SerializeField] GameObject fireTrailPrefab;
     Vector3 frontSmearScale;
     Vector3 frontSmearRotation;
     Vector3 frontSmearPosition;
@@ -13,7 +14,9 @@ public class FireSwordsmanController : EnemyController
     int hitDamage = 30;
     float hitPoiseDamage = 15;
     float chargeRange = 6;
-    float chargeSpeed = 10;
+    float chargeSpeed = 7;
+    float fireTrailMaxTime = 0.01f;
+    float fireTrailTime;
 
     public override void Start()
     {
@@ -79,6 +82,7 @@ public class FireSwordsmanController : EnemyController
 
         if (charging)
         {
+            FireTrail();
             Vector3 chargeDirection = chargeDestination - transform.position;
             navAgent.Move(chargeDirection * Time.deltaTime * chargeSpeed);
             float chargeDistance = Vector3.Distance(chargeDestination, transform.position);
@@ -88,6 +92,8 @@ public class FireSwordsmanController : EnemyController
                 charging = false;
             }
         }
+
+
     }
 
     void AttackPoint()
@@ -143,5 +149,20 @@ public class FireSwordsmanController : EnemyController
         navAgent.enabled = true;
         chargeDestination = playerController.transform.position;
         charging = true;
+    }
+
+    public void FireTrail()
+    {
+        if (fireTrailTime < 0)
+        {
+            GameObject fireTrail;
+            fireTrail = Instantiate(fireTrailPrefab);
+            fireTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);            
+            fireTrailTime = fireTrailMaxTime;
+        }
+        else
+        {
+            fireTrailTime -= Time.deltaTime;
+        }
     }
 }

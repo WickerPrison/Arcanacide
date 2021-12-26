@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     //This script is responsible for accepting inputs from the player and performing actions 
     //that those inputs dictate
 
+    [SerializeField] PlayerData playerData;
+
     public Transform attackPoint;
     public LayerMask enemyLayers;
     public float moveSpeed;
@@ -26,12 +28,9 @@ public class PlayerController : MonoBehaviour
     float dashTime = 0;
     float maxDashTime = 0.2f;
     float dashStaminaCost = 30f;
-    public float duckCD;
     string healString = "Heal";
-    bool hasHealed = false;
     string blockString = "Block";
     float blockCD = 3;
-    public string equippedAbility;
     public bool preventInput = false;
     public bool shield;
 
@@ -42,7 +41,6 @@ public class PlayerController : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerScript = GetComponent<PlayerScript>();
         rb = GetComponent<Rigidbody>();
-        equippedAbility = healString;
     }
 
     // Update is called once per frame
@@ -107,37 +105,47 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            equippedAbility = healString;
+            playerData.equippedAbility = healString;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            equippedAbility = blockString;
+            playerData.equippedAbility = blockString;
         }
 
 
-        if (CanInput() && Input.GetKeyDown(KeyCode.Space))
+        if (CanInput() && Input.GetButtonDown("Jump"))
         {
-            if (duckCD <= 0)
+            if (playerData.duckCD <= 0)
             {
                 rb.velocity = Vector3.zero;
-                playerAnimation.UseDuck(equippedAbility);
-                switch (equippedAbility)
+                playerAnimation.UseDuck(playerData.equippedAbility);
+                switch (playerData.equippedAbility)
                 {
                     case "Heal":
-                        hasHealed = true;
-                        duckCD += 1;
+                        playerData.hasHealed = true;
+                        playerData.duckCD += 1;
                         break;
                     case "Block":
-                        duckCD += blockCD;
+                        playerData.duckCD += blockCD;
                         break;
                 }
             }
         }
 
-        if (!hasHealed && duckCD > 0)
+        if(playerData.equippedAbility == "Block" && Input.GetButton("Jump"))
         {
-            duckCD -= Time.deltaTime;
+            playerAnimation.continueBlocking = true;
+            playerData.duckCD = blockCD;
+        }
+        else
+        {
+            playerAnimation.continueBlocking = false;
+        }
+
+        if (!playerData.hasHealed && playerData.duckCD > 0)
+        {
+            playerData.duckCD -= Time.deltaTime;
         }
     }
 

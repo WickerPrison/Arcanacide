@@ -9,6 +9,7 @@ public class DuckIcons : MonoBehaviour
     [SerializeField] Image heartIconEmpty;
     [SerializeField] Image blockIconFilled;
     [SerializeField] Image blockIconEmpty;
+    [SerializeField] PlayerData playerData;
     PlayerController playerController;
 
     // Start is called before the first frame update
@@ -21,7 +22,7 @@ public class DuckIcons : MonoBehaviour
     void Update()
     {
         DisableAllIcons();
-        if(playerController.duckCD <= 0)
+        if(playerData.duckCD <= 0)
         {
             FilledIcons();
         }
@@ -33,7 +34,7 @@ public class DuckIcons : MonoBehaviour
 
     void FilledIcons()
     {
-        switch (playerController.equippedAbility)
+        switch (playerData.equippedAbility)
         {
             case "Heal":
                 heartIconFilled.enabled = true;
@@ -46,7 +47,7 @@ public class DuckIcons : MonoBehaviour
 
     void EmptyIcons()
     {
-        switch (playerController.equippedAbility)
+        switch (playerData.equippedAbility)
         {
             case "Heal":
                 heartIconEmpty.enabled = true;
