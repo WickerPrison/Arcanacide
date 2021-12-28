@@ -9,18 +9,21 @@ public class Doorway : MonoBehaviour
     [SerializeField] string nextRoom;
     [SerializeField] MapData mapData;
     [SerializeField] int doorNumber;
+    [SerializeField] GameObject message;
+    Transform player;
     GameManager gm;
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        doorOpen = true;    
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        doorOpen = true;
     }
 
     private void Update()
     {
-        if(gm.numberOfEnemies < 1)
+        if(gm.awareEnemies < 1)
         {
             doorOpen = true;
         }
@@ -28,17 +31,20 @@ public class Doorway : MonoBehaviour
         {
             doorOpen = false;
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        float playerDistance = Vector3.Distance(transform.position, player.position);
+        if (playerDistance <= 2 && doorOpen)
         {
-            if (doorOpen)
+            message.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 mapData.doorNumber = doorNumber;
                 SceneManager.LoadScene(nextRoom);
             }
+        }
+        else
+        {
+            message.SetActive(false);
         }
     }
 }

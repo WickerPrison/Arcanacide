@@ -3,20 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class FireSwordsmanController : EnemyController
+public class FireMinionController : EnemyController
 {
     [SerializeField] ParticleSystem frontSmear;
-    [SerializeField] GameObject fireTrailPrefab;
     Vector3 frontSmearScale;
     Vector3 frontSmearRotation;
     Vector3 frontSmearPosition;
-    Vector3 chargeDestination;
     int hitDamage = 30;
     float hitPoiseDamage = 15;
-    float chargeRange = 6;
-    float chargeSpeed = 7;
-    float fireTrailMaxTime = 0.01f;
-    float fireTrailTime;
 
     public override void Start()
     {
@@ -47,14 +41,6 @@ public class FireSwordsmanController : EnemyController
                     attackTime = attackMaxTime;
                 }
             }
-            else if(Vector3.Distance(transform.position, playerController.transform.position) <= chargeRange)
-            {
-                if(attackTime <= 0)
-                {
-                    attackTime = attackMaxTime;
-                    frontAnimator.Play("ChargeWarmup");
-                }
-            }
         }
 
         if (attackTime > 0)
@@ -76,26 +62,11 @@ public class FireSwordsmanController : EnemyController
         {
             SmearDirection();
         }
-
-        if (charging)
-        {
-            FireTrail();
-            Vector3 chargeDirection = chargeDestination - transform.position;
-            navAgent.Move(chargeDirection * Time.deltaTime * chargeSpeed);
-            float chargeDistance = Vector3.Distance(chargeDestination, transform.position);
-            frontAnimator.SetFloat("ChargeDistance", chargeDistance);
-            if (chargeDistance < 1)
-            {
-                charging = false;
-            }
-        }
-
-
     }
 
     void AttackPoint()
     {
-        Vector3 direction = playerController.transform.position - transform.position; 
+        Vector3 direction = playerController.transform.position - transform.position;
         attackPoint.position = transform.position + direction.normalized;
     }
 
@@ -105,7 +76,7 @@ public class FireSwordsmanController : EnemyController
         frontSmearShape.arcSpeed = smearSpeed;
         frontSmear.Play();
         float hitDistance = Vector3.Distance(attackPoint.position, playerController.transform.position);
-        if(hitDistance <= 1.5 && playerController.gameObject.layer == 3)
+        if (hitDistance <= 1.5 && playerController.gameObject.layer == 3)
         {
             if (!playerAnimation.attacking)
             {
@@ -139,27 +110,5 @@ public class FireSwordsmanController : EnemyController
             return attacking;
         }
         else return false;
-    }
-
-    public override void SpecialAbility()
-    {
-        navAgent.enabled = true;
-        chargeDestination = playerController.transform.position;
-        charging = true;
-    }
-
-    public void FireTrail()
-    {
-        if (fireTrailTime < 0)
-        {
-            GameObject fireTrail;
-            fireTrail = Instantiate(fireTrailPrefab);
-            fireTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);            
-            fireTrailTime = fireTrailMaxTime;
-        }
-        else
-        {
-            fireTrailTime -= Time.deltaTime;
-        }
     }
 }

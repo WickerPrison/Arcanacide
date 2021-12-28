@@ -8,6 +8,7 @@ public class AltarScript : MonoBehaviour
     [SerializeField] MapData mapData;
     [SerializeField] Transform spawnPoint;
     [SerializeField] int altarNumber;
+    [SerializeField] GameObject message;
     Transform player;
     PlayerScript playerScript;
 
@@ -20,16 +21,21 @@ public class AltarScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        float playerDistance = Vector3.Distance(transform.position, player.position);
+        if (playerDistance <= 2)
         {
-            float playerDistance = Vector3.Distance(transform.position, player.position);
-            if(playerDistance <= 2)
+            message.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 playerData.lastAltar = altarNumber;
                 mapData.doorNumber = 0;
                 mapData.deadEnemies.Clear();
                 playerScript.Rest();
             }
+        }
+        else
+        {
+            message.SetActive(false);
         }
     }
 }

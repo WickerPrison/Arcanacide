@@ -12,10 +12,7 @@ public class FireMageController : EnemyController
 
     public override void EnemyAI()
     {
-        if (Vector3.Distance(transform.position, playerController.transform.position) <= detectRange)
-        {
-            hasSeenPlayer = true;
-        }
+        base.EnemyAI();
 
         if (hasSeenPlayer)
         {

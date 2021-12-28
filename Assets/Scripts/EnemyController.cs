@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     //This script controls the actions of the enemy units. It will likely be inherited by all enemy types
 
     GameObject player;
+    GameManager gm;
     public PlayerController playerController;
     public PlayerScript playerScript;
     public PlayerAnimation playerAnimation;
@@ -22,6 +23,7 @@ public class EnemyController : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform attackPoint;
     public bool charging = false;
+    public bool detectionTrigger = false;
 
     Rigidbody rb;
     float scaleX;
@@ -36,6 +38,7 @@ public class EnemyController : MonoBehaviour
         playerAnimation = player.GetComponent<PlayerAnimation>();
         navAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         scaleX = frontAnimator.transform.localScale.x;
         offsetX = frontAnimator.transform.localPosition.x;
     }
@@ -59,33 +62,11 @@ public class EnemyController : MonoBehaviour
     // actions from moment to moment
     public virtual void EnemyAI()
     {
-        if (Vector3.Distance(transform.position, playerController.transform.position) <= detectRange)
+        if (!detectionTrigger && Vector3.Distance(transform.position, playerController.transform.position) <= detectRange)
         {
+            detectionTrigger = true;
             hasSeenPlayer = true;
-        }
-
-        if (hasSeenPlayer)
-        {
-            //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
-            if (navAgent.enabled == true)
-            {
-                navAgent.SetDestination(playerController.transform.position);
-            }
-
-            if (Vector3.Distance(transform.position, playerController.transform.position) < attackRange)
-            {
-                if (attackTime <= 0)
-                {
-                    frontAnimator.SetTrigger("SpellAttack");
-                    attackTime = attackMaxTime;
-                }
-            }
-
-        }
-
-        if (attackTime > 0)
-        {
-            attackTime -= Time.deltaTime;
+            gm.awareEnemies += 1;
         }
     }
 

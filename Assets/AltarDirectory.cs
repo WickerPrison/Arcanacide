@@ -11,6 +11,10 @@ public class AltarDirectory : MonoBehaviour
         {
             case 1:
                 return "Tutorial1";
+            case 2:
+                return "FireHub1";
+            case 3:
+                return "FireHub2";
             default:
                 return "Error";
         }
