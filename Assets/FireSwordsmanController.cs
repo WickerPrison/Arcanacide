@@ -52,6 +52,7 @@ public class FireSwordsmanController : EnemyController
                 if(attackTime <= 0)
                 {
                     attackTime = attackMaxTime;
+                    directionLock = true;
                     frontAnimator.Play("ChargeWarmup");
                 }
             }
@@ -72,7 +73,7 @@ public class FireSwordsmanController : EnemyController
     {
         base.Update();
 
-        if (navAgent.enabled)
+        if (navAgent.enabled && !directionLock)
         {
             SmearDirection();
         }
@@ -86,6 +87,7 @@ public class FireSwordsmanController : EnemyController
             frontAnimator.SetFloat("ChargeDistance", chargeDistance);
             if (chargeDistance < 1)
             {
+                navAgent.enabled = false;
                 charging = false;
             }
         }

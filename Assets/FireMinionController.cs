@@ -36,7 +36,7 @@ public class FireMinionController : EnemyController
             {
                 if (attackTime <= 0)
                 {
-                    frontAnimator.Play("Attack");
+                    frontAnimator.Play("Attack1");
                     attacking = true;
                     attackTime = attackMaxTime;
                 }

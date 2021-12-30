@@ -129,6 +129,7 @@ public class PlayerScript : MonoBehaviour
         playerData.hasSpawned = false;
         playerData.duckCD = 0;
         mapData.doorNumber = 0;
+        mapData.deadEnemies.Clear();
         string sceneName = altarDirectory.GetSceneName(playerData.lastAltar);
         SceneManager.LoadScene(sceneName);
     }

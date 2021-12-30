@@ -9,9 +9,12 @@ public class MapData : ScriptableObject
 
     public List<int> deadEnemies;
 
+    public List<int> unlockedDoors;
+
     private void OnEnable()
     {
         doorNumber = 0;
         deadEnemies.Clear();
+        unlockedDoors.Clear();
     }
 }

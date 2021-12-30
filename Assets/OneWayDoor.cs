@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Doorway : MonoBehaviour
+public class OneWayDoor : MonoBehaviour
 {
-    public bool doorOpen;
+    bool doorOpen;
     [SerializeField] string nextRoom;
     [SerializeField] MapData mapData;
     [SerializeField] int doorNumber;
     [SerializeField] GameObject message;
+    [SerializeField] GameObject lockedMessage;
+    [SerializeField] int lockedDoorID;
     Transform player;
     GameManager gm;
 
@@ -26,7 +28,7 @@ public class Doorway : MonoBehaviour
         float playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance <= 2)
         {
-            if (gm.awareEnemies < 1)
+            if (gm.awareEnemies < 1 && mapData.unlockedDoors.Contains(lockedDoorID))
             {
                 doorOpen = true;
             }
@@ -38,6 +40,7 @@ public class Doorway : MonoBehaviour
             if (doorOpen)
             {
                 message.SetActive(true);
+                lockedMessage.SetActive(false);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     mapData.doorNumber = doorNumber;
@@ -47,11 +50,16 @@ public class Doorway : MonoBehaviour
             else
             {
                 message.SetActive(false);
+                if (!mapData.unlockedDoors.Contains(lockedDoorID))
+                {
+                    lockedMessage.SetActive(true);
+                }
             }
         }
         else
         {
             message.SetActive(false);
+            lockedMessage.SetActive(false);
         }
     }
 }

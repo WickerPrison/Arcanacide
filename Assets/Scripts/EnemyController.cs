@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
     public Transform attackPoint;
     public bool charging = false;
     public bool detectionTrigger = false;
+    public bool directionLock = false;
 
     Rigidbody rb;
     float scaleX;
@@ -51,7 +52,7 @@ public class EnemyController : MonoBehaviour
         //the enemy currently only has a front animator, that will change eventually
         frontAnimator.SetFloat("Velocity", navAgent.velocity.magnitude);
 
-        if (navAgent.enabled)
+        if (navAgent.enabled && !directionLock)
         {
             FacePlayer();
         }

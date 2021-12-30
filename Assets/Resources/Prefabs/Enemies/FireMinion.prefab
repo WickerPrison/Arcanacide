@@ -5280,8 +5280,8 @@ GameObject:
   - component: {fileID: 4968901705430164503}
   - component: {fileID: 4968901705430164502}
   - component: {fileID: 4968901705430164521}
-  - component: {fileID: 4968901705430164520}
   - component: {fileID: 4968901705430164523}
+  - component: {fileID: 2114939515815710655}
   m_Layer: 0
   m_Name: FrontAnimator
   m_TagString: Untagged
@@ -5417,25 +5417,6 @@ MonoBehaviour:
     showGizmo: 1
   - color: {r: 0, g: 1, b: 0, a: 1}
     showGizmo: 1
---- !u!95 &4968901705430164520
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4968901705430164525}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6d2c3f69c8b8e8a47805824ca6bb4606, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &4968901705430164523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5448,6 +5429,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7caa7b42d0d80d42b0bb1c146a59de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &2114939515815710655
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4968901705430164525}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: edea6b73c933e714bad21fe307f4b6b3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4968901705459474492
 GameObject:
   m_ObjectHideFlags: 0
@@ -6116,7 +6116,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
   playerAnimation: {fileID: 0}
-  frontAnimator: {fileID: 4968901705430164520}
+  frontAnimator: {fileID: 2114939515815710655}
   navAgent: {fileID: 7618466471682336275}
   hasSeenPlayer: 0
   attackMaxTime: 4
@@ -6127,6 +6127,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   attackPoint: {fileID: 712397617754106463}
   charging: 0
+  detectionTrigger: 0
+  directionLock: 0
   frontSmear: {fileID: 144368115355007136}
 --- !u!1 &7618466471837308260
 GameObject:

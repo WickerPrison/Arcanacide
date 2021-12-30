@@ -24,6 +24,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     {
         enemyController.navAgent.enabled = true;
         enemyController.attacking = false;
+        enemyController.directionLock = false;
     }
 
     public void AttackHit(int smearSpeed)
