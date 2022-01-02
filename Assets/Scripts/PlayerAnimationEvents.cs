@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAnimationEvents : MonoBehaviour
 {
     //This is the only script that can be referenced directly by the player animations
-
+    [SerializeField] PlayerData playerData;
     PlayerAnimation playerAnimation;
     PlayerController playerController;
     PlayerScript playerScript;
@@ -33,7 +33,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         foreach(Collider enemy in hitEnemies)
         {
             enemyScript = enemy.GetComponent<EnemyScript>();
-            enemyScript.LoseHealth(playerScript.attackPower);
+            enemyScript.LoseHealth(playerData.attackPower);
         }
     }
 

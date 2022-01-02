@@ -7,10 +7,12 @@ public class EnemyScript : MonoBehaviour
     //this script controls the automatic workings of the enemy like health 
 
     public int health;
+    [SerializeField] int reward;
     [SerializeField] GameObject healthbar;
     [SerializeField] float healthbarScale;
     [SerializeField] int enemyID;
     [SerializeField] MapData mapData;
+    [SerializeField] PlayerData playerData;
     EnemyController enemyController;
     GameManager gm;
     [SerializeField] int maxHealth = 100;
@@ -67,6 +69,7 @@ public class EnemyScript : MonoBehaviour
     void Death()
     {
         mapData.deadEnemies.Add(enemyID);
+        playerData.money += reward;
         gm.numberOfEnemies -= 1;
         if (enemyController.detectionTrigger)
         {

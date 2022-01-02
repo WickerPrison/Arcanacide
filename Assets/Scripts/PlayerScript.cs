@@ -10,16 +10,14 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
-    public int attackPower = 10;
     public float stamina;
     public float poise;
     [SerializeField] GameObject healbarFill;
     [SerializeField] GameObject staminabarFill;
     AltarDirectory altarDirectory;
-
+    GameManager gm;
     PlayerController playerController;
     PlayerAnimation playerAnimation;
-    float maxStamina = 100;
     float maxStaminaDelay = 1f;
     float staminaDelay;
     float staminaRate = 40;
@@ -31,7 +29,8 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         altarDirectory = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AltarDirectory>();
-        stamina = maxStamina;
+        gm = altarDirectory.gameObject.GetComponent<GameManager>();
+        stamina = playerData.maxStamina;
         poise = maxPoise;
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
@@ -92,7 +91,7 @@ public class PlayerScript : MonoBehaviour
 
     void UpdateStaminaBar()
     {
-        float staminaRatio = stamina / maxStamina;
+        float staminaRatio = stamina / playerData.maxStamina;
         staminabarFill.transform.localScale = new Vector3(staminaRatio * healthbarScale, staminabarFill.transform.localScale.y, staminabarFill.transform.localScale.z);
     }
 
@@ -109,7 +108,7 @@ public class PlayerScript : MonoBehaviour
         {
             staminaDelay -= Time.deltaTime;
         }
-        else if(stamina < maxStamina)
+        else if(stamina < playerData.maxStamina)
         {
             stamina += Time.deltaTime * staminaRate;
         }
@@ -128,8 +127,13 @@ public class PlayerScript : MonoBehaviour
         playerData.hasHealed = false;
         playerData.hasSpawned = false;
         playerData.duckCD = 0;
+        playerData.lostMoney = playerData.money;
+        playerData.money = 0;
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();
+        mapData.deathPosition = transform.position;
+        mapData.deathRoom = SceneManager.GetActiveScene().name;
+        gm.SaveGame();
         string sceneName = altarDirectory.GetSceneName(playerData.lastAltar);
         SceneManager.LoadScene(sceneName);
     }
@@ -140,6 +144,7 @@ public class PlayerScript : MonoBehaviour
         playerData.duckCD = 0;
         playerData.hasHealed = false;
         playerData.hasSpawned = false;
+        gm.SaveGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

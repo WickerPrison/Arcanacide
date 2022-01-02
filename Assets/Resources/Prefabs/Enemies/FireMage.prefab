@@ -11079,10 +11079,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  reward: 10
   healthbar: {fileID: 5566665767565311819}
   healthbarScale: 1
   enemyID: 0
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   maxHealth: 50
 --- !u!114 &5566665768951350949
 MonoBehaviour:
@@ -11110,6 +11112,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7086795160678116252, guid: 3cedf55e3cd5a214297e811b67b22bee, type: 3}
   attackPoint: {fileID: 5566665767226053794}
   charging: 0
+  detectionTrigger: 0
+  directionLock: 0
   fireRing: {fileID: 5257937341476949498}
 --- !u!1 &5566665768970283555
 GameObject:

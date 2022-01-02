@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     //that those inputs dictate
 
     [SerializeField] PlayerData playerData;
+    [SerializeField] GameObject pauseMenuPrefab;
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
     Rigidbody rb;
+    GameObject pauseMenu;
     Vector3 mouseDirection;
     Vector3 moveDirection;
     Vector3 dashDirection;
@@ -68,7 +70,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //If left mouse button is pressed they player will attack if they are currently able
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !pauseMenu)
         {
             if (playerAnimation.attacking)
             {
@@ -99,6 +101,18 @@ public class PlayerController : MonoBehaviour
         }
 
         playerAnimation.StaggerUpdate(stagger);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!pauseMenu)
+            {
+                pauseMenu = Instantiate(pauseMenuPrefab);
+            }
+            else
+            {
+                Destroy(pauseMenu);
+            }
+        }
     }
 
     void DuckAbilities()
@@ -108,7 +122,7 @@ public class PlayerController : MonoBehaviour
             playerData.equippedAbility = healString;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (playerData.hasBlock && Input.GetKeyDown(KeyCode.Alpha2))
         {
             playerData.equippedAbility = blockString;
         }

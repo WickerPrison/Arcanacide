@@ -11,10 +11,19 @@ public class MapData : ScriptableObject
 
     public List<int> unlockedDoors;
 
+    public string deathRoom;
+    public Vector3 deathPosition;
+    public bool fireBossKilled;
+
+    public bool boughtDamage;
+    public bool boughtHealth;
+    public bool boughtStamina;
+
     private void OnEnable()
     {
         doorNumber = 0;
         deadEnemies.Clear();
         unlockedDoors.Clear();
+        fireBossKilled = false;
     }
 }
