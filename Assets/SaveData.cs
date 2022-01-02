@@ -16,6 +16,7 @@ public class SaveData
     public int[] unlockedDoors;
     public string deathRoom;
     public float[] deathPosition;
+    public bool ticketFiled;
     public bool fireBossKilled;
     public bool boughtDamage;
     public bool boughtHealth;
@@ -37,6 +38,7 @@ public class SaveData
         deathPosition[0] = mapData.deathPosition.x;
         deathPosition[1] = mapData.deathPosition.y;
         deathPosition[2] = mapData.deathPosition.z;
+        ticketFiled = mapData.ticketFiled;
         fireBossKilled = mapData.fireBossKilled;
         boughtDamage = mapData.boughtDamage;
         boughtHealth = mapData.boughtHealth;

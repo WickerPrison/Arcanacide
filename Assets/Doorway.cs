@@ -7,10 +7,10 @@ public class Doorway : MonoBehaviour
 {
     public bool doorOpen;
     [SerializeField] string nextRoom;
-    [SerializeField] MapData mapData;
+    public MapData mapData;
     [SerializeField] int doorNumber;
     [SerializeField] GameObject message;
-    Transform player;
+    public Transform player;
     GameManager gm;
 
     // Start is called before the first frame update
@@ -19,9 +19,10 @@ public class Doorway : MonoBehaviour
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         doorOpen = true;
+        message.SetActive(false);
     }
 
-    public void Update()
+    public virtual void Update()
     {
         float playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance <= 2)

@@ -13,6 +13,7 @@ public class MapData : ScriptableObject
 
     public string deathRoom;
     public Vector3 deathPosition;
+    public bool ticketFiled;
     public bool fireBossKilled;
 
     public bool boughtDamage;

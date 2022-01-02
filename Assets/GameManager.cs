@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     int lostMoney = 0;
     string deathRoom = "none";
     Vector3 deathPosition = Vector3.zero;
+    bool ticketFiled = false;
     bool fireBossKilled = false;
     bool boughtDamage = false;
     bool boughtHealth = false;
@@ -60,6 +61,7 @@ public class GameManager : MonoBehaviour
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.deathRoom = data.deathRoom;
             mapData.deathPosition = new Vector3(data.deathPosition[0], data.deathPosition[1], data.deathPosition[2]);
+            mapData.ticketFiled = data.ticketFiled;
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.boughtDamage = data.boughtDamage;
             mapData.boughtHealth = data.boughtHealth;
@@ -84,6 +86,7 @@ public class GameManager : MonoBehaviour
         mapData.unlockedDoors.Clear();
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
+        mapData.ticketFiled = ticketFiled;
         mapData.fireBossKilled = fireBossKilled;
         mapData.boughtDamage = boughtDamage;
         mapData.boughtHealth = boughtHealth;
