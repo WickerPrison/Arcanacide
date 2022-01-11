@@ -36,9 +36,7 @@ public class FireMinionController : EnemyController
             {
                 if (attackTime <= 0)
                 {
-                    frontAnimator.Play("Attack1");
-                    attacking = true;
-                    attackTime = attackMaxTime;
+                    Attack();
                 }
             }
         }
@@ -62,6 +60,21 @@ public class FireMinionController : EnemyController
         {
             SmearDirection();
         }
+    }
+
+    void Attack()
+    {
+        int num = Random.Range(0, 3);
+        if(num <= 1)
+        {
+            frontAnimator.Play("Attack1");
+        }
+        else
+        {
+            frontAnimator.Play("DoubleAttack1");
+        }
+        attacking = true;
+        attackTime = attackMaxTime;
     }
 
     void AttackPoint()

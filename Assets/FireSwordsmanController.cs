@@ -42,9 +42,7 @@ public class FireSwordsmanController : EnemyController
             {
                 if (attackTime <= 0)
                 {
-                    frontAnimator.Play("Attack");
-                    attacking = true;
-                    attackTime = attackMaxTime;
+                    Attack();
                 }
             }
             else if(Vector3.Distance(transform.position, playerController.transform.position) <= chargeRange)
@@ -93,6 +91,22 @@ public class FireSwordsmanController : EnemyController
         }
 
 
+    }
+
+    void Attack()
+    {
+        int num = Random.Range(0, 3);
+        if(num <= 1)
+        {
+            frontAnimator.SetBool("TripleAttack", false);
+        }
+        else
+        {
+            frontAnimator.SetBool("TripleAttack", true);
+        }
+        frontAnimator.Play("Attack");
+        attacking = true;
+        attackTime = attackMaxTime;
     }
 
     void AttackPoint()
