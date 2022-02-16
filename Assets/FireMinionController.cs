@@ -5,12 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class FireMinionController : EnemyController
 {
-    [SerializeField] ParticleSystem frontSmear;
+
     Vector3 frontSmearScale;
     Vector3 frontSmearRotation;
     Vector3 frontSmearPosition;
-    int hitDamage = 30;
-    float hitPoiseDamage = 15;
 
     public override void Start()
     {
@@ -18,6 +16,8 @@ public class FireMinionController : EnemyController
         frontSmearScale = frontSmear.transform.localScale;
         frontSmearRotation = new Vector3(90, -20, 0);
         frontSmearPosition = new Vector3(-0.17f, -0.3f, 0.17f);
+        hitDamage = 30;
+        hitPoiseDamage = 15;
     }
 
     public override void EnemyAI()
@@ -83,22 +83,6 @@ public class FireMinionController : EnemyController
         attackPoint.position = transform.position + direction.normalized;
     }
 
-    public override void AttackHit(int smearSpeed)
-    {
-        ParticleSystem.ShapeModule frontSmearShape = frontSmear.shape;
-        frontSmearShape.arcSpeed = smearSpeed;
-        frontSmear.Play();
-        float hitDistance = Vector3.Distance(attackPoint.position, playerController.transform.position);
-        if (hitDistance <= 1.5 && playerController.gameObject.layer == 3)
-        {
-            if (!playerAnimation.attacking)
-            {
-                playerScript.LoseHealth(hitDamage);
-                playerScript.LosePoise(hitPoiseDamage);
-            }
-        }
-    }
-
     void SmearDirection()
     {
         if (playerController.transform.position.x > transform.position.x)
@@ -115,13 +99,4 @@ public class FireMinionController : EnemyController
         }
     }
 
-    public override bool SwordClash()
-    {
-        float hitDistance = Vector3.Distance(attackPoint.position, playerController.transform.position);
-        if (hitDistance <= 1.5 && playerAnimation.attacking)
-        {
-            return attacking;
-        }
-        else return false;
-    }
 }

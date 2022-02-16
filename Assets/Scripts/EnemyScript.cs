@@ -7,6 +7,7 @@ public class EnemyScript : MonoBehaviour
     //this script controls the automatic workings of the enemy like health 
 
     public int health;
+    public float poise;
     [SerializeField] int reward;
     [SerializeField] GameObject healthbar;
     [SerializeField] float healthbarScale;
@@ -15,7 +16,9 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] PlayerData playerData;
     EnemyController enemyController;
     GameManager gm;
-    [SerializeField] int maxHealth = 100;
+    [SerializeField] int maxHealth;
+    [SerializeField] float maxPoise;
+    [SerializeField] float poiseRegeneration;
 
     private void Awake()
     {
@@ -34,14 +37,17 @@ public class EnemyScript : MonoBehaviour
         gm.numberOfEnemies += 1;
     }
 
-    public void LoseHealth(int damage)
+    public void LoseHealth(int damage, float poiseDamage)
     {
-        if (!enemyController.SwordClash())
-        {
-            health -= damage;
-            UpdateHealthbar();
-            enemyController.OnHit();
-        }
+        LosePoise(poiseDamage);
+        health -= damage;
+        UpdateHealthbar();
+        enemyController.OnHit();
+    }
+
+    public void LosePoise(float poiseDamage)
+    {
+        poise -= poiseDamage;
     }
 
     void UpdateHealthbar()
@@ -60,6 +66,17 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(poise <= 0)
+        {
+            enemyController.Stagger();
+            poise = maxPoise;
+        }
+
+        if(poise < maxPoise)
+        {
+            poise += Time.deltaTime * poiseRegeneration;
+        }
+
         if(health <= 0)
         {
             Death();

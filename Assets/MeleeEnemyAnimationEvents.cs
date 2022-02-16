@@ -29,11 +29,17 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
 
     public void AttackHit(int smearSpeed)
     {
+        enemyController.parryWindow = false;
         enemyController.AttackHit(smearSpeed);
     }
 
     public void SpecialAbility()
     {
         enemyController.SpecialAbility();
+    }
+
+    public void ParryWindowOn()
+    {
+        enemyController.parryWindow = true;
     }
 }

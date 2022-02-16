@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public float stagger;
     public float maxStaggered;
     public bool knockback = false;
+    public bool shopMenuOpen = false;
 
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
@@ -104,12 +105,19 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!pauseMenu)
+            if (shopMenuOpen)
             {
+                Shop shop = GameObject.FindGameObjectWithTag("Shop").GetComponent<Shop>();
+                shop.CloseShop();
+            }
+            else if(!pauseMenu)
+            {
+                preventInput = true;
                 pauseMenu = Instantiate(pauseMenuPrefab);
             }
             else
             {
+                preventInput = false;
                 Destroy(pauseMenu);
             }
         }
@@ -133,7 +141,14 @@ public class PlayerController : MonoBehaviour
             if (playerData.duckCD <= 0)
             {
                 rb.velocity = Vector3.zero;
-                playerAnimation.UseDuck(playerData.equippedAbility);
+                if(playerData.equippedAbility != healString)
+                {
+                    playerAnimation.UseDuck(playerData.equippedAbility);
+                }
+                else
+                {
+                    playerScript.DuckHeal();
+                }
                 switch (playerData.equippedAbility)
                 {
                     case "Heal":
@@ -167,6 +182,12 @@ public class PlayerController : MonoBehaviour
     {
         playerAnimation.attack = true;
         playerAnimation.attacking = true;
+    }
+
+    public void Parry(EnemyScript enemyScript)
+    {
+        playerAnimation.ParryAnimation();
+        enemyScript.LosePoise(playerData.attackPower * 10);
     }
 
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse

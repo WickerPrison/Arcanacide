@@ -9,6 +9,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerController playerController;
     PlayerScript playerScript;
+    Animator frontAnimator;
     float attackStaminaCost = 20f;
 
     // Start is called before the first frame update
@@ -17,11 +18,13 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation = GetComponentInParent<PlayerAnimation>();
         playerController = GetComponentInParent<PlayerController>();
         playerScript = GetComponentInParent<PlayerScript>();
+        frontAnimator = gameObject.GetComponent<Animator>();
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
     public void AttackHit(int smearSpeed)
     {
+        playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackStaminaCost);
         ParticleSystem.ShapeModule smearShapeBack = playerAnimation.backSmear.shape;
         smearShapeBack.arcSpeed = -smearSpeed;
@@ -33,7 +36,19 @@ public class PlayerAnimationEvents : MonoBehaviour
         foreach(Collider enemy in hitEnemies)
         {
             enemyScript = enemy.GetComponent<EnemyScript>();
-            enemyScript.LoseHealth(playerData.attackPower);
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            if (enemyController.parryWindow)
+            {
+                enemyController.isParrying = true;
+            }
+            else if(playerAnimation.isParrying)
+            {
+                playerAnimation.isParrying = false;
+            }
+            else
+            {
+                enemyScript.LoseHealth(playerData.attackPower, playerData.attackPower);
+            }
         }
     }
 
@@ -70,18 +85,23 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerController.preventInput = false;
     }
 
-    public void Heal()
-    {
-        playerScript.MaxHeal();
-    }
-
     public void StartShield()
     {
         playerController.shield = true;
+        playerAnimation.StartBodyMagic();
     }
 
     public void EndShield()
     {
         playerController.shield = false;
+        playerAnimation.EndBodyMagic();
+    }
+
+    public void ParryWindow()
+    {
+        if (frontAnimator.GetBool("Attacks"))
+        {
+            playerAnimation.parryWindow = true;
+        }
     }
 }

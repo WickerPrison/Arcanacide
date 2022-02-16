@@ -10,6 +10,7 @@ public class PlayerAnimation : MonoBehaviour
     //the two without worrying about lining up the timing or animations being cut short
 
     public Animator smearAnimator;
+    public Animator parryAnimator;
     public Vector3 mousePosition;
     public Vector3 playerFeetPosition;
     public Vector3 playerScreenPosition;
@@ -17,8 +18,11 @@ public class PlayerAnimation : MonoBehaviour
     public bool attack;
     public bool attacking;
     public bool continueBlocking;
+    public bool parryWindow = false;
+    public bool isParrying = false;
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
+    [SerializeField] ParticleSystem bodyMagic;
     public ParticleSystem frontSmear;
     public ParticleSystem backSmear;
     [SerializeField] Camera cam;
@@ -135,6 +139,21 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.SetBool("Attacks", false);
     }
 
+    public void ParryAnimation()
+    {
+        parryAnimator.Play("Parry");
+    }
+
+    public void StartBodyMagic()
+    {
+        bodyMagic.Play();
+    }
+
+    public void EndBodyMagic()
+    {
+        bodyMagic.Stop();
+    }
+
     void FaceMouse()
     {
         //find the mouse position in screen coordinates
@@ -196,7 +215,7 @@ public class PlayerAnimation : MonoBehaviour
 
     }
 
-    void BackRight()
+    void BackLeft()
     {
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
@@ -205,12 +224,12 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         backAnimator.transform.localPosition = new Vector3(-backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
         frontSmear.transform.position = away;
-        backSmear.transform.localScale = new Vector3(-backSmearScale.x, backSmearScale.y, backSmearScale.z);
-        backSmear.transform.localRotation = Quaternion.Euler(backSmearRotation.x, backSmearRotation.y, backSmearRotation.z);
-        backSmear.transform.localPosition = backSmearPosition;
+        backSmear.transform.localScale = backSmearScale;
+        backSmear.transform.localRotation = Quaternion.Euler(backSmearRotation.x, -backSmearRotation.y, backSmearRotation.z);
+        backSmear.transform.localPosition = new Vector3(-backSmearPosition.x, backSmearPosition.y, backSmearPosition.z);
     }
 
-    void BackLeft()
+    void BackRight()
     {
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
@@ -219,8 +238,8 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         backAnimator.transform.localPosition = new Vector3(backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
         frontSmear.transform.position = away;
-        backSmear.transform.localScale = backSmearScale;
-        backSmear.transform.localRotation = Quaternion.Euler(backSmearRotation.x, -backSmearRotation.y, backSmearRotation.z);
-        backSmear.transform.localPosition = new Vector3(-backSmearPosition.x, backSmearPosition.y, backSmearPosition.z);
+        backSmear.transform.localScale = new Vector3(-backSmearScale.x, backSmearScale.y, backSmearScale.z);
+        backSmear.transform.localRotation = Quaternion.Euler(backSmearRotation.x, backSmearRotation.y, backSmearRotation.z);
+        backSmear.transform.localPosition = backSmearPosition;
     }
 }

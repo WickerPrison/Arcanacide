@@ -8,11 +8,13 @@ public class Shop : MonoBehaviour
     [SerializeField] GameObject shopWindowPrefab;
     GameObject shopWindow;
     Transform player;
+    PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        playerController = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -24,6 +26,7 @@ public class Shop : MonoBehaviour
             message.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
+                playerController.preventInput = true;
                 OpenShop();
             }
         }
@@ -32,13 +35,21 @@ public class Shop : MonoBehaviour
             message.SetActive(false);
             if(shopWindow != null)
             {
-                Destroy(shopWindow);
+                CloseShop();
             }
         }
     }
 
     void OpenShop()
     {
+        playerController.shopMenuOpen = true;
         shopWindow = Instantiate(shopWindowPrefab);
+    }
+
+    public void CloseShop()
+    {
+        playerController.shopMenuOpen = false;
+        playerController.preventInput = false;
+        Destroy(shopWindow);
     }
 }

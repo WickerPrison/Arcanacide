@@ -5,14 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class FireSwordsmanController : EnemyController
 {
-    [SerializeField] ParticleSystem frontSmear;
     [SerializeField] GameObject fireTrailPrefab;
     Vector3 frontSmearScale;
     Vector3 frontSmearRotation;
     Vector3 frontSmearPosition;
     Vector3 chargeDestination;
-    int hitDamage = 30;
-    float hitPoiseDamage = 15;
     float chargeRange = 6;
     float chargeSpeed = 7;
     float fireTrailMaxTime = 0.01f;
@@ -24,6 +21,8 @@ public class FireSwordsmanController : EnemyController
         frontSmearScale = frontSmear.transform.localScale;
         frontSmearRotation = new Vector3(90, -20, 0);
         frontSmearPosition = new Vector3(-0.17f, -0.3f, 0.17f);
+        hitDamage = 30;
+        hitPoiseDamage = 15;
     }
 
     public override void EnemyAI()
@@ -115,22 +114,6 @@ public class FireSwordsmanController : EnemyController
         attackPoint.position = transform.position + direction.normalized;
     }
 
-    public override void AttackHit(int smearSpeed)
-    {
-        ParticleSystem.ShapeModule frontSmearShape = frontSmear.shape;
-        frontSmearShape.arcSpeed = smearSpeed;
-        frontSmear.Play();
-        float hitDistance = Vector3.Distance(attackPoint.position, playerController.transform.position);
-        if(hitDistance <= 1.5 && playerController.gameObject.layer == 3)
-        {
-            if (!playerAnimation.attacking)
-            {
-                playerScript.LoseHealth(hitDamage);
-                playerScript.LosePoise(hitPoiseDamage);
-            }
-        }
-    }
-
     void SmearDirection()
     {
         if (playerController.transform.position.x > transform.position.x)
@@ -145,16 +128,6 @@ public class FireSwordsmanController : EnemyController
             frontSmear.transform.localRotation = Quaternion.Euler(frontSmearRotation.x, -frontSmearRotation.y, frontSmearRotation.z);
             frontSmear.transform.localPosition = new Vector3(-frontSmearPosition.x, frontSmearPosition.y, frontSmearPosition.z);
         }
-    }
-
-    public override bool SwordClash()
-    {
-        float hitDistance = Vector3.Distance(attackPoint.position, playerController.transform.position);
-        if (hitDistance <= 1.5 && playerAnimation.attacking)
-        {
-            return attacking;
-        }
-        else return false;
     }
 
     public override void SpecialAbility()

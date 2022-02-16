@@ -7,8 +7,10 @@ public class EnemyController : MonoBehaviour
 {
     //This script controls the actions of the enemy units. It will likely be inherited by all enemy types
 
+    public ParticleSystem frontSmear;
     GameObject player;
     GameManager gm;
+    EnemyScript enemyScript;
     public PlayerController playerController;
     public PlayerScript playerScript;
     public PlayerAnimation playerAnimation;
@@ -25,6 +27,10 @@ public class EnemyController : MonoBehaviour
     public bool charging = false;
     public bool detectionTrigger = false;
     public bool directionLock = false;
+    public bool parryWindow = false;
+    public bool isParrying = false;
+    public int hitDamage;
+    public float hitPoiseDamage;
 
     Rigidbody rb;
     float scaleX;
@@ -33,6 +39,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
+        enemyScript = gameObject.GetComponent<EnemyScript>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         playerScript = player.GetComponent<PlayerScript>();
@@ -106,13 +113,35 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public virtual void AttackHit(int smearSpeed)
+    public virtual void Stagger()
     {
-
+        frontAnimator.Play("Stagger");
     }
 
-    public virtual bool SwordClash()
+    public virtual void AttackHit(int smearSpeed)
     {
-        return false;
+        parryWindow = false;
+        ParticleSystem.ShapeModule frontSmearShape = frontSmear.shape;
+        frontSmearShape.arcSpeed = smearSpeed;
+        frontSmear.Play();
+        float hitDistance = Vector3.Distance(attackPoint.position, playerController.transform.position);
+        if (hitDistance <= 1.5 && playerController.gameObject.layer == 3)
+        {
+            if (playerAnimation.parryWindow)
+            {
+                playerAnimation.isParrying = true;
+                playerController.Parry(enemyScript);
+            }
+            else if (isParrying)
+            {
+                isParrying = false;
+                playerController.Parry(enemyScript);
+            }
+            else
+            {
+                playerScript.LoseHealth(hitDamage);
+                playerScript.LosePoise(hitPoiseDamage);
+            }
+        }
     }
 }

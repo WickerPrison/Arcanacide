@@ -24,6 +24,10 @@ public class PlayerScript : MonoBehaviour
     float healthbarScale = 1.555f;
     float maxPoise = 100;
     float poiseRate = 5;
+    float duckHealTimer = 0;
+    float duckHealDuration = 2;
+    float duckHealCounter = 0;
+    float duckHealSpeed = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +54,23 @@ public class PlayerScript : MonoBehaviour
     {
         playerData.health = playerData.maxHealth;
         UpdateHealthbar();
+    }
+
+    void PartialHeal(int healAmount)
+    {
+        playerData.health += healAmount;
+        if(playerData.health > playerData.maxHealth)
+        {
+            playerData.health = playerData.maxHealth;
+        }
+        UpdateHealthbar();
+    }
+
+    public void DuckHeal()
+    {
+        duckHealTimer = duckHealDuration;
+        duckHealSpeed = playerData.maxHealth / duckHealDuration;
+        playerAnimation.StartBodyMagic();
     }
 
     public void LosePoise(float poiseDamage)
@@ -118,6 +139,23 @@ public class PlayerScript : MonoBehaviour
         if(poise < maxPoise)
         {
             poise += poiseRate * Time.deltaTime;
+        }
+
+        if(duckHealTimer > 0)
+        {
+            duckHealTimer -= Time.deltaTime;
+            if(duckHealTimer <= 0)
+            {
+                playerAnimation.EndBodyMagic();
+            }
+            duckHealCounter += duckHealSpeed * Time.deltaTime;
+            if(duckHealCounter >= 1)
+            {
+                int amount = Mathf.FloorToInt(duckHealCounter);
+                PartialHeal(amount);
+                duckHealCounter -= amount;
+                UpdateHealthbar();
+            }
         }
     }
 

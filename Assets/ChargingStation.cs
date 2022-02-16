@@ -6,6 +6,7 @@ public class ChargingStation : MonoBehaviour
 {
     [SerializeField] GameObject message;
     [SerializeField] PlayerData playerData;
+    [SerializeField] ParticleSystem particles;
     bool hasBeenUsed = false;
     Transform player;
     PlayerScript playerScript;
@@ -28,6 +29,7 @@ public class ChargingStation : MonoBehaviour
                 playerData.duckCD = 0;
                 playerScript.MaxHeal();
                 hasBeenUsed = true;
+                particles.Stop();
             }
         }
         else
