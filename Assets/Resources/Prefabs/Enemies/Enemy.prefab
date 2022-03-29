@@ -10481,7 +10481,7 @@ GameObject:
   - component: {fileID: 5513286450024642746}
   m_Layer: 6
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10566,11 +10566,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70962b62328c3d45a2a07dd057e18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMelee: 0
+  frontSmear: {fileID: 0}
+  backSmear: {fileID: 0}
   playerController: {fileID: 0}
+  playerScript: {fileID: 0}
+  playerAnimation: {fileID: 0}
   frontAnimator: {fileID: 5513286448780299714}
-  projectilePrefab: {fileID: 9122315055615299977, guid: 5d9ef0136c20d4d488bb4e676848066b, type: 3}
-  attackPoint: {fileID: 5513286449338477241}
+  backAnimator: {fileID: 0}
   navAgent: {fileID: 0}
+  hasSeenPlayer: 0
+  attackMaxTime: 2
+  attackTime: 0
+  detectRange: 10
+  attackRange: 0
+  attacking: 0
+  projectilePrefab: {fileID: 9122315055615299977, guid: 5d9ef0136c20d4d488bb4e676848066b, type: 3}
+  frontAttackPoint: {fileID: 0}
+  backAttackPoint: {fileID: 0}
+  charging: 0
+  detectionTrigger: 0
+  directionLock: 0
+  parryWindow: 0
+  isParrying: 0
+  hitDamage: 0
+  hitPoiseDamage: 0
+  canHitPlayer: 0
+  away: {x: 100, y: 100, z: 100}
 --- !u!114 &5513286450024642746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10583,8 +10605,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthbar: {fileID: 5513286449108336976}
   health: 0
+  poise: 0
+  reward: 0
+  healthbar: {fileID: 5513286449108336976}
+  healthbarScale: 0
+  enemyID: 0
+  mapData: {fileID: 0}
+  playerData: {fileID: 0}
+  maxHealth: 0
+  maxPoise: 0
+  poiseRegeneration: 0
 --- !u!1 &5513286450043997391
 GameObject:
   m_ObjectHideFlags: 0

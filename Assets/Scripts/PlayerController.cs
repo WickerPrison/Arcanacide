@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     //that those inputs dictate
 
     [SerializeField] PlayerData playerData;
+    [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] GameObject pauseMenuPrefab;
 
     public Transform attackPoint;
@@ -16,10 +17,12 @@ public class PlayerController : MonoBehaviour
     public float stagger;
     public float maxStaggered;
     public bool knockback = false;
+    public bool anyMenuOpen = false;
     public bool shopMenuOpen = false;
 
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
+    PlayerSound playerSound;
     Rigidbody rb;
     GameObject pauseMenu;
     Vector3 mouseDirection;
@@ -37,12 +40,20 @@ public class PlayerController : MonoBehaviour
     public bool preventInput = false;
     public bool shield;
 
+    public bool pathActive = false;
+    float swordMaxTime = 5;
+    float swordTimer;
+    float pathOfPathMaxTime = 0.04f;
+    float pathOfPathTimer;
+    [SerializeField] GameObject pathTrailPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
         //Set references to other player scripts
         playerAnimation = GetComponent<PlayerAnimation>();
         playerScript = GetComponent<PlayerScript>();
+        playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -65,8 +76,16 @@ public class PlayerController : MonoBehaviour
                 //They player dashes in whatever direction they were already moving
                 dashDirection = moveDirection.normalized;
                 dashTime = maxDashTime;
-                playerScript.LoseStamina(dashStaminaCost);
+                if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))
+                {
+                    playerScript.LoseStamina(dashStaminaCost / 2);
+                }
+                else
+                {
+                    playerScript.LoseStamina(dashStaminaCost);
+                }
                 playerAnimation.DashAnimation();
+                playerSound.Dodge();
             }
         }
 
@@ -105,10 +124,13 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (shopMenuOpen)
+            if (anyMenuOpen)
             {
-                Shop shop = GameObject.FindGameObjectWithTag("Shop").GetComponent<Shop>();
-                shop.CloseShop();
+                if (shopMenuOpen)
+                {
+                    Shop shop = GameObject.FindGameObjectWithTag("Shop").GetComponent<Shop>();
+                    shop.CloseShop();
+                }
             }
             else if(!pauseMenu)
             {
@@ -121,6 +143,28 @@ public class PlayerController : MonoBehaviour
                 Destroy(pauseMenu);
             }
         }
+
+        if(swordTimer > 0)
+        {
+            swordTimer -= Time.deltaTime;
+            if(swordTimer <= 0)
+            {
+                pathActive = false;
+                playerAnimation.EndSwordMagic();
+            }
+        }
+
+        if(playerData.path == "Path" && pathActive)
+        {
+            if(pathOfPathTimer < 0)
+            {
+                PathOfThePath();
+            }
+            else
+            {
+                pathOfPathTimer -= Time.deltaTime;
+            }
+        }
     }
 
     void DuckAbilities()
@@ -130,9 +174,19 @@ public class PlayerController : MonoBehaviour
             playerData.equippedAbility = healString;
         }
 
-        if (playerData.hasBlock && Input.GetKeyDown(KeyCode.Alpha2))
+        if (playerData.unlockedAbilities.Contains(blockString) && Input.GetKeyDown(KeyCode.Alpha2))
         {
             playerData.equippedAbility = blockString;
+        }
+
+        if (Input.mouseScrollDelta.y > 0)
+        {
+            NextAbility();
+        }
+
+        if(Input.mouseScrollDelta.y < 0)
+        {
+            PreviousAbility();
         }
 
 
@@ -162,7 +216,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(playerData.equippedAbility == "Block" && Input.GetButton("Jump"))
+        if(shield && Input.GetButton("Jump"))
         {
             playerAnimation.continueBlocking = true;
             playerData.duckCD = blockCD;
@@ -175,7 +229,35 @@ public class PlayerController : MonoBehaviour
         if (!playerData.hasHealed && playerData.duckCD > 0)
         {
             playerData.duckCD -= Time.deltaTime;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.magical_acceleration))
+            {
+                playerData.duckCD -= Time.deltaTime;
+            }
         }
+    }
+
+    void NextAbility()
+    {
+        int index;
+        index = playerData.unlockedAbilities.IndexOf(playerData.equippedAbility);
+        index += 1;
+        if (index > playerData.unlockedAbilities.Count - 1)
+        {
+            index = 0;
+        }
+        playerData.equippedAbility = playerData.unlockedAbilities[index]; 
+    }
+
+    void PreviousAbility()
+    {
+        int index;
+        index = playerData.unlockedAbilities.IndexOf(playerData.equippedAbility);
+        index -= 1;
+        if (index < 0)
+        {
+            index = playerData.unlockedAbilities.Count - 1;
+        }
+        playerData.equippedAbility = playerData.unlockedAbilities[index];
     }
 
     void Attack()
@@ -184,10 +266,26 @@ public class PlayerController : MonoBehaviour
         playerAnimation.attacking = true;
     }
 
+    public int AttackPower()
+    {
+        int attackPower;
+        attackPower = playerData.AttackPower();
+        if (!pathActive)
+        {
+            return attackPower;
+        }
+        if(playerData.path == "Sword" || playerData.path == "Dying")
+        {
+            attackPower += playerData.PathDamage();
+        }
+        return attackPower;
+    }
+
     public void Parry(EnemyScript enemyScript)
     {
+        playerSound.SwordClang();
         playerAnimation.ParryAnimation();
-        enemyScript.LosePoise(playerData.attackPower * 10);
+        enemyScript.LosePoise(playerData.AttackPower());
     }
 
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
@@ -256,6 +354,55 @@ public class PlayerController : MonoBehaviour
         if (playerAnimation.attacking)
         {
             rb.velocity = Vector3.zero;
+        }
+    }
+
+    public void PathOfTheSword()
+    {
+        if(playerData.path != "Sword")
+        {
+            return;
+        }
+        pathActive = true;
+        swordTimer = swordMaxTime;
+        playerAnimation.StartSwordMagic();
+    }
+
+    public void PathOfTheDying()
+    {
+        playerAnimation.StartSwordMagic();
+        pathActive = true;
+    }
+
+    public void EndPathOfTheDying()
+    {
+        playerAnimation.EndSwordMagic();
+        pathActive = false;
+    }
+
+    public void StartPathOfThePath()
+    {
+        if(playerData.path == "Path")
+        {
+            pathActive = true;
+            pathOfPathTimer = pathOfPathMaxTime;
+        }
+    }
+
+    void PathOfThePath()
+    {
+        GameObject pathTrail;
+        pathTrail = Instantiate(pathTrailPrefab);
+        pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        pathOfPathTimer = pathOfPathMaxTime;
+    }
+
+    public void EndPathOfThePath()
+    {
+        if (playerData.path == "Path")
+        {
+            pathActive = false;
+            pathOfPathTimer = 0;
         }
     }
 }

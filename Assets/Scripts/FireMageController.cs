@@ -26,7 +26,8 @@ public class FireMageController : EnemyController
             {
                 if(attackTime <= 0)
                 {
-                    frontAnimator.SetTrigger("FireRing");
+                    frontAnimator.Play("FireBlast");
+                    backAnimator.Play("FireBlast");
                     attackTime = attackMaxTime;
                 }
             }
@@ -34,7 +35,8 @@ public class FireMageController : EnemyController
             {
                 if (attackTime <= 0)
                 {
-                    frontAnimator.SetTrigger("SpellAttack");
+                    frontAnimator.Play("CastSpell");
+                    backAnimator.Play("CastSpell");
                     attackTime = attackMaxTime;
                 }
             }
@@ -59,7 +61,7 @@ public class FireMageController : EnemyController
     public override void SpecialAbility()
     {
         fireRing.Explode();
-        if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose)
+        if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose && playerController.gameObject.layer == 3)
         {
             playerScript.LoseHealth(fireRingDamage);
             playerScript.LosePoise(fireRingPoiseDamage);

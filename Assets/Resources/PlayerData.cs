@@ -5,24 +5,68 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PlayerData : ScriptableObject
 {
-    public int maxHealth;
     public int health;
-    public float maxStamina;
-    public int attackPower;
     public string equippedAbility;
     public float duckCD;
     public bool hasHealed;
     public bool hasSpawned;
     public int lastAltar;
-    public bool hasBlock;
+    public List<string> unlockedAbilities;
+    public List<string> emblems;
+    public List<string> equippedEmblems;
+    public List<string> tutorials;
     public int money;
     public int lostMoney;
 
-    private void OnEnable()
+    public string path;
+
+    public int strength;
+    public int dexterity;
+    public int vitality;
+    public int dedication;
+
+
+    public int MaxHealth()
     {
-        health = maxHealth;
-        equippedAbility = "Heal";
-        hasHealed = false;
-        hasSpawned = false;
+        int maxHealth = 80 + vitality * 5;
+        return maxHealth;
+    }
+
+    public int MaxStamina()
+    {
+        int maxStamina = 80 + dexterity * 5;
+        return maxStamina;
+    }
+
+    public int AttackPower()
+    {
+        int attackPower = 18 + strength;
+        return attackPower;
+    }
+
+    public int PathDamage()
+    {
+        int pathDamage;
+        switch (path)
+        {
+            case "Sword":
+                pathDamage = 10 + 2 * dedication;
+                return pathDamage;
+            case "Dying":
+                pathDamage = 10 + 3 * dedication;
+                return pathDamage;
+            case "Path":
+                pathDamage = 4 + dedication;
+                return pathDamage;
+            default:
+                pathDamage = 0;
+                return pathDamage;
+        }
+    }
+
+    public int GetLevel()
+    {
+        int level = strength + dexterity + vitality + dedication - 3;
+        return level;
     }
 }

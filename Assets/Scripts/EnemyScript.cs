@@ -14,11 +14,14 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] int enemyID;
     [SerializeField] MapData mapData;
     [SerializeField] PlayerData playerData;
+    [SerializeField] EmblemLibrary emblemLibrary;
     EnemyController enemyController;
+    EnemySound enemySound;
     GameManager gm;
     [SerializeField] int maxHealth;
     [SerializeField] float maxPoise;
     [SerializeField] float poiseRegeneration;
+    [SerializeField] bool isBoss;
 
     private void Awake()
     {
@@ -33,6 +36,7 @@ public class EnemyScript : MonoBehaviour
     {
         health = maxHealth;
         enemyController = GetComponent<EnemyController>();
+        enemySound = GetComponentInChildren<EnemySound>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gm.numberOfEnemies += 1;
     }
@@ -47,6 +51,10 @@ public class EnemyScript : MonoBehaviour
 
     public void LosePoise(float poiseDamage)
     {
+        if (playerData.equippedEmblems.Contains(emblemLibrary.heavy_blows))
+        {
+            poiseDamage *= 1.5f;
+        }
         poise -= poiseDamage;
     }
 
@@ -92,6 +100,22 @@ public class EnemyScript : MonoBehaviour
         {
             gm.awareEnemies -= 1;
         }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
+        {
+            PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
+            playerScript.PartialHeal(healAmount);
+        }
+
+        if (isBoss)
+        {
+            GameObject bossHealthbar = healthbar.transform.parent.gameObject;
+            bossHealthbar.SetActive(false);
+            ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
+            managerVanquished.ShowMessage();
+        }
+
         Destroy(gameObject);
     }
 }

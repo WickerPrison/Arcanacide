@@ -10,17 +10,33 @@ public class HomingProjectile : MonoBehaviour
     public float turnAngle;
     int speed = 12;
     [SerializeField] float lifetime;
+    [SerializeField] AudioClip impactSFX;
+    [SerializeField] float impactSFXvolume;
 
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerScript playerScript;
-            playerScript = collision.gameObject.GetComponent<PlayerScript>();
-            playerScript.LoseHealth(spellDamage);
-            playerScript.LosePoise(poiseDamage);
+            if (collision.gameObject.layer == 3)
+            {
+                PlayerScript playerScript;
+                playerScript = collision.gameObject.GetComponent<PlayerScript>();
+                playerScript.LoseHealth(spellDamage);
+                playerScript.LosePoise(poiseDamage);
+                AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
+                Destroy(gameObject);
+            }
+            else if (collision.gameObject.layer == 8)
+            {
+                PlayerController playerController;
+                playerController = collision.gameObject.GetComponent<PlayerController>();
+                playerController.PathOfTheSword();
+            }
         }
-        Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()

@@ -18,13 +18,14 @@ public class PlayerScript : MonoBehaviour
     GameManager gm;
     PlayerController playerController;
     PlayerAnimation playerAnimation;
+    PlayerSound sfx;
     float maxStaminaDelay = 1f;
     float staminaDelay;
     float staminaRate = 40;
     float healthbarScale = 1.555f;
     float maxPoise = 100;
     float poiseRate = 5;
-    float duckHealTimer = 0;
+    public float duckHealTimer = 0;
     float duckHealDuration = 2;
     float duckHealCounter = 0;
     float duckHealSpeed = 0;
@@ -34,10 +35,11 @@ public class PlayerScript : MonoBehaviour
     {
         altarDirectory = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AltarDirectory>();
         gm = altarDirectory.gameObject.GetComponent<GameManager>();
-        stamina = playerData.maxStamina;
+        stamina = playerData.MaxStamina();
         poise = maxPoise;
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        sfx = GetComponentInChildren<PlayerSound>();
         UpdateHealthbar();
     }
 
@@ -52,16 +54,16 @@ public class PlayerScript : MonoBehaviour
 
     public void MaxHeal()
     {
-        playerData.health = playerData.maxHealth;
+        playerData.health = playerData.MaxHealth();
         UpdateHealthbar();
     }
 
-    void PartialHeal(int healAmount)
+    public void PartialHeal(int healAmount)
     {
         playerData.health += healAmount;
-        if(playerData.health > playerData.maxHealth)
+        if(playerData.health > playerData.MaxHealth())
         {
-            playerData.health = playerData.maxHealth;
+            playerData.health = playerData.MaxHealth();
         }
         UpdateHealthbar();
     }
@@ -69,7 +71,8 @@ public class PlayerScript : MonoBehaviour
     public void DuckHeal()
     {
         duckHealTimer = duckHealDuration;
-        duckHealSpeed = playerData.maxHealth / duckHealDuration;
+        duckHealSpeed = playerData.MaxHealth() / duckHealDuration;
+        sfx.Heal();
         playerAnimation.StartBodyMagic();
     }
 
@@ -106,13 +109,13 @@ public class PlayerScript : MonoBehaviour
 
     void UpdateHealthbar()
     {
-        float healthRatio = (float)playerData.health / (float)playerData.maxHealth;
+        float healthRatio = (float)playerData.health / (float)playerData.MaxHealth();
         healbarFill.transform.localScale = new Vector3(healthRatio * healthbarScale, healbarFill.transform.localScale.y, healbarFill.transform.localScale.z);
     }
 
     void UpdateStaminaBar()
     {
-        float staminaRatio = stamina / playerData.maxStamina;
+        float staminaRatio = stamina / playerData.MaxStamina();
         staminabarFill.transform.localScale = new Vector3(staminaRatio * healthbarScale, staminabarFill.transform.localScale.y, staminabarFill.transform.localScale.z);
     }
 
@@ -129,9 +132,13 @@ public class PlayerScript : MonoBehaviour
         {
             staminaDelay -= Time.deltaTime;
         }
-        else if(stamina < playerData.maxStamina)
+        else if(stamina < playerData.MaxStamina())
         {
             stamina += Time.deltaTime * staminaRate;
+            if(playerData.path == "Dying" && playerController.pathActive)
+            {
+                stamina += Time.deltaTime * staminaRate;
+            }
         }
 
         UpdateStaminaBar();
@@ -169,6 +176,7 @@ public class PlayerScript : MonoBehaviour
         playerData.money = 0;
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();
+        mapData.usedChargingStations.Clear();
         mapData.deathPosition = transform.position;
         mapData.deathRoom = SceneManager.GetActiveScene().name;
         gm.SaveGame();

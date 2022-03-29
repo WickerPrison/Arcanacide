@@ -23,11 +23,14 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     [SerializeField] ParticleSystem bodyMagic;
+    [SerializeField] ParticleSystem frontSwordMagic;
+    [SerializeField] ParticleSystem backSwordMagic;
     public ParticleSystem frontSmear;
     public ParticleSystem backSmear;
     [SerializeField] Camera cam;
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerController playerController;
+    PlayerSound playerSound;
 
     Vector3 frontSmearScale;
     Vector3 frontSmearRotation;
@@ -44,7 +47,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Start()
     {
-        //Various positions are saved as variables so they can be manipulated/used later
+        playerSound = gameObject.GetComponentInChildren<PlayerSound>();
         frontAnimatorPosition = frontAnimator.transform.localPosition;
         backAnimatorPosition = backAnimator.transform.localPosition;
         initalScaleX = frontAnimator.transform.localScale.x;
@@ -147,11 +150,27 @@ public class PlayerAnimation : MonoBehaviour
     public void StartBodyMagic()
     {
         bodyMagic.Play();
+        playerSound.Magic();
     }
 
     public void EndBodyMagic()
     {
         bodyMagic.Stop();
+        playerSound.StopSoundEffect();
+    }
+
+    public void StartSwordMagic()
+    {
+        frontSwordMagic.Play();
+        backSwordMagic.Play();
+        playerSound.Magic();
+    }
+
+    public void EndSwordMagic()
+    {
+        frontSwordMagic.Stop();
+        backSwordMagic.Stop();
+        playerSound.StopSoundEffect();
     }
 
     void FaceMouse()

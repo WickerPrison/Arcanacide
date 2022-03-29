@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bonfire : MonoBehaviour
 {
+    [SerializeField] AudioClip impactSound;
+    AudioSource sfx;
     Transform player;
     float duration = 5;
     int damage = 20;
@@ -12,6 +14,8 @@ public class Bonfire : MonoBehaviour
 
     private void Start()
     {
+        sfx = GetComponent<AudioSource>();
+        sfx.time = Random.Range(0, 0.5f);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
@@ -19,11 +23,21 @@ public class Bonfire : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerScript playerScript;
-            playerScript = other.gameObject.GetComponent<PlayerScript>();
-            playerScript.LoseHealth(damage);
-            playerScript.LosePoise(poiseDamage);
-            Destroy(gameObject);
+            if(other.gameObject.layer == 3)
+            {
+                PlayerScript playerScript;
+                playerScript = other.gameObject.GetComponent<PlayerScript>();
+                playerScript.LoseHealth(damage);
+                playerScript.LosePoise(poiseDamage);
+                AudioSource.PlayClipAtPoint(impactSound, transform.position, 0.5f);
+                Destroy(gameObject);
+            }
+            else if(other.gameObject.layer == 8)
+            {
+                PlayerController playerController;
+                playerController = other.gameObject.GetComponent<PlayerController>();
+                playerController.PathOfTheSword();
+            }
         }
     }
 

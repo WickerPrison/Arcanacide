@@ -9,8 +9,10 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerController playerController;
     PlayerScript playerScript;
+    PlayerSound playerSound;
     Animator frontAnimator;
     float attackStaminaCost = 20f;
+    float hitboxRadius = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,12 +20,14 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation = GetComponentInParent<PlayerAnimation>();
         playerController = GetComponentInParent<PlayerController>();
         playerScript = GetComponentInParent<PlayerScript>();
+        playerSound = transform.parent.GetComponentInChildren<PlayerSound>();
         frontAnimator = gameObject.GetComponent<Animator>();
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
     public void AttackHit(int smearSpeed)
     {
+        playerSound.SwordSwoosh();
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackStaminaCost);
         ParticleSystem.ShapeModule smearShapeBack = playerAnimation.backSmear.shape;
@@ -32,7 +36,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         smearShapeFront.arcSpeed = smearSpeed;
         playerAnimation.particleSmear();
         EnemyScript enemyScript;
-        Collider[] hitEnemies = Physics.OverlapSphere(playerController.attackPoint.position, 1, playerController.enemyLayers);
+        Collider[] hitEnemies = Physics.OverlapSphere(playerController.attackPoint.position, hitboxRadius, playerController.enemyLayers);
         foreach(Collider enemy in hitEnemies)
         {
             enemyScript = enemy.GetComponent<EnemyScript>();
@@ -47,7 +51,8 @@ public class PlayerAnimationEvents : MonoBehaviour
             }
             else
             {
-                enemyScript.LoseHealth(playerData.attackPower, playerData.attackPower);
+                playerSound.SwordImpact();
+                enemyScript.LoseHealth(playerController.AttackPower(), playerController.AttackPower());
             }
         }
     }
@@ -67,12 +72,14 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void StartIFrames()
     {
         playerController.gameObject.layer = 8;
+        playerController.StartPathOfThePath();
     }
 
     //Layer 3 is the player layer, it can collide with terrain, enemies, and enemy projectiles
     public void EndIFrames()
     {
         playerController.gameObject.layer = 3;
+        playerController.EndPathOfThePath();
     }
 
     public void StopInput()
@@ -103,5 +110,10 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             playerAnimation.parryWindow = true;
         }
+    }
+
+    public void Footstep()
+    {
+        playerSound.Footstep();
     }
 }

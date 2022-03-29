@@ -27,22 +27,15 @@ public class BossController : EnemyController
     float floatTimer;
     float floatMaxTime = 1;
     float floatSpeed = 0.3f;
-    float staggerTimer = 0;
-    float staggerMaxTime = 3;
     public bool canStagger = false;
     bool isStaggered = false;
     int goingUp = 1;
+    public bool pauseTimer = false;
 
     public override void Start()
     {
         base.Start();
         bonfireCD = bonfireMaxCD;
-    }
-
-    public override void Update()
-    {
-        base.Update();
-        frontAnimator.SetFloat("Stagger", staggerTimer);
     }
 
     void FixedUpdate()
@@ -52,15 +45,6 @@ public class BossController : EnemyController
 
     public override void EnemyAI()
     {
-        if (staggerTimer > 0)
-        {
-            staggerTimer -= Time.deltaTime;
-            if(staggerTimer <= 0)
-            {
-                EndStagger();
-            }
-        }
-
         if (Vector3.Distance(transform.position, playerController.transform.position) <= detectRange)
         {
             hasSeenPlayer = true;
@@ -90,7 +74,9 @@ public class BossController : EnemyController
                     }
                     else if(bonfireCD <= 0)
                     {
-                        frontAnimator.SetTrigger("Bonfire");
+                        pauseTimer = true;
+                        frontAnimator.Play("Bonfires");
+                        backAnimator.Play("Bonfires");
                         bonfireCD = bonfireMaxCD;
                     }
                     else if (fireBallCD <= 0)
@@ -98,11 +84,13 @@ public class BossController : EnemyController
                         int num = Random.Range(1, 3);
                         if (num == 1)
                         {
-                            frontAnimator.SetTrigger("SpellAttack");
+                            frontAnimator.Play("FireBalls");
+                            backAnimator.Play("FireBalls");
                         }
                         if(num == 2)
                         {
-                            frontAnimator.SetTrigger("FireWave");
+                            frontAnimator.Play("FireWave");
+                            backAnimator.Play("FireWave");
                         }
                         fireBallCD = fireBallMaxCD;
                     }
@@ -118,7 +106,7 @@ public class BossController : EnemyController
             RunAway();
         }
 
-        if (attackCD > 0)
+        if (!pauseTimer && attackCD > 0)
         {
             attackCD -= Time.deltaTime;
         }
@@ -164,17 +152,18 @@ public class BossController : EnemyController
         if (canStagger)
         {
             frontAnimator.Play("Stagger");
+            backAnimator.Play("Stagger");
             isStaggered = true;
-            staggerTimer = staggerMaxTime;
         }
     }
 
-    void EndStagger()
+    public void EndStagger()
     {
         BossAnimationEvents animationEvents = frontAnimator.GetComponent<BossAnimationEvents>();
         animationEvents.CanNotStagger();
         animationEvents.EnableMovement();
         frontAnimator.Play("Idle");
+        backAnimator.Play("Idle");
         isStaggered = false;
     }
 

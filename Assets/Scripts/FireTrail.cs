@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class FireTrail : MonoBehaviour
 {
+    AudioSource sfx;
     float duration = 5;
     float damagePerSecond = 5;
     float damage;
 
 
+    private void Start()
+    {
+        sfx = GetComponent<AudioSource>();
+        sfx.time += Random.Range(0, 0.5f);
+    }
+
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && other.gameObject.layer == 3)
         {
             PlayerScript playerScript;
             playerScript = other.gameObject.GetComponent<PlayerScript>();

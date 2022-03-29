@@ -12,11 +12,24 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerScript playerScript;
-            playerScript = collision.gameObject.GetComponent<PlayerScript>();
-            playerScript.LoseHealth(spellDamage);
+            if(collision.gameObject.layer == 3)
+            {
+                PlayerScript playerScript;
+                playerScript = collision.gameObject.GetComponent<PlayerScript>();
+                playerScript.LoseHealth(spellDamage);
+                Destroy(gameObject);
+            }
+            else if(collision.gameObject.layer == 8)
+            {
+                PlayerController playerController;
+                playerController = collision.gameObject.GetComponent<PlayerController>();
+                playerController.PathOfTheSword();
+            }
         }
-        Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()

@@ -26,6 +26,7 @@ public class BossAnimationEvents : EnemyAnimationEvents
         {
             bossController.strafeLeftOrRight *= -1;
         }
+        bossController.pauseTimer = false;
     }
 
     public void CanStagger()
@@ -46,5 +47,10 @@ public class BossAnimationEvents : EnemyAnimationEvents
     public void FireWave()
     {
         bossController.FireWave();
+    }
+
+    public void EndStagger()
+    {
+        bossController.EndStagger();
     }
 }
