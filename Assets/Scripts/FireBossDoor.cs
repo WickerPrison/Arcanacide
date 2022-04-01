@@ -10,12 +10,17 @@ public class FireBossDoor : Doorway
     // Update is called once per frame
     public override void Update()
     {
+        playerDistance = Vector3.Distance(transform.position, player.position);
+
         if (mapData.ticketFiled)
         {
             base.Update();
         }
+        else
+        {
+            doorOpen = false;
+        }
 
-        float playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance <= 2 && !mapData.ticketFiled)
         {
             secondMessage.SetActive(true);

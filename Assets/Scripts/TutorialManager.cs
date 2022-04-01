@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
+    InputManager im;
     GameObject currentMessage;
     GameObject nextMessage;
     bool messageOpen = false;
@@ -27,10 +28,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject endOfDemoTutorial;
     string endOfDemo = "EndOfDemo";
     public List<string> allTutorials;
-    
 
     private void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Tutorial.Select.performed += ctx => NextMessage();
         TutorialList();
         if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
         {
@@ -44,11 +46,6 @@ public class TutorialManager : MonoBehaviour
 
     private void Update()
     {
-        if(messageOpen && Input.GetKeyDown(KeyCode.Q))
-        {
-            NextMessage();
-        }
-
         if (inGame && playerData.tutorials.Contains(walk))
         {
             playerData.tutorials.Remove(walk);
@@ -60,6 +57,11 @@ public class TutorialManager : MonoBehaviour
 
     void NextMessage()
     {
+        if (!messageOpen)
+        {
+            return;
+        }
+
         if(nextMessage != null)
         {
             Destroy(currentMessage);
@@ -74,12 +76,14 @@ public class TutorialManager : MonoBehaviour
 
     void OpenMessage()
     {
+        im.Tutorial();
         messageOpen = true;
         Time.timeScale = 0;
     }
 
     void CloseMessage()
     {
+        im.Gameplay();
         messageOpen = false;
         Time.timeScale = 1;
         Destroy(currentMessage);

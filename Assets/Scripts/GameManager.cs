@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] GameObject moneyDropPrefab;
     TutorialManager tutorialManager;
-    public int numberOfEnemies;
+    public List<EnemyScript> enemies = new List<EnemyScript>();
     public int awareEnemies;
 
 

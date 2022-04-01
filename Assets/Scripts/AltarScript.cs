@@ -12,25 +12,25 @@ public class AltarScript : MonoBehaviour
     PlayerController playerController;
     GameObject restMenu;
     RestMenuButtons restMenuButtons;
-
+    InputManager im;
+    float playerDistance;
+    float interactDistance = 2;
 
     // Start is called before the first frame update
     void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Gameplay.Interact.performed += ctx => OpenRestMenu();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerController = player.gameObject.GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        float playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= 2)
+        playerDistance = Vector3.Distance(transform.position, player.position);
+        if (playerDistance <= interactDistance)
         {
             message.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E) && Time.timeScale == 1)
-            {
-                OpenRestMenu();
-            }
         }
         else
         {
@@ -40,12 +40,13 @@ public class AltarScript : MonoBehaviour
 
     void OpenRestMenu()
     {
-        playerController.anyMenuOpen = true;
-        playerController.preventInput = true;
-        restMenu = Instantiate(restMenuPrfab);
-        restMenuButtons = restMenu.GetComponent<RestMenuButtons>();
-        restMenuButtons.altarNumber = altarNumber;
-        restMenuButtons.spawnPoint = spawnPoint;
+        if(playerDistance <= interactDistance)
+        {
+            restMenu = Instantiate(restMenuPrfab);
+            restMenuButtons = restMenu.GetComponent<RestMenuButtons>();
+            restMenuButtons.altarNumber = altarNumber;
+            restMenuButtons.spawnPoint = spawnPoint;
+            im.Menu();
+        }
     }
-
 }

@@ -7,27 +7,36 @@ public class FileTicket : MonoBehaviour
     [SerializeField] MapData mapData;
     [SerializeField] GameObject message;
     Transform player;
+    InputManager im;
+    float playerDistance;
+    float interactDistance = 2;
 
     void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Gameplay.Interact.performed += ctx => FileSupportTicket();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= 2 && !mapData.ticketFiled)
+        playerDistance = Vector3.Distance(transform.position, player.position);
+        if (playerDistance <= interactDistance && !mapData.ticketFiled)
         {
             message.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                mapData.ticketFiled = true;                
-            }
         }
         else
         {
             message.SetActive(false);
+        }
+    }
+
+    void FileSupportTicket()
+    {
+        if(playerDistance <= interactDistance && !mapData.ticketFiled)
+        {
+            mapData.ticketFiled = true;
         }
     }
 }

@@ -49,7 +49,7 @@ public class TutorialTrigger : MonoBehaviour
             {
                 case "Heal":
                     GameManager gm = tutorialManager.gameObject.GetComponent<GameManager>();
-                    if (playerData.tutorials.Contains("Heal") && gm.numberOfEnemies <= 0)
+                    if (playerData.tutorials.Contains("Heal") && gm.enemies.Count <= 0)
                     {
                         tutorialManager.HealTutorial();
                     }

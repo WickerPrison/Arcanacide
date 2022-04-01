@@ -13,53 +13,45 @@ public class Safe : MonoBehaviour
     Transform player;
     TutorialManager tutorialManager;
     bool newEmblemMessageOpen = false;
+    InputManager im;
+    float playerDistance;
+    float interactDistance = 2;
 
     private void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Gameplay.Interact.performed += ctx => Interaction();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         newEmblemMessage.SetActive(false);
     }
 
     void Update()
     {
-        if (newEmblemMessageOpen)
+        playerDistance = Vector3.Distance(transform.position, player.position);
+        if (playerDistance <= interactDistance && !playerData.emblems.Contains(emblemName))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                newEmblemMessageOpen = false;
-                newEmblemMessage.SetActive(false);
-                TriggerTutorial();
-            }
-        }
-
-        float playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= 2)
-        {
-            if (!playerData.emblems.Contains(emblemName))
-            {
-                openMessage.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    playerData.emblems.Add(emblemName);
-                    newEmblemMessage.SetActive(true);
-                    newEmblemMessageOpen = true;
-                    emblemMessageText.text = "New Emblem: " + emblemName;
-                }
-            }
-            else
-            {
-                openMessage.SetActive(false);
-            }
+            openMessage.SetActive(true);
         }
         else
         {
             openMessage.SetActive(false);
-            if (newEmblemMessageOpen)
-            {
-                newEmblemMessageOpen = false;
-                newEmblemMessage.SetActive(false);
-                TriggerTutorial();
-            }
+        }
+    }
+
+    void Interaction()
+    {
+        if (newEmblemMessageOpen)
+        { 
+            newEmblemMessageOpen = false;
+            newEmblemMessage.SetActive(false);
+            TriggerTutorial();
+        }
+        else if(playerDistance <= interactDistance && !playerData.emblems.Contains(emblemName))
+        {
+            playerData.emblems.Add(emblemName);
+            newEmblemMessage.SetActive(true);
+            newEmblemMessageOpen = true;
+            emblemMessageText.text = "New Emblem: " + emblemName;
         }
     }
 
@@ -68,6 +60,7 @@ public class Safe : MonoBehaviour
         if (playerData.tutorials.Contains("Emblem"))
         {
             tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
+            im.controls.Tutorial.Disable();
             tutorialManager.EmblemTutorial();
         }
     }

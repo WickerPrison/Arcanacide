@@ -10,9 +10,14 @@ public class Janitor : MonoBehaviour
     [SerializeField] Animator janitorAnimator;
     Transform player;
     Vector3 scale;
+    InputManager im;
+    float playerDistance;
+    float interactDistance = 2;
 
     void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Gameplay.Interact.performed += ctx => Talk();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         scale = janitorAnimator.transform.localScale;
     }
@@ -20,7 +25,7 @@ public class Janitor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float playerDistance = Vector3.Distance(transform.position, player.position);
+        playerDistance = Vector3.Distance(transform.position, player.position);
         janitorAnimator.SetFloat("PlayerDistance", playerDistance);
 
         if(playerDistance <= 4)
@@ -28,18 +33,23 @@ public class Janitor : MonoBehaviour
             FacePlayer();
         }
 
-        if (playerDistance <= 2 && !playerData.unlockedAbilities.Contains("Block"))
+        if (playerDistance <= interactDistance && !playerData.unlockedAbilities.Contains("Block"))
         {
             message.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                playerData.unlockedAbilities.Add("Block");
-                Instantiate(tutorailPrefab);
-            }
         }
         else
         {
             message.SetActive(false);
+        }
+    }
+
+    void Talk()
+    {
+        if(playerDistance <= interactDistance && !playerData.unlockedAbilities.Contains("Block"))
+        {
+            playerData.unlockedAbilities.Add("Block");
+            im.Tutorial();
+            Instantiate(tutorailPrefab);
         }
     }
 

@@ -9,10 +9,15 @@ public class Shop : MonoBehaviour
     GameObject shopWindow;
     Transform player;
     PlayerController playerController;
+    InputManager im;
+    float playerDistance;
+    float interactDistance = 2;
 
     // Start is called before the first frame update
     void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Gameplay.Interact.performed += ctx => OpenShop();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerController = player.GetComponent<PlayerController>();
     }
@@ -20,38 +25,31 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= 2)
+        playerDistance = Vector3.Distance(transform.position, player.position);
+        if (playerDistance <= interactDistance)
         {
             message.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                playerController.preventInput = true;
-                OpenShop();
-            }
         }
         else
         {
             message.SetActive(false);
-            if(shopWindow != null)
-            {
-                CloseShop();
-            }
         }
     }
 
     void OpenShop()
     {
-        playerController.anyMenuOpen = true;
-        playerController.shopMenuOpen = true;
-        shopWindow = Instantiate(shopWindowPrefab);
+        if(playerDistance <= interactDistance)
+        {
+            im.Menu();
+            playerController.preventInput = true;
+            shopWindow = Instantiate(shopWindowPrefab);
+        }
     }
 
     public void CloseShop()
     {
-        playerController.anyMenuOpen = false;
-        playerController.shopMenuOpen = false;
         playerController.preventInput = false;
+        im.Gameplay();
         Destroy(shopWindow);
     }
 }

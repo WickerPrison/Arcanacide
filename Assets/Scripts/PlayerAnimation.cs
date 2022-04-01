@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAnimation : MonoBehaviour
 {
@@ -69,7 +70,14 @@ public class PlayerAnimation : MonoBehaviour
         //While attacking the player won't change what direction he is facing. Otherwise he faces the mouse
         if (playerController.CanInput())
         {
-            FaceMouse();
+            if(Gamepad.current == null)
+            {
+                FaceMouse();
+            }
+            else
+            {
+                FaceJoystick();
+            }
         }
 
         if (walk)
@@ -173,10 +181,36 @@ public class PlayerAnimation : MonoBehaviour
         playerSound.StopSoundEffect();
     }
 
+    void FaceJoystick()
+    {
+        if(playerController.lookDir.x > 0)
+        {
+            if(playerController.lookDir.y > 0)
+            {
+                BackRight();
+            }
+            else
+            {
+                FrontRight();
+            }
+        }
+        else
+        {
+            if(playerController.lookDir.y > 0)
+            {
+                BackLeft();
+            }
+            else
+            {
+                FrontLeft();
+            }
+        }
+    }
+
     void FaceMouse()
     {
         //find the mouse position in screen coordinates
-        mousePosition = Input.mousePosition;
+        mousePosition = Mouse.current.position.ReadValue();
         //find the position of the player's feet and convert it to screen coordinates
         playerFeetPosition = new Vector3(transform.position.x, 0, transform.position.z);
         playerScreenPosition = cam.WorldToScreenPoint(playerFeetPosition);

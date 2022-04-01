@@ -7,28 +7,28 @@ public class BlockMessage : MonoBehaviour
     [SerializeField] GameObject message1;
     [SerializeField] GameObject message2;
     int counter;
+    InputManager im;
 
     private void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Tutorial.Select.performed += ctx => NextMessage();
         counter = 1;
         message2.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    void NextMessage()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (counter == 1)
         {
-            if(counter == 1)
-            {
-                counter += 1;
-                message1.SetActive(false);
-                message2.SetActive(true);
-            }
-            else if(counter == 2)
-            {
-                Destroy(gameObject);
-            }
+            counter += 1;
+            message1.SetActive(false);
+            message2.SetActive(true);
+        }
+        else if (counter == 2)
+        {
+            im.Gameplay();
+            Destroy(gameObject);
         }
     }
 }

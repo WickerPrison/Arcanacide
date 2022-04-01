@@ -103,7 +103,9 @@ MonoBehaviour:
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   doorNumber: 0
   message: {fileID: 3846949170206094167}
+  lockedMessage: {fileID: 2383908313693130515}
   doorAudioPrefab: {fileID: 7140987698445707265, guid: 07c3a153c7265354c9f61a01cc4a475b, type: 3}
+  lockedDoorID: 0
   player: {fileID: 0}
 --- !u!1 &2383908313693130515
 GameObject:
@@ -121,7 +123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1287744464307805205
 Transform:
   m_ObjectHideFlags: 0
@@ -129,15 +131,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2383908313693130515}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.08, z: 0}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: -0.78, y: 1.08, z: -1.48}
   m_LocalScale: {x: 3.8310392, y: 0.59089774, z: 0.8727273}
   m_Children:
   - {fileID: 4149167729502699370}
   - {fileID: 278688333234004472}
   m_Father: {fileID: 1445953062381594738}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!212 &8623257425895374849
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -216,7 +218,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2584050244221788671}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.02}
   m_LocalScale: {x: 0.02088206, y: 0.18051837, z: 0.09999996}
   m_Children:
   - {fileID: 7140323030571056133}
@@ -480,13 +482,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4477475786091046005}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 278688333234004472}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}

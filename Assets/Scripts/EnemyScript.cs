@@ -38,7 +38,7 @@ public class EnemyScript : MonoBehaviour
         enemyController = GetComponent<EnemyController>();
         enemySound = GetComponentInChildren<EnemySound>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        gm.numberOfEnemies += 1;
+        gm.enemies.Add(this);
     }
 
     public void LoseHealth(int damage, float poiseDamage)
@@ -95,7 +95,7 @@ public class EnemyScript : MonoBehaviour
     {
         mapData.deadEnemies.Add(enemyID);
         playerData.money += reward;
-        gm.numberOfEnemies -= 1;
+        gm.enemies.Remove(this);
         if (enemyController.detectionTrigger)
         {
             gm.awareEnemies -= 1;

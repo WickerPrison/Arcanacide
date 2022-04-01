@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,9 +18,9 @@ public class PlayerController : MonoBehaviour
     public float stagger;
     public float maxStaggered;
     public bool knockback = false;
-    public bool anyMenuOpen = false;
-    public bool shopMenuOpen = false;
 
+    InputManager im;
+    GameManager gm;
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
     PlayerSound playerSound;
@@ -28,8 +29,6 @@ public class PlayerController : MonoBehaviour
     Vector3 mouseDirection;
     Vector3 moveDirection;
     Vector3 dashDirection;
-    float horizontalAxis;
-    float verticalAxis;
     float dashSpeed = 1000;
     float dashTime = 0;
     float maxDashTime = 0.2f;
@@ -37,6 +36,7 @@ public class PlayerController : MonoBehaviour
     string healString = "Heal";
     string blockString = "Block";
     float blockCD = 3;
+    float lockOnDistance = 10;
     public bool preventInput = false;
     public bool shield;
 
@@ -47,9 +47,16 @@ public class PlayerController : MonoBehaviour
     float pathOfPathTimer;
     [SerializeField] GameObject pathTrailPrefab;
 
+    Vector2 moveDir;
+    Vector2 rightStickValue;
+    public Vector2 lookDir;
+    List<Transform> nearbyEnemies = new List<Transform>();
+
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        SetUpControls();
         //Set references to other player scripts
         playerAnimation = GetComponent<PlayerAnimation>();
         playerScript = GetComponent<PlayerScript>();
@@ -60,49 +67,33 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //get the inputs from the keyboard/controller for movement
-        horizontalAxis = Input.GetAxis("Horizontal");
-        verticalAxis = Input.GetAxis("Vertical");
         //turn those inputs into a vector that cannot have a magnitude greater than 1
-        moveDirection = new Vector3(horizontalAxis, 0, verticalAxis);
+        moveDirection = new Vector3(moveDir.x, 0, moveDir.y);
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
 
-
-        //If right mouse button is pressed the player should dash if they are currently able
-        if (Input.GetMouseButtonDown(1))
+        if (playerAnimation.continueBlocking)
         {
-            if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
+            playerData.duckCD = blockCD;
+        }
+
+        if (!playerData.hasHealed && playerData.duckCD > 0)
+        {
+            playerData.duckCD -= Time.deltaTime;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.magical_acceleration))
             {
-                //They player dashes in whatever direction they were already moving
-                dashDirection = moveDirection.normalized;
-                dashTime = maxDashTime;
-                if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))
-                {
-                    playerScript.LoseStamina(dashStaminaCost / 2);
-                }
-                else
-                {
-                    playerScript.LoseStamina(dashStaminaCost);
-                }
-                playerAnimation.DashAnimation();
-                playerSound.Dodge();
+                playerData.duckCD -= Time.deltaTime;
             }
         }
 
-        //If left mouse button is pressed they player will attack if they are currently able
-        if(Input.GetMouseButtonDown(0) && !pauseMenu)
+        float scrollWheel = Mouse.current.scroll.ReadValue().y;
+        if(scrollWheel > 0)
         {
-            if (playerAnimation.attacking)
-            {
-                playerAnimation.ChainAttacks();
-            }
-            else if (CanInput() && playerScript.stamina > 0)
-            {
-                Attack();
-            }
+            NextAbility();
         }
-
-        DuckAbilities();
+        else if(scrollWheel < 0)
+        {
+            PreviousAbility();
+        }
 
         AttackPointPosition();
 
@@ -121,28 +112,6 @@ public class PlayerController : MonoBehaviour
         }
 
         playerAnimation.StaggerUpdate(stagger);
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (anyMenuOpen)
-            {
-                if (shopMenuOpen)
-                {
-                    Shop shop = GameObject.FindGameObjectWithTag("Shop").GetComponent<Shop>();
-                    shop.CloseShop();
-                }
-            }
-            else if(!pauseMenu)
-            {
-                preventInput = true;
-                pauseMenu = Instantiate(pauseMenuPrefab);
-            }
-            else
-            {
-                preventInput = false;
-                Destroy(pauseMenu);
-            }
-        }
 
         if(swordTimer > 0)
         {
@@ -167,72 +136,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void DuckAbilities()
+    void EquipAbility(string ability)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (playerData.unlockedAbilities.Contains(ability))
         {
-            playerData.equippedAbility = healString;
+            playerData.equippedAbility = ability;
         }
+    }
 
-        if (playerData.unlockedAbilities.Contains(blockString) && Input.GetKeyDown(KeyCode.Alpha2))
+    void UseAbility()
+    {
+        if (playerData.duckCD <= 0)
         {
-            playerData.equippedAbility = blockString;
-        }
-
-        if (Input.mouseScrollDelta.y > 0)
-        {
-            NextAbility();
-        }
-
-        if(Input.mouseScrollDelta.y < 0)
-        {
-            PreviousAbility();
-        }
-
-
-        if (CanInput() && Input.GetButtonDown("Jump"))
-        {
-            if (playerData.duckCD <= 0)
+            rb.velocity = Vector3.zero;
+            if (playerData.equippedAbility != healString)
             {
-                rb.velocity = Vector3.zero;
-                if(playerData.equippedAbility != healString)
-                {
-                    playerAnimation.UseDuck(playerData.equippedAbility);
-                }
-                else
-                {
-                    playerScript.DuckHeal();
-                }
-                switch (playerData.equippedAbility)
-                {
-                    case "Heal":
-                        playerData.hasHealed = true;
-                        playerData.duckCD += 1;
-                        break;
-                    case "Block":
-                        playerData.duckCD += blockCD;
-                        break;
-                }
+                playerAnimation.UseDuck(playerData.equippedAbility);
             }
-        }
-
-        if(shield && Input.GetButton("Jump"))
-        {
+            else
+            {
+                playerScript.DuckHeal();
+            }
+            switch (playerData.equippedAbility)
+            {
+                case "Heal":
+                    playerData.hasHealed = true;
+                    playerData.duckCD += 1;
+                    break;
+                case "Block":
+                    playerData.duckCD += blockCD;
+                    break;
+            }
             playerAnimation.continueBlocking = true;
-            playerData.duckCD = blockCD;
-        }
-        else
-        {
-            playerAnimation.continueBlocking = false;
-        }
-
-        if (!playerData.hasHealed && playerData.duckCD > 0)
-        {
-            playerData.duckCD -= Time.deltaTime;
-            if (playerData.equippedEmblems.Contains(emblemLibrary.magical_acceleration))
-            {
-                playerData.duckCD -= Time.deltaTime;
-            }
         }
     }
 
@@ -260,10 +195,37 @@ public class PlayerController : MonoBehaviour
         playerData.equippedAbility = playerData.unlockedAbilities[index];
     }
 
+    void Dodge()
+    {
+        if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
+        {
+            //They player dashes in whatever direction they were already moving
+            dashDirection = moveDirection.normalized;
+            dashTime = maxDashTime;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))
+            {
+                playerScript.LoseStamina(dashStaminaCost / 2);
+            }
+            else
+            {
+                playerScript.LoseStamina(dashStaminaCost);
+            }
+            playerAnimation.DashAnimation();
+            playerSound.Dodge();
+        }
+    }
+
     void Attack()
     {
-        playerAnimation.attack = true;
-        playerAnimation.attacking = true;
+        if (playerAnimation.attacking)
+        {
+            playerAnimation.ChainAttacks();
+        }
+        else if (CanInput() && playerScript.stamina > 0)
+        {
+            playerAnimation.attack = true;
+            playerAnimation.attacking = true;
+        }
     }
 
     public int AttackPower()
@@ -291,9 +253,67 @@ public class PlayerController : MonoBehaviour
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
     void AttackPointPosition()
     {
-        mouseDirection = playerAnimation.mousePosition - playerAnimation.playerScreenPosition;
-        mouseDirection = new Vector3(mouseDirection.x, 0.5f, mouseDirection.y);
-        attackPoint.transform.position = transform.position + mouseDirection.normalized;
+        if (!CanInput())
+        {
+            return;
+        }
+
+        if (Gamepad.current == null)
+        {
+            mouseDirection = playerAnimation.mousePosition - playerAnimation.playerScreenPosition;
+            mouseDirection = new Vector3(mouseDirection.x, 0.5f, mouseDirection.y);
+            attackPoint.transform.position = transform.position + mouseDirection.normalized;
+        }
+        else
+        {
+            if (moveDir.magnitude != 0)
+            {
+                lookDir = moveDir;
+            }
+            LockOn();
+            if(rightStickValue.magnitude > 0)
+            {
+                lookDir = rightStickValue.normalized;
+            }
+            Vector3 lookDirection = new Vector3(lookDir.x, 0.5f, lookDir.y);
+            attackPoint.transform.position = transform.position + lookDirection.normalized;
+        }
+    }
+
+    void LockOn()
+    {
+        if(gm.enemies.Count < 1)
+        {
+            return;
+        }
+        Transform lockOnTarget = transform;
+        float currentDistance = lockOnDistance;
+        for (int enemy = 0; enemy < gm.enemies.Count; enemy++)
+        {
+            if (Vector3.Distance(transform.position, gm.enemies[enemy].transform.position) < currentDistance)
+            {
+                lockOnTarget = gm.enemies[enemy].transform;
+            }
+        }
+        if(lockOnTarget != transform)
+        {
+            Vector3 lockOnDirection = lockOnTarget.position - transform.position;
+            lookDir = new Vector2(lockOnDirection.x, lockOnDirection.z);
+        }
+    }
+
+    void PauseMenu()
+    {
+        if (!pauseMenu)
+        {
+            preventInput = true;
+            pauseMenu = Instantiate(pauseMenuPrefab);
+        }
+        else
+        {
+            preventInput = false;
+            Destroy(pauseMenu);
+        }
     }
 
     //Returns a bool that is true if the player is currently allowed to give new inputs
@@ -404,5 +424,22 @@ public class PlayerController : MonoBehaviour
             pathActive = false;
             pathOfPathTimer = 0;
         }
+    }
+
+    void SetUpControls()
+    {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+
+        im.controls.Gameplay.Attack.performed += ctx => Attack();
+        im.controls.Gameplay.Dodge.performed += ctx => Dodge();
+        im.controls.Gameplay.PauseMenu.performed += ctx => PauseMenu();
+        im.controls.Gameplay.Move.performed += ctx => moveDir = ctx.ReadValue<Vector2>();
+        im.controls.Gameplay.Move.canceled += ctx => moveDir = Vector2.zero;
+        im.controls.Gameplay.UseAbility.performed += ctx => UseAbility();
+        im.controls.Gameplay.UseAbility.canceled += ctx => playerAnimation.continueBlocking = false;
+        im.controls.Gameplay.EquipHeal.performed += ctx => EquipAbility(healString);
+        im.controls.Gameplay.EquipBlock.performed += ctx => EquipAbility(blockString);
+        im.controls.Gameplay.Look.performed += ctx => rightStickValue = ctx.ReadValue<Vector2>();
+        im.controls.Gameplay.Look.canceled += ctx => rightStickValue = Vector2.zero;
     }
 }

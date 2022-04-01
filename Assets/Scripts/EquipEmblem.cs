@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class EquipEmblem : MonoBehaviour
 {
@@ -10,11 +11,14 @@ public class EquipEmblem : MonoBehaviour
     [SerializeField] GameObject check;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI descriptionText;
+    public EmblemMenu emblemMenu;
+    Button button;
     public string emblemName;
 
     // Start is called before the first frame update
     void Start()
     {
+        SetUpMenuControls();
         nameText.text = emblemName;
         descriptionText.text = emblemLibrary.GetDescription(emblemName);
         if (!playerData.equippedEmblems.Contains(emblemName))
@@ -45,5 +49,29 @@ public class EquipEmblem : MonoBehaviour
     {
         playerData.equippedEmblems.Remove(emblemName);
         check.SetActive(false);
+    }
+
+    void SetUpMenuControls()
+    {
+        button = GetComponent<Button>();
+        int listIndex = playerData.emblems.IndexOf(emblemName);
+        Navigation nav = button.navigation;
+        if (listIndex != 0)
+        {
+            nav.selectOnUp = emblemMenu.buttons[listIndex - 1].GetComponent<Button>();
+        }
+        else
+        {
+            nav.selectOnUp = emblemMenu.leaveButton.GetComponent<Button>();
+        }
+
+        if(listIndex < emblemMenu.buttons.Count - 1)
+        {
+            nav.selectOnDown = emblemMenu.buttons[listIndex + 1].GetComponent<Button>();
+        }
+
+        nav.selectOnRight = emblemMenu.leaveButton.GetComponent<Button>();
+
+        button.navigation = nav;
     }
 }

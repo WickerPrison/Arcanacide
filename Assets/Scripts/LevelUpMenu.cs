@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class LevelUpMenu : MonoBehaviour
 {
-    [SerializeField] GameObject restMenuPrefab;
     [SerializeField] PlayerData playerData;
     [SerializeField] TextMeshProUGUI currentMoney;
     [SerializeField] TextMeshProUGUI requiredMoneyText;
@@ -13,22 +14,24 @@ public class LevelUpMenu : MonoBehaviour
     [SerializeField] TextMeshProUGUI dexterityAmount;
     [SerializeField] TextMeshProUGUI vitalityAmount;
     [SerializeField] TextMeshProUGUI dedicationAmount;
-    GameObject restMenu;
+    [SerializeField] GameObject firstButton;
+    public RestMenuButtons restMenuScript;
     int requiredMoney;
     public int altarNumber;
     public Transform spawnPoint;
+    PlayerControls controls;
+
+    private void Awake()
+    {
+        controls = new PlayerControls();
+        controls.Menu.Back.performed += ctx => OpenRestMenu();
+    }
 
     private void Start()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButton);
         UpdateText();   
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            OpenRestMenu();
-        }
     }
 
     public void IncreaseStrength()
@@ -77,10 +80,15 @@ public class LevelUpMenu : MonoBehaviour
 
     public void OpenRestMenu()
     {
+        /*
         restMenu = Instantiate(restMenuPrefab);
         RestMenuButtons restMenuScript = restMenu.GetComponent<RestMenuButtons>();
         restMenuScript.altarNumber = altarNumber;
         restMenuScript.spawnPoint = spawnPoint;
+        */
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
+        restMenuScript.controls.Enable();
         Destroy(gameObject);
     }
 
@@ -98,5 +106,15 @@ public class LevelUpMenu : MonoBehaviour
     void RequiredMoney()
     {
         requiredMoney = Mathf.RoundToInt(4 + Mathf.Pow(playerData.GetLevel(), 2));
+    }
+
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
     }
 }

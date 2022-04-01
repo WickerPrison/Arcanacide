@@ -8,16 +8,19 @@ public class OpenOneWayDoor : MonoBehaviour
     [SerializeField] int lockedDoorID;
     [SerializeField] MapData mapData;
     Transform player;
+    InputManager im;
 
     void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Gameplay.Interact.performed += ctx => OpenDoor();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
-    public void Update()
+    void OpenDoor()
     {
         float playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= 2 && doorwayScript.doorOpen && Input.GetKeyDown(KeyCode.E) && !mapData.unlockedDoors.Contains(lockedDoorID))
+        if (playerDistance <= 2 && doorwayScript.doorOpen && !mapData.unlockedDoors.Contains(lockedDoorID))
         {
             mapData.unlockedDoors.Add(lockedDoorID);
         }

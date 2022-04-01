@@ -12,9 +12,14 @@ public class ChargingStation : MonoBehaviour
     bool hasBeenUsed = false;
     Transform player;
     PlayerScript playerScript;
+    InputManager im;
+    float playerDistance;
+    float interactDistance = 2;
 
     void Start()
     {
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Gameplay.Interact.performed += ctx => Charge();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerScript = player.GetComponent<PlayerScript>();
         if (mapData.usedChargingStations.Contains(chargingStationID))
@@ -26,23 +31,27 @@ public class ChargingStation : MonoBehaviour
 
     private void Update()
     {
-        float playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= 2 && !hasBeenUsed && playerData.hasHealed)
+        playerDistance = Vector3.Distance(transform.position, player.position);
+        if (playerDistance <= interactDistance && !hasBeenUsed && playerData.hasHealed)
         {
             message.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                playerData.hasHealed = false;
-                playerData.duckCD = 0;
-                playerScript.MaxHeal();
-                hasBeenUsed = true;
-                mapData.usedChargingStations.Add(chargingStationID);
-                particles.Stop();
-            }
         }
         else
         {
             message.SetActive(false);
+        }
+    }
+
+    void Charge()
+    {
+        if(playerDistance <= interactDistance && !hasBeenUsed && playerData.hasHealed)
+        {
+            playerData.hasHealed = false;
+            playerData.duckCD = 0;
+            playerScript.MaxHeal();
+            hasBeenUsed = true;
+            mapData.usedChargingStations.Add(chargingStationID);
+            particles.Stop();
         }
     }
 }
