@@ -107,6 +107,7 @@ MonoBehaviour:
   doorAudioPrefab: {fileID: 7140987698445707265, guid: 07c3a153c7265354c9f61a01cc4a475b, type: 3}
   lockedDoorID: 0
   player: {fileID: 0}
+  playerDistance: 0
 --- !u!1 &2383908313693130515
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,6 +715,7 @@ GameObject:
   - component: {fileID: 3934870241301648051}
   - component: {fileID: 4681735457650716044}
   - component: {fileID: 7553782299240903833}
+  - component: {fileID: 6473579348339938834}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -787,7 +789,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 275aa410edba15d4bb1774dc9c9bf824, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -837,6 +839,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6473579348339938834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5768346630960206545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba8560697905e0b43ba33049ab4a8a9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KBMprompt: 'E: Open Door'
+  GPprompt: '<sprite index= 0>: Open Door'
 --- !u!1 &7352556649023781467
 GameObject:
   m_ObjectHideFlags: 0

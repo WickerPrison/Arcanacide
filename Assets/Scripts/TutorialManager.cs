@@ -25,6 +25,9 @@ public class TutorialManager : MonoBehaviour
     string remnant = "Remnant";
     [SerializeField] GameObject emblemTutorial;
     string emblem = "Emblem";
+    [SerializeField] GameObject blockTutorial1;
+    [SerializeField] GameObject blockTutorial2;
+    string block = "Block";
     [SerializeField] GameObject endOfDemoTutorial;
     string endOfDemo = "EndOfDemo";
     public List<string> allTutorials;
@@ -137,6 +140,14 @@ public class TutorialManager : MonoBehaviour
         OpenMessage();
     }
 
+    public void BlockTutorial()
+    {
+        playerData.tutorials.Remove(block);
+        nextMessage = blockTutorial2;
+        currentMessage = Instantiate(blockTutorial1);
+        OpenMessage();
+    }
+
     public void EndOfDemoTutorial()
     {
         playerData.tutorials.Remove("EndOfDemo");
@@ -155,6 +166,7 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(swordSite);
         allTutorials.Add(remnant);
         allTutorials.Add(emblem);
+        allTutorials.Add(block);
         allTutorials.Add(endOfDemo);
     }
 }

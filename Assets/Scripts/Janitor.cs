@@ -6,8 +6,8 @@ public class Janitor : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] GameObject message;
-    [SerializeField] GameObject tutorailPrefab;
     [SerializeField] Animator janitorAnimator;
+    TutorialManager tutorialManager;
     Transform player;
     Vector3 scale;
     InputManager im;
@@ -48,8 +48,9 @@ public class Janitor : MonoBehaviour
         if(playerDistance <= interactDistance && !playerData.unlockedAbilities.Contains("Block"))
         {
             playerData.unlockedAbilities.Add("Block");
-            im.Tutorial();
-            Instantiate(tutorailPrefab);
+            tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
+            im.controls.Tutorial.Disable();
+            tutorialManager.BlockTutorial();
         }
     }
 

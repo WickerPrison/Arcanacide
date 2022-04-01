@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 6706439393515645116}
   - component: {fileID: 6706439393515645118}
   - component: {fileID: 6706439393515645117}
+  - component: {fileID: 4118525373627600174}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -312,9 +313,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6706439393515645115}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.90000176}
+  m_LocalScale: {x: 0.8163265, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6706439393258867859}
   m_RootOrder: 0
@@ -371,7 +372,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 275aa410edba15d4bb1774dc9c9bf824, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -415,12 +416,26 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 90.33971, y: 21.96928, z: 90.77614, w: 21.51215}
+  m_margin: {x: 87.79443, y: 22.137196, z: 87.792915, w: 21.51215}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4118525373627600174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6706439393515645115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba8560697905e0b43ba33049ab4a8a9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KBMprompt: 'E: Gain Ability'
+  GPprompt: '<sprite index= 0>: Gain Ability'
 --- !u!1 &6706439393552687656
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +629,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   message: {fileID: 6706439393984617811}
-  tutorailPrefab: {fileID: 5993134900137100975, guid: 13cbe14fcc5c47b4d8d4b42946200a4b, type: 3}
   janitorAnimator: {fileID: 4855027029349050933}
 --- !u!136 &6706439393756764895
 CapsuleCollider:
@@ -996,7 +1010,7 @@ Transform:
   m_GameObject: {fileID: 6706439393984617811}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 1.629, z: 0.363}
-  m_LocalScale: {x: 1.2, y: 0.4, z: 0.6}
+  m_LocalScale: {x: 1.47, y: 0.4, z: 0.6}
   m_Children:
   - {fileID: 6706439393574021748}
   - {fileID: 6706439393258867859}
