@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     Vector3 deathPosition = Vector3.zero;
     bool ticketFiled = false;
     bool fireBossKilled = false;
+    bool secretaryConvo = false;
 
 
     private void Start()
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
             mapData.deathPosition = new Vector3(data.deathPosition[0], data.deathPosition[1], data.deathPosition[2]);
             mapData.ticketFiled = data.ticketFiled;
             mapData.fireBossKilled = data.fireBossKilled;
+            mapData.secretaryConvo = data.secretaryConvo;
         }
         else
         {
@@ -94,5 +96,6 @@ public class GameManager : MonoBehaviour
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
         mapData.fireBossKilled = fireBossKilled;
+        mapData.secretaryConvo = secretaryConvo;
     }
 }

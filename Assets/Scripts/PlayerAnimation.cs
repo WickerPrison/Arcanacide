@@ -56,7 +56,7 @@ public class PlayerAnimation : MonoBehaviour
         backOffset = backAnimator.transform.localPosition.x;
         frontSmearScale = frontSmear.transform.localScale;
         frontSmearRotation = new Vector3(90, -20, 0);
-        frontSmearPosition = new Vector3(-0.32f, 0, 0.32f);
+        frontSmearPosition = new Vector3(0.32f, 0, -0.32f);
         backSmearScale = backSmear.transform.localScale;
         backSmearRotation = new Vector3(-90, 70, 0);
         backSmearPosition = new Vector3(0.32f, 0, 0.32f);

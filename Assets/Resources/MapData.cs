@@ -17,6 +17,7 @@ public class MapData : ScriptableObject
     public Vector3 deathPosition;
     public bool ticketFiled;
     public bool fireBossKilled;
+    public bool secretaryConvo;
 
     private void OnEnable()
     {

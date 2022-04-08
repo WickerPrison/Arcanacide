@@ -9,12 +9,14 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerControls();
+        Gameplay();
     }
 
     public void Gameplay()
     {
         controls.Menu.Disable();
         controls.Tutorial.Disable();
+        controls.Dialogue.Disable();
         controls.Gameplay.Enable();
     }
 
@@ -22,6 +24,7 @@ public class InputManager : MonoBehaviour
     {
         controls.Menu.Disable();
         controls.Gameplay.Disable();
+        controls.Dialogue.Disable();
         controls.Tutorial.Enable();
     }
 
@@ -29,7 +32,16 @@ public class InputManager : MonoBehaviour
     {
         controls.Tutorial.Disable();
         controls.Gameplay.Disable();
+        controls.Dialogue.Disable();
         controls.Menu.Enable();
+    }
+
+    public void Dialogue()
+    {
+        controls.Tutorial.Disable();
+        controls.Gameplay.Disable();
+        controls.Menu.Disable();
+        controls.Dialogue.Enable();
     }
 
     private void OnEnable()

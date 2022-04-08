@@ -7,8 +7,17 @@ public class FireMageController : EnemyController
 {
     [SerializeField] FireRing fireRing;
     float tooClose = 4;
+    int fireBallDamage = 15;
+    int fireBallPoiseDamage = 15;
     int fireRingDamage = 30;
     float fireRingPoiseDamage = 100;
+
+    public override void Start()
+    {
+        base.Start();
+        spellAttackDamage = fireBallDamage;
+        spellAttackPoiseDamage = fireBallPoiseDamage;
+    }
 
     public override void EnemyAI()
     {

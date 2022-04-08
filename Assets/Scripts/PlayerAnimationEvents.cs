@@ -12,7 +12,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerSound playerSound;
     Animator frontAnimator;
     float attackStaminaCost = 20f;
-    float hitboxRadius = 1f;
+    float hitboxRadius = 1.5f;
 
     // Start is called before the first frame update
     void Start()

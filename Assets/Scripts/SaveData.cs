@@ -27,9 +27,7 @@ public class SaveData
     public float[] deathPosition;
     public bool ticketFiled;
     public bool fireBossKilled;
-    public bool boughtDamage;
-    public bool boughtHealth;
-    public bool boughtStamina;
+    public bool secretaryConvo;
 
     public SaveData (PlayerData playerData, MapData mapData)
     {
@@ -55,5 +53,6 @@ public class SaveData
         deathPosition[2] = mapData.deathPosition.z;
         ticketFiled = mapData.ticketFiled;
         fireBossKilled = mapData.fireBossKilled;
+        secretaryConvo = mapData.secretaryConvo;
     }
 }

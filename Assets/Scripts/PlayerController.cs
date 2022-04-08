@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     string healString = "Heal";
     string blockString = "Block";
     float blockCD = 3;
+    float attackPointRadius = 1.5f;
     float lockOnDistance = 10;
     public bool preventInput = false;
     public bool shield;
@@ -262,7 +263,7 @@ public class PlayerController : MonoBehaviour
         {
             mouseDirection = playerAnimation.mousePosition - playerAnimation.playerScreenPosition;
             mouseDirection = new Vector3(mouseDirection.x, 0.5f, mouseDirection.y);
-            attackPoint.transform.position = transform.position + mouseDirection.normalized;
+            attackPoint.transform.position = transform.position + mouseDirection.normalized * attackPointRadius;
         }
         else
         {
@@ -276,7 +277,7 @@ public class PlayerController : MonoBehaviour
                 lookDir = rightStickValue.normalized;
             }
             Vector3 lookDirection = new Vector3(lookDir.x, 0.5f, lookDir.y);
-            attackPoint.transform.position = transform.position + lookDirection.normalized;
+            attackPoint.transform.position = transform.position + lookDirection.normalized * attackPointRadius;
         }
     }
 

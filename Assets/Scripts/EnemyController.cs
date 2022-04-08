@@ -35,6 +35,8 @@ public class EnemyController : MonoBehaviour
     public bool directionLock = false;
     public bool parryWindow = false;
     public bool isParrying = false;
+    public int spellAttackDamage = 15;
+    public int spellAttackPoiseDamage = 15;
     public int hitDamage;
     public float hitPoiseDamage;
     bool facingFront;
@@ -135,6 +137,8 @@ public class EnemyController : MonoBehaviour
         }
         projectile.transform.LookAt(playerController.transform.position);
         projectileScript.target = playerController.transform;
+        projectileScript.poiseDamage = spellAttackPoiseDamage;
+        projectileScript.spellDamage = spellAttackDamage;
     }
 
     public virtual void SpecialAbility()

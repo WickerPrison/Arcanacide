@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public Vector3 direction;
-    int spellDamage = 30;
+    public int spellDamage;
     int speed = 12;
 
     private void OnTriggerEnter(Collider collision)

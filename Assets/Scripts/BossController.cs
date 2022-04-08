@@ -9,6 +9,7 @@ public class BossController : EnemyController
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject bonfirePrefab;
     [SerializeField] GameObject fireWavePrefab;
+    BossDialogue bossDialogue;
     public int strafeLeftOrRight = 1;
 
     float tooClose = 3f;
@@ -31,11 +32,16 @@ public class BossController : EnemyController
     bool isStaggered = false;
     int goingUp = 1;
     public bool pauseTimer = false;
+    int fireBallDamage = 20;
+    int fireBallPoiseDamage = 15;
 
     public override void Start()
     {
         base.Start();
         bonfireCD = bonfireMaxCD;
+        spellAttackPoiseDamage = fireBallPoiseDamage;
+        spellAttackDamage = fireBallDamage;
+        bossDialogue = GetComponent<BossDialogue>();
     }
 
     void FixedUpdate()
@@ -45,59 +51,56 @@ public class BossController : EnemyController
 
     public override void EnemyAI()
     {
-        if (Vector3.Distance(transform.position, playerController.transform.position) <= detectRange)
+        if (!hasSeenPlayer)
         {
-            hasSeenPlayer = true;
+            return;
         }
-        if (hasSeenPlayer)
+
+        if (navAgent.enabled == true)
         {
-            if (navAgent.enabled == true)
-            {
-                navAgent.SetDestination(playerController.transform.position);
-            }
+            navAgent.SetDestination(playerController.transform.position);
+        }
 
-            if (Vector3.Distance(transform.position, playerController.transform.position) < attackRange)
+        if (Vector3.Distance(transform.position, playerController.transform.position) < attackRange)
+        {
+            if (navAgent.enabled)
             {
-                if (navAgent.enabled)
+                if(Vector3.Distance(transform.position, playerController.transform.position) > tooClose)
                 {
-                    if(Vector3.Distance(transform.position, playerController.transform.position) > tooClose)
-                    {
-                        Strafe();
-                    }
-                }
-
-                if (attackCD <= 0 && !isStaggered)
-                {
-                    if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose && !isStaggered)
-                    {
-                        runAwayTime = runAwayMaxTime;
-                    }
-                    else if(bonfireCD <= 0)
-                    {
-                        pauseTimer = true;
-                        frontAnimator.Play("Bonfires");
-                        backAnimator.Play("Bonfires");
-                        bonfireCD = bonfireMaxCD;
-                    }
-                    else if (fireBallCD <= 0)
-                    {
-                        int num = Random.Range(1, 3);
-                        if (num == 1)
-                        {
-                            frontAnimator.Play("FireBalls");
-                            backAnimator.Play("FireBalls");
-                        }
-                        if(num == 2)
-                        {
-                            frontAnimator.Play("FireWave");
-                            backAnimator.Play("FireWave");
-                        }
-                        fireBallCD = fireBallMaxCD;
-                    }
-                    attackCD = attackMaxCD;
+                    Strafe();
                 }
             }
 
+            if (attackCD <= 0 && !isStaggered)
+            {
+                if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose && !isStaggered)
+                {
+                    runAwayTime = runAwayMaxTime;
+                }
+                else if(bonfireCD <= 0)
+                {
+                    pauseTimer = true;
+                    frontAnimator.Play("Bonfires");
+                    backAnimator.Play("Bonfires");
+                    bonfireCD = bonfireMaxCD;
+                }
+                else if (fireBallCD <= 0)
+                {
+                    int num = Random.Range(1, 3);
+                    if (num == 1)
+                    {
+                        frontAnimator.Play("FireBalls");
+                        backAnimator.Play("FireBalls");
+                    }
+                    if(num == 2)
+                    {
+                        frontAnimator.Play("FireWave");
+                        backAnimator.Play("FireWave");
+                    }
+                    fireBallCD = fireBallMaxCD;
+                }
+                attackCD = attackMaxCD;
+            }
         }
 
         if(runAwayTime > 0)
@@ -151,6 +154,7 @@ public class BossController : EnemyController
         base.OnHit();
         if (canStagger)
         {
+            bossDialogue.EndLookUpDialogue();
             frontAnimator.Play("Stagger");
             backAnimator.Play("Stagger");
             isStaggered = true;

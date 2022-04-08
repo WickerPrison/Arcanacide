@@ -6,11 +6,13 @@ using UnityEngine;
 public class BossAnimationEvents : EnemyAnimationEvents
 {
     BossController bossController;
+    BossDialogue bossDialogue;
 
     public override void Start()
     {
         base.Start();
         bossController = GetComponentInParent<BossController>();
+        bossDialogue = GetComponentInParent<BossDialogue>();
     }
 
     public void FireTral()
@@ -52,5 +54,15 @@ public class BossAnimationEvents : EnemyAnimationEvents
     public void EndStagger()
     {
         bossController.EndStagger();
+    }
+
+    public void LookUpDialogue()
+    {
+        bossDialogue.LookUpDialogue();
+    }
+
+    public void EndLookUpDialogue()
+    {
+        bossDialogue.EndLookUpDialogue();
     }
 }
