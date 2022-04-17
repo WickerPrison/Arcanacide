@@ -60,6 +60,15 @@ public class PlayerAnimation : MonoBehaviour
         backSmearScale = backSmear.transform.localScale;
         backSmearRotation = new Vector3(-90, 70, 0);
         backSmearPosition = new Vector3(0.32f, 0, 0.32f);
+
+        if (Gamepad.current == null)
+        {
+            FaceMouse();
+        }
+        else
+        {
+            FaceJoystick();
+        }
     }
 
     // Update is called once per frame

@@ -13,6 +13,7 @@ public class ChargingStation : MonoBehaviour
     Transform player;
     PlayerScript playerScript;
     InputManager im;
+    TutorialManager tutorialManager;
     float playerDistance;
     float interactDistance = 2;
 
@@ -32,9 +33,14 @@ public class ChargingStation : MonoBehaviour
     private void Update()
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= interactDistance && !hasBeenUsed && playerData.hasHealed)
+        if (playerDistance <= interactDistance && !hasBeenUsed)
         {
             message.SetActive(true);
+            if (playerData.tutorials.Contains("Altar"))
+            {
+                tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
+                tutorialManager.AltarTutorial();
+            }
         }
         else
         {
@@ -44,9 +50,14 @@ public class ChargingStation : MonoBehaviour
 
     void Charge()
     {
-        if(playerDistance <= interactDistance && !hasBeenUsed && playerData.hasHealed)
+        if(playerData.healCharges == playerData.maxHealCharges && playerData.health == playerData.MaxHealth())
         {
-            playerData.hasHealed = false;
+            return;
+        }
+
+        if(playerDistance <= interactDistance && !hasBeenUsed)
+        {
+            playerData.healCharges = playerData.maxHealCharges;
             playerData.duckCD = 0;
             playerScript.MaxHeal();
             hasBeenUsed = true;

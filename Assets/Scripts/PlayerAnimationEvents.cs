@@ -94,6 +94,12 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void StartShield()
     {
+        if(playerController.gameObject.layer == 8)
+        {
+            EndIFrames();
+            playerController.dashTime = 0;
+        }
+        playerAnimation.attacking = false;
         playerController.shield = true;
         playerAnimation.StartBodyMagic();
     }

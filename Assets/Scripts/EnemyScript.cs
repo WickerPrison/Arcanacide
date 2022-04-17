@@ -94,7 +94,14 @@ public class EnemyScript : MonoBehaviour
     void Death()
     {
         mapData.deadEnemies.Add(enemyID);
-        playerData.money += reward;
+        if (playerData.equippedEmblems.Contains(emblemLibrary.pay_raise))
+        {
+            playerData.money += Mathf.RoundToInt(reward * 1.25f);
+        }
+        else
+        {
+            playerData.money += reward;
+        }
         gm.enemies.Remove(this);
         if (enemyController.detectionTrigger)
         {
@@ -110,6 +117,7 @@ public class EnemyScript : MonoBehaviour
 
         if (isBoss)
         {
+            gm.awareEnemies -= 1;
             GameObject bossHealthbar = healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
             ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();

@@ -8,7 +8,7 @@ public class BossDialogue : MonoBehaviour
     DialogueScript dialogue;
     InputManager im;
 
-    string introDialogue = "Hmmm... Looks like you somehow resited my control.\nNo matter. Turning you off and on agian ought to do the trick.";
+    string introDialogue = "Hmmm... Looks like you somehow resisted my control.\nNo matter. Turning you off and on again ought to do the trick.";
     string lookUpDialogue = "Now where did I save that incantation?";
 
     private void Start()

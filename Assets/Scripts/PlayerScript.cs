@@ -16,6 +16,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject staminabarFill;
     AltarDirectory altarDirectory;
     GameManager gm;
+    InputManager im;
     PlayerController playerController;
     PlayerAnimation playerAnimation;
     PlayerSound sfx;
@@ -35,6 +36,7 @@ public class PlayerScript : MonoBehaviour
     {
         altarDirectory = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AltarDirectory>();
         gm = altarDirectory.gameObject.GetComponent<GameManager>();
+        im = altarDirectory.gameObject.GetComponent<InputManager>();
         stamina = playerData.MaxStamina();
         poise = maxPoise;
         playerController = GetComponent<PlayerController>();
@@ -48,7 +50,18 @@ public class PlayerScript : MonoBehaviour
         if (!playerController.shield)
         {
             playerData.health -= damage;
-            UpdateHealthbar();
+            if(playerData.health <= 0)
+            {
+                im.DisableAll();
+                playerController.preventInput = true;
+                YouDied youDied = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<YouDied>();
+                youDied.playerScript = this;
+                youDied.ShowMessage();
+            }
+            else
+            {
+                UpdateHealthbar();
+            }
         }
     }
 
@@ -122,12 +135,6 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //If the player reaches 0 health, restart the current scene
-        if(playerData.health <= 0 || transform.position.y < -20)
-        {
-            Death();   
-        }
-
         if(staminaDelay > 0)
         {
             staminaDelay -= Time.deltaTime;
@@ -166,10 +173,10 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    void Death()
+    public void Death()
     {
         MaxHeal();
-        playerData.hasHealed = false;
+        playerData.healCharges = playerData.maxHealCharges;
         playerData.hasSpawned = false;
         playerData.duckCD = 0;
         playerData.lostMoney = playerData.money;
@@ -188,7 +195,7 @@ public class PlayerScript : MonoBehaviour
     {
         MaxHeal();
         playerData.duckCD = 0;
-        playerData.hasHealed = false;
+        playerData.healCharges = playerData.maxHealCharges;
         playerData.hasSpawned = false;
         gm.SaveGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

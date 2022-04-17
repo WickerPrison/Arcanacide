@@ -8,6 +8,8 @@ public class SaveData
     public int maxHealth;
     public float maxStamina;
     public int attackPower;
+    public int maxHealCharges;
+    public int healCharges;
     public int lastAltar;
     public List<string> unlockedAbilities;
     public List<string> emblems;
@@ -23,6 +25,7 @@ public class SaveData
     public int dedication;
 
     public int[] unlockedDoors;
+    public int[] visitedRooms;
     public string deathRoom;
     public float[] deathPosition;
     public bool ticketFiled;
@@ -31,6 +34,8 @@ public class SaveData
 
     public SaveData (PlayerData playerData, MapData mapData)
     {
+        maxHealCharges = playerData.maxHealCharges;
+        healCharges = playerData.healCharges;
         lastAltar = playerData.lastAltar;
         unlockedAbilities = playerData.unlockedAbilities;
         emblems = playerData.emblems;
@@ -46,6 +51,7 @@ public class SaveData
 
 
         unlockedDoors = mapData.unlockedDoors.ToArray();
+        visitedRooms = mapData.visitedRooms.ToArray();
         deathRoom = mapData.deathRoom;
         deathPosition = new float[3];
         deathPosition[0] = mapData.deathPosition.x;

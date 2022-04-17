@@ -12,7 +12,6 @@ public class Safe : MonoBehaviour
     [SerializeField] string emblemName;
     Transform player;
     TutorialManager tutorialManager;
-    bool newEmblemMessageOpen = false;
     InputManager im;
     float playerDistance;
     float interactDistance = 2;
@@ -21,6 +20,7 @@ public class Safe : MonoBehaviour
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => Interaction();
+        im.controls.Dialogue.Next.performed += ctx => CloseNewEmblemMessage();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         newEmblemMessage.SetActive(false);
     }
@@ -40,18 +40,22 @@ public class Safe : MonoBehaviour
 
     void Interaction()
     {
-        if (newEmblemMessageOpen)
-        { 
-            newEmblemMessageOpen = false;
-            newEmblemMessage.SetActive(false);
-            TriggerTutorial();
-        }
-        else if(playerDistance <= interactDistance && !playerData.emblems.Contains(emblemName))
+        if(playerDistance <= interactDistance && !playerData.emblems.Contains(emblemName))
         {
             playerData.emblems.Add(emblemName);
             newEmblemMessage.SetActive(true);
-            newEmblemMessageOpen = true;
             emblemMessageText.text = "New Emblem: " + emblemName;
+            im.Dialogue();
+        }
+    }
+
+    void CloseNewEmblemMessage()
+    {
+        if(playerDistance <= interactDistance)
+        {
+            newEmblemMessage.SetActive(false);
+            im.Gameplay();
+            TriggerTutorial();
         }
     }
 

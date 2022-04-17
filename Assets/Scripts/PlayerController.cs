@@ -30,12 +30,13 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     Vector3 dashDirection;
     float dashSpeed = 1000;
-    float dashTime = 0;
+    public float dashTime = 0;
     float maxDashTime = 0.2f;
     float dashStaminaCost = 30f;
     string healString = "Heal";
     string blockString = "Block";
     float blockCD = 3;
+    float healCD = 30;
     float attackPointRadius = 1.5f;
     float lockOnDistance = 10;
     public bool preventInput = false;
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
             playerData.duckCD = blockCD;
         }
 
-        if (!playerData.hasHealed && playerData.duckCD > 0)
+        if (playerData.healCharges > 0 && playerData.duckCD > 0)
         {
             playerData.duckCD -= Time.deltaTime;
             if (playerData.equippedEmblems.Contains(emblemLibrary.magical_acceleration))
@@ -161,8 +162,8 @@ public class PlayerController : MonoBehaviour
             switch (playerData.equippedAbility)
             {
                 case "Heal":
-                    playerData.hasHealed = true;
-                    playerData.duckCD += 1;
+                    playerData.healCharges -= 1;
+                    playerData.duckCD += 30;
                     break;
                 case "Block":
                     playerData.duckCD += blockCD;
@@ -294,6 +295,7 @@ public class PlayerController : MonoBehaviour
             if (Vector3.Distance(transform.position, gm.enemies[enemy].transform.position) < currentDistance)
             {
                 lockOnTarget = gm.enemies[enemy].transform;
+                currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
             }
         }
         if(lockOnTarget != transform)

@@ -9,6 +9,7 @@ public class Remnant : MonoBehaviour
     [SerializeField] GameObject message;
     Transform player;
     TutorialManager tutorialManager;
+    InputManager im;
     PlayerControls controls;
     float playerDistance;
     float interactDistance = 2;
@@ -16,8 +17,11 @@ public class Remnant : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        
         controls = new PlayerControls();
         controls.Gameplay.Interact.performed += ctx => PickUpRemnant();
+
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
     }
 
     // Update is called once per frame
@@ -32,11 +36,13 @@ public class Remnant : MonoBehaviour
         {
             message.SetActive(false);
         }
+
+
     }
 
     void PickUpRemnant()
     {
-        if(playerDistance <= interactDistance)
+        if(playerDistance <= interactDistance && im.controls.Gameplay.enabled)
         {
             playerData.money += playerData.lostMoney;
             playerData.lostMoney = 0;

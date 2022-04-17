@@ -30,6 +30,8 @@ public class TutorialManager : MonoBehaviour
     string block = "Block";
     [SerializeField] GameObject endOfDemoTutorial;
     string endOfDemo = "EndOfDemo";
+    [SerializeField] GameObject altarTutorial;
+    string altar = "Altar";
     public List<string> allTutorials;
 
     private void Start()
@@ -156,6 +158,14 @@ public class TutorialManager : MonoBehaviour
         OpenMessage();
     }
 
+    public void AltarTutorial()
+    {
+        playerData.tutorials.Remove("Altar");
+        nextMessage = null;
+        currentMessage = Instantiate(altarTutorial);
+        OpenMessage();
+    }
+
     void TutorialList()
     {
         allTutorials.Clear();
@@ -168,5 +178,6 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(emblem);
         allTutorials.Add(block);
         allTutorials.Add(endOfDemo);
+        allTutorials.Add(altar);
     }
 }

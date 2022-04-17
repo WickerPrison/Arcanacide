@@ -11,6 +11,8 @@ public class MapData : ScriptableObject
 
     public List<int> unlockedDoors;
 
+    public List<int> visitedRooms;
+
     public List<int> usedChargingStations;
 
     public string deathRoom;

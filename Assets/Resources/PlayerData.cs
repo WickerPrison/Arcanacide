@@ -8,7 +8,8 @@ public class PlayerData : ScriptableObject
     public int health;
     public string equippedAbility;
     public float duckCD;
-    public bool hasHealed;
+    public int maxHealCharges;
+    public int healCharges;
     public bool hasSpawned;
     public int lastAltar;
     public List<string> unlockedAbilities;

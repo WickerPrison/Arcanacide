@@ -9,6 +9,10 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerControls();
+    }
+
+    private void Start()
+    {
         Gameplay();
     }
 
@@ -42,6 +46,14 @@ public class InputManager : MonoBehaviour
         controls.Gameplay.Disable();
         controls.Menu.Disable();
         controls.Dialogue.Enable();
+    }
+
+    public void DisableAll()
+    {
+        controls.Tutorial.Disable();
+        controls.Gameplay.Disable();
+        controls.Menu.Disable();
+        controls.Dialogue.Disable();
     }
 
     private void OnEnable()

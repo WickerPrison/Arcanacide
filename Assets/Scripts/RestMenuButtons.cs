@@ -9,9 +9,12 @@ public class RestMenuButtons : MonoBehaviour
     [SerializeField] MapData mapData;
     [SerializeField] GameObject emblemMenuPrefab;
     [SerializeField] GameObject levelUpMenuPrefab;
+    [SerializeField] GameObject mapMenuPrefab;
+    public Vector3 mapPlayerFacePosition;
     public GameObject firstButton;
     GameObject emblemMenu;
     GameObject levelUpMenu;
+    GameObject mapMenu;
     public Transform spawnPoint;
     public int altarNumber;
     Transform player;
@@ -51,6 +54,15 @@ public class RestMenuButtons : MonoBehaviour
         levelUpMenuScript.altarNumber = altarNumber;
         levelUpMenuScript.spawnPoint = spawnPoint;
         levelUpMenuScript.restMenuScript = this;
+        controls.Disable();
+    }
+
+    public void OpenMapMenu()
+    {
+        mapMenu = Instantiate(mapMenuPrefab);
+        MapMenu mapMenuScript = mapMenu.GetComponent<MapMenu>();
+        mapMenuScript.restMenuScript = this;
+        mapMenuScript.playerFacePosition = mapPlayerFacePosition;
         controls.Disable();
     }
 

@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     bool fireBossKilled = false;
     bool secretaryConvo = false;
 
-
     private void Start()
     {
         if(SceneManager.GetActiveScene().name == mapData.deathRoom)
@@ -47,6 +46,8 @@ public class GameManager : MonoBehaviour
 
         if(data != null)
         {
+            playerData.maxHealCharges = data.maxHealCharges;
+            playerData.healCharges = data.healCharges;
             playerData.lastAltar = data.lastAltar;
             playerData.unlockedAbilities = data.unlockedAbilities;
             playerData.emblems = data.emblems;
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
             playerData.dedication = data.dedication;
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
+            mapData.visitedRooms = data.visitedRooms.ToList();
             mapData.deathRoom = data.deathRoom;
             mapData.deathPosition = new Vector3(data.deathPosition[0], data.deathPosition[1], data.deathPosition[2]);
             mapData.ticketFiled = data.ticketFiled;
@@ -76,7 +78,8 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         playerData.health = playerData.MaxHealth();
-        playerData.hasHealed = false;
+        playerData.maxHealCharges = 1;
+        playerData.healCharges = 1;
         playerData.lastAltar = lastAltar;
         playerData.unlockedAbilities.Clear();
         playerData.unlockedAbilities.Add("Heal");
@@ -92,6 +95,7 @@ public class GameManager : MonoBehaviour
         playerData.dedication = 1;
 
         mapData.unlockedDoors.Clear();
+        mapData.visitedRooms.Clear();
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;

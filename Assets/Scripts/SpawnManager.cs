@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    [SerializeField] int roomNumber;
     [SerializeField] MapData mapData;
     public List<Transform> spawnPoints;
     Transform player;
@@ -12,6 +13,10 @@ public class SpawnManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         SpawnPosition();
+        if (!mapData.visitedRooms.Contains(roomNumber))
+        {
+            mapData.visitedRooms.Add(roomNumber);
+        }
     }
 
     public void SpawnPosition()

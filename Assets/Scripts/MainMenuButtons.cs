@@ -19,7 +19,7 @@ public class MainMenuButtons : MonoBehaviour
     public void NewGame()
     {
         gm.NewGame();
-        SceneManager.LoadScene("ChoosePath");
+        SceneManager.LoadScene("IntroCutscene");
     }
 
     public void QuitGame()

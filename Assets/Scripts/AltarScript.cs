@@ -8,6 +8,7 @@ public class AltarScript : MonoBehaviour
     [SerializeField] GameObject restMenuPrfab;
     [SerializeField] Transform spawnPoint;
     [SerializeField] int altarNumber;
+    [SerializeField] Vector3 mapPlayerFacePosition;
     Transform player;
     PlayerController playerController;
     GameObject restMenu;
@@ -46,6 +47,7 @@ public class AltarScript : MonoBehaviour
             restMenuButtons = restMenu.GetComponent<RestMenuButtons>();
             restMenuButtons.altarNumber = altarNumber;
             restMenuButtons.spawnPoint = spawnPoint;
+            restMenuButtons.mapPlayerFacePosition = mapPlayerFacePosition;
             im.Menu();
         }
     }
