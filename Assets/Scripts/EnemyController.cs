@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
     GameObject player;
     GameManager gm;
     TutorialManager tutorialManager;
-    EnemyScript enemyScript;
+    public EnemyScript enemyScript;
     EnemySound enemySound;
     public PlayerController playerController;
     public PlayerScript playerScript;

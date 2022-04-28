@@ -122,6 +122,8 @@ public class EnemyScript : MonoBehaviour
             bossHealthbar.SetActive(false);
             ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
             managerVanquished.ShowMessage();
+            SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
+            sm.BossDefeated();
         }
 
         Destroy(gameObject);

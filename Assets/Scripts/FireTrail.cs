@@ -5,8 +5,8 @@ using UnityEngine;
 public class FireTrail : MonoBehaviour
 {
     AudioSource sfx;
-    float duration = 5;
-    float damagePerSecond = 5;
+    public float duration = 5;
+    public float damagePerSecond = 5;
     float damage;
 
 

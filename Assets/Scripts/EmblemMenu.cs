@@ -18,6 +18,7 @@ public class EmblemMenu : MonoBehaviour
     public int altarNumber;
     public Transform spawnPoint;
     PlayerControls controls;
+    SoundManager sm;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class EmblemMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         SpawnEmblems();
         if(playerData.emblems.Count > 0)
@@ -54,6 +56,7 @@ public class EmblemMenu : MonoBehaviour
         restMenuScript.altarNumber = altarNumber;
         restMenuScript.spawnPoint = spawnPoint;
         */
+        sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
         restMenuScript.controls.Enable();

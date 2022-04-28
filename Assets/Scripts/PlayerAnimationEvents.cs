@@ -12,7 +12,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerSound playerSound;
     Animator frontAnimator;
     float attackStaminaCost = 20f;
-    float hitboxRadius = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -36,18 +35,20 @@ public class PlayerAnimationEvents : MonoBehaviour
         smearShapeFront.arcSpeed = smearSpeed;
         playerAnimation.particleSmear();
         EnemyScript enemyScript;
-        Collider[] hitEnemies = Physics.OverlapSphere(playerController.attackPoint.position, hitboxRadius, playerController.enemyLayers);
+        Collider[] getHitEnemies = playerController.HitBox();
+        Collider[] hitEnemies = getHitEnemies;
         foreach(Collider enemy in hitEnemies)
         {
             enemyScript = enemy.GetComponent<EnemyScript>();
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            if (enemyController.parryWindow)
+            if (enemyController.parryWindow && enemyController.canHitPlayer)
             {
                 enemyController.isParrying = true;
             }
             else if(playerAnimation.isParrying)
             {
                 playerAnimation.isParrying = false;
+                playerController.Parry(enemyScript);
             }
             else
             {

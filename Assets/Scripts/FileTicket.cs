@@ -8,6 +8,7 @@ public class FileTicket : MonoBehaviour
     [SerializeField] GameObject message;
     Transform player;
     InputManager im;
+    AudioSource sfx;
     float playerDistance;
     float interactDistance = 2;
 
@@ -16,6 +17,7 @@ public class FileTicket : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => FileSupportTicket();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        sfx = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,7 @@ public class FileTicket : MonoBehaviour
     {
         if(playerDistance <= interactDistance && !mapData.ticketFiled)
         {
+            sfx.Play();
             mapData.ticketFiled = true;
         }
     }

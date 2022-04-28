@@ -58,6 +58,10 @@ public class PlayerSound : MonoBehaviour
         SFX.PlayOneShot(soundEffects[8], 0.5f);
     }
 
+    public void Shield()
+    {
+        SFX.PlayOneShot(soundEffects[9], 1);
+    }
     public void StopSoundEffect()
     {
         SFX.Stop();

@@ -9,6 +9,7 @@ public class Shop : MonoBehaviour
     GameObject shopWindow;
     Transform player;
     InputManager im;
+    SoundManager sm;
     float playerDistance;
     float interactDistance = 2;
 
@@ -22,6 +23,7 @@ public class Shop : MonoBehaviour
     void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        sm = im.gameObject.GetComponent<SoundManager>();
         im.controls.Gameplay.Interact.performed += ctx => StartDialogue();
         im.controls.Dialogue.Next.performed += ctx => Talk();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -53,6 +55,7 @@ public class Shop : MonoBehaviour
 
     void Talk()
     {
+        sm.ButtonSound();
         switch (tracker)
         {
             case 0:

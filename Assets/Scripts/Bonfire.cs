@@ -7,10 +7,10 @@ public class Bonfire : MonoBehaviour
     [SerializeField] AudioClip impactSound;
     AudioSource sfx;
     Transform player;
-    float duration = 5;
+    float duration = 7;
     int damage = 20;
     float poiseDamage = 70;
-    float speed = 5;
+    float speed = 8;
 
     private void Start()
     {

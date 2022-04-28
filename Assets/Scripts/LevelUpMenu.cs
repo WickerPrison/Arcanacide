@@ -20,6 +20,7 @@ public class LevelUpMenu : MonoBehaviour
     public int altarNumber;
     public Transform spawnPoint;
     PlayerControls controls;
+    SoundManager sm;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class LevelUpMenu : MonoBehaviour
 
     private void Start()
     {
+        sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
         UpdateText();   
@@ -36,6 +38,7 @@ public class LevelUpMenu : MonoBehaviour
 
     public void IncreaseStrength()
     {
+        sm.ButtonSound();
         RequiredMoney();
         if(playerData.money >= requiredMoney)
         {
@@ -47,6 +50,7 @@ public class LevelUpMenu : MonoBehaviour
 
     public void IncreaseDexterity()
     {
+        sm.ButtonSound();
         RequiredMoney();
         if (playerData.money >= requiredMoney)
         {
@@ -58,6 +62,7 @@ public class LevelUpMenu : MonoBehaviour
 
     public void IncreaseVitality()
     {
+        sm.ButtonSound();
         RequiredMoney();
         if (playerData.money >= requiredMoney)
         {
@@ -69,6 +74,7 @@ public class LevelUpMenu : MonoBehaviour
 
     public void IncreaseDedication()
     {
+        sm.ButtonSound();
         RequiredMoney();
         if (playerData.money >= requiredMoney)
         {
@@ -86,6 +92,7 @@ public class LevelUpMenu : MonoBehaviour
         restMenuScript.altarNumber = altarNumber;
         restMenuScript.spawnPoint = spawnPoint;
         */
+        sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
         restMenuScript.controls.Enable();

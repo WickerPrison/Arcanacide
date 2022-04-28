@@ -51,6 +51,32 @@ public class BossAnimationEvents : EnemyAnimationEvents
         bossController.FireWave();
     }
 
+    public void Phase2FireWave()
+    {
+        if(bossController.phase > 1)
+        {
+            FireWave();
+        }
+    }
+
+    public void Phase1FireWave()
+    {
+        if(bossController.phase == 1)
+        {
+            FireWave();
+        }
+    }
+
+    public void FireRing()
+    {
+        bossController.FireRing();
+    }
+
+    public void GroundFire()
+    {
+        bossController.GroundFire();
+    }
+
     public void EndStagger()
     {
         bossController.EndStagger();

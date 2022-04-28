@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     InputManager im;
     GameManager gm;
+    SoundManager sm;
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
     PlayerSound playerSound;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     float blockCD = 3;
     float healCD = 30;
     float attackPointRadius = 1.5f;
+    float hitboxRadius = 1.5f;
     float lockOnDistance = 10;
     public bool preventInput = false;
     public bool shield;
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        sm = gm.gameObject.GetComponent<SoundManager>();
         SetUpControls();
         //Set references to other player scripts
         playerAnimation = GetComponent<PlayerAnimation>();
@@ -252,6 +255,12 @@ public class PlayerController : MonoBehaviour
         enemyScript.LosePoise(playerData.AttackPower());
     }
 
+    public Collider[] HitBox()
+    {
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, hitboxRadius, enemyLayers);
+        return hitEnemies;
+    }
+
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
     void AttackPointPosition()
     {
@@ -307,6 +316,7 @@ public class PlayerController : MonoBehaviour
 
     void PauseMenu()
     {
+        sm.ButtonSound();
         if (!pauseMenu)
         {
             preventInput = true;

@@ -21,6 +21,7 @@ public class RestMenuButtons : MonoBehaviour
     PlayerController playerController;
     PlayerScript playerScript;
     public PlayerControls controls;
+    SoundManager sm;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class RestMenuButtons : MonoBehaviour
 
     void Start()
     {
+        sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerController = player.gameObject.GetComponent<PlayerController>();
         playerScript = player.gameObject.GetComponent<PlayerScript>();
@@ -39,6 +41,7 @@ public class RestMenuButtons : MonoBehaviour
 
     public void OpenEmblemMenu()
     {
+        sm.ButtonSound();
         emblemMenu = Instantiate(emblemMenuPrefab);
         EmblemMenu emblemMenuScript = emblemMenu.GetComponent<EmblemMenu>();
         emblemMenuScript.altarNumber = altarNumber;
@@ -49,6 +52,7 @@ public class RestMenuButtons : MonoBehaviour
 
     public void OpenLevelUpMenu()
     {
+        sm.ButtonSound();
         levelUpMenu = Instantiate(levelUpMenuPrefab);
         LevelUpMenu levelUpMenuScript = levelUpMenu.GetComponent<LevelUpMenu>();
         levelUpMenuScript.altarNumber = altarNumber;
@@ -59,6 +63,7 @@ public class RestMenuButtons : MonoBehaviour
 
     public void OpenMapMenu()
     {
+        sm.ButtonSound();
         mapMenu = Instantiate(mapMenuPrefab);
         MapMenu mapMenuScript = mapMenu.GetComponent<MapMenu>();
         mapMenuScript.restMenuScript = this;
@@ -68,6 +73,7 @@ public class RestMenuButtons : MonoBehaviour
 
     public void CloseRestMenu()
     {
+        sm.ButtonSound();
         Rest();
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>().Gameplay();
         Destroy(gameObject);
@@ -75,6 +81,7 @@ public class RestMenuButtons : MonoBehaviour
 
     void Rest()
     {
+        sm.RestSound();
         playerData.lastAltar = altarNumber;
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();

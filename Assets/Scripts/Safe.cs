@@ -13,16 +13,20 @@ public class Safe : MonoBehaviour
     Transform player;
     TutorialManager tutorialManager;
     InputManager im;
+    SoundManager sm;
+    AudioSource sfx;
     float playerDistance;
     float interactDistance = 2;
 
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        sm = im.gameObject.GetComponent<SoundManager>();
         im.controls.Gameplay.Interact.performed += ctx => Interaction();
         im.controls.Dialogue.Next.performed += ctx => CloseNewEmblemMessage();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         newEmblemMessage.SetActive(false);
+        sfx = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -42,6 +46,7 @@ public class Safe : MonoBehaviour
     {
         if(playerDistance <= interactDistance && !playerData.emblems.Contains(emblemName))
         {
+            sfx.Play();
             playerData.emblems.Add(emblemName);
             newEmblemMessage.SetActive(true);
             emblemMessageText.text = "New Emblem: " + emblemName;
@@ -51,6 +56,7 @@ public class Safe : MonoBehaviour
 
     void CloseNewEmblemMessage()
     {
+        sm.ButtonSound();
         if(playerDistance <= interactDistance)
         {
             newEmblemMessage.SetActive(false);

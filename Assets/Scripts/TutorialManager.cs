@@ -6,6 +6,7 @@ public class TutorialManager : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     InputManager im;
+    SoundManager sm;
     GameObject currentMessage;
     GameObject nextMessage;
     bool messageOpen = false;
@@ -37,6 +38,7 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        sm = im.gameObject.GetComponent<SoundManager>();
         im.controls.Tutorial.Select.performed += ctx => NextMessage();
         TutorialList();
         if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
@@ -66,6 +68,8 @@ public class TutorialManager : MonoBehaviour
         {
             return;
         }
+
+        sm.ButtonSound();
 
         if(nextMessage != null)
         {

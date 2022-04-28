@@ -12,6 +12,7 @@ public class MapMenu : MonoBehaviour
     PlayerControls controls;
     public Vector3 playerFacePosition;
     public RestMenuButtons restMenuScript;
+    SoundManager sm;
 
 
     private void Awake()
@@ -22,6 +23,7 @@ public class MapMenu : MonoBehaviour
 
     private void Start()
     {
+        sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(backButton);
         UpdateMap();
@@ -30,6 +32,7 @@ public class MapMenu : MonoBehaviour
 
     public void OpenRestMenu()
     {
+        sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
         restMenuScript.controls.Enable();

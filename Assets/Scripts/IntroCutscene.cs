@@ -8,6 +8,7 @@ public class IntroCutscene : MonoBehaviour
     [SerializeField] List<GameObject> panels = new List<GameObject>();
     int panelIndex = 0;
     PlayerControls controls;
+    SoundManager sm;
 
     private void Awake()
     {
@@ -24,10 +25,13 @@ public class IntroCutscene : MonoBehaviour
         }
 
         panels[0].SetActive(true);
+
+        sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
     }
 
     void NextPanel()
     {
+        sm.ButtonSound();
         if(panelIndex < 3)
         {
             panels[panelIndex].SetActive(false);

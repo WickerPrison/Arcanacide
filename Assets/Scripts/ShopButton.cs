@@ -14,9 +14,11 @@ public class ShopButton : MonoBehaviour
     [SerializeField] TextMeshProUGUI descriptionText;
     [SerializeField] string emblemName;
     [SerializeField] int cost = 100;
+    SoundManager sm;
 
     public void ShopButtonPressed()
     {
+        sm.ButtonSound();
         if (!playerData.emblems.Contains(emblemName) && playerData.money >= cost)
         {
             playerData.emblems.Add(emblemName);
@@ -27,6 +29,7 @@ public class ShopButton : MonoBehaviour
 
     private void Start()
     {
+        sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         UpdateText();
     }
 

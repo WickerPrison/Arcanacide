@@ -9,7 +9,9 @@ public class BossController : EnemyController
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject bonfirePrefab;
     [SerializeField] GameObject fireWavePrefab;
+    [SerializeField] GameObject groundFirePrefab;
     BossDialogue bossDialogue;
+    FireRing fireRing;
     public int strafeLeftOrRight = 1;
 
     float tooClose = 3f;
@@ -34,6 +36,12 @@ public class BossController : EnemyController
     public bool pauseTimer = false;
     int fireBallDamage = 20;
     int fireBallPoiseDamage = 15;
+    public int phase = 1;
+    int phaseTrigger = 300;
+    int phaseCounter = 3;
+    int fireRingDamage = 50;
+    float fireRingPoiseDamage = 150;
+    float fireRingRadius = 2.5f;
 
     public override void Start()
     {
@@ -42,6 +50,17 @@ public class BossController : EnemyController
         spellAttackPoiseDamage = fireBallPoiseDamage;
         spellAttackDamage = fireBallDamage;
         bossDialogue = GetComponent<BossDialogue>();
+        fireRing = GetComponentInChildren<FireRing>();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        if(enemyScript.health < phaseTrigger)
+        {
+            phaseTrigger = 0;
+            StartPhase2();
+        }
     }
 
     void FixedUpdate()
@@ -73,11 +92,19 @@ public class BossController : EnemyController
 
             if (attackCD <= 0 && !isStaggered)
             {
-                if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose && !isStaggered)
+                if (Vector3.Distance(transform.position, playerController.transform.position) < tooClose && !isStaggered)
                 {
-                    runAwayTime = runAwayMaxTime;
+                    if(phase == 1)
+                    {
+                        runAwayTime = runAwayMaxTime;
+                    }
+                    else
+                    {
+                        frontAnimator.Play("FireRing");
+                        backAnimator.Play("FireRing");
+                    }
                 }
-                else if(bonfireCD <= 0)
+                else if (bonfireCD <= 0)
                 {
                     pauseTimer = true;
                     frontAnimator.Play("Bonfires");
@@ -86,16 +113,21 @@ public class BossController : EnemyController
                 }
                 else if (fireBallCD <= 0)
                 {
-                    int num = Random.Range(1, 3);
+                    int num = Random.Range(1, phaseCounter);
                     if (num == 1)
                     {
                         frontAnimator.Play("FireBalls");
                         backAnimator.Play("FireBalls");
                     }
-                    if(num == 2)
+                    if (num == 2)
                     {
                         frontAnimator.Play("FireWave");
                         backAnimator.Play("FireWave");
+                    }
+                    if(num == 3)
+                    {
+                        frontAnimator.Play("GroundFire");
+                        backAnimator.Play("GroundFire");
                     }
                     fireBallCD = fireBallMaxCD;
                 }
@@ -174,10 +206,13 @@ public class BossController : EnemyController
 
     public void Bonfire()
     {
+        float bonfireMinSummonRadius = 2;
         float bonfireSummonRadius = 7;
-        float xPos = Random.Range(-bonfireSummonRadius, bonfireSummonRadius);
-        float zPos = Random.Range(-bonfireSummonRadius, bonfireSummonRadius);
-        Vector3 startPos = transform.position + new Vector3(xPos, -1, zPos);
+        int xDir = Random.Range(1, 3);
+        int yDir = Random.Range(1, 3);
+        float xPos = Random.Range(bonfireMinSummonRadius, bonfireSummonRadius);
+        float zPos = Random.Range(bonfireMinSummonRadius, bonfireSummonRadius);
+        Vector3 startPos = playerController.transform.position + new Vector3(xPos * Mathf.Pow(-1, xDir), -1, zPos * Mathf.Pow(-1, yDir));
         NavMeshHit hit;
         NavMesh.SamplePosition(startPos, out hit, bonfireSummonRadius + 1, NavMesh.AllAreas);
         GameObject bonfire = Instantiate(bonfirePrefab);
@@ -204,6 +239,23 @@ public class BossController : EnemyController
         }
     }
 
+    public void FireRing()
+    {
+        fireRing.Explode();
+        if (Vector3.Distance(transform.position, playerController.transform.position) < fireRingRadius && playerController.gameObject.layer == 3)
+        {
+            playerScript.LoseHealth(fireRingDamage);
+            playerScript.LosePoise(fireRingPoiseDamage);
+            Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
+            Vector3 awayVector = playerController.transform.position - transform.position;
+            playerController.knockback = true;
+            PlayerAnimation playerAnimation = playerController.gameObject.GetComponent<PlayerAnimation>();
+            playerAnimation.attacking = false;
+            playerRB.velocity = Vector3.zero;
+            playerRB.AddForce(awayVector.normalized * 7, ForceMode.VelocityChange);
+        }
+    }
+
     public void FireTrail()
     {
         GameObject fireTrail;
@@ -213,6 +265,27 @@ public class BossController : EnemyController
         {
             fireTrail.transform.localScale = Vector3.Scale(fireTrail.transform.localScale, new Vector3(2f, 1f, 2f));
         }
+    }
+
+    public void GroundFire()
+    {
+        GameObject groundFire = Instantiate(groundFirePrefab);
+        groundFire.transform.position = transform.position;
+        GroundFire groundFireScript = groundFire.GetComponent<GroundFire>();
+        groundFireScript.target = playerController.transform;
+    }
+
+    public void FireBlast()
+    {
+
+    }
+
+    void StartPhase2()
+    {
+        phase = 2;
+        backAnimator.SetInteger("Phase", 2);
+        frontAnimator.SetInteger("Phase", 2);
+        phaseCounter = 4;
     }
 
     void Strafe()

@@ -57,17 +57,24 @@ public class PlayerScript : MonoBehaviour
                 YouDied youDied = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<YouDied>();
                 youDied.playerScript = this;
                 youDied.ShowMessage();
+                SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
+                sm.DeathSoundEffect();
             }
             else
             {
                 UpdateHealthbar();
             }
         }
+        else
+        {
+            sfx.Shield();
+        }
     }
 
     public void MaxHeal()
     {
         playerData.health = playerData.MaxHealth();
+        sfx.Heal();
         UpdateHealthbar();
     }
 

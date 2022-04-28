@@ -7,6 +7,7 @@ public class Secretary : MonoBehaviour
     [SerializeField] GameObject dialoguePrefab;
     [SerializeField] MapData mapData;
     InputManager im;
+    SoundManager sm;
     DialogueScript dialogue;
     int tracker = 0;
 
@@ -19,6 +20,7 @@ public class Secretary : MonoBehaviour
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        sm = im.gameObject.GetComponent<SoundManager>();
         im.controls.Dialogue.Next.performed += ctx => Talk();
     }
 
@@ -35,6 +37,7 @@ public class Secretary : MonoBehaviour
 
     void Talk()
     {
+        sm.ButtonSound();
         switch (tracker)
         {
             case 0:

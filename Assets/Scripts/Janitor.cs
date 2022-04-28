@@ -14,6 +14,7 @@ public class Janitor : MonoBehaviour
     Transform player;
     Vector3 scale;
     InputManager im;
+    SoundManager sm;
     float playerDistance;
     float interactDistance = 2;
 
@@ -24,6 +25,7 @@ public class Janitor : MonoBehaviour
     void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        sm = im.GetComponent<SoundManager>();
         im.controls.Gameplay.Interact.performed += ctx => StartConversation();
         im.controls.Dialogue.Next.performed += ctx => Talk();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -75,6 +77,7 @@ public class Janitor : MonoBehaviour
     {
         if(playerDistance <= interactDistance && !playerData.unlockedAbilities.Contains("Block"))
         {
+            sm.ButtonSound();
             switch (conversationTracker)
             {
                 case 0:
@@ -89,6 +92,7 @@ public class Janitor : MonoBehaviour
         }
         else
         {
+            sm.ButtonSound();
             Destroy(dialogue.gameObject);
             im.Gameplay();
         }

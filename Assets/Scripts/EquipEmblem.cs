@@ -14,10 +14,12 @@ public class EquipEmblem : MonoBehaviour
     public EmblemMenu emblemMenu;
     Button button;
     public string emblemName;
+    SoundManager sm;
 
     // Start is called before the first frame update
     void Start()
     {
+        sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         SetUpMenuControls();
         nameText.text = emblemName;
         descriptionText.text = emblemLibrary.GetDescription(emblemName);
@@ -29,6 +31,7 @@ public class EquipEmblem : MonoBehaviour
 
     public void ButtonPressed()
     {
+        sm.ButtonSound();
         if (playerData.equippedEmblems.Contains(emblemName))
         {
             EmblemUnequip();

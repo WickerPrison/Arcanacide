@@ -8,6 +8,7 @@ public class ShopWindow : MonoBehaviour
     [SerializeField] GameObject firstButton;
     Shop shop;
     PlayerControls controls;
+    SoundManager sm;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class ShopWindow : MonoBehaviour
 
     void Start()
     {
+        sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
         shop = GameObject.FindGameObjectWithTag("Shop").GetComponent<Shop>();   
@@ -24,6 +26,7 @@ public class ShopWindow : MonoBehaviour
 
     public void CloseShopWindow()
     {
+        sm.ButtonSound();
         shop.CloseShop();
     }
 
