@@ -13,7 +13,7 @@ public class MapData : ScriptableObject
 
     public List<int> visitedRooms;
 
-    public List<int> usedChargingStations;
+    public List<int> usedAltars;
 
     public string deathRoom;
     public Vector3 deathPosition;
@@ -26,7 +26,7 @@ public class MapData : ScriptableObject
         doorNumber = 0;
         deadEnemies.Clear();
         unlockedDoors.Clear();
-        usedChargingStations.Clear();
+        usedAltars.Clear();
         fireBossKilled = false;
     }
 }

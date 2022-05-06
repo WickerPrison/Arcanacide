@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    [SerializeField] PlayerController playerController;
+    [SerializeField] PlayerScript playerScript;
     [SerializeField] SpriteRenderer spriteRenderer;
 
     // Update is called once per frame
     void Update()
     {
-        if (playerController.shield)
+        if (playerScript.shield)
         {
             spriteRenderer.enabled = true;
         }

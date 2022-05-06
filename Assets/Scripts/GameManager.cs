@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         {
             playerData.maxHealCharges = data.maxHealCharges;
             playerData.healCharges = data.healCharges;
-            playerData.lastAltar = data.lastAltar;
+            playerData.lastSwordSite = data.lastSwordSite;
             playerData.unlockedAbilities = data.unlockedAbilities;
             playerData.emblems = data.emblems;
             playerData.equippedEmblems = data.equippedEmblems;
@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
             playerData.dexterity = data.dexterity;
             playerData.vitality = data.vitality;
             playerData.dedication = data.dedication;
+            playerData.maxMana = data.maxMana;
+            playerData.mana = data.mana;
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.visitedRooms = data.visitedRooms.ToList();
@@ -80,10 +82,8 @@ public class GameManager : MonoBehaviour
         playerData.health = playerData.MaxHealth();
         playerData.maxHealCharges = 1;
         playerData.healCharges = 1;
-        playerData.lastAltar = lastAltar;
+        playerData.lastSwordSite = lastAltar;
         playerData.unlockedAbilities.Clear();
-        playerData.unlockedAbilities.Add("Heal");
-        playerData.equippedAbility = "Heal";
         playerData.emblems.Clear();
         playerData.equippedEmblems.Clear();
         playerData.tutorials = tutorialManager.allTutorials;
@@ -93,6 +93,8 @@ public class GameManager : MonoBehaviour
         playerData.dexterity = 1;
         playerData.vitality = 1;
         playerData.dedication = 1;
+        playerData.maxMana = 50;
+        playerData.mana = playerData.maxMana;
 
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();

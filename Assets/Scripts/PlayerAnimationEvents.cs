@@ -101,13 +101,13 @@ public class PlayerAnimationEvents : MonoBehaviour
             playerController.dashTime = 0;
         }
         playerAnimation.attacking = false;
-        playerController.shield = true;
+        playerScript.shield = true;
         playerAnimation.StartBodyMagic();
     }
 
     public void EndShield()
     {
-        playerController.shield = false;
+        playerScript.shield = false;
         playerAnimation.EndBodyMagic();
     }
 

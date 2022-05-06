@@ -123,10 +123,16 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.Play("Stagger");
     }
 
-    public void UseDuck(string abilityName)
+    public void StopBlocking()
     {
-        frontAnimator.Play(abilityName);
-        backAnimator.Play(abilityName);
+        frontAnimator.Play("StopBlocking");
+        backAnimator.Play("StopBlocking");
+    }
+
+    public void Shield()
+    {
+        frontAnimator.Play("Block");
+        backAnimator.Play("Block");
     }
 
     public void StaggerUpdate(float stagger)

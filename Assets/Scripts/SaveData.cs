@@ -10,7 +10,7 @@ public class SaveData
     public int attackPower;
     public int maxHealCharges;
     public int healCharges;
-    public int lastAltar;
+    public int lastSwordSite;
     public List<string> unlockedAbilities;
     public List<string> emblems;
     public List<string> equippedEmblems;
@@ -23,6 +23,8 @@ public class SaveData
     public int dexterity;
     public int vitality;
     public int dedication;
+    public float maxMana;
+    public float mana;
 
     public int[] unlockedDoors;
     public int[] visitedRooms;
@@ -36,7 +38,7 @@ public class SaveData
     {
         maxHealCharges = playerData.maxHealCharges;
         healCharges = playerData.healCharges;
-        lastAltar = playerData.lastAltar;
+        lastSwordSite = playerData.lastSwordSite;
         unlockedAbilities = playerData.unlockedAbilities;
         emblems = playerData.emblems;
         equippedEmblems = playerData.equippedEmblems;
@@ -48,6 +50,8 @@ public class SaveData
         dexterity = playerData.dexterity;
         vitality = playerData.vitality;
         dedication = playerData.dedication;
+        maxMana = playerData.maxMana;
+        mana = playerData.mana;
 
 
         unlockedDoors = mapData.unlockedDoors.ToArray();

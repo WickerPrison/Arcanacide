@@ -6,7 +6,7 @@ using UnityEngine;
 public class EmblemLibrary : ScriptableObject
 {
     public string magical_acceleration = "Magical Acceleration";
-    public string magical_acceleration_description = "Abilities recharge twice as fast";
+    public string magical_acceleration_description = "Mana recharges faster";
     public string heavy_blows = "Heavy Blows";
     public string heavy_blows_description = "Attacks stagger enemies faster";
     public string vampiric_strikes = "Vampiric Strikes";

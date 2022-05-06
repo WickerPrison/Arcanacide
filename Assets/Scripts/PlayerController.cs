@@ -34,15 +34,10 @@ public class PlayerController : MonoBehaviour
     public float dashTime = 0;
     float maxDashTime = 0.2f;
     float dashStaminaCost = 30f;
-    string healString = "Heal";
-    string blockString = "Block";
-    float blockCD = 3;
-    float healCD = 30;
     float attackPointRadius = 1.5f;
     float hitboxRadius = 1.5f;
     float lockOnDistance = 10;
     public bool preventInput = false;
-    public bool shield;
 
     public bool pathActive = false;
     float swordMaxTime = 5;
@@ -75,30 +70,6 @@ public class PlayerController : MonoBehaviour
         //turn those inputs into a vector that cannot have a magnitude greater than 1
         moveDirection = new Vector3(moveDir.x, 0, moveDir.y);
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
-
-        if (playerAnimation.continueBlocking)
-        {
-            playerData.duckCD = blockCD;
-        }
-
-        if (playerData.healCharges > 0 && playerData.duckCD > 0)
-        {
-            playerData.duckCD -= Time.deltaTime;
-            if (playerData.equippedEmblems.Contains(emblemLibrary.magical_acceleration))
-            {
-                playerData.duckCD -= Time.deltaTime;
-            }
-        }
-
-        float scrollWheel = Mouse.current.scroll.ReadValue().y;
-        if(scrollWheel > 0)
-        {
-            NextAbility();
-        }
-        else if(scrollWheel < 0)
-        {
-            PreviousAbility();
-        }
 
         AttackPointPosition();
 
@@ -141,63 +112,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void EquipAbility(string ability)
+    void Shield()
     {
-        if (playerData.unlockedAbilities.Contains(ability))
+        if (!playerData.unlockedAbilities.Contains("Block"))
         {
-            playerData.equippedAbility = ability;
+            return;
         }
-    }
 
-    void UseAbility()
-    {
-        if (playerData.duckCD <= 0)
+        if(playerData.mana > 0)
         {
             rb.velocity = Vector3.zero;
-            if (playerData.equippedAbility != healString)
-            {
-                playerAnimation.UseDuck(playerData.equippedAbility);
-            }
-            else
-            {
-                playerScript.DuckHeal();
-            }
-            switch (playerData.equippedAbility)
-            {
-                case "Heal":
-                    playerData.healCharges -= 1;
-                    playerData.duckCD += 30;
-                    break;
-                case "Block":
-                    playerData.duckCD += blockCD;
-                    break;
-            }
+            playerAnimation.Shield();
             playerAnimation.continueBlocking = true;
         }
-    }
-
-    void NextAbility()
-    {
-        int index;
-        index = playerData.unlockedAbilities.IndexOf(playerData.equippedAbility);
-        index += 1;
-        if (index > playerData.unlockedAbilities.Count - 1)
-        {
-            index = 0;
-        }
-        playerData.equippedAbility = playerData.unlockedAbilities[index]; 
-    }
-
-    void PreviousAbility()
-    {
-        int index;
-        index = playerData.unlockedAbilities.IndexOf(playerData.equippedAbility);
-        index -= 1;
-        if (index < 0)
-        {
-            index = playerData.unlockedAbilities.Count - 1;
-        }
-        playerData.equippedAbility = playerData.unlockedAbilities[index];
     }
 
     void Dodge()
@@ -448,10 +375,9 @@ public class PlayerController : MonoBehaviour
         im.controls.Gameplay.PauseMenu.performed += ctx => PauseMenu();
         im.controls.Gameplay.Move.performed += ctx => moveDir = ctx.ReadValue<Vector2>();
         im.controls.Gameplay.Move.canceled += ctx => moveDir = Vector2.zero;
-        im.controls.Gameplay.UseAbility.performed += ctx => UseAbility();
-        im.controls.Gameplay.UseAbility.canceled += ctx => playerAnimation.continueBlocking = false;
-        im.controls.Gameplay.EquipHeal.performed += ctx => EquipAbility(healString);
-        im.controls.Gameplay.EquipBlock.performed += ctx => EquipAbility(blockString);
+        im.controls.Gameplay.Shield.performed += ctx => Shield();
+        im.controls.Gameplay.Shield.canceled += ctx => playerAnimation.continueBlocking = false;
+        im.controls.Gameplay.Heal.performed += ctx => playerScript.Heal();
         im.controls.Gameplay.Look.performed += ctx => rightStickValue = ctx.ReadValue<Vector2>();
         im.controls.Gameplay.Look.canceled += ctx => rightStickValue = Vector2.zero;
     }

@@ -11821,6 +11821,7 @@ MonoBehaviour:
   maxHealth: 100
   maxPoise: 100
   poiseRegeneration: 5
+  isBoss: 0
 --- !u!114 &6037543807233965241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11836,6 +11837,7 @@ MonoBehaviour:
   isMelee: 1
   frontSmear: {fileID: 144368115355007136}
   backSmear: {fileID: 3529451986842610791}
+  enemyScript: {fileID: 0}
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
   playerAnimation: {fileID: 0}
@@ -11856,6 +11858,8 @@ MonoBehaviour:
   directionLock: 0
   parryWindow: 0
   isParrying: 0
+  spellAttackDamage: 15
+  spellAttackPoiseDamage: 15
   hitDamage: 0
   hitPoiseDamage: 0
   canHitPlayer: 0

@@ -82,10 +82,10 @@ public class RestMenuButtons : MonoBehaviour
     void Rest()
     {
         sm.RestSound();
-        playerData.lastAltar = altarNumber;
+        playerData.lastSwordSite = altarNumber;
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();
-        mapData.usedChargingStations.Clear();
+        mapData.usedAltars.Clear();
         playerScript.Rest();
     }
 

@@ -6,12 +6,10 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public int health;
-    public string equippedAbility;
-    public float duckCD;
     public int maxHealCharges;
     public int healCharges;
     public bool hasSpawned;
-    public int lastAltar;
+    public int lastSwordSite;
     public List<string> unlockedAbilities;
     public List<string> emblems;
     public List<string> equippedEmblems;
@@ -25,6 +23,9 @@ public class PlayerData : ScriptableObject
     public int dexterity;
     public int vitality;
     public int dedication;
+
+    public float maxMana = 50;
+    public float mana;
 
 
     public int MaxHealth()
@@ -57,7 +58,7 @@ public class PlayerData : ScriptableObject
                 pathDamage = 10 + 3 * dedication;
                 return pathDamage;
             case "Path":
-                pathDamage = 4 + dedication;
+                pathDamage = 2 + Mathf.FloorToInt(dedication * 0.75f);
                 return pathDamage;
             default:
                 pathDamage = 0;

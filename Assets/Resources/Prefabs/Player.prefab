@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46af2cff8cf5af44ca2aee29f23ac894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 4614688894240553599}
+  playerScript: {fileID: 4614688894240553584}
   spriteRenderer: {fileID: 4759480112261120680}
 --- !u!1 &1396189683088477866
 GameObject:
@@ -11408,7 +11408,6 @@ MonoBehaviour:
   knockback: 0
   dashTime: 0
   preventInput: 0
-  shield: 0
   pathActive: 0
   pathTrailPrefab: {fileID: 4858251652121785841, guid: 1e836e9d474f207419a199a40ad04d17, type: 3}
   lookDir: {x: 0, y: 0}
@@ -11475,11 +11474,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  playerAnimationEvent: {fileID: 6955821376063308663}
   stamina: 0
   poise: 0
   healbarFill: {fileID: 0}
   staminabarFill: {fileID: 0}
+  manaBarFill: {fileID: 0}
+  manaBarCrack: {fileID: 0}
   duckHealTimer: 0
+  shield: 0
 --- !u!81 &614590855892894281
 AudioListener:
   m_ObjectHideFlags: 0

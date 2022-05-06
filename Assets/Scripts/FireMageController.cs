@@ -6,7 +6,7 @@ using UnityEngine;
 public class FireMageController : EnemyController
 {
     [SerializeField] FireRing fireRing;
-    float tooClose = 4;
+    float tooClose = 3.5f;
     int fireBallDamage = 15;
     int fireBallPoiseDamage = 15;
     int fireRingDamage = 30;

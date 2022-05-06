@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AltarDirectory : MonoBehaviour
+public class SwordSiteDirectory : MonoBehaviour
 {
     
-    public string GetSceneName(int altarNumber)
+    public string GetSceneName(int swordSiteNumber)
     {
-        switch (altarNumber)
+        switch (swordSiteNumber)
         {
             case 1:
                 return "Tutorial1";

@@ -12,9 +12,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] MapData mapData;
     public float stamina;
     public float poise;
-    [SerializeField] GameObject healbarFill;
-    [SerializeField] GameObject staminabarFill;
-    AltarDirectory altarDirectory;
+    SwordSiteDirectory swordSiteDirectory;
     GameManager gm;
     InputManager im;
     PlayerController playerController;
@@ -23,31 +21,39 @@ public class PlayerScript : MonoBehaviour
     float maxStaminaDelay = 1f;
     float staminaDelay;
     float staminaRate = 40;
-    float healthbarScale = 1.555f;
     float maxPoise = 100;
     float poiseRate = 5;
     public float duckHealTimer = 0;
     float duckHealDuration = 2;
     float duckHealCounter = 0;
     float duckHealSpeed = 0;
+    public bool shield;
+
+    float manaDelay;
+    float maxManaDelay = 2;
+    int blockManaCost = 15;
+    float manaRechargeRate = 3;
 
     // Start is called before the first frame update
     void Start()
     {
-        altarDirectory = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AltarDirectory>();
-        gm = altarDirectory.gameObject.GetComponent<GameManager>();
-        im = altarDirectory.gameObject.GetComponent<InputManager>();
+        swordSiteDirectory = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SwordSiteDirectory>();
+        gm = swordSiteDirectory.gameObject.GetComponent<GameManager>();
+        im = swordSiteDirectory.gameObject.GetComponent<InputManager>();
         stamina = playerData.MaxStamina();
         poise = maxPoise;
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
         sfx = GetComponentInChildren<PlayerSound>();
-        UpdateHealthbar();
+        if(playerData.path == "Path")
+        {
+            Physics.IgnoreLayerCollision(8, 6, true);
+        }
     }
 
     public void LoseHealth(int damage)
     {
-        if (!playerController.shield)
+        if (!shield)
         {
             playerData.health -= damage;
             if(playerData.health <= 0)
@@ -60,10 +66,6 @@ public class PlayerScript : MonoBehaviour
                 SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
                 sm.DeathSoundEffect();
             }
-            else
-            {
-                UpdateHealthbar();
-            }
         }
         else
         {
@@ -75,7 +77,6 @@ public class PlayerScript : MonoBehaviour
     {
         playerData.health = playerData.MaxHealth();
         sfx.Heal();
-        UpdateHealthbar();
     }
 
     public void PartialHeal(int healAmount)
@@ -85,20 +86,27 @@ public class PlayerScript : MonoBehaviour
         {
             playerData.health = playerData.MaxHealth();
         }
-        UpdateHealthbar();
     }
 
-    public void DuckHeal()
+    public void Heal()
     {
-        duckHealTimer = duckHealDuration;
-        duckHealSpeed = playerData.MaxHealth() / duckHealDuration;
-        sfx.Heal();
-        playerAnimation.StartBodyMagic();
+        if(playerData.healCharges >= 0)
+        {
+            if(playerData.unlockedAbilities.Count ==0 && playerData.healCharges == 0)
+            {
+                return;
+            }
+            playerData.healCharges -= 1;
+            duckHealTimer = duckHealDuration;
+            duckHealSpeed = playerData.MaxHealth() / duckHealDuration;
+            sfx.Heal();
+            playerAnimation.StartBodyMagic();
+        }
     }
 
     public void LosePoise(float poiseDamage)
     {
-        if (!playerController.shield)
+        if (shield)
         {
             if(playerController.stagger <= 0)
             {
@@ -127,16 +135,18 @@ public class PlayerScript : MonoBehaviour
         staminaDelay = maxStaminaDelay;
     }
 
-    void UpdateHealthbar()
+    public void LoseMana(int amount)
     {
-        float healthRatio = (float)playerData.health / (float)playerData.MaxHealth();
-        healbarFill.transform.localScale = new Vector3(healthRatio * healthbarScale, healbarFill.transform.localScale.y, healbarFill.transform.localScale.z);
-    }
-
-    void UpdateStaminaBar()
-    {
-        float staminaRatio = stamina / playerData.MaxStamina();
-        staminabarFill.transform.localScale = new Vector3(staminaRatio * healthbarScale, staminabarFill.transform.localScale.y, staminabarFill.transform.localScale.z);
+        playerData.mana -= amount;
+        if(playerData.mana < 0)
+        {
+            playerData.mana = 0;
+        }
+        manaDelay = maxManaDelay;
+        if (playerData.equippedEmblems.Contains("MagicalAcceleration"))
+        {
+            manaDelay = maxManaDelay / 2;
+        }
     }
 
     // Update is called once per frame
@@ -155,7 +165,36 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        UpdateStaminaBar();
+        if (shield)
+        {
+            playerData.mana -= Time.deltaTime * blockManaCost;
+            if(playerData.mana <= 0)
+            {
+                playerAnimation.StopBlocking();
+            }
+            manaDelay = maxManaDelay;
+        }
+
+        if(manaDelay <= 0)
+        {
+            if(playerData.mana < playerData.maxMana)
+            {
+                playerData.mana += Time.deltaTime * manaRechargeRate;
+                if (playerData.equippedEmblems.Contains("Magical Acceleration"))
+                {
+                    playerData.mana += Time.deltaTime * manaRechargeRate;
+                }
+            }
+        }
+        else
+        {
+            manaDelay -= Time.deltaTime;
+        }
+
+        if(playerData.healCharges < 0)
+        {
+            playerData.mana = 0;
+        }
 
         if(poise < maxPoise)
         {
@@ -175,7 +214,6 @@ public class PlayerScript : MonoBehaviour
                 int amount = Mathf.FloorToInt(duckHealCounter);
                 PartialHeal(amount);
                 duckHealCounter -= amount;
-                UpdateHealthbar();
             }
         }
     }
@@ -184,24 +222,24 @@ public class PlayerScript : MonoBehaviour
     {
         MaxHeal();
         playerData.healCharges = playerData.maxHealCharges;
+        playerData.mana = playerData.maxMana;
         playerData.hasSpawned = false;
-        playerData.duckCD = 0;
         playerData.lostMoney = playerData.money;
         playerData.money = 0;
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();
-        mapData.usedChargingStations.Clear();
+        mapData.usedAltars.Clear();
         mapData.deathPosition = transform.position;
         mapData.deathRoom = SceneManager.GetActiveScene().name;
         gm.SaveGame();
-        string sceneName = altarDirectory.GetSceneName(playerData.lastAltar);
+        string sceneName = swordSiteDirectory.GetSceneName(playerData.lastSwordSite);
         SceneManager.LoadScene(sceneName);
     }
 
     public void Rest()
     {
         MaxHeal();
-        playerData.duckCD = 0;
+        playerData.mana = playerData.maxMana;
         playerData.healCharges = playerData.maxHealCharges;
         playerData.hasSpawned = false;
         gm.SaveGame();

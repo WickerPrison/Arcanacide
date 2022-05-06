@@ -4,34 +4,43 @@ using UnityEngine;
 
 public class AltarScript : MonoBehaviour
 {
+    [SerializeField] int altarID;
     [SerializeField] GameObject message;
-    [SerializeField] GameObject restMenuPrfab;
-    [SerializeField] Transform spawnPoint;
-    [SerializeField] int altarNumber;
-    [SerializeField] Vector3 mapPlayerFacePosition;
+    [SerializeField] PlayerData playerData;
+    [SerializeField] MapData mapData;
+    [SerializeField] ParticleSystem particles;
+    bool hasBeenUsed = false;
     Transform player;
-    PlayerController playerController;
-    GameObject restMenu;
-    RestMenuButtons restMenuButtons;
+    PlayerScript playerScript;
     InputManager im;
+    TutorialManager tutorialManager;
     float playerDistance;
     float interactDistance = 2;
 
-    // Start is called before the first frame update
     void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        im.controls.Gameplay.Interact.performed += ctx => OpenRestMenu();
+        im.controls.Gameplay.Interact.performed += ctx => Charge();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerController = player.gameObject.GetComponent<PlayerController>();
+        playerScript = player.GetComponent<PlayerScript>();
+        if (mapData.usedAltars.Contains(altarID))
+        {
+            hasBeenUsed = true;
+            particles.Stop();
+        }
     }
 
     private void Update()
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= interactDistance)
+        if (playerDistance <= interactDistance && !hasBeenUsed)
         {
             message.SetActive(true);
+            if (playerData.tutorials.Contains("Altar"))
+            {
+                tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
+                tutorialManager.AltarTutorial();
+            }
         }
         else
         {
@@ -39,16 +48,19 @@ public class AltarScript : MonoBehaviour
         }
     }
 
-    void OpenRestMenu()
+    void Charge()
     {
-        if(playerDistance <= interactDistance)
+        if(playerData.health == playerData.MaxHealth())
         {
-            restMenu = Instantiate(restMenuPrfab);
-            restMenuButtons = restMenu.GetComponent<RestMenuButtons>();
-            restMenuButtons.altarNumber = altarNumber;
-            restMenuButtons.spawnPoint = spawnPoint;
-            restMenuButtons.mapPlayerFacePosition = mapPlayerFacePosition;
-            im.Menu();
+            return;
+        }
+
+        if(playerDistance <= interactDistance && !hasBeenUsed)
+        {
+            playerScript.MaxHeal();
+            hasBeenUsed = true;
+            mapData.usedAltars.Add(altarID);
+            particles.Stop();
         }
     }
 }

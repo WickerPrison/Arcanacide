@@ -51,25 +51,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""UseAbility"",
+                    ""name"": ""Shield"",
                     ""type"": ""Button"",
                     ""id"": ""e8a7f1aa-0275-4d36-b85c-52f908b57a2f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""EquipHeal"",
-                    ""type"": ""Button"",
-                    ""id"": ""d0ee49ad-5356-4a2b-b58d-43b1df178cbb"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""EquipBlock"",
-                    ""type"": ""Button"",
-                    ""id"": ""18eef770-6ff1-4fec-b11a-78215e18bc0e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -94,6 +78,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""Screenshot"",
                     ""type"": ""Button"",
                     ""id"": ""e60f9023-eddc-4a11-b2cf-291a09f98f8a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Heal"",
+                    ""type"": ""Button"",
+                    ""id"": ""938b022c-6ffd-4ca0-a318-6493028917b7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -239,7 +231,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UseAbility"",
+                    ""action"": ""Shield"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -250,51 +242,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UseAbility"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5db701a1-9535-4cf4-ab84-8ff1c57b9c71"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EquipHeal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""995189d6-5cdc-4fb7-80d1-2273bf7fbf69"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EquipHeal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a1cbd2b1-c962-47a8-89a8-e030ef0b6a7a"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EquipBlock"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5b07dfb2-6b67-415e-9e8c-1a9d7d848d03"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EquipBlock"",
+                    ""action"": ""Shield"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -350,6 +298,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Screenshot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a881c5f-7d23-499a-979c-353140d602a8"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2b6593d-550e-44b6-a0d7-1bc250517772"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -497,12 +467,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Dodge = m_Gameplay.FindAction("Dodge", throwIfNotFound: true);
         m_Gameplay_PauseMenu = m_Gameplay.FindAction("PauseMenu", throwIfNotFound: true);
-        m_Gameplay_UseAbility = m_Gameplay.FindAction("UseAbility", throwIfNotFound: true);
-        m_Gameplay_EquipHeal = m_Gameplay.FindAction("EquipHeal", throwIfNotFound: true);
-        m_Gameplay_EquipBlock = m_Gameplay.FindAction("EquipBlock", throwIfNotFound: true);
+        m_Gameplay_Shield = m_Gameplay.FindAction("Shield", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_Screenshot = m_Gameplay.FindAction("Screenshot", throwIfNotFound: true);
+        m_Gameplay_Heal = m_Gameplay.FindAction("Heal", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_Select = m_Tutorial.FindAction("Select", throwIfNotFound: true);
@@ -566,12 +535,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Dodge;
     private readonly InputAction m_Gameplay_PauseMenu;
-    private readonly InputAction m_Gameplay_UseAbility;
-    private readonly InputAction m_Gameplay_EquipHeal;
-    private readonly InputAction m_Gameplay_EquipBlock;
+    private readonly InputAction m_Gameplay_Shield;
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_Screenshot;
+    private readonly InputAction m_Gameplay_Heal;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -580,12 +548,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Dodge => m_Wrapper.m_Gameplay_Dodge;
         public InputAction @PauseMenu => m_Wrapper.m_Gameplay_PauseMenu;
-        public InputAction @UseAbility => m_Wrapper.m_Gameplay_UseAbility;
-        public InputAction @EquipHeal => m_Wrapper.m_Gameplay_EquipHeal;
-        public InputAction @EquipBlock => m_Wrapper.m_Gameplay_EquipBlock;
+        public InputAction @Shield => m_Wrapper.m_Gameplay_Shield;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
         public InputAction @Screenshot => m_Wrapper.m_Gameplay_Screenshot;
+        public InputAction @Heal => m_Wrapper.m_Gameplay_Heal;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -607,15 +574,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @PauseMenu.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseMenu;
                 @PauseMenu.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseMenu;
                 @PauseMenu.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPauseMenu;
-                @UseAbility.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseAbility;
-                @UseAbility.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseAbility;
-                @UseAbility.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUseAbility;
-                @EquipHeal.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquipHeal;
-                @EquipHeal.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquipHeal;
-                @EquipHeal.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquipHeal;
-                @EquipBlock.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquipBlock;
-                @EquipBlock.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquipBlock;
-                @EquipBlock.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquipBlock;
+                @Shield.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShield;
+                @Shield.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShield;
+                @Shield.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShield;
                 @Interact.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
@@ -625,6 +586,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Screenshot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnScreenshot;
                 @Screenshot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnScreenshot;
                 @Screenshot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnScreenshot;
+                @Heal.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
+                @Heal.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
+                @Heal.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -641,15 +605,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @PauseMenu.started += instance.OnPauseMenu;
                 @PauseMenu.performed += instance.OnPauseMenu;
                 @PauseMenu.canceled += instance.OnPauseMenu;
-                @UseAbility.started += instance.OnUseAbility;
-                @UseAbility.performed += instance.OnUseAbility;
-                @UseAbility.canceled += instance.OnUseAbility;
-                @EquipHeal.started += instance.OnEquipHeal;
-                @EquipHeal.performed += instance.OnEquipHeal;
-                @EquipHeal.canceled += instance.OnEquipHeal;
-                @EquipBlock.started += instance.OnEquipBlock;
-                @EquipBlock.performed += instance.OnEquipBlock;
-                @EquipBlock.canceled += instance.OnEquipBlock;
+                @Shield.started += instance.OnShield;
+                @Shield.performed += instance.OnShield;
+                @Shield.canceled += instance.OnShield;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -659,6 +617,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Screenshot.started += instance.OnScreenshot;
                 @Screenshot.performed += instance.OnScreenshot;
                 @Screenshot.canceled += instance.OnScreenshot;
+                @Heal.started += instance.OnHeal;
+                @Heal.performed += instance.OnHeal;
+                @Heal.canceled += instance.OnHeal;
             }
         }
     }
@@ -776,12 +737,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
-        void OnUseAbility(InputAction.CallbackContext context);
-        void OnEquipHeal(InputAction.CallbackContext context);
-        void OnEquipBlock(InputAction.CallbackContext context);
+        void OnShield(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnScreenshot(InputAction.CallbackContext context);
+        void OnHeal(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {

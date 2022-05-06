@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fc18a103c2fe948bf5dadf32370d3d, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  health: 55
+  health: 85
   equippedAbility: Heal
   duckCD: 0
   maxHealCharges: 1
@@ -20,17 +20,19 @@ MonoBehaviour:
   hasSpawned: 0
   lastAltar: 3
   unlockedAbilities:
-  - Heal
   - Block
   emblems: []
-  equippedEmblems: []
+  equippedEmblems:
+  - Quickstep
   tutorials:
   - EndOfDemo
   - Altar
-  money: 0
+  money: 40
   lostMoney: 35
-  path: Sword
+  path: Path
   strength: 1
   dexterity: 1
   vitality: 1
   dedication: 1
+  maxMana: 50
+  mana: 30.864603

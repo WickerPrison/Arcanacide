@@ -41,7 +41,7 @@ public class BossController : EnemyController
     int phaseCounter = 3;
     int fireRingDamage = 50;
     float fireRingPoiseDamage = 150;
-    float fireRingRadius = 2.5f;
+    float fireRingRadius = 3.5f;
 
     public override void Start()
     {

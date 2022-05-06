@@ -272,23 +272,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6583712414327358675, guid: 7ee3a17cc990910438c7610975e12a7c, type: 3}
   m_PrefabInstance: {fileID: 2093356905}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &96582479 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 298750023833986125, guid: f0da49de1fb1b6741885e48da0ecc43d, type: 3}
-  m_PrefabInstance: {fileID: 298750023474245900}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &96582480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 96582479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1658f8a9657a5414a93a3706785fd7a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &119692052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5349238803439986347, guid: cee0493dd60af2943af73498a4c8e476, type: 3}
@@ -759,6 +742,14 @@ PrefabInstance:
       propertyPath: healbarFill
       value: 
       objectReference: {fileID: 614707794}
+    - target: {fileID: 4614688894240553584, guid: 603be6d268d8a7c4ca5907a32b359f6e, type: 3}
+      propertyPath: manaBarFill
+      value: 
+      objectReference: {fileID: 1339739059}
+    - target: {fileID: 4614688894240553584, guid: 603be6d268d8a7c4ca5907a32b359f6e, type: 3}
+      propertyPath: manaBarCrack
+      value: 
+      objectReference: {fileID: 1119553715}
     - target: {fileID: 4614688894240553584, guid: 603be6d268d8a7c4ca5907a32b359f6e, type: 3}
       propertyPath: staminabarFill
       value: 
@@ -2821,6 +2812,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1763343578995329392, guid: 39122beb88ee51f4784e66695121628e, type: 3}
+      propertyPath: swordSiteNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1763343578995329392, guid: 39122beb88ee51f4784e66695121628e, type: 3}
       propertyPath: mapPlayerFacePosition.x
       value: 2000
       objectReference: {fileID: 0}
@@ -2874,7 +2869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3683044543340707541, guid: 39122beb88ee51f4784e66695121628e, type: 3}
       propertyPath: m_Name
-      value: Altar
+      value: SwordSite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39122beb88ee51f4784e66695121628e, type: 3}
@@ -3131,6 +3126,11 @@ PrefabInstance:
 Camera:
   m_CorrespondingSourceObject: {fileID: 5640747524982445119, guid: 78e4e7afc0b9d9949a48c85fa6122d1b, type: 3}
   m_PrefabInstance: {fileID: 670805039}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1119553715 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1599137251783961704, guid: c5e141dd948578f4086669b54b1987ea, type: 3}
+  m_PrefabInstance: {fileID: 712491856}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1125277517
 PrefabInstance:
@@ -3866,6 +3866,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 118e30af652877e49ab13bd59f8cc21e, type: 3}
+--- !u!1 &1339739059 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1824430363508167573, guid: c5e141dd948578f4086669b54b1987ea, type: 3}
+  m_PrefabInstance: {fileID: 712491856}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1347114236
 PrefabInstance:
   m_ObjectHideFlags: 0
