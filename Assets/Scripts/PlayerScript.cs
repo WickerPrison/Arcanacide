@@ -32,7 +32,7 @@ public class PlayerScript : MonoBehaviour
     float manaDelay;
     float maxManaDelay = 2;
     int blockManaCost = 15;
-    float manaRechargeRate = 3;
+    float manaRechargeRate = 4;
 
     // Start is called before the first frame update
     void Start()
@@ -106,7 +106,7 @@ public class PlayerScript : MonoBehaviour
 
     public void LosePoise(float poiseDamage)
     {
-        if (shield)
+        if (!shield)
         {
             if(playerController.stagger <= 0)
             {

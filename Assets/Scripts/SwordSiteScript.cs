@@ -16,6 +16,7 @@ public class SwordSiteScript : MonoBehaviour
     InputManager im;
     float playerDistance;
     float interactDistance = 2;
+    float swordSiteTimer = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,11 @@ public class SwordSiteScript : MonoBehaviour
 
     private void Update()
     {
+        if(swordSiteTimer >= 0)
+        {
+            swordSiteTimer -= Time.deltaTime;
+        }
+
         playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance <= interactDistance)
         {
@@ -41,6 +47,11 @@ public class SwordSiteScript : MonoBehaviour
 
     void OpenRestMenu()
     {
+        if(swordSiteTimer > 0)
+        {
+            return;
+        }
+
         if(playerDistance <= interactDistance)
         {
             restMenu = Instantiate(restMenuPrfab);

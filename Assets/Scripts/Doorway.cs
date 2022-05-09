@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Doorway : MonoBehaviour
 {
-    public bool doorOpen;
+    public bool doorOpen = false;
     [SerializeField] string nextRoom;
     public MapData mapData;
     [SerializeField] int doorNumber;
@@ -17,8 +17,9 @@ public class Doorway : MonoBehaviour
     public Transform player;
     GameManager gm;
     InputManager im;
-    public float playerDistance;
+    public float playerDistance = 100;
     float interactDistance = 2;
+    float doorTimer = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,11 @@ public class Doorway : MonoBehaviour
 
     public virtual void Update()
     {
+        if(doorTimer > 0)
+        {
+            doorTimer -= Time.deltaTime;
+        }
+
         playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance <= interactDistance && gm.awareEnemies < 1)
         {
@@ -59,6 +65,11 @@ public class Doorway : MonoBehaviour
 
     void OpenDoor()
     {
+        if(doorTimer > 0)
+        {
+            return;
+        }
+
         if(playerDistance <= interactDistance && doorOpen)
         {
             doorAudio = Instantiate(doorAudioPrefab);

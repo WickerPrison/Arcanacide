@@ -70,6 +70,11 @@ public class FireMageController : EnemyController
     public override void SpecialAbility()
     {
         fireRing.Explode();
+        if (playerScript.shield)
+        {
+            return;
+        }
+
         if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose && playerController.gameObject.layer == 3)
         {
             playerScript.LoseHealth(fireRingDamage);

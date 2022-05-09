@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public bool pathActive = false;
     float swordMaxTime = 5;
     float swordTimer;
-    float pathOfPathMaxTime = 0.04f;
+    float pathOfPathMaxTime = 0.03f;
     float pathOfPathTimer;
     [SerializeField] GameObject pathTrailPrefab;
 
@@ -96,18 +96,6 @@ public class PlayerController : MonoBehaviour
             {
                 pathActive = false;
                 playerAnimation.EndSwordMagic();
-            }
-        }
-
-        if(playerData.path == "Path" && pathActive)
-        {
-            if(pathOfPathTimer < 0)
-            {
-                PathOfThePath();
-            }
-            else
-            {
-                pathOfPathTimer -= Time.deltaTime;
             }
         }
     }
@@ -314,6 +302,18 @@ public class PlayerController : MonoBehaviour
         if (playerAnimation.attacking)
         {
             rb.velocity = Vector3.zero;
+        }
+
+        if (playerData.path == "Path" && pathActive)
+        {
+            if (pathOfPathTimer < 0)
+            {
+                PathOfThePath();
+            }
+            else
+            {
+                pathOfPathTimer -= Time.deltaTime;
+            }
         }
     }
 
