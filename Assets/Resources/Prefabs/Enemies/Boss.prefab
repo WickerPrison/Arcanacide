@@ -11538,6 +11538,7 @@ GameObject:
   - component: {fileID: 5619636744262080948}
   - component: {fileID: 5619636744262080955}
   - component: {fileID: 6838957957722118267}
+  - component: {fileID: -5864115168128347477}
   m_Layer: 6
   m_Name: Boss
   m_TagString: Enemy
@@ -11560,6 +11561,7 @@ Transform:
   - {fileID: 6942398762844402586}
   - {fileID: 3740839097451431491}
   - {fileID: 3419805517794734845}
+  - {fileID: 5226847831153202371}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11652,9 +11654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a7108e346718c4fb5692e706da6ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMelee: 0
-  frontSmear: {fileID: 0}
-  backSmear: {fileID: 0}
   enemyScript: {fileID: 0}
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
@@ -11669,8 +11668,6 @@ MonoBehaviour:
   attackRange: 8
   attacking: 0
   projectilePrefab: {fileID: 7086795160678116252, guid: 3cedf55e3cd5a214297e811b67b22bee, type: 3}
-  frontAttackPoint: {fileID: 4473673404468742160}
-  backAttackPoint: {fileID: 2376219749708215307}
   charging: 0
   detectionTrigger: 0
   directionLock: 0
@@ -11680,12 +11677,14 @@ MonoBehaviour:
   spellAttackPoiseDamage: 15
   hitDamage: 0
   hitPoiseDamage: 0
+  facingFront: 0
   canHitPlayer: 0
-  away: {x: 100, y: 100, z: 100}
   fireTrailPrefab: {fileID: 8120567399107066, guid: 14c74eaa539125c42aba4c9dd97d78d6, type: 3}
   bonfirePrefab: {fileID: 6002190749465052700, guid: 06ae8010139dcb943a6c904b708e679f, type: 3}
   fireWavePrefab: {fileID: 849592477973554572, guid: a6afd2840179e5945bf99b454bada27f, type: 3}
   groundFirePrefab: {fileID: 9140805214649986040, guid: 36322b06fd733ad499219ed774e100aa, type: 3}
+  frontAttackPoint: {fileID: 4473673404468742160}
+  backAttackPoint: {fileID: 2376219749708215307}
   strafeLeftOrRight: 1
   canStagger: 0
   pauseTimer: 0
@@ -11703,6 +11702,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePrefab: {fileID: 6286585989320248928, guid: 8fb30ecf51e1b064ab6d94ebfcaeaac7, type: 3}
+--- !u!114 &-5864115168128347477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5619636744262080949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c852d4bf87ca34c98f4434e92f1580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 5226847831153202371}
+  frontAnimator: {fileID: 3754896222824279943}
+  backAnimator: {fileID: 444891748265054244}
+  away: {x: 100, y: 100, z: 100}
 --- !u!1 &5711259007199953057
 GameObject:
   m_ObjectHideFlags: 0
@@ -12183,6 +12198,36 @@ Transform:
   m_Father: {fileID: 128174204393181997}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.172}
+--- !u!1 &7366307768694428566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5226847831153202371}
+  m_Layer: 6
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5226847831153202371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7366307768694428566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5619636744262080959}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7741642261209938180
 GameObject:
   m_ObjectHideFlags: 0

@@ -16887,6 +16887,8 @@ GameObject:
   - component: {fileID: 7704874516132386300}
   - component: {fileID: 7704874516132386297}
   - component: {fileID: 7704874516132386293}
+  - component: {fileID: 5053255453205229388}
+  - component: {fileID: 3839037649162331313}
   m_Layer: 6
   m_Name: FireSwordsman
   m_TagString: Enemy
@@ -16991,6 +16993,7 @@ MonoBehaviour:
   maxHealth: 120
   maxPoise: 120
   poiseRegeneration: 5
+  isBoss: 0
 --- !u!114 &7704874516132386293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17003,9 +17006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a02bb79472309d489c99cb9a3f63cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMelee: 1
-  frontSmear: {fileID: 96803622104206159}
-  backSmear: {fileID: 5941933629788065923}
+  enemyScript: {fileID: 0}
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
   playerAnimation: {fileID: 0}
@@ -17026,12 +17027,44 @@ MonoBehaviour:
   directionLock: 0
   parryWindow: 0
   isParrying: 0
+  spellAttackDamage: 15
+  spellAttackPoiseDamage: 15
   hitDamage: 0
   hitPoiseDamage: 0
+  facingFront: 0
   canHitPlayer: 0
-  away: {x: 100, y: 100, z: 100}
   fireTrailPrefab: {fileID: 8120567399107066, guid: 14c74eaa539125c42aba4c9dd97d78d6, type: 3}
   fireArcPrefab: {fileID: 2429647943623921199, guid: 42e03ea37ccc0e847b3e6db3cef49b4b, type: 3}
+--- !u!114 &5053255453205229388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7704874516132386291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcd2d8e3972804389cae8ec735fcfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontSmear: {fileID: 96803622104206159}
+  backSmear: {fileID: 5941933629788065923}
+--- !u!114 &3839037649162331313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7704874516132386291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c852d4bf87ca34c98f4434e92f1580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 2819929083363805643}
+  frontAnimator: {fileID: 6803650855326903489}
+  backAnimator: {fileID: 1577165425122849719}
+  away: {x: 100, y: 100, z: 100}
 --- !u!1 &7704874516403122065
 GameObject:
   m_ObjectHideFlags: 0

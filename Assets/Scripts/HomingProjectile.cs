@@ -10,6 +10,7 @@ public class HomingProjectile : MonoBehaviour
     public float turnAngle;
     int speed = 12;
     [SerializeField] float lifetime;
+    [SerializeField] AudioClip playerImpactSFX;
     [SerializeField] AudioClip impactSFX;
     [SerializeField] float impactSFXvolume;
 
@@ -23,7 +24,7 @@ public class HomingProjectile : MonoBehaviour
                 playerScript = collision.gameObject.GetComponent<PlayerScript>();
                 playerScript.LoseHealth(spellDamage);
                 playerScript.LosePoise(poiseDamage);
-                AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
+                AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
                 Destroy(gameObject);
             }
             else if (collision.gameObject.layer == 8)
@@ -35,6 +36,7 @@ public class HomingProjectile : MonoBehaviour
         }
         else
         {
+            AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
             Destroy(gameObject);
         }
     }

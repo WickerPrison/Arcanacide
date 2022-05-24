@@ -11717,6 +11717,8 @@ GameObject:
   - component: {fileID: 7618466471682336275}
   - component: {fileID: 7618466471682336278}
   - component: {fileID: 6037543807233965241}
+  - component: {fileID: 3347427332824189573}
+  - component: {fileID: 5011220085014176232}
   m_Layer: 6
   m_Name: FireMinion
   m_TagString: Enemy
@@ -11834,9 +11836,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415fceb0bbb114d4d96ecd16af4b60c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMelee: 1
-  frontSmear: {fileID: 144368115355007136}
-  backSmear: {fileID: 3529451986842610791}
   enemyScript: {fileID: 0}
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
@@ -11862,7 +11861,37 @@ MonoBehaviour:
   spellAttackPoiseDamage: 15
   hitDamage: 0
   hitPoiseDamage: 0
+  facingFront: 0
   canHitPlayer: 0
+--- !u!114 &3347427332824189573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7618466471682336284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcd2d8e3972804389cae8ec735fcfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontSmear: {fileID: 144368115355007136}
+  backSmear: {fileID: 3529451986842610791}
+--- !u!114 &5011220085014176232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7618466471682336284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c852d4bf87ca34c98f4434e92f1580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 712397617754106463}
+  frontAnimator: {fileID: 1023806121353634006}
+  backAnimator: {fileID: 9210301130512316167}
   away: {x: 100, y: 100, z: 100}
 --- !u!1 &7618466471837308260
 GameObject:

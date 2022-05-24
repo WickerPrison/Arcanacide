@@ -37,21 +37,6 @@ public class FireMinionController : EnemyController
         {
             attackTime -= Time.deltaTime;
         }
-
-        if (navAgent.enabled)
-        {
-            AttackPoint();
-        }
-    }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if (navAgent.enabled)
-        {
-            SmearDirection();
-        }
     }
 
     void Attack()

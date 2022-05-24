@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour
     float pathOfPathTimer;
     [SerializeField] GameObject pathTrailPrefab;
 
-    Vector2 moveDir;
     Vector2 rightStickValue;
     public Vector2 lookDir;
     List<Transform> nearbyEnemies = new List<Transform>();
@@ -68,7 +67,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //turn those inputs into a vector that cannot have a magnitude greater than 1
-        moveDirection = new Vector3(moveDir.x, 0, moveDir.y);
+        moveDirection = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y);
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
 
         AttackPointPosition();
@@ -192,9 +191,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (moveDir.magnitude != 0)
+            if (playerData.moveDir.magnitude != 0)
             {
-                lookDir = moveDir;
+                lookDir = playerData.moveDir;
             }
             LockOn();
             if(rightStickValue.magnitude > 0)
@@ -373,8 +372,8 @@ public class PlayerController : MonoBehaviour
         im.controls.Gameplay.Attack.performed += ctx => Attack();
         im.controls.Gameplay.Dodge.performed += ctx => Dodge();
         im.controls.Gameplay.PauseMenu.performed += ctx => PauseMenu();
-        im.controls.Gameplay.Move.performed += ctx => moveDir = ctx.ReadValue<Vector2>();
-        im.controls.Gameplay.Move.canceled += ctx => moveDir = Vector2.zero;
+        im.controls.Gameplay.Move.performed += ctx => playerData.moveDir = ctx.ReadValue<Vector2>();
+        im.controls.Gameplay.Move.canceled += ctx => playerData.moveDir = Vector2.zero;
         im.controls.Gameplay.Shield.performed += ctx => Shield();
         im.controls.Gameplay.Shield.canceled += ctx => playerAnimation.continueBlocking = false;
         im.controls.Gameplay.Heal.performed += ctx => playerScript.Heal();

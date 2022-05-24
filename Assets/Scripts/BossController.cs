@@ -10,6 +10,8 @@ public class BossController : EnemyController
     [SerializeField] GameObject bonfirePrefab;
     [SerializeField] GameObject fireWavePrefab;
     [SerializeField] GameObject groundFirePrefab;
+    [SerializeField] Transform frontAttackPoint;
+    [SerializeField] Transform backAttackPoint;
     BossDialogue bossDialogue;
     FireRing fireRing;
     public int strafeLeftOrRight = 1;
@@ -294,5 +296,25 @@ public class BossController : EnemyController
         playerToBoss *= strafeLeftOrRight;
         Vector3 strafeDirection = Vector3.Cross(transform.position, playerToBoss);
         navAgent.Move(strafeDirection.normalized * Time.deltaTime * strafeSpeed);
+    }
+
+    public override void SpellAttack()
+    {
+        GameObject projectile;
+        HomingProjectile projectileScript;
+        projectile = Instantiate(projectilePrefab);
+        projectileScript = projectile.GetComponent<HomingProjectile>();
+        if (facingFront)
+        {
+            projectile.transform.position = frontAttackPoint.position;
+        }
+        else
+        {
+            projectile.transform.position = backAttackPoint.position;
+        }
+        projectile.transform.LookAt(playerController.transform.position);
+        projectileScript.target = playerController.transform;
+        projectileScript.poiseDamage = spellAttackPoiseDamage;
+        projectileScript.spellDamage = spellAttackDamage;
     }
 }

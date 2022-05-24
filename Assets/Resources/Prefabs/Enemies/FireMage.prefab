@@ -21473,6 +21473,7 @@ GameObject:
   - component: {fileID: 5566665768951350948}
   - component: {fileID: 5566665768951350945}
   - component: {fileID: 5566665768951350949}
+  - component: {fileID: 3617108593839140567}
   m_Layer: 6
   m_Name: FireMage
   m_TagString: Enemy
@@ -21496,6 +21497,7 @@ Transform:
   - {fileID: 1186174392979342426}
   - {fileID: 5869985789780945654}
   - {fileID: 3697116432102505921}
+  - {fileID: 2765990682074378895}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21588,9 +21590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e34f5701a2c3de42b8d8cdfe4fd5856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMelee: 0
-  frontSmear: {fileID: 0}
-  backSmear: {fileID: 0}
   enemyScript: {fileID: 0}
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
@@ -21605,8 +21604,6 @@ MonoBehaviour:
   attackRange: 8
   attacking: 0
   projectilePrefab: {fileID: 7086795160678116252, guid: 3cedf55e3cd5a214297e811b67b22bee, type: 3}
-  frontAttackPoint: {fileID: 1398189442160786050}
-  backAttackPoint: {fileID: 7771422698703503874}
   charging: 0
   detectionTrigger: 0
   directionLock: 0
@@ -21616,9 +21613,27 @@ MonoBehaviour:
   spellAttackPoiseDamage: 13
   hitDamage: 0
   hitPoiseDamage: 0
+  facingFront: 0
   canHitPlayer: 0
-  away: {x: 100, y: 100, z: 100}
   fireRing: {fileID: 5257937341476949498}
+  frontAttackPoint: {fileID: 1398189442160786050}
+  backAttackPoint: {fileID: 7771422698703503874}
+--- !u!114 &3617108593839140567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566665768951350955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c852d4bf87ca34c98f4434e92f1580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 2765990682074378895}
+  frontAnimator: {fileID: 2251276571789981522}
+  backAnimator: {fileID: 2417016062129175783}
+  away: {x: 100, y: 100, z: 100}
 --- !u!1 &5615333894407808172
 GameObject:
   m_ObjectHideFlags: 0
@@ -26907,6 +26922,36 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
   m_Flip: 0
+--- !u!1 &7653814794458149611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2765990682074378895}
+  m_Layer: 6
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2765990682074378895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7653814794458149611}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5566665768951350954}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7741090347923192888
 GameObject:
   m_ObjectHideFlags: 0

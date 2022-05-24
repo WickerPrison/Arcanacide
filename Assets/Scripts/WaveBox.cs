@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireWaveBox : MonoBehaviour
+public class WaveBox : MonoBehaviour
 {
     [SerializeField] AudioClip impactSFX;
-    int damage = 10;
-    float poiseDamage = 20;
+    [SerializeField] int damage;
+    [SerializeField] float poiseDamage;
 
 
     private void OnTriggerEnter(Collider other)

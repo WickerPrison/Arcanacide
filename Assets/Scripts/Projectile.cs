@@ -6,7 +6,10 @@ public class Projectile : MonoBehaviour
 {
     public Vector3 direction;
     public int spellDamage;
-    int speed = 12;
+    [SerializeField] int speed;
+    [SerializeField] AudioClip playerImpactSFX;
+    [SerializeField] AudioClip impactSFX;
+    [SerializeField] float impactSFXvolume;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -17,6 +20,7 @@ public class Projectile : MonoBehaviour
                 PlayerScript playerScript;
                 playerScript = collision.gameObject.GetComponent<PlayerScript>();
                 playerScript.LoseHealth(spellDamage);
+                AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
                 Destroy(gameObject);
             }
             else if(collision.gameObject.layer == 8)
@@ -28,6 +32,7 @@ public class Projectile : MonoBehaviour
         }
         else
         {
+            AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
             Destroy(gameObject);
         }
     }

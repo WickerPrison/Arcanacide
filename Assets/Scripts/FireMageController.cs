@@ -6,6 +6,8 @@ using UnityEngine;
 public class FireMageController : EnemyController
 {
     [SerializeField] FireRing fireRing;
+    [SerializeField] Transform frontAttackPoint;
+    [SerializeField] Transform backAttackPoint;
     float tooClose = 3.5f;
     int fireBallDamage = 15;
     int fireBallPoiseDamage = 15;
@@ -87,5 +89,25 @@ public class FireMageController : EnemyController
             playerRB.velocity = Vector3.zero;
             playerRB.AddForce(awayVector.normalized * 7, ForceMode.VelocityChange);
         }
+    }
+
+    public override void SpellAttack()
+    {
+        GameObject projectile;
+        HomingProjectile projectileScript;
+        projectile = Instantiate(projectilePrefab);
+        projectileScript = projectile.GetComponent<HomingProjectile>();
+        if (facingFront)
+        {
+            projectile.transform.position = frontAttackPoint.position;
+        }
+        else
+        {
+            projectile.transform.position = backAttackPoint.position;
+        }
+        projectile.transform.LookAt(playerController.transform.position);
+        projectileScript.target = playerController.transform;
+        projectileScript.poiseDamage = spellAttackPoiseDamage;
+        projectileScript.spellDamage = spellAttackDamage;
     }
 }

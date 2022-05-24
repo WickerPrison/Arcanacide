@@ -22,6 +22,10 @@ public class FireTrail : MonoBehaviour
         {
             PlayerScript playerScript;
             playerScript = other.gameObject.GetComponent<PlayerScript>();
+            if (playerScript.shield)
+            {
+                return;
+            }
             damage += damagePerSecond * Time.deltaTime;
             if(damage > 1)
             {

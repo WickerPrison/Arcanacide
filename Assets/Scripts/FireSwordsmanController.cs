@@ -67,21 +67,11 @@ public class FireSwordsmanController : EnemyController
         {
             attackTime -= Time.deltaTime;
         }
-
-        if (navAgent.enabled)
-        {
-            AttackPoint();
-        }
     }
 
     public override void Update()
     {
         base.Update();
-
-        if (navAgent.enabled && !directionLock)
-        {
-            SmearDirection();
-        }
 
         if (charging && navAgent.enabled)
         {
@@ -144,14 +134,6 @@ public class FireSwordsmanController : EnemyController
         navAgent.enabled = true;
         chargeDestination = playerController.transform.position;
         charging = true;
-    }
-
-    public override void AttackPoint()
-    {
-        if (!charging)
-        {
-            base.AttackPoint();
-        }
     }
 
     public void FireTrail()

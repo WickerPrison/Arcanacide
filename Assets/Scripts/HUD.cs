@@ -40,6 +40,10 @@ public class HUD : MonoBehaviour
     void UpdateHealthbar()
     {
         float healthRatio = (float)playerData.health / (float)playerData.MaxHealth();
+        if(playerData.health < 0)
+        {
+            healthRatio = 0;
+        }
         healbarFill.transform.localScale = new Vector3(healthRatio * healthbarScale, healbarFill.transform.localScale.y, healbarFill.transform.localScale.z);
     }
 

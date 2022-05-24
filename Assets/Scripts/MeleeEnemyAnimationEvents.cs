@@ -6,14 +6,17 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
 {
     EnemyController enemyController;
     EnemySound enemySound;
-    AttackArcGenerator attackArc;
+    [SerializeField] AttackArcGenerator attackArc;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         enemyController = GetComponentInParent<EnemyController>();
         enemySound = transform.parent.GetComponentInChildren<EnemySound>();
-        attackArc = transform.parent.GetComponentInChildren<AttackArcGenerator>();
+        if(attackArc == null)
+        {
+            attackArc = transform.parent.GetComponentInChildren<AttackArcGenerator>();
+        }
     }
 
     //disabling the navAgent prevents the enemy from being able to walk
@@ -31,12 +34,14 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         enemyController.directionLock = false;
     }
 
+    public virtual void EnableNavAgent()
+    {
+        enemyController.navAgent.enabled = true;
+    }
+
     public void AttackHit(int smearSpeed)
     {
-        enemyController.parryWindow = false;
-        enemySound.SwordSwoosh();
         enemyController.AttackHit(smearSpeed);
-        attackArc.HideAttackArc();
     }
 
     public void SpecialAbility()
@@ -57,6 +62,11 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     public void ShowArc()
     {
         attackArc.ShowAttackArc();
+    }
+
+    public void HideArc()
+    {
+        attackArc.HideAttackArc();
     }
 
     public void ColorArc()

@@ -27,6 +27,8 @@ public class PlayerData : ScriptableObject
     public float maxMana = 50;
     public float mana;
 
+    public Vector2 moveDir;
+
 
     public int MaxHealth()
     {
@@ -58,7 +60,7 @@ public class PlayerData : ScriptableObject
                 pathDamage = 10 + 3 * dedication;
                 return pathDamage;
             case "Path":
-                pathDamage = 2 + Mathf.FloorToInt(dedication * 0.75f);
+                pathDamage = 2 + dedication;
                 return pathDamage;
             default:
                 pathDamage = 0;
