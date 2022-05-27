@@ -8,8 +8,12 @@ public class IceGolemController : EnemyController
     [SerializeField] GameObject iceRipplePrefab;
     [SerializeField] Transform attackPoint;
     [SerializeField] Transform trackingPoint;
+    public bool isCharging;
     FacePlayerSlow facePlayer;
     float minWalkAngle = 70;
+    float chargeRange = 7;
+    int chargeDamage = 30;
+    int chargePoiseDamage = 100;
 
     public override void Start()
     {
@@ -30,30 +34,40 @@ public class IceGolemController : EnemyController
                 navAgent.SetDestination(playerController.transform.position);
             } 
 
+            if(attackTime > 0)
+            {
+                attackTime -= Time.deltaTime;
+                return;
+            }
+
             if (Vector3.Distance(transform.position, playerController.transform.position) <= attackRange)
             {
-                if (attackTime <= 0)
+                int randN = Random.Range(0, 3);
+                if (randN == 0)
                 {
-                    int randN = Random.Range(0, 2);
-                    if (randN == 0)
-                    {
-                        Smash();
-                    }
-                    else if (randN == 1)
-                    {
-                        MultiSmash();
-                    }
-                    else if (randN == 2)
-                    {
-                        Kick();
-                    }
+                    Smash();
+                }
+                else if (randN == 1)
+                {
+                    MultiSmash();
+                }
+                else if (randN == 2)
+                {
+                    IceRings();
                 }
             }
-        }
-
-        if (attackTime > 0)
-        {
-            attackTime -= Time.deltaTime;
+            else if(Vector3.Distance(transform.position, playerController.transform.position) <= chargeRange)
+            {
+                int randN = Random.Range(0, 2);
+                if(randN == 0)
+                {
+                    ShoulderCharge();
+                }
+                else if(randN == 1)
+                {
+                    IceRings();
+                }
+            }
         }
     }
 
@@ -74,17 +88,25 @@ public class IceGolemController : EnemyController
         attackTime = attackMaxTime + 1;
     }
 
-    void Kick()
+    void ShoulderCharge()
     {
         facePlayer.FacePlayerFast();
-        directionLock = true;
-        frontAnimator.Play("Kick");
+        frontAnimator.Play("ShoulderCharge");
+        attacking = true;
+        attackTime = attackMaxTime;
+    }
+
+    void IceRings()
+    {
+        facePlayer.FacePlayerFast();
+        frontAnimator.Play("IceRings");
         attacking = true;
         attackTime = attackMaxTime;
     }
 
     public override void AttackHit(int smearSpeed)
     {
+        enemySound.OtherSounds(1, 1);
         parryWindow = false;
 
         if (!canHitPlayer)
@@ -105,12 +127,19 @@ public class IceGolemController : EnemyController
 
     public override void SpecialAbility()
     {
+        enemySound.OtherSounds(0, 1);
         GameObject iceRipple = Instantiate(iceRipplePrefab);
-        iceRipple.transform.position = attackPoint.transform.position;
+        iceRipple.transform.position = transform.position;
     }
 
     void AngleMeasurement()
     {
+        if (isCharging)
+        {
+            facePlayer.FacePlayerFast();
+            return;
+        }
+
         Vector3 trackingVector = trackingPoint.position - transform.position;
         Vector3 attackVector = attackPoint.position - transform.position;
         float turnAngle = Vector3.Angle(trackingVector, attackVector);
@@ -121,6 +150,29 @@ public class IceGolemController : EnemyController
         else
         {
             navAgent.speed = 0;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!isCharging)
+        {
+            return;
+        }
+
+        if (collision.transform.CompareTag("Player"))
+        {
+            enemySound.OtherSounds(2, 1);
+            frontAnimator.Play("ChargeCollision");
+            if(collision.gameObject.layer == 3)
+            {
+                playerScript.LoseHealth(chargeDamage);
+                playerScript.LosePoise(chargePoiseDamage);
+            }
+            else if(collision.gameObject.layer == 8)
+            {
+                playerController.PathOfTheSword();
+            }
         }
     }
 }

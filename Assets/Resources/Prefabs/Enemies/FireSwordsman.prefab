@@ -5276,6 +5276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7caa7b42d0d80d42b0bb1c146a59de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackArc: {fileID: 0}
 --- !u!1 &1115137616563929206
 GameObject:
   m_ObjectHideFlags: 0
@@ -17020,8 +17021,6 @@ MonoBehaviour:
   attackRange: 2.5
   attacking: 0
   projectilePrefab: {fileID: 0}
-  frontAttackPoint: {fileID: 2819929083363805643}
-  backAttackPoint: {fileID: 2819929083363805643}
   charging: 0
   detectionTrigger: 0
   directionLock: 0
@@ -17064,6 +17063,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2819929083363805643}
   frontAnimator: {fileID: 6803650855326903489}
   backAnimator: {fileID: 1577165425122849719}
+  playerController: {fileID: 0}
   away: {x: 100, y: 100, z: 100}
 --- !u!1 &7704874516403122065
 GameObject:

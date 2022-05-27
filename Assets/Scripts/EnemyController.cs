@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     GameManager gm;
     EnemySmear smearScript;
     public EnemyScript enemyScript;
-    EnemySound enemySound;
+    public EnemySound enemySound;
     public PlayerController playerController;
     public PlayerScript playerScript;
     public PlayerAnimation playerAnimation;

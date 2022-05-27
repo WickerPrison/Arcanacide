@@ -25,7 +25,10 @@ public class FacePlayerSlow : FacePlayer
         Quaternion neededRotation = Quaternion.LookRotation(attackAnchor.position - trackingPoint.position);
         attackAnchor.rotation = Quaternion.RotateTowards(attackAnchor.rotation, neededRotation, rotateSpeed * Time.deltaTime);
 
-        attackPoint.transform.rotation = Quaternion.LookRotation(attackPoint.position - transform.position);
+        if(attackPoint.position != transform.position)
+        {
+            attackPoint.transform.rotation = Quaternion.LookRotation(attackPoint.position - transform.position);
+        }
     }
 
     public void FacePlayerFast()

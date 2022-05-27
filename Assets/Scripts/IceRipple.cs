@@ -5,9 +5,9 @@ using UnityEngine;
 public class IceRipple : MonoBehaviour
 {
     [SerializeField] GameObject iceBoxPrefab;
-    float startRadius = 0.5f;
-    int numberOfBoxes = 50;
-    float rippleSpeed = 10;
+    float startRadius = 2;
+    int numberOfBoxes = 35;
+    float rippleSpeed = 5;
     float lifeTime = 2;
 
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class IceRipple : MonoBehaviour
             iceBox.transform.RotateAround(transform.position, transform.up, rotateAngle * box);
             iceBox.rippleSpeed = rippleSpeed;
             iceBox.lifeTime = lifeTime;
-            iceBox.origin = transform.position;
+            iceBox.direction = Vector3.Normalize(iceBox.transform.position - transform.position);
         }
     }
 
