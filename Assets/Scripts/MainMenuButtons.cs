@@ -34,7 +34,7 @@ public class MainMenuButtons : MonoBehaviour
     public void QuitGame()
     {
         ButtonSound();
-        Application.Quit();
+        SceneManager.LoadScene("SurveyScreen");
     }
 
     void ButtonSound()
