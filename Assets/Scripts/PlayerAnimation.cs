@@ -135,6 +135,12 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.Play("Block");
     }
 
+    public void Shove()
+    {
+        frontAnimator.Play("Shove");
+        backAnimator.Play("Shove");
+    }
+
     public void StaggerUpdate(float stagger)
     {
         frontAnimator.SetFloat("Stagger", stagger);

@@ -6,8 +6,8 @@ public class EnemySmear : MonoBehaviour
 {
     public ParticleSystem frontSmear;
     public ParticleSystem backSmear;
+    [SerializeField] Transform attackPoint;
     EnemyController enemyController;
-    PlayerController playerController;
     Vector3 frontSmearScale;
     Vector3 frontSmearRotation;
     Vector3 frontSmearPosition;
@@ -19,7 +19,6 @@ public class EnemySmear : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemyController = GetComponent<EnemyController>();
         frontSmearScale = frontSmear.transform.localScale;
         frontSmearRotation = new Vector3(90, -20, 0);
@@ -50,9 +49,9 @@ public class EnemySmear : MonoBehaviour
 
     public void SmearDirection()
     {
-        if (playerController.transform.position.z < transform.position.z)
+        if (attackPoint.position.z < transform.position.z)
         {
-            if (playerController.transform.position.x > transform.position.x)
+            if (attackPoint.position.x > transform.position.x)
             {
                 backSmear.transform.position = away;
                 frontSmear.transform.localScale = frontSmearScale;
@@ -69,7 +68,7 @@ public class EnemySmear : MonoBehaviour
         }
         else
         {
-            if (playerController.transform.position.x < transform.position.x)
+            if (attackPoint.position.x < transform.position.x)
             {
                 frontSmear.transform.position = away;
                 backSmear.transform.localScale = backSmearScale;

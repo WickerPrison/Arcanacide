@@ -481,6 +481,7 @@ MonoBehaviour:
   swordSwoosh: {fileID: 8300000, guid: 084ddb136b4bce44698b009b414e93e7, type: 3}
   pain: {fileID: 8300000, guid: df5f068f3f63ec3489fd7f856124fda2, type: 3}
   swordImpact: {fileID: 8300000, guid: 0d0b4a1b4b49c5b448714ecd1447022b, type: 3}
+  otherSounds: []
 --- !u!1 &1906278221326585868
 GameObject:
   m_ObjectHideFlags: 0
@@ -11269,6 +11270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7caa7b42d0d80d42b0bb1c146a59de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackArc: {fileID: 0}
 --- !u!1 &6320247987698696281
 GameObject:
   m_ObjectHideFlags: 0
@@ -11837,6 +11839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 0}
+  enemySound: {fileID: 0}
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
   playerAnimation: {fileID: 0}
@@ -11850,8 +11853,6 @@ MonoBehaviour:
   attackRange: 2.5
   attacking: 0
   projectilePrefab: {fileID: 0}
-  frontAttackPoint: {fileID: 712397617754106463}
-  backAttackPoint: {fileID: 712397617754106463}
   charging: 0
   detectionTrigger: 0
   directionLock: 0
@@ -11877,6 +11878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontSmear: {fileID: 144368115355007136}
   backSmear: {fileID: 3529451986842610791}
+  attackPoint: {fileID: 712397617754106463}
 --- !u!114 &5011220085014176232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11892,6 +11894,7 @@ MonoBehaviour:
   attackPoint: {fileID: 712397617754106463}
   frontAnimator: {fileID: 1023806121353634006}
   backAnimator: {fileID: 9210301130512316167}
+  playerController: {fileID: 0}
   away: {x: 100, y: 100, z: 100}
 --- !u!1 &7618466471837308260
 GameObject:
@@ -12583,6 +12586,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7618466471682336285}
     m_Modifications:
+    - target: {fileID: 4259516015393706199, guid: 80890f0515b60f747a1ff5ba7f8abc23, type: 3}
+      propertyPath: yOffset
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 5152996951802296328, guid: 80890f0515b60f747a1ff5ba7f8abc23, type: 3}
       propertyPath: m_Name
       value: AttackPoint

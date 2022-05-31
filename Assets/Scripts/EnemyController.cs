@@ -133,11 +133,17 @@ public class EnemyController : MonoBehaviour
                 enemySound.SwordImpact();
                 playerScript.LoseHealth(hitDamage);
                 playerScript.LosePoise(hitPoiseDamage);
+                AdditionalAttackEffects();
             }
         }
         else if(playerController.gameObject.layer == 8)
         {
             playerController.PathOfTheSword();
         }
+    }
+
+    public virtual void AdditionalAttackEffects()
+    {
+
     }
 }

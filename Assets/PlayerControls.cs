@@ -75,17 +75,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Screenshot"",
+                    ""name"": ""Heal"",
                     ""type"": ""Button"",
-                    ""id"": ""e60f9023-eddc-4a11-b2cf-291a09f98f8a"",
+                    ""id"": ""938b022c-6ffd-4ca0-a318-6493028917b7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Heal"",
+                    ""name"": ""Shove"",
                     ""type"": ""Button"",
-                    ""id"": ""938b022c-6ffd-4ca0-a318-6493028917b7"",
+                    ""id"": ""c3112e2e-dc2a-4fe1-8ab4-cae8bb6bec92"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -281,28 +281,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""aba2aa58-d11f-4f43-bfc4-ecae505b80fb"",
-                    ""path"": ""<Mouse>/backButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Screenshot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""92c5d4a1-0a41-4fbe-82a4-948dec32722f"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Screenshot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""3a881c5f-7d23-499a-979c-353140d602a8"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
@@ -320,6 +298,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b6ab476-547e-45f6-969e-b1e17363e6d9"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""607ad056-f80e-41ad-9f28-f035df55da21"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -470,8 +470,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Shield = m_Gameplay.FindAction("Shield", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
-        m_Gameplay_Screenshot = m_Gameplay.FindAction("Screenshot", throwIfNotFound: true);
         m_Gameplay_Heal = m_Gameplay.FindAction("Heal", throwIfNotFound: true);
+        m_Gameplay_Shove = m_Gameplay.FindAction("Shove", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_Select = m_Tutorial.FindAction("Select", throwIfNotFound: true);
@@ -538,8 +538,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Shield;
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Look;
-    private readonly InputAction m_Gameplay_Screenshot;
     private readonly InputAction m_Gameplay_Heal;
+    private readonly InputAction m_Gameplay_Shove;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -551,8 +551,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Shield => m_Wrapper.m_Gameplay_Shield;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
-        public InputAction @Screenshot => m_Wrapper.m_Gameplay_Screenshot;
         public InputAction @Heal => m_Wrapper.m_Gameplay_Heal;
+        public InputAction @Shove => m_Wrapper.m_Gameplay_Shove;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -583,12 +583,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Look.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                @Screenshot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnScreenshot;
-                @Screenshot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnScreenshot;
-                @Screenshot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnScreenshot;
                 @Heal.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
                 @Heal.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
                 @Heal.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
+                @Shove.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShove;
+                @Shove.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShove;
+                @Shove.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShove;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -614,12 +614,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @Screenshot.started += instance.OnScreenshot;
-                @Screenshot.performed += instance.OnScreenshot;
-                @Screenshot.canceled += instance.OnScreenshot;
                 @Heal.started += instance.OnHeal;
                 @Heal.performed += instance.OnHeal;
                 @Heal.canceled += instance.OnHeal;
+                @Shove.started += instance.OnShove;
+                @Shove.performed += instance.OnShove;
+                @Shove.canceled += instance.OnShove;
             }
         }
     }
@@ -740,8 +740,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnShield(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnScreenshot(InputAction.CallbackContext context);
         void OnHeal(InputAction.CallbackContext context);
+        void OnShove(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {

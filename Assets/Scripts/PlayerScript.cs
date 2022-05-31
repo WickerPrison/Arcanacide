@@ -135,7 +135,7 @@ public class PlayerScript : MonoBehaviour
         staminaDelay = maxStaminaDelay;
     }
 
-    public void LoseMana(int amount)
+    public void LoseMana(float amount)
     {
         playerData.mana -= amount;
         if(playerData.mana < 0)

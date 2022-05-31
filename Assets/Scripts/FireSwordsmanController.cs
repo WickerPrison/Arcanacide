@@ -12,14 +12,6 @@ public class FireSwordsmanController : EnemyController
     float chargeSpeed = 7;
     float fireTrailMaxTime = 0.01f;
     float fireTrailTime;
-    bool fireArc = false;
-
-    public override void Start()
-    {
-        base.Start();
-        hitDamage = 30;
-        hitPoiseDamage = 15;
-    }
 
     public override void EnemyAI()
     {
@@ -37,7 +29,6 @@ public class FireSwordsmanController : EnemyController
             {
                 if (attackTime <= 0)
                 {
-                    fireArc = false;
                     Attack();
                 }
             }
@@ -46,19 +37,9 @@ public class FireSwordsmanController : EnemyController
                 if(attackTime <= 0)
                 {
                     attackTime = attackMaxTime;
-                    //int num = Random.Range(0, 3);
-                    int num = 2;
-                    if(num < 2)
-                    {
-                        fireArc = true;
-                        Attack();
-                    }
-                    else
-                    {
-                        directionLock = true;
-                        frontAnimator.Play("ChargeWarmup");
-                        backAnimator.Play("ChargeWarmup");
-                    }
+                    directionLock = true;
+                    frontAnimator.Play("ChargeWarmup");
+                    backAnimator.Play("ChargeWarmup");
                 }
             }
         }
@@ -108,15 +89,6 @@ public class FireSwordsmanController : EnemyController
         backAnimator.Play("Attack");
         attacking = true;
         attackTime = attackMaxTime;
-    }
-
-    public override void AttackHit(int smearSpeed)
-    {
-        base.AttackHit(smearSpeed);
-        if (fireArc)
-        {
-            FireArc();
-        }
     }
 
     void FireArc()

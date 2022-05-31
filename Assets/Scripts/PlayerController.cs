@@ -46,6 +46,10 @@ public class PlayerController : MonoBehaviour
     float pathOfPathTimer;
     [SerializeField] GameObject pathTrailPrefab;
 
+    float shoveManaCost = 20;
+    float shoveRadius = 3;
+    float shovePoiseDamage = 100;
+
     Vector2 rightStickValue;
     public Vector2 lookDir;
     List<Transform> nearbyEnemies = new List<Transform>();
@@ -111,6 +115,32 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector3.zero;
             playerAnimation.Shield();
             playerAnimation.continueBlocking = true;
+        }
+    }
+
+    void Shove()
+    {
+        if (!playerData.unlockedAbilities.Contains("Shove"))
+        {
+            return;
+        }
+
+        if(playerData.mana > shoveManaCost)
+        {
+            playerScript.LoseMana(shoveManaCost);
+            rb.velocity = Vector3.zero;
+            playerAnimation.Shove();
+        }
+    }
+
+    public void ShoveEffect()
+    {
+        foreach (EnemyScript enemy in gm.enemies)
+        {
+            if(Vector3.Distance(transform.position, enemy.transform.position) <= shoveRadius)
+            {
+                enemy.LosePoise(shovePoiseDamage);
+            }
         }
     }
 
@@ -379,5 +409,6 @@ public class PlayerController : MonoBehaviour
         im.controls.Gameplay.Heal.performed += ctx => playerScript.Heal();
         im.controls.Gameplay.Look.performed += ctx => rightStickValue = ctx.ReadValue<Vector2>();
         im.controls.Gameplay.Look.canceled += ctx => rightStickValue = Vector2.zero;
+        im.controls.Gameplay.Shove.performed += ctx => Shove();
     }
 }

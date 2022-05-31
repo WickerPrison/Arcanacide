@@ -111,6 +111,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation.EndBodyMagic();
     }
 
+    public void Shove()
+    {
+        playerController.ShoveEffect();
+    }
+
     public void ParryWindow()
     {
         if (frontAnimator.GetBool("Attacks"))

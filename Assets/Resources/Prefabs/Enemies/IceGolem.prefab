@@ -1105,9 +1105,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.8
-  m_Height: 2
+  m_Height: 1.8004398
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.09978025, z: 0}
 --- !u!54 &4338857641628726242
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1142,8 +1142,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
+  m_Height: 1.8
+  m_BaseOffset: 0.8
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4338857641628726244
@@ -11495,6 +11495,10 @@ PrefabInstance:
     - target: {fileID: 4259516015393706199, guid: 80890f0515b60f747a1ff5ba7f8abc23, type: 3}
       propertyPath: radius
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259516015393706199, guid: 80890f0515b60f747a1ff5ba7f8abc23, type: 3}
+      propertyPath: yOffset
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4259516015393706199, guid: 80890f0515b60f747a1ff5ba7f8abc23, type: 3}
       propertyPath: halfConeAngle

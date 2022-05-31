@@ -10,6 +10,7 @@ public class AttackArcGenerator : MonoBehaviour
     [SerializeField] MeshCollider colliderMesh;
     [SerializeField] int halfConeAngle;
     [SerializeField] float radius;
+    [SerializeField] float yOffset;
     EnemyController enemyController;
     Material viewConeMaterial;
     Renderer coneRenderer;
@@ -18,7 +19,6 @@ public class AttackArcGenerator : MonoBehaviour
     Mesh viewMesh;
 
     int arcPoints;
-    float yOffset = -1;
     Vector3 centerPoint;   
 
     // Start is called before the first frame update
@@ -41,7 +41,7 @@ public class AttackArcGenerator : MonoBehaviour
     public void CalculateAttackArc()
     {
         Vector3[] vertices = new Vector3[arcPoints + 3];
-        int[] triangles = new int[arcPoints * 3];
+        int[] triangles = new int[(arcPoints + 3) * 3];
         vertices[0] = new Vector3(-0.3f,yOffset,-0.5f);
         for(int i = 0; i <= arcPoints - 1; i++)
         {
@@ -55,10 +55,10 @@ public class AttackArcGenerator : MonoBehaviour
                 triangles[i * 3 + 2] = i + 2;
             }
         }
-        vertices[arcPoints - 1] = new Vector3(0.3f, yOffset, -0.5f);
-        triangles[(arcPoints - 1) * 3] = 0;
-        triangles[(arcPoints - 1) * 3 + 1] = arcPoints + 1;
-        triangles[(arcPoints - 1) * 3 + 2] = arcPoints + 2;
+        vertices[arcPoints] = new Vector3(0.3f, yOffset, -0.5f);
+        triangles[arcPoints * 3] = 0;
+        triangles[arcPoints * 3 + 1] = arcPoints + 1;
+        triangles[arcPoints * 3 + 2] = arcPoints + 2;
         viewMesh.Clear();
         viewMesh.vertices = vertices;
         viewMesh.triangles = triangles;
