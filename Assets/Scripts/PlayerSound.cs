@@ -14,7 +14,7 @@ public class PlayerSound : MonoBehaviour
 
     public void Footstep()
     {
-        SFX.PlayOneShot(soundEffects[0], 0.25f);
+        SFX.PlayOneShot(soundEffects[0], 0.75f);
     }
 
     public void SwordSwoosh()

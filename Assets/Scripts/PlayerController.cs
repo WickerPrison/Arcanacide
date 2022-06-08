@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] GameObject pauseMenuPrefab;
+    [SerializeField] ParticleSystem shoveVFX;
+    [SerializeField] ParticleSystem dodgeVFX;
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -85,6 +87,7 @@ public class PlayerController : MonoBehaviour
             stagger -= Time.deltaTime;
             if(stagger <= 0)
             {
+                preventInput = false;
                 knockback = false;
                 playerScript.ResetPoise();
             }
@@ -105,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
     void Shield()
     {
-        if (!playerData.unlockedAbilities.Contains("Block"))
+        if (!playerData.unlockedAbilities.Contains("Block") || !CanInput())
         {
             return;
         }
@@ -120,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
     void Shove()
     {
-        if (!playerData.unlockedAbilities.Contains("Shove"))
+        if (!playerData.unlockedAbilities.Contains("Shove") || !CanInput())
         {
             return;
         }
@@ -135,11 +138,14 @@ public class PlayerController : MonoBehaviour
 
     public void ShoveEffect()
     {
+        shoveVFX.Play();
         foreach (EnemyScript enemy in gm.enemies)
         {
             if(Vector3.Distance(transform.position, enemy.transform.position) <= shoveRadius)
             {
                 enemy.LosePoise(shovePoiseDamage);
+                EnemyController enemyController = enemy.gameObject.GetComponent<EnemyController>();
+                enemyController.StartStagger(0.5f);
             }
         }
     }
@@ -149,6 +155,7 @@ public class PlayerController : MonoBehaviour
         if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
         {
             //They player dashes in whatever direction they were already moving
+            dodgeVFX.Play();
             dashDirection = moveDirection.normalized;
             dashTime = maxDashTime;
             if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))

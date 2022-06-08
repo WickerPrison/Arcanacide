@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
+    [SerializeField] ParticleSystem hitVFX;
     public float stamina;
     public float poise;
     SwordSiteDirectory swordSiteDirectory;
@@ -18,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     PlayerController playerController;
     PlayerAnimation playerAnimation;
     PlayerSound sfx;
+    CameraFollow cameraScript;
     float maxStaminaDelay = 1f;
     float staminaDelay;
     float staminaRate = 40;
@@ -45,6 +47,7 @@ public class PlayerScript : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
         sfx = GetComponentInChildren<PlayerSound>();
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         if(playerData.path == "Path")
         {
             Physics.IgnoreLayerCollision(8, 6, true);
@@ -56,6 +59,9 @@ public class PlayerScript : MonoBehaviour
         if (!shield)
         {
             playerData.health -= damage;
+            hitVFX.Play();
+            float screenShakeMagnitude = (float)damage / (float)playerData.MaxHealth() * .1f;
+            StartCoroutine(cameraScript.ScreenShake(.1f, screenShakeMagnitude));
             if(playerData.health <= 0)
             {
                 im.DisableAll();

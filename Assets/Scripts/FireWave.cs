@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FireWave : MonoBehaviour
 {
+    public int boxNum;
     float moveSpeed = 7;
     public Vector3 target;
     Vector3 moveDirection;
@@ -17,7 +18,7 @@ public class FireWave : MonoBehaviour
 
     private void Update()
     {
-        if(lifetime > 0)
+        if(lifetime > 0 && boxNum > 0)
         {
             lifetime -= Time.deltaTime;
         }

@@ -5,13 +5,16 @@ using UnityEngine;
 public class PathTrail : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
+    ParticleSystem VFX;
     AudioSource sfx;
     float duration = 3;
     float damagePerSecond;
     float damage;
+    bool dead = false;
 
     private void Start()
     {
+        VFX = GetComponent<ParticleSystem>();
         damagePerSecond = playerData.PathDamage();
         sfx = GetComponent<AudioSource>();
         sfx.time += Random.Range(0, 0.5f);
@@ -19,7 +22,7 @@ public class PathTrail : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && !dead)
         {
             EnemyScript enemyScript;
             enemyScript = other.gameObject.GetComponent<EnemyScript>();
@@ -39,7 +42,21 @@ public class PathTrail : MonoBehaviour
 
         if (duration <= 0)
         {
-            Destroy(gameObject);
+            if (!dead)
+            {
+                duration += 2;
+                Death();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
+    }
+
+    void Death()
+    {
+        dead = true;
+        VFX.Stop();
     }
 }

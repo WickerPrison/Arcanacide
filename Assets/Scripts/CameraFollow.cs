@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    [SerializeField] PlayerData playerData;
+
     //This script makes the camera follow the player. Some delay is added to prevent jerking the camera when the player dashes.
 
     [SerializeField] GameObject movePoint;
@@ -30,5 +32,26 @@ public class CameraFollow : MonoBehaviour
     {
         //the camera always moves towards the movePoint at a steady speed
         transform.position = Vector3.MoveTowards(transform.position, movePoint.transform.position, playerController.moveSpeed * 2 * Time.fixedDeltaTime);
+    }
+
+    public IEnumerator ScreenShake(float duration, float magnitude)
+    {
+        float timer = duration;
+
+        while (timer > 0)
+        {
+            if(playerData.health <= 0)
+            {
+                yield break;
+            }
+            float xPosition = transform.position.x + Random.Range(-1, 1) * magnitude;
+            float yPosition = transform.position.y + Random.Range(-1, 1) * magnitude;
+            float zPosition = transform.position.z + Random.Range(-1, 1) * magnitude;
+            transform.position = new Vector3(xPosition, yPosition, zPosition);
+
+            timer -= Time.deltaTime;
+
+            yield return null;
+        }
     }
 }

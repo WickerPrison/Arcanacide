@@ -7,6 +7,12 @@ public class WaveBox : MonoBehaviour
     [SerializeField] AudioClip impactSFX;
     [SerializeField] int damage;
     [SerializeField] float poiseDamage;
+    FireWave fireWave;
+
+    private void Start()
+    {
+        fireWave = GetComponentInParent<FireWave>();
+    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -31,6 +37,7 @@ public class WaveBox : MonoBehaviour
         }
         else
         {
+            fireWave.boxNum -= 1;
             Destroy(gameObject);
         }
     }

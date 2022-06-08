@@ -25,7 +25,6 @@ public class EnemyController : MonoBehaviour
     public float attackRange;
     public bool attacking = false;
     public GameObject projectilePrefab;
-    public bool charging = false;
     public bool detectionTrigger = false;
     public bool directionLock = false;
     public bool parryWindow = false;
@@ -35,6 +34,8 @@ public class EnemyController : MonoBehaviour
     public int hitDamage;
     public float hitPoiseDamage;
     public bool facingFront;
+    float staggerTimer = 0;
+    public bool isStaggered = false;
 
     public bool canHitPlayer = false;
 
@@ -59,7 +60,18 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        EnemyAI();
+        if (isStaggered)
+        {
+            staggerTimer -= Time.deltaTime;
+            if (staggerTimer <= 0)
+            {
+                EndStagger();
+            }
+        }
+        else
+        {
+            EnemyAI();
+        }
 
         frontAnimator.SetFloat("Velocity", navAgent.velocity.magnitude);
         backAnimator.SetFloat("Velocity", navAgent.velocity.magnitude);
@@ -99,10 +111,24 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public virtual void Stagger()
+    public virtual void StartStagger(float staggerDuration)
     {
+        staggerTimer += staggerDuration;
+        isStaggered = true;
+        navAgent.enabled = false;
+        attacking = false;
+        directionLock = true;
         frontAnimator.Play("Stagger");
         backAnimator.Play("Stagger");
+    }
+
+    public virtual void EndStagger()
+    {
+        isStaggered = false;
+        navAgent.enabled = true;
+        directionLock = false;
+        frontAnimator.Play("Idle");
+        backAnimator.Play("Idle");
     }
 
     public virtual void AttackHit(int smearSpeed)

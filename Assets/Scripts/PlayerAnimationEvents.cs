@@ -6,6 +6,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 {
     //This is the only script that can be referenced directly by the player animations
     [SerializeField] PlayerData playerData;
+    CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
     PlayerController playerController;
     PlayerScript playerScript;
@@ -21,6 +22,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerScript = GetComponentInParent<PlayerScript>();
         playerSound = transform.parent.GetComponentInChildren<PlayerSound>();
         frontAnimator = gameObject.GetComponent<Animator>();
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
@@ -53,6 +55,7 @@ public class PlayerAnimationEvents : MonoBehaviour
             else
             {
                 playerSound.SwordImpact();
+                StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
                 enemyScript.LoseHealth(playerController.AttackPower(), playerController.AttackPower());
             }
         }

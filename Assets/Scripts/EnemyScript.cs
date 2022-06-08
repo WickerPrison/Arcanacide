@@ -22,6 +22,8 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float maxPoise;
     [SerializeField] float poiseRegeneration;
     [SerializeField] bool isBoss;
+    [SerializeField] float staggerDuration;
+    [SerializeField] ParticleSystem hitVFX;
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class EnemyScript : MonoBehaviour
 
     public void LoseHealth(int damage, float poiseDamage)
     {
+        hitVFX.Play();
         LosePoise(poiseDamage);
         health -= damage;
         UpdateHealthbar();
@@ -76,7 +79,7 @@ public class EnemyScript : MonoBehaviour
     {
         if(poise <= 0)
         {
-            enemyController.Stagger();
+            enemyController.StartStagger(staggerDuration);
             poise = maxPoise;
         }
 

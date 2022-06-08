@@ -7,11 +7,19 @@ public class FireSwordsmanController : EnemyController
 {
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject fireArcPrefab;
+    AttackArcGenerator attackArc;
     Vector3 chargeDestination;
     float chargeRange = 6;
     float chargeSpeed = 7;
     float fireTrailMaxTime = 0.01f;
     float fireTrailTime;
+    bool charging = false;
+
+    public override void Start()
+    {
+        base.Start();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
+    }
 
     public override void EnemyAI()
     {
@@ -89,6 +97,13 @@ public class FireSwordsmanController : EnemyController
         backAnimator.Play("Attack");
         attacking = true;
         attackTime = attackMaxTime;
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        attackArc.HideAttackArc();
+        charging = false;
     }
 
     void FireArc()

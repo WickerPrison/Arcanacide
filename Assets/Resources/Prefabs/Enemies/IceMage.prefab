@@ -534,6 +534,7 @@ MonoBehaviour:
   maxPoise: 70
   poiseRegeneration: 5
   isBoss: 0
+  staggerDuration: 2
 --- !u!114 &2327532180746279828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 1553197363090012574}
+  enemySound: {fileID: 0}
   playerController: {fileID: 0}
   playerScript: {fileID: 0}
   playerAnimation: {fileID: 0}
@@ -587,6 +589,7 @@ MonoBehaviour:
   attackPoint: {fileID: 543038021799548279}
   frontAnimator: {fileID: 7197082632759640427}
   backAnimator: {fileID: 7740439660354088547}
+  playerController: {fileID: 0}
   away: {x: 100, y: 100, z: 100}
 --- !u!1 &1553197363269651180
 GameObject:
@@ -1538,6 +1541,7 @@ MonoBehaviour:
   swordSwoosh: {fileID: 8300000, guid: 084ddb136b4bce44698b009b414e93e7, type: 3}
   pain: {fileID: 8300000, guid: df5f068f3f63ec3489fd7f856124fda2, type: 3}
   swordImpact: {fileID: 0}
+  otherSounds: []
 --- !u!1 &3321222696593362454
 GameObject:
   m_ObjectHideFlags: 0

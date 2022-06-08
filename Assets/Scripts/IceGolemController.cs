@@ -8,6 +8,8 @@ public class IceGolemController : EnemyController
     [SerializeField] GameObject iceRipplePrefab;
     [SerializeField] Transform attackPoint;
     [SerializeField] Transform trackingPoint;
+    AttackArcGenerator attackArc;
+    CameraFollow cameraScript;
     public bool isCharging;
     FacePlayerSlow facePlayer;
     float minWalkAngle = 70;
@@ -18,7 +20,9 @@ public class IceGolemController : EnemyController
     public override void Start()
     {
         base.Start();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
         facePlayer = GetComponent<FacePlayerSlow>();
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
     }
 
     public override void EnemyAI()
@@ -71,6 +75,13 @@ public class IceGolemController : EnemyController
         }
     }
 
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        attackArc.HideAttackArc();
+        isCharging = false;
+    }
+
     void Smash()
     {
         facePlayer.FacePlayerFast();
@@ -106,6 +117,7 @@ public class IceGolemController : EnemyController
 
     public override void AttackHit(int smearSpeed)
     {
+        StartCoroutine(cameraScript.ScreenShake(.1f, .1f));
         enemySound.OtherSounds(1, 1);
         parryWindow = false;
 

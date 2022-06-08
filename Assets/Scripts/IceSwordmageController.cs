@@ -6,6 +6,13 @@ using UnityEngine;
 public class IceSwordmageController : EnemyController
 {
     [SerializeField] ParticleSystem poof;
+    AttackArcGenerator attackArc;
+
+    public override void Start()
+    {
+        base.Start();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
+    }
 
     public override void EnemyAI()
     {
@@ -79,5 +86,11 @@ public class IceSwordmageController : EnemyController
         {
             playerController.PathOfTheSword();
         }
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        attackArc.HideAttackArc();
     }
 }

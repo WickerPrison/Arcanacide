@@ -5,9 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class FireMinionController : EnemyController
 {
+    AttackArcGenerator attackArc;
+
     public override void Start()
     {
         base.Start();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
         hitDamage = 30;
         hitPoiseDamage = 15;
     }
@@ -54,5 +57,11 @@ public class FireMinionController : EnemyController
         }
         attacking = true;
         attackTime = attackMaxTime;
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        attackArc.HideAttackArc();
     }
 }

@@ -33,7 +33,6 @@ public class BossController : EnemyController
     float floatMaxTime = 1;
     float floatSpeed = 0.3f;
     public bool canStagger = false;
-    bool isStaggered = false;
     int goingUp = 1;
     public bool pauseTimer = false;
     int fireBallDamage = 20;
@@ -92,9 +91,9 @@ public class BossController : EnemyController
                 }
             }
 
-            if (attackCD <= 0 && !isStaggered)
+            if (attackCD <= 0)
             {
-                if (Vector3.Distance(transform.position, playerController.transform.position) < tooClose && !isStaggered)
+                if (Vector3.Distance(transform.position, playerController.transform.position) < tooClose)
                 {
                     if(phase == 1)
                     {
@@ -158,7 +157,7 @@ public class BossController : EnemyController
             bonfireCD -= Time.deltaTime;
         }
 
-        if(fireTrailTime < 0 && !isStaggered)
+        if(fireTrailTime < 0)
         {
             FireTrail();
             fireTrailTime = fireTrailMaxTime;
@@ -188,21 +187,17 @@ public class BossController : EnemyController
         base.OnHit();
         if (canStagger)
         {
+            canStagger = false;
             bossDialogue.EndLookUpDialogue();
-            frontAnimator.Play("Stagger");
-            backAnimator.Play("Stagger");
-            isStaggered = true;
+            StartStagger(3);
         }
     }
 
-    public void EndStagger()
+    public override void EndStagger()
     {
-        BossAnimationEvents animationEvents = frontAnimator.GetComponent<BossAnimationEvents>();
-        animationEvents.CanNotStagger();
-        animationEvents.EnableMovement();
-        frontAnimator.Play("Idle");
-        backAnimator.Play("Idle");
-        isStaggered = false;
+        base.EndStagger();
+        canStagger = false;
+        pauseTimer = false;
     }
 
 
