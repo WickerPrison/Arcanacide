@@ -21,30 +21,29 @@ public class PlayerAnimation : MonoBehaviour
     public bool continueBlocking;
     public bool parryWindow = false;
     public bool isParrying = false;
+    [SerializeField] List<Vector3> smearPositions = new List<Vector3>();
+    [SerializeField] List<Vector3> smearRotations = new List<Vector3>();
+    [SerializeField] List<Vector3> smearScales = new List<Vector3>();
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     [SerializeField] ParticleSystem bodyMagic;
     [SerializeField] ParticleSystem frontSwordMagic;
     [SerializeField] ParticleSystem backSwordMagic;
-    public ParticleSystem frontSmear;
-    public ParticleSystem backSmear;
+    public ParticleSystem smear;
     [SerializeField] Camera cam;
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerController playerController;
     PlayerSound playerSound;
 
-    Vector3 frontSmearScale;
-    Vector3 frontSmearRotation;
-    Vector3 frontSmearPosition;
-    Vector3 backSmearScale;
-    Vector3 backSmearRotation;
-    Vector3 backSmearPosition;
     Vector3 away = new Vector3(100, 100, 100);
     Vector3 frontAnimatorPosition;
     Vector3 backAnimatorPosition;
     float initalScaleX;
     float frontOffset;
     float backOffset;
+
+    // front right = 0, front left = 1, back left = 2, back right = 3
+    int facingDirection = 0;
 
     private void Start()
     {
@@ -54,12 +53,6 @@ public class PlayerAnimation : MonoBehaviour
         initalScaleX = frontAnimator.transform.localScale.x;
         frontOffset = frontAnimator.transform.localPosition.x;
         backOffset = backAnimator.transform.localPosition.x;
-        frontSmearScale = frontSmear.transform.localScale;
-        frontSmearRotation = new Vector3(90, -20, 0);
-        frontSmearPosition = new Vector3(0.32f, 0, -0.32f);
-        backSmearScale = backSmear.transform.localScale;
-        backSmearRotation = new Vector3(-90, 70, 0);
-        backSmearPosition = new Vector3(0.32f, 0, 0.32f);
 
         if (Gamepad.current == null)
         {
@@ -153,10 +146,25 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.Play("Dash");
     }
 
-    public void particleSmear()
+    public void particleSmear(int smearSpeed)
     {
-        frontSmear.Play();
-        backSmear.Play();
+        SmearDirection(smearSpeed);
+        ParticleSystem.ShapeModule smearShapeFront = smear.shape;
+        smearShapeFront.arcSpeed = smearSpeed;
+        smear.Play();
+        //backSmear.Play();
+    }
+
+    void SmearDirection(int smearSpeed)
+    {
+        int smearDirection = facingDirection;
+        if (smearSpeed < 0)
+        {
+            smearDirection += 4;
+        }
+        smear.transform.localScale = smearScales[facingDirection];
+        smear.transform.localPosition = smearPositions[smearDirection];
+        smear.transform.localRotation = Quaternion.Euler(smearRotations[smearDirection].x, smearRotations[smearDirection].y, smearRotations[smearDirection].z);
     }
 
     public void ChainAttacks()
@@ -262,58 +270,45 @@ public class PlayerAnimation : MonoBehaviour
 
     void FrontRight()
     {
+        facingDirection = 0;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         frontAnimator.transform.localPosition = new Vector3(frontOffset, frontAnimator.transform.localPosition.y, frontAnimator.transform.localPosition.z);
         backAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         backAnimator.transform.localPosition = new Vector3(backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
-        frontSmear.transform.localScale = frontSmearScale;
-        frontSmear.transform.localRotation = Quaternion.Euler(frontSmearRotation.x, frontSmearRotation.y, frontSmearRotation.z);
-        frontSmear.transform.localPosition = frontSmearPosition;
-        backSmear.transform.position = away;
     }
 
     void FrontLeft()
     {
+        facingDirection = 1;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         frontAnimator.transform.localPosition = new Vector3(-frontOffset, frontAnimator.transform.localPosition.y, frontAnimator.transform.localPosition.z);
         backAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         backAnimator.transform.localPosition = new Vector3(-backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
-        frontSmear.transform.localScale = new Vector3(-frontSmearScale.x, frontSmearScale.y, frontSmearScale.z);
-        frontSmear.transform.localRotation = Quaternion.Euler(frontSmearRotation.x, -frontSmearRotation.y, frontSmearRotation.z);
-        frontSmear.transform.localPosition = new Vector3(-frontSmearPosition.x, frontSmearPosition.y, frontSmearPosition.z);
-        backSmear.transform.position = away;
-
     }
 
     void BackLeft()
     {
+        facingDirection = 2;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         frontAnimator.transform.localPosition = new Vector3(frontOffset, frontAnimator.transform.localPosition.y, frontAnimator.transform.localPosition.z);
         backAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         backAnimator.transform.localPosition = new Vector3(-backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
-        frontSmear.transform.position = away;
-        backSmear.transform.localScale = backSmearScale;
-        backSmear.transform.localRotation = Quaternion.Euler(backSmearRotation.x, -backSmearRotation.y, backSmearRotation.z);
-        backSmear.transform.localPosition = new Vector3(-backSmearPosition.x, backSmearPosition.y, backSmearPosition.z);
     }
 
     void BackRight()
     {
+        facingDirection = 3;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         frontAnimator.transform.localPosition = new Vector3(-frontOffset, frontAnimator.transform.localPosition.y, frontAnimator.transform.localPosition.z);
         backAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         backAnimator.transform.localPosition = new Vector3(backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
-        frontSmear.transform.position = away;
-        backSmear.transform.localScale = new Vector3(-backSmearScale.x, backSmearScale.y, backSmearScale.z);
-        backSmear.transform.localRotation = Quaternion.Euler(backSmearRotation.x, backSmearRotation.y, backSmearRotation.z);
-        backSmear.transform.localPosition = backSmearPosition;
     }
 }

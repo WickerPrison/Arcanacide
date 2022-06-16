@@ -31,11 +31,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerSound.SwordSwoosh();
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackStaminaCost);
-        ParticleSystem.ShapeModule smearShapeBack = playerAnimation.backSmear.shape;
-        smearShapeBack.arcSpeed = -smearSpeed;
-        ParticleSystem.ShapeModule smearShapeFront = playerAnimation.frontSmear.shape;
-        smearShapeFront.arcSpeed = smearSpeed;
-        playerAnimation.particleSmear();
+        playerAnimation.particleSmear(smearSpeed);
         EnemyScript enemyScript;
         Collider[] getHitEnemies = playerController.HitBox();
         Collider[] hitEnemies = getHitEnemies;
