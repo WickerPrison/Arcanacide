@@ -42,18 +42,24 @@ public class FireMinionController : EnemyController
         }
     }
 
+    public override void AttackHit(int smearSpeed)
+    {
+        enemySound.OtherSounds(0, 2);
+        base.AttackHit(smearSpeed);
+    }
+
     void Attack()
     {
         int num = Random.Range(0, 3);
         if(num <= 1)
         {
-            frontAnimator.Play("Attack1");
-            backAnimator.Play("Attack1");
+            frontAnimator.Play("Attack");
+            backAnimator.Play("Attack");
         }
         else
         {
-            frontAnimator.Play("DoubleAttack1");
-            backAnimator.Play("DoubleAttack1");
+            frontAnimator.Play("DoubleAttack");
+            backAnimator.Play("DoubleAttack");
         }
         attacking = true;
         attackTime = attackMaxTime;

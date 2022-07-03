@@ -28,6 +28,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
     public void AttackHit(int smearSpeed)
     {
+        StartCoroutine(playerController.StepWithAttack());
         playerSound.SwordSwoosh();
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackStaminaCost);

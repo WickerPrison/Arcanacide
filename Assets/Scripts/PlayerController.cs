@@ -179,9 +179,25 @@ public class PlayerController : MonoBehaviour
         }
         else if (CanInput() && playerScript.stamina > 0)
         {
+            rb.velocity = Vector3.zero;
             playerAnimation.attack = true;
             playerAnimation.attacking = true;
         }
+    }
+
+    public IEnumerator StepWithAttack()
+    {
+        float stepTimer = 0.15f;
+        Vector3 stepDirection = Vector3.Normalize(attackPoint.position - transform.position);
+        
+        while (stepTimer > 0)
+        {
+            stepTimer -= Time.fixedDeltaTime;
+            rb.velocity = new Vector3(stepDirection.x * Time.fixedDeltaTime * moveSpeed, 0, stepDirection.z * Time.fixedDeltaTime * moveSpeed);
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb.velocity = Vector3.zero;
     }
 
     public int AttackPower()
@@ -337,7 +353,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerAnimation.attacking)
         {
-            rb.velocity = Vector3.zero;
+            //rb.velocity = Vector3.zero;
         }
 
         if (playerData.path == "Path" && pathActive)

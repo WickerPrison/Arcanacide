@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -40,16 +41,12 @@ public class CameraFollow : MonoBehaviour
 
         while (timer > 0)
         {
-            if(playerData.health <= 0)
-            {
-                yield break;
-            }
             float xPosition = transform.position.x + Random.Range(-1, 1) * magnitude;
             float yPosition = transform.position.y + Random.Range(-1, 1) * magnitude;
             float zPosition = transform.position.z + Random.Range(-1, 1) * magnitude;
             transform.position = new Vector3(xPosition, yPosition, zPosition);
 
-            timer -= Time.deltaTime;
+            timer -= Time.unscaledDeltaTime;
 
             yield return null;
         }

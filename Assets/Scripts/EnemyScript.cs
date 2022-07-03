@@ -54,6 +54,12 @@ public class EnemyScript : MonoBehaviour
 
     public void LosePoise(float poiseDamage)
     {
+        if(poiseDamage <= 0)
+        {
+            return;
+        }
+
+        enemyController.StartStagger(0.2f);
         if (playerData.equippedEmblems.Contains(emblemLibrary.heavy_blows))
         {
             poiseDamage *= 1.5f;

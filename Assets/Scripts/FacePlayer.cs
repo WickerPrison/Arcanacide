@@ -12,13 +12,15 @@ public class FacePlayer : MonoBehaviour
     Vector3 frontAnimatorPosition;
     Vector3 backAnimatorPosition;
     public Vector3 away = new Vector3(100, 100, 100);
-    float scaleX;
+    float frontScaleX;
+    float backScaleX;
 
     public virtual void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemyController = GetComponent<EnemyController>();
-        scaleX = frontAnimator.transform.localScale.x;
+        frontScaleX = frontAnimator.transform.localScale.x;
+        backScaleX = backAnimator.transform.localScale.x;
         frontAnimatorPosition = frontAnimator.transform.localPosition;
         backAnimatorPosition = backAnimator.transform.localPosition;
     }
@@ -74,27 +76,27 @@ public class FacePlayer : MonoBehaviour
     {
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
-        frontAnimator.transform.localScale = new Vector3(scaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
+        frontAnimator.transform.localScale = new Vector3(frontScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
     }
 
     void FrontLeft()
     {
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = new Vector3(-frontAnimatorPosition.x, frontAnimatorPosition.y, frontAnimatorPosition.z);
-        frontAnimator.transform.localScale = new Vector3(-scaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
+        frontAnimator.transform.localScale = new Vector3(-frontScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
     }
 
     void BackRight()
     {
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
-        backAnimator.transform.localScale = new Vector3(scaleX, backAnimator.transform.localScale.y, backAnimator.transform.localScale.z);
+        backAnimator.transform.localScale = new Vector3(backScaleX, backAnimator.transform.localScale.y, backAnimator.transform.localScale.z);
     }
 
     void BackLeft()
     {
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = new Vector3(-backAnimatorPosition.x, backAnimatorPosition.y, backAnimatorPosition.z);
-        backAnimator.transform.localScale = new Vector3(-scaleX, backAnimator.transform.localScale.y, backAnimator.transform.localScale.z);
+        backAnimator.transform.localScale = new Vector3(-backScaleX, backAnimator.transform.localScale.y, backAnimator.transform.localScale.z);
     }
 }
