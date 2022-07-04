@@ -193,7 +193,8 @@ public class PlayerController : MonoBehaviour
         while (stepTimer > 0)
         {
             stepTimer -= Time.fixedDeltaTime;
-            rb.velocity = new Vector3(stepDirection.x * Time.fixedDeltaTime * moveSpeed, 0, stepDirection.z * Time.fixedDeltaTime * moveSpeed);
+            //rb.velocity = new Vector3(stepDirection.x * Time.fixedDeltaTime * moveSpeed, 0, stepDirection.z * Time.fixedDeltaTime * moveSpeed);
+            rb.MovePosition(transform.position + stepDirection.normalized * Time.fixedDeltaTime * moveSpeed / 100);
             yield return new WaitForFixedUpdate();
         }
 

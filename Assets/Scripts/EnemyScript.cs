@@ -59,7 +59,11 @@ public class EnemyScript : MonoBehaviour
             return;
         }
 
-        enemyController.StartStagger(0.2f);
+        if (!enemyController.attacking)
+        {
+            enemyController.StartStagger(0.2f);
+        }
+
         if (playerData.equippedEmblems.Contains(emblemLibrary.heavy_blows))
         {
             poiseDamage *= 1.5f;

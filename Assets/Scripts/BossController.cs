@@ -101,12 +101,14 @@ public class BossController : EnemyController
                     }
                     else
                     {
+                        attacking = true;
                         frontAnimator.Play("FireRing");
                         backAnimator.Play("FireRing");
                     }
                 }
                 else if (bonfireCD <= 0)
                 {
+                    attacking = true;
                     pauseTimer = true;
                     frontAnimator.Play("Bonfires");
                     backAnimator.Play("Bonfires");
@@ -114,6 +116,7 @@ public class BossController : EnemyController
                 }
                 else if (fireBallCD <= 0)
                 {
+                    attacking = true;
                     int num = Random.Range(1, phaseCounter);
                     if (num == 1)
                     {
