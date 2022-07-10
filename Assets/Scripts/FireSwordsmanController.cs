@@ -8,6 +8,7 @@ public class FireSwordsmanController : EnemyController
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject fireArcPrefab;
     AttackArcGenerator attackArc;
+    Rigidbody rb;
     Vector3 chargeDestination;
     float chargeRange = 6;
     float chargeSpeed = 7;
@@ -19,6 +20,7 @@ public class FireSwordsmanController : EnemyController
     {
         base.Start();
         attackArc = GetComponentInChildren<AttackArcGenerator>();
+        rb = GetComponent<Rigidbody>();
     }
 
     public override void EnemyAI()
@@ -136,5 +138,28 @@ public class FireSwordsmanController : EnemyController
         {
             fireTrailTime -= Time.deltaTime;
         }
+    }
+
+    public override void AttackHit(int smearSpeed)
+    {
+        StartCoroutine(StepWithAttack());
+        base.AttackHit(smearSpeed);
+    }
+
+    public IEnumerator StepWithAttack()
+    {
+        float moveSpeed = 500;
+        float stepTimer = 0.15f;
+        Vector3 stepDirection = Vector3.Normalize(attackArc.transform.position - transform.position);
+
+        while (stepTimer > 0)
+        {
+            stepTimer -= Time.fixedDeltaTime;
+            //rb.velocity = new Vector3(stepDirection.x * Time.fixedDeltaTime * moveSpeed, 0, stepDirection.z * Time.fixedDeltaTime * moveSpeed);
+            rb.MovePosition(transform.position + stepDirection.normalized * Time.fixedDeltaTime * moveSpeed / 100);
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb.velocity = Vector3.zero;
     }
 }

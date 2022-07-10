@@ -72,28 +72,28 @@ public class FacePlayer : MonoBehaviour
         }
     }
 
-    void FrontRight()
+    public virtual void FrontRight()
     {
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(frontScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
     }
 
-    void FrontLeft()
+    public virtual void FrontLeft()
     {
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = new Vector3(-frontAnimatorPosition.x, frontAnimatorPosition.y, frontAnimatorPosition.z);
         frontAnimator.transform.localScale = new Vector3(-frontScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
     }
 
-    void BackRight()
+    public virtual void BackRight()
     {
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
         backAnimator.transform.localScale = new Vector3(backScaleX, backAnimator.transform.localScale.y, backAnimator.transform.localScale.z);
     }
 
-    void BackLeft()
+    public virtual void BackLeft()
     {
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = new Vector3(-backAnimatorPosition.x, backAnimatorPosition.y, backAnimatorPosition.z);

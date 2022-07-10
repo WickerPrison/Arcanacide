@@ -7,6 +7,7 @@ public class BossDialogue : MonoBehaviour
     [SerializeField] GameObject dialoguePrefab;
     DialogueScript dialogue;
     InputManager im;
+    MusicManager musicManager;
 
     string introDialogue = "Hmmm... Looks like you somehow resisted my control.\nNo matter. Turning you off and on again ought to do the trick.";
     string lookUpDialogue = "Now where did I save that incantation?";
@@ -22,6 +23,9 @@ public class BossDialogue : MonoBehaviour
         dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
         dialogue.SetImage("Head of IT");
         dialogue.SetText(introDialogue);
+
+        musicManager = gm.gameObject.GetComponentInChildren<MusicManager>();
+        musicManager.PlayMusic(0);
     }
 
     void CloseDialogueBox()

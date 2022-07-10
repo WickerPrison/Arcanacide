@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
 
     GameObject player;
     GameManager gm;
-    EnemySmear smearScript;
+    Smear smearScript;
     public EnemyScript enemyScript;
     public EnemySound enemySound;
     public PlayerController playerController;
@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
     {
         enemyScript = gameObject.GetComponent<EnemyScript>();
         enemySound = GetComponentInChildren<EnemySound>();
-        smearScript = GetComponent<EnemySmear>();
+        smearScript = GetComponentInChildren<Smear>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         playerScript = player.GetComponent<PlayerScript>();
@@ -134,7 +134,7 @@ public class EnemyController : MonoBehaviour
     public virtual void AttackHit(int smearSpeed)
     {
         parryWindow = false;
-        smearScript.PlaySmear(smearSpeed);
+        smearScript.particleSmear(smearSpeed);
         enemySound.SwordSwoosh();
 
         if (!canHitPlayer)
@@ -164,7 +164,7 @@ public class EnemyController : MonoBehaviour
         }
         else if(playerController.gameObject.layer == 8)
         {
-            playerController.PathOfTheSword();
+            playerController.PerfectDodge();
         }
     }
 

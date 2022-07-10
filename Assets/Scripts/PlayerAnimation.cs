@@ -10,7 +10,6 @@ public class PlayerAnimation : MonoBehaviour
     //Animations are always called on both animators, even though one is unseen. This allows us to smoothly switch between
     //the two without worrying about lining up the timing or animations being cut short
 
-    public Animator smearAnimator;
     public Animator parryAnimator;
     public Vector3 mousePosition;
     public Vector3 playerFeetPosition;
@@ -21,15 +20,12 @@ public class PlayerAnimation : MonoBehaviour
     public bool continueBlocking;
     public bool parryWindow = false;
     public bool isParrying = false;
-    [SerializeField] List<Vector3> smearPositions = new List<Vector3>();
-    [SerializeField] List<Vector3> smearRotations = new List<Vector3>();
-    [SerializeField] List<Vector3> smearScales = new List<Vector3>();
+    Smear smear;
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     [SerializeField] ParticleSystem bodyMagic;
     [SerializeField] ParticleSystem frontSwordMagic;
     [SerializeField] ParticleSystem backSwordMagic;
-    public ParticleSystem smear;
     [SerializeField] Camera cam;
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerController playerController;
@@ -42,9 +38,6 @@ public class PlayerAnimation : MonoBehaviour
     float frontOffset;
     float backOffset;
 
-    // front right = 0, front left = 1, back left = 2, back right = 3
-    int facingDirection = 0;
-
     private void Start()
     {
         playerSound = gameObject.GetComponentInChildren<PlayerSound>();
@@ -53,6 +46,7 @@ public class PlayerAnimation : MonoBehaviour
         initalScaleX = frontAnimator.transform.localScale.x;
         frontOffset = frontAnimator.transform.localPosition.x;
         backOffset = backAnimator.transform.localPosition.x;
+        smear = GetComponentInChildren<Smear>();
 
         if (Gamepad.current == null)
         {
@@ -144,27 +138,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         frontAnimator.Play("Dash");
         backAnimator.Play("Dash");
-    }
-
-    public void particleSmear(int smearSpeed)
-    {
-        SmearDirection(smearSpeed);
-        ParticleSystem.ShapeModule smearShapeFront = smear.shape;
-        smearShapeFront.arcSpeed = smearSpeed;
-        smear.Play();
-        //backSmear.Play();
-    }
-
-    void SmearDirection(int smearSpeed)
-    {
-        int smearDirection = facingDirection;
-        if (smearSpeed < 0)
-        {
-            smearDirection += 4;
-        }
-        smear.transform.localScale = smearScales[facingDirection];
-        smear.transform.localPosition = smearPositions[smearDirection];
-        smear.transform.localRotation = Quaternion.Euler(smearRotations[smearDirection].x, smearRotations[smearDirection].y, smearRotations[smearDirection].z);
     }
 
     public void ChainAttacks()
@@ -270,7 +243,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void FrontRight()
     {
-        facingDirection = 0;
+        smear.facingDirection = 0;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
@@ -281,7 +254,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void FrontLeft()
     {
-        facingDirection = 1;
+        smear.facingDirection = 1;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
@@ -292,7 +265,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void BackLeft()
     {
-        facingDirection = 2;
+        smear.facingDirection = 2;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
@@ -303,7 +276,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void BackRight()
     {
-        facingDirection = 3;
+        smear.facingDirection = 3;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);

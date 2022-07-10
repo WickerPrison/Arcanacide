@@ -84,7 +84,7 @@ public class IceSwordmageController : EnemyController
         }
         else if (playerController.gameObject.layer == 8)
         {
-            playerController.PathOfTheSword();
+            playerController.PerfectDodge();
         }
     }
 

@@ -31,7 +31,7 @@ public class HomingProjectile : MonoBehaviour
             {
                 PlayerController playerController;
                 playerController = collision.gameObject.GetComponent<PlayerController>();
-                playerController.PathOfTheSword();
+                playerController.PerfectDodge();
             }
         }
         else

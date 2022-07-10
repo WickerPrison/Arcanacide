@@ -133,7 +133,7 @@ public class IceGolemController : EnemyController
         }
         else if (playerController.gameObject.layer == 8)
         {
-            playerController.PathOfTheSword();
+            playerController.PerfectDodge();
         }
     }
 
@@ -183,7 +183,7 @@ public class IceGolemController : EnemyController
             }
             else if(collision.gameObject.layer == 8)
             {
-                playerController.PathOfTheSword();
+                playerController.PerfectDodge();
             }
         }
     }

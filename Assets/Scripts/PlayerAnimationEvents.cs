@@ -8,6 +8,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] PlayerData playerData;
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
+    Smear smear;
     PlayerController playerController;
     PlayerScript playerScript;
     PlayerSound playerSound;
@@ -18,6 +19,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     void Start()
     {
         playerAnimation = GetComponentInParent<PlayerAnimation>();
+        smear = transform.parent.GetComponentInChildren<Smear>();
         playerController = GetComponentInParent<PlayerController>();
         playerScript = GetComponentInParent<PlayerScript>();
         playerSound = transform.parent.GetComponentInChildren<PlayerSound>();
@@ -32,7 +34,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerSound.SwordSwoosh();
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackStaminaCost);
-        playerAnimation.particleSmear(smearSpeed);
+        smear.particleSmear(smearSpeed);
         EnemyScript enemyScript;
         Collider[] getHitEnemies = playerController.HitBox();
         Collider[] hitEnemies = getHitEnemies;

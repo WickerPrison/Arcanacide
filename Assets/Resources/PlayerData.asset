@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fc18a103c2fe948bf5dadf32370d3d, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  health: 1
+  health: -10
   maxHealCharges: 1
-  healCharges: 1
+  healCharges: -1
   hasSpawned: 0
-  lastSwordSite: 0
+  lastSwordSite: 3
   unlockedAbilities:
   - Block
   - Shove
@@ -24,15 +24,14 @@ MonoBehaviour:
   equippedEmblems:
   - Quickstep
   tutorials:
-  - EndOfDemo
   - Altar
-  money: 20
+  money: 300
   lostMoney: 0
   path: Sword
   strength: 1
   dexterity: 1
-  vitality: 1
+  vitality: 100000
   dedication: 1
   maxMana: 50
-  mana: 50
+  mana: 0
   moveDir: {x: 0, y: 0}

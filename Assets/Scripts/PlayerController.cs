@@ -370,12 +370,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PathOfTheSword()
+    public void PerfectDodge()
     {
-        if(playerData.path != "Sword")
+        //playerSound.PerfectDodge();
+
+        if(playerData.path == "Sword")
         {
-            return;
+            PathOfTheSword();
         }
+    }
+
+    void PathOfTheSword()
+    {
         pathActive = true;
         swordTimer = swordMaxTime;
         playerAnimation.StartSwordMagic();

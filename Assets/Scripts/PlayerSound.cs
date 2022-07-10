@@ -19,7 +19,7 @@ public class PlayerSound : MonoBehaviour
 
     public void SwordSwoosh()
     {
-        SFX.PlayOneShot(soundEffects[1], 1);
+        SFX.PlayOneShot(soundEffects[1], 2);
     }
 
     public void Pain()
@@ -44,7 +44,7 @@ public class PlayerSound : MonoBehaviour
 
     public void Heal()
     {
-        SFX.PlayOneShot(soundEffects[6], 0.4f);
+        SFX.PlayOneShot(soundEffects[6], 0.6f);
     }
 
     public void Magic()
@@ -55,7 +55,7 @@ public class PlayerSound : MonoBehaviour
 
     public void PerfectDodge()
     {
-        SFX.PlayOneShot(soundEffects[8], 0.5f);
+        SFX.PlayOneShot(soundEffects[8], 2f);
     }
 
     public void Shield()

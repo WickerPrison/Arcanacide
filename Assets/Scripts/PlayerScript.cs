@@ -71,6 +71,8 @@ public class PlayerScript : MonoBehaviour
                 youDied.ShowMessage();
                 SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
                 sm.DeathSoundEffect();
+                MusicManager musicManager = gm.gameObject.GetComponentInChildren<MusicManager>();
+                musicManager.StartFadeOut(1);
             }
         }
         else

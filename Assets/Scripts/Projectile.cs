@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
             {
                 PlayerController playerController;
                 playerController = collision.gameObject.GetComponent<PlayerController>();
-                playerController.PathOfTheSword();
+                playerController.PerfectDodge();
             }
         }
         else

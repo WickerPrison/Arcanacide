@@ -32,7 +32,7 @@ public class WaveBox : MonoBehaviour
             {
                 PlayerController playerController;
                 playerController = other.gameObject.GetComponent<PlayerController>();
-                playerController.PathOfTheSword();
+                playerController.PerfectDodge();
             }
         }
         else

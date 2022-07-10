@@ -36,7 +36,7 @@ public class Bonfire : MonoBehaviour
             {
                 PlayerController playerController;
                 playerController = other.gameObject.GetComponent<PlayerController>();
-                playerController.PathOfTheSword();
+                playerController.PerfectDodge();
             }
         }
     }
