@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
 
     GameObject player;
     GameManager gm;
-    Smear smearScript;
+    public Smear smearScript;
     public EnemyScript enemyScript;
     public EnemySound enemySound;
     public PlayerController playerController;
@@ -134,7 +134,6 @@ public class EnemyController : MonoBehaviour
     public virtual void AttackHit(int smearSpeed)
     {
         parryWindow = false;
-        smearScript.particleSmear(smearSpeed);
         enemySound.SwordSwoosh();
 
         if (!canHitPlayer)

@@ -32,7 +32,6 @@ public class MusicManager : MonoBehaviour
 
         while (timer > 0)
         {
-            Debug.Log(timer);
             timer -= Time.unscaledDeltaTime;
             audioSource.volume -= rate * Time.unscaledDeltaTime;
 

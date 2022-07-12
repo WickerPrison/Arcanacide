@@ -9,6 +9,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
     Smear smear;
+    StepWithAttack stepWithAttack;
     PlayerController playerController;
     PlayerScript playerScript;
     PlayerSound playerSound;
@@ -20,6 +21,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         playerAnimation = GetComponentInParent<PlayerAnimation>();
         smear = transform.parent.GetComponentInChildren<Smear>();
+        stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
         playerController = GetComponentInParent<PlayerController>();
         playerScript = GetComponentInParent<PlayerScript>();
         playerSound = transform.parent.GetComponentInChildren<PlayerSound>();
@@ -30,7 +32,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
     public void AttackHit(int smearSpeed)
     {
-        StartCoroutine(playerController.StepWithAttack());
+        stepWithAttack.Step();
         playerSound.SwordSwoosh();
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackStaminaCost);

@@ -24,6 +24,8 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] bool isBoss;
     [SerializeField] float staggerDuration;
     [SerializeField] ParticleSystem hitVFX;
+    Animator frontAnimator;
+    Animator backAnimator;
 
     private void Awake()
     {
@@ -41,6 +43,8 @@ public class EnemyScript : MonoBehaviour
         enemySound = GetComponentInChildren<EnemySound>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gm.enemies.Add(this);
+        frontAnimator = enemyController.frontAnimator;
+        backAnimator = enemyController.backAnimator;
     }
 
     public void LoseHealth(int damage, float poiseDamage)
@@ -101,6 +105,8 @@ public class EnemyScript : MonoBehaviour
         if(health <= 0)
         {
             Death();
+            //frontAnimator.Play("Death");
+            //backAnimator.Play("Death");
         }
     }
 
