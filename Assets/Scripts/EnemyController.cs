@@ -60,6 +60,11 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
+        if (enemyScript.isDying)
+        {
+            return;
+        }
+
         if (isStaggered)
         {
             staggerTimer -= Time.deltaTime;

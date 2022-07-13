@@ -5,6 +5,7 @@ using UnityEngine;
 public class MeleeEnemyAnimationEvents : MonoBehaviour
 {
     EnemyController enemyController;
+    EnemyScript enemyScript;
     EnemySound enemySound;
     [SerializeField] AttackArcGenerator attackArc;
 
@@ -12,6 +13,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     public virtual void Start()
     {
         enemyController = GetComponentInParent<EnemyController>();
+        enemyScript = GetComponentInParent<EnemyScript>();
         enemySound = transform.parent.GetComponentInChildren<EnemySound>();
         if(attackArc == null)
         {
@@ -77,5 +79,10 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     public void Footstep()
     {
         enemySound.Footstep();
+    }
+
+    public void Death()
+    {
+        enemyScript.Death();
     }
 }

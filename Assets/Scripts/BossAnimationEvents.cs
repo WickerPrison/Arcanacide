@@ -7,6 +7,7 @@ public class BossAnimationEvents : EnemyAnimationEvents
 {
     BossController bossController;
     BossDialogue bossDialogue;
+    [SerializeField] ParticleSystem deathFire;
 
     public override void Start()
     {
@@ -90,5 +91,15 @@ public class BossAnimationEvents : EnemyAnimationEvents
     public void EndLookUpDialogue()
     {
         bossDialogue.EndLookUpDialogue();
+    }
+
+    public void StartDying()
+    {
+        deathFire.Play();
+    }
+
+    public void StopDeathFire()
+    {
+        deathFire.Stop();
     }
 }

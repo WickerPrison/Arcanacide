@@ -26,6 +26,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] ParticleSystem hitVFX;
     Animator frontAnimator;
     Animator backAnimator;
+    public bool isDying = false;
 
     private void Awake()
     {
@@ -50,20 +51,20 @@ public class EnemyScript : MonoBehaviour
     public void LoseHealth(int damage, float poiseDamage)
     {
         hitVFX.Play();
-        LosePoise(poiseDamage);
         health -= damage;
+        LosePoise(poiseDamage);
         UpdateHealthbar();
         enemyController.OnHit();
     }
 
     public void LosePoise(float poiseDamage)
     {
-        if(poiseDamage <= 0)
+        if(poiseDamage <= 0 || health <= 0)
         {
             return;
         }
 
-        if (!enemyController.attacking)
+        if (!enemyController.attacking && !isDying)
         {
             enemyController.StartStagger(0.2f);
         }
@@ -102,15 +103,15 @@ public class EnemyScript : MonoBehaviour
             poise += Time.deltaTime * poiseRegeneration;
         }
 
-        if(health <= 0)
+        if(health <= 0 && !isDying)
         {
-            Death();
-            //frontAnimator.Play("Death");
-            //backAnimator.Play("Death");
+            isDying = true;
+            frontAnimator.Play("Death");
+            backAnimator.Play("Death");
         }
     }
 
-    void Death()
+    public void Death()
     {
         mapData.deadEnemies.Add(enemyID);
         if (playerData.equippedEmblems.Contains(emblemLibrary.pay_raise))

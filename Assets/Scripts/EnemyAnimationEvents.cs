@@ -9,11 +9,13 @@ public class EnemyAnimationEvents : MonoBehaviour
     //It will be inherited by the BossAnimationEvents script and many enemy types
     [SerializeField] AudioSource footstep;
     EnemyController enemyController;
+    EnemyScript enemyScript;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         enemyController = GetComponentInParent<EnemyController>();
+        enemyScript = GetComponentInParent<EnemyScript>();
     }
 
     public void SpellAttack()
@@ -43,5 +45,10 @@ public class EnemyAnimationEvents : MonoBehaviour
     public void Footstep()
     {
         footstep.Play();
+    }
+
+    public void Death()
+    {
+        enemyScript.Death();
     }
 }
