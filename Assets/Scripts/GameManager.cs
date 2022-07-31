@@ -6,6 +6,7 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject musicPlayer;
     [SerializeField] MapData mapData;
     [SerializeField] PlayerData playerData;
     [SerializeField] GameObject moneyDropPrefab;
@@ -23,6 +24,14 @@ public class GameManager : MonoBehaviour
     bool ticketFiled = false;
     bool fireBossKilled = false;
     bool secretaryConvo = false;
+
+    private void Awake()
+    {
+        if (GameObject.FindGameObjectWithTag("MusicPlayer") == null)
+        {
+            Instantiate(musicPlayer);
+        }
+    }
 
     private void Start()
     {

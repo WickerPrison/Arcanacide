@@ -4,38 +4,41 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    AudioSource audioSource;
-    [SerializeField] List<AudioClip> audioClips = new List<AudioClip>();
+    [SerializeField] bool fadeOutMusic = true;
+    [SerializeField] bool immediateStopMusic = false;
+    [SerializeField] int trackNumber = 0;
+    MusicPlayer musicPlayer;
+    AudioSource musicSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-    }
+        musicPlayer = GameObject.FindGameObjectWithTag("MusicPlayer").GetComponent<MusicPlayer>();
+        musicSource = musicPlayer.gameObject.GetComponent<AudioSource>();
 
-    public void PlayMusic(int musicIndex)
-    {
-        audioSource.clip = audioClips[musicIndex];
-        audioSource.Play();
-    }
-
-    public void StartFadeOut(float duration)
-    {
-        StartCoroutine(FadeOut(duration));
-    }
-
-    IEnumerator FadeOut(float duration)
-    {
-        float rate = audioSource.volume / duration;
-
-        float timer = duration;
-
-        while (timer > 0)
+        if (immediateStopMusic)
         {
-            timer -= Time.unscaledDeltaTime;
-            audioSource.volume -= rate * Time.unscaledDeltaTime;
-
-            yield return null;
+            musicSource.Stop();
+            return;
         }
+
+        if (fadeOutMusic)
+        {
+            StartFadeOut(4);
+        }
+        else
+        {
+            musicPlayer.EndFadeOut();
+
+            if (trackNumber != musicPlayer.currentTrack || !musicSource.isPlaying)
+            {
+                musicPlayer.PlayMusic(trackNumber, 1);
+            }
+        }
+    }
+
+    public void StartFadeOut(int duration)
+    {
+        musicPlayer.StartFadeOut(duration);
     }
 }

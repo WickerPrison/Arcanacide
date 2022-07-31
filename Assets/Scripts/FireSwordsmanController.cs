@@ -15,6 +15,7 @@ public class FireSwordsmanController : EnemyController
     float fireTrailMaxTime = 0.01f;
     float fireTrailTime;
     bool charging = false;
+    float previousChargeDistance = 0;
 
     public override void Start()
     {
@@ -72,6 +73,15 @@ public class FireSwordsmanController : EnemyController
             float chargeDistance = Vector3.Distance(chargeDestination, transform.position);
             frontAnimator.SetFloat("ChargeDistance", chargeDistance);
             backAnimator.SetFloat("ChargeDistance", chargeDistance);
+            float amountMoved = Mathf.Abs(chargeDistance - previousChargeDistance);
+            previousChargeDistance = chargeDistance;
+            if(amountMoved <= 0.1f)
+            {
+                frontAnimator.Play("Attack4");
+                backAnimator.Play("Attack4");
+                chargeDistance = 0;
+            }
+
             if (chargeDistance < 1)
             {
                 navAgent.enabled = false;

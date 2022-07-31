@@ -189,14 +189,20 @@ public class PlayerController : MonoBehaviour
     {
         int attackPower;
         attackPower = playerData.AttackPower();
-        if (!pathActive)
+
+        if (pathActive)
         {
-            return attackPower;
+            if (playerData.path == "Sword" || playerData.path == "Dying")
+            {
+                attackPower += playerData.PathDamage();
+            }
         }
-        if(playerData.path == "Sword" || playerData.path == "Dying")
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.quick_strikes))
         {
-            attackPower += playerData.PathDamage();
+            attackPower = Mathf.RoundToInt(attackPower * 0.8f);
         }
+
         return attackPower;
     }
 

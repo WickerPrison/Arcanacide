@@ -6,6 +6,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 {
     //This is the only script that can be referenced directly by the player animations
     [SerializeField] PlayerData playerData;
+    [SerializeField] EmblemLibrary emblemLibrary;
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
     Smear smear;
@@ -14,6 +15,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerScript playerScript;
     PlayerSound playerSound;
     Animator frontAnimator;
+    [SerializeField] Animator backAnimator;
     float attackStaminaCost = 20f;
 
     // Start is called before the first frame update
@@ -70,6 +72,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void EndAttack()
     {
         playerAnimation.attacking = false;
+        frontAnimator.speed = 1;
+        backAnimator.speed = 1;
     }
 
     //Layer 8 is the IFrame layer. It cannot collide with the enemy projectile layer, but otherwise 
@@ -131,5 +135,19 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void Footstep()
     {
         playerSound.Footstep();
+    }
+
+    public void AttackAnimationSpeed()
+    {
+        if (playerData.equippedEmblems.Contains(emblemLibrary.quick_strikes))
+        {
+            frontAnimator.speed = 1.5f;
+            backAnimator.speed = 1.5f;
+        }
+        else
+        {
+            frontAnimator.speed = 1;
+            backAnimator.speed = 1;
+        }
     }
 }

@@ -144,7 +144,7 @@ public class EnemyScript : MonoBehaviour
             managerVanquished.ShowMessage();
             SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
             sm.BossDefeated();
-            MusicManager musicManager = gm.gameObject.GetComponentInChildren<MusicManager>();
+            MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
             musicManager.StartFadeOut(4);
         }
 

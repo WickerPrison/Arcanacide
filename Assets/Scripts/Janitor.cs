@@ -18,8 +18,8 @@ public class Janitor : MonoBehaviour
     float playerDistance;
     float interactDistance = 2;
 
-    string dialogue1 = "You look as if you have maintained your free will. You must have more resilience than most.";
-    string dialogue2 = "Let me impart some of my power to you. Hopefully it will keep you alive.";
+    string dialogue1 = "I figured we’d be seeing someone like you after what happened to the last agent they sent.";
+    string dialogue2 = "Let me impart some of my power to you. There’s enough that needs cleaning around here without adding your corpse to the list.";
     string dialogue3 = "Good luck. I'm sure we'll meet agian";
 
     void Start()
