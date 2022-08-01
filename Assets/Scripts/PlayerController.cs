@@ -155,17 +155,21 @@ public class PlayerController : MonoBehaviour
         if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
         {
             //They player dashes in whatever direction they were already moving
+            float staminaCost = dashStaminaCost;
             dodgeVFX.Play();
             dashDirection = moveDirection.normalized;
             dashTime = maxDashTime;
             if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))
             {
-                playerScript.LoseStamina(dashStaminaCost / 2);
+                staminaCost /= 2;
             }
-            else
+
+            if (playerData.equippedEmblems.Contains(emblemLibrary.shell_company))
             {
-                playerScript.LoseStamina(dashStaminaCost);
+                staminaCost *= 2;
             }
+            
+            playerScript.LoseStamina(staminaCost);
             playerAnimation.DashAnimation();
             playerSound.Dodge();
         }

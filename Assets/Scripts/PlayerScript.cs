@@ -11,6 +11,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
     [SerializeField] ParticleSystem hitVFX;
+    [SerializeField] EmblemLibrary emblemLibrary;
     public float stamina;
     public float poise;
     SwordSiteDirectory swordSiteDirectory;
@@ -175,12 +176,19 @@ public class PlayerScript : MonoBehaviour
 
         if (shield)
         {
-            playerData.mana -= Time.deltaTime * blockManaCost;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.shell_company))
+            {
+                LoseMana(Time.deltaTime * blockManaCost / 2);
+            }
+            else
+            {
+                LoseMana(Time.deltaTime * blockManaCost);
+            }
+
             if(playerData.mana <= 0)
             {
                 playerAnimation.StopBlocking();
             }
-            manaDelay = maxManaDelay;
         }
 
         if(manaDelay <= 0)

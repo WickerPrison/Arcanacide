@@ -15,10 +15,14 @@ public class EmblemLibrary : ScriptableObject
     public string quickstep_description = "Dodging does not use as much Stamina";
     public string pay_raise = "Pay Raise";
     public string pay_raise_description = "Earn more money each time you kill an enemy";
-    public string explosive_healing = "Explosive Healing";
-    public string explosive_healing_description = "Deal damage to nearby enemies whenever you use the Heal ability";
     public string quick_strikes = "Quick Strikes";
     public string quick_strikes_description = "Increase attack speed but decrease damage of each attack";
+    public string shell_company = "Shell Company";
+    public string shell_company_description = "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking";
+
+    //public string explosive_healing = "Explosive Healing";
+    //public string explosive_healing_description = "Deal damage to nearby enemies whenever you use the Heal ability";
+
 
     public string GetDescription(string name)
     {
@@ -34,10 +38,10 @@ public class EmblemLibrary : ScriptableObject
                 return quickstep_description;
             case "Pay Raise":
                 return pay_raise_description;
-            case "Explosive Healing":
-                return explosive_healing_description;
             case "Quick Strikes":
                 return quick_strikes_description;
+            case "Shell Company":
+                return shell_company_description;
             default:
                 return "Error";
         }
