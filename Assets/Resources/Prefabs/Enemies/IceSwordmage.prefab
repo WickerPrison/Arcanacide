@@ -10398,12 +10398,15 @@ MonoBehaviour:
   enemyID: 0
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
   maxHealth: 120
   maxPoise: 100
   poiseRegeneration: 5
   isBoss: 0
   staggerDuration: 2
+  hitVFX: {fileID: 0}
+  isDying: 0
 --- !u!114 &7405740321385819027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10431,6 +10434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a605dbdbfa1287741a1402aaa017f4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smearScript: {fileID: 0}
   enemyScript: {fileID: 0}
   enemySound: {fileID: 0}
   playerController: {fileID: 0}

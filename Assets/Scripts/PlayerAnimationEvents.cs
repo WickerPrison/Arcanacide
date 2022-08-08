@@ -45,6 +45,12 @@ public class PlayerAnimationEvents : MonoBehaviour
         foreach(Collider enemy in hitEnemies)
         {
             enemyScript = enemy.GetComponent<EnemyScript>();
+            playerSound.SwordImpact();
+            StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
+            enemyScript.LoseHealth(playerController.AttackPower(), playerController.AttackPower());
+
+            // this code is used for the parrying system that has been removed
+            /*
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
             if (enemyController.parryWindow && enemyController.canHitPlayer)
             {
@@ -61,6 +67,7 @@ public class PlayerAnimationEvents : MonoBehaviour
                 StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
                 enemyScript.LoseHealth(playerController.AttackPower(), playerController.AttackPower());
             }
+            */
         }
     }
 

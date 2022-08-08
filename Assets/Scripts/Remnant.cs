@@ -52,7 +52,7 @@ public class Remnant : MonoBehaviour
                 PlayerController playerController = player.gameObject.GetComponent<PlayerController>();
                 playerController.EndPathOfTheDying();
                 PlayerScript playerScript = player.gameObject.GetComponent<PlayerScript>();
-                playerScript.Heal();
+                playerScript.MaxHeal();
 
             }
             Destroy(gameObject);

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject musicPlayer;
     [SerializeField] MapData mapData;
     [SerializeField] PlayerData playerData;
+    [SerializeField] PhoneData phoneData;
     [SerializeField] GameObject moneyDropPrefab;
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveSystem.SaveGame(playerData, mapData);
+        SaveSystem.SaveGame(playerData, mapData, phoneData);
     }
 
     public void LoadGame()
@@ -71,6 +72,8 @@ public class GameManager : MonoBehaviour
             playerData.dedication = data.dedication;
             playerData.maxMana = data.maxMana;
             playerData.mana = data.mana;
+            playerData.deathNum = data.deathNum;
+            playerData.killedEnemiesNum = data.killedEnemiesNum;
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.visitedRooms = data.visitedRooms.ToList();
@@ -79,6 +82,15 @@ public class GameManager : MonoBehaviour
             mapData.ticketFiled = data.ticketFiled;
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
+
+            phoneData.ODPARCHMENTQueue = data.ODPARCHMENTQueue;
+            phoneData.ODPARCHMENTPreviousConversations = data.ODPARCHMENTPreviousConversations;
+            phoneData.ODTRENCHQueue = data.ODTRENCHQueue;
+            phoneData.ODTRENCHPreviousConversations = data.ODTRENCHPreviousConversations;
+            phoneData.QuestionMarksQueue = data.QuestionMarksQueue;
+            phoneData.QuestionMarksPreviousConversations = data.QuestionMarksPreviousConversations;
+            phoneData.HeadOfITQueue = data.HeadOfITQueue;
+            phoneData.HeadOfITPreviousConversations = data.HeadOfITPreviousConversations;
         }
         else
         {
@@ -104,6 +116,8 @@ public class GameManager : MonoBehaviour
         playerData.dedication = 1;
         playerData.maxMana = 50;
         playerData.mana = playerData.maxMana;
+        playerData.deathNum = 0;
+        playerData.killedEnemiesNum = 0;
 
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
@@ -112,5 +126,16 @@ public class GameManager : MonoBehaviour
         mapData.ticketFiled = ticketFiled;
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
+
+        phoneData.ODPARCHMENTQueue.Clear();
+        phoneData.ODPARCHMENTPreviousConversations.Clear();
+        phoneData.ODTRENCHQueue.Clear();
+        phoneData.ODTRENCHPreviousConversations.Clear();
+        phoneData.QuestionMarksQueue.Clear();
+        phoneData.QuestionMarksPreviousConversations.Clear();
+        phoneData.HeadOfITQueue.Clear();
+        phoneData.HeadOfITPreviousConversations.Clear();
+
+        phoneData.ODPARCHMENTQueue.Add(0);
     }
 }

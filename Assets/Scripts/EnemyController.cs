@@ -148,6 +148,13 @@ public class EnemyController : MonoBehaviour
 
         if (playerController.gameObject.layer == 3)
         {
+            enemySound.SwordImpact();
+            playerScript.LoseHealth(hitDamage);
+            playerScript.LosePoise(hitPoiseDamage);
+            AdditionalAttackEffects();
+
+            // this code is used for the parry system that has been removed
+            /*
             if (playerAnimation.parryWindow)
             {
                 playerAnimation.isParrying = true;
@@ -165,6 +172,7 @@ public class EnemyController : MonoBehaviour
                 playerScript.LosePoise(hitPoiseDamage);
                 AdditionalAttackEffects();
             }
+            */
         }
         else if(playerController.gameObject.layer == 8)
         {

@@ -13,6 +13,7 @@ public class Phone : MonoBehaviour
     InputManager im;
     float playerDistance;
     float interactDistance = 2;
+    bool phoneInUse = false;
 
     void Start()
     {
@@ -44,18 +45,24 @@ public class Phone : MonoBehaviour
         {
             phoneMenuScript = Instantiate(phoneMenu).GetComponent<PhoneMenu>();
             phoneMenuScript.phoneLibrary = phoneLibrary;
+            phoneInUse = true;
             im.Menu();
         }
     }
 
     void HangUp()
     {
-        Destroy(phoneMenuScript.gameObject);
-        im.Gameplay();
+        if(phoneInUse)
+        {
+            phoneInUse = false;
+            Destroy(phoneMenuScript.gameObject);
+            im.Gameplay();
+        }
     }
 
     public void StartDialogue()
     {
+        phoneInUse = false;
         Destroy(phoneMenuScript.gameObject);
         im.Dialogue();
     }

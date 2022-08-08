@@ -25,6 +25,8 @@ public class SaveData
     public int dedication;
     public float maxMana;
     public float mana;
+    public int deathNum;
+    public int killedEnemiesNum;
 
     public int[] unlockedDoors;
     public int[] visitedRooms;
@@ -34,7 +36,16 @@ public class SaveData
     public bool fireBossKilled;
     public bool secretaryConvo;
 
-    public SaveData (PlayerData playerData, MapData mapData)
+    public List<int> ODPARCHMENTQueue;
+    public List<int> ODPARCHMENTPreviousConversations;
+    public List<int> ODTRENCHQueue;
+    public List<int> ODTRENCHPreviousConversations;
+    public List<int> QuestionMarksQueue;
+    public List<int> QuestionMarksPreviousConversations;
+    public List<int> HeadOfITQueue;
+    public List<int> HeadOfITPreviousConversations;
+
+    public SaveData (PlayerData playerData, MapData mapData, PhoneData phoneData)
     {
         maxHealCharges = playerData.maxHealCharges;
         healCharges = playerData.healCharges;
@@ -52,6 +63,8 @@ public class SaveData
         dedication = playerData.dedication;
         maxMana = playerData.maxMana;
         mana = playerData.mana;
+        deathNum = playerData.deathNum;
+        killedEnemiesNum = playerData.killedEnemiesNum;
 
 
         unlockedDoors = mapData.unlockedDoors.ToArray();
@@ -64,5 +77,14 @@ public class SaveData
         ticketFiled = mapData.ticketFiled;
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
+
+        ODPARCHMENTQueue = phoneData.ODPARCHMENTQueue;
+        ODPARCHMENTPreviousConversations = phoneData.ODPARCHMENTPreviousConversations;
+        ODTRENCHQueue = phoneData.ODTRENCHQueue;
+        ODTRENCHPreviousConversations = phoneData.ODTRENCHPreviousConversations;
+        QuestionMarksQueue = phoneData.QuestionMarksQueue;
+        QuestionMarksPreviousConversations = phoneData.QuestionMarksPreviousConversations;
+        HeadOfITQueue = phoneData.HeadOfITQueue;
+        HeadOfITPreviousConversations = phoneData.HeadOfITPreviousConversations;
     }
 }

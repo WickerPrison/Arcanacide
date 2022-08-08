@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
+    [SerializeField] PhoneData phoneData;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] EmblemLibrary emblemLibrary;
     public float stamina;
@@ -236,6 +237,20 @@ public class PlayerScript : MonoBehaviour
 
     public void Death()
     {
+        playerData.deathNum += 1;
+        switch (playerData.deathNum)
+        {
+            case 1:
+                phoneData.ODPARCHMENTQueue.Add(1);
+                break;
+            case 3:
+                phoneData.HeadOfITQueue.Add(2);
+                break;
+            case 10:
+                phoneData.HeadOfITQueue.Add(3);
+                break;
+        }
+
         MaxHeal();
         playerData.healCharges = playerData.maxHealCharges;
         playerData.mana = playerData.maxMana;

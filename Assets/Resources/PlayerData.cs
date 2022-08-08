@@ -27,6 +27,9 @@ public class PlayerData : ScriptableObject
     public float maxMana = 50;
     public float mana;
 
+    public int deathNum;
+    public int killedEnemiesNum;
+
     public Vector2 moveDir;
 
 

@@ -529,12 +529,15 @@ MonoBehaviour:
   enemyID: 0
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
   maxHealth: 70
   maxPoise: 70
   poiseRegeneration: 5
   isBoss: 0
   staggerDuration: 2
+  hitVFX: {fileID: 0}
+  isDying: 0
 --- !u!114 &2327532180746279828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470767068bfeabd46879f3671c2eecea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smearScript: {fileID: 0}
   enemyScript: {fileID: 1553197363090012574}
   enemySound: {fileID: 0}
   playerController: {fileID: 0}
@@ -562,7 +566,6 @@ MonoBehaviour:
   attackRange: 8
   attacking: 0
   projectilePrefab: {fileID: 3398478112403510094, guid: bb0e5d9e06e78854285795632634d81e, type: 3}
-  charging: 0
   detectionTrigger: 0
   directionLock: 0
   parryWindow: 0
@@ -572,6 +575,7 @@ MonoBehaviour:
   hitDamage: 0
   hitPoiseDamage: 0
   facingFront: 0
+  isStaggered: 0
   canHitPlayer: 0
   iceRing: {fileID: 5965480288445082084}
 --- !u!114 &406160750042197360

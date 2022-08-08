@@ -5,6 +5,7 @@ using UnityEngine;
 public class FileTicket : MonoBehaviour
 {
     [SerializeField] MapData mapData;
+    [SerializeField] PhoneData phoneData;
     [SerializeField] GameObject message;
     Transform player;
     InputManager im;
@@ -40,6 +41,8 @@ public class FileTicket : MonoBehaviour
         {
             sfx.Play();
             mapData.ticketFiled = true;
+            phoneData.QuestionMarksQueue.Add(1);
+            phoneData.HeadOfITQueue.Insert(0, 4);
         }
     }
 }

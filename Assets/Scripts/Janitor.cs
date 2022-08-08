@@ -75,7 +75,12 @@ public class Janitor : MonoBehaviour
 
     void Talk()
     {
-        if(playerDistance <= interactDistance && !playerData.unlockedAbilities.Contains("Block"))
+        if(playerDistance > interactDistance)
+        {
+            return;
+        }
+
+        if(!playerData.unlockedAbilities.Contains("Block"))
         {
             sm.ButtonSound();
             switch (conversationTracker)

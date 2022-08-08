@@ -14,6 +14,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] int enemyID;
     [SerializeField] MapData mapData;
     [SerializeField] PlayerData playerData;
+    [SerializeField] PhoneData phoneData;
     [SerializeField] EmblemLibrary emblemLibrary;
     EnemyController enemyController;
     EnemySound enemySound;
@@ -113,6 +114,17 @@ public class EnemyScript : MonoBehaviour
 
     public void Death()
     {
+        playerData.killedEnemiesNum += 1;
+
+        if(playerData.killedEnemiesNum == 4)
+        {
+            phoneData.HeadOfITQueue.Add(0);
+        }
+        else if(playerData.killedEnemiesNum == 10)
+        {
+            phoneData.HeadOfITQueue.Add(1);
+        }
+
         mapData.deadEnemies.Add(enemyID);
         if (playerData.equippedEmblems.Contains(emblemLibrary.pay_raise))
         {
