@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class EmblemMenu : MonoBehaviour
 {
@@ -10,20 +11,25 @@ public class EmblemMenu : MonoBehaviour
     [SerializeField] GameObject equipEmblemPrefab;
     [SerializeField] Transform canvas;
     [SerializeField] GameObject noEmblemsMessage;
+    [SerializeField] Transform content;
+    [SerializeField] ScrollRect scrollRect;
     public GameObject leaveButton;
     Button leaveButtonButton;
     public RestMenuButtons restMenuScript;
     public List<GameObject> buttons = new List<GameObject>();
-    Vector3 firstEmblemPosition = new Vector3(350, 850, 0);
     public int altarNumber;
     public Transform spawnPoint;
     PlayerControls controls;
     SoundManager sm;
+    float scrollDir;
+    float scrollSpeed = .1f;
 
     private void Awake()
     {
         controls = new PlayerControls();
         controls.Menu.Back.performed += ctx => OpenRestMenu();
+        controls.Menu.Scroll.performed += ctx => scrollDir = ctx.ReadValue<Vector2>().y;
+        controls.Menu.Scroll.canceled += ctx => scrollDir = 0;
     }
 
     // Start is called before the first frame update
@@ -37,8 +43,8 @@ public class EmblemMenu : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(buttons[0]);
             leaveButtonButton = leaveButton.GetComponent<Button>();
             Navigation nav = leaveButtonButton.navigation;
+            nav.selectOnUp = buttons[buttons.Count - 1].GetComponent<Button>();
             nav.selectOnDown = buttons[0].GetComponent<Button>();
-            nav.selectOnLeft = buttons[0].GetComponent<Button>();
             leaveButtonButton.navigation = nav;
             noEmblemsMessage.SetActive(false);
         }
@@ -48,14 +54,23 @@ public class EmblemMenu : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(playerData.emblems.Count > 0)
+        {
+            if(Gamepad.current == null)
+            {
+                MouseScrollPosition();
+            }
+            else
+            {
+                ControllerScrollPosition();
+            }
+        }
+    }
+
     public void OpenRestMenu()
     {
-        /*
-        restMenu = Instantiate(restMenuPrefab);
-        RestMenuButtons restMenuScript = restMenu.GetComponent<RestMenuButtons>();
-        restMenuScript.altarNumber = altarNumber;
-        restMenuScript.spawnPoint = spawnPoint;
-        */
         sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
@@ -69,13 +84,49 @@ public class EmblemMenu : MonoBehaviour
         {
             GameObject equipEmblem = Instantiate(equipEmblemPrefab);
             buttons.Add(equipEmblem);
-            equipEmblem.transform.SetParent(canvas.transform);
-            Vector3 offset = new Vector3(0, i * 100, 0);
-            RectTransform equipEmblemRect = equipEmblem.GetComponent<RectTransform>();
-            equipEmblemRect.position = firstEmblemPosition - offset;
+            equipEmblem.transform.SetParent(content);
             EquipEmblem equipEmblemScript = equipEmblem.GetComponent<EquipEmblem>();
             equipEmblemScript.emblemName = playerData.emblems[i];
             equipEmblemScript.emblemMenu = this;
+        }
+    }
+
+    void ControllerScrollPosition()
+    {
+        GameObject currentButton = EventSystem.current.currentSelectedGameObject;
+        if (!buttons.Contains(currentButton))
+        {
+            return;
+        }
+
+        int index = buttons.IndexOf(currentButton);
+        float position = (float)index / ((float)buttons.Count - 1);
+        position = 1 - position;
+
+        float scrollDiff = position - scrollRect.verticalNormalizedPosition;
+        scrollDir = scrollDiff / Mathf.Abs(scrollDiff);
+        float scrollDistance = scrollDiff * 2f * Time.deltaTime + scrollDir * .4f * Time.deltaTime;
+        if (Mathf.Abs(scrollDiff) < scrollDistance)
+        {
+            scrollRect.verticalNormalizedPosition = position;
+        }
+        else
+        {
+            scrollRect.verticalNormalizedPosition += scrollDistance;
+        }
+    }
+
+    void MouseScrollPosition()
+    {
+        scrollDir /= 120;
+        scrollRect.verticalNormalizedPosition += scrollDir * scrollSpeed;
+        if(scrollRect.verticalNormalizedPosition > 1)
+        {
+            scrollRect.verticalNormalizedPosition = 1;
+        }
+        else if(scrollRect.verticalNormalizedPosition < 0)
+        {
+            scrollRect.verticalNormalizedPosition = 0;
         }
     }
 

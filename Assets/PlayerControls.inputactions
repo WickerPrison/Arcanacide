@@ -70,7 +70,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Shove",
+                    "name": "Totem",
                     "type": "Button",
                     "id": "c3112e2e-dc2a-4fe1-8ab4-cae8bb6bec92",
                     "expectedControlType": "Button",
@@ -295,7 +295,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Shove",
+                    "action": "Totem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -306,7 +306,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Shove",
+                    "action": "Totem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -369,6 +369,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "bb5bbf7f-b9cc-46e1-bf96-86964a26cfa0",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ControllerDirection",
+                    "type": "Value",
+                    "id": "25de466c-5621-45d2-919e-4691e2993432",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -376,6 +392,17 @@
                     "name": "",
                     "id": "a2dbf909-714d-4c33-854a-4b7de41e0aaf",
                     "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d0d9d03-f812-4db8-ba37-bf1c257ea362",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -402,6 +429,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f175aa39-5ca9-48fc-ab6a-4a302f39d805",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4ed45645-a2d4-435e-abbd-032c0df23457",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ControllerDirection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

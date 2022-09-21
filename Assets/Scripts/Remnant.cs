@@ -11,7 +11,7 @@ public class Remnant : MonoBehaviour
     TutorialManager tutorialManager;
     InputManager im;
     PlayerControls controls;
-    float playerDistance;
+    float playerDistance = 100;
     float interactDistance = 2;
 
     void Awake()

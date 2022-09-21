@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class FileTicket : MonoBehaviour
 {
     [SerializeField] MapData mapData;
     [SerializeField] PhoneData phoneData;
     [SerializeField] GameObject message;
+    [SerializeField] TextMeshProUGUI screenText;
+    string screenText1 = "File Support Ticket Here";
+    string screenText2 = "Support Ticket Filed";
     Transform player;
     InputManager im;
     AudioSource sfx;
@@ -19,6 +23,14 @@ public class FileTicket : MonoBehaviour
         im.controls.Gameplay.Interact.performed += ctx => FileSupportTicket();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         sfx = GetComponent<AudioSource>();
+        if (mapData.ticketFiled)
+        {
+            screenText.text = screenText2;
+        }
+        else
+        {
+            screenText.text = screenText1;
+        }
     }
 
     // Update is called once per frame
@@ -41,7 +53,8 @@ public class FileTicket : MonoBehaviour
         {
             sfx.Play();
             mapData.ticketFiled = true;
-            phoneData.QuestionMarksQueue.Add(1);
+            screenText.text = screenText2;
+            phoneData.UnknownNumberQueue.Add(1);
             phoneData.HeadOfITQueue.Insert(0, 4);
         }
     }

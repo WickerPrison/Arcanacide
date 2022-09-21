@@ -6,10 +6,12 @@ public class Projectile : MonoBehaviour
 {
     public Vector3 direction;
     public int spellDamage;
-    [SerializeField] int speed;
+    public int poiseDamage;
+    public int speed;
     [SerializeField] AudioClip playerImpactSFX;
     [SerializeField] AudioClip impactSFX;
     [SerializeField] float impactSFXvolume;
+    [SerializeField] float lifetime;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -17,28 +19,53 @@ public class Projectile : MonoBehaviour
         {
             if(collision.gameObject.layer == 3)
             {
-                PlayerScript playerScript;
-                playerScript = collision.gameObject.GetComponent<PlayerScript>();
-                playerScript.LoseHealth(spellDamage);
-                AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
-                Destroy(gameObject);
+                HitPlayer(collision);
             }
             else if(collision.gameObject.layer == 8)
             {
-                PlayerController playerController;
-                playerController = collision.gameObject.GetComponent<PlayerController>();
-                playerController.PerfectDodge();
+                PerfectDodge(collision);
             }
         }
         else
         {
-            AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
-            Destroy(gameObject);
+            HitObject(collision);
         }
     }
 
-    private void FixedUpdate()
+    public virtual void HitPlayer(Collider collision)
+    {
+        PlayerScript playerScript;
+        playerScript = collision.gameObject.GetComponent<PlayerScript>();
+        playerScript.LoseHealth(spellDamage);
+        playerScript.LosePoise(poiseDamage);
+        AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
+        Destroy(gameObject);
+    }
+
+    public virtual void PerfectDodge(Collider collision)
+    {
+        PlayerController playerController;
+        playerController = collision.gameObject.GetComponent<PlayerController>();
+        playerController.PerfectDodge();
+    }
+
+    public virtual void HitObject(Collider collision)
+    {
+        AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
+        Destroy(gameObject);
+    }
+
+    public virtual void FixedUpdate()
     {
         transform.position = transform.position + direction.normalized * Time.fixedDeltaTime * speed;
+    }
+
+    private void Update()
+    {
+        lifetime -= Time.deltaTime;
+        if (lifetime <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

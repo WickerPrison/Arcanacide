@@ -83,7 +83,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Shove"",
+                    ""name"": ""Totem"",
                     ""type"": ""Button"",
                     ""id"": ""c3112e2e-dc2a-4fe1-8ab4-cae8bb6bec92"",
                     ""expectedControlType"": ""Button"",
@@ -308,7 +308,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Shove"",
+                    ""action"": ""Totem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -319,7 +319,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Shove"",
+                    ""action"": ""Totem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -382,6 +382,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""bb5bbf7f-b9cc-46e1-bf96-86964a26cfa0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ControllerDirection"",
+                    ""type"": ""Value"",
+                    ""id"": ""25de466c-5621-45d2-919e-4691e2993432"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -389,6 +405,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""a2dbf909-714d-4c33-854a-4b7de41e0aaf"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d0d9d03-f812-4db8-ba37-bf1c257ea362"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -415,6 +442,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f175aa39-5ca9-48fc-ab6a-4a302f39d805"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4ed45645-a2d4-435e-abbd-032c0df23457"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerDirection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -471,7 +520,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_Heal = m_Gameplay.FindAction("Heal", throwIfNotFound: true);
-        m_Gameplay_Shove = m_Gameplay.FindAction("Shove", throwIfNotFound: true);
+        m_Gameplay_Totem = m_Gameplay.FindAction("Totem", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_Select = m_Tutorial.FindAction("Select", throwIfNotFound: true);
@@ -479,6 +528,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
         m_Menu_Back = m_Menu.FindAction("Back", throwIfNotFound: true);
+        m_Menu_Scroll = m_Menu.FindAction("Scroll", throwIfNotFound: true);
+        m_Menu_ControllerDirection = m_Menu.FindAction("ControllerDirection", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_Next = m_Dialogue.FindAction("Next", throwIfNotFound: true);
@@ -539,7 +590,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_Heal;
-    private readonly InputAction m_Gameplay_Shove;
+    private readonly InputAction m_Gameplay_Totem;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -552,7 +603,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
         public InputAction @Heal => m_Wrapper.m_Gameplay_Heal;
-        public InputAction @Shove => m_Wrapper.m_Gameplay_Shove;
+        public InputAction @Totem => m_Wrapper.m_Gameplay_Totem;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -586,9 +637,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Heal.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
                 @Heal.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
                 @Heal.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
-                @Shove.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShove;
-                @Shove.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShove;
-                @Shove.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShove;
+                @Totem.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTotem;
+                @Totem.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTotem;
+                @Totem.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTotem;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -617,9 +668,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Heal.started += instance.OnHeal;
                 @Heal.performed += instance.OnHeal;
                 @Heal.canceled += instance.OnHeal;
-                @Shove.started += instance.OnShove;
-                @Shove.performed += instance.OnShove;
-                @Shove.canceled += instance.OnShove;
+                @Totem.started += instance.OnTotem;
+                @Totem.performed += instance.OnTotem;
+                @Totem.canceled += instance.OnTotem;
             }
         }
     }
@@ -663,12 +714,16 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IMenuActions m_MenuActionsCallbackInterface;
     private readonly InputAction m_Menu_Select;
     private readonly InputAction m_Menu_Back;
+    private readonly InputAction m_Menu_Scroll;
+    private readonly InputAction m_Menu_ControllerDirection;
     public struct MenuActions
     {
         private @PlayerControls m_Wrapper;
         public MenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m_Menu_Select;
         public InputAction @Back => m_Wrapper.m_Menu_Back;
+        public InputAction @Scroll => m_Wrapper.m_Menu_Scroll;
+        public InputAction @ControllerDirection => m_Wrapper.m_Menu_ControllerDirection;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -684,6 +739,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Back.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
+                @Scroll.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnScroll;
+                @Scroll.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnScroll;
+                @Scroll.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnScroll;
+                @ControllerDirection.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnControllerDirection;
+                @ControllerDirection.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnControllerDirection;
+                @ControllerDirection.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnControllerDirection;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -694,6 +755,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
+                @ControllerDirection.started += instance.OnControllerDirection;
+                @ControllerDirection.performed += instance.OnControllerDirection;
+                @ControllerDirection.canceled += instance.OnControllerDirection;
             }
         }
     }
@@ -741,7 +808,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnHeal(InputAction.CallbackContext context);
-        void OnShove(InputAction.CallbackContext context);
+        void OnTotem(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {
@@ -751,6 +818,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnSelect(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
+        void OnControllerDirection(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {

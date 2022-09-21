@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeathTimer : MonoBehaviour
 {
-    [SerializeField] float timeToDie;
+    public float timeToDie;
 
     // Update is called once per frame
     void Update()

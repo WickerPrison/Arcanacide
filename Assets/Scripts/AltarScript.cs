@@ -14,7 +14,7 @@ public class AltarScript : MonoBehaviour
     PlayerScript playerScript;
     InputManager im;
     TutorialManager tutorialManager;
-    float playerDistance;
+    float playerDistance = 100;
     float interactDistance = 2;
 
     void Start()

@@ -82,8 +82,8 @@ public class SaveData
         ODPARCHMENTPreviousConversations = phoneData.ODPARCHMENTPreviousConversations;
         ODTRENCHQueue = phoneData.ODTRENCHQueue;
         ODTRENCHPreviousConversations = phoneData.ODTRENCHPreviousConversations;
-        QuestionMarksQueue = phoneData.QuestionMarksQueue;
-        QuestionMarksPreviousConversations = phoneData.QuestionMarksPreviousConversations;
+        QuestionMarksQueue = phoneData.UnknownNumberQueue;
+        QuestionMarksPreviousConversations = phoneData.UnknownNumberPreviousConversations;
         HeadOfITQueue = phoneData.HeadOfITQueue;
         HeadOfITPreviousConversations = phoneData.HeadOfITPreviousConversations;
     }

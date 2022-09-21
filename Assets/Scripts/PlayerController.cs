@@ -13,12 +13,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject pauseMenuPrefab;
     [SerializeField] ParticleSystem shoveVFX;
     [SerializeField] ParticleSystem dodgeVFX;
+    [SerializeField] GameObject totemObject;
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
     public float moveSpeed;
-    public float stagger;
-    public float maxStaggered;
     public bool knockback = false;
 
     InputManager im;
@@ -27,7 +26,7 @@ public class PlayerController : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerScript playerScript;
     PlayerSound playerSound;
-    Rigidbody rb;
+    public Rigidbody rb;
     GameObject pauseMenu;
     Vector3 mouseDirection;
     Vector3 moveDirection;
@@ -48,6 +47,9 @@ public class PlayerController : MonoBehaviour
     float pathOfPathTimer;
     [SerializeField] GameObject pathTrailPrefab;
 
+    float totemManaCost = 25;
+    float totemMaxCooldown = 2;
+    float totemCooldown;
     float shoveManaCost = 20;
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
@@ -78,23 +80,6 @@ public class PlayerController : MonoBehaviour
 
         AttackPointPosition();
 
-        if(stagger > 0)
-        {
-            if (!knockback)
-            {
-                rb.velocity = Vector3.zero;
-            }
-            stagger -= Time.deltaTime;
-            if(stagger <= 0)
-            {
-                preventInput = false;
-                knockback = false;
-                playerScript.ResetPoise();
-            }
-        }
-
-        playerAnimation.StaggerUpdate(stagger);
-
         if(swordTimer > 0)
         {
             swordTimer -= Time.deltaTime;
@@ -103,6 +88,11 @@ public class PlayerController : MonoBehaviour
                 pathActive = false;
                 playerAnimation.EndSwordMagic();
             }
+        }
+
+        if(totemCooldown > 0)
+        {
+            totemCooldown -= Time.deltaTime;
         }
     }
 
@@ -113,11 +103,27 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if(playerData.mana > 0)
+        if(playerData.mana > 0 && totemCooldown <= 0)
         {
             rb.velocity = Vector3.zero;
             playerAnimation.Shield();
             playerAnimation.continueBlocking = true;
+        }
+    }
+
+    void Totem()
+    {
+        if(!playerData.unlockedAbilities.Contains("Totem") || !CanInput())
+        {
+            return;
+        }
+
+        if(playerData.mana > 0 && totemCooldown <= 0)
+        {
+            playerScript.LoseMana(totemManaCost);
+            totemCooldown = totemMaxCooldown;
+            GameObject totem = Instantiate(totemObject);
+            totem.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
     }
 
@@ -154,7 +160,7 @@ public class PlayerController : MonoBehaviour
     {
         if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
         {
-            //They player dashes in whatever direction they were already moving
+            //The player dashes in whatever direction they were already moving
             float staminaCost = dashStaminaCost;
             dodgeVFX.Play();
             dashDirection = moveDirection.normalized;
@@ -276,17 +282,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void PauseMenu()
+    public void PauseMenu()
     {
         sm.ButtonSound();
         if (!pauseMenu)
         {
             preventInput = true;
+            Time.timeScale = 0;
             pauseMenu = Instantiate(pauseMenuPrefab);
         }
         else
         {
             preventInput = false;
+            Time.timeScale = 1;
             Destroy(pauseMenu);
         }
     }
@@ -306,7 +314,7 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
-        if (stagger > 0)
+        if (playerScript.isStaggered)
         {
             return false;
         }
@@ -433,6 +441,6 @@ public class PlayerController : MonoBehaviour
         im.controls.Gameplay.Heal.performed += ctx => playerScript.Heal();
         im.controls.Gameplay.Look.performed += ctx => rightStickValue = ctx.ReadValue<Vector2>();
         im.controls.Gameplay.Look.canceled += ctx => rightStickValue = Vector2.zero;
-        im.controls.Gameplay.Shove.performed += ctx => Shove();
+        im.controls.Gameplay.Totem.performed += ctx => Totem();
     }
 }

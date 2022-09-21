@@ -5,7 +5,7 @@ using TMPro;
 
 public class PhoneContact : MonoBehaviour
 {
-    public PhoneLibrary phoneLibrary;
+    public TextingLibrary phoneLibrary;
     string contactName;
     [SerializeField] TextMeshProUGUI text;
 
@@ -17,6 +17,6 @@ public class PhoneContact : MonoBehaviour
 
     public void StartConversation()
     {
-        phoneLibrary.StartConversation(contactName);
+        //phoneLibrary.StartConversation(contactName);
     }
 }

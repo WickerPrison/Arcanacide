@@ -15,7 +15,7 @@ public class Safe : MonoBehaviour
     InputManager im;
     SoundManager sm;
     AudioSource sfx;
-    float playerDistance;
+    float playerDistance = 100;
     float interactDistance = 2;
 
     private void Start()

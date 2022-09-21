@@ -20,9 +20,7 @@ public class PauseMenuButtons : MonoBehaviour
 
     public void ResumeGame()
     {
-        sm.ButtonSound();
-        playerController.preventInput = false;
-        Destroy(gameObject);
+        playerController.PauseMenu();
     }
 
     public void MainMenu()

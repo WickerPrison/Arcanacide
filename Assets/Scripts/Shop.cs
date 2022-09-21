@@ -10,7 +10,7 @@ public class Shop : MonoBehaviour
     Transform player;
     InputManager im;
     SoundManager sm;
-    float playerDistance;
+    float playerDistance = 100;
     float interactDistance = 2;
 
     [SerializeField] GameObject dialoguePrefab;

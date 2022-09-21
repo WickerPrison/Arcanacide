@@ -22,7 +22,7 @@ public class FireBlast : MonoBehaviour
             playerScript = other.gameObject.GetComponent<PlayerScript>();
             playerController = other.gameObject.GetComponent<PlayerController>();
             playerScript.LoseHealth(spellDamage);
-            playerController.stagger += 1;
+            playerScript.StartStagger(1);
             playerRB = playerController.gameObject.GetComponent<Rigidbody>();
             Vector3 pushDirection = playerController.transform.position - transform.position;
             playerRB.AddForce(pushDirection.normalized * 15, ForceMode.VelocityChange);

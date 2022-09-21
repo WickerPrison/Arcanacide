@@ -15,7 +15,7 @@ public class Janitor : MonoBehaviour
     Vector3 scale;
     InputManager im;
     SoundManager sm;
-    float playerDistance;
+    float playerDistance = 100;
     float interactDistance = 2;
 
     string dialogue1 = "I figured we’d be seeing someone like you after what happened to the last agent they sent.";

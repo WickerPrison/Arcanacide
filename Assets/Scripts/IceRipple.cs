@@ -16,7 +16,7 @@ public class IceRipple : MonoBehaviour
         float rotateAngle = 360 / numberOfBoxes;
         for(int box = 0; box < numberOfBoxes; box++)
         {
-            IceBox iceBox = Instantiate(iceBoxPrefab).GetComponent<IceBox>();
+            RippleBox iceBox = Instantiate(iceBoxPrefab).GetComponent<RippleBox>();
             iceBox.transform.position = transform.position + new Vector3(startRadius, 0, 0);
             iceBox.transform.RotateAround(transform.position, transform.up, rotateAngle * box);
             iceBox.rippleSpeed = rippleSpeed;

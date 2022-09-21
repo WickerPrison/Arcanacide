@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
@@ -14,6 +15,18 @@ public class InputManager : MonoBehaviour
     private void Start()
     {
         Gameplay();
+    }
+
+    private void Update()
+    {
+        if(Gamepad.current == null)
+        {
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.visible = false;
+        }
     }
 
     public void Gameplay()

@@ -72,8 +72,10 @@ public class EquipEmblem : MonoBehaviour
         {
             nav.selectOnDown = emblemMenu.buttons[listIndex + 1].GetComponent<Button>();
         }
-
-        nav.selectOnRight = emblemMenu.leaveButton.GetComponent<Button>();
+        else
+        {
+            nav.selectOnDown = emblemMenu.leaveButton.GetComponent<Button>();
+        }
 
         button.navigation = nav;
     }

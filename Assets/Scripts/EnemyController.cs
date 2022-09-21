@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour
     //This script controls the actions of the enemy units. It will likely be inherited by all enemy types
 
     GameObject player;
-    GameManager gm;
+    public GameManager gm;
     public Smear smearScript;
     public EnemyScript enemyScript;
     public EnemySound enemySound;
@@ -111,9 +111,18 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public virtual void OnHit()
+    public virtual void SpecialAbilityOff()
     {
 
+    }
+
+    public virtual void OnHit()
+    {
+        ElectricAlly ally = GetComponent<ElectricAlly>();
+        if (ally != null)
+        {
+            ally.OnHit();
+        }
     }
 
     public virtual void StartStagger(float staggerDuration)
@@ -183,5 +192,11 @@ public class EnemyController : MonoBehaviour
     public virtual void AdditionalAttackEffects()
     {
 
+    }
+
+    public virtual void Death()
+    {
+        frontAnimator.Play("Death");
+        backAnimator.Play("Death");
     }
 }

@@ -14,7 +14,7 @@ public class SwordSiteScript : MonoBehaviour
     GameObject restMenu;
     RestMenuButtons restMenuButtons;
     InputManager im;
-    float playerDistance;
+    float playerDistance = 100;
     float interactDistance = 2;
     float swordSiteTimer = 0.5f;
 

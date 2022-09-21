@@ -7,6 +7,7 @@ public class WaveBox : MonoBehaviour
     [SerializeField] AudioClip impactSFX;
     [SerializeField] int damage;
     [SerializeField] float poiseDamage;
+    [SerializeField] bool canHurtEnemies = false;
     FireWave fireWave;
 
     private void Start()
@@ -35,9 +36,18 @@ public class WaveBox : MonoBehaviour
                 playerController.PerfectDodge();
             }
         }
+        else if(canHurtEnemies && other.gameObject.CompareTag("Enemy"))
+        {
+            EnemyScript enemyScript = other.gameObject.GetComponent<EnemyScript>();
+            enemyScript.LoseHealth(damage, poiseDamage);
+            Destroy(gameObject);
+        }
         else
         {
-            fireWave.boxNum -= 1;
+            if(fireWave!= null)
+            {
+                fireWave.boxNum -= 1;
+            }
             Destroy(gameObject);
         }
     }

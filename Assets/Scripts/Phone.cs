@@ -8,10 +8,10 @@ public class Phone : MonoBehaviour
     [SerializeField] GameObject message;
     [SerializeField] GameObject phoneMenu;
     PhoneMenu phoneMenuScript;
-    PhoneLibrary phoneLibrary;
+    TextingLibrary phoneLibrary;
     Transform player;
     InputManager im;
-    float playerDistance;
+    float playerDistance = 100;
     float interactDistance = 2;
     bool phoneInUse = false;
 
@@ -19,10 +19,10 @@ public class Phone : MonoBehaviour
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => UsePhone();
-        im.controls.Dialogue.Next.performed += ctx => phoneLibrary.NextDialogue();
+        //im.controls.Dialogue.Next.performed += ctx => phoneLibrary.NextDialogue();
         im.controls.Menu.Back.performed += ctx => HangUp();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        phoneLibrary = GetComponent<PhoneLibrary>();
+        phoneLibrary = GetComponent<TextingLibrary>();
     }
 
     // Update is called once per frame

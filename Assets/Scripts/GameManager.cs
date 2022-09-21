@@ -87,8 +87,8 @@ public class GameManager : MonoBehaviour
             phoneData.ODPARCHMENTPreviousConversations = data.ODPARCHMENTPreviousConversations;
             phoneData.ODTRENCHQueue = data.ODTRENCHQueue;
             phoneData.ODTRENCHPreviousConversations = data.ODTRENCHPreviousConversations;
-            phoneData.QuestionMarksQueue = data.QuestionMarksQueue;
-            phoneData.QuestionMarksPreviousConversations = data.QuestionMarksPreviousConversations;
+            phoneData.UnknownNumberQueue = data.QuestionMarksQueue;
+            phoneData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations;
             phoneData.HeadOfITQueue = data.HeadOfITQueue;
             phoneData.HeadOfITPreviousConversations = data.HeadOfITPreviousConversations;
         }
@@ -131,8 +131,8 @@ public class GameManager : MonoBehaviour
         phoneData.ODPARCHMENTPreviousConversations.Clear();
         phoneData.ODTRENCHQueue.Clear();
         phoneData.ODTRENCHPreviousConversations.Clear();
-        phoneData.QuestionMarksQueue.Clear();
-        phoneData.QuestionMarksPreviousConversations.Clear();
+        phoneData.UnknownNumberQueue.Clear();
+        phoneData.UnknownNumberPreviousConversations.Clear();
         phoneData.HeadOfITQueue.Clear();
         phoneData.HeadOfITPreviousConversations.Clear();
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
@@ -11,8 +12,11 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject manaBarFill;
     [SerializeField] GameObject manaBarCrack;
     [SerializeField] TextMeshProUGUI healCounter;
+    [SerializeField] List<Sprite> gemSprites = new List<Sprite>();
+    [SerializeField] Sprite unbrokenGem;
+    [SerializeField] Image gemImage;
     PlayerScript playerScript;
-    float healthbarScale = 1.555f;
+    float healthbarScale = 1;
 
     private void Start()
     {
@@ -21,6 +25,7 @@ public class HUD : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (playerData.healCharges < 0)
         {
             healCounter.gameObject.SetActive(false);
@@ -31,10 +36,13 @@ public class HUD : MonoBehaviour
             healCounter.gameObject.SetActive(true);
             manaBarCrack.SetActive(false);
         }
+        */
+
         UpdateHealthbar();
         UpdateStaminaBar();
         UpdateManaBar();
-        healCounter.text = playerData.healCharges.ToString();
+        UpdateGemCracks();
+        //healCounter.text = playerData.healCharges.ToString();
     }
 
     void UpdateHealthbar()
@@ -54,11 +62,23 @@ public class HUD : MonoBehaviour
     }
 
     void UpdateManaBar()
-    {
+    {   
         float manaRatio = (float)playerData.mana / (float)playerData.maxMana;
         if (manaRatio >= 0)
         {
             manaBarFill.transform.localScale = new Vector3(manaBarFill.transform.localScale.x, manaRatio, manaBarFill.transform.localScale.z);
+        }
+    }
+
+    void UpdateGemCracks()
+    {
+        if(playerData.healCharges == playerData.maxHealCharges)
+        {
+            gemImage.sprite = unbrokenGem;
+        }
+        else
+        {
+            gemImage.sprite = gemSprites[playerData.healCharges + 1];
         }
     }
 }

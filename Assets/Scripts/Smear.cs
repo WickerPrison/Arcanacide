@@ -16,6 +16,7 @@ public class Smear : MonoBehaviour
     {
         smear = GetComponent<ParticleSystem>();
         smearShape = smear.shape;
+        smear.Simulate(1);
     }
 
     public void particleSmear(int smearSpeed)
@@ -24,7 +25,7 @@ public class Smear : MonoBehaviour
         SmearDirection(smearSpeed);
         ParticleSystem.ShapeModule smearShapeFront = smear.shape;
         smearShapeFront.arcSpeed = smearSpeed;
-        smear.Play();
+        smear.Simulate(0);
     }
 
     void SmearDirection(int smearSpeed)
@@ -42,5 +43,10 @@ public class Smear : MonoBehaviour
     public void SpeedMultiplier(float multiplier)
     {
         smearShape.arcSpeedMultiplier = multiplier;
+    }
+
+    private void FixedUpdate()
+    {
+            smear.Simulate(Time.fixedDeltaTime, true, false);
     }
 }

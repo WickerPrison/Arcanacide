@@ -28,7 +28,7 @@ public class DialogueScript : MonoBehaviour
         nameText.text = characterName + ":";
         switch (characterName)
         {
-            case "Player":
+            case "Agent":
                 speakerImage.sprite = playerImage;
                 break;
             case "Ernie":

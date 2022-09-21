@@ -25,9 +25,9 @@ public class PhoneTrigger : MonoBehaviour
                 }
                 break;
             case "??????":
-                if (!phoneData.QuestionMarksQueue.Contains(conversationNum) && !phoneData.QuestionMarksPreviousConversations.Contains(conversationNum))
+                if (!phoneData.UnknownNumberQueue.Contains(conversationNum) && !phoneData.UnknownNumberPreviousConversations.Contains(conversationNum))
                 {
-                    phoneData.QuestionMarksQueue.Add(conversationNum);
+                    phoneData.UnknownNumberQueue.Add(conversationNum);
                 }
                 break;
             case "Head of IT":

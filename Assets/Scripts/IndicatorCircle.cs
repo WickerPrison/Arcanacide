@@ -5,10 +5,11 @@ using UnityEngine;
 public class IndicatorCircle : MonoBehaviour
 {
     [SerializeField] Transform indicatorCircle;
-    [SerializeField] float startScale;
-    [SerializeField] float finalScale;
-    [SerializeField] float growthTime;
-    [SerializeField] float deathTime;
+    public float startScale;
+    public float finalScale;
+    public float growthTime;
+    public float deathTime;
+    public bool destroyParent;
     float growthRate;
     Vector3 growthVector;
     float timer;
@@ -28,7 +29,14 @@ public class IndicatorCircle : MonoBehaviour
 
         if(timer >= deathTime)
         {
-            Destroy(gameObject.transform.parent.gameObject);
+            if (destroyParent)
+            {
+                Destroy(gameObject.transform.parent.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

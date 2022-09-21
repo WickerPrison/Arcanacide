@@ -106,8 +106,15 @@ public class PlayerAnimation : MonoBehaviour
 
     public void PlayStagger()
     {
+        attacking = false;
         frontAnimator.Play("Stagger");
         backAnimator.Play("Stagger");
+    }
+
+    public void PlayIdle()
+    {
+        frontAnimator.Play("Idle");
+        backAnimator.Play("Idle");
     }
 
     public void StopBlocking()
@@ -126,12 +133,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         frontAnimator.Play("Shove");
         backAnimator.Play("Shove");
-    }
-
-    public void StaggerUpdate(float stagger)
-    {
-        frontAnimator.SetFloat("Stagger", stagger);
-        backAnimator.SetFloat("Stagger", stagger);
     }
 
     public void DashAnimation()

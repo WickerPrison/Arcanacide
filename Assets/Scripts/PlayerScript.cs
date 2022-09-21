@@ -27,6 +27,9 @@ public class PlayerScript : MonoBehaviour
     float staminaRate = 40;
     float maxPoise = 100;
     float poiseRate = 5;
+    float staggerTimer = 0;
+    float poiseBreakStagger = 2;
+    public bool isStaggered = false;
     public float duckHealTimer = 0;
     float duckHealDuration = 2;
     float duckHealCounter = 0;
@@ -118,14 +121,11 @@ public class PlayerScript : MonoBehaviour
     {
         if (!shield)
         {
-            if(playerController.stagger <= 0)
-            {
-                poise -= poiseDamage;
-            }
+            poise -= poiseDamage;
             if(poise <= 0)
             {
-                playerAnimation.PlayStagger();
-                playerController.stagger = playerController.maxStaggered;
+                StartStagger(poiseBreakStagger);
+                ResetPoise();
             }
         }
     }
@@ -133,6 +133,27 @@ public class PlayerScript : MonoBehaviour
     public void ResetPoise()
     {
         poise = maxPoise;
+    }
+
+    public void StartStagger(float staggerDuration)
+    {
+        if(staggerDuration > 0)
+        {
+            if (!playerController.knockback)
+            {
+                playerController.rb.velocity = Vector3.zero;
+            }
+            staggerTimer += staggerDuration;
+            isStaggered = true;
+            playerAnimation.PlayStagger();
+        }
+    }
+
+    public void EndStagger()
+    {
+        staggerTimer = 0;
+        isStaggered = false;
+        playerAnimation.PlayIdle();
     }
 
     public void LoseStamina(float amount)
@@ -218,7 +239,16 @@ public class PlayerScript : MonoBehaviour
             poise += poiseRate * Time.deltaTime;
         }
 
-        if(duckHealTimer > 0)
+        if (isStaggered)
+        {
+            staggerTimer -= Time.deltaTime;
+            if (staggerTimer <= 0)
+            {
+                EndStagger();
+            }
+        }
+
+        if (duckHealTimer > 0)
         {
             duckHealTimer -= Time.deltaTime;
             if(duckHealTimer <= 0)

@@ -9,12 +9,12 @@ public class PhoneMenu : MonoBehaviour
     [SerializeField] List<PhoneContact> phoneContacts;
     [SerializeField] GameObject contactObjects;
     [SerializeField] GameObject lineDeadObject;
-    public PhoneLibrary phoneLibrary;
+    public TextingLibrary phoneLibrary;
     List<string> activeContacts;
 
     void Start()
     {
-        activeContacts = phoneData.GetActiveContacts();
+        activeContacts = phoneData.GetNewMessages();
         if(activeContacts.Count > 0)
         {
             lineDeadObject.SetActive(false);

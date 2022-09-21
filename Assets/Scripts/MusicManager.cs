@@ -32,7 +32,7 @@ public class MusicManager : MonoBehaviour
 
             if (trackNumber != musicPlayer.currentTrack || !musicSource.isPlaying)
             {
-                musicPlayer.PlayMusic(trackNumber, 1);
+                musicPlayer.PlayMusic(trackNumber, 0.5f);
             }
         }
     }

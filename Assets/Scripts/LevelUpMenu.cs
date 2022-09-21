@@ -124,4 +124,9 @@ public class LevelUpMenu : MonoBehaviour
     {
         controls.Disable();
     }
+
+    public void Test()
+    {
+        Debug.Log("TEst");
+    }
 }

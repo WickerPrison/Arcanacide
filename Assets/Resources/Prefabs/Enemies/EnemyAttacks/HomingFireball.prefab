@@ -4835,14 +4835,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6d31ff8748311645961dbb44866a908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   spellDamage: 20
   poiseDamage: 20
-  turnAngle: 80
-  lifetime: 3
+  speed: 12
   playerImpactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
   impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
   impactSFXvolume: 1
+  lifetime: 3
+  target: {fileID: 0}
+  turnAngle: 80
 --- !u!54 &6427348197512250551
 Rigidbody:
   m_ObjectHideFlags: 0
