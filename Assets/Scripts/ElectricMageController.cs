@@ -16,6 +16,10 @@ public class ElectricMageController : EnemyController
     float boltCD = 0;
     float boltMaxCD = 1;
     int boltDamage = 20;
+    float boltPoiseDamage = 40;
+    float strafeSpeed = 3;
+    int strafeLeftOrRight = 1;
+    float strafeTimer;
 
     public override void Start()
     {
@@ -35,6 +39,14 @@ public class ElectricMageController : EnemyController
         }
 
         layerMask = LayerMask.GetMask("Player");
+
+        int plusOrMinus = Random.Range(0, 2);
+        if(plusOrMinus == 0)
+        {
+            strafeLeftOrRight *= -1;
+        }
+
+        strafeTimer = Random.Range(2f, 10f);
     }
 
     public override void EnemyAI()
@@ -93,6 +105,7 @@ public class ElectricMageController : EnemyController
         if (playerHit)
         {
             playerScript.LoseHealth(boltDamage);
+            playerScript.LosePoise(boltPoiseDamage);
             boltCD = boltMaxCD;
         }
     }
@@ -119,15 +132,28 @@ public class ElectricMageController : EnemyController
 
     void MovementAI()
     {
-        Vector3 direction = playerController.transform.position - target.transform.position;
-        float distance = Vector3.Distance(playerController.transform.position, target.transform.position);
-        Vector3 destination = target.transform.position + direction * distance * 2;
-        navAgent.SetDestination(destination);
+        Strafe();
 
-        if(Vector3.Distance(playerController.transform.position, transform.position) < 4)
+        if (Vector3.Distance(playerController.transform.position, transform.position) < 5)
         {
             Vector3 awayFromPlayer = transform.position - playerController.transform.position;
-            navAgent.Move(awayFromPlayer.normalized * Time.fixedDeltaTime);
+            navAgent.Move(awayFromPlayer.normalized * Time.fixedDeltaTime * 2);
         }
+    }
+
+    void Strafe()
+    {
+        if(strafeTimer > 0)
+        {
+            strafeTimer -= Time.deltaTime;
+            if(strafeTimer <= 0)
+            {
+                strafeTimer = Random.Range(2f, 10f);
+            }
+        }
+        Vector3 playerToenemy = transform.position - playerController.transform.position;
+        playerToenemy *= strafeLeftOrRight;
+        Vector3 strafeDirection = Vector3.Cross(transform.position, playerToenemy);
+        navAgent.Move(strafeDirection.normalized * Time.deltaTime * strafeSpeed);
     }
 }
