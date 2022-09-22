@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ElectricAlly : MonoBehaviour
 {
+    public Transform lightningDestination;
     public int priorityValue;
     public int damage;
     public float poiseDamage;

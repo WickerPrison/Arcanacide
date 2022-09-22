@@ -95,11 +95,11 @@ public class ElectricMageController : EnemyController
             {
                 if (facingFront)
                 {
-                    bolt.SetPositions(frontLightningOrigin.position, target.transform.position);
+                    bolt.SetPositions(frontLightningOrigin.position, target.lightningDestination.position);
                 }
                 else
                 {
-                    bolt.SetPositions(backLightningOrigin.position, target.transform.position);
+                    bolt.SetPositions(backLightningOrigin.position, target.lightningDestination.position);
                 }
             }
 

@@ -88,7 +88,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743529751592799345}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 985633031301893936}
@@ -264,7 +264,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2850575094819328274}
   frontAnimator: {fileID: 1284198045007948469}
   backAnimator: {fileID: 1284198045007948469}
-  playerController: {fileID: 0}
+  player: {fileID: 0}
   away: {x: 100, y: 100, z: 100}
   playerDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &1892724828287016805
@@ -326,7 +326,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719a2fc6227378d4eb320e8738f8f841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightningDestination: {fileID: 2674530463472973940}
   priorityValue: 2
+  damage: 0
+  poiseDamage: 0
+  isShielded: 0
 --- !u!1 &1055871940873721227
 GameObject:
   m_ObjectHideFlags: 0
