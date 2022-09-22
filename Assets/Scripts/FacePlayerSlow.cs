@@ -18,7 +18,7 @@ public class FacePlayerSlow : FacePlayer
 
     public override void AttackPoint()
     {
-        Vector3 direction = playerController.transform.position - transform.position;
+        Vector3 direction = player.position - transform.position;
         direction = new Vector3(direction.x, 0, direction.z);
         trackingPoint.position = transform.position + direction.normalized;
 

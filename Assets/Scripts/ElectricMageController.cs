@@ -6,6 +6,9 @@ using UnityEngine;
 public class ElectricMageController : EnemyController
 {
     [SerializeField] GameObject LightningBoltPrefab;
+    [SerializeField] Transform frontLightningOrigin;
+    [SerializeField] Transform backLightningOrigin;
+    FacePlayer facePlayer;
     List<LightningBolt> lightningBolts = new List<LightningBolt>();
     List<ElectricAlly> otherEnemies = new List<ElectricAlly>();
     ElectricAlly target = null;
@@ -20,10 +23,12 @@ public class ElectricMageController : EnemyController
     float strafeSpeed = 3;
     int strafeLeftOrRight = 1;
     float strafeTimer;
+    bool hasSurrendered = false;
 
     public override void Start()
     {
         base.Start();
+        facePlayer = GetComponent<FacePlayer>();
         for(int i = 0; i < 3; i++)
         {
             lightningBolts.Add(Instantiate(LightningBoltPrefab).GetComponent<LightningBolt>());
@@ -53,8 +58,10 @@ public class ElectricMageController : EnemyController
     {
         base.EnemyAI();
 
-        if (hasSeenPlayer)
+        if (hasSeenPlayer && !hasSurrendered)
         {
+            frontAnimator.SetBool("hasSeenPlayer", true);
+            backAnimator.SetBool("hasSeenPlayer", true);
             CreateOtherEnemies();
 
             if (otherEnemies.Count > 0)
@@ -74,6 +81,7 @@ public class ElectricMageController : EnemyController
             else
             {
                 BoltAway();
+                Surrender();
             }
         }
     }
@@ -82,12 +90,24 @@ public class ElectricMageController : EnemyController
     {
         if(target != null)
         {
+            facePlayer.player = target.transform;
             foreach(LightningBolt bolt in lightningBolts)
             {
-                bolt.SetPositions(transform.position, target.transform.position);
+                if (facingFront)
+                {
+                    bolt.SetPositions(frontLightningOrigin.position, target.transform.position);
+                }
+                else
+                {
+                    bolt.SetPositions(backLightningOrigin.position, target.transform.position);
+                }
             }
 
             BoltDamage();
+        }
+        else
+        {
+            facePlayer.player = playerController.transform;
         }
     }
 
@@ -108,6 +128,16 @@ public class ElectricMageController : EnemyController
             playerScript.LosePoise(boltPoiseDamage);
             boltCD = boltMaxCD;
         }
+    }
+
+    void Surrender()
+    {
+        hasSurrendered = true;
+        detectionTrigger = false;
+        gm.awareEnemies -= 1;
+     
+        frontAnimator.Play("Surrender");
+        backAnimator.Play("Surrender");
     }
 
     void BoltAway()
@@ -155,5 +185,29 @@ public class ElectricMageController : EnemyController
         playerToenemy *= strafeLeftOrRight;
         Vector3 strafeDirection = Vector3.Cross(transform.position, playerToenemy);
         navAgent.Move(strafeDirection.normalized * Time.deltaTime * strafeSpeed);
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        if (!hasSurrendered)
+        {
+            base.StartStagger(staggerDuration);
+        }
+    }
+
+    public override void Death()
+    {
+        BoltAway();
+        boltCD = 10000;
+        if (hasSurrendered)
+        {
+            frontAnimator.Play("SurrenderDeath");
+            backAnimator.Play("SurrenderDeath");
+        }
+        else
+        {
+            frontAnimator.Play("StandingDeath");
+            backAnimator.Play("StandingDeath");
+        }
     }
 }

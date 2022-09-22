@@ -8,7 +8,7 @@ public class FacePlayer : MonoBehaviour
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     EnemyController enemyController;
-    public PlayerController playerController;
+    public Transform player;
     Vector3 frontAnimatorPosition;
     Vector3 backAnimatorPosition;
     public Vector3 away = new Vector3(100, 100, 100);
@@ -18,7 +18,7 @@ public class FacePlayer : MonoBehaviour
 
     public virtual void Start()
     {
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemyController = GetComponent<EnemyController>();
         frontScaleX = frontAnimator.transform.localScale.x;
         backScaleX = backAnimator.transform.localScale.x;
@@ -39,7 +39,7 @@ public class FacePlayer : MonoBehaviour
 
     public virtual void AttackPoint()
     {
-        playerDirection = playerController.transform.position - transform.position;
+        playerDirection = player.position - transform.position;
         playerDirection = new Vector3(playerDirection.x, 0, playerDirection.z);
         attackPoint.position = transform.position + playerDirection.normalized;
         attackPoint.transform.rotation = Quaternion.LookRotation(playerDirection.normalized);
