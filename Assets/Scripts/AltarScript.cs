@@ -33,14 +33,16 @@ public class AltarScript : MonoBehaviour
     private void Update()
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
+
+        if(playerData.tutorials.Contains("Altar") && playerDistance <= 4)
+        {
+            tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
+            tutorialManager.AltarTutorial();
+        }
+
         if (playerDistance <= interactDistance && !hasBeenUsed)
         {
             message.SetActive(true);
-            if (playerData.tutorials.Contains("Altar"))
-            {
-                tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
-                tutorialManager.AltarTutorial();
-            }
         }
         else
         {

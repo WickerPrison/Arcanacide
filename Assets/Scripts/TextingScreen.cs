@@ -181,7 +181,7 @@ public class TextingScreen : MonoBehaviour
         {
             return;
         }
-
+        
         sm.ButtonSound();
         textingMenu.SpawnContacts();
         textingMenu.controls.Enable();
