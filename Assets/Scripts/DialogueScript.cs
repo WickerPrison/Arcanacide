@@ -14,8 +14,8 @@ public class DialogueScript : MonoBehaviour
     [SerializeField] Sprite secretaryImage;
     [SerializeField] Sprite patchworkGaryImage;
     [SerializeField] Sprite headOfITImage;
-    [SerializeField] Sprite ODPARCHMENTImage;
-    [SerializeField] Sprite ODTRENCHImage;
+    [SerializeField] Sprite ORTHODOXImage;
+    [SerializeField] Sprite TRENCHImage;
     [SerializeField] Sprite QuestionMarksImage;
 
     public void SetText(string dialogue)
@@ -43,11 +43,11 @@ public class DialogueScript : MonoBehaviour
             case "Head of IT":
                 speakerImage.sprite = headOfITImage;
                 break;
-            case "ODPARCHMENT":
-                speakerImage.sprite = ODPARCHMENTImage;
+            case "ORTHODOX":
+                speakerImage.sprite = ORTHODOXImage;
                 break;
-            case "ODTRENCH":
-                speakerImage.sprite = ODTRENCHImage;
+            case "TRENCH":
+                speakerImage.sprite = TRENCHImage;
                 break;
             case "??????":
                 speakerImage.sprite = QuestionMarksImage;

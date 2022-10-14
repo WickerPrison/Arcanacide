@@ -5,18 +5,19 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PhoneData : ScriptableObject
 {
-    string ODPARCHMENT = "ODPARCHMENT";
-    public List<int> ODPARCHMENTQueue;
-    public List<int> ODPARCHMENTPreviousConversations;
-    string ODTRENCH = "ODTRENCH";
-    public List<int> ODTRENCHQueue;
-    public List<int> ODTRENCHPreviousConversations;
+    string ORTHODOX = "ORTHODOX";
+    public List<int> ORTHODOXQueue;
+    public List<int> ORTHODOXPreviousConversations;
+    string TRENCH = "TRENCH";
+    public List<int> TRENCHQueue;
+    public List<int> TRENCHPreviousConversations;
     string UnkownNumber = "Unknown Number";
     public List<int> UnknownNumberQueue;
     public List<int> UnknownNumberPreviousConversations;
     string HeadOfIT = "Head of IT";
     public List<int> HeadOfITQueue;
     public List<int> HeadOfITPreviousConversations;
+
 
     public List<string> GetNewMessages()
     {
@@ -27,14 +28,14 @@ public class PhoneData : ScriptableObject
             newMessages.Add(HeadOfIT);
         }
 
-        if(ODPARCHMENTQueue.Count > 0)
+        if(ORTHODOXQueue.Count > 0)
         {
-            newMessages.Add(ODPARCHMENT);
+            newMessages.Add(ORTHODOX);
         }
 
-        if(ODTRENCHQueue.Count > 0)
+        if(TRENCHQueue.Count > 0)
         {
-            newMessages.Add(ODTRENCH);
+            newMessages.Add(TRENCH);
         }
 
         if(UnknownNumberQueue.Count > 0)
@@ -59,21 +60,21 @@ public class PhoneData : ScriptableObject
             }
         }
 
-        if(ODPARCHMENTQueue.Count + ODPARCHMENTPreviousConversations.Count > 0)
+        if(ORTHODOXQueue.Count + ORTHODOXPreviousConversations.Count > 0)
         {
-            contacts.Add(ODPARCHMENT);
-            if(ODPARCHMENTQueue.Count > 0)
+            contacts.Add(ORTHODOX);
+            if(ORTHODOXQueue.Count > 0)
             {
-                newMessages.Add(ODPARCHMENT);
+                newMessages.Add(ORTHODOX);
             }
         }
 
-        if(ODTRENCHQueue.Count + ODTRENCHPreviousConversations.Count > 0)
+        if(TRENCHQueue.Count + TRENCHPreviousConversations.Count > 0)
         {
-            contacts.Add(ODTRENCH);
-            if(ODTRENCHQueue.Count > 0)
+            contacts.Add(TRENCH);
+            if(TRENCHQueue.Count > 0)
             {
-                newMessages.Add(ODTRENCH);
+                newMessages.Add(TRENCH);
             }
         }
 

@@ -83,10 +83,10 @@ public class GameManager : MonoBehaviour
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
 
-            phoneData.ODPARCHMENTQueue = data.ODPARCHMENTQueue;
-            phoneData.ODPARCHMENTPreviousConversations = data.ODPARCHMENTPreviousConversations;
-            phoneData.ODTRENCHQueue = data.ODTRENCHQueue;
-            phoneData.ODTRENCHPreviousConversations = data.ODTRENCHPreviousConversations;
+            phoneData.ORTHODOXQueue = data.ORTHODOXQueue;
+            phoneData.ORTHODOXPreviousConversations = data.ORTHODOXPreviousConversations;
+            phoneData.TRENCHQueue = data.TRENCHQueue;
+            phoneData.TRENCHPreviousConversations = data.TRENCHPreviousConversations;
             phoneData.UnknownNumberQueue = data.QuestionMarksQueue;
             phoneData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations;
             phoneData.HeadOfITQueue = data.HeadOfITQueue;
@@ -127,15 +127,15 @@ public class GameManager : MonoBehaviour
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
 
-        phoneData.ODPARCHMENTQueue.Clear();
-        phoneData.ODPARCHMENTPreviousConversations.Clear();
-        phoneData.ODTRENCHQueue.Clear();
-        phoneData.ODTRENCHPreviousConversations.Clear();
+        phoneData.ORTHODOXQueue.Clear();
+        phoneData.ORTHODOXPreviousConversations.Clear();
+        phoneData.TRENCHQueue.Clear();
+        phoneData.TRENCHPreviousConversations.Clear();
         phoneData.UnknownNumberQueue.Clear();
         phoneData.UnknownNumberPreviousConversations.Clear();
         phoneData.HeadOfITQueue.Clear();
         phoneData.HeadOfITPreviousConversations.Clear();
 
-        phoneData.ODPARCHMENTQueue.Add(0);
+        phoneData.ORTHODOXQueue.Add(0);
     }
 }

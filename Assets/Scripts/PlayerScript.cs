@@ -271,7 +271,7 @@ public class PlayerScript : MonoBehaviour
         switch (playerData.deathNum)
         {
             case 1:
-                phoneData.ODPARCHMENTQueue.Add(1);
+                phoneData.ORTHODOXQueue.Add(1);
                 break;
             case 3:
                 phoneData.HeadOfITQueue.Add(2);

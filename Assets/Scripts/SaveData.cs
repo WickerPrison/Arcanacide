@@ -36,10 +36,10 @@ public class SaveData
     public bool fireBossKilled;
     public bool secretaryConvo;
 
-    public List<int> ODPARCHMENTQueue;
-    public List<int> ODPARCHMENTPreviousConversations;
-    public List<int> ODTRENCHQueue;
-    public List<int> ODTRENCHPreviousConversations;
+    public List<int> ORTHODOXQueue;
+    public List<int> ORTHODOXPreviousConversations;
+    public List<int> TRENCHQueue;
+    public List<int> TRENCHPreviousConversations;
     public List<int> QuestionMarksQueue;
     public List<int> QuestionMarksPreviousConversations;
     public List<int> HeadOfITQueue;
@@ -78,10 +78,10 @@ public class SaveData
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
 
-        ODPARCHMENTQueue = phoneData.ODPARCHMENTQueue;
-        ODPARCHMENTPreviousConversations = phoneData.ODPARCHMENTPreviousConversations;
-        ODTRENCHQueue = phoneData.ODTRENCHQueue;
-        ODTRENCHPreviousConversations = phoneData.ODTRENCHPreviousConversations;
+        ORTHODOXQueue = phoneData.ORTHODOXQueue;
+        ORTHODOXPreviousConversations = phoneData.ORTHODOXPreviousConversations;
+        TRENCHQueue = phoneData.TRENCHQueue;
+        TRENCHPreviousConversations = phoneData.TRENCHPreviousConversations;
         QuestionMarksQueue = phoneData.UnknownNumberQueue;
         QuestionMarksPreviousConversations = phoneData.UnknownNumberPreviousConversations;
         HeadOfITQueue = phoneData.HeadOfITQueue;

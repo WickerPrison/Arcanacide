@@ -7,8 +7,8 @@ public class TextingLibrary : MonoBehaviour
     [SerializeField] PhoneData phoneData;
     [SerializeField] GameObject dialogueBox;
 
-    [SerializeField] TextAsset ODPARCHMENTtexts;
-    [SerializeField] TextAsset ODTRENCHtexts;
+    [SerializeField] TextAsset ORTHODOXtexts;
+    [SerializeField] TextAsset TRENCHtexts;
     [SerializeField] TextAsset UnknownNumberTexts;
     [SerializeField] TextAsset HeadOfITtexts;
 
@@ -18,15 +18,15 @@ public class TextingLibrary : MonoBehaviour
     {
         switch (contactName)
         {
-            case "ODPARCHMENT":
-                SetUpConversation(ODPARCHMENTtexts);
-                textingScreen.previousConversations = phoneData.ODPARCHMENTPreviousConversations;
-                textingScreen.conversationQueue = phoneData.ODPARCHMENTQueue;
+            case "ORTHODOX":
+                SetUpConversation(ORTHODOXtexts);
+                textingScreen.previousConversations = phoneData.ORTHODOXPreviousConversations;
+                textingScreen.conversationQueue = phoneData.ORTHODOXQueue;
                 break;
-            case "ODTRENCH":
-                SetUpConversation(ODTRENCHtexts);
-                textingScreen.previousConversations = phoneData.ODTRENCHPreviousConversations;
-                textingScreen.conversationQueue = phoneData.ODTRENCHQueue;
+            case "TRENCH":
+                SetUpConversation(TRENCHtexts);
+                textingScreen.previousConversations = phoneData.TRENCHPreviousConversations;
+                textingScreen.conversationQueue = phoneData.TRENCHQueue;
                 break;
             case "Unknown Number":
                 SetUpConversation(UnknownNumberTexts);
@@ -48,16 +48,16 @@ public class TextingLibrary : MonoBehaviour
     {
         switch (contactName)
         {
-            case "ODPARCHMENT":
+            case "ORTHODOX":
                 if (conversationIndex == 0)
                 {
-                    phoneData.ODTRENCHQueue.Add(0);
+                    phoneData.TRENCHQueue.Add(0);
                 }
                 break;
             case "Head of IT":
-                if (!phoneData.ODPARCHMENTQueue.Contains(2) && !phoneData.ODPARCHMENTPreviousConversations.Contains(2))
+                if (!phoneData.ORTHODOXQueue.Contains(2) && !phoneData.ORTHODOXPreviousConversations.Contains(2))
                 {
-                    phoneData.ODPARCHMENTQueue.Add(2);
+                    phoneData.ORTHODOXQueue.Add(2);
                 }
                 break;
         }

@@ -12,16 +12,16 @@ public class PhoneTrigger : MonoBehaviour
     {
         switch (contactName)
         {
-            case "ODPARCHMENT":
-                if(!phoneData.ODPARCHMENTQueue.Contains(conversationNum) && !phoneData.ODPARCHMENTPreviousConversations.Contains(conversationNum))
+            case "ORTHODOX":
+                if(!phoneData.ORTHODOXQueue.Contains(conversationNum) && !phoneData.ORTHODOXPreviousConversations.Contains(conversationNum))
                 {
-                    phoneData.ODPARCHMENTQueue.Add(conversationNum);
+                    phoneData.ORTHODOXQueue.Add(conversationNum);
                 }
                 break;
-            case "ODTRENCH":
-                if (!phoneData.ODTRENCHQueue.Contains(conversationNum) && !phoneData.ODTRENCHPreviousConversations.Contains(conversationNum))
+            case "TRENCH":
+                if (!phoneData.TRENCHQueue.Contains(conversationNum) && !phoneData.TRENCHPreviousConversations.Contains(conversationNum))
                 {
-                    phoneData.ODTRENCHQueue.Add(conversationNum);
+                    phoneData.TRENCHQueue.Add(conversationNum);
                 }
                 break;
             case "??????":

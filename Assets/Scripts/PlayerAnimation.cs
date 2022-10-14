@@ -26,7 +26,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] ParticleSystem bodyMagic;
     [SerializeField] ParticleSystem frontSwordMagic;
     [SerializeField] ParticleSystem backSwordMagic;
-    [SerializeField] Camera cam;
+    Camera cam;
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerController playerController;
     PlayerSound playerSound;
@@ -40,6 +40,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Start()
     {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         playerSound = gameObject.GetComponentInChildren<PlayerSound>();
         frontAnimatorPosition = frontAnimator.transform.localPosition;
         backAnimatorPosition = backAnimator.transform.localPosition;
