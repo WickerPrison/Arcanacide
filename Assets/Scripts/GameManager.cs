@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.visitedRooms = data.visitedRooms.ToList();
+            mapData.powerSwitchesFlipped = data.powerSwitchesFlipped.ToList();
             mapData.deathRoom = data.deathRoom;
             mapData.deathPosition = new Vector3(data.deathPosition[0], data.deathPosition[1], data.deathPosition[2]);
             mapData.ticketFiled = data.ticketFiled;
@@ -121,6 +122,7 @@ public class GameManager : MonoBehaviour
 
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
+        mapData.powerSwitchesFlipped.Clear();
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;

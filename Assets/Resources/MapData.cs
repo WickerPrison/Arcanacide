@@ -15,6 +15,8 @@ public class MapData : ScriptableObject
 
     public List<int> usedAltars;
 
+    public List<int> powerSwitchesFlipped;
+
     public string deathRoom;
     public Vector3 deathPosition;
     public bool ticketFiled;
