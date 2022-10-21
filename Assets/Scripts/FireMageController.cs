@@ -109,5 +109,6 @@ public class FireMageController : EnemyController
         projectileScript.target = playerController.transform;
         projectileScript.poiseDamage = spellAttackPoiseDamage;
         projectileScript.spellDamage = spellAttackDamage;
+        enemySound.OtherSounds(0, 1);
     }
 }
