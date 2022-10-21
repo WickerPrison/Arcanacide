@@ -314,5 +314,6 @@ public class BossController : EnemyController
         projectileScript.target = playerController.transform;
         projectileScript.poiseDamage = spellAttackPoiseDamage;
         projectileScript.spellDamage = spellAttackDamage;
+        enemySound.OtherSounds(0, 1);
     }
 }
