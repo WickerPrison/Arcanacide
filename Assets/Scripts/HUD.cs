@@ -8,7 +8,8 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] GameObject healbarFill;
-    [SerializeField] GameObject staminabarFill;
+    //[SerializeField] GameObject staminabarFill;
+    [SerializeField] RectTransform staminaBarCover;
     [SerializeField] GameObject manaBarFill;
     [SerializeField] GameObject manaBarCrack;
     [SerializeField] TextMeshProUGUI healCounter;
@@ -58,7 +59,8 @@ public class HUD : MonoBehaviour
     void UpdateStaminaBar()
     {
         float staminaRatio = playerScript.stamina / playerData.MaxStamina();
-        staminabarFill.transform.localScale = new Vector3(staminaRatio * healthbarScale, staminabarFill.transform.localScale.y, staminabarFill.transform.localScale.z);
+        //staminabarFill.transform.localScale = new Vector3(staminaRatio * healthbarScale, staminabarFill.transform.localScale.y, staminabarFill.transform.localScale.z);
+        staminaBarCover.localScale = new Vector3(1 - staminaRatio, staminaBarCover.localScale.y, staminaBarCover.localScale.z);
     }
 
     void UpdateManaBar()
