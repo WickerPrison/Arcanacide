@@ -88,10 +88,10 @@ public class IceMageController : EnemyController
             playerScript.LosePoise(fireRingPoiseDamage);
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
             Vector3 awayVector = playerController.transform.position - transform.position;
-            playerController.knockback = true;
             PlayerAnimation playerAnimation = playerController.gameObject.GetComponent<PlayerAnimation>();
             playerAnimation.attacking = false;
             playerRB.velocity = Vector3.zero;
+            StartCoroutine(playerController.KnockBack(0.4f));
             playerRB.AddForce(awayVector.normalized * 7, ForceMode.VelocityChange);
         }
     }

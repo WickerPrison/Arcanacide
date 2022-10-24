@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 53017203}
   - component: {fileID: 53017202}
   - component: {fileID: 53017205}
+  - component: {fileID: 53017206}
   m_Layer: 5
   m_Name: PathOfThePathless
   m_TagString: Untagged
@@ -287,6 +288,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &53017206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53017200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e43318a2fafa5c43bac198ff00be05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: {fileID: 1537633160}
+  speed: 25
 --- !u!1 &168654530
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,9 +338,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 257, y: 16.000023}
-  m_SizeDelta: {x: 160, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -415.00458, y: -46.8929}
+  m_SizeDelta: {x: 159.7064, y: 163.8574}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &168654532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,6 +573,7 @@ GameObject:
   - component: {fileID: 550866527}
   - component: {fileID: 550866526}
   - component: {fileID: 550866529}
+  - component: {fileID: 550866530}
   m_Layer: 5
   m_Name: PathOfTheSword
   m_TagString: Untagged
@@ -709,6 +725,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &550866530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550866524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e43318a2fafa5c43bac198ff00be05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: {fileID: 1979118000}
+  speed: 25
 --- !u!1 &643400965
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +766,7 @@ RectTransform:
   m_GameObject: {fileID: 643400965}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.119046815, y: 0.6666667, z: 0.10000002}
+  m_LocalScale: {x: 0.11904683, y: 0.6666667, z: 0.10000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1606499479}
@@ -744,7 +774,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -53.45202, y: -0}
+  m_AnchoredPosition: {x: -53.598816, y: 20.333344}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &643400967
@@ -767,8 +797,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You can dodge through enemies. Leave a trail of magic when you dodge. Enemies
-    that touch it will take damage.
+  m_text: 'You can dodge through enemies. Leave a damaging trail of magic when you
+    dodge.
+
+    Choose this Path if you want increased mobility or want to turn your
+    dodge into an offensive weapon.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
   m_sharedMaterial: {fileID: -4503134213540977879, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
@@ -831,7 +864,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -112.35841, y: -34.36267, z: -1017.44073, w: -35.501007}
+  m_margin: {x: -112.35841, y: -34.36267, z: -1017.44073, w: -94.69443}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1102,6 +1135,7 @@ GameObject:
   - component: {fileID: 1000242135}
   - component: {fileID: 1000242134}
   - component: {fileID: 1000242137}
+  - component: {fileID: 1000242138}
   m_Layer: 5
   m_Name: PathOfThePath
   m_TagString: Untagged
@@ -1253,6 +1287,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1000242138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000242132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e43318a2fafa5c43bac198ff00be05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: {fileID: 1606499479}
+  speed: 25
 --- !u!1 &1046120958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,7 +1328,7 @@ RectTransform:
   m_GameObject: {fileID: 1046120958}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.119046815, y: 0.6666667, z: 0.10000002}
+  m_LocalScale: {x: 0.11904683, y: 0.6666667, z: 0.10000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1979118000}
@@ -1288,7 +1336,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -44.3, y: -13}
+  m_AnchoredPosition: {x: -44.44162, y: -5.068695}
   m_SizeDelta: {x: 157.76501, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1046120960
@@ -1311,7 +1359,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Whenever you dodge through an enemy attack, gain a temporary damage boost.
+  m_text: "Gain a temporary damage boost on a Perfect Dodge. \nChoose this Path if
+    you want an aggressive, high-risk high-reward playstyle"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
   m_sharedMaterial: {fileID: -4503134213540977879, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
@@ -1374,7 +1423,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -210.25516, y: -41.819336, z: -964.5412, w: 1.7825623}
+  m_margin: {x: -210.25516, y: -16.090271, z: -962.1619, w: -6.1340637}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1716,9 +1765,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 257, y: -311.99997}
-  m_SizeDelta: {x: 160, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -415.00446, y: -322.57782}
+  m_SizeDelta: {x: 160, y: 94.1038}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1537633161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1928,9 +1977,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 257, y: -150.99997}
-  m_SizeDelta: {x: 160, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -415.0044, y: -181.5}
+  m_SizeDelta: {x: 160.2936, y: 120.67}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1606499480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2117,6 +2166,7 @@ GameObject:
   - component: {fileID: 1778452292}
   - component: {fileID: 1778452291}
   - component: {fileID: 1778452294}
+  - component: {fileID: 1778452295}
   m_Layer: 5
   m_Name: PathOfTheDying
   m_TagString: Untagged
@@ -2268,6 +2318,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1778452295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778452289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e43318a2fafa5c43bac198ff00be05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: {fileID: 168654531}
+  speed: 25
 --- !u!1 &1979117999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,9 +2368,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 257, y: 185.00003}
-  m_SizeDelta: {x: 160, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -415.00464, y: 173.10306}
+  m_SizeDelta: {x: 160.2833, y: 95.8627}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1979118001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2372,7 +2436,7 @@ RectTransform:
   m_GameObject: {fileID: 2001042664}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.119046815, y: 0.6666667, z: 0.10000002}
+  m_LocalScale: {x: 0.11904683, y: 0.6666667, z: 0.10000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1537633160}
@@ -2380,7 +2444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -53.45202, y: -1.3333282}
+  m_AnchoredPosition: {x: -53.45201, y: 5.718567}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2001042666
@@ -2403,7 +2467,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This path offers no additional power
+  m_text: 'This path offers no additional power.
+
+    Choose this Path if you want
+    an extreme challenge.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
   m_sharedMaterial: {fileID: -4503134213540977879, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
@@ -2466,7 +2533,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -112.79695, y: -34.36267, z: -1017.44073, w: -35.501007}
+  m_margin: {x: -112.79695, y: -22.609528, z: -1017.44073, w: -40.20227}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2507,7 +2574,7 @@ RectTransform:
   m_GameObject: {fileID: 2006669279}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.119046815, y: 0.6666667, z: 0.10000002}
+  m_LocalScale: {x: 0.11904683, y: 0.6666667, z: 0.10000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 168654531}
@@ -2515,7 +2582,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -53.45202, y: 0}
+  m_AnchoredPosition: {x: -53.305206, y: 41.92861}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2006669281
@@ -2538,8 +2605,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase your damage and stamina regeneration when near your Remnant. Picking
-    up your Remnant restores health.
+  m_text: 'Increase your damage and stamina regeneration when near your Remnant.
+    Picking up your Remnant restores you to full health.
+
+    Choose this Path if
+    you want a significant power boost whenever you get stuck facing a challenging
+    enemy'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
   m_sharedMaterial: {fileID: -4503134213540977879, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
@@ -2602,7 +2673,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -113.1136, y: -34.36267, z: -1017.44073, w: -35.501007}
+  m_margin: {x: -113.1136, y: -24.49707, z: -1017.44073, w: -148.95505}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

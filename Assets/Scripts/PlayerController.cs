@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -80,17 +80,17 @@ public class PlayerController : MonoBehaviour
 
         AttackPointPosition();
 
-        if(swordTimer > 0)
+        if (swordTimer > 0)
         {
             swordTimer -= Time.deltaTime;
-            if(swordTimer <= 0)
+            if (swordTimer <= 0)
             {
                 pathActive = false;
                 playerAnimation.EndSwordMagic();
             }
         }
 
-        if(totemCooldown > 0)
+        if (totemCooldown > 0)
         {
             totemCooldown -= Time.deltaTime;
         }
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if(playerData.mana > 0 && totemCooldown <= 0)
+        if (playerData.mana > 0 && totemCooldown <= 0)
         {
             rb.velocity = Vector3.zero;
             playerAnimation.Shield();
@@ -113,12 +113,12 @@ public class PlayerController : MonoBehaviour
 
     void Totem()
     {
-        if(!playerData.unlockedAbilities.Contains("Totem") || !CanInput())
+        if (!playerData.unlockedAbilities.Contains("Totem") || !CanInput())
         {
             return;
         }
 
-        if(playerData.mana > 0 && totemCooldown <= 0)
+        if (playerData.mana > 0 && totemCooldown <= 0)
         {
             playerScript.LoseMana(totemManaCost);
             totemCooldown = totemMaxCooldown;
@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if(playerData.mana > shoveManaCost)
+        if (playerData.mana > shoveManaCost)
         {
             playerScript.LoseMana(shoveManaCost);
             rb.velocity = Vector3.zero;
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
         shoveVFX.Play();
         foreach (EnemyScript enemy in gm.enemies)
         {
-            if(Vector3.Distance(transform.position, enemy.transform.position) <= shoveRadius)
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= shoveRadius)
             {
                 enemy.LosePoise(shovePoiseDamage);
                 EnemyController enemyController = enemy.gameObject.GetComponent<EnemyController>();
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
             {
                 staminaCost *= 2;
             }
-            
+
             playerScript.LoseStamina(staminaCost);
             playerAnimation.DashAnimation();
             playerSound.Dodge();
@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
                 lookDir = playerData.moveDir;
             }
             LockOn();
-            if(rightStickValue.magnitude > 0)
+            if (rightStickValue.magnitude > 0)
             {
                 lookDir = rightStickValue.normalized;
             }
@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour
 
     void LockOn()
     {
-        if(gm.enemies.Count < 1)
+        if (gm.enemies.Count < 1)
         {
             return;
         }
@@ -275,7 +275,7 @@ public class PlayerController : MonoBehaviour
                 currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
             }
         }
-        if(lockOnTarget != transform)
+        if (lockOnTarget != transform)
         {
             Vector3 lockOnDirection = lockOnTarget.position - transform.position;
             lookDir = new Vector2(lockOnDirection.x, lockOnDirection.z);
@@ -306,7 +306,7 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
-        if(dashTime > 0)
+        if (dashTime > 0)
         {
             return false;
         }
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
     //FixedUpdate is similar to Update but should always be used when dealing with physics
     private void FixedUpdate()
     {
-        if(moveDirection.magnitude > 0 && CanInput())
+        if (moveDirection.magnitude > 0 && CanInput())
         {
             playerAnimation.walk = true;
         }
@@ -344,12 +344,12 @@ public class PlayerController : MonoBehaviour
         }
 
         //move the player if they are not dashing or attacking
-        if(CanInput())
+        if (CanInput())
         {
-            rb.velocity = new Vector3(moveDirection.x * Time.fixedDeltaTime * moveSpeed, rb.velocity.y , moveDirection.z * Time.fixedDeltaTime * moveSpeed);
+            rb.velocity = new Vector3(moveDirection.x * Time.fixedDeltaTime * moveSpeed, rb.velocity.y, moveDirection.z * Time.fixedDeltaTime * moveSpeed);
         }
         //dash if the player has pressed the right mouse button
-        else if(dashTime > 0)
+        else if (dashTime > 0)
         {
             Dash();
         }
@@ -376,10 +376,18 @@ public class PlayerController : MonoBehaviour
     {
         //playerSound.PerfectDodge();
 
-        if(playerData.path == "Sword")
+        if (playerData.path == "Sword")
         {
             PathOfTheSword();
         }
+    }
+
+    public IEnumerator KnockBack(float knockbackTime)
+    {
+        knockback = false;
+        yield return new WaitForSeconds(knockbackTime);
+        knockback = true;
+        rb.velocity = Vector3.zero;
     }
 
     void PathOfTheSword()
@@ -403,7 +411,7 @@ public class PlayerController : MonoBehaviour
 
     public void StartPathOfThePath()
     {
-        if(playerData.path == "Path")
+        if (playerData.path == "Path")
         {
             pathActive = true;
             pathOfPathTimer = pathOfPathMaxTime;
