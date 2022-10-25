@@ -17,7 +17,7 @@ public class Shop : MonoBehaviour
     DialogueScript dialogue;
     int tracker = 0;
     string dialogue1 = "Hello there! I see those fools with hammers haven’t managed to squash you yet.";
-    string dialogue2 = "I have some interesting Emblems if you're in the market for 'em.\nCare to take a look?";
+    string dialogue2 = "I have some interesting Patches if you're in the market for 'em.\nCare to take a look?";
     string dialogue3 = "Goodbye then. Stay safe friend.";
 
     [SerializeField] List<string> emblemNames;

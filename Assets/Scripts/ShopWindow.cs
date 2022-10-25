@@ -12,6 +12,8 @@ public class ShopWindow : MonoBehaviour
     [SerializeField] PlayerData playerData;
     public List<string> emblemNames = new List<string>();
     public List<int> emblemCosts = new List<int>();
+    [SerializeField] Color selectedColor;
+    [SerializeField] TextMeshProUGUI backButtonText;
     
     Shop shop;
     PlayerControls controls;
@@ -39,7 +41,15 @@ public class ShopWindow : MonoBehaviour
 
     private void Update()
     {
-        yourMoney.text = "Your Money: " + playerData.money.ToString();
+        yourMoney.text = "$" + playerData.money.ToString();
+        if(EventSystem.current.currentSelectedGameObject == backButtonText.transform.parent.gameObject)
+        {
+            backButtonText.color = selectedColor;
+        }
+        else
+        {
+            backButtonText.color = Color.white;
+        }
     }
 
     public void CloseShopWindow()

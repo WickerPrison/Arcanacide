@@ -12,8 +12,6 @@ public class ShopButton : MonoBehaviour
     [SerializeField] TextMeshProUGUI costText;
     [SerializeField] TextMeshProUGUI emblemNameText;
     [SerializeField] TextMeshProUGUI descriptionText;
-    [SerializeField] GameObject SoldOut;
-    [SerializeField] GameObject dollarSign;
     public string emblemName;
     public int cost = 100;
     SoundManager sm;
@@ -49,16 +47,11 @@ public class ShopButton : MonoBehaviour
             descriptionText.text = emblemLibrary.GetDescription(emblemName);
             if (playerData.emblems.Contains(emblemName))
             {
-                dollarSign.SetActive(false);
-                costText.gameObject.SetActive(false);
-                SoldOut.SetActive(true);
+                costText.text = "Sold Out";
             }
             else
             {
-                dollarSign.SetActive(true);
-                costText.text = cost.ToString();
-                costText.gameObject.SetActive(true);
-                SoldOut.SetActive(false);
+                costText.text = "$" + cost.ToString();
             }
         }
         else

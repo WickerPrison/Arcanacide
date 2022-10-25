@@ -13,6 +13,7 @@ public class MainMenuButtons : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1;
         sm = gm.gameObject.GetComponent<SoundManager>();
     }
 
