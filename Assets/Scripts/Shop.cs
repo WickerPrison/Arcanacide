@@ -20,6 +20,9 @@ public class Shop : MonoBehaviour
     string dialogue2 = "I have some interesting Emblems if you're in the market for 'em.\nCare to take a look?";
     string dialogue3 = "Goodbye then. Stay safe friend.";
 
+    [SerializeField] List<string> emblemNames;
+    [SerializeField] List<int> emblemCosts;
+
     void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
@@ -81,6 +84,9 @@ public class Shop : MonoBehaviour
         {
             im.Menu();
             shopWindow = Instantiate(shopWindowPrefab);
+            ShopWindow shopWindowScript = shopWindow.GetComponent<ShopWindow>();
+            shopWindowScript.emblemNames = emblemNames;
+            shopWindowScript.emblemCosts = emblemCosts;
         }
     }
 
