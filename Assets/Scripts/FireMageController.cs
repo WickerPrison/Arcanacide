@@ -79,7 +79,7 @@ public class FireMageController : EnemyController
 
         if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose && playerController.gameObject.layer == 3)
         {
-            playerScript.LoseHealth(fireRingDamage);
+            playerScript.LoseHealth(fireRingDamage, enemyScript);
             playerScript.LosePoise(fireRingPoiseDamage);
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
             Vector3 awayVector = playerController.transform.position - transform.position;
@@ -109,6 +109,7 @@ public class FireMageController : EnemyController
         projectileScript.target = playerController.transform;
         projectileScript.poiseDamage = spellAttackPoiseDamage;
         projectileScript.spellDamage = spellAttackDamage;
+        projectileScript.enemyOfOrigin = enemyScript;
         enemySound.OtherSounds(0, 1);
     }
 }

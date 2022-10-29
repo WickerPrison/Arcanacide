@@ -13,6 +13,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] PhoneData phoneData;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] PlayerProjectile projectilePrefab;
     public float stamina;
     public float poise;
     SwordSiteDirectory swordSiteDirectory;
@@ -35,6 +36,7 @@ public class PlayerScript : MonoBehaviour
     float duckHealCounter = 0;
     float duckHealSpeed = 0;
     public bool shield;
+    public bool parry;
 
     float manaDelay;
     float maxManaDelay = 2;
@@ -59,7 +61,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void LoseHealth(int damage)
+    public void LoseHealth(int damage, EnemyScript attackingEnemy = null)
     {
         if (!shield)
         {
@@ -83,6 +85,14 @@ public class PlayerScript : MonoBehaviour
         else
         {
             sfx.Shield();
+            if (parry)
+            {
+                PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
+                projectile.transform.position = transform.position;
+                projectile.transform.LookAt(attackingEnemy.transform.position + new Vector3(0, 1.1f, 0));
+                projectile.target = attackingEnemy.transform;
+                projectile.playerController = playerController;
+            }
         }
     }
 

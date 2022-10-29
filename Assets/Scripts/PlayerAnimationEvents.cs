@@ -123,6 +123,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void EndShield()
     {
         playerScript.shield = false;
+        playerScript.parry = false;
         playerAnimation.EndBodyMagic();
     }
 

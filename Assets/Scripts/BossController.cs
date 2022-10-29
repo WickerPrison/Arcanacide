@@ -218,6 +218,7 @@ public class BossController : EnemyController
         GameObject bonfire = Instantiate(bonfirePrefab);
         bonfire.transform.position = hit.position;
         bonfireCD = bonfireMaxCD;
+        bonfire.GetComponent<Bonfire>().enemyOfOrigin = enemyScript;
     }
 
     public void FireWave()
@@ -228,6 +229,7 @@ public class BossController : EnemyController
         FireWave fireWaveScript;
         fireWaveScript = fireWave.GetComponent<FireWave>();
         fireWaveScript.target = playerController.transform.position;
+        fireWaveScript.enemyOfOrigin = enemyScript;
     }
 
     void RunAway()
@@ -244,7 +246,7 @@ public class BossController : EnemyController
         fireRing.Explode();
         if (Vector3.Distance(transform.position, playerController.transform.position) < fireRingRadius && playerController.gameObject.layer == 3)
         {
-            playerScript.LoseHealth(fireRingDamage);
+            playerScript.LoseHealth(fireRingDamage, enemyScript);
             playerScript.LosePoise(fireRingPoiseDamage);
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
             Vector3 awayVector = playerController.transform.position - transform.position;
@@ -314,6 +316,7 @@ public class BossController : EnemyController
         projectileScript.target = playerController.transform;
         projectileScript.poiseDamage = spellAttackPoiseDamage;
         projectileScript.spellDamage = spellAttackDamage;
+        projectileScript.enemyOfOrigin = enemyScript;
         enemySound.OtherSounds(0, 1);
     }
 }

@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
 
+    WaitForSeconds parryWindow = new WaitForSeconds(0.1f);
+    float parryCost = 20;
+
     Vector2 rightStickValue;
     public Vector2 lookDir;
     List<Transform> nearbyEnemies = new List<Transform>();
@@ -183,6 +186,12 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
+        if (playerScript.shield && !playerScript.parry)
+        {
+            StartCoroutine(Parry());
+            return;
+        }
+
         if (playerAnimation.attacking)
         {
             playerAnimation.ChainAttacks();
@@ -193,6 +202,14 @@ public class PlayerController : MonoBehaviour
             playerAnimation.attack = true;
             playerAnimation.attacking = true;
         }
+    }
+
+    IEnumerator Parry()
+    {
+        playerScript.LoseMana(parryCost);
+        playerScript.parry = true;
+        yield return parryWindow;
+        playerScript.parry = false;
     }
 
     public int AttackPower()
@@ -214,13 +231,6 @@ public class PlayerController : MonoBehaviour
         }
 
         return attackPower;
-    }
-
-    public void Parry(EnemyScript enemyScript)
-    {
-        playerSound.SwordClang();
-        playerAnimation.ParryAnimation();
-        enemyScript.LosePoise(playerData.AttackPower());
     }
 
     public Collider[] HitBox()

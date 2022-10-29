@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bonfire : MonoBehaviour
 {
     [SerializeField] AudioClip impactSound;
+    public EnemyScript enemyOfOrigin;
     AudioSource sfx;
     Transform player;
     float duration = 7;
@@ -27,7 +28,7 @@ public class Bonfire : MonoBehaviour
             {
                 PlayerScript playerScript;
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
-                playerScript.LoseHealth(damage);
+                playerScript.LoseHealth(damage, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
                 AudioSource.PlayClipAtPoint(impactSound, transform.position, 0.5f);
                 Destroy(gameObject);

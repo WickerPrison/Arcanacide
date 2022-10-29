@@ -5,10 +5,11 @@ using UnityEngine;
 public class FireWave : MonoBehaviour
 {
     public int boxNum;
-    float moveSpeed = 7;
+    public float moveSpeed = 7;
     public Vector3 target;
     Vector3 moveDirection;
     float lifetime = 10;
+    public EnemyScript enemyOfOrigin;
 
     private void Start()
     {

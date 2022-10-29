@@ -9,10 +9,12 @@ public class WaveBox : MonoBehaviour
     [SerializeField] float poiseDamage;
     [SerializeField] bool canHurtEnemies = false;
     FireWave fireWave;
+    EnemyScript enemyOfOrigin;
 
     private void Start()
     {
         fireWave = GetComponentInParent<FireWave>();
+        enemyOfOrigin = fireWave.enemyOfOrigin;
     }
 
 
@@ -24,7 +26,7 @@ public class WaveBox : MonoBehaviour
             {
                 PlayerScript playerScript;
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
-                playerScript.LoseHealth(damage);
+                playerScript.LoseHealth(damage, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
                 AudioSource.PlayClipAtPoint(impactSFX, transform.position, 1);
                 Destroy(gameObject);

@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] AudioClip impactSFX;
     [SerializeField] float impactSFXvolume;
     [SerializeField] float lifetime;
+    public EnemyScript enemyOfOrigin;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -36,7 +37,7 @@ public class Projectile : MonoBehaviour
     {
         PlayerScript playerScript;
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
-        playerScript.LoseHealth(spellDamage);
+        playerScript.LoseHealth(spellDamage, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
         AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
         Destroy(gameObject);

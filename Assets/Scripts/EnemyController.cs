@@ -158,7 +158,7 @@ public class EnemyController : MonoBehaviour
         if (playerController.gameObject.layer == 3)
         {
             enemySound.SwordImpact();
-            playerScript.LoseHealth(hitDamage);
+            playerScript.LoseHealth(hitDamage, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
 

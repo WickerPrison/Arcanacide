@@ -12,7 +12,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public Animator parryAnimator;
     public Vector3 mousePosition;
-    public Vector3 playerFeetPosition;
+    public Vector3 playerRotationPoint;
     public Vector3 playerScreenPosition;
     public bool walk;
     public bool attack;
@@ -29,6 +29,7 @@ public class PlayerAnimation : MonoBehaviour
     Camera cam;
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerController playerController;
+    [SerializeField] float rotationPointY;
     PlayerSound playerSound;
 
     Vector3 away = new Vector3(100, 100, 100);
@@ -215,9 +216,9 @@ public class PlayerAnimation : MonoBehaviour
     {
         //find the mouse position in screen coordinates
         mousePosition = Mouse.current.position.ReadValue();
-        //find the position of the player's feet and convert it to screen coordinates
-        playerFeetPosition = new Vector3(transform.position.x, 0, transform.position.z);
-        playerScreenPosition = cam.WorldToScreenPoint(playerFeetPosition);
+        //find the position of the player's rotation point and convert it to screen coordinates
+        playerRotationPoint = new Vector3(transform.position.x, rotationPointY, transform.position.z);
+        playerScreenPosition = cam.WorldToScreenPoint(playerRotationPoint);
 
         if (mousePosition.y < playerScreenPosition.y)
         {

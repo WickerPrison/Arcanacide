@@ -10,6 +10,9 @@ public class WaveMachine : MonoBehaviour
     [SerializeField] float interWaveDelay = 1f;
     [SerializeField] float waveDelay = 5f;
     [SerializeField] bool silentWaves;
+    [SerializeField] SpriteRenderer grate;
+    [SerializeField] Color redColor;
+    [SerializeField] float fireWaveSpeed;
     float waveTime;
     int waveNum = 2;
 
@@ -25,6 +28,10 @@ public class WaveMachine : MonoBehaviour
         if(waveTime > 0)
         {
             waveTime -= Time.deltaTime;
+            if (waveTime < 0.5f)
+            {
+                grate.color = redColor;
+            }
         }
         else
         {
@@ -50,10 +57,21 @@ public class WaveMachine : MonoBehaviour
         FireWave fireWaveScript;
         fireWaveScript = fireWave.GetComponent<FireWave>();
         fireWaveScript.target = target.position;
+        fireWaveScript.moveSpeed = 0;
+        StartCoroutine(DelayedFireWave(fireWaveScript));
         if (silentWaves && waveNum != 2)
         {
             AudioSource audio = fireWave.GetComponent<AudioSource>();
             audio.Stop();
         }
+    }
+
+
+    IEnumerator DelayedFireWave(FireWave fireWaveScript)
+    {
+        yield return new WaitForSeconds(0.5f);
+        fireWaveScript.moveSpeed = fireWaveSpeed;
+        if(waveNum == 2)
+        grate.color = Color.white;
     }
 }
