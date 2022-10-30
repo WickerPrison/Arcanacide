@@ -85,7 +85,7 @@ public class PlayerScript : MonoBehaviour
         else
         {
             sfx.Shield();
-            if (parry)
+            if (parry & attackingEnemy != null)
             {
                 PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
                 projectile.transform.position = transform.position;
