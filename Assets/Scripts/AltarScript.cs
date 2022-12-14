@@ -8,7 +8,7 @@ public class AltarScript : MonoBehaviour
     [SerializeField] GameObject message;
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
-    [SerializeField] ParticleSystem particles;
+    [SerializeField] Transform water;
     bool hasBeenUsed = false;
     Transform player;
     PlayerScript playerScript;
@@ -16,6 +16,8 @@ public class AltarScript : MonoBehaviour
     TutorialManager tutorialManager;
     float playerDistance = 100;
     float interactDistance = 2;
+    float waterMaxHeight = 0.6f;
+    float currentFill = 1;
 
     void Start()
     {
@@ -26,7 +28,11 @@ public class AltarScript : MonoBehaviour
         if (mapData.usedAltars.Contains(altarID))
         {
             hasBeenUsed = true;
-            particles.Stop();
+            SetWaterHeight(0);
+        }
+        else
+        {
+            SetWaterHeight(1);
         }
     }
 
@@ -48,6 +54,12 @@ public class AltarScript : MonoBehaviour
         {
             message.SetActive(false);
         }
+
+        if(hasBeenUsed && currentFill > 0)
+        {
+            currentFill -= Time.deltaTime;
+            SetWaterHeight(currentFill);
+        }
     }
 
     void Charge()
@@ -62,7 +74,13 @@ public class AltarScript : MonoBehaviour
             playerScript.MaxHeal();
             hasBeenUsed = true;
             mapData.usedAltars.Add(altarID);
-            particles.Stop();
         }
+    }
+
+    void SetWaterHeight(float decimalFull)
+    {
+        float currentHeight = waterMaxHeight * decimalFull;
+        water.localPosition = new Vector3(water.localPosition.x, currentHeight, water.localPosition.z);
+        water.localScale = new Vector3(water.localScale.x, currentHeight, water.localScale.z);
     }
 }
