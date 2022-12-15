@@ -11,6 +11,8 @@ public class RestMenuButtons : MonoBehaviour
     [SerializeField] GameObject levelUpMenuPrefab;
     [SerializeField] GameObject mapMenuPrefab;
     [SerializeField] GameObject textMenuPrefab;
+    [SerializeField] GameObject newMessage;
+    [SerializeField] PhoneData phoneData;
     public Vector3 mapPlayerFacePosition;
     public GameObject firstButton;
     GameObject emblemMenu;
@@ -39,6 +41,14 @@ public class RestMenuButtons : MonoBehaviour
         playerScript = player.gameObject.GetComponent<PlayerScript>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
+    }
+
+    private void Update()
+    {
+        if (phoneData.GetNewMessages().Count == 0)
+        {
+            newMessage.SetActive(false);
+        }
     }
 
     public void OpenEmblemMenu()
