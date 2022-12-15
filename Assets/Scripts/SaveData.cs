@@ -30,6 +30,7 @@ public class SaveData
 
     public int[] unlockedDoors;
     public int[] visitedRooms;
+    public int[] conversationsHad;
     public int[] powerSwitchesFlipped;
     public string deathRoom;
     public float[] deathPosition;
@@ -70,6 +71,7 @@ public class SaveData
 
         unlockedDoors = mapData.unlockedDoors.ToArray();
         visitedRooms = mapData.visitedRooms.ToArray();
+        conversationsHad = mapData.conversationsHad.ToArray();
         powerSwitchesFlipped = mapData.powerSwitchesFlipped.ToArray();
         deathRoom = mapData.deathRoom;
         deathPosition = new float[3];
