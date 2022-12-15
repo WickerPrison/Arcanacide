@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 public class TextingMenu : MonoBehaviour
 {
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData phoneData;
     [SerializeField] GameObject contactPrefab;
     [SerializeField] Transform content;
     public GameObject leaveButton;
     Button leaveButtonButton;
     public RestMenuButtons restMenuScript;
+    public PauseMenuButtons pauseMenuScript;
     List<string> contacts;
     List<string> newMessages;
     public PlayerControls controls;
@@ -22,7 +23,7 @@ public class TextingMenu : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerControls();
-        controls.Menu.Back.performed += ctx => OpenRestMenu();
+        controls.Menu.Back.performed += ctx => CloseWindow();
     }
 
     void Start()
@@ -60,12 +61,33 @@ public class TextingMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
-    public void OpenRestMenu()
+    public void CloseWindow()
+    {
+        if(restMenuScript != null)
+        {
+            OpenRestMenu();
+        }
+        else
+        {
+            OpenPauseMenu();
+        }
+    }
+
+    void OpenRestMenu()
     {
         sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
         restMenuScript.controls.Enable();
+        Destroy(gameObject);
+    }
+
+    void OpenPauseMenu()
+    {
+        sm.ButtonSound();
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseMenuScript.resumeButton);
+        pauseMenuScript.controls.Enable();
         Destroy(gameObject);
     }
 

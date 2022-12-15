@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PhoneMenu : MonoBehaviour
 {
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData phoneData;
     [SerializeField] List<PhoneContact> phoneContacts;
     [SerializeField] GameObject contactObjects;
     [SerializeField] GameObject lineDeadObject;

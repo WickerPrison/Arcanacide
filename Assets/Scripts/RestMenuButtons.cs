@@ -12,7 +12,7 @@ public class RestMenuButtons : MonoBehaviour
     [SerializeField] GameObject mapMenuPrefab;
     [SerializeField] GameObject textMenuPrefab;
     [SerializeField] GameObject newMessage;
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData dialogueData;
     public Vector3 mapPlayerFacePosition;
     public GameObject firstButton;
     GameObject emblemMenu;
@@ -45,7 +45,7 @@ public class RestMenuButtons : MonoBehaviour
 
     private void Update()
     {
-        if (phoneData.GetNewMessages().Count == 0)
+        if (dialogueData.GetNewMessages().Count == 0)
         {
             newMessage.SetActive(false);
         }

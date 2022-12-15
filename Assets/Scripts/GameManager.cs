@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject musicPlayer;
     [SerializeField] MapData mapData;
     [SerializeField] PlayerData playerData;
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData dialogueData;
     [SerializeField] GameObject moneyDropPrefab;
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveSystem.SaveGame(playerData, mapData, phoneData);
+        SaveSystem.SaveGame(playerData, mapData, dialogueData);
     }
 
     public void LoadGame()
@@ -77,7 +77,6 @@ public class GameManager : MonoBehaviour
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.visitedRooms = data.visitedRooms.ToList();
-            mapData.conversationsHad = data.conversationsHad.ToList();
             mapData.powerSwitchesFlipped = data.powerSwitchesFlipped.ToList();
             mapData.deathRoom = data.deathRoom;
             mapData.deathPosition = new Vector3(data.deathPosition[0], data.deathPosition[1], data.deathPosition[2]);
@@ -85,14 +84,13 @@ public class GameManager : MonoBehaviour
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
 
-            phoneData.ORTHODOXQueue = data.ORTHODOXQueue;
-            phoneData.ORTHODOXPreviousConversations = data.ORTHODOXPreviousConversations;
-            phoneData.TRENCHQueue = data.TRENCHQueue;
-            phoneData.TRENCHPreviousConversations = data.TRENCHPreviousConversations;
-            phoneData.UnknownNumberQueue = data.QuestionMarksQueue;
-            phoneData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations;
-            phoneData.HeadOfITQueue = data.HeadOfITQueue;
-            phoneData.HeadOfITPreviousConversations = data.HeadOfITPreviousConversations;
+            dialogueData.ORTHODOXQueue = data.ORTHODOXQueue;
+            dialogueData.ORTHODOXPreviousConversations = data.ORTHODOXPreviousConversations;
+            dialogueData.TRENCHQueue = data.TRENCHQueue;
+            dialogueData.TRENCHPreviousConversations = data.TRENCHPreviousConversations;
+            dialogueData.UnknownNumberQueue = data.QuestionMarksQueue;
+            dialogueData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations;
+            dialogueData.conversationsHad = data.conversationsHad.ToList();
         }
         else
         {
@@ -123,7 +121,6 @@ public class GameManager : MonoBehaviour
 
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
-        mapData.conversationsHad.Clear();
         mapData.powerSwitchesFlipped.Clear();
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
@@ -131,15 +128,13 @@ public class GameManager : MonoBehaviour
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
 
-        phoneData.ORTHODOXQueue.Clear();
-        phoneData.ORTHODOXPreviousConversations.Clear();
-        phoneData.TRENCHQueue.Clear();
-        phoneData.TRENCHPreviousConversations.Clear();
-        phoneData.UnknownNumberQueue.Clear();
-        phoneData.UnknownNumberPreviousConversations.Clear();
-        phoneData.HeadOfITQueue.Clear();
-        phoneData.HeadOfITPreviousConversations.Clear();
-
-        phoneData.ORTHODOXQueue.Add(0);
+        dialogueData.ORTHODOXQueue.Clear();
+        dialogueData.ORTHODOXPreviousConversations.Clear();
+        dialogueData.TRENCHQueue.Clear();
+        dialogueData.TRENCHPreviousConversations.Clear();
+        dialogueData.UnknownNumberQueue.Clear();
+        dialogueData.UnknownNumberPreviousConversations.Clear();
+        dialogueData.ORTHODOXQueue.Add(0);
+        dialogueData.conversationsHad.Clear();
     }
 }

@@ -298,12 +298,14 @@ public class PlayerController : MonoBehaviour
         if (!pauseMenu)
         {
             preventInput = true;
+            im.Menu();
             Time.timeScale = 0;
             pauseMenu = Instantiate(pauseMenuPrefab);
         }
         else
         {
             preventInput = false;
+            im.Gameplay();
             Time.timeScale = 1;
             Destroy(pauseMenu);
         }

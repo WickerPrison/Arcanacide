@@ -10,7 +10,7 @@ public class TextingScreen : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI contactNameText;
     [SerializeField] GameObject textBoxPrefab;
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData phoneData;
     [SerializeField] Transform content;
     [SerializeField] GameObject linePrefab;
     [SerializeField] GameObject newLinePrefab;

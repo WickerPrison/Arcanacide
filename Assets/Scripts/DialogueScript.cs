@@ -17,6 +17,7 @@ public class DialogueScript : MonoBehaviour
     [SerializeField] Sprite ORTHODOXImage;
     [SerializeField] Sprite TRENCHImage;
     [SerializeField] Sprite QuestionMarksImage;
+    [SerializeField] Sprite fatManImage;
 
     public void SetText(string dialogue)
     {
@@ -51,6 +52,9 @@ public class DialogueScript : MonoBehaviour
                 break;
             case "??????":
                 speakerImage.sprite = QuestionMarksImage;
+                break;
+            case "Fat Man":
+                speakerImage.sprite = fatManImage;
                 break;
         }
     }

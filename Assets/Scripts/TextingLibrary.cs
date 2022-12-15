@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TextingLibrary : MonoBehaviour
 {
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData phoneData;
     [SerializeField] GameObject dialogueBox;
 
     [SerializeField] TextAsset ORTHODOXtexts;
@@ -32,11 +32,6 @@ public class TextingLibrary : MonoBehaviour
                 SetUpConversation(UnknownNumberTexts);
                 textingScreen.previousConversations = phoneData.UnknownNumberPreviousConversations;
                 textingScreen.conversationQueue = phoneData.UnknownNumberQueue;
-                break;
-            case "Head of IT":
-                SetUpConversation(HeadOfITtexts);
-                textingScreen.previousConversations = phoneData.HeadOfITPreviousConversations;
-                textingScreen.conversationQueue = phoneData.HeadOfITQueue;
                 break;
         }
 

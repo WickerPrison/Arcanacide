@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PhoneData : ScriptableObject
+public class DialogueData : ScriptableObject
 {
     string ORTHODOX = "ORTHODOX";
     public List<int> ORTHODOXQueue;
@@ -14,19 +14,12 @@ public class PhoneData : ScriptableObject
     string UnkownNumber = "Unknown Number";
     public List<int> UnknownNumberQueue;
     public List<int> UnknownNumberPreviousConversations;
-    string HeadOfIT = "Head of IT";
-    public List<int> HeadOfITQueue;
-    public List<int> HeadOfITPreviousConversations;
 
+    public List<int> conversationsHad;
 
     public List<string> GetNewMessages()
     {
         List<string> newMessages = new List<string>();
-
-        if(HeadOfITQueue.Count > 0)
-        {
-            newMessages.Add(HeadOfIT);
-        }
 
         if(ORTHODOXQueue.Count > 0)
         {
@@ -50,15 +43,6 @@ public class PhoneData : ScriptableObject
     {
         contacts = new List<string>();
         newMessages = new List<string>();
-
-        if (HeadOfITQueue.Count + HeadOfITPreviousConversations.Count > 0)
-        {
-            contacts.Add(HeadOfIT);
-            if (HeadOfITQueue.Count > 0)
-            {
-                newMessages.Add(HeadOfIT);
-            }
-        }
 
         if(ORTHODOXQueue.Count + ORTHODOXPreviousConversations.Count > 0)
         {

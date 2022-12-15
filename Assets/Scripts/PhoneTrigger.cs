@@ -6,7 +6,7 @@ public class PhoneTrigger : MonoBehaviour
 {
     [SerializeField] string contactName;
     [SerializeField] int conversationNum;
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData phoneData;
 
     private void Start()
     {
@@ -28,12 +28,6 @@ public class PhoneTrigger : MonoBehaviour
                 if (!phoneData.UnknownNumberQueue.Contains(conversationNum) && !phoneData.UnknownNumberPreviousConversations.Contains(conversationNum))
                 {
                     phoneData.UnknownNumberQueue.Add(conversationNum);
-                }
-                break;
-            case "Head of IT":
-                if(!phoneData.HeadOfITQueue.Contains(conversationNum) && !phoneData.HeadOfITPreviousConversations.Contains(conversationNum))
-                {
-                    phoneData.HeadOfITQueue.Add(conversationNum);
                 }
                 break;
         }

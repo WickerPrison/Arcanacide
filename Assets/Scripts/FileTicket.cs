@@ -6,7 +6,7 @@ using TMPro;
 public class FileTicket : MonoBehaviour
 {
     [SerializeField] MapData mapData;
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData phoneData;
     [SerializeField] GameObject message;
     [SerializeField] TextMeshProUGUI screenText;
     string screenText1 = "File Support Ticket Here";
@@ -55,7 +55,6 @@ public class FileTicket : MonoBehaviour
             mapData.ticketFiled = true;
             screenText.text = screenText2;
             phoneData.UnknownNumberQueue.Add(1);
-            phoneData.HeadOfITQueue.Insert(0, 4);
         }
     }
 }

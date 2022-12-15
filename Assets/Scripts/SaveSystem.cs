@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    public static void SaveGame (PlayerData playerData, MapData mapData, PhoneData phoneData)
+    public static void SaveGame (PlayerData playerData, MapData mapData, DialogueData phoneData)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/playerData.sav";

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Phone : MonoBehaviour
 {
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData phoneData;
     [SerializeField] GameObject message;
     [SerializeField] GameObject phoneMenu;
     PhoneMenu phoneMenuScript;

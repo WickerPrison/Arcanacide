@@ -15,8 +15,6 @@ public class MapData : ScriptableObject
 
     public List<int> usedAltars;
 
-    public List<int> conversationsHad;
-
     public List<int> powerSwitchesFlipped;
 
     public string deathRoom;

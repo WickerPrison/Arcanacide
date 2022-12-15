@@ -9,7 +9,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] TextAsset CSVfile;
     [SerializeField] int conversationNumber;
     [SerializeField] bool stopEnemy;
-    [SerializeField] MapData mapData;
+    [SerializeField] DialogueData dialogueData;
     NavMeshAgent navAgent;
     float speed;
     InputManager im;
@@ -36,12 +36,12 @@ public class Dialogue : MonoBehaviour
 
     public void StartConversation()
     {
-        if (mapData.conversationsHad.Contains(conversationNumber))
+        if (dialogueData.conversationsHad.Contains(conversationNumber))
         {
             return;
         }
 
-        mapData.conversationsHad.Add(conversationNumber);
+        dialogueData.conversationsHad.Add(conversationNumber);
         im.Dialogue();
         inDialogue = true;
         dialogueBox = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();

@@ -30,7 +30,6 @@ public class SaveData
 
     public int[] unlockedDoors;
     public int[] visitedRooms;
-    public int[] conversationsHad;
     public int[] powerSwitchesFlipped;
     public string deathRoom;
     public float[] deathPosition;
@@ -46,8 +45,9 @@ public class SaveData
     public List<int> QuestionMarksPreviousConversations;
     public List<int> HeadOfITQueue;
     public List<int> HeadOfITPreviousConversations;
+    public int[] conversationsHad;
 
-    public SaveData (PlayerData playerData, MapData mapData, PhoneData phoneData)
+    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData)
     {
         maxHealCharges = playerData.maxHealCharges;
         healCharges = playerData.healCharges;
@@ -71,7 +71,6 @@ public class SaveData
 
         unlockedDoors = mapData.unlockedDoors.ToArray();
         visitedRooms = mapData.visitedRooms.ToArray();
-        conversationsHad = mapData.conversationsHad.ToArray();
         powerSwitchesFlipped = mapData.powerSwitchesFlipped.ToArray();
         deathRoom = mapData.deathRoom;
         deathPosition = new float[3];
@@ -82,13 +81,12 @@ public class SaveData
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
 
-        ORTHODOXQueue = phoneData.ORTHODOXQueue;
-        ORTHODOXPreviousConversations = phoneData.ORTHODOXPreviousConversations;
-        TRENCHQueue = phoneData.TRENCHQueue;
-        TRENCHPreviousConversations = phoneData.TRENCHPreviousConversations;
-        QuestionMarksQueue = phoneData.UnknownNumberQueue;
-        QuestionMarksPreviousConversations = phoneData.UnknownNumberPreviousConversations;
-        HeadOfITQueue = phoneData.HeadOfITQueue;
-        HeadOfITPreviousConversations = phoneData.HeadOfITPreviousConversations;
+        ORTHODOXQueue = dialogueData.ORTHODOXQueue;
+        ORTHODOXPreviousConversations = dialogueData.ORTHODOXPreviousConversations;
+        TRENCHQueue = dialogueData.TRENCHQueue;
+        TRENCHPreviousConversations = dialogueData.TRENCHPreviousConversations;
+        QuestionMarksQueue = dialogueData.UnknownNumberQueue;
+        QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations;
+        conversationsHad = dialogueData.conversationsHad.ToArray();
     }
 }

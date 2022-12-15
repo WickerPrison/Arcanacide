@@ -10,7 +10,7 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
-    [SerializeField] PhoneData phoneData;
+    [SerializeField] DialogueData dialogueData;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] PlayerProjectile projectilePrefab;
@@ -281,13 +281,7 @@ public class PlayerScript : MonoBehaviour
         switch (playerData.deathNum)
         {
             case 1:
-                phoneData.ORTHODOXQueue.Add(1);
-                break;
-            case 3:
-                phoneData.HeadOfITQueue.Add(2);
-                break;
-            case 10:
-                phoneData.HeadOfITQueue.Add(3);
+                dialogueData.ORTHODOXQueue.Add(1);
                 break;
         }
 
