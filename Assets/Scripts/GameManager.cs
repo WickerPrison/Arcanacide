@@ -84,13 +84,14 @@ public class GameManager : MonoBehaviour
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
 
-            dialogueData.ORTHODOXQueue = data.ORTHODOXQueue;
-            dialogueData.ORTHODOXPreviousConversations = data.ORTHODOXPreviousConversations;
-            dialogueData.TRENCHQueue = data.TRENCHQueue;
-            dialogueData.TRENCHPreviousConversations = data.TRENCHPreviousConversations;
-            dialogueData.UnknownNumberQueue = data.QuestionMarksQueue;
-            dialogueData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations;
+            dialogueData.ORTHODOXQueue = data.ORTHODOXQueue.ToList();
+            dialogueData.ORTHODOXPreviousConversations = data.ORTHODOXPreviousConversations.ToList();
+            dialogueData.TRENCHQueue = data.TRENCHQueue.ToList();
+            dialogueData.TRENCHPreviousConversations = data.TRENCHPreviousConversations.ToList();
+            dialogueData.UnknownNumberQueue = data.QuestionMarksQueue.ToList();
+            dialogueData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations.ToList();
             dialogueData.conversationsHad = data.conversationsHad.ToList();
+            dialogueData.patchworkGaryConversations = data.patchworkGaryConversations.ToList();
         }
         else
         {
@@ -136,5 +137,6 @@ public class GameManager : MonoBehaviour
         dialogueData.UnknownNumberPreviousConversations.Clear();
         dialogueData.ORTHODOXQueue.Add(0);
         dialogueData.conversationsHad.Clear();
+        dialogueData.patchworkGaryConversations.Clear();
     }
 }

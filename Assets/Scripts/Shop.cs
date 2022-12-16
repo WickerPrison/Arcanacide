@@ -6,6 +6,12 @@ public class Shop : MonoBehaviour
 {
     [SerializeField] GameObject message;
     [SerializeField] GameObject shopWindowPrefab;
+    [SerializeField] TextAsset csvFile;
+    [SerializeField] DialogueData dialogueData;
+    [SerializeField] int firstTimeTalking;
+    [SerializeField] int repeatableGreeting;
+    [SerializeField] int farewell;
+    CSVparser readCSV;
     GameObject shopWindow;
     Transform player;
     InputManager im;
@@ -15,20 +21,22 @@ public class Shop : MonoBehaviour
 
     [SerializeField] GameObject dialoguePrefab;
     DialogueScript dialogue;
-    int tracker = 0;
-    string dialogue1 = "Hello there! I see those fools with hammers haven’t managed to squash you yet.";
-    string dialogue2 = "I have some interesting Patches if you're in the market for 'em.\nCare to take a look?";
-    string dialogue3 = "Goodbye then. Stay safe friend.";
-
     [SerializeField] List<string> emblemNames;
     [SerializeField] List<int> emblemCosts;
+    List<List<string>> conversations = new List<List<string>>();
+    List<string> thisConversation;
+    int currentLineIndex = 0;
+    int conversationIndex;
+    bool inDialogue = false;
 
     void Start()
     {
+        readCSV = GetComponent<CSVparser>();
+        conversations = readCSV.ParseConversation(csvFile);
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         sm = im.gameObject.GetComponent<SoundManager>();
-        im.controls.Gameplay.Interact.performed += ctx => StartDialogue();
-        im.controls.Dialogue.Next.performed += ctx => Talk();
+        im.controls.Gameplay.Interact.performed += ctx => WhichStartingConversation();
+        im.controls.Dialogue.Next.performed += ctx => NextLine();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
@@ -45,36 +53,65 @@ public class Shop : MonoBehaviour
         }
     }
 
-    void StartDialogue()
+    void WhichStartingConversation()
     {
-        if(playerDistance <= interactDistance)
+        if (dialogueData.patchworkGaryConversations.Contains(firstTimeTalking))
         {
-            dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
-            dialogue.SetImage("Patchwork Gary");
-            dialogue.SetText(dialogue1);
-            im.Dialogue();
+            StartConversation(repeatableGreeting);
+        }
+        else
+        {
+            dialogueData.patchworkGaryConversations.Add(firstTimeTalking);
+            StartConversation(firstTimeTalking);
         }
     }
 
-    void Talk()
+    void StartConversation(int conversation)
     {
-        sm.ButtonSound();
-        switch (tracker)
+        if (playerDistance > interactDistance)
         {
-            case 0:
-                tracker += 1;
-                dialogue.SetText(dialogue2);
-                break;
-            case 1:
-                tracker += 1;
+            return;
+        }
+
+        currentLineIndex = 0;
+        inDialogue = true;
+        im.Dialogue();
+        dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
+        conversationIndex = conversation;
+        thisConversation = conversations[conversationIndex];
+        string[] currentLine = thisConversation[currentLineIndex].Split('|');
+        dialogue.SetImage(currentLine[0]);
+        dialogue.SetText(currentLine[1]);
+        
+    }
+
+
+    void NextLine()
+    {
+        if (!inDialogue)
+        {
+            return;
+        }
+
+        currentLineIndex++;
+        if (currentLineIndex >= thisConversation.Count)
+        {
+            Destroy(dialogue.gameObject);
+            inDialogue = false;
+            if(conversationIndex == repeatableGreeting || conversationIndex == firstTimeTalking)
+            {
                 OpenShop();
-                Destroy(dialogue.gameObject);
-                break;
-            case 2:
-                tracker = 0;
+            }
+            else if(conversationIndex == farewell)
+            {
                 im.Gameplay();
-                Destroy(dialogue.gameObject);
-                break;
+            }
+        }
+        else
+        {
+            string[] currentLine = thisConversation[currentLineIndex].Split('|');
+            dialogue.SetImage(currentLine[0]);
+            dialogue.SetText(currentLine[1]);
         }
     }
 
@@ -93,10 +130,6 @@ public class Shop : MonoBehaviour
     public void CloseShop()
     {
         Destroy(shopWindow);
-        dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
-        dialogue.SetImage("Patchwork Gary");
-        dialogue.SetText(dialogue3);
-        tracker = 2;
-        im.Dialogue();
+        StartConversation(farewell);
     }
 }

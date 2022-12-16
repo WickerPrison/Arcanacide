@@ -16,6 +16,7 @@ public class DialogueData : ScriptableObject
     public List<int> UnknownNumberPreviousConversations;
 
     public List<int> conversationsHad;
+    public List<int> patchworkGaryConversations;
 
     public List<string> GetNewMessages()
     {

@@ -37,15 +37,16 @@ public class SaveData
     public bool fireBossKilled;
     public bool secretaryConvo;
 
-    public List<int> ORTHODOXQueue;
-    public List<int> ORTHODOXPreviousConversations;
-    public List<int> TRENCHQueue;
-    public List<int> TRENCHPreviousConversations;
-    public List<int> QuestionMarksQueue;
-    public List<int> QuestionMarksPreviousConversations;
-    public List<int> HeadOfITQueue;
-    public List<int> HeadOfITPreviousConversations;
+    public int[] ORTHODOXQueue;
+    public int[] ORTHODOXPreviousConversations;
+    public int[] TRENCHQueue;
+    public int[] TRENCHPreviousConversations;
+    public int[] QuestionMarksQueue;
+    public int[] QuestionMarksPreviousConversations;
+    public int[] HeadOfITQueue;
+    public int[] HeadOfITPreviousConversations;
     public int[] conversationsHad;
+    public int[] patchworkGaryConversations;
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData)
     {
@@ -81,12 +82,13 @@ public class SaveData
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
 
-        ORTHODOXQueue = dialogueData.ORTHODOXQueue;
-        ORTHODOXPreviousConversations = dialogueData.ORTHODOXPreviousConversations;
-        TRENCHQueue = dialogueData.TRENCHQueue;
-        TRENCHPreviousConversations = dialogueData.TRENCHPreviousConversations;
-        QuestionMarksQueue = dialogueData.UnknownNumberQueue;
-        QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations;
+        ORTHODOXQueue = dialogueData.ORTHODOXQueue.ToArray();
+        ORTHODOXPreviousConversations = dialogueData.ORTHODOXPreviousConversations.ToArray();
+        TRENCHQueue = dialogueData.TRENCHQueue.ToArray();
+        TRENCHPreviousConversations = dialogueData.TRENCHPreviousConversations.ToArray();
+        QuestionMarksQueue = dialogueData.UnknownNumberQueue.ToArray();
+        QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations.ToArray();
         conversationsHad = dialogueData.conversationsHad.ToArray();
+        patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();
     }
 }
