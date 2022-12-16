@@ -49,7 +49,7 @@ public class Safe : MonoBehaviour
             sfx.Play();
             playerData.emblems.Add(emblemName);
             newEmblemMessage.SetActive(true);
-            emblemMessageText.text = "New Patch: " + emblemName;
+            emblemMessageText.text = emblemName;
             im.Dialogue();
         }
     }
