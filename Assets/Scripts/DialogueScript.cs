@@ -32,6 +32,9 @@ public class DialogueScript : MonoBehaviour
             case "Agent":
                 speakerImage.sprite = playerImage;
                 break;
+            case "Agent Adams":
+                speakerImage.sprite = playerImage;
+                break;
             case "Ernie":
                 speakerImage.sprite = janitorImage;
                 break;

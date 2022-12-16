@@ -7,12 +7,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] PlayerData playerData;
     InputManager im;
     SoundManager sm;
-    GameObject currentMessage;
-    GameObject nextMessage;
+    [System.NonSerialized] public GameObject currentMessage;
+    [System.NonSerialized] public GameObject nextMessage;
     bool messageOpen = false;
-    bool inGame = false;
-    [SerializeField] GameObject walkTutorial;
-    string walk = "Walk";
+    public GameObject textsTutorial;
+    string texts = "Texts";
     [SerializeField] GameObject attackTutorial;
     string attack = "Attack";
     [SerializeField] GameObject healTutorial;
@@ -41,25 +40,6 @@ public class TutorialManager : MonoBehaviour
         sm = im.gameObject.GetComponent<SoundManager>();
         im.controls.Tutorial.Select.performed += ctx => NextMessage();
         TutorialList();
-        if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
-        {
-            inGame = true;
-        }
-        else
-        {
-            inGame = false;
-        }
-    }
-
-    private void Update()
-    {
-        if (inGame && playerData.tutorials.Contains(walk))
-        {
-            playerData.tutorials.Remove(walk);
-            nextMessage = null;
-            currentMessage = Instantiate(walkTutorial);
-            OpenMessage();
-        }
     }
 
     void NextMessage()
@@ -83,7 +63,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    void OpenMessage()
+    public void OpenMessage()
     {
         im.Tutorial();
         messageOpen = true;
@@ -96,6 +76,14 @@ public class TutorialManager : MonoBehaviour
         messageOpen = false;
         Time.timeScale = 1;
         Destroy(currentMessage);
+    }
+
+    public void TextsTutorial()
+    {
+        playerData.tutorials.Remove(texts);
+        nextMessage = null;
+        currentMessage = Instantiate(textsTutorial);
+        OpenMessage();
     }
 
     public void AttackTutorial()
@@ -173,7 +161,7 @@ public class TutorialManager : MonoBehaviour
     void TutorialList()
     {
         allTutorials.Clear();
-        allTutorials.Add(walk);
+        allTutorials.Add(texts);
         allTutorials.Add(attack);
         allTutorials.Add(heal);
         allTutorials.Add(dodge);

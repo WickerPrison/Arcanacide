@@ -71,6 +71,11 @@ public class Dialogue : MonoBehaviour
             {
                 navAgent.speed = speed;
             }
+            EndDialogueEvent endEvent = GetComponent<EndDialogueEvent>();
+            if(endEvent != null)
+            {
+                endEvent.EndEvent();
+            }
         }
         else
         {
