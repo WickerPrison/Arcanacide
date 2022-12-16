@@ -8,8 +8,10 @@ public class Janitor : MonoBehaviour
     [SerializeField] GameObject message;
     [SerializeField] Animator janitorAnimator;
     [SerializeField] GameObject dialoguePrefab;
+    [SerializeField] TextAsset csvFile;
+    [SerializeField] int repeatableConversation;
+    CSVparser readCSV;
     DialogueScript dialogue;
-    int conversationTracker = 0;
     TutorialManager tutorialManager;
     Transform player;
     Vector3 scale;
@@ -17,17 +19,20 @@ public class Janitor : MonoBehaviour
     SoundManager sm;
     float playerDistance = 100;
     float interactDistance = 2;
-
-    string dialogue1 = "I figured we’d be seeing someone like you after what happened to the last agent they sent.";
-    string dialogue2 = "Let me impart some of my power to you. There’s enough that needs cleaning around here without adding your corpse to the list.";
-    string dialogue3 = "Good luck. I'm sure we'll meet agian";
+    List<List<string>> conversations = new List<List<string>>();
+    int conversationIndex;
+    int currentLineIndex = 0;
+    bool inDialogue = false;
+    List<string> thisConversation;
 
     void Start()
     {
+        readCSV = GetComponent<CSVparser>();
+        conversations = readCSV.ParseConversation(csvFile);
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         sm = im.GetComponent<SoundManager>();
         im.controls.Gameplay.Interact.performed += ctx => StartConversation();
-        im.controls.Dialogue.Next.performed += ctx => Talk();
+        im.controls.Dialogue.Next.performed += ctx => NextLine();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         scale = janitorAnimator.transform.localScale;
     }
@@ -60,46 +65,48 @@ public class Janitor : MonoBehaviour
             return;
         }
 
+        currentLineIndex = 0;
+        im.Dialogue();
+        inDialogue = true;
         dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
         if (!playerData.unlockedAbilities.Contains("Block"))
         {
-            dialogue.SetText(dialogue1);
+            conversationIndex = 0;
         }
         else
         {
-            dialogue.SetText(dialogue3);
+            conversationIndex = repeatableConversation;
         }
-        dialogue.SetImage("Ernie");
-        im.Dialogue();
+        thisConversation = conversations[conversationIndex];
+        string[] currentLine = thisConversation[currentLineIndex].Split('|');
+        dialogue.SetImage(currentLine[0]);
+        dialogue.SetText(currentLine[1]);
     }
 
-    void Talk()
+    void NextLine()
     {
-        if(playerDistance > interactDistance)
+        if (!inDialogue)
         {
             return;
         }
 
-        if(!playerData.unlockedAbilities.Contains("Block"))
+        currentLineIndex++;
+        if (currentLineIndex >= thisConversation.Count)
         {
-            sm.ButtonSound();
-            switch (conversationTracker)
+            Destroy(dialogue.gameObject);
+            inDialogue = false;
+            im.Gameplay();
+            if (!playerData.unlockedAbilities.Contains("Block"))
             {
-                case 0:
-                    conversationTracker += 1;
-                    dialogue.SetText(dialogue2);
-                    break;
-                case 1:
-                    Destroy(dialogue.gameObject);
-                    GetBlock();
-                    break;
+                GetBlock();
             }
+
         }
         else
         {
-            sm.ButtonSound();
-            Destroy(dialogue.gameObject);
-            im.Gameplay();
+            string[] currentLine = thisConversation[currentLineIndex].Split('|');
+            dialogue.SetImage(currentLine[0]);
+            dialogue.SetText(currentLine[1]);
         }
     }
 

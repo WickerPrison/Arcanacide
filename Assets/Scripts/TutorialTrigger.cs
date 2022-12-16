@@ -19,12 +19,6 @@ public class TutorialTrigger : MonoBehaviour
         {
             switch (tutorialName)
             {
-                case "Attack":
-                    if (playerData.tutorials.Contains("Attack"))
-                    {
-                        tutorialManager.AttackTutorial();
-                    }
-                    break;
                 case "Dodge":
                     if (playerData.tutorials.Contains("Dodge"))
                     {

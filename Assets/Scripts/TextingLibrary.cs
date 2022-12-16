@@ -49,12 +49,6 @@ public class TextingLibrary : MonoBehaviour
                     phoneData.TRENCHQueue.Add(0);
                 }
                 break;
-            case "Head of IT":
-                if (!phoneData.ORTHODOXQueue.Contains(2) && !phoneData.ORTHODOXPreviousConversations.Contains(2))
-                {
-                    phoneData.ORTHODOXQueue.Add(2);
-                }
-                break;
         }
     }
 
