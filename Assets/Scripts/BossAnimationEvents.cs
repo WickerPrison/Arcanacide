@@ -102,4 +102,23 @@ public class BossAnimationEvents : EnemyAnimationEvents
     {
         deathFire.Stop();
     }
+
+    public void SurrenderDialogue()
+    {
+        EnemyScript enemyScript = GetComponentInParent<EnemyScript>();
+        enemyScript.health = 0;
+        enemyScript.GainHealth(5);
+        Dialogue dialogue = GetComponent<Dialogue>();
+        dialogue.StartConversation();
+        enemyScript.isDying = false;
+        bossController.isDisabled = true;
+        bossController.hasSurrendered = true;  
+    }
+
+
+    public override void Death()
+    {
+        base.Death();
+        bossController.Death();
+    }
 }

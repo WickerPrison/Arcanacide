@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class EnemyController : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class EnemyController : MonoBehaviour
     public bool facingFront;
     float staggerTimer = 0;
     public bool isStaggered = false;
+    [System.NonSerialized] public bool isDisabled;
 
     public bool canHitPlayer = false;
 
@@ -60,7 +62,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if (enemyScript.isDying)
+        if (enemyScript.isDying || isDisabled)
         {
             return;
         }
@@ -194,9 +196,14 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public virtual void Death()
+    public virtual void StartDying()
     {
         frontAnimator.Play("Death");
         backAnimator.Play("Death");
+    }
+
+    public virtual void Death()
+    {
+
     }
 }

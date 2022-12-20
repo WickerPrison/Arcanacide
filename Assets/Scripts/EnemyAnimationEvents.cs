@@ -47,7 +47,7 @@ public class EnemyAnimationEvents : MonoBehaviour
         footstep.Play();
     }
 
-    public void Death()
+    public virtual void Death()
     {
         enemyScript.Death();
     }

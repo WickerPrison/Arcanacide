@@ -10,6 +10,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] int conversationNumber;
     [SerializeField] bool stopEnemy;
     [SerializeField] DialogueData dialogueData;
+    [SerializeField] bool repeatable = false;
     NavMeshAgent navAgent;
     float speed;
     InputManager im;
@@ -36,12 +37,19 @@ public class Dialogue : MonoBehaviour
 
     public void StartConversation()
     {
-        if (dialogueData.conversationsHad.Contains(conversationNumber))
+        if (!repeatable)
         {
-            return;
+            if (dialogueData.conversationsHad.Contains(conversationNumber))
+            {
+                return;
+            }
+        }
+        else
+        {
+            dialogueData.conversationsHad.Add(conversationNumber);
         }
 
-        dialogueData.conversationsHad.Add(conversationNumber);
+
         im.Dialogue();
         inDialogue = true;
         dialogueBox = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();

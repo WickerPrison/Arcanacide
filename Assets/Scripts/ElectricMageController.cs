@@ -195,7 +195,7 @@ public class ElectricMageController : EnemyController
         }
     }
 
-    public override void Death()
+    public override void StartDying()
     {
         BoltAway();
         boltCD = 10000;

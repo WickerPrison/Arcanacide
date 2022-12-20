@@ -43,6 +43,7 @@ public class BossController : EnemyController
     int fireRingDamage = 50;
     float fireRingPoiseDamage = 150;
     float fireRingRadius = 3.5f;
+    [System.NonSerialized] public bool hasSurrendered = false;
 
     public override void Start()
     {
@@ -318,5 +319,34 @@ public class BossController : EnemyController
         projectileScript.spellDamage = spellAttackDamage;
         projectileScript.enemyOfOrigin = enemyScript;
         enemySound.OtherSounds(0, 1);
+    }
+
+    public override void StartDying()
+    {
+        if (!hasSurrendered)
+        {
+            frontAnimator.Play("HandsUp");
+            backAnimator.Play("HandsUp");
+        }
+        else
+        {
+            frontAnimator.Play("Death");
+            backAnimator.Play("Death");
+        }
+    }
+
+    public override void Death()
+    {
+        base.Death();
+
+        gm.awareEnemies -= 1;
+        GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
+        bossHealthbar.SetActive(false);
+        ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
+        managerVanquished.ShowMessage();
+        SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
+        sm.BossDefeated();
+        MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
+        musicManager.StartFadeOut(4);
     }
 }

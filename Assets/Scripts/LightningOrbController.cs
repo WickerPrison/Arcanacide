@@ -77,7 +77,7 @@ public class LightningOrbController : EnemyController
         attack.transform.rotation = Quaternion.LookRotation(playerDirection.normalized);
     }
 
-    public override void Death()
+    public override void StartDying()
     {
         enemyScript.Death();
         GameObject explosion = Instantiate(lightningExplosion);

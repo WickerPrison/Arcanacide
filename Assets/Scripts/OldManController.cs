@@ -177,9 +177,9 @@ public class OldManController : EnemyController
         }
     }
 
-    public override void Death()
+    public override void StartDying()
     {
         staticVFX.Stop();
-        base.Death();
+        base.StartDying();
     }
 }

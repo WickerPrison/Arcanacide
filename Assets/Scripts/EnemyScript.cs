@@ -8,21 +8,20 @@ public class EnemyScript : MonoBehaviour
 
     public int health;
     public float poise;
-    [SerializeField] int reward;
-    [SerializeField] GameObject healthbar;
+    public int reward;
+    public GameObject healthbar;
     [SerializeField] float healthbarScale;
-    [SerializeField] int enemyID;
-    [SerializeField] MapData mapData;
-    [SerializeField] PlayerData playerData;
+    public int enemyID;
+    public MapData mapData;
+    public PlayerData playerData;
     [SerializeField] DialogueData phoneData;
-    [SerializeField] EmblemLibrary emblemLibrary;
+    public EmblemLibrary emblemLibrary;
     EnemyController enemyController;
     EnemySound enemySound;
     GameManager gm;
     [SerializeField] int maxHealth;
     [SerializeField] float maxPoise;
     [SerializeField] float poiseRegeneration;
-    [SerializeField] bool isBoss;
     [SerializeField] float staggerDuration;
     [SerializeField] ParticleSystem hitVFX;
     public bool isDying = false;
@@ -49,9 +48,24 @@ public class EnemyScript : MonoBehaviour
     {
         hitVFX.Play();
         health -= damage;
+        if(health < 0)
+        {
+            health = 0;
+        }
         LosePoise(poiseDamage);
         UpdateHealthbar();
         enemyController.OnHit();
+    }
+
+    public void GainHealth(int healAmount)
+    {
+        health += healAmount;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        Debug.Log(health);
+        UpdateHealthbar();
     }
 
     public void LosePoise(float poiseDamage)
@@ -82,7 +96,7 @@ public class EnemyScript : MonoBehaviour
         }
         else
         {
-            healthbar.transform.localScale = Vector3.zero;
+            healthbar.transform.localScale = new Vector3(0, healthbar.transform.localScale.y, healthbar.transform.localScale.z);
         }
     }
 
@@ -103,7 +117,7 @@ public class EnemyScript : MonoBehaviour
         if(health <= 0 && !isDying)
         {
             isDying = true;
-            enemyController.Death();
+            enemyController.StartDying();
         }
     }
 
@@ -131,19 +145,6 @@ public class EnemyScript : MonoBehaviour
             PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
             int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
             playerScript.PartialHeal(healAmount);
-        }
-
-        if (isBoss)
-        {
-            gm.awareEnemies -= 1;
-            GameObject bossHealthbar = healthbar.transform.parent.gameObject;
-            bossHealthbar.SetActive(false);
-            ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
-            managerVanquished.ShowMessage();
-            SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
-            sm.BossDefeated();
-            MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
-            musicManager.StartFadeOut(4);
         }
 
         Destroy(gameObject);
