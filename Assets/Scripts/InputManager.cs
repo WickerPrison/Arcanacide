@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     public PlayerControls controls;
+    GameObject player;
 
     private void Awake()
     {
@@ -14,6 +15,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         Gameplay();
     }
 
@@ -31,6 +33,7 @@ public class InputManager : MonoBehaviour
 
     public void Gameplay()
     {
+        player.layer = 3;
         controls.Menu.Disable();
         controls.Tutorial.Disable();
         controls.Dialogue.Disable();
@@ -39,6 +42,7 @@ public class InputManager : MonoBehaviour
 
     public void Tutorial()
     {
+        player.layer = 8;
         controls.Menu.Disable();
         controls.Gameplay.Disable();
         controls.Dialogue.Disable();
@@ -47,6 +51,7 @@ public class InputManager : MonoBehaviour
 
     public void Menu()
     {
+        player.layer = 3;
         controls.Tutorial.Disable();
         controls.Gameplay.Disable();
         controls.Dialogue.Disable();
@@ -55,6 +60,7 @@ public class InputManager : MonoBehaviour
 
     public void Dialogue()
     {
+        player.layer = 8;
         controls.Tutorial.Disable();
         controls.Gameplay.Disable();
         controls.Menu.Disable();

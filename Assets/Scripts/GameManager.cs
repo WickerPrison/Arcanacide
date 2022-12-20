@@ -101,7 +101,6 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
-        playerData.health = playerData.MaxHealth();
         playerData.maxHealCharges = 1;
         playerData.healCharges = 1;
         playerData.lastSwordSite = lastAltar;
@@ -115,6 +114,7 @@ public class GameManager : MonoBehaviour
         playerData.dexterity = 1;
         playerData.vitality = 1;
         playerData.dedication = 1;
+        playerData.health = playerData.MaxHealth();
         playerData.maxMana = 50;
         playerData.mana = playerData.maxMana;
         playerData.deathNum = 0;
