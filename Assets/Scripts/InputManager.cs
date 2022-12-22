@@ -16,7 +16,10 @@ public class InputManager : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        Gameplay();
+        if(player != null)
+        {
+            Gameplay();
+        }
     }
 
     private void Update()

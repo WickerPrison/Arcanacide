@@ -43,6 +43,10 @@ public class Dialogue : MonoBehaviour
             {
                 return;
             }
+            else
+            {
+                dialogueData.conversationsHad.Add(conversationNumber);
+            }
         }
         else
         {
