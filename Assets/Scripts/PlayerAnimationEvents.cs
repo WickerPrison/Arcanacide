@@ -17,6 +17,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     float attackStaminaCost = 20f;
+    PlayerAttackArc attackArc;
 
     // Start is called before the first frame update
     void Start()
@@ -29,45 +30,25 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerSound = transform.parent.GetComponentInChildren<PlayerSound>();
         frontAnimator = gameObject.GetComponent<Animator>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+        attackArc = playerController.attackPoint.gameObject.GetComponent<PlayerAttackArc>();
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
-    public void AttackHit(int smearSpeed)
+    public void AttackHit(AttackProfiles attackProfile)
     {
         stepWithAttack.Step();
         playerSound.SwordSwoosh();
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackStaminaCost);
-        smear.particleSmear(smearSpeed);
+        smear.particleSmear(attackProfile.smearSpeed);
+        attackArc.ChangeArc(attackProfile);
         EnemyScript enemyScript;
-        Collider[] getHitEnemies = playerController.HitBox();
-        Collider[] hitEnemies = getHitEnemies;
-        foreach(Collider enemy in hitEnemies)
+        foreach(Collider enemy in playerController.enemiesInRange)
         {
             enemyScript = enemy.GetComponent<EnemyScript>();
             playerSound.SwordImpact();
             StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
-            enemyScript.LoseHealth(playerController.AttackPower(), playerController.AttackPower());
-
-            // this code is used for the parrying system that has been removed
-            /*
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            if (enemyController.parryWindow && enemyController.canHitPlayer)
-            {
-                enemyController.isParrying = true;
-            }
-            else if(playerAnimation.isParrying)
-            {
-                playerAnimation.isParrying = false;
-                playerController.Parry(enemyScript);
-            }
-            else
-            {
-                playerSound.SwordImpact();
-                StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
-                enemyScript.LoseHealth(playerController.AttackPower(), playerController.AttackPower());
-            }
-            */
+            enemyScript.LoseHealth(playerController.AttackPower() * attackProfile.damageMultiplier, playerController.AttackPower() * attackProfile.poiseDamageMultiplier);
         }
     }
 

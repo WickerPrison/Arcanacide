@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
+    [System.NonSerialized] public List<Collider> enemiesInRange = new List<Collider>();
     public float moveSpeed;
     public bool knockback = false;
 
@@ -35,8 +36,6 @@ public class PlayerController : MonoBehaviour
     public float dashTime = 0;
     float maxDashTime = 0.2f;
     float dashStaminaCost = 30f;
-    float attackPointRadius = 1.5f;
-    float hitboxRadius = 1.5f;
     float lockOnDistance = 10;
     public bool preventInput = false;
 
@@ -199,8 +198,22 @@ public class PlayerController : MonoBehaviour
         else if (CanInput() && playerScript.stamina > 0)
         {
             rb.velocity = Vector3.zero;
-            playerAnimation.attack = true;
             playerAnimation.attacking = true;
+            playerAnimation.Attack();
+        }
+    }
+
+    void HeavyAttack()
+    {
+        if (playerAnimation.attacking)
+        {
+            playerAnimation.ChainAttacks();
+        }
+        else if (CanInput() && playerScript.stamina > 0)
+        {
+            rb.velocity = Vector3.zero;
+            playerAnimation.attacking = true;
+            playerAnimation.HeavyAttack();
         }
     }
 
@@ -233,12 +246,6 @@ public class PlayerController : MonoBehaviour
         return attackPower;
     }
 
-    public Collider[] HitBox()
-    {
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, hitboxRadius, enemyLayers);
-        return hitEnemies;
-    }
-
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
     void AttackPointPosition()
     {
@@ -251,7 +258,8 @@ public class PlayerController : MonoBehaviour
         {
             mouseDirection = playerAnimation.mousePosition - playerAnimation.playerScreenPosition;
             mouseDirection = new Vector3(mouseDirection.x, 0.5f, mouseDirection.y);
-            attackPoint.transform.position = transform.position + mouseDirection.normalized * attackPointRadius;
+            attackPoint.transform.position = transform.position + mouseDirection.normalized;
+            attackPoint.transform.rotation = Quaternion.LookRotation(mouseDirection.normalized);
         }
         else
         {
@@ -264,8 +272,12 @@ public class PlayerController : MonoBehaviour
             {
                 lookDir = rightStickValue.normalized;
             }
-            Vector3 lookDirection = new Vector3(lookDir.x, 0.5f, lookDir.y);
-            attackPoint.transform.position = transform.position + lookDirection.normalized * attackPointRadius;
+            Vector3 lookDirection = new Vector3(lookDir.x, 0, lookDir.y);
+            attackPoint.transform.position = transform.position + lookDirection.normalized;
+            if(lookDirection.normalized != Vector3.zero)
+            {
+                attackPoint.transform.rotation = Quaternion.LookRotation(lookDirection.normalized);
+            }
         }
     }
 
@@ -452,6 +464,7 @@ public class PlayerController : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
 
         im.controls.Gameplay.Attack.performed += ctx => Attack();
+        im.controls.Gameplay.HeavyAttack.performed += ctx => HeavyAttack();
         im.controls.Gameplay.Dodge.performed += ctx => Dodge();
         im.controls.Gameplay.PauseMenu.performed += ctx => PauseMenu();
         im.controls.Gameplay.Move.performed += ctx => playerData.moveDir = ctx.ReadValue<Vector2>();

@@ -15,7 +15,6 @@ public class PlayerAnimation : MonoBehaviour
     public Vector3 playerRotationPoint;
     public Vector3 playerScreenPosition;
     public bool walk;
-    public bool attack;
     public bool attacking;
     public bool continueBlocking;
     public bool parryWindow = false;
@@ -89,15 +88,19 @@ public class PlayerAnimation : MonoBehaviour
             backAnimator.SetBool("Walk", false);
         }
 
-        if (attack)
-        {
-            attack = false;
-            frontAnimator.Play("Attack");
-            backAnimator.Play("Attack");
-        }
-
         frontAnimator.SetBool("ContinueBlocking", continueBlocking);
         backAnimator.SetBool("ContinueBlocking", continueBlocking);
+    }
+
+    public void Attack()
+    {
+        frontAnimator.Play("Attack");
+        backAnimator.Play("Attack");
+    }
+
+    public void HeavyAttack()
+    {
+        frontAnimator.Play("HeavyAttack");
     }
 
     void StaminaUpdate()

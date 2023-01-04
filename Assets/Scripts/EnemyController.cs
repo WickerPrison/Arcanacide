@@ -163,27 +163,6 @@ public class EnemyController : MonoBehaviour
             playerScript.LoseHealth(hitDamage, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
-
-            // this code is used for the parry system that has been removed
-            /*
-            if (playerAnimation.parryWindow)
-            {
-                playerAnimation.isParrying = true;
-                playerController.Parry(enemyScript);
-            }
-            else if (isParrying)
-            {
-                isParrying = false;
-                playerController.Parry(enemyScript);
-            }
-            else
-            {
-                enemySound.SwordImpact();
-                playerScript.LoseHealth(hitDamage);
-                playerScript.LosePoise(hitPoiseDamage);
-                AdditionalAttackEffects();
-            }
-            */
         }
         else if(playerController.gameObject.layer == 8)
         {

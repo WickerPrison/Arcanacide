@@ -7,22 +7,24 @@ public class AttackArcGenerator : MonoBehaviour
     [SerializeField] Material whiteMaterial;
     [SerializeField] Material colorMaterial;
     [SerializeField] GameObject viewConeObject;
-    [SerializeField] MeshCollider colliderMesh;
-    [SerializeField] int halfConeAngle;
-    [SerializeField] float radius;
+    public MeshCollider colliderMesh;
+    public int halfConeAngle;
+    public float radius;
     [SerializeField] float yOffset;
     EnemyController enemyController;
     Material viewConeMaterial;
-    Renderer coneRenderer;
+    [System.NonSerialized] public Renderer coneRenderer;
 
     public MeshFilter meshFilter;
-    Mesh viewMesh;
+    [System.NonSerialized] public Mesh viewMesh;
 
-    int arcPoints;
-    Vector3 centerPoint;   
+    [System.NonSerialized] public int arcPoints;
+    Vector3 centerPoint;
+
+    [SerializeField] int testAngle;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         enemyController = GetComponentInParent<EnemyController>();
         centerPoint = new Vector3(0, yOffset, -1);
@@ -42,13 +44,13 @@ public class AttackArcGenerator : MonoBehaviour
     {
         Vector3[] vertices = new Vector3[arcPoints + 3];
         int[] triangles = new int[(arcPoints + 3) * 3];
-        vertices[0] = new Vector3(-0.3f,yOffset,-0.5f);
-        for(int i = 0; i <= arcPoints - 1; i++)
+        vertices[0] = new Vector3(-0.3f, yOffset, -0.5f);
+        for (int i = 0; i <= arcPoints - 1; i++)
         {
             Vector3 nextPosition;
             nextPosition = FindNextPosition(i - halfConeAngle);
-            vertices[i + 1] = nextPosition;
-            if(i < arcPoints - 1)
+            vertices[i + 1] = transform.InverseTransformPoint(nextPosition);
+            if (i < arcPoints - 1)
             {
                 triangles[i * 3] = 0;
                 triangles[i * 3 + 1] = i + 1;
@@ -65,6 +67,7 @@ public class AttackArcGenerator : MonoBehaviour
         viewMesh.RecalculateNormals();
         coneRenderer.material = whiteMaterial;
     }
+   
 
     public void ShowAttackArc()
     {
@@ -95,11 +98,11 @@ public class AttackArcGenerator : MonoBehaviour
         }
         Vector3 direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), 0, Mathf.Cos(Mathf.Deg2Rad * angle));
         direction = direction.normalized * radius;
-        Vector3 nextPosition = centerPoint + direction;
+        Vector3 nextPosition = new Vector3(transform.position.x, 0,transform.position.z) + direction;
         return nextPosition;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -107,7 +110,7 @@ public class AttackArcGenerator : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
