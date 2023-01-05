@@ -112,6 +112,7 @@ public class PlayerAnimation : MonoBehaviour
     public void HeavyAttack()
     {
         frontAnimator.Play("HeavyAttack");
+        backAnimator.Play("HeavyAttack");
     }
 
     void StaminaUpdate()
@@ -166,6 +167,7 @@ public class PlayerAnimation : MonoBehaviour
     public void Combo()
     {
         frontAnimator.SetBool("Combo", true);
+        backAnimator.SetBool("Combo", true);
     }
 
     public void EndChain()
