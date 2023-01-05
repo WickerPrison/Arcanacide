@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject moneyDropPrefab;
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
+    [System.NonSerialized] public List<EnemyScript> enemiesInRange = new List<EnemyScript>();
     public int awareEnemies;
 
 

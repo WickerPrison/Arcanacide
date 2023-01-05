@@ -38,6 +38,9 @@ public class PlayerAnimation : MonoBehaviour
     float frontOffset;
     float backOffset;
 
+    int weaponMagicSources = 0;
+    bool weaponMagicOn;
+
     private void Start()
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -90,6 +93,14 @@ public class PlayerAnimation : MonoBehaviour
 
         frontAnimator.SetBool("ContinueBlocking", continueBlocking);
         backAnimator.SetBool("ContinueBlocking", continueBlocking);
+
+        if (weaponMagicOn && weaponMagicSources <= 0)
+        {
+            weaponMagicOn = false;
+            frontSwordMagic.Stop();
+            backSwordMagic.Stop();
+            playerSound.StopSoundEffect();
+        }
     }
 
     public void Attack()
@@ -152,10 +163,16 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.SetBool("Attacks", true);
     }
 
+    public void Combo()
+    {
+        frontAnimator.SetBool("Combo", true);
+    }
+
     public void EndChain()
     {
         frontAnimator.SetBool("Attacks", false);
         backAnimator.SetBool("Attacks", false);
+        frontAnimator.SetBool("Combo", false);
     }
 
     public void ParryAnimation()
@@ -177,6 +194,8 @@ public class PlayerAnimation : MonoBehaviour
 
     public void StartSwordMagic()
     {
+        weaponMagicSources += 1;
+        weaponMagicOn = true;
         frontSwordMagic.Play();
         backSwordMagic.Play();
         playerSound.Magic();
@@ -184,9 +203,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void EndSwordMagic()
     {
-        frontSwordMagic.Stop();
-        backSwordMagic.Stop();
-        playerSound.StopSoundEffect();
+        weaponMagicSources -= 1;
     }
 
     void FaceJoystick()

@@ -7,7 +7,9 @@ public class AttackProfiles : ScriptableObject
 {
     public int smearSpeed;
     public int halfConeAngle;
-    public float attackArcRadius;
+    public float attackRange;
     public int damageMultiplier;
+    public int magicDamageMultiplier;
     public int poiseDamageMultiplier;
+    public float staminaCost;
 }

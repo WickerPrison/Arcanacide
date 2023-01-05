@@ -6,10 +6,12 @@ using UnityEngine;
 public class PlayerAttackArc : AttackArcGenerator
 {
     PlayerController playerController;
+    GameManager gm;
 
     public override void Start()
     {
         base.Start();
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerController = GetComponentInParent<PlayerController>();
         coneRenderer.enabled = true;
     }
@@ -18,7 +20,8 @@ public class PlayerAttackArc : AttackArcGenerator
     {
         if (other.CompareTag("Enemy"))
         {
-            playerController.enemiesInRange.Add(other);
+            EnemyScript enemy = other.gameObject.GetComponent<EnemyScript>();
+            gm.enemiesInRange.Add(enemy);
         }
     }
 
@@ -26,7 +29,8 @@ public class PlayerAttackArc : AttackArcGenerator
     {
         if (other.CompareTag("Enemy"))
         {
-            playerController.enemiesInRange.Remove(other);
+            EnemyScript enemy = other.gameObject.GetComponent<EnemyScript>();
+            gm.enemiesInRange.Remove(enemy);
         }
     }
 
@@ -39,7 +43,7 @@ public class PlayerAttackArc : AttackArcGenerator
         viewMesh.name = "View Mesh";
         meshFilter.mesh = viewMesh;
         colliderMesh.sharedMesh = viewMesh;
-        radius = attackProfile.attackArcRadius;
+        radius = attackProfile.attackRange;
         CalculateAttackArc();
     }
 }

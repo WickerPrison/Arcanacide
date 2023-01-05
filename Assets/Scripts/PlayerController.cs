@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
-    [System.NonSerialized] public List<Collider> enemiesInRange = new List<Collider>();
     public float moveSpeed;
     public bool knockback = false;
 
@@ -207,7 +206,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerAnimation.attacking)
         {
-            playerAnimation.ChainAttacks();
+            playerAnimation.Combo();
         }
         else if (CanInput() && playerScript.stamina > 0)
         {
@@ -230,20 +229,18 @@ public class PlayerController : MonoBehaviour
         int attackPower;
         attackPower = playerData.AttackPower();
 
-        if (pathActive)
-        {
-            if (playerData.path == "Sword" || playerData.path == "Dying")
-            {
-                attackPower += playerData.PathDamage();
-            }
-        }
-
         if (playerData.equippedEmblems.Contains(emblemLibrary.quick_strikes))
         {
             attackPower = Mathf.RoundToInt(attackPower * 0.8f);
         }
 
         return attackPower;
+    }
+
+    public int MagicalDamage()
+    {
+        int magicalDamage = playerData.PathDamage();
+        return magicalDamage;
     }
 
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse

@@ -7,6 +7,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     //This is the only script that can be referenced directly by the player animations
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] ParticleSystem shoveVFX;
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
     Smear smear;
@@ -16,12 +17,13 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerSound playerSound;
     Animator frontAnimator;
     [SerializeField] Animator backAnimator;
-    float attackStaminaCost = 20f;
     PlayerAttackArc attackArc;
+    GameManager gm;
 
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerAnimation = GetComponentInParent<PlayerAnimation>();
         smear = transform.parent.GetComponentInChildren<Smear>();
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
@@ -39,16 +41,41 @@ public class PlayerAnimationEvents : MonoBehaviour
         stepWithAttack.Step();
         playerSound.SwordSwoosh();
         playerAnimation.parryWindow = false;
-        playerScript.LoseStamina(attackStaminaCost);
+        playerScript.LoseStamina(attackProfile.staminaCost);
         smear.particleSmear(attackProfile.smearSpeed);
         attackArc.ChangeArc(attackProfile);
-        EnemyScript enemyScript;
-        foreach(Collider enemy in playerController.enemiesInRange)
+
+        int attackDamage = playerController.AttackPower() * attackProfile.damageMultiplier;
+        if (playerController.pathActive)
         {
-            enemyScript = enemy.GetComponent<EnemyScript>();
+            if (playerData.path == "Sword" || playerData.path == "Dying")
+            {
+                attackDamage += playerData.PathDamage();
+            }
+        }
+        attackDamage += playerController.MagicalDamage() * attackProfile.magicDamageMultiplier;
+
+        foreach (EnemyScript enemy in gm.enemiesInRange)
+        {
             playerSound.SwordImpact();
             StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
-            enemyScript.LoseHealth(playerController.AttackPower() * attackProfile.damageMultiplier, playerController.AttackPower() * attackProfile.poiseDamageMultiplier);
+            enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
+        }
+    }
+
+    public void SwordHeavy(AttackProfiles attackProfile)
+    {
+        playerScript.LoseStamina(attackProfile.staminaCost);
+        shoveVFX.Play();
+        StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
+        foreach (EnemyScript enemy in gm.enemies)
+        {
+            if (Vector3.Distance(enemy.transform.position, transform.position) < attackProfile.attackRange)
+            {
+                enemy.LoseHealth(playerController.AttackPower() * attackProfile.damageMultiplier, playerController.AttackPower() * attackProfile.poiseDamageMultiplier);
+                EnemyController enemyController = enemy.gameObject.GetComponent<EnemyController>();
+                enemyController.StartStagger(0.5f);
+            }
         }
     }
 
@@ -106,6 +133,16 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerScript.shield = false;
         playerScript.parry = false;
         playerAnimation.EndBodyMagic();
+    }
+
+    public void StartSwordMagic()
+    {
+        playerAnimation.StartSwordMagic();
+    }
+
+    public void EndSwordMagic()
+    {
+        playerAnimation.EndSwordMagic();
     }
 
     public void Shove()

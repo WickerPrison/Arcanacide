@@ -135,6 +135,7 @@ public class EnemyScript : MonoBehaviour
             playerData.money += reward;
         }
         gm.enemies.Remove(this);
+        gm.enemiesInRange.Remove(this);
         if (enemyController.detectionTrigger)
         {
             gm.awareEnemies -= 1;
