@@ -45,7 +45,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         smear.particleSmear(attackProfile.smearSpeed);
         attackArc.ChangeArc(attackProfile);
 
-        int attackDamage = playerController.AttackPower() * attackProfile.damageMultiplier;
+        int attackDamage = Mathf.RoundToInt(playerController.AttackPower() * attackProfile.damageMultiplier);
         if (playerController.pathActive)
         {
             if (playerData.path == "Sword" || playerData.path == "Dying")
@@ -53,13 +53,14 @@ public class PlayerAnimationEvents : MonoBehaviour
                 attackDamage += playerData.PathDamage();
             }
         }
-        attackDamage += playerController.MagicalDamage() * attackProfile.magicDamageMultiplier;
+        attackDamage += Mathf.RoundToInt(playerController.MagicalDamage() * attackProfile.magicDamageMultiplier);
 
         foreach (EnemyScript enemy in gm.enemiesInRange)
         {
             playerSound.SwordImpact();
             StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
             enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
+            enemy.GainDOT(attackProfile.durationDOT);
         }
     }
 
@@ -72,7 +73,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             if (Vector3.Distance(enemy.transform.position, transform.position) < attackProfile.attackRange)
             {
-                enemy.LoseHealth(playerController.AttackPower() * attackProfile.damageMultiplier, playerController.AttackPower() * attackProfile.poiseDamageMultiplier);
+                enemy.LoseHealth(Mathf.RoundToInt(playerController.AttackPower() * attackProfile.damageMultiplier), playerController.AttackPower() * attackProfile.poiseDamageMultiplier);
                 EnemyController enemyController = enemy.gameObject.GetComponent<EnemyController>();
                 enemyController.StartStagger(0.5f);
             }

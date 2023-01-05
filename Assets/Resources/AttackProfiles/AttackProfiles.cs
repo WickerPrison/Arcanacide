@@ -8,8 +8,9 @@ public class AttackProfiles : ScriptableObject
     public int smearSpeed;
     public int halfConeAngle;
     public float attackRange;
-    public int damageMultiplier;
-    public int magicDamageMultiplier;
-    public int poiseDamageMultiplier;
+    public float damageMultiplier;
+    public float magicDamageMultiplier;
+    public float poiseDamageMultiplier;
     public float staminaCost;
+    public float durationDOT;
 }

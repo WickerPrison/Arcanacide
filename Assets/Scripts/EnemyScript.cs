@@ -24,7 +24,10 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float poiseRegeneration;
     [SerializeField] float staggerDuration;
     [SerializeField] ParticleSystem hitVFX;
+    [SerializeField] ParticleSystem dotVFX;
     public bool isDying = false;
+    float DOT = 0;
+    float damageDOT = 0;
 
     private void Awake()
     {
@@ -44,6 +47,44 @@ public class EnemyScript : MonoBehaviour
         gm.enemies.Add(this);
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (poise <= 0)
+        {
+            enemyController.StartStagger(staggerDuration);
+            poise = maxPoise;
+        }
+
+        if(poise < maxPoise)
+        {
+            poise += Time.deltaTime * poiseRegeneration;
+        }
+
+        if(health <= 0 && !isDying)
+        {
+            isDying = true;
+            dotVFX.Stop();
+            enemyController.StartDying();
+        }
+
+        if(DOT > 0 && !isDying)
+        {
+            DOT -= Time.deltaTime;
+            damageDOT += Time.deltaTime * playerData.dedication;
+            if(damageDOT >= 1)
+            {
+                LoseHealth(1, 0); ;
+                damageDOT -= 1;
+            }
+
+            if(DOT <= 0)
+            {
+                dotVFX.Stop();
+            }
+        }
+    }
+
     public void LoseHealth(int damage, float poiseDamage)
     {
         hitVFX.Play();
@@ -55,6 +96,15 @@ public class EnemyScript : MonoBehaviour
         LosePoise(poiseDamage);
         UpdateHealthbar();
         enemyController.OnHit();
+    }
+
+    public void GainDOT(float duration)
+    {
+        if(duration > 0)
+        {
+            DOT += duration;
+            dotVFX.Play();
+        }
     }
 
     public void GainHealth(int healAmount)
@@ -100,26 +150,6 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(poise <= 0)
-        {
-            enemyController.StartStagger(staggerDuration);
-            poise = maxPoise;
-        }
-
-        if(poise < maxPoise)
-        {
-            poise += Time.deltaTime * poiseRegeneration;
-        }
-
-        if(health <= 0 && !isDying)
-        {
-            isDying = true;
-            enemyController.StartDying();
-        }
-    }
 
     public void Death()
     {

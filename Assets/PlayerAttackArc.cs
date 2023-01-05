@@ -21,7 +21,10 @@ public class PlayerAttackArc : AttackArcGenerator
         if (other.CompareTag("Enemy"))
         {
             EnemyScript enemy = other.gameObject.GetComponent<EnemyScript>();
-            gm.enemiesInRange.Add(enemy);
+            if (!gm.enemiesInRange.Contains(enemy))
+            {
+                gm.enemiesInRange.Add(enemy);
+            }
         }
     }
 
