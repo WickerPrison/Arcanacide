@@ -114,7 +114,6 @@ public class EnemyScript : MonoBehaviour
         {
             health = maxHealth;
         }
-        Debug.Log(health);
         UpdateHealthbar();
     }
 
