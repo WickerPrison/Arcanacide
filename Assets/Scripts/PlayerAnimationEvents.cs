@@ -109,7 +109,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         foreach (EnemyScript enemy in gm.enemies)
         {
-            Debug.Log(Vector3.Distance(enemy.transform.position, transform.parent.position));
             if (Vector3.Distance(enemy.transform.position, transform.parent.position) < attackProfile.attackRange)
             {
                 AttackHitEachEnemy(enemy, attackDamage, attackProfile);
