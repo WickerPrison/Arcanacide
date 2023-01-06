@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: SwordCombo1
   m_EditorClassIdentifier: 
+  hitboxType: Arc
   smearSpeed: 0
   halfConeAngle: 35
   attackRange: 3
@@ -20,5 +21,10 @@ MonoBehaviour:
   poiseDamageMultiplier: 1
   staminaCost: 40
   durationDOT: 0
+  staggerDuration: 0.5
   screenShakeOnHit: {x: 0, y: 0}
   screenShakeNoHit: {x: 0.1, y: 0.1}
+  soundOnHit: {fileID: 8300000, guid: 0d0b4a1b4b49c5b448714ecd1447022b, type: 3}
+  soundOnHitVolume: 1
+  soundNoHit: {fileID: 8300000, guid: 29c3565d14e2e084bac2c66a2bbb9eac, type: 3}
+  soundNoHitVolume: 1

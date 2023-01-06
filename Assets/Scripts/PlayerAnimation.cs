@@ -175,6 +175,7 @@ public class PlayerAnimation : MonoBehaviour
         frontAnimator.SetBool("Attacks", false);
         backAnimator.SetBool("Attacks", false);
         frontAnimator.SetBool("Combo", false);
+        backAnimator.SetBool("Combo", false);
     }
 
     public void ParryAnimation()

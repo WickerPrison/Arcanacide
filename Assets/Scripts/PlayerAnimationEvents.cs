@@ -19,6 +19,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] Animator backAnimator;
     PlayerAttackArc attackArc;
     GameManager gm;
+    AudioSource SFX;
 
     // Start is called before the first frame update
     void Start()
@@ -33,17 +34,21 @@ public class PlayerAnimationEvents : MonoBehaviour
         frontAnimator = gameObject.GetComponent<Animator>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         attackArc = playerController.attackPoint.gameObject.GetComponent<PlayerAttackArc>();
+        SFX = transform.parent.GetComponentInChildren<AudioSource>();
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
     public void AttackHit(AttackProfiles attackProfile)
     {
         stepWithAttack.Step();
-        playerSound.SwordSwoosh();
+        if(attackProfile.soundNoHit != null)
+        {
+            SFX.PlayOneShot(attackProfile.soundNoHit, attackProfile.soundNoHitVolume);
+        }
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackProfile.staminaCost);
         smear.particleSmear(attackProfile.smearSpeed);
-        attackArc.ChangeArc(attackProfile);
+
 
         if(attackProfile.screenShakeNoHit != Vector2.zero)
         {
@@ -60,30 +65,54 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
         attackDamage += Mathf.RoundToInt(playerController.MagicalDamage() * attackProfile.magicDamageMultiplier);
 
-        foreach (EnemyScript enemy in gm.enemiesInRange)
+        switch (attackProfile.hitboxType)
         {
-            playerSound.SwordImpact();
-            if(attackProfile.screenShakeOnHit != Vector2.zero)
-            {
-                StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
-            }
-            enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
-            enemy.GainDOT(attackProfile.durationDOT);
+            case "Arc":
+                AttackArcHitbox(attackProfile, attackDamage);
+                break;
+            case "Circle":
+                CircleHitbox(attackProfile, attackDamage);
+                break;
         }
     }
 
-    public void SwordHeavy(AttackProfiles attackProfile)
+    void AttackHitEachEnemy(EnemyScript enemy, int attackDamage, AttackProfiles attackProfile)
     {
-        playerScript.LoseStamina(attackProfile.staminaCost);
-        shoveVFX.Play();
-        StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
+        if (attackProfile.soundOnHit != null)
+        {
+            SFX.PlayOneShot(attackProfile.soundOnHit, attackProfile.soundOnHitVolume);
+        }
+
+        if (attackProfile.screenShakeOnHit != Vector2.zero)
+        {
+            StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
+        }
+        enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
+        enemy.GainDOT(attackProfile.durationDOT);
+        if(attackProfile.staggerDuration > 0)
+        {
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            enemyController.StartStagger(attackProfile.staggerDuration);
+        }
+    }
+
+    void AttackArcHitbox(AttackProfiles attackProfile, int attackDamage)
+    {
+        attackArc.ChangeArc(attackProfile);
+        foreach (EnemyScript enemy in gm.enemiesInRange)
+        {
+            AttackHitEachEnemy(enemy, attackDamage, attackProfile);
+        }
+    }
+
+    void CircleHitbox(AttackProfiles attackProfile, int attackDamage)
+    {
         foreach (EnemyScript enemy in gm.enemies)
         {
-            if (Vector3.Distance(enemy.transform.position, transform.position) < attackProfile.attackRange)
+            Debug.Log(Vector3.Distance(enemy.transform.position, transform.parent.position));
+            if (Vector3.Distance(enemy.transform.position, transform.parent.position) < attackProfile.attackRange)
             {
-                enemy.LoseHealth(Mathf.RoundToInt(playerController.AttackPower() * attackProfile.damageMultiplier), playerController.AttackPower() * attackProfile.poiseDamageMultiplier);
-                EnemyController enemyController = enemy.gameObject.GetComponent<EnemyController>();
-                enemyController.StartStagger(0.5f);
+                AttackHitEachEnemy(enemy, attackDamage, attackProfile);
             }
         }
     }
@@ -156,7 +185,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void Shove()
     {
-        playerController.ShoveEffect();
+        shoveVFX.Play();
     }
 
     public void ParryWindow()

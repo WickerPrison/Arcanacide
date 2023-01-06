@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class AttackProfiles : ScriptableObject
 {
+    public string hitboxType;
+
     public int smearSpeed;
     public int halfConeAngle;
     public float attackRange;
@@ -14,6 +16,13 @@ public class AttackProfiles : ScriptableObject
     public float staminaCost;
 
     public float durationDOT;
+    public float staggerDuration;
+
     public Vector2 screenShakeOnHit;
     public Vector2 screenShakeNoHit;
+
+    public AudioClip soundOnHit;
+    public float soundOnHitVolume;
+    public AudioClip soundNoHit;
+    public float soundNoHitVolume;
 }

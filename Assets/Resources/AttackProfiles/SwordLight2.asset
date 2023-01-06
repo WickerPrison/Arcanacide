@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: SwordLight2
   m_EditorClassIdentifier: 
+  hitboxType: Arc
   smearSpeed: -5
   halfConeAngle: 45
   attackRange: 1.5
@@ -20,5 +21,10 @@ MonoBehaviour:
   poiseDamageMultiplier: 1
   staminaCost: 20
   durationDOT: 0
+  staggerDuration: 0
   screenShakeOnHit: {x: 0.1, y: 0.03}
   screenShakeNoHit: {x: 0, y: 0}
+  soundOnHit: {fileID: 8300000, guid: 0d0b4a1b4b49c5b448714ecd1447022b, type: 3}
+  soundOnHitVolume: 0.5
+  soundNoHit: {fileID: 8300000, guid: 084ddb136b4bce44698b009b414e93e7, type: 3}
+  soundNoHitVolume: 2
