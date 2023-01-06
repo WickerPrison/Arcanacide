@@ -155,6 +155,11 @@ public class PlayerScript : MonoBehaviour
             }
             staggerTimer += staggerDuration;
             isStaggered = true;
+            if (playerAnimation.animationSwordMagic)
+            {
+                playerAnimation.EndSwordMagic();
+                playerAnimation.animationSwordMagic = false;
+            }
             playerAnimation.PlayStagger();
         }
     }

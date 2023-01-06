@@ -174,11 +174,13 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void StartSwordMagic()
     {
+        playerAnimation.animationSwordMagic = true;
         playerAnimation.StartSwordMagic();
     }
 
     public void EndSwordMagic()
     {
+        playerAnimation.animationSwordMagic = false;
         playerAnimation.EndSwordMagic();
     }
 

@@ -19,6 +19,7 @@ public class PlayerAnimation : MonoBehaviour
     public bool continueBlocking;
     public bool parryWindow = false;
     public bool isParrying = false;
+    public bool animationSwordMagic = false;
     Smear smear;
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;

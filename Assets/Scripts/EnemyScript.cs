@@ -65,6 +65,7 @@ public class EnemyScript : MonoBehaviour
         {
             isDying = true;
             dotVFX.Stop();
+            dotVFX.Clear();
             enemyController.StartDying();
         }
 
