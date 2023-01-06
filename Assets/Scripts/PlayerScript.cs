@@ -193,16 +193,19 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(staminaDelay > 0)
+        if (!playerAnimation.attacking)
         {
-            staminaDelay -= Time.deltaTime;
-        }
-        else if(stamina < playerData.MaxStamina())
-        {
-            stamina += Time.deltaTime * staminaRate;
-            if(playerData.path == "Dying" && playerController.pathActive)
+            if(staminaDelay > 0)
+            {
+                staminaDelay -= Time.deltaTime;
+            }
+            else if(stamina < playerData.MaxStamina())
             {
                 stamina += Time.deltaTime * staminaRate;
+                if(playerData.path == "Dying" && playerController.pathActive)
+                {
+                    stamina += Time.deltaTime * staminaRate;
+                }
             }
         }
 

@@ -45,6 +45,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         smear.particleSmear(attackProfile.smearSpeed);
         attackArc.ChangeArc(attackProfile);
 
+        if(attackProfile.screenShakeNoHit != Vector2.zero)
+        {
+            StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeNoHit.x, attackProfile.screenShakeNoHit.y));
+        }
+
         int attackDamage = Mathf.RoundToInt(playerController.AttackPower() * attackProfile.damageMultiplier);
         if (playerController.pathActive)
         {
@@ -58,7 +63,10 @@ public class PlayerAnimationEvents : MonoBehaviour
         foreach (EnemyScript enemy in gm.enemiesInRange)
         {
             playerSound.SwordImpact();
-            StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
+            if(attackProfile.screenShakeOnHit != Vector2.zero)
+            {
+                StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
+            }
             enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
             enemy.GainDOT(attackProfile.durationDOT);
         }

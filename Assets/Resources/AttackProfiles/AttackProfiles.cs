@@ -12,5 +12,8 @@ public class AttackProfiles : ScriptableObject
     public float magicDamageMultiplier;
     public float poiseDamageMultiplier;
     public float staminaCost;
+
     public float durationDOT;
+    public Vector2 screenShakeOnHit;
+    public Vector2 screenShakeNoHit;
 }
