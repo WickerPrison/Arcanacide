@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathTrail : MonoBehaviour
 {
-    [SerializeField] PlayerData playerData;
+    [SerializeField] EmblemLibrary emblemLibrary;
     ParticleSystem VFX;
     AudioSource sfx;
     float duration = 3;
@@ -15,7 +15,7 @@ public class PathTrail : MonoBehaviour
     private void Start()
     {
         VFX = GetComponent<ParticleSystem>();
-        damagePerSecond = playerData.PathDamage();
+        damagePerSecond = emblemLibrary.ArcaneStepDamage();
         sfx = GetComponent<AudioSource>();
         sfx.time += Random.Range(0, 0.5f);
     }

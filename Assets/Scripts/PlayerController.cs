@@ -38,11 +38,12 @@ public class PlayerController : MonoBehaviour
     float lockOnDistance = 10;
     public bool preventInput = false;
 
-    public bool pathActive = false;
-    float swordMaxTime = 5;
-    float swordTimer;
-    float pathOfPathMaxTime = 0.03f;
-    float pathOfPathTimer;
+    float closeCallMaxTime = 5;
+    [System.NonSerialized] public float closeCallTimer;
+    float arcaneStepMaxTime = 0.03f;
+    float arcaneStepTimer;
+    bool arcaneStepActive = false;
+    [System.NonSerialized] public bool arcaneRemainsActive = false;
     [SerializeField] GameObject pathTrailPrefab;
 
     float totemManaCost = 25;
@@ -81,12 +82,11 @@ public class PlayerController : MonoBehaviour
 
         AttackPointPosition();
 
-        if (swordTimer > 0)
+        if (closeCallTimer > 0)
         {
-            swordTimer -= Time.deltaTime;
-            if (swordTimer <= 0)
+            closeCallTimer -= Time.deltaTime;
+            if (closeCallTimer <= 0)
             {
-                pathActive = false;
                 playerAnimation.EndSwordMagic();
             }
         }
@@ -237,12 +237,6 @@ public class PlayerController : MonoBehaviour
         return attackPower;
     }
 
-    public int MagicalDamage()
-    {
-        int magicalDamage = playerData.PathDamage();
-        return magicalDamage;
-    }
-
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
     void AttackPointPosition()
     {
@@ -380,15 +374,18 @@ public class PlayerController : MonoBehaviour
             //rb.velocity = Vector3.zero;
         }
 
-        if (playerData.path == "Path" && pathActive)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
         {
-            if (pathOfPathTimer < 0)
+            if (arcaneStepTimer < 0)
             {
-                PathOfThePath();
+                GameObject pathTrail;
+                pathTrail = Instantiate(pathTrailPrefab);
+                pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                arcaneStepTimer = arcaneStepMaxTime;
             }
             else
             {
-                pathOfPathTimer -= Time.deltaTime;
+                arcaneStepTimer -= Time.deltaTime;
             }
         }
     }
@@ -397,9 +394,13 @@ public class PlayerController : MonoBehaviour
     {
         //playerSound.PerfectDodge();
 
-        if (playerData.path == "Sword")
+        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call))
         {
-            PathOfTheSword();
+            if(closeCallTimer > 0)
+            {
+                playerAnimation.StartSwordMagic();
+            }
+            closeCallTimer = closeCallMaxTime;
         }
     }
 
@@ -411,49 +412,16 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector3.zero;
     }
 
-    void PathOfTheSword()
+    public void StartArcaneStep()
     {
-        pathActive = true;
-        swordTimer = swordMaxTime;
-        playerAnimation.StartSwordMagic();
+        arcaneStepActive = true;
+        arcaneStepTimer = arcaneStepMaxTime;
     }
 
-    public void PathOfTheDying()
+    public void EndArcaneStep()
     {
-        playerAnimation.StartSwordMagic();
-        pathActive = true;
-    }
-
-    public void EndPathOfTheDying()
-    {
-        playerAnimation.EndSwordMagic();
-        pathActive = false;
-    }
-
-    public void StartPathOfThePath()
-    {
-        if (playerData.path == "Path")
-        {
-            pathActive = true;
-            pathOfPathTimer = pathOfPathMaxTime;
-        }
-    }
-
-    void PathOfThePath()
-    {
-        GameObject pathTrail;
-        pathTrail = Instantiate(pathTrailPrefab);
-        pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        pathOfPathTimer = pathOfPathMaxTime;
-    }
-
-    public void EndPathOfThePath()
-    {
-        if (playerData.path == "Path")
-        {
-            pathActive = false;
-            pathOfPathTimer = 0;
-        }
+        arcaneStepActive = false;
+        arcaneStepTimer = 0;
     }
 
     void SetUpControls()

@@ -55,7 +55,7 @@ public class PlayerScript : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         sfx = GetComponentInChildren<PlayerSound>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-        if(playerData.path == "Path")
+        if(playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
             Physics.IgnoreLayerCollision(8, 6, true);
         }
@@ -207,10 +207,6 @@ public class PlayerScript : MonoBehaviour
             else if(stamina < playerData.MaxStamina())
             {
                 stamina += Time.deltaTime * staminaRate;
-                if(playerData.path == "Dying" && playerController.pathActive)
-                {
-                    stamina += Time.deltaTime * staminaRate;
-                }
             }
         }
 

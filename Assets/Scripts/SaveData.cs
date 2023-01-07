@@ -59,7 +59,6 @@ public class SaveData
         tutorials = playerData.tutorials;
         money = playerData.money;
         lostMoney = playerData.lostMoney;
-        path = playerData.path;
         strength = playerData.strength;
         dexterity = playerData.dexterity;
         vitality = playerData.vitality;

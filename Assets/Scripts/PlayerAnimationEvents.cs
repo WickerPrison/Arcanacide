@@ -56,14 +56,8 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
 
         int attackDamage = Mathf.RoundToInt(playerController.AttackPower() * attackProfile.damageMultiplier);
-        if (playerController.pathActive)
-        {
-            if (playerData.path == "Sword" || playerData.path == "Dying")
-            {
-                attackDamage += playerData.PathDamage();
-            }
-        }
-        attackDamage += Mathf.RoundToInt(playerController.MagicalDamage() * attackProfile.magicDamageMultiplier);
+        attackDamage = EmblemDamageModifiers(attackDamage);
+        attackDamage += Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
 
         switch (attackProfile.hitboxType)
         {
@@ -116,6 +110,20 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
     }
 
+    int EmblemDamageModifiers(int attackDamage)
+    {
+        if(playerData.equippedEmblems.Contains(emblemLibrary.close_call) && playerController.closeCallTimer > 0)
+        {
+            attackDamage += emblemLibrary.CloseCallDamage();
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && playerController.arcaneRemainsActive)
+        {
+            attackDamage += emblemLibrary.ArcaneRemainsDamage();
+        }
+        return attackDamage;
+    }
+
     public void AttackFalse()
     {
         playerAnimation.EndChain();
@@ -133,14 +141,20 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void StartIFrames()
     {
         playerController.gameObject.layer = 8;
-        playerController.StartPathOfThePath();
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
+        {
+            playerController.StartArcaneStep();
+        }
     }
 
     //Layer 3 is the player layer, it can collide with terrain, enemies, and enemy projectiles
     public void EndIFrames()
     {
         playerController.gameObject.layer = 3;
-        playerController.EndPathOfThePath();
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
+        {
+            playerController.EndArcaneStep();
+        }
     }
 
     public void StopInput()

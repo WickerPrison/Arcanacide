@@ -17,28 +17,28 @@ public class ChoosePathButtons : MonoBehaviour
     public void PathOfTheSword()
     {
         ButtonSound();
-        playerData.path = "Sword";
+        //playerData.path = "Sword";
         SceneManager.LoadScene("Tutorial1");
     }
 
     public void PathOfTheDying()
     {
         ButtonSound();
-        playerData.path = "Dying";
+        //playerData.path = "Dying";
         SceneManager.LoadScene("Tutorial1");
     }
 
     public void PathOfThePath()
     {
         ButtonSound();
-        playerData.path = "Path";
+        //playerData.path = "Path";
         SceneManager.LoadScene("Tutorial1");
     }
 
     public void PathOfThePathless()
     {
         ButtonSound();
-        playerData.path = "Pathless";
+        //playerData.path = "Pathless";
         SceneManager.LoadScene("Tutorial1");
     }
 

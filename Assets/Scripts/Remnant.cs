@@ -7,6 +7,7 @@ public class Remnant : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
     [SerializeField] GameObject message;
+    [SerializeField] EmblemLibrary emblemLibrary;
     Transform player;
     TutorialManager tutorialManager;
     InputManager im;
@@ -47,10 +48,12 @@ public class Remnant : MonoBehaviour
             playerData.money += playerData.lostMoney;
             playerData.lostMoney = 0;
             mapData.deathRoom = "none";
-            if (playerData.path == "Dying")
+            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
+                PlayerAnimation playerAnimation = player.gameObject.GetComponent<PlayerAnimation>();
+                playerAnimation.EndSwordMagic();
                 PlayerController playerController = player.gameObject.GetComponent<PlayerController>();
-                playerController.EndPathOfTheDying();
+                playerController.arcaneRemainsActive = true;
                 PlayerScript playerScript = player.gameObject.GetComponent<PlayerScript>();
                 playerScript.MaxHeal();
 
@@ -61,10 +64,12 @@ public class Remnant : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && playerData.path == "Dying")
+        if (other.CompareTag("Player") && playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
         {
-            PlayerController playerController = player.gameObject.GetComponent<PlayerController>();
-            playerController.PathOfTheDying();
+            PlayerAnimation playerAnimation = player.gameObject.GetComponent<PlayerAnimation>();
+            playerAnimation.StartSwordMagic();
+            PlayerController playerController = playerAnimation.gameObject.GetComponent<PlayerController>();
+            playerController.arcaneRemainsActive = true;
         }
 
         if (playerData.tutorials.Contains("Remnant") && other.CompareTag("Player"))
@@ -76,10 +81,12 @@ public class Remnant : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && playerData.path == "Dying")
+        if (other.CompareTag("Player") && playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
         {
-            PlayerController playerController = player.gameObject.GetComponent<PlayerController>();
-            playerController.EndPathOfTheDying();
+            PlayerAnimation playerAnimation = player.gameObject.GetComponent<PlayerAnimation>();
+            playerAnimation.EndSwordMagic();
+            PlayerController playerController = playerAnimation.gameObject.GetComponent<PlayerController>();
+            playerController.arcaneRemainsActive = false;
         }
     }
 

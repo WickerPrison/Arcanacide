@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour
             playerData.tutorials = data.tutorials;
             playerData.money = data.money;
             playerData.lostMoney = data.lostMoney;
-            playerData.path = data.path;
             playerData.strength = data.strength;
             playerData.dexterity = data.dexterity;
             playerData.vitality = data.vitality;

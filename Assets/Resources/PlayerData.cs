@@ -17,8 +17,6 @@ public class PlayerData : ScriptableObject
     public int money;
     public int lostMoney;
 
-    public string path;
-
     public int strength;
     public int dexterity;
     public int vitality;
@@ -51,24 +49,10 @@ public class PlayerData : ScriptableObject
         return attackPower;
     }
 
-    public int PathDamage()
+    public int ArcaneDamage()
     {
-        int pathDamage;
-        switch (path)
-        {
-            case "Sword":
-                pathDamage = 10 + 2 * dedication;
-                return pathDamage;
-            case "Dying":
-                pathDamage = 10 + 3 * dedication;
-                return pathDamage;
-            case "Path":
-                pathDamage = 2 + dedication;
-                return pathDamage;
-            default:
-                pathDamage = 0;
-                return pathDamage;
-        }
+        int pathDamage = 10 + 2 * dedication;
+        return pathDamage;
     }
 
     public int GetLevel()
