@@ -16932,7 +16932,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   dashTime: 0
   preventInput: 0
-  pathActive: 0
   pathTrailPrefab: {fileID: 4858251652121785841, guid: 1e836e9d474f207419a199a40ad04d17, type: 3}
   lookDir: {x: 0, y: 0}
 --- !u!114 &4614688894240553598
@@ -16956,6 +16955,7 @@ MonoBehaviour:
   continueBlocking: 0
   parryWindow: 0
   isParrying: 0
+  animationSwordMagic: 0
   frontAnimator: {fileID: 2878037202980228874}
   backAnimator: {fileID: 2743549938435777060}
   bodyMagic: {fileID: 7231501570776593843}
@@ -22097,6 +22097,134 @@ Transform:
   m_Father: {fileID: 4584580265328283669}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 3.485}
+--- !u!1 &5398125302561768390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3441475814659012090}
+  - component: {fileID: 3775135615419437746}
+  m_Layer: 3
+  m_Name: WeaponMagicSFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3441475814659012090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5398125302561768390}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 677686415837854654}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &3775135615419437746
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5398125302561768390}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 855cdc3f64af74c4e8f0d913828cc18a, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5527822905621090711
 GameObject:
   m_ObjectHideFlags: 0
@@ -32031,6 +32159,7 @@ Transform:
   - {fileID: 1109679084641101765}
   - {fileID: 3213238207931679366}
   - {fileID: 4198381081885296459}
+  - {fileID: 3441475814659012090}
   m_Father: {fileID: 4614688894240553596}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32208,6 +32337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5d5dae3b637aa42ad91e784422d45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponMagicSFX: {fileID: 3775135615419437746}
   soundEffects:
   - {fileID: 8300000, guid: 9c9fe3c027c2bec4fab432e5a2df986e, type: 3}
   - {fileID: 8300000, guid: 084ddb136b4bce44698b009b414e93e7, type: 3}

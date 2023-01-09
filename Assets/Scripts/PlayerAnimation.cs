@@ -100,7 +100,7 @@ public class PlayerAnimation : MonoBehaviour
             weaponMagicOn = false;
             frontSwordMagic.Stop();
             backSwordMagic.Stop();
-            playerSound.StopSoundEffect();
+            playerSound.StopWeaponMagic();
         }
     }
 

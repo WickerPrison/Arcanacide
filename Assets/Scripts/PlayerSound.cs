@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerSound : MonoBehaviour
 {
     AudioSource SFX;
+    [SerializeField] AudioSource weaponMagicSFX;
     [SerializeField] List<AudioClip> soundEffects = new List<AudioClip>();
 
     private void Start()
@@ -49,8 +50,12 @@ public class PlayerSound : MonoBehaviour
 
     public void Magic()
     {
-        SFX.clip = soundEffects[7];
-        SFX.Play();
+        weaponMagicSFX.Play();
+    }
+
+    public void StopWeaponMagic()
+    {
+        weaponMagicSFX.Stop();
     }
 
     public void PerfectDodge()
@@ -62,6 +67,7 @@ public class PlayerSound : MonoBehaviour
     {
         SFX.PlayOneShot(soundEffects[9], 1);
     }
+
     public void StopSoundEffect()
     {
         SFX.Stop();
