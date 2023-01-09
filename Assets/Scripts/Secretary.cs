@@ -10,6 +10,7 @@ public class Secretary : MonoBehaviour
     SoundManager sm;
     DialogueScript dialogue;
     int tracker = 0;
+    bool isColliding = false;
 
     string dialogue1 = "If you want to see the Boss you'll have to file a support ticket first. Let me check and see if there's one in the system.";
     string dialogue2 = "Hmmm....\nJust give me one second.";
@@ -26,6 +27,12 @@ public class Secretary : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isColliding)
+        {
+            return;
+        }
+
+        isColliding = true;
         if (!mapData.secretaryConvo)
         {
             dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
@@ -33,6 +40,11 @@ public class Secretary : MonoBehaviour
             dialogue.SetText(dialogue1);
             im.Dialogue();
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isColliding = false;
     }
 
     void Talk()

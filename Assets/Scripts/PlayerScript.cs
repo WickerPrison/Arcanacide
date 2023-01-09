@@ -59,6 +59,10 @@ public class PlayerScript : MonoBehaviour
         {
             Physics.IgnoreLayerCollision(8, 6, true);
         }
+        else
+        {
+            Physics.IgnoreLayerCollision(8, 6, false);
+        }
     }
 
     public void LoseHealth(int damage, EnemyScript attackingEnemy = null)

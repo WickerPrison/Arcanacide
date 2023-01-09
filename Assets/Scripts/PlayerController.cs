@@ -396,7 +396,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.close_call))
         {
-            if(closeCallTimer > 0)
+            if(closeCallTimer <= 0)
             {
                 playerAnimation.StartSwordMagic();
             }
