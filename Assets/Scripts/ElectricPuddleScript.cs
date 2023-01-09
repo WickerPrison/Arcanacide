@@ -8,17 +8,32 @@ public class ElectricPuddleScript : MonoBehaviour
     [SerializeField] int powerSwitchNumber;
     [SerializeField] List<Collider> colliders;
     [SerializeField] ParticleSystem particles;
+    bool switchFlipped = false;
 
     // Start is called before the first frame update
     void Start()
     {
         if (mapData.powerSwitchesFlipped.Contains(powerSwitchNumber))
         {
-            particles.Stop();
-            foreach(Collider collider in colliders)
-            {
-                collider.isTrigger = true;
-            }
+            FlipSwitch();
+        }
+    }
+
+    private void Update()
+    {
+        if (!switchFlipped && mapData.powerSwitchesFlipped.Contains(powerSwitchNumber))
+        {
+                FlipSwitch();
+        }
+    }
+
+    void FlipSwitch()
+    {
+        switchFlipped = true;
+        particles.Stop();
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = true;
         }
     }
 }

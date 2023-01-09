@@ -27,7 +27,7 @@ public class DoorSetup : MonoBehaviour
             direction = 1;
         }
 
-        openDoorMessage.localRotation = Quaternion.Euler(openDoorMessage.rotation.x, 45 * direction, openDoorMessage.rotation.z);
-        notOpenMessage.localRotation = Quaternion.Euler(notOpenMessage.localEulerAngles.x, 45 * direction, notOpenMessage.localEulerAngles.z);
+        openDoorMessage.localRotation = Quaternion.Euler(30, 45 * direction, openDoorMessage.rotation.z);
+        notOpenMessage.localRotation = Quaternion.Euler(30, 45 * direction, notOpenMessage.localEulerAngles.z);
     }
 }
