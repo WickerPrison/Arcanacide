@@ -86,6 +86,7 @@ public class OldManController : EnemyController
     void Charge()
     { 
         Vector3 playerDirection = playerController.transform.position - transform.position;
+        playerDirection.y = 0;
 
         chargePath.Clear();
         Vector3 footPosition = new Vector3(transform.position.x, 0, transform.position.z);
@@ -129,7 +130,7 @@ public class OldManController : EnemyController
     void LayChargeIndicator(Vector3 initialPosition, Vector3 direction, float chargeDistance, Vector3 previousNormal)
     {
         RaycastHit hit;
-        bool pathBlocked = Physics.Raycast(initialPosition, direction, out hit, chargeDistance, layerMask);
+        bool pathBlocked = Physics.Raycast(initialPosition, direction, out hit, chargeDistance, layerMask, QueryTriggerInteraction.Ignore);
 
         Vector3 finalPosition;
 

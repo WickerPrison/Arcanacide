@@ -42,7 +42,7 @@ public class FacePlayer : MonoBehaviour
         playerDirection = player.position - transform.position;
         playerDirection = new Vector3(playerDirection.x, 0, playerDirection.z);
         attackPoint.position = transform.position + playerDirection.normalized;
-        attackPoint.transform.rotation = Quaternion.LookRotation(playerDirection.normalized);
+        attackPoint.transform.localRotation = Quaternion.LookRotation(playerDirection.normalized);
     }
 
     public void FacePlayerSprite()

@@ -226,7 +226,7 @@ public class BossController : EnemyController
     {
         GameObject fireWave;
         fireWave = Instantiate(fireWavePrefab);
-        fireWave.transform.position = transform.position;
+        fireWave.transform.position = transform.position + new Vector3(0,0.8f,0);
         FireWave fireWaveScript;
         fireWaveScript = fireWave.GetComponent<FireWave>();
         fireWaveScript.target = playerController.transform.position;

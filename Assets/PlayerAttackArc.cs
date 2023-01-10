@@ -13,6 +13,7 @@ public class PlayerAttackArc : AttackArcGenerator
         base.Start();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerController = GetComponentInParent<PlayerController>();
+        coneRenderer.enabled = true;
     }
 
     public override void OnTriggerEnter(Collider other)
