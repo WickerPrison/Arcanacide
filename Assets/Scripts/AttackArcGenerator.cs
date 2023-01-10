@@ -34,9 +34,9 @@ public class AttackArcGenerator : MonoBehaviour
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         meshFilter.mesh = viewMesh;
-        colliderMesh.sharedMesh = viewMesh;
         arcPoints = halfConeAngle * 2;
         CalculateAttackArc();
+        colliderMesh.sharedMesh = viewMesh;
         coneRenderer.enabled = false;
     }
 
