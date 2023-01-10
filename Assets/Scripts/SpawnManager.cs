@@ -22,6 +22,6 @@ public class SpawnManager : MonoBehaviour
     public void SpawnPosition()
     {
         player.position = spawnPoints[mapData.doorNumber].position;
-        player.position = new Vector3(player.position.x, 1, player.position.z);
+        player.position = new Vector3(player.position.x, 0, player.position.z);
     } 
 }
