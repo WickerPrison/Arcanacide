@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AttackArcGenerator : MonoBehaviour
 {
     [SerializeField] Material whiteMaterial;
     [SerializeField] Material colorMaterial;
     [SerializeField] GameObject viewConeObject;
-    public MeshCollider colliderMesh;
     public int halfConeAngle;
     public float radius;
     [SerializeField] float yOffset;
@@ -23,6 +23,8 @@ public class AttackArcGenerator : MonoBehaviour
 
     [SerializeField] int testAngle;
 
+    LayerMask layerMask = ~0;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -36,7 +38,6 @@ public class AttackArcGenerator : MonoBehaviour
         meshFilter.mesh = viewMesh;
         arcPoints = halfConeAngle * 2;
         CalculateAttackArc();
-        colliderMesh.sharedMesh = viewMesh;
         coneRenderer.enabled = false;
     }
 
@@ -45,7 +46,7 @@ public class AttackArcGenerator : MonoBehaviour
         Vector3[] vertices = new Vector3[arcPoints + 3];
         int[] triangles = new int[(arcPoints + 3) * 3];
         vertices[0] = new Vector3(-0.3f, yOffset, -0.5f);
-        for (int i = 0; i <= arcPoints - 1; i++)
+        for (int i = 0; i <= arcPoints - 1 ; i++)
         {
             Vector3 nextPosition;
             nextPosition = FindNextPosition(i - halfConeAngle);
@@ -102,11 +103,11 @@ public class AttackArcGenerator : MonoBehaviour
         return nextPosition;
     }
 
-    public virtual void OnTriggerEnter(Collider other)
+    /*public virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            enemyController.canHitPlayer = true;
+            //enemyController.canHitPlayer = true;
         }
     }
 
@@ -114,7 +115,39 @@ public class AttackArcGenerator : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            enemyController.canHitPlayer = false;
+            //enemyController.canHitPlayer = false;
         }
+    }
+    */
+
+    public bool CanHitPlayer()
+    {
+        bool canHitPlayer = false;
+
+        for (int i = 0; i < arcPoints; i += 5)
+        {
+            float angle = i - halfConeAngle;
+            float angleToZero = Mathf.Acos(Vector3.Dot(Vector3.forward, transform.forward) / (Vector3.forward.magnitude * transform.forward.magnitude));
+            if (transform.forward.x >= 0)
+            {
+                angle += angleToZero * Mathf.Rad2Deg;
+            }
+            else
+            {
+                angle -= angleToZero * Mathf.Rad2Deg;
+            }
+            Vector3 direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), 0, Mathf.Cos(Mathf.Deg2Rad * angle));
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, direction.normalized, out hit, radius, layerMask, QueryTriggerInteraction.Ignore))
+            {
+                if (hit.collider.gameObject.CompareTag("Player"))
+                {
+                    canHitPlayer = true;
+                }
+            }
+            //Debug.DrawRay(transform.position, direction.normalized * radius, Color.red);
+        }
+
+        return canHitPlayer;
     }
 }

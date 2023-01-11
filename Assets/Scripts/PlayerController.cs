@@ -248,7 +248,7 @@ public class PlayerController : MonoBehaviour
         if (Gamepad.current == null)
         {
             mouseDirection = playerAnimation.mousePosition - playerAnimation.playerScreenPosition;
-            mouseDirection = new Vector3(mouseDirection.x, 0.5f, mouseDirection.y);
+            mouseDirection = new Vector3(mouseDirection.x, 0, mouseDirection.y);
             attackPoint.transform.position = transform.position + mouseDirection.normalized;
             attackPoint.transform.rotation = Quaternion.LookRotation(mouseDirection.normalized);
         }

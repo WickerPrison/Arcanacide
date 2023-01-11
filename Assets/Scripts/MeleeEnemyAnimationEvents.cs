@@ -43,6 +43,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
 
     public void AttackHit(int smearSpeed)
     {
+        enemyController.canHitPlayer = attackArc.CanHitPlayer();
         enemyController.AttackHit(smearSpeed);
     }
 

@@ -99,7 +99,7 @@ public class LightningThrower : EnemyController
 
     private void FixedUpdate()
     {
-        if (isShocking && canHitPlayer)
+        if (isShocking && attackArc.CanHitPlayer())
         {
             shockDamageBuildup += Time.fixedDeltaTime * lightningThrowerDamage;
             while (shockDamageBuildup > 1)

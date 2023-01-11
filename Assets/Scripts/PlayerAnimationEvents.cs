@@ -93,6 +93,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     void AttackArcHitbox(AttackProfiles attackProfile, int attackDamage)
     {
         attackArc.ChangeArc(attackProfile);
+        attackArc.GetEnemiesInRange();
         foreach (EnemyScript enemy in gm.enemiesInRange)
         {
             AttackHitEachEnemy(enemy, attackDamage, attackProfile);
