@@ -115,7 +115,6 @@ public class OldManController : EnemyController
             chargePath.RemoveAt(0);
             if(chargePath.Count == 0)
             {
-                attackPointCollider.enabled = true;
                 enemyCollider.isTrigger = false;
                 charging = false;
                 attacking = false;
