@@ -9,10 +9,16 @@ public class ElectricPuddleScript : MonoBehaviour
     [SerializeField] List<Collider> colliders;
     [SerializeField] ParticleSystem particles;
     bool switchFlipped = false;
+    PlayerScript playerScript;
+    Rigidbody playerRigidbody;
+    float staggerDuration = 1;
+    float staggerTimer;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerRigidbody = playerScript.gameObject.GetComponent<Rigidbody>();
         if (mapData.powerSwitchesFlipped.Contains(powerSwitchNumber))
         {
             FlipSwitch();
@@ -21,9 +27,15 @@ public class ElectricPuddleScript : MonoBehaviour
 
     private void Update()
     {
+        if(staggerTimer > 0)
+        {
+            staggerTimer -= Time.deltaTime;
+            playerRigidbody.velocity = Vector3.zero;
+        }
+
         if (!switchFlipped && mapData.powerSwitchesFlipped.Contains(powerSwitchNumber))
         {
-                FlipSwitch();
+            FlipSwitch();
         }
     }
 
@@ -34,6 +46,16 @@ public class ElectricPuddleScript : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             collider.isTrigger = true;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            playerScript.LoseHealth(25);
+            playerScript.StartStagger(staggerDuration);
+            staggerTimer = staggerDuration;
         }
     }
 }

@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public float closeCallTimer;
     float arcaneStepMaxTime = 0.03f;
     float arcaneStepTimer;
-    bool arcaneStepActive = false;
+    [System.NonSerialized] public bool arcaneStepActive = false;
     [System.NonSerialized] public bool arcaneRemainsActive = false;
     [SerializeField] GameObject pathTrailPrefab;
 

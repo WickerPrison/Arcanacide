@@ -164,6 +164,10 @@ public class PlayerScript : MonoBehaviour
                 playerAnimation.EndSwordMagic();
                 playerAnimation.animationSwordMagic = false;
             }
+            if (playerController.arcaneStepActive)
+            {
+                playerController.EndArcaneStep();
+            }
             playerAnimation.PlayStagger();
         }
     }

@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class PlayerAttackArc : AttackArcGenerator
     PlayerController playerController;
     GameManager gm;
     LayerMask enemiesLayerMask;
+    Vector3 forwardVector;
 
     public override void Start()
     {
@@ -16,6 +18,12 @@ public class PlayerAttackArc : AttackArcGenerator
         playerController = GetComponentInParent<PlayerController>();
         coneRenderer.enabled = true;
         enemiesLayerMask = LayerMask.GetMask("Enemy");
+        leftIndex = 6;
+        rightIndex = 6;
+        forwardVector = transform.forward;
+        angleForward = Vector3.Angle(forwardVector, vertices[0]);
+        angleLeftSide = Vector3.Angle(forwardVector, vertices[leftIndex] - vertices[0]);
+        angleRightSide = Vector3.Angle(forwardVector, vertices[arcPoints - rightIndex] - vertices[arcPoints]);
     }
 
     /*
@@ -56,6 +64,7 @@ public class PlayerAttackArc : AttackArcGenerator
     public void GetEnemiesInRange()
     {
         gm.enemiesInRange.Clear();
+        RaycastHit hit;
 
         for (int i = 0; i < arcPoints; i += 5)
         {
@@ -70,16 +79,46 @@ public class PlayerAttackArc : AttackArcGenerator
                 angle -= angleToZero * Mathf.Rad2Deg;
             }
             Vector3 direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), 0, Mathf.Cos(Mathf.Deg2Rad * angle));
-            RaycastHit hit;
+            //Debug.DrawRay(transform.position, direction.normalized * radius, Color.red);
             if (Physics.Raycast(transform.position, direction.normalized, out hit, radius, enemiesLayerMask, QueryTriggerInteraction.Ignore))
             {
-                EnemyScript enemyScript = hit.collider.gameObject.GetComponent<EnemyScript>();
-                if (!gm.enemiesInRange.Contains(enemyScript))
-                {
-                    gm.enemiesInRange.Add(enemyScript);
-                }
+                AddToEnemiesInRange(hit);
             }
-            Debug.DrawRay(transform.position, direction.normalized * radius, Color.red);
+        }
+
+        Vector3 baseDirection = Quaternion.AngleAxis(-angleForward, Vector3.up) * transform.forward;
+        float leftSideDistance = Vector3.Distance(vertices[0], vertices[leftIndex]);
+        Vector3 leftSideDirection = Quaternion.AngleAxis(-angleLeftSide, Vector3.up) * transform.forward;
+
+        //Debug.DrawRay(transform.position + baseDirection * vertices[0].magnitude, leftSideDirection.normalized * leftSideDistance, Color.red);
+        if(Physics.Raycast(transform.position + baseDirection * vertices[0].magnitude, leftSideDirection.normalized, out hit, leftSideDistance, enemiesLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            AddToEnemiesInRange(hit);
+        }
+
+        baseDirection = Quaternion.AngleAxis(angleForward, Vector3.up) * transform.forward;
+        float rightSideDistance = Vector3.Distance(vertices[arcPoints], vertices[arcPoints - rightIndex]);
+        Vector3 rightSideDirection = Quaternion.AngleAxis(angleRightSide, Vector3.up) * transform.forward;
+
+        //Debug.DrawRay(transform.position + baseDirection * vertices[arcPoints].magnitude, rightSideDirection.normalized * rightSideDistance, Color.red);
+        if(Physics.Raycast(transform.position + baseDirection * vertices[arcPoints].magnitude, rightSideDirection.normalized, out hit, rightSideDistance, enemiesLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            AddToEnemiesInRange(hit);
+        }
+
+        //Debug.DrawRay(transform.parent.position, transform.forward * radius, Color.red);
+        if(Physics.Raycast(transform.parent.position, transform.forward, out hit, radius, enemiesLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            AddToEnemiesInRange(hit);
         }
     } 
+
+    void AddToEnemiesInRange(RaycastHit hit)
+    {
+        EnemyScript enemyScript = hit.collider.gameObject.GetComponent<EnemyScript>();
+        if (!gm.enemiesInRange.Contains(enemyScript))
+        {
+            gm.enemiesInRange.Add(enemyScript);
+        }
+    }
 }

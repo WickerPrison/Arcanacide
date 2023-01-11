@@ -106,7 +106,6 @@ public class OldManController : EnemyController
 
     void Charging()
     {
-        attackPointCollider.enabled = false;
         Vector3 footPosition = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 chargeDirection = chargePath[0] - footPosition;
         transform.Translate(chargeDirection.normalized * Time.fixedDeltaTime * chargeSpeed);
