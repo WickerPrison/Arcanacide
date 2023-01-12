@@ -15,6 +15,8 @@ public class SwordSiteDirectory : MonoBehaviour
                 return "FireHub1";
             case 3:
                 return "FireHub2";
+            case 4: 
+                return "ElectricHub";
             default:
                 return "Error";
         }

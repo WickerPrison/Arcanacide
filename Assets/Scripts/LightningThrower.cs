@@ -80,6 +80,7 @@ public class LightningThrower : EnemyController
     {
         base.StartStagger(staggerDuration);
         attackArc.HideAttackArc();
+        SpecialAbilityOff();
     }
 
     public override void SpecialAbility()

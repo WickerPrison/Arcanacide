@@ -24,6 +24,7 @@ public class ElectricMageController : EnemyController
     int strafeLeftOrRight = 1;
     float strafeTimer;
     bool hasSurrendered = false;
+    bool isDying = false;
 
     public override void Start()
     {
@@ -88,6 +89,11 @@ public class ElectricMageController : EnemyController
 
     private void FixedUpdate()
     {
+        if (isDying)
+        {
+            return;
+        }
+
         if(target != null)
         {
             facePlayer.player = target.transform;
@@ -198,6 +204,8 @@ public class ElectricMageController : EnemyController
     public override void StartDying()
     {
         BoltAway();
+        target.isShielded = false;
+        isDying = true;
         boltCD = 10000;
         if (hasSurrendered)
         {
