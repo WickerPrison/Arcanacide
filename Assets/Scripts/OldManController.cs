@@ -101,7 +101,8 @@ public class OldManController : EnemyController
         charging = true;
         frontAnimator.SetBool("Charging", true);
         backAnimator.SetBool("Charging", true);
-        enemyCollider.isTrigger = true;        
+        enemyCollider.isTrigger = true;
+        navAgent.enabled = false;
     }
 
     void Charging()
@@ -116,6 +117,7 @@ public class OldManController : EnemyController
             if(chargePath.Count == 0)
             {
                 enemyCollider.isTrigger = false;
+                navAgent.enabled = true;
                 charging = false;
                 attacking = false;
                 frontAnimator.SetBool("Charging", false);

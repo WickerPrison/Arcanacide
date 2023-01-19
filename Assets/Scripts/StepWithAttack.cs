@@ -7,16 +7,23 @@ public class StepWithAttack : MonoBehaviour
     [SerializeField] Transform attackPoint;
     Rigidbody rb;
     Vector3 stepDirection;
+    float raycastDistance;
+    float moveSpeed = 5;
+    LayerMask mask = ~0;
+    float maxStepTimer = 0.15f;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        CapsuleCollider myCollider = GetComponent<CapsuleCollider>();
+        raycastDistance = myCollider.radius + moveSpeed * maxStepTimer + 0.1f;
     }
+
 
     public void Step()
     {
         stepDirection = Vector3.Normalize(attackPoint.position - transform.position);
-        if (!Physics.Raycast(transform.position, stepDirection.normalized, 1))
+        if(!Physics.Raycast(transform.position, stepDirection,raycastDistance, mask, QueryTriggerInteraction.Ignore))
         {
             StartCoroutine(StepCoroutine());
         }
@@ -24,15 +31,15 @@ public class StepWithAttack : MonoBehaviour
 
     IEnumerator StepCoroutine()
     {
-        float moveSpeed = 500;
-        float stepTimer = 0.15f;
+        moveSpeed = 5;
+        float stepTimer = maxStepTimer;
         
 
         while (stepTimer > 0)
         {
             stepTimer -= Time.fixedDeltaTime;
             //rb.velocity = new Vector3(stepDirection.x * Time.fixedDeltaTime * moveSpeed, 0, stepDirection.z * Time.fixedDeltaTime * moveSpeed);
-            rb.MovePosition(transform.position + stepDirection.normalized * Time.fixedDeltaTime * moveSpeed / 100);
+            rb.MovePosition(transform.position + stepDirection.normalized * Time.fixedDeltaTime * moveSpeed);
             yield return new WaitForFixedUpdate();
         }
 

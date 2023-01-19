@@ -41,6 +41,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void AttackHit(AttackProfiles attackProfile)
     {
         stepWithAttack.Step();
+
         if(attackProfile.soundNoHit != null)
         {
             SFX.PlayOneShot(attackProfile.soundNoHit, attackProfile.soundNoHitVolume);
@@ -98,6 +99,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             AttackHitEachEnemy(enemy, attackDamage, attackProfile);
         }
+
+        if(gm.enemiesInRange.Count > 0)
+        {
+            stepWithAttack.Step();
+        }
     }
 
     void CircleHitbox(AttackProfiles attackProfile, int attackDamage)
@@ -135,6 +141,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation.attacking = false;
         frontAnimator.speed = 1;
         backAnimator.speed = 1;
+        playerController.lockPosition = false;
     }
 
     //Layer 8 is the IFrame layer. It cannot collide with the enemy projectile layer, but otherwise 
@@ -156,6 +163,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             playerController.EndArcaneStep();
         }
+    }
+
+    public void LockPosition()
+    {
+        playerController.lockPosition = true;
     }
 
     public void StopInput()

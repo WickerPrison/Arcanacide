@@ -57,6 +57,10 @@ public class ElectricMageController : EnemyController
 
     public override void EnemyAI()
     {
+        if (hasSurrendered)
+        {
+            detectionTrigger = true;
+        }
         base.EnemyAI();
 
         if (hasSeenPlayer && !hasSurrendered)
@@ -141,7 +145,6 @@ public class ElectricMageController : EnemyController
         hasSurrendered = true;
         detectionTrigger = false;
         gm.awareEnemies -= 1;
-     
         frontAnimator.Play("Surrender");
         backAnimator.Play("Surrender");
     }
@@ -204,7 +207,10 @@ public class ElectricMageController : EnemyController
     public override void StartDying()
     {
         BoltAway();
-        target.isShielded = false;
+        if(target != null)
+        {
+            target.isShielded = false;
+        }
         isDying = true;
         boltCD = 10000;
         if (hasSurrendered)

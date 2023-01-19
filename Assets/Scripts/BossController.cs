@@ -44,6 +44,7 @@ public class BossController : EnemyController
     float fireRingPoiseDamage = 150;
     float fireRingRadius = 3.5f;
     [System.NonSerialized] public bool hasSurrendered = false;
+    Vector3 attackOffset = new Vector3(0, 0.8f, 0);
 
     public override void Start()
     {
@@ -213,7 +214,7 @@ public class BossController : EnemyController
         int yDir = Random.Range(1, 3);
         float xPos = Random.Range(bonfireMinSummonRadius, bonfireSummonRadius);
         float zPos = Random.Range(bonfireMinSummonRadius, bonfireSummonRadius);
-        Vector3 startPos = playerController.transform.position + new Vector3(xPos * Mathf.Pow(-1, xDir), -1, zPos * Mathf.Pow(-1, yDir));
+        Vector3 startPos = playerController.transform.position + new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
         NavMeshHit hit;
         NavMesh.SamplePosition(startPos, out hit, bonfireSummonRadius + 1, NavMesh.AllAreas);
         GameObject bonfire = Instantiate(bonfirePrefab);
@@ -226,10 +227,10 @@ public class BossController : EnemyController
     {
         GameObject fireWave;
         fireWave = Instantiate(fireWavePrefab);
-        fireWave.transform.position = transform.position + new Vector3(0,0.8f,0);
+        fireWave.transform.position = transform.position + attackOffset;
         FireWave fireWaveScript;
         fireWaveScript = fireWave.GetComponent<FireWave>();
-        fireWaveScript.target = playerController.transform.position;
+        fireWaveScript.target = playerController.transform.position + attackOffset;
         fireWaveScript.enemyOfOrigin = enemyScript;
     }
 

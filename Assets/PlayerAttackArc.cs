@@ -16,7 +16,7 @@ public class PlayerAttackArc : AttackArcGenerator
         base.Start();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerController = GetComponentInParent<PlayerController>();
-        coneRenderer.enabled = true;
+        //coneRenderer.enabled = true;
         enemiesLayerMask = LayerMask.GetMask("Enemy");
         leftIndex = 6;
         rightIndex = 6;

@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     float dashStaminaCost = 30f;
     float lockOnDistance = 10;
     public bool preventInput = false;
+    [System.NonSerialized] public bool lockPosition = false;
 
     float closeCallMaxTime = 5;
     [System.NonSerialized] public float closeCallTimer;
@@ -94,6 +95,11 @@ public class PlayerController : MonoBehaviour
         if (totemCooldown > 0)
         {
             totemCooldown -= Time.deltaTime;
+        }
+
+        if (lockPosition)
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 

@@ -7,10 +7,12 @@ public class HomingProjectile : Projectile
 {
     public Transform target;
     public float turnAngle;
+    Vector3 attackOffset = new Vector3(0, 0.8f, 0);
 
     public override void FixedUpdate()
     {
-        Vector3 rayDirection = transform.position - target.position;
+        Vector3 targetPosition = target.position + attackOffset;
+        Vector3 rayDirection = transform.position - targetPosition;
         float angleToTarget = Mathf.Acos(Vector3.Dot(-rayDirection, transform.forward) / (rayDirection.magnitude * transform.forward.magnitude));
         angleToTarget *= Mathf.Rad2Deg;
         if(angleToTarget <= turnAngle * Time.fixedDeltaTime)
@@ -19,7 +21,7 @@ public class HomingProjectile : Projectile
         }
         else
         {
-            Vector3 rotateDirection = Vector3.RotateTowards(transform.forward, target.position - transform.position, turnAngle * Mathf.Deg2Rad * Time.fixedDeltaTime, 0);
+            Vector3 rotateDirection = Vector3.RotateTowards(transform.forward, targetPosition - transform.position, turnAngle * Mathf.Deg2Rad * Time.fixedDeltaTime, 0);
             transform.rotation = Quaternion.LookRotation(rotateDirection);
         }
 

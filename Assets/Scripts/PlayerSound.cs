@@ -48,7 +48,7 @@ public class PlayerSound : MonoBehaviour
         SFX.PlayOneShot(soundEffects[6], 0.6f);
     }
 
-    public void Magic()
+    public void WeaponMagic()
     {
         weaponMagicSFX.Play();
     }

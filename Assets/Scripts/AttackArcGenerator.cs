@@ -133,6 +133,14 @@ public class AttackArcGenerator : MonoBehaviour
     {
         RaycastHit hit;
 
+        if(Physics.Raycast(transform.parent.position, transform.forward, out hit, radius, layerMask, QueryTriggerInteraction.Ignore))
+        {
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+
         for (int i = 0; i < arcPoints; i += 5)
         {
             float angle = i - halfConeAngle;

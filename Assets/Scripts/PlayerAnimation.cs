@@ -187,13 +187,11 @@ public class PlayerAnimation : MonoBehaviour
     public void StartBodyMagic()
     {
         bodyMagic.Play();
-        playerSound.Magic();
     }
 
     public void EndBodyMagic()
     {
         bodyMagic.Stop();
-        playerSound.StopSoundEffect();
     }
 
     public void StartSwordMagic()
@@ -202,7 +200,7 @@ public class PlayerAnimation : MonoBehaviour
         weaponMagicOn = true;
         frontSwordMagic.Play();
         backSwordMagic.Play();
-        playerSound.Magic();
+        playerSound.WeaponMagic();
     }
 
     public void EndSwordMagic()
