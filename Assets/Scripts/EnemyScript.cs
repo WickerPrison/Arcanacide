@@ -96,7 +96,6 @@ public class EnemyScript : MonoBehaviour
         }
         LosePoise(poiseDamage);
         UpdateHealthbar();
-        enemyController.OnHit();
     }
 
     public void GainDOT(float duration)
@@ -124,6 +123,7 @@ public class EnemyScript : MonoBehaviour
         {
             return;
         }
+        enemyController.OnHit();
 
         if (!enemyController.attacking && !isDying)
         {
