@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class ElectricMageController : EnemyController
 {
-    [SerializeField] GameObject LightningBoltPrefab;
+    [SerializeField] GameObject boltsPrefab;
     [SerializeField] Transform frontLightningOrigin;
     [SerializeField] Transform backLightningOrigin;
     FacePlayer facePlayer;
-    List<LightningBolt> lightningBolts = new List<LightningBolt>();
+    Bolts lightningBolts;
     List<ElectricAlly> otherEnemies = new List<ElectricAlly>();
     ElectricAlly target = null;
     Vector3 away = new Vector3(100, 100, 100);
@@ -30,11 +30,7 @@ public class ElectricMageController : EnemyController
     {
         base.Start();
         facePlayer = GetComponent<FacePlayer>();
-        for(int i = 0; i < 3; i++)
-        {
-            lightningBolts.Add(Instantiate(LightningBoltPrefab).GetComponent<LightningBolt>());
-            lightningBolts[i].frameCounter = i;
-        }
+        lightningBolts = Instantiate(boltsPrefab).GetComponent<Bolts>();
         BoltAway();
 
         CreateOtherEnemies();
@@ -101,16 +97,13 @@ public class ElectricMageController : EnemyController
         if(target != null)
         {
             facePlayer.player = target.transform;
-            foreach(LightningBolt bolt in lightningBolts)
+            if (facingFront)
             {
-                if (facingFront)
-                {
-                    bolt.SetPositions(frontLightningOrigin.position, target.lightningDestination.position);
-                }
-                else
-                {
-                    bolt.SetPositions(backLightningOrigin.position, target.lightningDestination.position);
-                }
+                lightningBolts.SetPositions(frontLightningOrigin.position, target.lightningDestination.position);
+            }
+            else
+            {
+                lightningBolts.SetPositions(backLightningOrigin.position, target.lightningDestination.position);
             }
 
             BoltDamage();
@@ -151,10 +144,7 @@ public class ElectricMageController : EnemyController
 
     void BoltAway()
     {
-        foreach(LightningBolt bolt in lightningBolts)
-        {
-            bolt.SetPositions(away, away);
-        }
+        lightningBolts.SetPositions(away, away);   
     }
 
     void CreateOtherEnemies()
