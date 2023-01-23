@@ -8,6 +8,7 @@ public class LightningOrbController : EnemyController
     [SerializeField] GameObject lightningExplosion;
     [SerializeField] ParticleSystem lightning;
     [SerializeField] ParticleSystem attack;
+    [SerializeField] float selfDestructTime;
     ElectricAlly allyScript;
     Vector3 playerDirection;
     float playerDistance;
@@ -39,7 +40,8 @@ public class LightningOrbController : EnemyController
             if(attackTime <= 0 && playerDistance <= attackRange)
             {
                 attackTime = attackMaxTime;
-                StartCoroutine(AttackCouroutine());
+                StartCoroutine(SelfDestructCoroutine());
+                //StartCoroutine(AttackCoroutine());
             }
 
             TowardsPlayer();
@@ -51,7 +53,7 @@ public class LightningOrbController : EnemyController
         }
     }
 
-    IEnumerator AttackCouroutine()
+    IEnumerator AttackCoroutine()
     {
         lightning.Stop();
         yield return new WaitForSeconds(1);
@@ -59,6 +61,13 @@ public class LightningOrbController : EnemyController
         attack.Play();
         yield return new WaitForSeconds(.5f);
         lightning.Play();
+    }
+
+    IEnumerator SelfDestructCoroutine()
+    {
+        lightning.Stop();
+        yield return new WaitForSeconds(selfDestructTime);
+        SelfDestruct();
     }
 
     void Attack()
@@ -79,9 +88,26 @@ public class LightningOrbController : EnemyController
 
     public override void StartDying()
     {
+        SelfDestruct();
+
+        /*
         enemyScript.Death();
         GameObject explosion = Instantiate(lightningExplosion);
         explosion.transform.position = transform.position + Vector3.up * 1.5f;
+        */
+    }
+
+    void SelfDestruct()
+    {
+        GameObject explosion = Instantiate(lightningExplosion);
+        explosion.transform.position = transform.position + Vector3.up * 1.5f;
+        if (playerDistance <= attackRange)
+        {
+            playerScript.LoseHealth(spellAttackDamage);
+            playerScript.LosePoise(spellAttackPoiseDamage);
+        }
+
+        enemyScript.Death();
     }
 
     public override void StartStagger(float staggerDuration)

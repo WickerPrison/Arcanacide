@@ -137,37 +137,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ed56fae5a67884ab1c359836359fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gm: {fileID: 0}
-  smearScript: {fileID: 0}
-  enemyScript: {fileID: 0}
-  enemySound: {fileID: 0}
-  playerController: {fileID: 0}
-  playerScript: {fileID: 0}
-  playerAnimation: {fileID: 0}
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
   navAgent: {fileID: -6104532893862982024}
-  hasSeenPlayer: 0
-  attackMaxTime: 3
-  attackTime: 0
+  attackMaxTime: 0
   detectRange: 100
   attackRange: 3
-  attacking: 0
   projectilePrefab: {fileID: 0}
-  detectionTrigger: 0
-  directionLock: 0
-  parryWindow: 0
-  isParrying: 0
-  spellAttackDamage: 15
-  spellAttackPoiseDamage: 1
+  spellAttackDamage: 30
+  spellAttackPoiseDamage: 50
   hitDamage: 0
   hitPoiseDamage: 0
-  facingFront: 0
-  isStaggered: 0
-  canHitPlayer: 0
   lightningExplosion: {fileID: 3284791711765906126, guid: 4d5bd7b8dac83504ab22c5a5d3758717, type: 3}
   lightning: {fileID: 3049108788982477052}
   attack: {fileID: 5918047746592107296}
+  selfDestructTime: 0.4
 --- !u!114 &961816689155818981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10062,7 +10046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5256884818311308986
 Transform:
   m_ObjectHideFlags: 0

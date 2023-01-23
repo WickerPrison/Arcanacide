@@ -9,37 +9,37 @@ public class EnemyController : MonoBehaviour
     //This script controls the actions of the enemy units. It will likely be inherited by all enemy types
 
     GameObject player;
-    public GameManager gm;
-    public Smear smearScript;
-    public EnemyScript enemyScript;
-    public EnemySound enemySound;
-    public PlayerController playerController;
-    public PlayerScript playerScript;
-    public PlayerAnimation playerAnimation;
+    [System.NonSerialized] public GameManager gm;
+    [System.NonSerialized] public Smear smearScript;
+    [System.NonSerialized] public EnemyScript enemyScript;
+    [System.NonSerialized] public EnemySound enemySound;
+    [System.NonSerialized] public PlayerController playerController;
+    [System.NonSerialized] public PlayerScript playerScript;
+    [System.NonSerialized] public PlayerAnimation playerAnimation;
     public Animator frontAnimator;
     public Animator backAnimator;
     public NavMeshAgent navAgent;
-    public bool hasSeenPlayer = false;
+    [System.NonSerialized] public bool hasSeenPlayer = false;
     public float attackMaxTime = 2;
-    public float attackTime;
+    [System.NonSerialized] public float attackTime;
     public float detectRange = 10f;
     public float attackRange;
-    public bool attacking = false;
+    [System.NonSerialized] public bool attacking = false;
     public GameObject projectilePrefab;
-    public bool detectionTrigger = false;
-    public bool directionLock = false;
-    public bool parryWindow = false;
-    public bool isParrying = false;
+    [System.NonSerialized] public bool detectionTrigger = false;
+    [System.NonSerialized] public bool directionLock = false;
+    [System.NonSerialized] public bool parryWindow = false;
+    [System.NonSerialized] public bool isParrying = false;
     public int spellAttackDamage = 15;
     public int spellAttackPoiseDamage = 15;
     public int hitDamage;
     public float hitPoiseDamage;
-    public bool facingFront;
+    [System.NonSerialized] public bool facingFront;
     float staggerTimer = 0;
-    public bool isStaggered = false;
+    [System.NonSerialized] public bool isStaggered = false;
     [System.NonSerialized] public bool isDisabled;
 
-    public bool canHitPlayer = false;
+    [System.NonSerialized] public bool canHitPlayer = false;
 
     float startDelay;
 
