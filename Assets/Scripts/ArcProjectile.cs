@@ -10,7 +10,8 @@ public class ArcProjectile : MonoBehaviour
     TouchingCollider touchingCircle;
     [SerializeField] float explosionRadius;
     public Vector3 direction;
-    [SerializeField] float speed;
+    [SerializeField] float timeToHit;
+    float speed;
     [SerializeField] int spellDamage;
     [SerializeField] int poiseDamage;
     PlayerScript player;
@@ -32,6 +33,8 @@ public class ArcProjectile : MonoBehaviour
         startPoint = transform.position;
         direction = new Vector3(endPoint.x, 0, endPoint.z) - new Vector3(startPoint.x, 0, startPoint.z);
         float distance = Vector2.Distance(new Vector2(startPoint.x, startPoint.z), new Vector2(endPoint.x, endPoint.z));
+
+        speed = distance / timeToHit;
 
         midpoint = distance / 2;
         arcWidth = arcHeight / Mathf.Pow(midpoint, 2);
