@@ -1,54 +1,43 @@
+using Mono.Cecil;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class ElectricMageController : EnemyController
 {
-    [SerializeField] GameObject boltsPrefab;
+    public GameObject boltsPrefab;
     [SerializeField] Transform frontLightningOrigin;
     [SerializeField] Transform backLightningOrigin;
-    FacePlayer facePlayer;
-    Bolts lightningBolts;
-    List<ElectricAlly> otherEnemies = new List<ElectricAlly>();
-    ElectricAlly target = null;
+    [System.NonSerialized] public List<ChainLightningLink> chainLightningLinks = new List<ChainLightningLink>();
+    [System.NonSerialized] public List<ChainLightningLink> notElectrifiedLinks = new List<ChainLightningLink>();
+    List<ChainLightningLink> nearbyLinks = new List<ChainLightningLink>();
+    [SerializeField] float meshRadius;
+    List<Bolts> chainLightning = new List<Bolts>();
     Vector3 away = new Vector3(100, 100, 100);
-    int shieldDamage = 50;
-    float shieldPoiseDamage = 70;
-    LayerMask layerMask;
+    [System.NonSerialized] public LayerMask layerMask;
     float boltCD = 0;
-    float boltMaxCD = 1;
-    int boltDamage = 20;
-    float boltPoiseDamage = 40;
-    float strafeSpeed = 3;
-    int strafeLeftOrRight = 1;
-    float strafeTimer;
+    [System.NonSerialized] public float boltMaxCD = 0.1f;
+    [System.NonSerialized] public int boltDamage = 2;
+    [System.NonSerialized] public float boltPoiseDamage = 4;
     bool hasSurrendered = false;
     bool isDying = false;
+    ChainLightningLink closestLink;
+    bool moving = false;
+    bool getNewPoint = true;
 
     public override void Start()
     {
         base.Start();
-        facePlayer = GetComponent<FacePlayer>();
-        lightningBolts = Instantiate(boltsPrefab).GetComponent<Bolts>();
+        for(int i = 0; i < 3; i++)
+        {
+            Bolts bolts = Instantiate(boltsPrefab).GetComponent<Bolts>();
+            chainLightning.Add(bolts);
+        }
         BoltAway();
 
-        CreateOtherEnemies();
-        foreach(ElectricAlly enemy in otherEnemies)
-        {
-            enemy.damage = shieldDamage;
-            enemy.poiseDamage = shieldPoiseDamage;
-        }
-
         layerMask = LayerMask.GetMask("Player");
-
-        int plusOrMinus = Random.Range(0, 2);
-        if(plusOrMinus == 0)
-        {
-            strafeLeftOrRight *= -1;
-        }
-
-        strafeTimer = Random.Range(2f, 10f);
     }
 
     public override void EnemyAI()
@@ -63,27 +52,7 @@ public class ElectricMageController : EnemyController
         {
             frontAnimator.SetBool("hasSeenPlayer", true);
             backAnimator.SetBool("hasSeenPlayer", true);
-            CreateOtherEnemies();
-
-            if (otherEnemies.Count > 0)
-            {
-                target = otherEnemies[0];
-                foreach(ElectricAlly enemy in otherEnemies)
-                {
-                    enemy.isShielded = false;
-                    if(enemy.priorityValue > target.priorityValue)
-                    {
-                        target = enemy;
-                    }
-                }
-                target.isShielded = true;
-                MovementAI();
-            }
-            else
-            {
-                BoltAway();
-                Surrender();
-            }
+            MovementAI();
         }
     }
 
@@ -94,25 +63,54 @@ public class ElectricMageController : EnemyController
             return;
         }
 
-        if(target != null)
+        ChainLightning();
+        BoltDamage();
+    }
+
+    void ChainLightning()
+    {
+        notElectrifiedLinks.Clear();
+        notElectrifiedLinks = new List<ChainLightningLink>(chainLightningLinks);
+        nearbyLinks.Clear();
+        nearbyLinks = new List<ChainLightningLink>(chainLightningLinks);
+        for(int i = 0; i < 3; i++)
         {
-            facePlayer.player = target.transform;
-            if (facingFront)
+            float distance = 10;
+            foreach(ChainLightningLink link in nearbyLinks)
             {
-                lightningBolts.SetPositions(frontLightningOrigin.position, target.lightningDestination.position);
+                float linkDistance = Vector3.Distance(link.transform.position, transform.position);
+                if (linkDistance < distance)
+                {
+                    distance = linkDistance;
+                    closestLink = link;
+                }
+            }
+
+            if(distance < 10)
+            {
+                nearbyLinks.Remove(closestLink);
+                if (notElectrifiedLinks.Contains(closestLink))
+                {
+                    notElectrifiedLinks.Remove(closestLink);
+                    closestLink.ChainLightning();
+                }
+
+                if (facingFront)
+                {
+                    chainLightning[i].SetPositions(frontLightningOrigin.position, closestLink.transform.position);
+                }
+                else
+                {
+                    chainLightning[i].SetPositions(backLightningOrigin.position, closestLink.transform.position);
+                }
             }
             else
             {
-                lightningBolts.SetPositions(backLightningOrigin.position, target.lightningDestination.position);
+                chainLightning[i].SetPositions(away, away);
             }
-
-            BoltDamage();
-        }
-        else
-        {
-            facePlayer.player = playerController.transform;
         }
     }
+
 
     void BoltDamage()
     {
@@ -122,9 +120,17 @@ public class ElectricMageController : EnemyController
             return;
         }
 
-        Vector3 direction = target.transform.position - transform.position;
-        float distance = Vector3.Distance(target.transform.position, transform.position);
-        bool playerHit = Physics.Raycast(transform.position, direction, distance, layerMask);
+        bool playerHit = false;
+        for(int i = 0; i < 3; i++)
+        {
+            Vector3 direction = chainLightning[i].endPosition - chainLightning[i].startPosition;
+            float distance = Vector3.Distance(chainLightning[i].startPosition, chainLightning[i].endPosition);
+            if (Physics.Raycast(chainLightning[i].startPosition, direction, distance, layerMask))
+            {
+                playerHit = true;
+            }
+        }
+
         if (playerHit)
         {
             playerScript.LoseHealth(boltDamage);
@@ -132,6 +138,7 @@ public class ElectricMageController : EnemyController
             boltCD = boltMaxCD;
         }
     }
+
 
     void Surrender()
     {
@@ -144,46 +151,36 @@ public class ElectricMageController : EnemyController
 
     void BoltAway()
     {
-        lightningBolts.SetPositions(away, away);   
-    }
-
-    void CreateOtherEnemies()
-    {
-        otherEnemies.Clear();
-        for (int enemy = 0; enemy < gm.enemies.Count; enemy++)
+        for(int i = 0; i < 3; i++)
         {
-            if (gm.enemies[enemy] != enemyScript)
-            {
-                otherEnemies.Add(gm.enemies[enemy].GetComponent<ElectricAlly>());
-            }
+            chainLightning[i].SetPositions(away, away);   
         }
     }
 
     void MovementAI()
     {
-        Strafe();
-
-        if (Vector3.Distance(playerController.transform.position, transform.position) < 5)
+        if (!moving && getNewPoint)
         {
-            Vector3 awayFromPlayer = transform.position - playerController.transform.position;
-            navAgent.Move(awayFromPlayer.normalized * Time.fixedDeltaTime * 2);
+            moving = true;
+            getNewPoint = false;
+            Vector3 direction = playerScript.transform.position - transform.position;
+            Vector3 position = transform.position + direction.normalized * 14;
+            position += Random.insideUnitSphere * meshRadius;
+            NavMeshHit hit;
+            NavMesh.SamplePosition(position, out hit, meshRadius, 1);
+            navAgent.SetDestination(hit.position);
+        }
+        else if(moving && navAgent.remainingDistance < 0.1)
+        {
+            moving = false;
+            StartCoroutine(WaitToMove());
         }
     }
 
-    void Strafe()
+    IEnumerator WaitToMove()
     {
-        if(strafeTimer > 0)
-        {
-            strafeTimer -= Time.deltaTime;
-            if(strafeTimer <= 0)
-            {
-                strafeTimer = Random.Range(2f, 10f);
-            }
-        }
-        Vector3 playerToenemy = transform.position - playerController.transform.position;
-        playerToenemy *= strafeLeftOrRight;
-        Vector3 strafeDirection = Vector3.Cross(transform.position, playerToenemy);
-        navAgent.Move(strafeDirection.normalized * Time.deltaTime * strafeSpeed);
+        yield return new WaitForSeconds(2);
+        getNewPoint = true;
     }
 
     public override void StartStagger(float staggerDuration)
@@ -196,13 +193,14 @@ public class ElectricMageController : EnemyController
 
     public override void StartDying()
     {
-        BoltAway();
-        if(target != null)
-        {
-            target.isShielded = false;
-        }
         isDying = true;
         boltCD = 10000;
+        notElectrifiedLinks.Clear();
+        notElectrifiedLinks = new List<ChainLightningLink>(chainLightningLinks);
+        for(int i = 0; i < 3; i++)
+        {
+            Destroy(chainLightning[i].gameObject);
+        }
         if (hasSurrendered)
         {
             frontAnimator.Play("SurrenderDeath");

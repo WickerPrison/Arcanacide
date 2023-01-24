@@ -6,6 +6,8 @@ using static UnityEngine.GraphicsBuffer;
 public class Bolts : MonoBehaviour
 {
     [SerializeField] List<LightningBolt> lightningBolts = new List<LightningBolt>();
+    [System.NonSerialized] public Vector3 startPosition;
+    [System.NonSerialized] public Vector3 endPosition;
 
     private void Start()
     {
@@ -15,8 +17,10 @@ public class Bolts : MonoBehaviour
         }
     }
 
-    public void SetPositions(Vector3 startPosition, Vector3 endPosition)
+    public void SetPositions(Vector3 startPos, Vector3 endPos)
     {
+        startPosition = startPos;
+        endPosition = endPos;
         foreach (LightningBolt bolt in lightningBolts)
         {
             bolt.SetPositions(startPosition, endPosition);
