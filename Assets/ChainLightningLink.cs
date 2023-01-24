@@ -7,6 +7,7 @@ public class ChainLightningLink : MonoBehaviour
     GameManager gm;
     ElectricMageController electricMage;
     ElectricAlly electricAlly;
+    ElectricPuddleScript puddle;
     GameObject boltsPrefab;
     Bolts bolts;
     PlayerScript playerScript;
@@ -20,6 +21,7 @@ public class ChainLightningLink : MonoBehaviour
     void Start()
     {
         electricAlly = GetComponentInParent<ElectricAlly>();
+        puddle = GetComponent<ElectricPuddleScript>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         foreach(EnemyScript enemy in gm.enemies)
@@ -47,6 +49,11 @@ public class ChainLightningLink : MonoBehaviour
             {
                 electricAlly.ShieldOnOff(isElectrified);
             }
+
+            if(puddle != null)
+            {
+                puddle.PowerOff();
+            }
         }
     }
 
@@ -62,6 +69,11 @@ public class ChainLightningLink : MonoBehaviour
         if(electricAlly != null)
         {
             electricAlly.ShieldOnOff(isElectrified);
+        }
+
+        if(puddle != null)
+        {
+            puddle.PowerOn();
         }
 
         closestLink = null;
@@ -109,6 +121,7 @@ public class ChainLightningLink : MonoBehaviour
 
     private void OnDestroy()
     {
+        bolts.SetPositions(away, away);
         if(electricMage != null)
         {
             electricMage.chainLightningLinks.Remove(this);

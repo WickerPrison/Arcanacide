@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class ElectricPuddleScript : MonoBehaviour
 {
-    [SerializeField] MapData mapData;
-    [SerializeField] int powerSwitchNumber;
     [SerializeField] List<Collider> colliders;
     [SerializeField] ParticleSystem particles;
-    bool switchFlipped = false;
     PlayerScript playerScript;
     Rigidbody playerRigidbody;
     float staggerDuration = 1;
     float staggerTimer;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerRigidbody = playerScript.gameObject.GetComponent<Rigidbody>();
-        if (mapData.powerSwitchesFlipped.Contains(powerSwitchNumber))
-        {
-            FlipSwitch();
-        }
+        PowerOff();
     }
 
     private void Update()
@@ -32,20 +26,23 @@ public class ElectricPuddleScript : MonoBehaviour
             staggerTimer -= Time.deltaTime;
             playerRigidbody.velocity = Vector3.zero;
         }
-
-        if (!switchFlipped && mapData.powerSwitchesFlipped.Contains(powerSwitchNumber))
-        {
-            FlipSwitch();
-        }
     }
 
-    void FlipSwitch()
+    public void PowerOff()
     {
-        switchFlipped = true;
         particles.Stop();
         foreach (Collider collider in colliders)
         {
             collider.isTrigger = true;
+        }
+    }
+
+    public void PowerOn()
+    {
+        particles.Play();
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = false;
         }
     }
 
