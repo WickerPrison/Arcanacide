@@ -7,8 +7,11 @@ public class OrbSpawnerController : EnemyController
 {
     [SerializeField] GameObject lightningOrbPrefab;
     [SerializeField] Transform spawnPoint;
+    [SerializeField] Transform orbSprite;
     float maxSpawnTime = 5;
     float spawnTimer = 0;
+    Vector3 minSize = new Vector3(0.01f, 0.01f, 0.01f);
+    Vector3 maxSize = Vector3.one;
 
     public override void Start()
     {
@@ -23,6 +26,8 @@ public class OrbSpawnerController : EnemyController
         {
             return;
         }
+
+        orbSprite.localScale = Vector3.Lerp(maxSize, minSize, spawnTimer / maxSpawnTime);
 
         EnemyAI();
     }
