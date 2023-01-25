@@ -32,15 +32,20 @@ public class ChainLightningLink : MonoBehaviour
                 mage.chainLightningLinks.Add(this);
                 electricMage = mage;
                 boltsPrefab = electricMage.boltsPrefab;
+                bolts = Instantiate(boltsPrefab).GetComponent<Bolts>();
+                bolts.SetPositions(away, away);
             }
         }
 
-        bolts = Instantiate(boltsPrefab).GetComponent<Bolts>();
-        bolts.SetPositions(away, away);
     }
 
     private void Update()
     {
+        if(electricMage == null)
+        {
+            return;
+        }
+
         if (isElectrified && electricMage.notElectrifiedLinks.Contains(this))
         {
             isElectrified = false;
@@ -59,6 +64,11 @@ public class ChainLightningLink : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (electricMage == null)
+        {
+            return;
+        }
+
         BoltDamage();
     }
 
@@ -121,9 +131,9 @@ public class ChainLightningLink : MonoBehaviour
 
     private void OnDestroy()
     {
-        bolts.SetPositions(away, away);
         if(electricMage != null)
         {
+            bolts.SetPositions(away, away);
             electricMage.chainLightningLinks.Remove(this);
         }
     }

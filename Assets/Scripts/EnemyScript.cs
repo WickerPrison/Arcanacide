@@ -6,8 +6,8 @@ public class EnemyScript : MonoBehaviour
 {
     //this script controls the automatic workings of the enemy like health 
 
-    public int health;
-    public float poise;
+    [System.NonSerialized] public int health;
+    [System.NonSerialized] public float poise;
     public int reward;
     public GameObject healthbar;
     [SerializeField] float healthbarScale;
@@ -25,7 +25,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float staggerDuration;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] ParticleSystem dotVFX;
-    public bool isDying = false;
+    [System.NonSerialized] public bool isDying = false;
     float DOT = 0;
     float damageDOT = 0;
 
@@ -41,6 +41,7 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         health = maxHealth;
+        poise = maxPoise;
         enemyController = GetComponent<EnemyController>();
         enemySound = GetComponentInChildren<EnemySound>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -155,7 +156,11 @@ public class EnemyScript : MonoBehaviour
     {
         playerData.killedEnemiesNum += 1;
 
-        mapData.deadEnemies.Add(enemyID);
+        if(enemyID != 0)
+        {
+            mapData.deadEnemies.Add(enemyID);
+        }
+
         if (playerData.equippedEmblems.Contains(emblemLibrary.pay_raise))
         {
             playerData.money += Mathf.RoundToInt(reward * 1.25f);

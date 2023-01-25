@@ -193,6 +193,7 @@ public class ElectricMageController : EnemyController
 
     public override void StartDying()
     {
+        navAgent.enabled = false;
         isDying = true;
         boltCD = 10000;
         notElectrifiedLinks.Clear();
