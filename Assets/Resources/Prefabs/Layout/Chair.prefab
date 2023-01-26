@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 401462286727251123}
-  - component: {fileID: 7595520271426865440}
   - component: {fileID: 4197536968948678982}
   - component: {fileID: 5172180976047346749}
   - component: {fileID: -4975911872457965420}
+  - component: {fileID: 9058229544151177385}
   m_Layer: 0
   m_Name: Chair
   m_TagString: Untagged
@@ -36,20 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &7595520271426865440
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 73469210573860753}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.66
-  m_Height: 1.94
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.04783666, z: -0.10455936}
 --- !u!208 &4197536968948678982
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -93,6 +79,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomize: 0
+--- !u!136 &9058229544151177385
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73469210573860753}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.56
+  m_Height: 1.7382283
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.19, z: -0.12}
 --- !u!1001 &8900242069944252671
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class ElectricPuddleScript : MonoBehaviour
 {
     [SerializeField] List<Collider> colliders;
     [SerializeField] ParticleSystem particles;
+    [SerializeField] bool startOn = false;
     PlayerScript playerScript;
     Rigidbody playerRigidbody;
     float staggerDuration = 1;
@@ -16,7 +17,14 @@ public class ElectricPuddleScript : MonoBehaviour
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerRigidbody = playerScript.gameObject.GetComponent<Rigidbody>();
-        PowerOff();
+        if (startOn)
+        {
+            PowerOn();
+        }
+        else
+        {
+            PowerOff();
+        }
     }
 
     private void Update()

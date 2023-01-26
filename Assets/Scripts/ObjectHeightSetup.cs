@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectHeightSetup : MonoBehaviour
 {
     [SerializeField] float height;
-    [SerializeField] bool lockHeight = true;
+    public bool lockHeight = true;
 
     private void OnDrawGizmosSelected()
     {
