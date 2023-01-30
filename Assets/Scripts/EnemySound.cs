@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySound : MonoBehaviour
 {
-    AudioSource SFX;
+    [System.NonSerialized] public AudioSource SFX;
     [SerializeField] AudioClip footstep;
     [SerializeField] AudioClip swordSwoosh;
     [SerializeField] AudioClip pain;

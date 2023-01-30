@@ -13,6 +13,12 @@ public class PlayerSound : MonoBehaviour
         SFX = GetComponent<AudioSource>();
     }
 
+    public void PlaySoundEffect(AudioClip clip, float volume)
+    {
+        SFX.PlayOneShot(clip, volume); 
+    }
+
+
     public void Footstep()
     {
         SFX.PlayOneShot(soundEffects[0], 0.75f);

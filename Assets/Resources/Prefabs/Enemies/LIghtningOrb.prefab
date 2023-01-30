@@ -109,8 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  poise: 10
   reward: 0
   healthbar: {fileID: 751730015116911183}
   healthbarScale: 1
@@ -125,7 +123,6 @@ MonoBehaviour:
   staggerDuration: 0
   hitVFX: {fileID: 2600884419329756723}
   dotVFX: {fileID: 6371117676211869800}
-  isDying: 0
 --- !u!114 &5988035559081268552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +150,7 @@ MonoBehaviour:
   lightning: {fileID: 3049108788982477052}
   attack: {fileID: 5918047746592107296}
   selfDestructTime: 0.4
+  impactSFX: {fileID: 8300000, guid: 1d9abbd6139042e49990de33ff18844e, type: 3}
 --- !u!114 &961816689155818981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15204,8 +15202,7 @@ MonoBehaviour:
   pain: {fileID: 8300000, guid: df5f068f3f63ec3489fd7f856124fda2, type: 3}
   swordImpact: {fileID: 8300000, guid: 0d0b4a1b4b49c5b448714ecd1447022b, type: 3}
   enemySpell: {fileID: 0}
-  otherSounds:
-  - {fileID: 0}
+  otherSounds: []
 --- !u!1 &6484535687194093098
 GameObject:
   m_ObjectHideFlags: 0

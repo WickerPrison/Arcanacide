@@ -126,12 +126,17 @@ public class ChainLightningLink : MonoBehaviour
             playerScript.LoseHealth(electricMage.boltDamage);
             playerScript.LosePoise(electricMage.boltPoiseDamage);
             boltCD = electricMage.boltMaxCD;
+            bolts.SoundOn();
+        }
+        else
+        {
+            bolts.SoundOff();
         }
     }
 
     private void OnDestroy()
     {
-        if(electricMage != null)
+        if(electricMage != null && bolts != null)
         {
             bolts.SetPositions(away, away);
             electricMage.chainLightningLinks.Remove(this);

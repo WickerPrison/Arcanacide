@@ -21,6 +21,9 @@ public class ArcProjectile : MonoBehaviour
     [SerializeField] float arcHeight;
     float midpoint;
     float arcWidth;
+    [SerializeField] AudioClip impactSound;
+    [SerializeField] float impactVolume;
+    [SerializeField] float staggerDuration;
 
     private void Start()
     {
@@ -62,15 +65,18 @@ public class ArcProjectile : MonoBehaviour
 
     void Explosion()
     {
+        GameObject explosion = Instantiate(explosionPrefab);
+        explosion.transform.position = new Vector3(endPoint.x, .3f, endPoint.z);
+        Destroy(gameObject);
+
         List<Collider> objects = touchingCircle.GetTouchingObjects();
         if (objects.Contains(playerCollider))
         {
+            explosion.GetComponent<AudioSource>().PlayOneShot(impactSound, impactVolume);
+            player.StartStagger(staggerDuration);
             player.LoseHealth(spellDamage);
             player.LosePoise(poiseDamage);
         }
 
-        GameObject explosion = Instantiate(explosionPrefab);
-        explosion.transform.position = new Vector3(endPoint.x, .3f, endPoint.z);
-        Destroy(gameObject);
     }
 }

@@ -8,9 +8,12 @@ public class Bolts : MonoBehaviour
     [SerializeField] List<LightningBolt> lightningBolts = new List<LightningBolt>();
     [System.NonSerialized] public Vector3 startPosition;
     [System.NonSerialized] public Vector3 endPosition;
+    bool soundOn;
+    AudioSource sfx;
 
     private void Start()
     {
+        sfx = GetComponent<AudioSource>();
         for (int i = 0; i < 1; i++)
         {
             lightningBolts[i].frameCounter = i;
@@ -25,5 +28,23 @@ public class Bolts : MonoBehaviour
         {
             bolt.SetPositions(startPosition, endPosition);
         }
+    }
+
+    public void SoundOn()
+    {
+        if (!soundOn)
+        {
+            soundOn = true;
+            sfx.Play();
+        }
+    }
+
+    public void SoundOff()
+    {
+        if(soundOn)
+        {
+            sfx.Stop();
+        }
+        soundOn = false;
     }
 }

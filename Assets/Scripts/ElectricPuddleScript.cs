@@ -7,16 +7,22 @@ public class ElectricPuddleScript : MonoBehaviour
     [SerializeField] List<Collider> colliders;
     [SerializeField] ParticleSystem particles;
     [SerializeField] bool startOn = false;
+    [SerializeField] AudioClip damageSound;
+    AudioSource sfx;
     PlayerScript playerScript;
+    PlayerSound playerSound;
     Rigidbody playerRigidbody;
     float staggerDuration = 1;
     float staggerTimer;
+    bool powerOn = false;
 
     // Start is called before the first frame update
     void Awake()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerSound = playerScript.gameObject.GetComponentInChildren<PlayerSound>();
         playerRigidbody = playerScript.gameObject.GetComponent<Rigidbody>();
+        sfx = GetComponent<AudioSource>();
         if (startOn)
         {
             PowerOn();
@@ -38,7 +44,9 @@ public class ElectricPuddleScript : MonoBehaviour
 
     public void PowerOff()
     {
+        powerOn = false;
         particles.Stop();
+        sfx.Stop();
         foreach (Collider collider in colliders)
         {
             collider.isTrigger = true;
@@ -47,7 +55,14 @@ public class ElectricPuddleScript : MonoBehaviour
 
     public void PowerOn()
     {
+        if (powerOn)
+        {
+            return;
+        }
+
+        powerOn = true;
         particles.Play();
+        sfx.Play();
         foreach (Collider collider in colliders)
         {
             collider.isTrigger = false;
@@ -60,6 +75,7 @@ public class ElectricPuddleScript : MonoBehaviour
         {
             playerScript.LoseHealth(25);
             playerScript.StartStagger(staggerDuration);
+            playerSound.PlaySoundEffect(damageSound, 1);
             staggerTimer = staggerDuration;
         }
     }

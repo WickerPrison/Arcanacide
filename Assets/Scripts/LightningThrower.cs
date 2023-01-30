@@ -71,6 +71,7 @@ public class LightningThrower : EnemyController
 
     public override void SpellAttack()
     {
+        enemySound.OtherSounds(0, 1);
         ArcProjectile lightningBall = Instantiate(lightningBallPrefab).GetComponent<ArcProjectile>();
         lightningBall.transform.position = electricityVFX.transform.position;
         lightningBall.endPoint = new Vector3(playerController.transform.position.x, 0, playerController.transform.position.z);
@@ -88,12 +89,14 @@ public class LightningThrower : EnemyController
         Vector3 direction = new Vector3(facePlayer.playerDirection.x, -90, facePlayer.playerDirection.z);
         electricityVFX.transform.rotation = Quaternion.LookRotation(direction.normalized);
         electricityVFX.Play();
+        enemySound.SFX.Play();
         isShocking = true;
     }
 
     public override void SpecialAbilityOff()
     {
         electricityVFX.Stop();
+        enemySound.SFX.Stop();
         isShocking = false;
     }
 

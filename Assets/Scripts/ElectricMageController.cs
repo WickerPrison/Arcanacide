@@ -26,6 +26,8 @@ public class ElectricMageController : EnemyController
     ChainLightningLink closestLink;
     bool moving = false;
     bool getNewPoint = true;
+    int chainsActive;
+    bool soundPlaying = false;
 
     public override void Start()
     {
@@ -73,6 +75,7 @@ public class ElectricMageController : EnemyController
         notElectrifiedLinks = new List<ChainLightningLink>(chainLightningLinks);
         nearbyLinks.Clear();
         nearbyLinks = new List<ChainLightningLink>(chainLightningLinks);
+        chainsActive = 0;
         for(int i = 0; i < 3; i++)
         {
             float distance = 10;
@@ -88,6 +91,7 @@ public class ElectricMageController : EnemyController
 
             if(distance < 10)
             {
+                chainsActive += 1;
                 nearbyLinks.Remove(closestLink);
                 if (notElectrifiedLinks.Contains(closestLink))
                 {
@@ -108,6 +112,20 @@ public class ElectricMageController : EnemyController
             {
                 chainLightning[i].SetPositions(away, away);
             }
+        }
+
+        if(chainsActive > 0)
+        {
+            if (!soundPlaying)
+            {
+                soundPlaying = true;
+                enemySound.SFX.Play();
+            }
+        }
+        else
+        {
+            soundPlaying = false;
+            enemySound.SFX.Stop();
         }
     }
 
@@ -133,9 +151,14 @@ public class ElectricMageController : EnemyController
 
         if (playerHit)
         {
+            chainLightning[0].SoundOn();
             playerScript.LoseHealth(boltDamage);
             playerScript.LosePoise(boltPoiseDamage);
             boltCD = boltMaxCD;
+        }
+        else
+        {
+            chainLightning[0].SoundOff();
         }
     }
 

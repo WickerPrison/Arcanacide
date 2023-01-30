@@ -9,6 +9,7 @@ public class LightningOrbController : EnemyController
     [SerializeField] ParticleSystem lightning;
     [SerializeField] ParticleSystem attack;
     [SerializeField] float selfDestructTime;
+    [SerializeField] AudioClip impactSFX;
     ElectricAlly allyScript;
     Vector3 playerDirection;
     float playerDistance;
@@ -53,16 +54,6 @@ public class LightningOrbController : EnemyController
         }
     }
 
-    IEnumerator AttackCoroutine()
-    {
-        lightning.Stop();
-        yield return new WaitForSeconds(1);
-        Attack();
-        attack.Play();
-        yield return new WaitForSeconds(.5f);
-        lightning.Play();
-    }
-
     IEnumerator SelfDestructCoroutine()
     {
         lightning.Stop();
@@ -103,8 +94,11 @@ public class LightningOrbController : EnemyController
         explosion.transform.position = transform.position + Vector3.up * 1.5f;
         if (playerDistance <= attackRange)
         {
+            explosion.GetComponent<AudioSource>().PlayOneShot(impactSFX, 2);
+            playerScript.StartStagger(0.1f);
             playerScript.LoseHealth(spellAttackDamage);
             playerScript.LosePoise(spellAttackPoiseDamage);
+
         }
 
         enemyScript.Death();
