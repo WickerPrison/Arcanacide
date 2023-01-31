@@ -103,6 +103,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public virtual void SpecialEffect()
+    {
+
+    }
+
     public virtual void SpellAttack()
     {
 

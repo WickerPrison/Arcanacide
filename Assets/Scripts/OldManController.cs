@@ -20,6 +20,8 @@ public class OldManController : EnemyController
     [SerializeField] int chargeDamage;
     bool isColliding;
     [SerializeField] ParticleSystem staticVFX;
+    [SerializeField] List<ParticleSystem> attackVFX;
+    FacePlayer facePlayer;
 
     public override void Start()
     {
@@ -27,6 +29,7 @@ public class OldManController : EnemyController
         layerMask = LayerMask.GetMask("Default");
         enemyCollider = GetComponent<CapsuleCollider>();
         chargeIndicatorWidth = enemyCollider.radius * 2;
+        facePlayer = GetComponent<FacePlayer>();
     }
 
     public override void EnemyAI()
@@ -78,9 +81,46 @@ public class OldManController : EnemyController
 
     public override void SpecialAbility()
     {
+        enemySound.OtherSounds(2, 2);
         float yDirection = Random.Range(-1f, 1f);
         Vector3 direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
         navAgent.Warp(playerController.transform.position + direction.normalized * 1.5f);
+    }
+
+    public override void SpecialEffect()
+    {
+        staticVFX.Stop();
+        staticVFX.Clear();
+        enemySound.OtherSounds(0, 1);
+        foreach (ParticleSystem particleSystem in attackVFX)
+        {
+            Vector3 direction = new Vector3(facePlayer.playerDirection.x, 90, facePlayer.playerDirection.z);
+            particleSystem.transform.rotation = Quaternion.LookRotation(direction.normalized);
+            particleSystem.Play();
+        }
+    }
+
+    public override void AttackHit(int smearSpeed)
+    {
+        parryWindow = false;
+        staticVFX.Play();
+
+        if (!canHitPlayer)
+        {
+            return;
+        }
+
+        if (playerController.gameObject.layer == 3)
+        {
+            enemySound.OtherSounds(1, 1);
+            playerScript.LoseHealth(hitDamage, enemyScript);
+            playerScript.LosePoise(hitPoiseDamage);
+            AdditionalAttackEffects();
+        }
+        else if (playerController.gameObject.layer == 8)
+        {
+            playerController.PerfectDodge();
+        }
     }
 
     void Charge()
@@ -175,6 +215,7 @@ public class OldManController : EnemyController
         {
             isColliding = true;
             playerScript.LoseHealth(chargeDamage);
+            enemySound.SwordImpact();
         }
     }
 

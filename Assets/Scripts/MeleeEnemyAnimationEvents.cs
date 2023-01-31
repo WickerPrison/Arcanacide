@@ -62,6 +62,11 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         enemyController.SpellAttack();
     }
 
+    public void SpecialEffect()
+    {
+        enemyController.SpecialEffect();
+    }
+
     public void ParryWindowOn()
     {
         enemyController.parryWindow = true;
