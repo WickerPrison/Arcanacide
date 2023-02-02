@@ -39,6 +39,7 @@ public class PlayerAnimation : MonoBehaviour
     float initalScaleX;
     float frontOffset;
     float backOffset;
+    public ParticleSystem shoveVFX;
 
     int weaponMagicSources = 0;
     bool weaponMagicOn;

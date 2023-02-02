@@ -18,6 +18,10 @@ public class PlayerSound : MonoBehaviour
         SFX.PlayOneShot(clip, volume); 
     }
 
+    public void PlaySoundEffectFromList(int index, float volume)
+    {
+        SFX.PlayOneShot(soundEffects[index], volume);
+    }
 
     public void Footstep()
     {

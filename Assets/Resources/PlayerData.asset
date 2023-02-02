@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 90
   maxHealCharges: 1
-  healCharges: 1
+  healCharges: -1
   hasSpawned: 0
   lastSwordSite: 3
   unlockedAbilities: []
@@ -22,7 +22,8 @@ MonoBehaviour:
   - Arcane Remains
   - Arcane Step
   - Protective Barrier
-  equippedEmblems: []
+  equippedEmblems:
+  - Explosive Healing
   tutorials:
   - Dodge
   - Sword Site
@@ -36,7 +37,7 @@ MonoBehaviour:
   vitality: 2
   dedication: 2
   maxMana: 50
-  mana: 50
+  mana: 0
   deathNum: 196
   killedEnemiesNum: 158
   moveDir: {x: 0, y: 0}

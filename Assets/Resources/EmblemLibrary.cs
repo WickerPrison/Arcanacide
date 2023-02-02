@@ -39,9 +39,10 @@ public class EmblemLibrary : ScriptableObject
     public string durable_gem_description = "Your healing gem can be used an extra time without breaking";
     public string protective_barrier = "Protective Barrier";
     public string protective_barrier_description = "Every 10 seconds gain a protective barrier that blocks one instance of damage";
-
-    //public string explosive_healing = "Explosive Healing";
-    //public string explosive_healing_description = "Deal damage to nearby enemies whenever you use the Heal ability";
+    public string explosive_healing = "Explosive Healing";
+    public string explosive_healing_description = "Deal damage to nearby enemies whenever you use your Healing Gem";
+    public float explosiveHealingRange = 5;
+    public float explosiveHealingStagger = 1f;
 
     public int ArcaneStepDamage()
     {
@@ -61,6 +62,11 @@ public class EmblemLibrary : ScriptableObject
     public int ConfidentKillerDamage()
     {
         return playerData.dedication * 2 + 15;
+    }
+
+    public int ExplosiveHealingDamage()
+    {
+        return playerData.dedication * 3 + 20;
     }
 
     public string GetDescription(string name)
@@ -95,6 +101,8 @@ public class EmblemLibrary : ScriptableObject
                 return rending_blows_description;
             case "Durable Gem":
                 return durable_gem_description;
+            case "Explosive Healing":
+                return explosive_healing_description;
             default:
                 return "Error";
         }

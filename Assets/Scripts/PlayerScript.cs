@@ -153,13 +153,32 @@ public class PlayerScript : MonoBehaviour
 
     public void Heal()
     {
-        if(playerData.healCharges >= 0)
+        if (playerData.healCharges < 0)
         {
-            playerData.healCharges -= 1;
-            duckHealTimer = duckHealDuration;
-            duckHealSpeed = playerData.MaxHealth() / duckHealDuration;
-            sfx.Heal();
-            playerAnimation.StartBodyMagic();
+            return;
+        }
+
+        playerData.healCharges -= 1;
+        duckHealTimer = duckHealDuration;
+        duckHealSpeed = playerData.MaxHealth() / duckHealDuration;
+        sfx.Heal();
+        playerAnimation.StartBodyMagic();
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.explosive_healing))
+        {
+            StartCoroutine(cameraScript.ScreenShake(0.1f, 0.3f));
+            sfx.PlaySoundEffectFromList(10, 1);
+            playerAnimation.shoveVFX.Play();
+
+            foreach (EnemyScript enemy in gm.enemies)
+            {
+                if (Vector3.Distance(enemy.transform.position, transform.position) < emblemLibrary.explosiveHealingRange)
+                {
+                    enemy.LoseHealth(emblemLibrary.ExplosiveHealingDamage(), emblemLibrary.ExplosiveHealingDamage());
+                    EnemyController enemyController = enemy.GetComponent<EnemyController>();
+                    enemyController.StartStagger(emblemLibrary.explosiveHealingStagger);
+                }
+            }
         }
     }
 
