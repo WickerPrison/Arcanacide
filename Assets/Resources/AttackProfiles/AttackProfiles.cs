@@ -6,6 +6,7 @@ using UnityEngine;
 public class AttackProfiles : ScriptableObject
 {
     public string hitboxType;
+    public bool heavyAttack;
 
     public int smearSpeed;
     public int halfConeAngle;

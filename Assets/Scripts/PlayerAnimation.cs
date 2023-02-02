@@ -30,6 +30,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerController playerController;
     [SerializeField] float rotationPointY;
+    [SerializeField] EmblemLibrary emblemLibrary;
     PlayerSound playerSound;
 
     Vector3 away = new Vector3(100, 100, 100);
@@ -42,10 +43,14 @@ public class PlayerAnimation : MonoBehaviour
     int weaponMagicSources = 0;
     bool weaponMagicOn;
 
+    private void Awake()
+    {
+        playerSound = gameObject.GetComponentInChildren<PlayerSound>();
+    }
+
     private void Start()
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        playerSound = gameObject.GetComponentInChildren<PlayerSound>();
         frontAnimatorPosition = frontAnimator.transform.localPosition;
         backAnimatorPosition = backAnimator.transform.localPosition;
         initalScaleX = frontAnimator.transform.localScale.x;
@@ -133,6 +138,15 @@ public class PlayerAnimation : MonoBehaviour
     {
         frontAnimator.Play("Idle");
         backAnimator.Play("Idle");
+    }
+
+    public void HealAnimation()
+    {
+        if(playerScript.playerData.healCharges >= 0)
+        {
+            frontAnimator.Play("Heal");
+            backAnimator.Play("Heal");
+        }
     }
 
     public void StopBlocking()

@@ -8,6 +8,7 @@ public class Shield : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Color transparent;
     [SerializeField] Color solid;
+    [SerializeField] Color barrier;
 
     // Update is called once per frame
     void Update()
@@ -23,6 +24,11 @@ public class Shield : MonoBehaviour
             {
                 spriteRenderer.color = transparent;
             }
+        }
+        else if (playerScript.barrier)
+        {
+            spriteRenderer.enabled = true;
+            spriteRenderer.color = barrier;
         }
         else
         {

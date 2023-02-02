@@ -408,6 +408,11 @@ public class PlayerController : MonoBehaviour
             }
             closeCallTimer = closeCallMaxTime;
         }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.adrenaline_rush))
+        {
+            playerScript.stamina = playerData.MaxStamina();
+        }
     }
 
     public IEnumerator KnockBack(float knockbackTime)
@@ -442,7 +447,7 @@ public class PlayerController : MonoBehaviour
         im.controls.Gameplay.Move.canceled += ctx => playerData.moveDir = Vector2.zero;
         im.controls.Gameplay.Shield.performed += ctx => Shield();
         im.controls.Gameplay.Shield.canceled += ctx => playerAnimation.continueBlocking = false;
-        im.controls.Gameplay.Heal.performed += ctx => playerScript.Heal();
+        im.controls.Gameplay.Heal.performed += ctx => playerAnimation.HealAnimation();
         im.controls.Gameplay.Look.performed += ctx => rightStickValue = ctx.ReadValue<Vector2>();
         im.controls.Gameplay.Look.canceled += ctx => rightStickValue = Vector2.zero;
         im.controls.Gameplay.Totem.performed += ctx => Totem();

@@ -13,9 +13,10 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject manaBarFill;
     [SerializeField] GameObject manaBarCrack;
     [SerializeField] TextMeshProUGUI healCounter;
-    [SerializeField] List<Sprite> gemSprites = new List<Sprite>();
+    public List<Sprite> gemSprites = new List<Sprite>();
     [SerializeField] Sprite unbrokenGem;
-    [SerializeField] Image gemImage;
+    public Image gemImage;
+    [SerializeField] Image gemProtection;
     PlayerScript playerScript;
     float healthbarScale = 1;
 
@@ -74,13 +75,15 @@ public class HUD : MonoBehaviour
 
     void UpdateGemCracks()
     {
-        if(playerData.healCharges == playerData.maxHealCharges)
+        if(playerData.healCharges >= playerData.maxHealCharges)
         {
             gemImage.sprite = unbrokenGem;
+            gemProtection.enabled = playerData.healCharges > playerData.maxHealCharges;
         }
         else
         {
             gemImage.sprite = gemSprites[playerData.healCharges + 1];
+            gemProtection.enabled = false;
         }
     }
 }

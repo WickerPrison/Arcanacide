@@ -83,7 +83,14 @@ public class PlayerAnimationEvents : MonoBehaviour
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
         }
         enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
+        
+        if(attackProfile.heavyAttack && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
+        {
+            enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
+        }
+
         enemy.GainDOT(attackProfile.durationDOT);
+
         if(attackProfile.staggerDuration > 0)
         {
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
@@ -128,6 +135,12 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             attackDamage += emblemLibrary.ArcaneRemainsDamage();
         }
+
+        if(playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
+        {
+            attackDamage += emblemLibrary.ConfidentKillerDamage();
+        }
+
         return attackDamage;
     }
 
@@ -142,6 +155,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         frontAnimator.speed = 1;
         backAnimator.speed = 1;
         playerController.lockPosition = false;
+    }
+
+    public void Heal()
+    {
+        playerScript.Heal();
     }
 
     //Layer 8 is the IFrame layer. It cannot collide with the enemy projectile layer, but otherwise 
@@ -168,6 +186,11 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void LockPosition()
     {
         playerController.lockPosition = true;
+    }
+
+    public void UnlockPosition()
+    {
+        playerController.lockPosition = false;
     }
 
     public void StopInput()

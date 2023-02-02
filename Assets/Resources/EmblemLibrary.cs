@@ -28,6 +28,17 @@ public class EmblemLibrary : ScriptableObject
     public string arcane_remains_description = "Add Arcane damage to all attacks when near your Remnant. Collecting your remnant restores you to full health";
     public string arcane_step = "Arcane Step";
     public string arcane_step_description = "You can dodge through enemies. Leave a trail of Arcane damage when you dodge";
+    public string confident_killer = "Confident Killer";
+    public string confident_killer_description = "Add Arcane damage to all attacks when you have full health";
+    public string adrenaline_rush = "Adrenaline Rush";
+    public string adrenaline_rush_description = "Regain all Stamina after a Perfect Dodge";
+    public string rending_blows = "Rending Blows";
+    public string rending_blows_description = "Heavy Attacks inflict damage over time";
+    public float rendingBlowsDuration = 5;
+    public string durable_gem = "Durable Gem";
+    public string durable_gem_description = "Your healing gem can be used an extra time without breaking";
+    public string protective_barrier = "Protective Barrier";
+    public string protective_barrier_description = "Every 10 seconds gain a protective barrier that blocks one instance of damage";
 
     //public string explosive_healing = "Explosive Healing";
     //public string explosive_healing_description = "Deal damage to nearby enemies whenever you use the Heal ability";
@@ -43,6 +54,11 @@ public class EmblemLibrary : ScriptableObject
     }
 
     public int ArcaneRemainsDamage()
+    {
+        return playerData.dedication * 2 + 15;
+    }
+
+    public int ConfidentKillerDamage()
     {
         return playerData.dedication * 2 + 15;
     }
@@ -71,6 +87,14 @@ public class EmblemLibrary : ScriptableObject
                 return arcane_remains_description;
             case "Arcane Step":
                 return arcane_step_description;
+            case "Confident Killer":
+                return confident_killer_description;
+            case "Adrenaline Rush":
+                return adrenaline_rush_description;
+            case "Rending Blows":
+                return rending_blows_description;
+            case "Durable Gem":
+                return durable_gem_description;
             default:
                 return "Error";
         }
