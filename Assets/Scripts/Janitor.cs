@@ -9,6 +9,8 @@ public class Janitor : MonoBehaviour
     [SerializeField] Animator janitorAnimator;
     [SerializeField] GameObject dialoguePrefab;
     [SerializeField] TextAsset csvFile;
+    [SerializeField] string ability;
+    [SerializeField] int newAbilityConversation;
     [SerializeField] int repeatableConversation;
     CSVparser readCSV;
     DialogueScript dialogue;
@@ -69,9 +71,9 @@ public class Janitor : MonoBehaviour
         im.Dialogue();
         inDialogue = true;
         dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
-        if (!playerData.unlockedAbilities.Contains("Block"))
+        if (!playerData.unlockedAbilities.Contains(ability))
         {
-            conversationIndex = 0;
+            conversationIndex = newAbilityConversation;
         }
         else
         {
@@ -96,9 +98,9 @@ public class Janitor : MonoBehaviour
             Destroy(dialogue.gameObject);
             inDialogue = false;
             im.Gameplay();
-            if (!playerData.unlockedAbilities.Contains("Block"))
+            if (!playerData.unlockedAbilities.Contains(ability))
             {
-                GetBlock();
+                GetAbility();
             }
 
         }
@@ -110,12 +112,13 @@ public class Janitor : MonoBehaviour
         }
     }
 
-    void GetBlock()
+    void GetAbility()
     {
-        playerData.unlockedAbilities.Add("Block");
+        playerData.unlockedAbilities.Add(ability);
         tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
-        tutorialManager.BlockTutorial();
-    }
+        tutorialManager.NewAbilityTutorial(ability);
+    } 
+
 
     void FacePlayer()
     {

@@ -5895,6 +5895,7 @@ GameObject:
   - component: {fileID: 6706439393756764894}
   - component: {fileID: 6706439393756764895}
   - component: {fileID: 895443311979105104}
+  - component: {fileID: 1259224723047881136}
   m_Layer: 0
   m_Name: Janitor
   m_TagString: Untagged
@@ -5936,6 +5937,8 @@ MonoBehaviour:
   janitorAnimator: {fileID: 87474460195633970}
   dialoguePrefab: {fileID: 6286585989320248928, guid: 8fb30ecf51e1b064ab6d94ebfcaeaac7, type: 3}
   csvFile: {fileID: 4900000, guid: a626b2d8112b6b74791e28a440269a62, type: 3}
+  ability: 
+  newAbilityConversation: 0
   repeatableConversation: 1
 --- !u!136 &6706439393756764895
 CapsuleCollider:
@@ -6047,6 +6050,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1259224723047881136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6706439393756764892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f0fcc98fd41e04bb6aa0876e11a40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6781820474484646793
 GameObject:
   m_ObjectHideFlags: 0
@@ -6917,7 +6932,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7784816200730667288, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 18.25
+      value: 15.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784816200730667288, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 10.04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}

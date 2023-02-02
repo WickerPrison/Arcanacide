@@ -28,6 +28,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject blockTutorial1;
     [SerializeField] GameObject blockTutorial2;
     string block = "Block";
+    [SerializeField] GameObject specialAttackTutorial;
+    string specialAttack = "Special Attack";
     [SerializeField] GameObject endOfDemoTutorial;
     string endOfDemo = "EndOfDemo";
     [SerializeField] GameObject altarTutorial;
@@ -134,11 +136,20 @@ public class TutorialManager : MonoBehaviour
         OpenMessage();
     }
 
-    public void BlockTutorial()
+    public void NewAbilityTutorial(string ability)
     {
-        playerData.tutorials.Remove(block);
-        nextMessage = blockTutorial2;
-        currentMessage = Instantiate(blockTutorial1);
+        playerData.tutorials.Remove(ability);
+        switch (ability)
+        {
+            case "Block":
+                nextMessage = blockTutorial2;
+                currentMessage = Instantiate(blockTutorial1);
+                break;
+            case "Special Attack":
+                nextMessage = null;
+                currentMessage = Instantiate(specialAttackTutorial);
+                break;
+        }
         OpenMessage();
     }
 
@@ -169,6 +180,7 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(remnant);
         allTutorials.Add(emblem);
         allTutorials.Add(block);
+        allTutorials.Add(specialAttack);
         allTutorials.Add(endOfDemo);
         allTutorials.Add(altar);
     }
