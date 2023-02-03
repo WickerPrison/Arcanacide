@@ -144,6 +144,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         return attackDamage;
     }
 
+    public void SwordSpecialAttack()
+    {
+        playerController.SwordSpecialAttack();
+    }
+
     public void AttackFalse()
     {
         playerAnimation.EndChain();

@@ -15,6 +15,7 @@ public class AttackProfiles : ScriptableObject
     public float magicDamageMultiplier;
     public float poiseDamageMultiplier;
     public float staminaCost;
+    public float manaCost;
 
     public float durationDOT;
     public float staggerDuration;

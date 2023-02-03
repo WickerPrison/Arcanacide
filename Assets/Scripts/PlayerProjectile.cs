@@ -11,8 +11,11 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField] AudioClip impactSFX;
     [SerializeField] float impactSFXvolume;
     [SerializeField] float lifetime;
+    [SerializeField] PlayerData playerData;
+    [System.NonSerialized] public AttackProfiles attackProfile;
     public Transform target;
     public float turnAngle;
+    Vector3 offset = new Vector3(0, 1, 0);
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -29,8 +32,11 @@ public class PlayerProjectile : MonoBehaviour
     public virtual void HitEnemy(Collider collision)
     {
         EnemyScript enemyScript = collision.gameObject.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(playerController.AttackPower() * 2, playerController.AttackPower() * 2);
-        //AudioSource.PlayClipAtPoint(enemyImpactSFX, transform.position, impactSFXvolume);
+        int damage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
+        int poiseDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.poiseDamageMultiplier);
+        enemyScript.LoseHealth(damage, poiseDamage);
+        enemyScript.GainDOT(attackProfile.durationDOT);
+        AudioSource.PlayClipAtPoint(enemyImpactSFX, transform.position, impactSFXvolume);
         Destroy(gameObject);
     }
 
@@ -42,7 +48,13 @@ public class PlayerProjectile : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
-        Vector3 rayDirection = transform.position - target.position;
+        if(target == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Vector3 rayDirection = transform.position - target.position + offset;
         float angleToTarget = Mathf.Acos(Vector3.Dot(-rayDirection, transform.forward) / (rayDirection.magnitude * transform.forward.magnitude));
         angleToTarget *= Mathf.Rad2Deg;
         if (angleToTarget <= turnAngle * Time.fixedDeltaTime)
@@ -51,7 +63,7 @@ public class PlayerProjectile : MonoBehaviour
         }
         else
         {
-            Vector3 rotateDirection = Vector3.RotateTowards(transform.forward, target.position - transform.position, turnAngle * Mathf.Deg2Rad * Time.fixedDeltaTime, 0);
+            Vector3 rotateDirection = Vector3.RotateTowards(transform.forward, target.position + offset - transform.position, turnAngle * Mathf.Deg2Rad * Time.fixedDeltaTime, 0);
             transform.rotation = Quaternion.LookRotation(rotateDirection);
         }
 

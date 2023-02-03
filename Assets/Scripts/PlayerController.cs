@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ParticleSystem shoveVFX;
     [SerializeField] ParticleSystem dodgeVFX;
     [SerializeField] GameObject totemObject;
+    [SerializeField] Transform frontSwordTip;
+    [SerializeField] Transform backSwordTip;
+    [SerializeField] PlayerProjectile projectilePrefab;
+    [SerializeField] AttackProfiles swordSpecialProfile;
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -220,6 +225,49 @@ public class PlayerController : MonoBehaviour
             playerAnimation.attacking = true;
             playerAnimation.HeavyAttack();
         }
+    }
+
+    public void SpecialAttack()
+    {
+        if(CanInput() && playerScript.stamina > 0 && playerData.mana > swordSpecialProfile.manaCost)
+        {
+            rb.velocity = Vector3.zero;
+            playerAnimation.attacking = true;
+            playerAnimation.SpecialAttack();
+        }
+    }
+
+    public void SwordSpecialAttack()
+    {
+        playerScript.LoseStamina(swordSpecialProfile.staminaCost);
+        playerScript.LoseMana(swordSpecialProfile.manaCost);
+        Transform origin;
+        if (playerAnimation.facingFront)
+        {
+            origin = frontSwordTip;
+        }
+        else
+        {
+            origin = backSwordTip;
+        }
+
+        foreach(EnemyScript enemy in gm.enemies)
+        {
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= swordSpecialProfile.attackRange)
+            {
+                FireProjectile(enemy, origin.position, swordSpecialProfile);
+            }
+        }
+    }
+
+    public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
+    {
+        PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
+        projectile.attackProfile = attackProfile;
+        projectile.transform.position = startingPosition;
+        projectile.transform.LookAt(enemy.transform.position + new Vector3(0, 1.1f, 0));
+        projectile.target = enemy.transform;
+        projectile.playerController = this;
     }
 
     IEnumerator Parry()
@@ -441,6 +489,7 @@ public class PlayerController : MonoBehaviour
 
         im.controls.Gameplay.Attack.performed += ctx => Attack();
         im.controls.Gameplay.HeavyAttack.performed += ctx => HeavyAttack();
+        im.controls.Gameplay.SpecialAttack.performed += ctx => SpecialAttack();
         im.controls.Gameplay.Dodge.performed += ctx => Dodge();
         im.controls.Gameplay.PauseMenu.performed += ctx => PauseMenu();
         im.controls.Gameplay.Move.performed += ctx => playerData.moveDir = ctx.ReadValue<Vector2>();

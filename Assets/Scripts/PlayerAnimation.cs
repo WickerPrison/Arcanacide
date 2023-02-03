@@ -20,6 +20,7 @@ public class PlayerAnimation : MonoBehaviour
     public bool parryWindow = false;
     public bool isParrying = false;
     public bool animationSwordMagic = false;
+    [System.NonSerialized] public bool facingFront;
     Smear smear;
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
@@ -120,6 +121,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         frontAnimator.Play("HeavyAttack");
         backAnimator.Play("HeavyAttack");
+    }
+
+    public void SpecialAttack()
+    {
+        frontAnimator.Play("SwordSpecialAttack");
+        backAnimator.Play("SwordSpecialAttack");
     }
 
     void StaminaUpdate()
@@ -283,6 +290,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void FrontRight()
     {
+        facingFront = true;
         smear.facingDirection = 0;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
@@ -294,6 +302,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void FrontLeft()
     {
+        facingFront = true;
         smear.facingDirection = 1;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
@@ -305,6 +314,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void BackLeft()
     {
+        facingFront = false;
         smear.facingDirection = 2;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
@@ -316,6 +326,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void BackRight()
     {
+        facingFront = false;
         smear.facingDirection = 3;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;

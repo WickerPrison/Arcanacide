@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 3665672022307716220}
   - component: {fileID: 6097107310019676004}
   - component: {fileID: 5748967463378149190}
+  - component: {fileID: -3748859879629552573}
   m_Layer: 6
   m_Name: OrbSpawner
   m_TagString: Enemy
@@ -229,8 +230,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7567124, y: 1.2812915, z: 0.80869067}
-  m_Center: {x: 0.16936865, y: 0.5995357, z: 0.24998802}
+  m_Size: {x: 0.7567124, y: 3.961466, z: 0.80869067}
+  m_Center: {x: 0.16936865, y: 1.939623, z: 0.24998802}
 --- !u!114 &6097107310019676004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +284,22 @@ MonoBehaviour:
   lightningOrbPrefab: {fileID: 260420701781460590, guid: 622db3b60b742ed4d8fbdaff35e4e11d, type: 3}
   spawnPoint: {fileID: 8361551601880967456}
   orbSprite: {fileID: 9182611085848644575}
+--- !u!54 &-3748859879629552573
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2501949541567006735}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &2700252958218214337
 GameObject:
   m_ObjectHideFlags: 0

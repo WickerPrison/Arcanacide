@@ -116,6 +116,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpecialAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba1be0c4-c7c9-48cd-8d57-698e5e410497"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -360,6 +369,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""HeavyAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d1e3256-275b-409a-996f-351184d07a8d"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea83cc77-f96e-4b73-b896-339f63e83dfc"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -566,6 +597,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Heal = m_Gameplay.FindAction("Heal", throwIfNotFound: true);
         m_Gameplay_Totem = m_Gameplay.FindAction("Totem", throwIfNotFound: true);
         m_Gameplay_HeavyAttack = m_Gameplay.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_Gameplay_SpecialAttack = m_Gameplay.FindAction("SpecialAttack", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_Select = m_Tutorial.FindAction("Select", throwIfNotFound: true);
@@ -647,6 +679,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Heal;
     private readonly InputAction m_Gameplay_Totem;
     private readonly InputAction m_Gameplay_HeavyAttack;
+    private readonly InputAction m_Gameplay_SpecialAttack;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -661,6 +694,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Heal => m_Wrapper.m_Gameplay_Heal;
         public InputAction @Totem => m_Wrapper.m_Gameplay_Totem;
         public InputAction @HeavyAttack => m_Wrapper.m_Gameplay_HeavyAttack;
+        public InputAction @SpecialAttack => m_Wrapper.m_Gameplay_SpecialAttack;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -700,6 +734,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @HeavyAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
+                @SpecialAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpecialAttack;
+                @SpecialAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpecialAttack;
+                @SpecialAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpecialAttack;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -734,6 +771,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @HeavyAttack.started += instance.OnHeavyAttack;
                 @HeavyAttack.performed += instance.OnHeavyAttack;
                 @HeavyAttack.canceled += instance.OnHeavyAttack;
+                @SpecialAttack.started += instance.OnSpecialAttack;
+                @SpecialAttack.performed += instance.OnSpecialAttack;
+                @SpecialAttack.canceled += instance.OnSpecialAttack;
             }
         }
     }
@@ -873,6 +913,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnHeal(InputAction.CallbackContext context);
         void OnTotem(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnSpecialAttack(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {

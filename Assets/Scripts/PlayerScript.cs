@@ -13,7 +13,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] PlayerProjectile projectilePrefab;
+    [SerializeField] AttackProfiles parryProfile;
     public float stamina;
     public float poise;
     SwordSiteDirectory swordSiteDirectory;
@@ -117,11 +117,7 @@ public class PlayerScript : MonoBehaviour
             sfx.Shield();
             if (parry & attackingEnemy != null)
             {
-                PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
-                projectile.transform.position = transform.position;
-                projectile.transform.LookAt(attackingEnemy.transform.position + new Vector3(0, 1.1f, 0));
-                projectile.target = attackingEnemy.transform;
-                projectile.playerController = playerController;
+                playerController.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
             }
         }
     }

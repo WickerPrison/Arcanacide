@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &93366920029792471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3079022714272363465}
+  m_Layer: 0
+  m_Name: FrontSwordTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3079022714272363465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93366920029792471}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.024, y: 0.603, z: 0.004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1805410961168794656}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116039898351009708
 GameObject:
   m_ObjectHideFlags: 0
@@ -6281,6 +6312,37 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
   m_Flip: 1
+--- !u!1 &2572818205263790167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4373143805650122359}
+  m_Layer: 0
+  m_Name: BackSwordTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4373143805650122359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572818205263790167}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.036, y: 0.631, z: -0.004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 480738553246561473}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2574666098034049318
 GameObject:
   m_ObjectHideFlags: 0
@@ -11636,6 +11698,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4206623971950981456}
+  - {fileID: 4373143805650122359}
   m_Father: {fileID: 8996320283537044506}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -88.362}
@@ -17105,6 +17168,10 @@ MonoBehaviour:
   shoveVFX: {fileID: 6321697753119861189}
   dodgeVFX: {fileID: 8482747864393254857}
   totemObject: {fileID: 7099582005832935722, guid: 99bdc7866ca1fa2449c00d734853cd56, type: 3}
+  frontSwordTip: {fileID: 3079022714272363465}
+  backSwordTip: {fileID: 4373143805650122359}
+  projectilePrefab: {fileID: 7335286762330827417, guid: db13e2660fafcdc42aa6a166b089e4e1, type: 3}
+  swordSpecialProfile: {fileID: 11400000, guid: 41f8649f66f3f424fab8049a06e26e92, type: 2}
   attackPoint: {fileID: 566375568958682984}
   enemyLayers:
     serializedVersion: 2
@@ -17181,7 +17248,7 @@ MonoBehaviour:
   dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   hitVFX: {fileID: 780656707513652994}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  projectilePrefab: {fileID: 7335286762330827417, guid: db13e2660fafcdc42aa6a166b089e4e1, type: 3}
+  parryProfile: {fileID: 11400000, guid: 8f4a8ad5bdacc634bb539dad6ddab79c, type: 2}
   stamina: 0
   poise: 0
   isStaggered: 0
@@ -33345,6 +33412,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8235810517791977967}
+  - {fileID: 3079022714272363465}
   m_Father: {fileID: 487135514611294622}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -88.362}
