@@ -78,6 +78,7 @@ public class InputManager : MonoBehaviour
         controls.Dialogue.Disable();
     }
 
+
     private void OnEnable()
     {
         controls.Enable();

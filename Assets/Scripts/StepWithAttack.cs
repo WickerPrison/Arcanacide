@@ -10,7 +10,7 @@ public class StepWithAttack : MonoBehaviour
     float raycastDistance;
     float moveSpeed = 5;
     LayerMask mask = ~0;
-    float maxStepTimer = 0.15f;
+    [System.NonSerialized] public float maxStepTimer = 0.15f;
 
     private void Start()
     {
@@ -20,11 +20,12 @@ public class StepWithAttack : MonoBehaviour
     }
 
 
-    public void Step()
+    public void Step(float stepWithAttackTimer)
     {
         stepDirection = Vector3.Normalize(attackPoint.position - transform.position);
         if(!Physics.Raycast(transform.position, stepDirection,raycastDistance, mask, QueryTriggerInteraction.Ignore))
         {
+            maxStepTimer = stepWithAttackTimer;
             StartCoroutine(StepCoroutine());
         }
     }

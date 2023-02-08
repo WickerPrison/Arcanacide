@@ -100,15 +100,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Totem"",
-                    ""type"": ""Button"",
-                    ""id"": ""c3112e2e-dc2a-4fe1-8ab4-cae8bb6bec92"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""HeavyAttack"",
                     ""type"": ""Button"",
                     ""id"": ""10ec1e02-efe9-4c68-a0e1-954315a616f0"",
@@ -121,6 +112,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""name"": ""SpecialAttack"",
                     ""type"": ""Button"",
                     ""id"": ""ba1be0c4-c7c9-48cd-8d57-698e5e410497"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sword"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8118a1e-65c5-439f-919e-87aad7dfe7fa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Axe"",
+                    ""type"": ""Button"",
+                    ""id"": ""70c6746f-a91b-42ed-ad85-0ed9688d4124"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -339,17 +348,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""607ad056-f80e-41ad-9f28-f035df55da21"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Totem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""ec3b2fd5-7c33-4111-be93-9741959a8ce1"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
@@ -389,6 +387,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f58841db-49c8-48e1-83c2-7d10d397a0b9"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sword"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""962f95a2-d789-4ce8-b97b-d04939aa2a39"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sword"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a19fc78e-04d3-4879-a493-ac8bed4e6def"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cde0254f-dad0-4197-8953-446dde560000"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -595,9 +637,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_Heal = m_Gameplay.FindAction("Heal", throwIfNotFound: true);
-        m_Gameplay_Totem = m_Gameplay.FindAction("Totem", throwIfNotFound: true);
         m_Gameplay_HeavyAttack = m_Gameplay.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Gameplay_SpecialAttack = m_Gameplay.FindAction("SpecialAttack", throwIfNotFound: true);
+        m_Gameplay_Sword = m_Gameplay.FindAction("Sword", throwIfNotFound: true);
+        m_Gameplay_Axe = m_Gameplay.FindAction("Axe", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_Select = m_Tutorial.FindAction("Select", throwIfNotFound: true);
@@ -677,9 +720,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_Heal;
-    private readonly InputAction m_Gameplay_Totem;
     private readonly InputAction m_Gameplay_HeavyAttack;
     private readonly InputAction m_Gameplay_SpecialAttack;
+    private readonly InputAction m_Gameplay_Sword;
+    private readonly InputAction m_Gameplay_Axe;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -692,9 +736,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
         public InputAction @Heal => m_Wrapper.m_Gameplay_Heal;
-        public InputAction @Totem => m_Wrapper.m_Gameplay_Totem;
         public InputAction @HeavyAttack => m_Wrapper.m_Gameplay_HeavyAttack;
         public InputAction @SpecialAttack => m_Wrapper.m_Gameplay_SpecialAttack;
+        public InputAction @Sword => m_Wrapper.m_Gameplay_Sword;
+        public InputAction @Axe => m_Wrapper.m_Gameplay_Axe;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -728,15 +773,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Heal.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
                 @Heal.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
                 @Heal.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
-                @Totem.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTotem;
-                @Totem.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTotem;
-                @Totem.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTotem;
                 @HeavyAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
                 @SpecialAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpecialAttack;
                 @SpecialAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpecialAttack;
                 @SpecialAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpecialAttack;
+                @Sword.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSword;
+                @Sword.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSword;
+                @Sword.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSword;
+                @Axe.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAxe;
+                @Axe.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAxe;
+                @Axe.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAxe;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -765,15 +813,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Heal.started += instance.OnHeal;
                 @Heal.performed += instance.OnHeal;
                 @Heal.canceled += instance.OnHeal;
-                @Totem.started += instance.OnTotem;
-                @Totem.performed += instance.OnTotem;
-                @Totem.canceled += instance.OnTotem;
                 @HeavyAttack.started += instance.OnHeavyAttack;
                 @HeavyAttack.performed += instance.OnHeavyAttack;
                 @HeavyAttack.canceled += instance.OnHeavyAttack;
                 @SpecialAttack.started += instance.OnSpecialAttack;
                 @SpecialAttack.performed += instance.OnSpecialAttack;
                 @SpecialAttack.canceled += instance.OnSpecialAttack;
+                @Sword.started += instance.OnSword;
+                @Sword.performed += instance.OnSword;
+                @Sword.canceled += instance.OnSword;
+                @Axe.started += instance.OnAxe;
+                @Axe.performed += instance.OnAxe;
+                @Axe.canceled += instance.OnAxe;
             }
         }
     }
@@ -911,9 +962,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnHeal(InputAction.CallbackContext context);
-        void OnTotem(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnSpecialAttack(InputAction.CallbackContext context);
+        void OnSword(InputAction.CallbackContext context);
+        void OnAxe(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {

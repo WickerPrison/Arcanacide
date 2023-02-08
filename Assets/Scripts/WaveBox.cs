@@ -5,16 +5,18 @@ using UnityEngine;
 public class WaveBox : MonoBehaviour
 {
     [SerializeField] AudioClip impactSFX;
-    [SerializeField] int damage;
-    [SerializeField] float poiseDamage;
+    public int damage;
+    public float poiseDamage;
     [SerializeField] bool canHurtEnemies = false;
     FireWave fireWave;
     EnemyScript enemyOfOrigin;
 
     private void Start()
     {
-        fireWave = GetComponentInParent<FireWave>();
-        enemyOfOrigin = fireWave.enemyOfOrigin;
+        if(fireWave = GetComponentInParent<FireWave>())
+        {
+            enemyOfOrigin = fireWave.enemyOfOrigin;
+        }
     }
 
 

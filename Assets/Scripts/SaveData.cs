@@ -27,6 +27,8 @@ public class SaveData
     public float mana;
     public int deathNum;
     public int killedEnemiesNum;
+    public List<int> unlockedWeapons;
+    public int currentWeapon;
 
     public int[] unlockedDoors;
     public int[] visitedRooms;
@@ -67,6 +69,8 @@ public class SaveData
         mana = playerData.mana;
         deathNum = playerData.deathNum;
         killedEnemiesNum = playerData.killedEnemiesNum;
+        unlockedWeapons = playerData.unlockedWeapons;
+        currentWeapon = playerData.currentWeapon;
 
 
         unlockedDoors = mapData.unlockedDoors.ToArray();

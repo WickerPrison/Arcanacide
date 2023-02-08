@@ -153,7 +153,7 @@ public class FireSwordsmanController : EnemyController
     public override void AttackHit(int smearSpeed)
     {
         smearScript.particleSmear(smearSpeed);
-        stepWithAttack.Step();
+        stepWithAttack.Step(0.15f);
         base.AttackHit(smearSpeed);
     }
 }

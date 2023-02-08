@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +6,11 @@ public class TotemAnimationEvents : MonoBehaviour
 {
     [SerializeField] GameObject ripplePrefab;
     [SerializeField] ParticleSystem landingVFX;
+    [SerializeField] AttackProfiles axeSpecial;
+    [SerializeField] PlayerData playerData;
     CameraFollow cameraScript;
     TouchingCollider colliderScript;
     List<Collider> touchingCollider;
-    PlayerController playerController;
-    int damageMultiplier = 2;
     float startRadius = 2;
     int numberOfBoxes = 50;
     float rippleSpeed = 5;
@@ -21,26 +21,32 @@ public class TotemAnimationEvents : MonoBehaviour
     {
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         colliderScript = GetComponentInParent<TouchingCollider>();
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     public void Landing()
     {
         landingVFX.Play();
-        StartCoroutine(cameraScript.ScreenShake(.1f, .03f));
+        StartCoroutine(cameraScript.ScreenShake(axeSpecial.screenShakeNoHit.x, axeSpecial.screenShakeNoHit.y));
         touchingCollider = colliderScript.GetTouchingObjects();
+        int damage = Mathf.RoundToInt(playerData.AttackPower() * axeSpecial.damageMultiplier);
+        int poiseDamage = Mathf.RoundToInt(playerData.AttackPower() * axeSpecial.damageMultiplier);
         foreach(Collider collider in touchingCollider)
         {
-            if (collider.gameObject.CompareTag("Enemy"))
+            if(collider != null)
             {
-                EnemyScript enemyScript = collider.gameObject.GetComponent<EnemyScript>();
-                enemyScript.LoseHealth(playerController.AttackPower() * damageMultiplier, playerController.AttackPower() * damageMultiplier);
-            }
-            else if (collider.gameObject.CompareTag("Player"))
-            {
-                PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
-                playerScript.LoseHealth(playerController.AttackPower() * damageMultiplier);
-                playerScript.LosePoise(playerController.AttackPower() * damageMultiplier);
+                if (collider.gameObject.CompareTag("Enemy"))
+                {
+                    EnemyScript enemyScript = collider.gameObject.GetComponent<EnemyScript>();
+                    enemyScript.LoseHealth(damage, poiseDamage);
+                    enemyScript.StartStagger(axeSpecial.staggerDuration);
+                }
+                else if (collider.gameObject.CompareTag("Player"))
+                {
+                    PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
+                    playerScript.LoseHealth(damage);
+                    playerScript.LosePoise(poiseDamage);
+                    playerScript.StartStagger(axeSpecial.staggerDuration);
+                }
             }
         }
     }
@@ -56,6 +62,9 @@ public class TotemAnimationEvents : MonoBehaviour
             rippleBox.rippleSpeed = rippleSpeed;
             rippleBox.lifeTime = lifeTime;
             rippleBox.direction = Vector3.Normalize(rippleBox.transform.position - transform.position);
+            WaveBox waveBox = rippleBox.gameObject.GetComponent<WaveBox>();
+            waveBox.damage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
+            waveBox.poiseDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
         }
     }
 

@@ -74,6 +74,8 @@ public class GameManager : MonoBehaviour
             playerData.mana = data.mana;
             playerData.deathNum = data.deathNum;
             playerData.killedEnemiesNum = data.killedEnemiesNum;
+            playerData.unlockedWeapons = data.unlockedWeapons;
+            playerData.currentWeapon = data.currentWeapon;
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.visitedRooms = data.visitedRooms.ToList();
@@ -119,6 +121,9 @@ public class GameManager : MonoBehaviour
         playerData.mana = playerData.maxMana;
         playerData.deathNum = 0;
         playerData.killedEnemiesNum = 0;
+        playerData.unlockedWeapons.Clear();
+        playerData.unlockedWeapons.Add(0);
+        playerData.currentWeapon = 0;
 
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();

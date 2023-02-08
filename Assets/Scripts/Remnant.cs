@@ -50,13 +50,12 @@ public class Remnant : MonoBehaviour
             mapData.deathRoom = "none";
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
-                PlayerAnimation playerAnimation = player.gameObject.GetComponent<PlayerAnimation>();
-                playerAnimation.EndSwordMagic();
+                WeaponManager weaponManager = player.gameObject.GetComponent<WeaponManager>();
+                weaponManager.RemoveWeaponMagicSource();
                 PlayerController playerController = player.gameObject.GetComponent<PlayerController>();
                 playerController.arcaneRemainsActive = true;
                 PlayerScript playerScript = player.gameObject.GetComponent<PlayerScript>();
                 playerScript.MaxHeal();
-
             }
             Destroy(gameObject);
         }
@@ -66,9 +65,9 @@ public class Remnant : MonoBehaviour
     {
         if (other.CompareTag("Player") && playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
         {
-            PlayerAnimation playerAnimation = player.gameObject.GetComponent<PlayerAnimation>();
-            playerAnimation.StartSwordMagic();
-            PlayerController playerController = playerAnimation.gameObject.GetComponent<PlayerController>();
+            WeaponManager weaponManager = player.gameObject.GetComponent<WeaponManager>();
+            weaponManager.AddWeaponMagicSource();
+            PlayerController playerController = weaponManager.gameObject.GetComponent<PlayerController>();
             playerController.arcaneRemainsActive = true;
         }
 
@@ -83,9 +82,9 @@ public class Remnant : MonoBehaviour
     {
         if (other.CompareTag("Player") && playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
         {
-            PlayerAnimation playerAnimation = player.gameObject.GetComponent<PlayerAnimation>();
-            playerAnimation.EndSwordMagic();
-            PlayerController playerController = playerAnimation.gameObject.GetComponent<PlayerController>();
+            WeaponManager weaponManager = player.gameObject.GetComponent<WeaponManager>();
+            weaponManager.RemoveWeaponMagicSource();
+            PlayerController playerController = weaponManager.gameObject.GetComponent<PlayerController>();
             playerController.arcaneRemainsActive = false;
         }
     }

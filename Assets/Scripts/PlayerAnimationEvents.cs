@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerAnimationEvents : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerAttackArc attackArc;
     GameManager gm;
     AudioSource SFX;
+    WeaponManager weaponManager;
 
     // Start is called before the first frame update
     void Start()
@@ -35,12 +37,13 @@ public class PlayerAnimationEvents : MonoBehaviour
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         attackArc = playerController.attackPoint.gameObject.GetComponent<PlayerAttackArc>();
         SFX = transform.parent.GetComponentInChildren<AudioSource>();
+        weaponManager = GetComponentInParent<WeaponManager>();
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
     public void AttackHit(AttackProfiles attackProfile)
     {
-        stepWithAttack.Step();
+        stepWithAttack.Step(attackProfile.stepWithAttack);
 
         if(attackProfile.soundNoHit != null)
         {
@@ -109,7 +112,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
         if(gm.enemiesInRange.Count > 0)
         {
-            stepWithAttack.Step();
+            stepWithAttack.Step(attackProfile.stepWithAttack);
         }
     }
 
@@ -147,6 +150,16 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void SwordSpecialAttack()
     {
         playerController.SwordSpecialAttack();
+    }
+
+    public void AxeHeavy()
+    {
+        playerController.axeHeavyTimer = playerController.axeHeavyMaxTime;
+    }
+
+    public void AxeSpecialAttack()
+    {
+        playerController.AxeSpecialAttack();
     }
 
     public void AttackFalse()
@@ -227,22 +240,31 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation.EndBodyMagic();
     }
 
-    public void StartSwordMagic()
+    public void StartWeaponMagic()
     {
-        playerAnimation.animationSwordMagic = true;
-        playerAnimation.StartSwordMagic();
+        weaponManager.AddWeaponMagicSource();
     }
 
-    public void EndSwordMagic()
+    public void EndWeaponMagic()
     {
-        playerAnimation.animationSwordMagic = false;
-        playerAnimation.EndSwordMagic();
+        weaponManager.RemoveWeaponMagicSource();
+    }
+
+    public void StartSpecificWeaponMagic(int weaponID)
+    {
+        weaponManager.AddSpecificWeaponSource(weaponID);
+    }
+
+    public void EndSpecificWeaponMagic(int weaponID)
+    {
+        weaponManager.RemoveSpecificWeaponSource(weaponID);
     }
 
     public void Shove()
     {
         shoveVFX.Play();
     }
+
 
     public void ParryWindow()
     {

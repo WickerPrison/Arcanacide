@@ -10,29 +10,25 @@ public class PlayerAnimation : MonoBehaviour
     //Animations are always called on both animators, even though one is unseen. This allows us to smoothly switch between
     //the two without worrying about lining up the timing or animations being cut short
 
-    public Animator parryAnimator;
-    public Vector3 mousePosition;
-    public Vector3 playerRotationPoint;
-    public Vector3 playerScreenPosition;
-    public bool walk;
-    public bool attacking;
-    public bool continueBlocking;
-    public bool parryWindow = false;
-    public bool isParrying = false;
-    public bool animationSwordMagic = false;
+    //public Animator parryAnimator;
+    [System.NonSerialized] public Vector3 mousePosition;
+    [System.NonSerialized] public Vector3 playerRotationPoint;
+    [System.NonSerialized] public Vector3 playerScreenPosition;
+    [System.NonSerialized] public bool walk;
+    [System.NonSerialized] public bool attacking;
+    [System.NonSerialized] public bool continueBlocking;
+    [System.NonSerialized] public bool parryWindow = false;
+    [System.NonSerialized] public bool isParrying = false;
     [System.NonSerialized] public bool facingFront;
     Smear smear;
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     [SerializeField] ParticleSystem bodyMagic;
-    [SerializeField] ParticleSystem frontSwordMagic;
-    [SerializeField] ParticleSystem backSwordMagic;
     Camera cam;
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerController playerController;
     [SerializeField] float rotationPointY;
     [SerializeField] EmblemLibrary emblemLibrary;
-    PlayerSound playerSound;
 
     Vector3 away = new Vector3(100, 100, 100);
     Vector3 frontAnimatorPosition;
@@ -41,14 +37,6 @@ public class PlayerAnimation : MonoBehaviour
     float frontOffset;
     float backOffset;
     public ParticleSystem shoveVFX;
-
-    int weaponMagicSources = 0;
-    bool weaponMagicOn;
-
-    private void Awake()
-    {
-        playerSound = gameObject.GetComponentInChildren<PlayerSound>();
-    }
 
     private void Start()
     {
@@ -101,14 +89,6 @@ public class PlayerAnimation : MonoBehaviour
 
         frontAnimator.SetBool("ContinueBlocking", continueBlocking);
         backAnimator.SetBool("ContinueBlocking", continueBlocking);
-
-        if (weaponMagicOn && weaponMagicSources <= 0)
-        {
-            weaponMagicOn = false;
-            frontSwordMagic.Stop();
-            backSwordMagic.Stop();
-            playerSound.StopWeaponMagic();
-        }
     }
 
     public void Attack()
@@ -125,8 +105,8 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SpecialAttack()
     {
-        frontAnimator.Play("SwordSpecialAttack");
-        backAnimator.Play("SwordSpecialAttack");
+        frontAnimator.Play("SpecialAttack");
+        backAnimator.Play("SpecialAttack");
     }
 
     void StaminaUpdate()
@@ -203,7 +183,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void ParryAnimation()
     {
-        parryAnimator.Play("Parry");
+        //parryAnimator.Play("Parry");
     }
 
     public void StartBodyMagic()
@@ -214,20 +194,6 @@ public class PlayerAnimation : MonoBehaviour
     public void EndBodyMagic()
     {
         bodyMagic.Stop();
-    }
-
-    public void StartSwordMagic()
-    {
-        weaponMagicSources += 1;
-        weaponMagicOn = true;
-        frontSwordMagic.Play();
-        backSwordMagic.Play();
-        playerSound.WeaponMagic();
-    }
-
-    public void EndSwordMagic()
-    {
-        weaponMagicSources -= 1;
     }
 
     void FaceJoystick()

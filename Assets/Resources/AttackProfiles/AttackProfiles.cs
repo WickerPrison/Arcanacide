@@ -9,6 +9,7 @@ public class AttackProfiles : ScriptableObject
     public bool heavyAttack;
 
     public int smearSpeed;
+    public float stepWithAttack;
     public int halfConeAngle;
     public float attackRange;
     public float damageMultiplier;

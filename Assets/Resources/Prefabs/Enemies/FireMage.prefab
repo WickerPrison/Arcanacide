@@ -44029,8 +44029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 70
-  poise: 70
   reward: 10
   healthbar: {fileID: 5566665767565311819}
   healthbarScale: 1
@@ -44045,7 +44043,6 @@ MonoBehaviour:
   staggerDuration: 0
   hitVFX: {fileID: 4816583161477865739}
   dotVFX: {fileID: 6293194480012144794}
-  isDying: 0
 --- !u!114 &5566665768951350949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44058,34 +44055,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e34f5701a2c3de42b8d8cdfe4fd5856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gm: {fileID: 0}
-  smearScript: {fileID: 0}
-  enemyScript: {fileID: 0}
-  enemySound: {fileID: 0}
-  playerController: {fileID: 0}
-  playerScript: {fileID: 0}
-  playerAnimation: {fileID: 0}
   frontAnimator: {fileID: 2213670239397115885}
   backAnimator: {fileID: 5581181131711111826}
   navAgent: {fileID: 5566665768951350948}
-  hasSeenPlayer: 0
   attackMaxTime: 3
-  attackTime: 0
   detectRange: 10
   attackRange: 8
-  attacking: 0
   projectilePrefab: {fileID: 7086795160678116252, guid: 3cedf55e3cd5a214297e811b67b22bee, type: 3}
-  detectionTrigger: 0
-  directionLock: 0
-  parryWindow: 0
-  isParrying: 0
   spellAttackDamage: 13
   spellAttackPoiseDamage: 13
   hitDamage: 0
   hitPoiseDamage: 0
-  facingFront: 0
-  isStaggered: 0
-  canHitPlayer: 0
   fireRing: {fileID: 5257937341476949498}
   frontAttackPoint: {fileID: 5474969153482539992}
   backAttackPoint: {fileID: 24195231076668799}

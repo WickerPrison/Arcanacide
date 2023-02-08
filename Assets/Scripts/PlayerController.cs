@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform frontSwordTip;
     [SerializeField] Transform backSwordTip;
     [SerializeField] PlayerProjectile projectilePrefab;
-    [SerializeField] AttackProfiles swordSpecialProfile;
+    [SerializeField] List<AttackProfiles> specialAttackProfiles;
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     GameManager gm;
     SoundManager sm;
     PlayerAnimation playerAnimation;
+    WeaponManager weaponManager;
     PlayerScript playerScript;
     PlayerSound playerSound;
     public Rigidbody rb;
@@ -52,9 +53,9 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public bool arcaneRemainsActive = false;
     [SerializeField] GameObject pathTrailPrefab;
 
-    float totemManaCost = 25;
-    float totemMaxCooldown = 2;
-    float totemCooldown;
+    [System.NonSerialized] public float axeHeavyTimer = 0;
+    [System.NonSerialized] public float axeHeavyMaxTime = 15;
+
     float shoveManaCost = 20;
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
@@ -74,6 +75,7 @@ public class PlayerController : MonoBehaviour
         SetUpControls();
         //Set references to other player scripts
         playerAnimation = GetComponent<PlayerAnimation>();
+        weaponManager = GetComponent<WeaponManager>();
         playerScript = GetComponent<PlayerScript>();
         playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
@@ -88,18 +90,22 @@ public class PlayerController : MonoBehaviour
 
         AttackPointPosition();
 
+        if(axeHeavyTimer > 0)
+        {
+            axeHeavyTimer -= Time.deltaTime;
+            if(axeHeavyTimer <= 0)
+            {
+                weaponManager.RemoveSpecificWeaponSource(1);
+            }
+        }
+
         if (closeCallTimer > 0)
         {
             closeCallTimer -= Time.deltaTime;
             if (closeCallTimer <= 0)
             {
-                playerAnimation.EndSwordMagic();
+                weaponManager.RemoveWeaponMagicSource();
             }
-        }
-
-        if (totemCooldown > 0)
-        {
-            totemCooldown -= Time.deltaTime;
         }
 
         if (lockPosition)
@@ -115,27 +121,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (playerData.mana > 0 && totemCooldown <= 0)
+        if (playerData.mana > 0)
         {
             rb.velocity = Vector3.zero;
             playerAnimation.Shield();
             playerAnimation.continueBlocking = true;
-        }
-    }
-
-    void Totem()
-    {
-        if (!playerData.unlockedAbilities.Contains("Totem") || !CanInput())
-        {
-            return;
-        }
-
-        if (playerData.mana > 0 && totemCooldown <= 0)
-        {
-            playerScript.LoseMana(totemManaCost);
-            totemCooldown = totemMaxCooldown;
-            GameObject totem = Instantiate(totemObject);
-            totem.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
     }
 
@@ -229,18 +219,25 @@ public class PlayerController : MonoBehaviour
 
     public void SpecialAttack()
     {
-        if(CanInput() && playerScript.stamina > 0 && playerData.mana > swordSpecialProfile.manaCost)
+        if(CanInput() && playerScript.stamina > 0 && playerData.mana > specialAttackProfiles[playerData.currentWeapon].manaCost)
         {
-            rb.velocity = Vector3.zero;
-            playerAnimation.attacking = true;
-            playerAnimation.SpecialAttack();
+            if(playerData.currentWeapon == 1)
+            {
+                AxeSpecialAttack();
+            }
+            else
+            {
+                rb.velocity = Vector3.zero;
+                playerAnimation.attacking = true;
+                playerAnimation.SpecialAttack();
+            }
         }
     }
 
     public void SwordSpecialAttack()
     {
-        playerScript.LoseStamina(swordSpecialProfile.staminaCost);
-        playerScript.LoseMana(swordSpecialProfile.manaCost);
+        playerScript.LoseStamina(specialAttackProfiles[0].staminaCost);
+        playerScript.LoseMana(specialAttackProfiles[0].manaCost);
         Transform origin;
         if (playerAnimation.facingFront)
         {
@@ -253,11 +250,18 @@ public class PlayerController : MonoBehaviour
 
         foreach(EnemyScript enemy in gm.enemies)
         {
-            if (Vector3.Distance(transform.position, enemy.transform.position) <= swordSpecialProfile.attackRange)
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= specialAttackProfiles[0].attackRange)
             {
-                FireProjectile(enemy, origin.position, swordSpecialProfile);
+                FireProjectile(enemy, origin.position, specialAttackProfiles[0]);
             }
         }
+    }
+
+    public void AxeSpecialAttack()
+    {
+        playerScript.LoseMana(specialAttackProfiles[1].manaCost);
+        GameObject totem = Instantiate(totemObject);
+        totem.transform.position = new Vector3(transform.position.x, 0, transform.position.z);    
     }
 
     public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
@@ -286,6 +290,11 @@ public class PlayerController : MonoBehaviour
         if (playerData.equippedEmblems.Contains(emblemLibrary.quick_strikes))
         {
             attackPower = Mathf.RoundToInt(attackPower * 0.8f);
+        }
+
+        if(playerData.currentWeapon == 1 && axeHeavyTimer > 0)
+        {
+            attackPower += playerData.ArcaneDamage();
         }
 
         return attackPower;
@@ -452,7 +461,7 @@ public class PlayerController : MonoBehaviour
         {
             if(closeCallTimer <= 0)
             {
-                playerAnimation.StartSwordMagic();
+                weaponManager.AddWeaponMagicSource();
             }
             closeCallTimer = closeCallMaxTime;
         }
@@ -499,6 +508,5 @@ public class PlayerController : MonoBehaviour
         im.controls.Gameplay.Heal.performed += ctx => playerAnimation.HealAnimation();
         im.controls.Gameplay.Look.performed += ctx => rightStickValue = ctx.ReadValue<Vector2>();
         im.controls.Gameplay.Look.canceled += ctx => rightStickValue = Vector2.zero;
-        im.controls.Gameplay.Totem.performed += ctx => Totem();
     }
 }

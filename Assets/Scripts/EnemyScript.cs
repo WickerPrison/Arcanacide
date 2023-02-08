@@ -138,6 +138,11 @@ public class EnemyScript : MonoBehaviour
         poise -= poiseDamage;
     }
 
+    public void StartStagger(float staggerDuration)
+    {
+        enemyController.StartStagger(staggerDuration);
+    }
+
     void UpdateHealthbar()
     {
         float healthbarRatio = (float)health / (float)maxHealth;

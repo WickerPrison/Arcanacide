@@ -21,6 +21,7 @@ public class PlayerScript : MonoBehaviour
     InputManager im;
     PlayerController playerController;
     PlayerAnimation playerAnimation;
+    WeaponManager weaponManager;
     PlayerSound sfx;
     CameraFollow cameraScript;
     float maxStaminaDelay = 1f;
@@ -59,6 +60,7 @@ public class PlayerScript : MonoBehaviour
         barrierTimer = 0;
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        weaponManager = GetComponent<WeaponManager>();
         sfx = GetComponentInChildren<PlayerSound>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         if(playerData.health == playerData.MaxHealth())
@@ -66,7 +68,7 @@ public class PlayerScript : MonoBehaviour
             fullHealth = true;
             if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
             {
-                playerAnimation.StartSwordMagic();
+                weaponManager.AddWeaponMagicSource();
             }
         }
         if(playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
@@ -93,7 +95,7 @@ public class PlayerScript : MonoBehaviour
             playerData.health -= damage;
             if(fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
             {
-                playerAnimation.EndSwordMagic();
+                weaponManager.RemoveWeaponMagicSource(); ;
             }
             fullHealth = false;
             hitVFX.Play();
@@ -127,7 +129,7 @@ public class PlayerScript : MonoBehaviour
         playerData.health = playerData.MaxHealth();
         if (!fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
         {
-            playerAnimation.StartSwordMagic();
+            weaponManager.AddWeaponMagicSource();
         }
         fullHealth = true;
         sfx.Heal();
@@ -141,7 +143,7 @@ public class PlayerScript : MonoBehaviour
             playerData.health = playerData.MaxHealth();
             if (!fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
             {
-                playerAnimation.StartSwordMagic();
+                weaponManager.AddWeaponMagicSource();
             }
             fullHealth = true;
         }
@@ -206,11 +208,13 @@ public class PlayerScript : MonoBehaviour
             }
             staggerTimer += staggerDuration;
             isStaggered = true;
+            /*
             if (playerAnimation.animationSwordMagic)
             {
                 playerAnimation.EndSwordMagic();
                 playerAnimation.animationSwordMagic = false;
             }
+            */
             if (playerController.arcaneStepActive)
             {
                 playerController.EndArcaneStep();

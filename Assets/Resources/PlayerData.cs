@@ -30,6 +30,9 @@ public class PlayerData : ScriptableObject
 
     public Vector2 moveDir;
 
+    public List<int> unlockedWeapons;
+    public int currentWeapon;
+
 
     public int MaxHealth()
     {
