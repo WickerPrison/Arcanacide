@@ -147,6 +147,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         return attackDamage;
     }
 
+    public void SwitchWeaponSprite(int weaponID)
+    {
+        weaponManager.ActivateWeaponSprite(weaponID);
+    }
+
     public void SwordSpecialAttack()
     {
         playerController.SwordSpecialAttack();

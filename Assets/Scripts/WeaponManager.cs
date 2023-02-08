@@ -72,14 +72,20 @@ public class WeaponManager : MonoBehaviour
         playerData.currentWeapon = nextWeapon;
         frontAnimator.runtimeAnimatorController = frontAnimatorControllers[nextWeapon];
         backAnimator.runtimeAnimatorController = backAnimatorControllers[nextWeapon];
-
         ClearSprites();
-        frontWeaponSprites[nextWeapon].SetActive(true);
-        backWeaponSprites[nextWeapon].SetActive(true);
+        frontAnimator.Play("SwitchWeapon");
+        backAnimator.Play("SwitchWeapon");
+
         if(weaponMagicSources + specificWeaponMagicSources[nextWeapon] > 0)
         {
             OnStartWeaponMagic?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    public void ActivateWeaponSprite(int weaponID)
+    {
+        frontWeaponSprites[weaponID].SetActive(true);
+        backWeaponSprites[weaponID].SetActive(true);
     }
 
     void ClearSprites()
