@@ -38,6 +38,8 @@ public class PlayerAnimation : MonoBehaviour
     float backOffset;
     public ParticleSystem shoveVFX;
 
+    public int facingDirection;
+
     private void Start()
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -257,7 +259,7 @@ public class PlayerAnimation : MonoBehaviour
     void FrontRight()
     {
         facingFront = true;
-        smear.facingDirection = 0;
+        facingDirection = 0;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
@@ -269,7 +271,7 @@ public class PlayerAnimation : MonoBehaviour
     void FrontLeft()
     {
         facingFront = true;
-        smear.facingDirection = 1;
+        facingDirection = 1;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
@@ -281,7 +283,7 @@ public class PlayerAnimation : MonoBehaviour
     void BackLeft()
     {
         facingFront = false;
-        smear.facingDirection = 2;
+        facingDirection = 2;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
@@ -293,7 +295,7 @@ public class PlayerAnimation : MonoBehaviour
     void BackRight()
     {
         facingFront = false;
-        smear.facingDirection = 3;
+        facingDirection = 3;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(-initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);

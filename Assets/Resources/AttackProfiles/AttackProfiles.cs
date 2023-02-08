@@ -28,4 +28,8 @@ public class AttackProfiles : ScriptableObject
     public float soundOnHitVolume;
     public AudioClip soundNoHit;
     public float soundNoHitVolume;
+
+    public List<Vector3> smearPositions;
+    public List<Vector3> smearRotations;
+    public List<Vector3> smearScales;
 }

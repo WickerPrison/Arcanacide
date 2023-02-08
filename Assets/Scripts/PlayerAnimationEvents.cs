@@ -11,7 +11,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] ParticleSystem shoveVFX;
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
-    Smear smear;
+    PlayerSmear smear;
     StepWithAttack stepWithAttack;
     PlayerController playerController;
     PlayerScript playerScript;
@@ -28,7 +28,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerAnimation = GetComponentInParent<PlayerAnimation>();
-        smear = transform.parent.GetComponentInChildren<Smear>();
+        smear = transform.parent.GetComponentInChildren<PlayerSmear>();
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
         playerController = GetComponentInParent<PlayerController>();
         playerScript = GetComponentInParent<PlayerScript>();
@@ -51,7 +51,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackProfile.staminaCost);
-        smear.particleSmear(attackProfile.smearSpeed);
+        smear.particleSmear(attackProfile);
 
 
         if(attackProfile.screenShakeNoHit != Vector2.zero)
