@@ -19,6 +19,11 @@ public class PlayerSmear : MonoBehaviour
 
     public void particleSmear(AttackProfiles attackProfile)
     {
+        if(attackProfile.smearSpeed == 0)
+        {
+            return;
+        }
+
         smear.Clear();
         SmearDirection(attackProfile);
         ParticleSystem.ShapeModule smearShapeFront = smear.shape;

@@ -29,7 +29,7 @@ public class WeaponManager : MonoBehaviour
 
         playerController = GetComponent<PlayerController>();
 
-        SwitchWeapon(playerData.currentWeapon);
+        SetWeapon(playerData.currentWeapon);
     }
 
     public void AddWeaponMagicSource()
@@ -64,7 +64,7 @@ public class WeaponManager : MonoBehaviour
 
     public void SwitchWeapon(int nextWeapon)
     {
-        if (!playerController.CanInput() || !playerData.unlockedWeapons.Contains(nextWeapon))
+        if (!playerController.CanInput() || !playerData.unlockedWeapons.Contains(nextWeapon) || playerData.currentWeapon == nextWeapon)
         {
             return;
         }
@@ -79,6 +79,21 @@ public class WeaponManager : MonoBehaviour
         backAnimator.Play("SwitchWeapon");
 
         if(weaponMagicSources + specificWeaponMagicSources[nextWeapon] > 0)
+        {
+            OnStartWeaponMagic?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    void SetWeapon(int weaponID)
+    {
+        playerData.currentWeapon = weaponID;
+        frontAnimator.runtimeAnimatorController = frontAnimatorControllers[weaponID];
+        backAnimator.runtimeAnimatorController = backAnimatorControllers[weaponID];
+        ClearSprites();
+        frontWeaponSprites[weaponID].SetActive(true);
+        backWeaponSprites[weaponID].SetActive(true);
+
+        if (weaponMagicSources + specificWeaponMagicSources[weaponID] > 0)
         {
             OnStartWeaponMagic?.Invoke(this, EventArgs.Empty);
         }

@@ -34,6 +34,8 @@ public class TutorialManager : MonoBehaviour
     string endOfDemo = "EndOfDemo";
     [SerializeField] GameObject altarTutorial;
     string altar = "Altar";
+    [SerializeField] GameObject newWeaponTutorial;
+    string newWeapon = "NewWeapon";
     public List<string> allTutorials;
 
     private void Start()
@@ -153,6 +155,14 @@ public class TutorialManager : MonoBehaviour
         OpenMessage();
     }
 
+    public void NewWeaponTutorial()
+    {
+        playerData.tutorials.Remove("NewWeapon");
+        nextMessage = null;
+        currentMessage = Instantiate(newWeaponTutorial);
+        OpenMessage();
+    }
+
     public void EndOfDemoTutorial()
     {
         playerData.tutorials.Remove("EndOfDemo");
@@ -183,5 +193,6 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(specialAttack);
         allTutorials.Add(endOfDemo);
         allTutorials.Add(altar);
+        allTutorials.Add(newWeapon);
     }
 }
