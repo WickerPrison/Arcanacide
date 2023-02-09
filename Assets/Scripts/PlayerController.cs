@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask enemyLayers;
     public float moveSpeed;
     public bool knockback = false;
+    [System.NonSerialized] public bool canWalk = false;
 
     InputManager im;
     GameManager gm;
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     GameObject pauseMenu;
     Vector3 mouseDirection;
-    Vector3 moveDirection;
+    [System.NonSerialized] public Vector3 moveDirection;
     Vector3 dashDirection;
     float dashSpeed = 1000;
     public float dashTime = 0;
@@ -303,7 +304,7 @@ public class PlayerController : MonoBehaviour
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
     void AttackPointPosition()
     {
-        if (!CanInput())
+        if (!CanInput() && !canWalk)
         {
             return;
         }
@@ -412,7 +413,7 @@ public class PlayerController : MonoBehaviour
     //FixedUpdate is similar to Update but should always be used when dealing with physics
     private void FixedUpdate()
     {
-        if (moveDirection.magnitude > 0 && CanInput())
+        if (moveDirection.magnitude > 0 && (CanInput() || canWalk))
         {
             playerAnimation.walk = true;
         }

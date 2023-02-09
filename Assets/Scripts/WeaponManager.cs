@@ -73,6 +73,8 @@ public class WeaponManager : MonoBehaviour
         frontAnimator.runtimeAnimatorController = frontAnimatorControllers[nextWeapon];
         backAnimator.runtimeAnimatorController = backAnimatorControllers[nextWeapon];
         ClearSprites();
+        frontAnimator.SetLayerWeight(1, 1);
+        backAnimator.SetLayerWeight(1, 1);
         frontAnimator.Play("SwitchWeapon");
         backAnimator.Play("SwitchWeapon");
 

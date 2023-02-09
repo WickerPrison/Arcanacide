@@ -134,6 +134,8 @@ public class PlayerAnimation : MonoBehaviour
     {
         if(playerScript.playerData.healCharges >= 0)
         {
+            frontAnimator.SetLayerWeight(1, 1);
+            backAnimator.SetLayerWeight(1, 1);
             frontAnimator.Play("Heal");
             backAnimator.Play("Heal");
         }

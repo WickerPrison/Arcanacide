@@ -265,6 +265,21 @@ public class PlayerAnimationEvents : MonoBehaviour
         weaponManager.RemoveSpecificWeaponSource(weaponID);
     }
 
+    public void StartWalkLayer()
+    {
+        playerController.canWalk = true;
+    }
+
+    public void EndWalkLayer()
+    {
+        playerController.canWalk = false;
+        frontAnimator.SetLayerWeight(1, 0);
+        if(playerController.moveDirection.magnitude > 0)
+        {
+            frontAnimator.Play("Walk", 0, frontAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime);
+        }
+    }
+
     public void Shove()
     {
         shoveVFX.Play();
