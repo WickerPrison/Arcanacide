@@ -423,7 +423,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //move the player if they are not dashing or attacking
-        if (CanInput())
+        if (CanInput() || canWalk)
         {
             rb.velocity = new Vector3(moveDirection.x * Time.fixedDeltaTime * moveSpeed, rb.velocity.y, moveDirection.z * Time.fixedDeltaTime * moveSpeed);
         }
