@@ -7,6 +7,7 @@ using UnityEngine.Rendering.PostProcessing;
 public class EmblemLibrary : ScriptableObject
 {
     [SerializeField] PlayerData playerData;
+    public List<string> firstFloorPatches;
 
     public string magical_acceleration = "Magical Acceleration";
     public string magical_acceleration_description = "Mana recharges faster";

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject musicPlayer;
     [SerializeField] MapData mapData;
+    [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] PlayerData playerData;
     [SerializeField] DialogueData dialogueData;
     [SerializeField] GameObject moneyDropPrefab;
@@ -123,6 +124,56 @@ public class GameManager : MonoBehaviour
         playerData.killedEnemiesNum = 0;
         playerData.unlockedWeapons.Clear();
         playerData.unlockedWeapons.Add(0);
+        playerData.currentWeapon = 0;
+
+        mapData.unlockedDoors.Clear();
+        mapData.visitedRooms.Clear();
+        mapData.powerSwitchesFlipped.Clear();
+        mapData.deathRoom = deathRoom;
+        mapData.deathPosition = deathPosition;
+        mapData.ticketFiled = ticketFiled;
+        mapData.fireBossKilled = fireBossKilled;
+        mapData.secretaryConvo = secretaryConvo;
+
+        dialogueData.ORTHODOXQueue.Clear();
+        dialogueData.ORTHODOXPreviousConversations.Clear();
+        dialogueData.TRENCHQueue.Clear();
+        dialogueData.TRENCHPreviousConversations.Clear();
+        dialogueData.UnknownNumberQueue.Clear();
+        dialogueData.UnknownNumberPreviousConversations.Clear();
+        dialogueData.ORTHODOXQueue.Add(0);
+        dialogueData.conversationsHad.Clear();
+        dialogueData.patchworkGaryConversations.Clear();
+    }
+
+    public void StartAtFloor2()
+    {
+        playerData.maxHealCharges = 2;
+        playerData.healCharges = 2;
+        playerData.lastSwordSite = 4;
+        playerData.unlockedAbilities.Clear();
+        playerData.unlockedAbilities.Add("Block");
+        playerData.emblems.Clear();
+        foreach (string patch in emblemLibrary.firstFloorPatches)
+        {
+            playerData.emblems.Add(patch);
+        }
+        playerData.equippedEmblems.Clear();
+        playerData.tutorials.Clear();
+        playerData.money = 280;
+        playerData.lostMoney = 0;
+        playerData.strength = 1;
+        playerData.dexterity = 1;
+        playerData.vitality = 1;
+        playerData.dedication = 1;
+        playerData.health = playerData.MaxHealth();
+        playerData.maxMana = 50;
+        playerData.mana = playerData.maxMana;
+        playerData.deathNum = 0;
+        playerData.killedEnemiesNum = 0;
+        playerData.unlockedWeapons.Clear();
+        playerData.unlockedWeapons.Add(0);
+        playerData.unlockedWeapons.Add(1);
         playerData.currentWeapon = 0;
 
         mapData.unlockedDoors.Clear();

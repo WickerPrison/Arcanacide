@@ -121,8 +121,15 @@ public class ChainLightningLink : MonoBehaviour
 
         Vector3 direction = bolts.endPosition - bolts.startPosition;
         float distance = Vector3.Distance(bolts.startPosition, bolts.endPosition);
-        if (Physics.Raycast(bolts.startPosition, direction, distance, electricMage.layerMask))
+        RaycastHit hit;
+        if (Physics.Raycast(bolts.startPosition, direction, out hit, distance, electricMage.layerMask))
         {
+
+            if(hit.collider.gameObject.layer == 8)
+            {
+                playerScript.gameObject.GetComponent<PlayerController>().PerfectDodge();
+                return;
+            }
             playerScript.LoseHealth(electricMage.boltDamage);
             playerScript.LosePoise(electricMage.boltPoiseDamage);
             boltCD = electricMage.boltMaxCD;

@@ -340,6 +340,7 @@ public class BossController : EnemyController
     {
         base.Death();
 
+        playerScript.GainMaxHealCharges();
         gm.awareEnemies -= 1;
         GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
         bossHealthbar.SetActive(false);

@@ -39,7 +39,7 @@ public class ElectricMageController : EnemyController
         }
         BoltAway();
 
-        layerMask = LayerMask.GetMask("Player");
+        layerMask = LayerMask.GetMask("Player", "IFrames");
     }
 
     public override void EnemyAI()

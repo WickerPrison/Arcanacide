@@ -134,6 +134,11 @@ public class EnemyController : MonoBehaviour
 
     public virtual void StartStagger(float staggerDuration)
     {
+        if (enemyScript.isDying)
+        {
+            return;
+        }
+
         staggerTimer += staggerDuration;
         isStaggered = true;
         navAgent.enabled = false;

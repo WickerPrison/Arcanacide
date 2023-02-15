@@ -94,13 +94,19 @@ public class LightningOrbController : EnemyController
         explosion.transform.position = transform.position + Vector3.up * 1.5f;
         if (playerDistance <= attackRange)
         {
-            explosion.GetComponent<AudioSource>().PlayOneShot(impactSFX, 2);
-            playerScript.StartStagger(0.1f);
-            playerScript.LoseHealth(spellAttackDamage);
-            playerScript.LosePoise(spellAttackPoiseDamage);
+            if(playerScript.gameObject.layer == 3)
+            {
+                explosion.GetComponent<AudioSource>().PlayOneShot(impactSFX, 2);
+                playerScript.StartStagger(0.1f);
+                playerScript.LoseHealth(spellAttackDamage);
+                playerScript.LosePoise(spellAttackPoiseDamage);
+            }
+            else if(playerScript.gameObject.layer == 8)
+            {
+                playerController.PerfectDodge();
+            }
 
         }
-
         enemyScript.Death();
     }
 

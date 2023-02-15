@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponPickup : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class WeaponPickup : MonoBehaviour
     void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        im.controls.Gameplay.Interact.performed += ctx => PickUpWeapon();
+        im.controls.Gameplay.Interact.performed += PickUpWeapon;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         if (playerData.unlockedWeapons.Contains(weaponID))
         {
@@ -38,7 +39,7 @@ public class WeaponPickup : MonoBehaviour
         }
     }
 
-    void PickUpWeapon()
+    void PickUpWeapon(InputAction.CallbackContext context)
     {
         if (playerDistance <= interactDistance)
         {
@@ -56,5 +57,10 @@ public class WeaponPickup : MonoBehaviour
             im.controls.Tutorial.Disable();
             tutorialManager.NewWeaponTutorial();
         }
+    }
+
+    private void OnDisable()
+    {
+        im.controls.Gameplay.Interact.performed -= PickUpWeapon;
     }
 }

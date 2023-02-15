@@ -200,7 +200,7 @@ public class PlayerScript : MonoBehaviour
 
     public void StartStagger(float staggerDuration)
     {
-        if(staggerDuration > 0)
+        if(staggerDuration > 0 && !shield)
         {
             if (!playerController.knockback)
             {
@@ -208,13 +208,7 @@ public class PlayerScript : MonoBehaviour
             }
             staggerTimer += staggerDuration;
             isStaggered = true;
-            /*
-            if (playerAnimation.animationSwordMagic)
-            {
-                playerAnimation.EndSwordMagic();
-                playerAnimation.animationSwordMagic = false;
-            }
-            */
+
             if (playerController.arcaneStepActive)
             {
                 playerController.EndArcaneStep();
@@ -315,6 +309,12 @@ public class PlayerScript : MonoBehaviour
         if (isStaggered)
         {
             staggerTimer -= Time.deltaTime;
+
+            if(playerData.currentWeapon == 1)
+            {
+                staggerTimer -= Time.deltaTime;
+            }
+
             if (staggerTimer <= 0)
             {
                 EndStagger();
@@ -385,5 +385,11 @@ public class PlayerScript : MonoBehaviour
         playerData.hasSpawned = false;
         gm.SaveGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GainMaxHealCharges()
+    {
+        playerData.maxHealCharges++;
+        playerData.healCharges++;
     }
 }

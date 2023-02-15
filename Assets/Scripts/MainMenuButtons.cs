@@ -32,6 +32,13 @@ public class MainMenuButtons : MonoBehaviour
         SceneManager.LoadScene("IntroCutscene");
     }
 
+    public void TestFloor2()
+    {
+        ButtonSound();
+        gm.StartAtFloor2();
+        SceneManager.LoadScene("ElectricHub");
+    }
+
     public void QuitGame()
     {
         ButtonSound();

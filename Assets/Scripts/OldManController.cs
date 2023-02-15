@@ -217,6 +217,11 @@ public class OldManController : EnemyController
             playerScript.LoseHealth(chargeDamage);
             enemySound.SwordImpact();
         }
+        else if(other.gameObject.layer == 8 && charging && !isColliding)
+        {
+            isColliding = true;
+            playerScript.GetComponent<PlayerController>().PerfectDodge();
+        }
     }
 
     public override void StartDying()
