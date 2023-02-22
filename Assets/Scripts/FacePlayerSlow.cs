@@ -35,6 +35,6 @@ public class FacePlayerSlow : FacePlayer
     {
         attackPoint.position = trackingPoint.position;
         AttackPoint();
-        FacePlayerSprite();
+        FaceAttackPoint();
     }
 }

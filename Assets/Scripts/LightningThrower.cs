@@ -94,7 +94,7 @@ public class LightningThrower : EnemyController
 
     public override void SpecialAbility()
     {
-        Vector3 direction = new Vector3(facePlayer.playerDirection.x, -90, facePlayer.playerDirection.z);
+        Vector3 direction = new Vector3(facePlayer.faceDirection.x, -90, facePlayer.faceDirection.z);
         if (facingFront)
         {
             frontElectricityVFX.transform.rotation = Quaternion.LookRotation(direction.normalized);

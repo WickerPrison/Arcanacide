@@ -25,7 +25,7 @@ public class Smear : MonoBehaviour
         SmearDirection(smearSpeed);
         ParticleSystem.ShapeModule smearShapeFront = smear.shape;
         smearShapeFront.arcSpeed = smearSpeed;
-        smear.Simulate(0);
+        smear.Simulate(0, false);
     }
 
     void SmearDirection(int smearSpeed)
@@ -35,7 +35,7 @@ public class Smear : MonoBehaviour
         {
             smearDirection += 4;
         }
-        smear.transform.localScale = smearScales[facingDirection];
+        smear.transform.localScale  = smearScales[facingDirection];
         smear.transform.localPosition = smearPositions[smearDirection];
         smear.transform.localRotation = Quaternion.Euler(smearRotations[smearDirection].x, smearRotations[smearDirection].y, smearRotations[smearDirection].z);
     }
@@ -47,6 +47,6 @@ public class Smear : MonoBehaviour
 
     private void FixedUpdate()
     {
-            smear.Simulate(Time.fixedDeltaTime, true, false);
+        smear.Simulate(Time.fixedDeltaTime, false, false);
     }
 }

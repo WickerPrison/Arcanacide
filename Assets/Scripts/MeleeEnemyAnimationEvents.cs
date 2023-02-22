@@ -7,7 +7,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     EnemyController enemyController;
     EnemyScript enemyScript;
     EnemySound enemySound;
-    [SerializeField] AttackArcGenerator attackArc;
+    public AttackArcGenerator attackArc;
 
     // Start is called before the first frame update
     public virtual void Start()

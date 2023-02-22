@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public Vector3 direction;
+    [System.NonSerialized] public Vector3 direction;
     public int spellDamage;
     public int poiseDamage;
     public int speed;
     [SerializeField] AudioClip playerImpactSFX;
-    [SerializeField] AudioClip impactSFX;
-    [SerializeField] float impactSFXvolume;
-    [SerializeField] float lifetime;
-    public EnemyScript enemyOfOrigin;
+    public AudioClip impactSFX;
+    public float impactSFXvolume;
+    public float lifetime;
+    [System.NonSerialized] public EnemyScript enemyOfOrigin;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -61,7 +61,7 @@ public class Projectile : MonoBehaviour
         transform.position = transform.position + direction.normalized * Time.fixedDeltaTime * speed;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         lifetime -= Time.deltaTime;
         if (lifetime <= 0)

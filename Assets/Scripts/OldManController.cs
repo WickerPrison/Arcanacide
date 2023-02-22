@@ -94,7 +94,7 @@ public class OldManController : EnemyController
         enemySound.OtherSounds(0, 1);
         foreach (ParticleSystem particleSystem in attackVFX)
         {
-            Vector3 direction = new Vector3(facePlayer.playerDirection.x, 90, facePlayer.playerDirection.z);
+            Vector3 direction = new Vector3(facePlayer.faceDirection.x, 90, facePlayer.faceDirection.z);
             particleSystem.transform.rotation = Quaternion.LookRotation(direction.normalized);
             particleSystem.Play();
         }

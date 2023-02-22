@@ -14,7 +14,9 @@ public class FacePlayer : MonoBehaviour
     public Vector3 away = new Vector3(100, 100, 100);
     float frontScaleX;
     float backScaleX;
-    public Vector3 playerDirection;
+    public Vector3 faceDirection;
+    Vector3 faceDestination;
+    bool facePlayer = true;
 
     public virtual void Start()
     {
@@ -32,20 +34,38 @@ public class FacePlayer : MonoBehaviour
         {
             AttackPoint();
 
-            FacePlayerSprite();
+            FaceAttackPoint();
         }
     }
 
+    public void SetDestination(Vector3 destination)
+    {
+        facePlayer = false;
+        faceDestination = destination;
+    }
+
+    public void ResetDestination()
+    {
+        facePlayer = true;
+    }
 
     public virtual void AttackPoint()
     {
-        playerDirection = player.position - transform.position;
-        playerDirection = new Vector3(playerDirection.x, 0, playerDirection.z);
-        attackPoint.position = transform.position + playerDirection.normalized;
-        attackPoint.transform.localRotation = Quaternion.LookRotation(playerDirection.normalized);
+        if (facePlayer)
+        {
+            faceDirection = player.position - transform.position;
+        }
+        else
+        {
+            faceDirection = faceDestination - transform.position;
+        }
+
+        faceDirection = new Vector3(faceDirection.x, 0, faceDirection.z);
+        attackPoint.position = transform.position + faceDirection.normalized;
+        attackPoint.transform.localRotation = Quaternion.LookRotation(faceDirection.normalized);
     }
 
-    public void FacePlayerSprite()
+    public void FaceAttackPoint()
     {
         if (attackPoint.position.z < transform.position.z)
         {
