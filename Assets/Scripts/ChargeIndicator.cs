@@ -14,7 +14,7 @@ public class ChargeIndicator : MonoBehaviour
     Renderer coneRenderer;
 
     public MeshFilter meshFilter;
-    Mesh viewMesh;
+    [System.NonSerialized] public Mesh viewMesh;
 
     Vector3 direction;
 

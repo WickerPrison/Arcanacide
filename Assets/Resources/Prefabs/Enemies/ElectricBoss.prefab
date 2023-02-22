@@ -108,6 +108,13 @@ MonoBehaviour:
   - {fileID: 8571103047203849314}
   - {fileID: 2550925098834043650}
   hadokenPrefab: {fileID: 3909571263677202062, guid: d2f984d01e5e16f42ad4262d0589e1c3, type: 3}
+  chargeIndicator: {fileID: 5827686701343468162, guid: 1b58e732ac34bfc4690b0304af835c92, type: 3}
+  maxChargeDistance: 100
+  chargeSpeed: 60
+  chargeDamage: 40
+  chargeBurstDamage: 40
+  chargeBurstPoiseDamage: 50
+  chargeBurstStagger: 0.5
 --- !u!54 &6075635025462980022
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -122,7 +129,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!195 &3204318568221520365
 NavMeshAgent:
@@ -5675,7 +5682,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -18355,6 +18362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackArc: {fileID: 4791777359928555983}
+  lightningOrbPrefab: {fileID: 260420701781460590, guid: 622db3b60b742ed4d8fbdaff35e4e11d, type: 3}
   swooshShock: {fileID: 4621306824803891371}
 --- !u!1 &7753042697976262863
 GameObject:

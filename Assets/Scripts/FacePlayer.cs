@@ -49,6 +49,12 @@ public class FacePlayer : MonoBehaviour
         facePlayer = true;
     }
 
+    public void ManualFace()
+    {
+        AttackPoint();
+        FaceAttackPoint();
+    }
+
     public virtual void AttackPoint()
     {
         if (facePlayer)
