@@ -6,28 +6,23 @@ using TMPro;
 public class ManagerVanquished : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI healthGemMessage;
 
-    float messageTime = 0;
-    bool hasActivated = false;
+    float messageTime = 3;
 
     public void ShowMessage()
     {
         text.gameObject.SetActive(true);
-        messageTime = 3;
-        hasActivated = true;
+        StartCoroutine(VanquishedMessage());
     }
 
-    private void Update()
+    IEnumerator VanquishedMessage()
     {
-        if (messageTime > 0)
-        {
-            messageTime -= Time.deltaTime;
-        }
-        else if (hasActivated)
-        {
-            //EndOfDemoMessage();
-            Destroy(gameObject);
-        }
+        yield return new WaitForSeconds(messageTime);
+        text.gameObject.SetActive(false);
+        healthGemMessage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(messageTime);
+        Destroy(gameObject);
     }
 
     void EndOfDemoMessage()
