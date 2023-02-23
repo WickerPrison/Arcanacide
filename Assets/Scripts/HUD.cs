@@ -19,10 +19,15 @@ public class HUD : MonoBehaviour
     [SerializeField] Image gemProtection;
     PlayerScript playerScript;
     float healthbarScale = 1;
+    Canvas canvas;
+    Camera mainCamera;
 
     private void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        canvas = GetComponent<Canvas>();
+        canvas.worldCamera = mainCamera;
     }
 
     private void Update()

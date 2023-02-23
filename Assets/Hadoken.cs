@@ -23,10 +23,7 @@ public class Hadoken : Projectile
         {
             Projectile projectile = Instantiate(smallerProjectilePrefab).GetComponent<Projectile>();
             float angle = 360 / projectileNum * i * Mathf.Deg2Rad;
-            Vector3 direction = Vector3.forward;
-            float x = Mathf.Cos(angle) * direction.x - Mathf.Sin(angle) * direction.z;
-            float z = Mathf.Sin(angle) * direction.x + Mathf.Cos(angle) * direction.z;
-            direction = new Vector3(x, 0, z).normalized; 
+            direction = RotateByAngle(Vector3.forward, angle);
             projectile.transform.position = transform.position + direction * spawnRadius;
             projectile.direction = direction;
         }
@@ -40,5 +37,12 @@ public class Hadoken : Projectile
             Explode();
             Destroy(gameObject);
         }
+    }
+
+    public Vector3 RotateByAngle(Vector3 direction, float angle)
+    {
+        float x = Mathf.Cos(angle) * direction.x - Mathf.Sin(angle) * direction.z;
+        float z = Mathf.Sin(angle) * direction.x + Mathf.Cos(angle) * direction.z;
+        return new Vector3(x, 0, z).normalized;
     }
 }

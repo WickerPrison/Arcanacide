@@ -32,6 +32,11 @@ public class ElectricBossController : EnemyController
     [SerializeField] float chargeBurstPoiseDamage;
     [SerializeField] float chargeBurstStagger;
     bool isColliding;
+    int attackCounter = 0;
+    [SerializeField] float[] hadokenAngles;
+    public bool phase2 = false;
+    int phaseTrigger = 300;
+    [SerializeField] ParticleSystem bodyLightning;
 
     public override void Start()
     {
@@ -55,6 +60,12 @@ public class ElectricBossController : EnemyController
 
     public override void EnemyAI()
     {
+        if(!phase2 && enemyScript.health < phaseTrigger)
+        {
+            phase2 = true;
+            bodyLightning.Play();
+        }
+
         base.EnemyAI();
         if (hasSeenPlayer)
         {
@@ -84,13 +95,18 @@ public class ElectricBossController : EnemyController
                     }
                 }
             }
-            else if(playerDistance < 2.5)
+            else if(!attacking && playerDistance < 1.5)
             {
                 ChooseRandomPoint();
-                attackTime = attackMaxTime;
+                attackCounter++;
+                if(attackCounter > 2)
+                {
+                    attackCounter = 0;
+                    attackTime = attackMaxTime;
+                }
+                attacking = true;
                 frontAnimator.Play("Attack");
                 backAnimator.Play("Attack");
-                attacking = true;
             }
             else if(navAgent.enabled)
             {
@@ -148,6 +164,7 @@ public class ElectricBossController : EnemyController
     void UseAbilty()
     {
         StartCoroutine(AbilityTimer());
+        attacking = true;
 
         int randInt = Random.Range(0, 3);
         switch (randInt)
@@ -172,6 +189,17 @@ public class ElectricBossController : EnemyController
         int frontOrBack = facingFront ? 0 : 1;
         hadoken.transform.position = firePoints[frontOrBack].position;
         hadoken.direction = playerController.transform.position + new Vector3(0, 1, 0) - firePoints[frontOrBack].position;
+        if (phase2)
+        {
+            foreach(float angle in hadokenAngles)
+            {
+                hadoken = Instantiate(hadokenPrefab).GetComponent<Hadoken>();
+                hadoken.transform.position = firePoints[frontOrBack].position;
+                hadoken.direction = playerController.transform.position + new Vector3(0, 1, 0) - firePoints[frontOrBack].position;
+                hadoken.direction = hadoken.RotateByAngle(hadoken.direction, angle);
+            }
+        }
+        attacking = false;
     }
 
     IEnumerator AbilityTimer()
@@ -226,6 +254,7 @@ public class ElectricBossController : EnemyController
     {
         enemyCollider.isTrigger = false;
         charging = false;
+        attacking = false;
         frontAnimator.SetBool("Charging", false);
         backAnimator.SetBool("Charging", false);
         yield return new WaitForSeconds(1);

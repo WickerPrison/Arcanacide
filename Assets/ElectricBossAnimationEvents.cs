@@ -9,6 +9,7 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
     [SerializeField] ParticleSystem swooshShock;
     ElectricBossController bossController;
     float spawnRadius = 1.3f;
+    bool spawnOrb = true;
 
     public override void Start()
     {
@@ -35,10 +36,18 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
 
     public void SpawnOrb()
     {
-        LightningOrbController orb = Instantiate(lightningOrbPrefab).GetComponent<LightningOrbController>();
-        float x = Random.Range(-spawnRadius, spawnRadius);
-        float z = Random.Range(-spawnRadius, spawnRadius);
-        orb.transform.position = bossController.transform.position + new Vector3(x, 0, z).normalized;
+        if (spawnOrb)
+        {
+            LightningOrbController orb = Instantiate(lightningOrbPrefab).GetComponent<LightningOrbController>();
+            float x = Random.Range(-spawnRadius, spawnRadius);
+            float z = Random.Range(-spawnRadius, spawnRadius);
+            orb.transform.position = bossController.transform.position + new Vector3(x, 0, z).normalized;
+        }
+
+        if (!bossController.phase2)
+        {
+            spawnOrb = !spawnOrb;
+        }
     }
 
     public void StartCharge()

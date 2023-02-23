@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4045529220938106890}
   m_Layer: 6
   m_Name: ElectricBoss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,8 +102,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   spellAttackDamage: 15
   spellAttackPoiseDamage: 15
-  hitDamage: 10
-  hitPoiseDamage: 5
+  hitDamage: 30
+  hitPoiseDamage: 15
   firePoints:
   - {fileID: 8571103047203849314}
   - {fileID: 2550925098834043650}
@@ -115,6 +115,11 @@ MonoBehaviour:
   chargeBurstDamage: 40
   chargeBurstPoiseDamage: 50
   chargeBurstStagger: 0.5
+  hadokenAngles:
+  - 20
+  - -20
+  phase2: 0
+  bodyLightning: {fileID: 8596935202627715605}
 --- !u!54 &6075635025462980022
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -145,7 +150,7 @@ NavMeshAgent:
   m_Acceleration: 30
   avoidancePriority: 50
   m_AngularSpeed: 0
-  m_StoppingDistance: 2.5
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -15766,7 +15771,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_RenderMode: 5
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -18801,6 +18806,7 @@ GameObject:
   - component: {fileID: 7500984765447177903}
   - component: {fileID: 7301854673948236086}
   - component: {fileID: 4001391207363772107}
+  - component: {fileID: 4875803522463153778}
   m_Layer: 6
   m_Name: BackArt
   m_TagString: Untagged
@@ -18875,6 +18881,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!210 &4875803522463153778
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8838343559505635447}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &8859121765558004643
 GameObject:
   m_ObjectHideFlags: 0

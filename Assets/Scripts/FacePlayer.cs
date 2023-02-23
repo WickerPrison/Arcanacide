@@ -66,9 +66,12 @@ public class FacePlayer : MonoBehaviour
             faceDirection = faceDestination - transform.position;
         }
 
-        faceDirection = new Vector3(faceDirection.x, 0, faceDirection.z);
-        attackPoint.position = transform.position + faceDirection.normalized;
-        attackPoint.transform.localRotation = Quaternion.LookRotation(faceDirection.normalized);
+        faceDirection = new Vector3(faceDirection.x, 0, faceDirection.z).normalized;
+        attackPoint.position = transform.position + faceDirection;
+        if(faceDirection.magnitude > 0)
+        {
+            attackPoint.transform.localRotation = Quaternion.LookRotation(faceDirection);
+        }
     }
 
     public void FaceAttackPoint()
