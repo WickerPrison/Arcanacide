@@ -15771,8 +15771,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 600
-  poise: 200
   reward: 100
   healthbar: {fileID: 0}
   healthbarScale: 1.55
@@ -15787,7 +15785,6 @@ MonoBehaviour:
   staggerDuration: 2
   hitVFX: {fileID: 9202323480412452172}
   dotVFX: {fileID: 6777446778814021810}
-  isDying: 0
 --- !u!114 &5619636744262080955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15800,34 +15797,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a7108e346718c4fb5692e706da6ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gm: {fileID: 0}
-  smearScript: {fileID: 0}
-  enemyScript: {fileID: 0}
-  enemySound: {fileID: 0}
-  playerController: {fileID: 0}
-  playerScript: {fileID: 0}
-  playerAnimation: {fileID: 0}
   frontAnimator: {fileID: 6619493916779045148}
   backAnimator: {fileID: 5979803923402093841}
   navAgent: {fileID: 5619636744262080954}
-  hasSeenPlayer: 0
   attackMaxTime: 2
-  attackTime: 0
   detectRange: 10
   attackRange: 8
-  attacking: 0
   projectilePrefab: {fileID: 7086795160678116252, guid: 3cedf55e3cd5a214297e811b67b22bee, type: 3}
-  detectionTrigger: 0
-  directionLock: 0
-  parryWindow: 0
-  isParrying: 0
   spellAttackDamage: 15
   spellAttackPoiseDamage: 15
   hitDamage: 0
   hitPoiseDamage: 0
-  facingFront: 0
-  isStaggered: 0
-  canHitPlayer: 0
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   fireTrailPrefab: {fileID: 8120567399107066, guid: 14c74eaa539125c42aba4c9dd97d78d6, type: 3}
   bonfirePrefab: {fileID: 6002190749465052700, guid: 06ae8010139dcb943a6c904b708e679f, type: 3}
   fireWavePrefab: {fileID: 849592477973554572, guid: a6afd2840179e5945bf99b454bada27f, type: 3}
@@ -15868,7 +15849,7 @@ MonoBehaviour:
   backAnimator: {fileID: 5979803923402093841}
   player: {fileID: 0}
   away: {x: 100, y: 100, z: 100}
-  playerDirection: {x: 0, y: 0, z: 0}
+  faceDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &1380471551361108495
 MonoBehaviour:
   m_ObjectHideFlags: 0

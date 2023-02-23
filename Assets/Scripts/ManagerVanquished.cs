@@ -25,7 +25,7 @@ public class ManagerVanquished : MonoBehaviour
         }
         else if (hasActivated)
         {
-            EndOfDemoMessage();
+            //EndOfDemoMessage();
             Destroy(gameObject);
         }
     }

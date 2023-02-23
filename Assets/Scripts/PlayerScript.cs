@@ -30,7 +30,7 @@ public class PlayerScript : MonoBehaviour
     float maxPoise = 100;
     float poiseRate = 5;
     float staggerTimer = 0;
-    float poiseBreakStagger = 2;
+    float poiseBreakStagger = 1;
     public bool isStaggered = false;
     public float duckHealTimer = 0;
     float duckHealDuration = 2;

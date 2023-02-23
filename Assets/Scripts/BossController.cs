@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [System.Serializable]
 public class BossController : EnemyController
 {
+    [SerializeField] MapData mapData;
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject bonfirePrefab;
     [SerializeField] GameObject fireWavePrefab;
@@ -54,6 +55,12 @@ public class BossController : EnemyController
         spellAttackDamage = fireBallDamage;
         bossDialogue = GetComponent<BossDialogue>();
         fireRing = GetComponentInChildren<FireRing>();
+        if (mapData.fireBossKilled)
+        {
+            GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
+            bossHealthbar.SetActive(false);
+            Destroy(gameObject);
+        }
     }
 
     public override void Update()
@@ -340,6 +347,8 @@ public class BossController : EnemyController
     {
         base.Death();
 
+        bossDialogue.EndLookUpDialogue();
+        mapData.fireBossKilled = true;
         playerScript.GainMaxHealCharges();
         gm.awareEnemies -= 1;
         GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;

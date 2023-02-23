@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6138939144874486088}
+  - component: {fileID: 3277555982933880361}
   m_Layer: 0
   m_Name: Torso2
   m_TagString: Untagged
@@ -36,6 +37,18 @@ Transform:
   m_Father: {fileID: 7864567386508215205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1.696}
+--- !u!114 &3277555982933880361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220602362747604741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 944b2c41d6642fe409a0156402782947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &251949244773100787
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +806,7 @@ MonoBehaviour:
   backAnimator: {fileID: 6873103840044162747}
   player: {fileID: 0}
   away: {x: 100, y: 100, z: 100}
-  playerDirection: {x: 0, y: 0, z: 0}
+  faceDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &1892724828287016805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -821,8 +834,8 @@ MonoBehaviour:
   layerNames: []
   maxChargeDistance: 50
   attackPointCollider: {fileID: 0}
-  chargeSpeed: 40
-  chargeDamage: 20
+  chargeSpeed: 50
+  chargeDamage: 30
   staticVFX: {fileID: 7601251257747662493}
   attackVFX:
   - {fileID: 1855675575025115079}
@@ -24268,6 +24281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 704949412398743274}
+  - component: {fileID: 593849943170626984}
   m_Layer: 0
   m_Name: Torso2
   m_TagString: Untagged
@@ -24294,6 +24308,18 @@ Transform:
   m_Father: {fileID: 409699539666874076}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &593849943170626984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324477077088789925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 944b2c41d6642fe409a0156402782947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8328701588640928856
 GameObject:
   m_ObjectHideFlags: 0

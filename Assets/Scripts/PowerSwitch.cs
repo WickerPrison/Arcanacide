@@ -7,6 +7,7 @@ public class PowerSwitch : MonoBehaviour
     [SerializeField] GameObject message;
     [SerializeField] MapData mapData;
     [SerializeField] int switchNumber;
+    [SerializeField] Animator animator;
     bool hasBeenUsed = false;
     Transform player;
     InputManager im;
@@ -18,9 +19,10 @@ public class PowerSwitch : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => FlipSwitch();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        if (mapData.usedAltars.Contains(switchNumber))
+        if (mapData.powerSwitchesFlipped.Contains(switchNumber))
         {
             hasBeenUsed = true;
+            animator.Play("SwitchDown");
         }
     }
 
@@ -44,6 +46,7 @@ public class PowerSwitch : MonoBehaviour
         {
             hasBeenUsed = true;
             mapData.powerSwitchesFlipped.Add(switchNumber);
+            animator.Play("Handle|Pull_Down");
         }
     }
 }
