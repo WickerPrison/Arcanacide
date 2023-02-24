@@ -257,7 +257,7 @@ public class ElectricBossController : EnemyController
         attacking = false;
         frontAnimator.SetBool("Charging", false);
         backAnimator.SetBool("Charging", false);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.2f);
 
 
         bool hitPlayer = false;
@@ -343,5 +343,4 @@ public class ElectricBossController : EnemyController
             playerScript.GetComponent<PlayerController>().PerfectDodge();
         }
     }
-
 }
