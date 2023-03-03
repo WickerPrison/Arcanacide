@@ -22,7 +22,7 @@ public class FacePlayerSlow : FacePlayer
         direction = new Vector3(direction.x, 0, direction.z);
         trackingPoint.position = transform.position + direction.normalized;
 
-        Quaternion neededRotation = Quaternion.LookRotation(attackAnchor.position - trackingPoint.position);
+        Quaternion neededRotation = Quaternion.LookRotation(trackingPoint.position - attackAnchor.position, Vector3.up);
         attackAnchor.rotation = Quaternion.RotateTowards(attackAnchor.rotation, neededRotation, rotateSpeed * Time.deltaTime);
 
         if(attackPoint.position != transform.position)

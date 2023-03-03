@@ -16,13 +16,18 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        Collision(collision);
+    }
+
+    public void Collision(Collider collision)
+    {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if(collision.gameObject.layer == 3)
+            if (collision.gameObject.layer == 3)
             {
                 HitPlayer(collision);
             }
-            else if(collision.gameObject.layer == 8)
+            else if (collision.gameObject.layer == 8)
             {
                 PerfectDodge(collision);
             }

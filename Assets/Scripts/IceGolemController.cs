@@ -36,7 +36,7 @@ public class IceGolemController : EnemyController
             {
                 AngleMeasurement();
                 navAgent.SetDestination(playerController.transform.position);
-            } 
+            }
 
             if(attackTime > 0)
             {

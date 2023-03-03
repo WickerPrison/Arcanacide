@@ -303,7 +303,7 @@ public class BossController : EnemyController
     {
         Vector3 playerToBoss = transform.position - playerController.transform.position;
         playerToBoss *= strafeLeftOrRight;
-        Vector3 strafeDirection = Vector3.Cross(transform.position, playerToBoss);
+        Vector3 strafeDirection = Vector3.Cross(Vector3.up, playerToBoss);
         navAgent.Move(strafeDirection.normalized * Time.deltaTime * strafeSpeed);
     }
 

@@ -41,6 +41,11 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         enemyController.navAgent.enabled = true;
     }
 
+    public void EndAttack()
+    {
+        enemyController.attacking = false;
+    }
+
     public void AttackHit(int smearSpeed)
     {
         enemyController.canHitPlayer = attackArc.CanHitPlayer();
