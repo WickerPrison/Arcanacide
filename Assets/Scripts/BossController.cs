@@ -59,6 +59,9 @@ public class BossController : EnemyController
         {
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
+            MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
+            musicManager.ImmediateStop();
+            gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
         }
     }
@@ -346,7 +349,6 @@ public class BossController : EnemyController
     public override void Death()
     {
         base.Death();
-
         bossDialogue.EndLookUpDialogue();
         mapData.fireBossKilled = true;
         playerScript.GainMaxHealCharges();

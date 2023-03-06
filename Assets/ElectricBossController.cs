@@ -8,6 +8,7 @@ public class ElectricBossController : EnemyController
 {
     [SerializeField] Transform[] firePoints;
     [SerializeField] GameObject hadokenPrefab;
+    [SerializeField] MapData mapData;
     float playerDistance;
     StepWithAttack stepWithAttack;
     FacePlayer facePlayer;
@@ -48,6 +49,15 @@ public class ElectricBossController : EnemyController
         enemyCollider = GetComponent<CapsuleCollider>();
         chargeIndicatorWidth = enemyCollider.radius * 2;
         ChooseRandomPoint();
+        if (mapData.electricBossKilled)
+        {
+            GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
+            bossHealthbar.SetActive(false);
+            MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
+            musicManager.ImmediateStop();
+            gm.enemies.Remove(enemyScript);
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
@@ -343,4 +353,22 @@ public class ElectricBossController : EnemyController
             playerScript.GetComponent<PlayerController>().PerfectDodge();
         }
     }
+
+    public override void Death()
+    {
+        base.Death();
+
+        mapData.electricBossKilled = true;
+        playerScript.GainMaxHealCharges();
+        gm.awareEnemies -= 1;
+        GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
+        bossHealthbar.SetActive(false);
+        ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
+        managerVanquished.ShowMessage();
+        SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
+        sm.BossDefeated();
+        MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
+        musicManager.StartFadeOut(4);
+    }
+
 }

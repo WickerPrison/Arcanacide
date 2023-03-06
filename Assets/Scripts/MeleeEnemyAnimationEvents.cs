@@ -102,7 +102,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         enemySound.Footstep();
     }
 
-    public void Death()
+    public virtual void Death()
     {
         enemyScript.Death();
     }

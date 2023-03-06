@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
             mapData.ticketFiled = data.ticketFiled;
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
+            mapData.electricBossKilled = data.electricBossKilled;
 
             dialogueData.ORTHODOXQueue = data.ORTHODOXQueue.ToList();
             dialogueData.ORTHODOXPreviousConversations = data.ORTHODOXPreviousConversations.ToList();
@@ -134,6 +135,7 @@ public class GameManager : MonoBehaviour
         mapData.ticketFiled = ticketFiled;
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
+        mapData.electricBossKilled = false;
 
         dialogueData.ORTHODOXQueue.Clear();
         dialogueData.ORTHODOXPreviousConversations.Clear();
@@ -182,8 +184,9 @@ public class GameManager : MonoBehaviour
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
-        mapData.fireBossKilled = fireBossKilled;
+        mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
+        mapData.electricBossKilled = false;
 
         dialogueData.ORTHODOXQueue.Clear();
         dialogueData.ORTHODOXPreviousConversations.Clear();

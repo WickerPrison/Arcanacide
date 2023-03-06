@@ -29,6 +29,13 @@ public class PuddleMine : MonoBehaviour
 
     private void Update()
     {
+        if(bossController == null)
+        {
+            bolts.SetPositions(away, away);
+            puddleScript.PowerOff();
+            return;
+        }
+
         if (bolting)
         {
             bolts.SetPositions(transform.position, bossController.transform.position);
@@ -39,6 +46,7 @@ public class PuddleMine : MonoBehaviour
                 bolting = false;
             }
         }
+
 
         if (!bossController.phase2 || !canTrigger)
         {

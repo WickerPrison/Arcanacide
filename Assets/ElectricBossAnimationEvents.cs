@@ -54,4 +54,10 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
     {
         bossController.StartCharge();
     }
+
+    public override void Death()
+    {
+        base.Death();
+        bossController.Death();
+    }
 }

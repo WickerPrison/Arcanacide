@@ -10,6 +10,7 @@ public class MusicManager : MonoBehaviour
     MusicPlayer musicPlayer;
     AudioSource musicSource;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,5 +41,10 @@ public class MusicManager : MonoBehaviour
     public void StartFadeOut(int duration)
     {
         musicPlayer.StartFadeOut(duration);
+    }
+
+    public void ImmediateStop()
+    {
+        musicSource.Stop();
     }
 }

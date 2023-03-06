@@ -23,6 +23,8 @@ public class MapData : ScriptableObject
     public bool fireBossKilled;
     public bool secretaryConvo;
 
+    public bool electricBossKilled;
+
     private void OnEnable()
     {
         doorNumber = 0;
