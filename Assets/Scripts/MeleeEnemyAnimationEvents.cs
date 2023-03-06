@@ -6,7 +6,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
 {
     EnemyController enemyController;
     EnemyScript enemyScript;
-    EnemySound enemySound;
+    [System.NonSerialized] public EnemySound enemySound;
     public AttackArcGenerator attackArc;
 
     // Start is called before the first frame update

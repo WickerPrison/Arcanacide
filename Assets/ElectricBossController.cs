@@ -156,17 +156,20 @@ public class ElectricBossController : EnemyController
 
         if (!canHitPlayer)
         {
+            enemySound.OtherSounds(1, 1);
             return;
         }
 
         if (playerController.gameObject.layer == 3)
         {
+            enemySound.OtherSounds(0, 1);
             playerScript.LoseHealth(hitDamage, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
         else if (playerController.gameObject.layer == 8)
         {
+            enemySound.OtherSounds(1, 1);
             playerController.PerfectDodge();
         }
     }
@@ -287,9 +290,14 @@ public class ElectricBossController : EnemyController
 
         if (hitPlayer)
         {
+            enemySound.OtherSounds(0, 1);
             playerScript.LoseHealth(chargeBurstDamage);
             playerScript.StartStagger(chargeBurstStagger);
             playerScript.LosePoise(chargeBurstPoiseDamage);
+        }
+        else
+        {
+            enemySound.OtherSounds(1, 1);
         }
 
         navAgent.enabled = true;
