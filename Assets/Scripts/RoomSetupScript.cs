@@ -12,6 +12,11 @@ public class RoomSetupScript : MonoBehaviour
     [SerializeField] Transform invisibleWall2;
     [SerializeField] RawImage floorImage;
 
+    private void Start()
+    {
+        floorImage.uvRect = new Rect(floorImage.uvRect.x, floorImage.uvRect.y, floor.localScale.x, floor.localScale.z);
+    }
+
     private void OnDrawGizmosSelected()
     {
         wall1.localPosition = new Vector3(floor.localPosition.x, floor.localPosition.y + 2.5f, floor.localPosition.z + floor.localScale.z * 5);

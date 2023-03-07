@@ -7,6 +7,6 @@ public class IntroText : MonoBehaviour
 {
     public void NextScreen()
     {
-        SceneManager.LoadScene("Tutorial1");
+        SceneManager.LoadScene("Lobby");
     }
 }

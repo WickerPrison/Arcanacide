@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public int health;
+    public bool hasHealthGem;
     public int maxHealCharges;
     public int healCharges;
     public bool hasSpawned;

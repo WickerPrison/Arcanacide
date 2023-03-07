@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
 
         if(data != null)
         {
+            playerData.hasHealthGem = data.hasHealthGem;
             playerData.maxHealCharges = data.maxHealCharges;
             playerData.healCharges = data.healCharges;
             playerData.lastSwordSite = data.lastSwordSite;
@@ -105,6 +106,7 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
+        playerData.hasHealthGem = false;
         playerData.maxHealCharges = 1;
         playerData.healCharges = 1;
         playerData.lastSwordSite = lastAltar;
@@ -150,6 +152,7 @@ public class GameManager : MonoBehaviour
 
     public void StartAtFloor2()
     {
+        playerData.hasHealthGem = true;
         playerData.maxHealCharges = 2;
         playerData.healCharges = 2;
         playerData.lastSwordSite = 4;

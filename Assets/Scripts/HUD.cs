@@ -10,6 +10,7 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject healbarFill;
     //[SerializeField] GameObject staminabarFill;
     [SerializeField] RectTransform staminaBarCover;
+    [SerializeField] GameObject manaGemIcon;
     [SerializeField] GameObject manaBarFill;
     [SerializeField] GameObject manaBarCrack;
     [SerializeField] TextMeshProUGUI healCounter;
@@ -28,6 +29,11 @@ public class HUD : MonoBehaviour
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = mainCamera;
+
+        if (!playerData.hasHealthGem)
+        {
+            manaGemIcon.SetActive(false);
+        }
     }
 
     private void Update()

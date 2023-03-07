@@ -10,7 +10,7 @@ public class SwordSiteDirectory : MonoBehaviour
         switch (swordSiteNumber)
         {
             case 1:
-                return "Tutorial1";
+                return "FirePath0.1";
             case 2:
                 return "FireHub1";
             case 3:

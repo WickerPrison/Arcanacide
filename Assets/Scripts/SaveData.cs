@@ -8,6 +8,7 @@ public class SaveData
     public int maxHealth;
     public float maxStamina;
     public int attackPower;
+    public bool hasHealthGem;
     public int maxHealCharges;
     public int healCharges;
     public int lastSwordSite;
@@ -53,6 +54,7 @@ public class SaveData
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData)
     {
+        hasHealthGem = playerData.hasHealthGem;
         maxHealCharges = playerData.maxHealCharges;
         healCharges = playerData.healCharges;
         lastSwordSite = playerData.lastSwordSite;
