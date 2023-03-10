@@ -25,6 +25,8 @@ public class MapData : ScriptableObject
 
     public bool electricBossKilled;
 
+    public bool ACOn;
+
     private void OnEnable()
     {
         doorNumber = 0;

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5470271128496654666}
   - component: {fileID: 5075726111561290587}
   - component: {fileID: -2421727946166535431}
-  - component: {fileID: 7860689086988527382}
   - component: {fileID: 479534431586172430}
   m_Layer: 0
   m_Name: GameManager
@@ -57,6 +56,15 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   moneyDropPrefab: {fileID: 5256610523385350538, guid: dcc1f003b16bc1e4babb78863afe6f08, type: 3}
+  sceneNames:
+  - 
+  - FirePath0.1
+  - FireHub1
+  - FireHub2
+  - ElectricHub
+  - IceHub1
+  - IceHub2
+  - IceHub3
   enemies: []
   awareEnemies: 0
 --- !u!114 &-622290233402536838
@@ -211,18 +219,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7860689086988527382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298750023833986125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6854318cf27e4c409d572c3ac5f7fbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &479534431586172430
 MonoBehaviour:
   m_ObjectHideFlags: 0

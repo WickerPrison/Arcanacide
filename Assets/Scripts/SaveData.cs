@@ -40,6 +40,7 @@ public class SaveData
     public bool fireBossKilled;
     public bool secretaryConvo;
     public bool electricBossKilled;
+    public bool ACOn;
 
     public int[] ORTHODOXQueue;
     public int[] ORTHODOXPreviousConversations;
@@ -88,6 +89,7 @@ public class SaveData
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
         electricBossKilled = mapData.electricBossKilled;
+        ACOn = mapData.ACOn;
 
         ORTHODOXQueue = dialogueData.ORTHODOXQueue.ToArray();
         ORTHODOXPreviousConversations = dialogueData.ORTHODOXPreviousConversations.ToArray();

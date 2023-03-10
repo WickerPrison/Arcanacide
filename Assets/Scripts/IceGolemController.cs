@@ -141,7 +141,7 @@ public class IceGolemController : EnemyController
     {
         enemySound.OtherSounds(0, 1);
         GameObject iceRipple = Instantiate(iceRipplePrefab);
-        iceRipple.transform.position = transform.position;
+        iceRipple.transform.position = transform.position + new Vector3(0, 1, 0);
     }
 
     void AngleMeasurement()

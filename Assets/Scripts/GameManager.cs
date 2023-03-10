@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] DialogueData dialogueData;
     [SerializeField] GameObject moneyDropPrefab;
+    [SerializeField] string[] sceneNames;
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
     [System.NonSerialized] public List<EnemyScript> enemiesInRange = new List<EnemyScript>();
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
         }
         tutorialManager = gameObject.GetComponent<TutorialManager>();
     }
+
+    public string GetSceneName(int swordSiteNumber) => sceneNames[swordSiteNumber];
 
     public void SaveGame()
     {
@@ -138,6 +141,7 @@ public class GameManager : MonoBehaviour
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
+        mapData.ACOn = true;
 
         dialogueData.ORTHODOXQueue.Clear();
         dialogueData.ORTHODOXPreviousConversations.Clear();
@@ -190,6 +194,7 @@ public class GameManager : MonoBehaviour
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
+        mapData.ACOn = true;
 
         dialogueData.ORTHODOXQueue.Clear();
         dialogueData.ORTHODOXPreviousConversations.Clear();

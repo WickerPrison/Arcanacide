@@ -16,7 +16,6 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] AttackProfiles parryProfile;
     public float stamina;
     public float poise;
-    SwordSiteDirectory swordSiteDirectory;
     GameManager gm;
     InputManager im;
     PlayerController playerController;
@@ -52,9 +51,8 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        swordSiteDirectory = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SwordSiteDirectory>();
-        gm = swordSiteDirectory.gameObject.GetComponent<GameManager>();
-        im = swordSiteDirectory.gameObject.GetComponent<InputManager>();
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        im = gm.gameObject.GetComponent<InputManager>();
         stamina = playerData.MaxStamina();
         poise = maxPoise;
         barrierTimer = 0;
@@ -369,7 +367,7 @@ public class PlayerScript : MonoBehaviour
         mapData.deathPosition = transform.position;
         mapData.deathRoom = SceneManager.GetActiveScene().name;
         gm.SaveGame();
-        string sceneName = swordSiteDirectory.GetSceneName(playerData.lastSwordSite);
+        string sceneName = gm.GetSceneName(playerData.lastSwordSite);
         SceneManager.LoadScene(sceneName);
     }
 

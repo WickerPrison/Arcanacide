@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuButtons : MonoBehaviour
 {
-    [SerializeField] SwordSiteDirectory altarDirectory;
     [SerializeField] GameManager gm;
     [SerializeField] PlayerData playerData;
     [SerializeField] GameObject buttonAudioPrefab;
@@ -21,7 +20,7 @@ public class MainMenuButtons : MonoBehaviour
     {
         ButtonSound();
         gm.LoadGame();
-        string sceneName = altarDirectory.GetSceneName(playerData.lastSwordSite);
+        string sceneName = gm.GetSceneName(playerData.lastSwordSite);
         SceneManager.LoadScene(sceneName);
     }
 
