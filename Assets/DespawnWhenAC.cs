@@ -5,11 +5,11 @@ using UnityEngine;
 public class DespawnWhenAC : MonoBehaviour
 {
     [SerializeField] MapData mapData;
-    [SerializeField] bool despawnState;
+    [SerializeField] bool despawnWhenOn;
 
     private void Awake()
     {
-        if (mapData.ACOn == despawnState)
+        if (mapData.ACOn == despawnWhenOn)
         {
             Destroy(gameObject);
         }

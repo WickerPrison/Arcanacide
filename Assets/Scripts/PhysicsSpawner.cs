@@ -30,7 +30,7 @@ public class PhysicsSpawner : MonoBehaviour
     {
         int objectId = Random.Range(0, spawnPool.Count);
         GameObject theObject = Instantiate(spawnPool[objectId]);
-        theObject.transform.parent = transform;
+        theObject.transform.parent = transform.parent;
         theObject.transform.position = transform.position;
         theObject.transform.rotation = Quaternion.Euler(new Vector3(Random.Range(1, 360), Random.Range(1, 360), Random.Range(1, 360)));
         ObjectHeightSetup objectHeight = theObject.GetComponent<ObjectHeightSetup>();

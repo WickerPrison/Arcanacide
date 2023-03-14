@@ -5768,11 +5768,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1553197363090012565}
+  - component: {fileID: 1553197363090012574}
+  - component: {fileID: 2327532180746279828}
   - component: {fileID: 1553197363090012569}
   - component: {fileID: 1553197363090012568}
   - component: {fileID: 1553197363090012571}
-  - component: {fileID: 1553197363090012574}
-  - component: {fileID: 2327532180746279828}
   - component: {fileID: 406160750042197360}
   m_Layer: 6
   m_Name: IceMage
@@ -5804,6 +5804,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1553197363090012574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553197363090012564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 10
+  healthbar: {fileID: 1553197362261721204}
+  healthbarScale: 1
+  enemyID: 0
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  maxHealth: 70
+  maxPoise: 70
+  poiseRegeneration: 5
+  staggerDuration: 2
+  hitVFX: {fileID: 8823882508510088645}
+  dotVFX: {fileID: 3126669520220361274}
+--- !u!114 &2327532180746279828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553197363090012564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470767068bfeabd46879f3671c2eecea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontAnimator: {fileID: 8241975028222420764}
+  backAnimator: {fileID: 7252742595013073776}
+  navAgent: {fileID: 1553197363090012571}
+  attackMaxTime: 2
+  detectRange: 17
+  attackRange: 15
+  projectilePrefab: {fileID: 3398478112403510094, guid: bb0e5d9e06e78854285795632634d81e, type: 3}
+  spellAttackDamage: 15
+  spellAttackPoiseDamage: 15
+  hitDamage: 0
+  hitPoiseDamage: 0
+  iceRing: {fileID: 5965480288445082084}
 --- !u!136 &1553197363090012569
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5856,56 +5906,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &1553197363090012574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553197363090012564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reward: 10
-  healthbar: {fileID: 1553197362261721204}
-  healthbarScale: 1
-  enemyID: 0
-  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
-  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
-  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
-  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 70
-  maxPoise: 70
-  poiseRegeneration: 5
-  staggerDuration: 2
-  hitVFX: {fileID: 8823882508510088645}
-  dotVFX: {fileID: 3126669520220361274}
---- !u!114 &2327532180746279828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553197363090012564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 470767068bfeabd46879f3671c2eecea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frontAnimator: {fileID: 8241975028222420764}
-  backAnimator: {fileID: 7252742595013073776}
-  navAgent: {fileID: 1553197363090012571}
-  attackMaxTime: 2
-  detectRange: 10
-  attackRange: 8
-  projectilePrefab: {fileID: 3398478112403510094, guid: bb0e5d9e06e78854285795632634d81e, type: 3}
-  spellAttackDamage: 15
-  spellAttackPoiseDamage: 15
-  hitDamage: 0
-  hitPoiseDamage: 0
-  iceRing: {fileID: 5965480288445082084}
 --- !u!114 &406160750042197360
 MonoBehaviour:
   m_ObjectHideFlags: 0

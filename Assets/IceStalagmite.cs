@@ -8,11 +8,19 @@ public class IceStalagmite : MonoBehaviour
     [SerializeField] GameObject puddle;
     [SerializeField] Collider collide;
     [SerializeField] MapData mapData;
+    [SerializeField] bool showPuddle = true;
 
     private void Start()
     {
         icicle.SetActive(mapData.ACOn);
-        puddle.SetActive(!mapData.ACOn);
+        if (showPuddle)
+        {
+            puddle.SetActive(!mapData.ACOn);
+        }
+        else
+        {
+            puddle.SetActive(false);
+        }
         collide.enabled = mapData.ACOn;
     }
 }

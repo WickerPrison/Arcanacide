@@ -39,6 +39,18 @@ public class IceBeamController : EnemyController
     {
         base.EnemyAI();
 
+        if (!detectionTrigger)
+        {
+            RaycastHit hit;
+            Physics.Linecast(transform.position, playerScript.transform.position, out hit, layerMask, QueryTriggerInteraction.Ignore);
+            if (hit.collider.CompareTag("Player"))
+            {
+                detectionTrigger = true;
+                hasSeenPlayer = true;
+                gm.awareEnemies += 1;
+            }
+        }
+
         if (hasSeenPlayer)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
