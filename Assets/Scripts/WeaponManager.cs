@@ -26,6 +26,7 @@ public class WeaponManager : MonoBehaviour
 
         im.controls.Gameplay.Sword.performed += ctx => SwitchWeapon(0);
         im.controls.Gameplay.Axe.performed += ctx => SwitchWeapon(1);
+        im.controls.Gameplay.Claws.performed += ctx => SwitchWeapon(2);
 
         playerController = GetComponent<PlayerController>();
 
