@@ -51,12 +51,6 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (poise <= 0)
-        {
-            enemyController.StartStagger(staggerDuration);
-            poise = maxPoise;
-        }
-
         if(poise < maxPoise)
         {
             poise += Time.deltaTime * poiseRegeneration;
@@ -136,6 +130,12 @@ public class EnemyScript : MonoBehaviour
             poiseDamage *= 1.5f;
         }
         poise -= poiseDamage;
+
+        if (poise <= 0)
+        {
+            enemyController.StartStagger(staggerDuration);
+            poise = maxPoise;
+        }
     }
 
     public void StartStagger(float staggerDuration)

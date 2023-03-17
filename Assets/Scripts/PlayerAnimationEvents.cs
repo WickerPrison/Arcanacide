@@ -22,6 +22,12 @@ public class PlayerAnimationEvents : MonoBehaviour
     GameManager gm;
     AudioSource SFX;
     WeaponManager weaponManager;
+    BigClaws bigClaws;
+
+    private void Awake()
+    {
+        bigClaws = transform.parent.GetComponentInChildren<BigClaws>();   
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -274,9 +280,11 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         playerController.canWalk = false;
         frontAnimator.SetLayerWeight(1, 0);
+        backAnimator.SetLayerWeight(1, 0);
         if(playerController.moveDirection.magnitude > 0)
         {
             frontAnimator.Play("Walk", 0, frontAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime);
+            backAnimator.Play("Walk", 0, backAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime);
         }
     }
 
@@ -285,6 +293,10 @@ public class PlayerAnimationEvents : MonoBehaviour
         shoveVFX.Play();
     }
 
+    public void BigClaw(AttackProfiles attackProfile)
+    {
+        bigClaws.ClawSwipe(attackProfile);
+    }
 
     public void ParryWindow()
     {

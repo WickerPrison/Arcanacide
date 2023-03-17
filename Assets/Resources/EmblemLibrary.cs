@@ -104,6 +104,8 @@ public class EmblemLibrary : ScriptableObject
                 return durable_gem_description;
             case "Explosive Healing":
                 return explosive_healing_description;
+            case "Protective Barrier":
+                return protective_barrier_description;
             default:
                 return "Error";
         }

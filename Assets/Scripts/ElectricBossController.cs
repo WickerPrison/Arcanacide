@@ -36,7 +36,7 @@ public class ElectricBossController : EnemyController
     int attackCounter = 0;
     [SerializeField] float[] hadokenAngles;
     public bool phase2 = false;
-    int phaseTrigger = 300;
+    int phaseTrigger = 200;
     [SerializeField] ParticleSystem bodyLightning;
 
     public override void Start()
@@ -360,6 +360,13 @@ public class ElectricBossController : EnemyController
             isColliding = true;
             playerScript.GetComponent<PlayerController>().PerfectDodge();
         }
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        if (attacking) { return; }
+
+        base.StartStagger(staggerDuration);
     }
 
     public override void Death()
