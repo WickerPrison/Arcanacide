@@ -45,8 +45,12 @@ public class PowerSwitch : MonoBehaviour
         if (playerDistance <= interactDistance && !hasBeenUsed)
         {
             hasBeenUsed = true;
-            mapData.powerSwitchesFlipped.Add(switchNumber);
             animator.Play("Handle|Pull_Down");
         }
+    }
+
+    public void PowerOff()
+    {
+        mapData.powerSwitchesFlipped.Add(switchNumber);
     }
 }
