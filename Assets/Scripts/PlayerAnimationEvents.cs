@@ -87,10 +87,6 @@ public class PlayerAnimationEvents : MonoBehaviour
             SFX.PlayOneShot(attackProfile.soundOnHit, attackProfile.soundOnHitVolume);
         }
 
-        if (attackProfile.screenShakeOnHit != Vector2.zero)
-        {
-            StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
-        }
         enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
         
         if(attackProfile.heavyAttack && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
@@ -116,9 +112,10 @@ public class PlayerAnimationEvents : MonoBehaviour
             AttackHitEachEnemy(enemy, attackDamage, attackProfile);
         }
 
-        if(gm.enemiesInRange.Count > 0)
+
+        if (gm.enemiesInRange.Count > 0 && attackProfile.screenShakeOnHit != Vector2.zero)
         {
-            stepWithAttack.Step(attackProfile.stepWithAttack);
+            StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
         }
     }
 
@@ -130,6 +127,11 @@ public class PlayerAnimationEvents : MonoBehaviour
             {
                 AttackHitEachEnemy(enemy, attackDamage, attackProfile);
             }
+        }
+
+        if (gm.enemiesInRange.Count > 0 && attackProfile.screenShakeOnHit != Vector2.zero)
+        {
+            StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
         }
     }
 

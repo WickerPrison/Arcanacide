@@ -35,8 +35,8 @@ public class IceMageController : EnemyController
             {
                 if (attackTime <= 0)
                 {
-                    frontAnimator.Play("IceBlast");
-                    backAnimator.Play("IceBlast");
+                    frontAnimator.Play("Blast");
+                    backAnimator.Play("Blast");
                     attackTime = attackMaxTime;
                 }
             }

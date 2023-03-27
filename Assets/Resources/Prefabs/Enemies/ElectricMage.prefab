@@ -1273,6 +1273,7 @@ GameObject:
   - component: {fileID: 3990039371435156072}
   - component: {fileID: 4641586848590437304}
   - component: {fileID: 7547651579084886853}
+  - component: {fileID: 3741050204111667857}
   m_Layer: 6
   m_Name: ElectricMage
   m_TagString: Enemy
@@ -1394,7 +1395,7 @@ MonoBehaviour:
   backAnimator: {fileID: 9142918192992037005}
   player: {fileID: 0}
   away: {x: 100, y: 100, z: 100}
-  playerDirection: {x: 0, y: 0, z: 0}
+  faceDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &7547651579084886853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,6 +1423,20 @@ MonoBehaviour:
   frontLightningOrigin: {fileID: 1402991321445038359}
   backLightningOrigin: {fileID: 2562945449598548410}
   meshRadius: 5
+--- !u!114 &3741050204111667857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3990039371435156066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb60614332c4ba439ff04fa8eaa9e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whiteMaterial: {fileID: 2100000, guid: f92daf5ee1300c149a42049a88c6e0b3, type: 2}
+  spriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &3990039371956402344
 GameObject:
   m_ObjectHideFlags: 0

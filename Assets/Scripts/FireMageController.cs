@@ -37,8 +37,8 @@ public class FireMageController : EnemyController
             {
                 if(attackTime <= 0)
                 {
-                    frontAnimator.Play("FireBlast");
-                    backAnimator.Play("FireBlast");
+                    frontAnimator.Play("Blast");
+                    backAnimator.Play("Blast");
                     attackTime = attackMaxTime;
                 }
             }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,8 @@ public class EnemyScript : MonoBehaviour
     [System.NonSerialized] public bool isDying = false;
     float DOT = 0;
     float damageDOT = 0;
+
+    public EventHandler OnTakeDamage;
 
     private void Awake()
     {
@@ -83,6 +86,7 @@ public class EnemyScript : MonoBehaviour
 
     public void LoseHealth(int damage, float poiseDamage)
     {
+        OnTakeDamage?.Invoke(this, EventArgs.Empty);
         hitVFX.Play();
         health -= damage;
         if(health < 0)
