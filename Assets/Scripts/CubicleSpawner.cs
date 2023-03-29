@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class CubicleSpawner : MonoBehaviour
 {
@@ -23,19 +23,19 @@ public class CubicleSpawner : MonoBehaviour
 
     void SpawnCubicles()
     {
-        for(int i = 0; i < cubicleNum; i++)
-        {
-            GameObject cubicle = PrefabUtility.InstantiatePrefab(cubiclePrefab) as GameObject;
-            cubicle.transform.parent = transform.parent;
-            cubicle.transform.localPosition = transform.localPosition + sideShift * i;
+        //for(int i = 0; i < cubicleNum; i++)
+        //{
+        //    GameObject cubicle = PrefabUtility.InstantiatePrefab(cubiclePrefab) as GameObject;
+        //    cubicle.transform.parent = transform.parent;
+        //    cubicle.transform.localPosition = transform.localPosition + sideShift * i;
 
-            if (doubleSided)
-            {
-                GameObject backCubicle = PrefabUtility.InstantiatePrefab(cubiclePrefab) as GameObject;
-                backCubicle.transform.parent = transform.parent;
-                backCubicle.transform.localPosition = cubicle.transform.localPosition + backShift;
-                backCubicle.transform.localScale = new Vector3(1, 1, -1);
-            }
-        }
+        //    if (doubleSided)
+        //    {
+        //        GameObject backCubicle = PrefabUtility.InstantiatePrefab(cubiclePrefab) as GameObject;
+        //        backCubicle.transform.parent = transform.parent;
+        //        backCubicle.transform.localPosition = cubicle.transform.localPosition + backShift;
+        //        backCubicle.transform.localScale = new Vector3(1, 1, -1);
+        //    }
+        //}
     }
 }
