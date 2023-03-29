@@ -143,6 +143,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Knife"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa2b026c-7798-45ba-b306-bb0f273bc065"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -446,7 +455,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""68d303ad-f32d-425f-ab15-08f90124e8bb"",
-                    ""path"": ""<Keyboard>/3"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -457,11 +466,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5cf71d0c-4869-4442-ae85-6061a774458f"",
-                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Claws"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6387d8d1-d0ba-4002-95c6-53bad8ee8ee1"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Knife"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a87bb013-8174-4ef5-a433-c63f559be2d6"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Knife"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -673,6 +704,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Sword = m_Gameplay.FindAction("Sword", throwIfNotFound: true);
         m_Gameplay_Axe = m_Gameplay.FindAction("Axe", throwIfNotFound: true);
         m_Gameplay_Claws = m_Gameplay.FindAction("Claws", throwIfNotFound: true);
+        m_Gameplay_Knife = m_Gameplay.FindAction("Knife", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_Select = m_Tutorial.FindAction("Select", throwIfNotFound: true);
@@ -757,6 +789,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Sword;
     private readonly InputAction m_Gameplay_Axe;
     private readonly InputAction m_Gameplay_Claws;
+    private readonly InputAction m_Gameplay_Knife;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -774,6 +807,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Sword => m_Wrapper.m_Gameplay_Sword;
         public InputAction @Axe => m_Wrapper.m_Gameplay_Axe;
         public InputAction @Claws => m_Wrapper.m_Gameplay_Claws;
+        public InputAction @Knife => m_Wrapper.m_Gameplay_Knife;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -822,6 +856,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Claws.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClaws;
                 @Claws.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClaws;
                 @Claws.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClaws;
+                @Knife.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKnife;
+                @Knife.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKnife;
+                @Knife.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKnife;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -865,6 +902,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Claws.started += instance.OnClaws;
                 @Claws.performed += instance.OnClaws;
                 @Claws.canceled += instance.OnClaws;
+                @Knife.started += instance.OnKnife;
+                @Knife.performed += instance.OnKnife;
+                @Knife.canceled += instance.OnKnife;
             }
         }
     }
@@ -1007,6 +1047,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSword(InputAction.CallbackContext context);
         void OnAxe(InputAction.CallbackContext context);
         void OnClaws(InputAction.CallbackContext context);
+        void OnKnife(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {

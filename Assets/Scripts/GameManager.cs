@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Add(0);
         playerData.currentWeapon = 0;
 
+        mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
         mapData.powerSwitchesFlipped.Clear();
@@ -185,6 +186,7 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Add(1);
         playerData.currentWeapon = 0;
 
+        mapData.doorNumber = 3;
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
         mapData.powerSwitchesFlipped.Clear();
