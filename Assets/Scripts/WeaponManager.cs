@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using System;
 
@@ -8,8 +7,8 @@ public class WeaponManager : MonoBehaviour
 {
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
-    [SerializeField] List<AnimatorController> frontAnimatorControllers;
-    [SerializeField] List<AnimatorController> backAnimatorControllers;
+    [SerializeField] List<RuntimeAnimatorController> frontAnimatorControllers;
+    [SerializeField] List<RuntimeAnimatorController> backAnimatorControllers;
     [SerializeField] List<GameObject> frontWeaponSprites;
     [SerializeField] List<GameObject> backWeaponSprites;
     [SerializeField] PlayerData playerData;
@@ -26,7 +25,8 @@ public class WeaponManager : MonoBehaviour
 
         im.controls.Gameplay.Sword.performed += ctx => SwitchWeapon(0);
         im.controls.Gameplay.Axe.performed += ctx => SwitchWeapon(1);
-        im.controls.Gameplay.Claws.performed += ctx => SwitchWeapon(2);
+        im.controls.Gameplay.Knife.performed += ctx => SwitchWeapon(2);
+        im.controls.Gameplay.Claws.performed += ctx => SwitchWeapon(3);
 
         playerController = GetComponent<PlayerController>();
 
