@@ -13,7 +13,7 @@ public class AltarScript : MonoBehaviour
     Transform player;
     PlayerScript playerScript;
     InputManager im;
-    TutorialManager tutorialManager;
+    //TutorialManager tutorialManager;
     float playerDistance = 100;
     float interactDistance = 2;
     float waterMaxHeight = 0.6f;
@@ -40,11 +40,11 @@ public class AltarScript : MonoBehaviour
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
 
-        if(playerData.tutorials.Contains("Altar") && playerDistance <= 4)
-        {
-            tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
-            tutorialManager.AltarTutorial();
-        }
+        //if(playerData.tutorials.Contains("Altar") && playerDistance <= 4)
+        //{
+        //    tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
+        //    tutorialManager.AltarTutorial();
+        //}
 
         if (playerDistance <= interactDistance && !hasBeenUsed)
         {

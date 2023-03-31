@@ -29,6 +29,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] float rotationPointY;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] PlayerData playerData;
 
     Vector3 away = new Vector3(100, 100, 100);
     Vector3 frontAnimatorPosition;
@@ -132,6 +133,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void HealAnimation()
     {
+        if (!playerData.hasHealthGem) return;
         if(playerController.CanInput() && playerScript.playerData.healCharges >= 0)
         {
             frontAnimator.SetLayerWeight(1, 1);

@@ -22,6 +22,7 @@ public class ManagerVanquished : MonoBehaviour
         text.gameObject.SetActive(false);
         healthGemMessage.gameObject.SetActive(true);
         yield return new WaitForSeconds(messageTime);
+        EndOfDemoMessage();
         Destroy(gameObject);
     }
 

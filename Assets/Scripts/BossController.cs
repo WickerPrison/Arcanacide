@@ -334,6 +334,7 @@ public class BossController : EnemyController
 
     public override void StartDying()
     {
+        bossDialogue.EndLookUpDialogue();
         if (!hasSurrendered)
         {
             frontAnimator.Play("HandsUp");
