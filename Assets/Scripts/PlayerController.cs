@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using JetBrains.Annotations;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform backSwordTip;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
+    [SerializeField] Bolts bolts;
+    [SerializeField] Transform[] boltsOrigin;
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
     GameManager gm;
     SoundManager sm;
     PlayerAnimation playerAnimation;
+    PlayerEvents playerEvents;
     WeaponManager weaponManager;
     PlayerScript playerScript;
     PlayerSound playerSound;
@@ -68,6 +72,15 @@ public class PlayerController : MonoBehaviour
     public Vector2 lookDir;
     List<Transform> nearbyEnemies = new List<Transform>();
 
+    bool knifeSpecialAttackOn = false;
+    float boltdamage = 0;
+    Vector3 away = Vector3.one * 100;
+
+    private void Awake()
+    {
+        playerEvents = GetComponent<PlayerEvents>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +93,7 @@ public class PlayerController : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
+        bolts.SetPositions(away, away);
     }
 
     // Update is called once per frame
@@ -112,6 +126,42 @@ public class PlayerController : MonoBehaviour
         if (lockPosition)
         {
             rb.velocity = Vector3.zero;
+        }
+
+        if (knifeSpecialAttackOn)
+        {
+            EnemyScript closestEnemy = null;
+            float distance = 10;
+            foreach(EnemyScript enemy in gm.enemies)
+            {
+                float enemyDistance = Vector3.Distance(enemy.transform.position, transform.position);
+                if (enemyDistance < distance)
+                {
+                    distance = enemyDistance;
+                    closestEnemy = enemy;
+                }
+            }
+
+            int boltsFrontOrBack = 0;
+            if(playerAnimation.facingDirection > 1)
+            {
+                boltsFrontOrBack = 1;
+            }
+
+            if(closestEnemy != null)
+            {
+                bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f,0));
+                boltdamage += playerData.dedication * 10 * Time.deltaTime;
+                if(boltdamage > 1)
+                {
+                    closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0);
+                    boltdamage = 0;
+                }
+            }
+            else
+            {
+                bolts.SetPositions(away, away);
+            }
         }
     }
 
@@ -237,6 +287,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void EndSpecialAttack()
+    {
+        if(playerData.currentWeapon == 2 && knifeSpecialAttackOn)
+        {
+            knifeSpecialAttackOn = false;
+            bolts.SetPositions(away, away);
+            playerAnimation.EndSpecialAttack();
+        }
+    }
+
     public void SwordSpecialAttack()
     {
         playerScript.LoseStamina(specialAttackProfiles[0].staminaCost);
@@ -265,6 +325,11 @@ public class PlayerController : MonoBehaviour
         playerScript.LoseMana(specialAttackProfiles[1].manaCost);
         GameObject totem = Instantiate(totemObject);
         totem.transform.position = new Vector3(transform.position.x, 0, transform.position.z);    
+    }
+
+    public void KnifeSpecialAttack()
+    {
+        knifeSpecialAttackOn = true;
     }
 
     public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
@@ -435,11 +500,6 @@ public class PlayerController : MonoBehaviour
             Dash();
         }
 
-        if (playerAnimation.attacking)
-        {
-            //rb.velocity = Vector3.zero;
-        }
-
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
         {
             if (arcaneStepTimer < 0)
@@ -495,6 +555,31 @@ public class PlayerController : MonoBehaviour
         arcaneStepTimer = 0;
     }
 
+    private void PlayerEvents_onPlayerStagger(object sender, System.EventArgs e)
+    {
+        EndArcaneStep();
+        if (knockback)
+        {
+            rb.velocity = Vector3.zero;
+        }
+
+        if (playerData.currentWeapon == 2 && knifeSpecialAttackOn)
+        {
+            knifeSpecialAttackOn = false;
+            bolts.SetPositions(away, away);
+        }
+    }
+
+    private void OnEnable()
+    {
+        playerEvents.onPlayerStagger += PlayerEvents_onPlayerStagger;
+    }
+
+    private void OnDisable()
+    {
+        playerEvents.onPlayerStagger -= PlayerEvents_onPlayerStagger;
+    }
+
     void SetUpControls()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
@@ -502,6 +587,7 @@ public class PlayerController : MonoBehaviour
         im.controls.Gameplay.Attack.performed += ctx => Attack();
         im.controls.Gameplay.HeavyAttack.performed += ctx => HeavyAttack();
         im.controls.Gameplay.SpecialAttack.performed += ctx => SpecialAttack();
+        im.controls.Gameplay.SpecialAttack.canceled += ctx => EndSpecialAttack();
         im.controls.Gameplay.Dodge.performed += ctx => Dodge();
         im.controls.Gameplay.PauseMenu.performed += ctx => PauseMenu();
         im.controls.Gameplay.Move.performed += ctx => playerData.moveDir = ctx.ReadValue<Vector2>();

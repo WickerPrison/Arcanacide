@@ -189,6 +189,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         electricTrap.StartTimer();
     }
 
+    public void KnifeSpecialAttack()
+    {
+        playerController.KnifeSpecialAttack();
+    }
+
     public void AttackFalse()
     {
         playerAnimation.EndChain();

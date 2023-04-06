@@ -20,6 +20,7 @@ public class PlayerScript : MonoBehaviour
     InputManager im;
     PlayerController playerController;
     PlayerAnimation playerAnimation;
+    PlayerEvents playerEvents;
     WeaponManager weaponManager;
     PlayerSound sfx;
     CameraFollow cameraScript;
@@ -58,6 +59,7 @@ public class PlayerScript : MonoBehaviour
         barrierTimer = 0;
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerEvents = GetComponent<PlayerEvents>();
         weaponManager = GetComponent<WeaponManager>();
         sfx = GetComponentInChildren<PlayerSound>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
@@ -200,18 +202,10 @@ public class PlayerScript : MonoBehaviour
     {
         if(staggerDuration > 0 && !shield)
         {
-            if (!playerController.knockback)
-            {
-                playerController.rb.velocity = Vector3.zero;
-            }
             staggerTimer += staggerDuration;
             isStaggered = true;
 
-            if (playerController.arcaneStepActive)
-            {
-                playerController.EndArcaneStep();
-            }
-            playerAnimation.PlayStagger();
+            playerEvents.PlayerStagger();
         }
     }
 

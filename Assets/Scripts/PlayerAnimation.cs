@@ -40,6 +40,12 @@ public class PlayerAnimation : MonoBehaviour
     public ParticleSystem shoveVFX;
 
     public int facingDirection;
+    PlayerEvents playerEvents;
+
+    private void Awake()
+    {
+        playerEvents = GetComponent<PlayerEvents>();
+    }
 
     private void Start()
     {
@@ -112,13 +118,20 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.Play("SpecialAttack");
     }
 
+    public void EndSpecialAttack()
+    {
+        attacking = false;
+        frontAnimator.Play("EndSpecialAttack");
+        backAnimator.Play("EndSpecialAttack");
+    }
+
     void StaminaUpdate()
     {
         frontAnimator.SetFloat("Stamina", playerScript.stamina);
         backAnimator.SetFloat("Stamina", playerScript.stamina);
     }
 
-    public void PlayStagger()
+    public void PlayStagger(object sender, System.EventArgs e)
     {
         attacking = false;
         frontAnimator.Play("Stagger");
@@ -306,5 +319,15 @@ public class PlayerAnimation : MonoBehaviour
         frontAnimator.transform.localPosition = new Vector3(-frontOffset, frontAnimator.transform.localPosition.y, frontAnimator.transform.localPosition.z);
         backAnimator.transform.localScale = new Vector3(initalScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
         backAnimator.transform.localPosition = new Vector3(backOffset, backAnimator.transform.localPosition.y, backAnimator.transform.localPosition.z);
+    }
+
+    private void OnEnable()
+    {
+        playerEvents.onPlayerStagger += PlayStagger;
+    }
+
+    private void OnDisable()
+    {
+        playerEvents.onPlayerStagger -= PlayStagger;
     }
 }
