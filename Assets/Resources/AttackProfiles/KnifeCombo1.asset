@@ -10,42 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
-  m_Name: SwordLight2
+  m_Name: KnifeCombo1
   m_EditorClassIdentifier: 
   hitboxType: Arc
   heavyAttack: 0
-  smearSpeed: -5
-  stepWithAttack: 0.15
+  smearSpeed: 5
+  stepWithAttack: 0.1
   halfConeAngle: 45
-  attackRange: 1.5
-  damageMultiplier: 1
+  attackRange: 1
+  damageMultiplier: 0
   magicDamageMultiplier: 0
-  poiseDamageMultiplier: 1
+  poiseDamageMultiplier: 0
   staminaCost: 20
   manaCost: 0
   durationDOT: 0
   staggerDuration: 0
   screenShakeOnHit: {x: 0.15, y: 0.08}
   screenShakeNoHit: {x: 0, y: 0}
-  soundOnHit: {fileID: 8300000, guid: 0d0b4a1b4b49c5b448714ecd1447022b, type: 3}
-  soundOnHitVolume: 0.5
+  soundOnHit: {fileID: 0}
+  soundOnHitVolume: 0
   soundNoHit: {fileID: 8300000, guid: 084ddb136b4bce44698b009b414e93e7, type: 3}
   soundNoHitVolume: 2
   smearPositions:
-  - {x: 0.5, y: 0, z: 0.5}
-  - {x: -0.5, y: 0, z: 5}
-  - {x: -0.1, y: 0, z: 0.7}
-  - {x: 0.1, y: 0, z: 0.7}
+  - {x: -0.4, y: 0, z: 0.6}
+  - {x: 0.4, y: 0, z: 0.6}
+  - {x: 0.3, y: 0, z: 0.2}
+  - {x: -0.3, y: 0, z: 0.2}
   smearRotations:
-  - {x: 90, y: -80, z: 0}
-  - {x: 90, y: 80, z: 0}
-  - {x: -90, y: 5, z: 0}
-  - {x: -90, y: -5, z: 0}
+  - {x: 90, y: -50, z: 0}
+  - {x: 90, y: 50, z: 0}
+  - {x: -90, y: -50, z: 0}
+  - {x: -90, y: 50, z: 0}
   smearScales:
-  - {x: 1, y: -1, z: 1}
-  - {x: -1, y: -1, z: 1}
-  - {x: -1, y: -1, z: -1}
-  - {x: 1, y: -1, z: -1}
+  - {x: 1, y: -1, z: 0.5}
+  - {x: -1, y: -1, z: 0.5}
+  - {x: -1, y: -1, z: -0.5}
+  - {x: 1, y: -1, z: -0.5}
   clawAngle: []
   clawRotations: []
   clawScales: []

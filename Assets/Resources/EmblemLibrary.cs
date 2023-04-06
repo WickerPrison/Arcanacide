@@ -45,11 +45,6 @@ public class EmblemLibrary : ScriptableObject
     public float explosiveHealingRange = 5;
     public float explosiveHealingStagger = 1f;
 
-    public int ArcaneStepDamage()
-    {
-        return playerData.dedication * 2;
-    }
-
     public int CloseCallDamage()
     {
         return playerData.dedication * 2 + 10;

@@ -9,6 +9,9 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] ParticleSystem shoveVFX;
+    [SerializeField] ParticleSystem electricSmear;
+    [SerializeField] GameObject electricTrapPrefab;
+    ElectricTrap electricTrap;
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
     PlayerSmear smear;
@@ -175,6 +178,17 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerController.AxeSpecialAttack();
     }
 
+    public void KnifeHeavy()
+    {
+        if(electricTrap == null)
+        {
+            electricTrap = Instantiate(electricTrapPrefab).GetComponent<ElectricTrap>();
+        }
+
+        electricTrap.transform.position = transform.parent.position;
+        electricTrap.StartTimer();
+    }
+
     public void AttackFalse()
     {
         playerAnimation.EndChain();
@@ -311,6 +325,11 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void Footstep()
     {
         playerSound.Footstep();
+    }
+
+    public void ElectricSmear()
+    {
+        electricSmear.Play();
     }
 
     public void AttackAnimationSpeed()

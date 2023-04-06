@@ -14,7 +14,7 @@ public class PlayerSmear : MonoBehaviour
         playerAnimation = GetComponentInParent<PlayerAnimation>();
         smear = GetComponent<ParticleSystem>();
         smearShape = smear.shape;
-        smear.Simulate(1);
+        smear.Simulate(1, false);
     }
 
     public void particleSmear(AttackProfiles attackProfile)
@@ -28,7 +28,7 @@ public class PlayerSmear : MonoBehaviour
         SmearDirection(attackProfile);
         ParticleSystem.ShapeModule smearShapeFront = smear.shape;
         smearShapeFront.arcSpeed = attackProfile.smearSpeed;
-        smear.Simulate(0);
+        smear.Simulate(0, false);
     }
 
     void SmearDirection(AttackProfiles attackProfile)
@@ -46,6 +46,6 @@ public class PlayerSmear : MonoBehaviour
 
     private void FixedUpdate()
     {
-        smear.Simulate(Time.fixedDeltaTime, true, false);
+        smear.Simulate(Time.fixedDeltaTime, false, false);
     }
 }
