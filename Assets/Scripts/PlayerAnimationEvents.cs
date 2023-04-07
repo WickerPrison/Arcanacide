@@ -161,6 +161,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void SwitchWeaponSprite(int weaponID)
     {
         weaponManager.ActivateWeaponSprite(weaponID);
+        weaponManager.CheckWeaponMagic();
     }
 
     public void SwordSpecialAttack()

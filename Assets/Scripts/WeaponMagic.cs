@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponMagic : MonoBehaviour
 {
     [SerializeField] List<ParticleSystem> weaponMagics = new List<ParticleSystem>();
+    [SerializeField] List<ParticleSystem> offhandWeaponMagics = new List<ParticleSystem>();
     [SerializeField] PlayerData playerData;
     WeaponManager weaponManager;
 
@@ -19,10 +20,18 @@ public class WeaponMagic : MonoBehaviour
     private void WeaponManager_OnStopWeaponMagic(object sender, System.EventArgs e)
     {
         weaponMagics[playerData.currentWeapon].Stop();
+        if (offhandWeaponMagics[playerData.currentWeapon] != null)
+        {
+            offhandWeaponMagics[playerData.currentWeapon].Stop();
+        }
     }
 
     private void WeaponManager_OnStartWeaponMagic(object sender, System.EventArgs e)
     {
         weaponMagics[playerData.currentWeapon].Play();
+        if (offhandWeaponMagics[playerData.currentWeapon] != null)
+        {
+            offhandWeaponMagics[playerData.currentWeapon].Play();
+        }
     }
 }

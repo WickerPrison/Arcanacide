@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ElectricTrap : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
-    ParticleSystem vfx;
+    [SerializeField] AudioClip electricDamage;
+    AudioSource audioSource;
     float damage = 0;
     float damagePerSecond;
     float duration = 3;
     float timer;
     Vector3 away = Vector3.one * 100;
+    bool canMakeDamageSound = true;
+    List<EnemyScript> enemiesInRange = new List<EnemyScript>();
 
     private void Awake()
     {
-        vfx = GetComponent<ParticleSystem>();
-        damagePerSecond = playerData.dedication * 4;
+        audioSource = GetComponent<AudioSource>();
+        damagePerSecond = playerData.dedication * 3;
     }
 
     private void Update()
@@ -28,21 +32,48 @@ public class ElectricTrap : MonoBehaviour
                 transform.position = away;
             }
         }
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
+        if(enemiesInRange.Count > 0)
         {
-            EnemyScript enemyScript;
-            enemyScript = other.gameObject.GetComponent<EnemyScript>();
             damage += damagePerSecond * Time.deltaTime;
             if (damage > 1)
             {
-                enemyScript.LoseHealth(Mathf.FloorToInt(damage), 0);
+                foreach(EnemyScript enemy in enemiesInRange)
+                {
+                    enemy.LoseHealth(Mathf.FloorToInt(damage), 0);
+                }
+
+                if (canMakeDamageSound)
+                {
+                    audioSource.PlayOneShot(electricDamage, .2f);
+                    StartCoroutine(SFXtimer());
+                }
                 damage = 0;
             }
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            enemiesInRange.Add(other.GetComponent<EnemyScript>());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            enemiesInRange.Remove(other.GetComponent<EnemyScript>());
+        }
+    }
+
+    IEnumerator SFXtimer()
+    {
+        canMakeDamageSound = false;
+        yield return new WaitForSeconds(electricDamage.length);
+        canMakeDamageSound = true;
     }
 
     public void StartTimer()

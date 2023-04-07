@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
+    [SerializeField] AttackProfiles knifeSpecialProfile;
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerEvents = GetComponent<PlayerEvents>();
+        bolts.SetPositions(away, away);
     }
 
     // Start is called before the first frame update
@@ -93,7 +95,6 @@ public class PlayerController : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
-        bolts.SetPositions(away, away);
     }
 
     // Update is called once per frame
@@ -130,6 +131,13 @@ public class PlayerController : MonoBehaviour
 
         if (knifeSpecialAttackOn)
         {
+            playerData.mana -= Time.deltaTime * knifeSpecialProfile.manaCost;
+            if(playerData.mana <= 0)
+            {
+                EndSpecialAttack();
+                return;
+            }
+
             EnemyScript closestEnemy = null;
             float distance = 10;
             foreach(EnemyScript enemy in gm.enemies)
@@ -151,7 +159,8 @@ public class PlayerController : MonoBehaviour
             if(closestEnemy != null)
             {
                 bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f,0));
-                boltdamage += playerData.dedication * 10 * Time.deltaTime;
+                bolts.SoundOn();
+                boltdamage += playerData.dedication * knifeSpecialProfile.magicDamageMultiplier * Time.deltaTime;
                 if(boltdamage > 1)
                 {
                     closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0);
@@ -161,6 +170,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 bolts.SetPositions(away, away);
+                bolts.SoundOff();
             }
         }
     }
@@ -289,10 +299,11 @@ public class PlayerController : MonoBehaviour
 
     void EndSpecialAttack()
     {
-        if(playerData.currentWeapon == 2 && knifeSpecialAttackOn)
+        if(playerData.currentWeapon == 2)
         {
             knifeSpecialAttackOn = false;
             bolts.SetPositions(away, away);
+            bolts.SoundOff();
             playerAnimation.EndSpecialAttack();
         }
     }

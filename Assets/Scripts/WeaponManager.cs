@@ -85,6 +85,18 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    public void CheckWeaponMagic()
+    {
+        if (weaponMagicSources + specificWeaponMagicSources[playerData.currentWeapon] > 0)
+        {
+            OnStartWeaponMagic?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            OnStopWeaponMagic?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     void SetWeapon(int weaponID)
     {
         playerData.currentWeapon = weaponID;
