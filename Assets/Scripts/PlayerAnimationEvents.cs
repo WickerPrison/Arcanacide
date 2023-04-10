@@ -29,7 +29,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     private void Awake()
     {
-        bigClaws = transform.parent.GetComponentInChildren<BigClaws>();   
+        bigClaws = transform.parent.GetComponentInChildren<BigClaws>();
     }
 
     // Start is called before the first frame update

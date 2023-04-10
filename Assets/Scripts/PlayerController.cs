@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
-    [SerializeField] AttackProfiles knifeSpecialProfile;
 
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -131,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
         if (knifeSpecialAttackOn)
         {
-            playerData.mana -= Time.deltaTime * knifeSpecialProfile.manaCost;
+            playerData.mana -= Time.deltaTime * specialAttackProfiles[2].manaCost;
             if(playerData.mana <= 0)
             {
                 EndSpecialAttack();
@@ -160,7 +159,7 @@ public class PlayerController : MonoBehaviour
             {
                 bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f,0));
                 bolts.SoundOn();
-                boltdamage += playerData.dedication * knifeSpecialProfile.magicDamageMultiplier * Time.deltaTime;
+                boltdamage += playerData.dedication * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
                 if(boltdamage > 1)
                 {
                     closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0);
