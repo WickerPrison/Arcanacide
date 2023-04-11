@@ -279,7 +279,7 @@ public class PlayerController : MonoBehaviour
 
     void EndHeavyAttack()
     {
-        if(playerData.currentWeapon == 3)
+        if(playerData.currentWeapon == 3 && !playerAnimation.attacking)
         {
             playerAnimation.PlayAnimation("EndHeavyAttack");
         }

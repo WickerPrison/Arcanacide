@@ -11,6 +11,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] ParticleSystem shoveVFX;
     [SerializeField] ParticleSystem electricSmear;
     [SerializeField] GameObject electricTrapPrefab;
+    [SerializeField] ParticleSystem icePoof;
     IceBreath iceBreath;
     ElectricTrap electricTrap;
     CameraFollow cameraScript;
@@ -350,6 +351,11 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void EndIceBreath()
     {
         iceBreath.StopIceBreath();
+    }
+
+    public void IcePoof()
+    {
+        icePoof.Play();   
     }
 
     public void AttackAnimationSpeed()

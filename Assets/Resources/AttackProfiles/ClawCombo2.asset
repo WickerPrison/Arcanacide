@@ -10,42 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
-  m_Name: ClawLight1
+  m_Name: ClawCombo2
   m_EditorClassIdentifier: 
   hitboxType: Arc
-  heavyAttack: 0
+  heavyAttack: 1
   smearSpeed: 0
-  stepWithAttack: 0.15
+  stepWithAttack: 0
   halfConeAngle: 45
-  attackRange: 2.5
+  attackRange: 3
   damageMultiplier: 0
   magicDamageMultiplier: 1
   poiseDamageMultiplier: 1
-  staminaCost: 20
+  staminaCost: 30
   manaCost: 0
   durationDOT: 0
-  staggerDuration: 0
+  staggerDuration: 0.2
   screenShakeOnHit: {x: 0.15, y: 0.08}
   screenShakeNoHit: {x: 0, y: 0}
-  soundOnHit: {fileID: 8300000, guid: 0d0b4a1b4b49c5b448714ecd1447022b, type: 3}
-  soundOnHitVolume: 0.5
-  soundNoHit: {fileID: 8300000, guid: 084ddb136b4bce44698b009b414e93e7, type: 3}
+  soundOnHit: {fileID: 0}
+  soundOnHitVolume: 0
+  soundNoHit: {fileID: 8300000, guid: 7ae8940842f2bc64db2b72b6e4ae3c95, type: 3}
   soundNoHitVolume: 1
   smearPositions: []
   smearRotations: []
   smearScales: []
-  clawAngle:
-  - -45
-  - 45
-  - -45
-  - 45
-  clawRotations:
-  - 35
-  - 155
-  - 160
-  - 0
-  clawScales:
-  - {x: 1, y: -1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: -1, z: 1}
-  - {x: 1, y: 1, z: 1}
+  clawAngle: []
+  clawRotations: []
+  clawScales: []
