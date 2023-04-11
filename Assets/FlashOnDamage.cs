@@ -9,7 +9,9 @@ public class FlashOnDamage : MonoBehaviour
     [SerializeField] Material spriteMaterial;
     SpriteRenderer[] renderers;
     WaitForSecondsRealtime flashTime = new WaitForSecondsRealtime(.15f);
+    WaitForSecondsRealtime delayTime = new WaitForSecondsRealtime(0.3f);
     bool isFlashing = false;
+    bool isDelayed = false;
 
     private void Awake()
     {
@@ -19,8 +21,9 @@ public class FlashOnDamage : MonoBehaviour
 
     void StartFlash(object sender, System.EventArgs e)
     {
-        if (!isFlashing)
+        if (!isFlashing && ! isDelayed)
         {
+            StartCoroutine(Delay());
             StartCoroutine(Flash());
         }
     }
@@ -38,6 +41,13 @@ public class FlashOnDamage : MonoBehaviour
             sprite.material = spriteMaterial;
         }
         isFlashing = false;
+    }
+
+    IEnumerator Delay()
+    {
+        isDelayed = true;
+        yield return delayTime;
+        isDelayed = false;
     }
 
     private void OnEnable()
