@@ -8,13 +8,14 @@ public class IceBreath : MonoBehaviour
     [SerializeField] PlayerData playerData;
     ParticleSystem vfx;
     PlayerScript playerScript;
-    float iceBreathRange = 4;
+    float iceBreathRange = 3;
     LayerMask layerMask;
     RaycastHit[] hitTargets;
     float damage = 2;
     float damageCounter;
     float staminaCost = 5;
     bool iceBreathOn = false;
+    Vector3 offset = new Vector3(0, 1, 0);
 
     private void Start()
     {
@@ -29,13 +30,15 @@ public class IceBreath : MonoBehaviour
 
         playerScript.LoseStamina(staminaCost * Time.deltaTime);
 
-        Vector3 lookDirection = attackPoint.position - transform.position;
+        Vector3 lookDirection = attackPoint.position - playerScript.transform.position;
         lookDirection = new Vector3 (lookDirection.x, 0, lookDirection.z).normalized;
         transform.rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
 
-        hitTargets = Physics.RaycastAll(transform.position, lookDirection, iceBreathRange, layerMask, QueryTriggerInteraction.Ignore);
+        hitTargets = Physics.RaycastAll(playerScript.transform.position + offset, lookDirection, iceBreathRange, layerMask, QueryTriggerInteraction.Ignore);
 
-        if(hitTargets.Length > 0 )
+        //Debug.DrawRay(playerScript.transform.position, lookDirection * iceBreathRange, Color.red);
+
+        if (hitTargets.Length > 0 )
         {
             damageCounter += damage * Time.deltaTime * playerData.dedication;
             if (damageCounter > 1)
