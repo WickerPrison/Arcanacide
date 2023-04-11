@@ -112,6 +112,12 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.Play("HeavyAttack");
     }
 
+    public void EndHeavyAttack()
+    {
+        frontAnimator.Play("EndHeavyAttack");
+        backAnimator.Play("EndHeavyAttack");
+    }
+
     public void SpecialAttack()
     {
         frontAnimator.Play("SpecialAttack");

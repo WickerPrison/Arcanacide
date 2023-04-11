@@ -11,6 +11,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] ParticleSystem shoveVFX;
     [SerializeField] ParticleSystem electricSmear;
     [SerializeField] GameObject electricTrapPrefab;
+    IceBreath iceBreath;
     ElectricTrap electricTrap;
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
@@ -47,6 +48,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         attackArc = playerController.attackPoint.gameObject.GetComponent<PlayerAttackArc>();
         SFX = transform.parent.GetComponentInChildren<AudioSource>();
         weaponManager = GetComponentInParent<WeaponManager>();
+        iceBreath = playerScript.gameObject.GetComponentInChildren<IceBreath>();
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
@@ -54,7 +56,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         stepWithAttack.Step(attackProfile.stepWithAttack);
 
-        if(attackProfile.soundNoHit != null)
+        if (attackProfile.soundNoHit != null)
         {
             SFX.PlayOneShot(attackProfile.soundNoHit, attackProfile.soundNoHitVolume);
         }
@@ -63,7 +65,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         smear.particleSmear(attackProfile);
 
 
-        if(attackProfile.screenShakeNoHit != Vector2.zero)
+        if (attackProfile.screenShakeNoHit != Vector2.zero)
         {
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeNoHit.x, attackProfile.screenShakeNoHit.y));
         }
@@ -91,15 +93,15 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
 
         enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
-        
-        if(attackProfile.heavyAttack && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
+
+        if (attackProfile.heavyAttack && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
         {
             enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
         }
 
         enemy.GainDOT(attackProfile.durationDOT);
 
-        if(attackProfile.staggerDuration > 0)
+        if (attackProfile.staggerDuration > 0)
         {
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
             enemyController.StartStagger(attackProfile.staggerDuration);
@@ -140,7 +142,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     int EmblemDamageModifiers(int attackDamage)
     {
-        if(playerData.equippedEmblems.Contains(emblemLibrary.close_call) && playerController.closeCallTimer > 0)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && playerController.closeCallTimer > 0)
         {
             attackDamage += emblemLibrary.CloseCallDamage();
         }
@@ -150,7 +152,7 @@ public class PlayerAnimationEvents : MonoBehaviour
             attackDamage += emblemLibrary.ArcaneRemainsDamage();
         }
 
-        if(playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
+        if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
         {
             attackDamage += emblemLibrary.ConfidentKillerDamage();
         }
@@ -181,7 +183,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void KnifeHeavy()
     {
-        if(electricTrap == null)
+        if (electricTrap == null)
         {
             electricTrap = Instantiate(electricTrapPrefab).GetComponent<ElectricTrap>();
         }
@@ -256,7 +258,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void StartShield()
     {
-        if(playerController.gameObject.layer == 8)
+        if (playerController.gameObject.layer == 8)
         {
             EndIFrames();
             playerController.dashTime = 0;
@@ -296,6 +298,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void StartWalkLayer()
     {
         playerController.canWalk = true;
+        frontAnimator.SetLayerWeight(1, 1);
+        backAnimator.SetLayerWeight(1, 1);
     }
 
     public void EndWalkLayer()
@@ -303,7 +307,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerController.canWalk = false;
         frontAnimator.SetLayerWeight(1, 0);
         backAnimator.SetLayerWeight(1, 0);
-        if(playerController.moveDirection.magnitude > 0)
+        if (playerController.moveDirection.magnitude > 0)
         {
             frontAnimator.Play("Walk", 0, frontAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime);
             backAnimator.Play("Walk", 0, backAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime);
@@ -336,6 +340,16 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void ElectricSmear()
     {
         electricSmear.Play();
+    }
+
+    public void StartIceBreath()
+    {
+        iceBreath.StartIceBreath();
+    }
+
+    public void EndIceBreath()
+    {
+        iceBreath.StopIceBreath();
     }
 
     public void AttackAnimationSpeed()

@@ -277,6 +277,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void EndHeavyAttack()
+    {
+        if(playerData.currentWeapon == 3)
+        {
+            playerAnimation.EndHeavyAttack();
+        }
+    }
+
     public void SpecialAttack()
     {
         if (!playerData.unlockedAbilities.Contains("SpecialAttack")) return;
@@ -596,6 +604,7 @@ public class PlayerController : MonoBehaviour
 
         im.controls.Gameplay.Attack.performed += ctx => Attack();
         im.controls.Gameplay.HeavyAttack.performed += ctx => HeavyAttack();
+        im.controls.Gameplay.HeavyAttack.canceled += ctx => EndHeavyAttack();
         im.controls.Gameplay.SpecialAttack.performed += ctx => SpecialAttack();
         im.controls.Gameplay.SpecialAttack.canceled += ctx => EndSpecialAttack();
         im.controls.Gameplay.Dodge.performed += ctx => Dodge();
