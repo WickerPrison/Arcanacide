@@ -213,7 +213,7 @@ public class PlayerScript : MonoBehaviour
     {
         staggerTimer = 0;
         isStaggered = false;
-        playerAnimation.PlayIdle();
+        playerAnimation.PlayAnimation("Idle");
     }
 
     public void LoseStamina(float amount)
@@ -268,7 +268,7 @@ public class PlayerScript : MonoBehaviour
 
             if(playerData.mana <= 0)
             {
-                playerAnimation.StopBlocking();
+                playerAnimation.PlayAnimation("StopBlocking");
             }
         }
 

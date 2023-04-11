@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
         if (playerData.mana > 0)
         {
             rb.velocity = Vector3.zero;
-            playerAnimation.Shield();
+            playerAnimation.PlayAnimation("Block");
             playerAnimation.continueBlocking = true;
         }
     }
@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
         {
             playerScript.LoseMana(shoveManaCost);
             rb.velocity = Vector3.zero;
-            playerAnimation.Shove();
+            playerAnimation.PlayAnimation("Shove");
         }
     }
 
@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
             }
 
             playerScript.LoseStamina(staminaCost);
-            playerAnimation.DashAnimation();
+            playerAnimation.PlayAnimation("Dash");
             playerSound.Dodge();
         }
     }
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = true;
-            playerAnimation.Attack();
+            playerAnimation.PlayAnimation("Attack");
         }
     }
 
@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = true;
-            playerAnimation.HeavyAttack();
+            playerAnimation.PlayAnimation("HeavyAttack");
         }
     }
 
@@ -281,7 +281,7 @@ public class PlayerController : MonoBehaviour
     {
         if(playerData.currentWeapon == 3)
         {
-            playerAnimation.EndHeavyAttack();
+            playerAnimation.PlayAnimation("EndHeavyAttack");
         }
     }
 
@@ -299,7 +299,7 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
                 playerAnimation.attacking = true;
-                playerAnimation.SpecialAttack();
+                playerAnimation.PlayAnimation("SpecialAttack");
             }
         }
     }
@@ -311,7 +311,7 @@ public class PlayerController : MonoBehaviour
             knifeSpecialAttackOn = false;
             bolts.SetPositions(away, away);
             bolts.SoundOff();
-            playerAnimation.EndSpecialAttack();
+            playerAnimation.PlayAnimation("EndSpecialAttack");
         }
     }
 

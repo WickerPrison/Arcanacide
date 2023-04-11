@@ -100,35 +100,10 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.SetBool("ContinueBlocking", continueBlocking);
     }
 
-    public void Attack()
+    public void PlayAnimation(string animationName)
     {
-        frontAnimator.Play("Attack");
-        backAnimator.Play("Attack");
-    }
-
-    public void HeavyAttack()
-    {
-        frontAnimator.Play("HeavyAttack");
-        backAnimator.Play("HeavyAttack");
-    }
-
-    public void EndHeavyAttack()
-    {
-        frontAnimator.Play("EndHeavyAttack");
-        backAnimator.Play("EndHeavyAttack");
-    }
-
-    public void SpecialAttack()
-    {
-        frontAnimator.Play("SpecialAttack");
-        backAnimator.Play("SpecialAttack");
-    }
-
-    public void EndSpecialAttack()
-    {
-        attacking = false;
-        frontAnimator.Play("EndSpecialAttack");
-        backAnimator.Play("EndSpecialAttack");
+        frontAnimator.Play(animationName);
+        backAnimator.Play(animationName);
     }
 
     void StaminaUpdate()
@@ -137,6 +112,7 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.SetFloat("Stamina", playerScript.stamina);
     }
 
+
     public void PlayStagger(object sender, System.EventArgs e)
     {
         attacking = false;
@@ -144,11 +120,6 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.Play("Stagger");
     }
 
-    public void PlayIdle()
-    {
-        frontAnimator.Play("Idle");
-        backAnimator.Play("Idle");
-    }
 
     public void HealAnimation()
     {
@@ -160,30 +131,6 @@ public class PlayerAnimation : MonoBehaviour
             frontAnimator.Play("Heal");
             backAnimator.Play("Heal");
         }
-    }
-
-    public void StopBlocking()
-    {
-        frontAnimator.Play("StopBlocking");
-        backAnimator.Play("StopBlocking");
-    }
-
-    public void Shield()
-    {
-        frontAnimator.Play("Block");
-        backAnimator.Play("Block");
-    }
-
-    public void Shove()
-    {
-        frontAnimator.Play("Shove");
-        backAnimator.Play("Shove");
-    }
-
-    public void DashAnimation()
-    {
-        frontAnimator.Play("Dash");
-        backAnimator.Play("Dash");
     }
 
     public void ChainAttacks()
@@ -204,11 +151,6 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.SetBool("Attacks", false);
         frontAnimator.SetBool("Combo", false);
         backAnimator.SetBool("Combo", false);
-    }
-
-    public void ParryAnimation()
-    {
-        //parryAnimator.Play("Parry");
     }
 
     public void StartBodyMagic()
