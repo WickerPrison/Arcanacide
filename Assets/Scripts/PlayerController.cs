@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour
     float boltdamage = 0;
     Vector3 away = Vector3.one * 100;
 
+    bool heavyAttackActive = false;
+
     private void Awake()
     {
         playerEvents = GetComponent<PlayerEvents>();
@@ -270,18 +272,21 @@ public class PlayerController : MonoBehaviour
         }
         else if (CanInput() && playerScript.stamina > 0)
         {
+            heavyAttackActive = true;
             rb.velocity = Vector3.zero;
-            playerAnimation.attacking = true;
+            playerAnimation.attacking = playerData.currentWeapon != 3;
             playerAnimation.PlayAnimation("HeavyAttack");
         }
     }
 
     void EndHeavyAttack()
     {
-        if(playerData.currentWeapon == 3 && !playerAnimation.attacking)
+        if(playerData.currentWeapon == 3 && heavyAttackActive)
         {
             playerAnimation.PlayAnimation("EndHeavyAttack");
         }
+
+        heavyAttackActive = false;
     }
 
     public void SpecialAttack()
