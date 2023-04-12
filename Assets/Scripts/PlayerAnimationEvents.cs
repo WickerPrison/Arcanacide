@@ -17,6 +17,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     ElectricTrap electricTrap;
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
+    PlayerEvents playerEvents;
     PlayerSmear smear;
     StepWithAttack stepWithAttack;
     PlayerController playerController;
@@ -40,6 +41,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerAnimation = GetComponentInParent<PlayerAnimation>();
+        playerEvents = GetComponentInParent<PlayerEvents>();
         smear = transform.parent.GetComponentInChildren<PlayerSmear>();
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
         playerController = GetComponentInParent<PlayerController>();
@@ -72,9 +74,10 @@ public class PlayerAnimationEvents : MonoBehaviour
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeNoHit.x, attackProfile.screenShakeNoHit.y));
         }
 
-        int attackDamage = Mathf.RoundToInt(playerController.AttackPower() * attackProfile.damageMultiplier);
+        int attackDamage = Mathf.RoundToInt(playerData.AttackPower() * attackProfile.damageMultiplier);
         attackDamage = EmblemDamageModifiers(attackDamage);
         attackDamage += Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
+        attackDamage = playerController.DamageModifiers(attackDamage);
 
         switch (attackProfile.hitboxType)
         {
@@ -197,6 +200,12 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void KnifeSpecialAttack()
     {
         playerController.KnifeSpecialAttack();
+    }
+
+    public void ClawsSpecialAttack()
+    {
+        Shove();
+        playerEvents.ClawSpecialAttack();
     }
 
     public void AttackFalse()

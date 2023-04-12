@@ -34,6 +34,9 @@ public class PlayerData : ScriptableObject
     public List<int> unlockedWeapons;
     public int currentWeapon;
 
+    public bool clawSpecialOn;
+    public float clawSpecialTimer;
+
 
     public int MaxHealth()
     {

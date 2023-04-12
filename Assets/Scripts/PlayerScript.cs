@@ -49,6 +49,14 @@ public class PlayerScript : MonoBehaviour
 
     [System.NonSerialized] public bool fullHealth;
 
+    float clawSpecialStamCostMult = 2;
+    float clawSpecialTakeDamageMult = 0.5f;
+
+    private void Awake()
+    {
+        playerEvents = GetComponent<PlayerEvents>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +67,6 @@ public class PlayerScript : MonoBehaviour
         barrierTimer = 0;
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
-        playerEvents = GetComponent<PlayerEvents>();
         weaponManager = GetComponent<WeaponManager>();
         sfx = GetComponentInChildren<PlayerSound>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
@@ -90,6 +97,11 @@ public class PlayerScript : MonoBehaviour
                 barrier = false;
                 barrierTimer = maxBarrierTimer;
                 return;
+            }
+
+            if (playerData.clawSpecialOn)
+            {
+                damage = Mathf.CeilToInt(damage * clawSpecialTakeDamageMult);
             }
 
             playerData.health -= damage;
@@ -218,6 +230,8 @@ public class PlayerScript : MonoBehaviour
 
     public void LoseStamina(float amount)
     {
+        if (playerData.clawSpecialOn) amount *= clawSpecialStamCostMult;
+
         stamina -= amount;
         if(stamina < 0)
         {

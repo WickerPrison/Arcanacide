@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour
     Vector3 away = Vector3.one * 100;
 
     bool heavyAttackActive = false;
+    float clawSpecialMaxTime = 15f;
+    float clawSpecialDamageMult = 2;
 
     private void Awake()
     {
@@ -133,6 +135,16 @@ public class PlayerController : MonoBehaviour
         if (knifeSpecialAttackOn)
         {
             UpdateKnifeSpecialAttack();
+        }
+
+        if(playerData.clawSpecialTimer > 0)
+        {
+            playerData.clawSpecialTimer -= Time.deltaTime;
+            if(playerData.clawSpecialTimer <= 0)
+            {
+                playerData.clawSpecialOn = false;
+                playerEvents.EndClawSpecialAttack();
+            }
         }
     }
 
@@ -417,19 +429,16 @@ public class PlayerController : MonoBehaviour
         playerScript.parry = false;
     }
 
-    public int AttackPower()
+    public int DamageModifiers(int attackPower)
     {
-        int attackPower;
-        attackPower = playerData.AttackPower();
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary.quick_strikes))
-        {
-            attackPower = Mathf.RoundToInt(attackPower * 0.8f);
-        }
-
         if(playerData.currentWeapon == 1 && axeHeavyTimer > 0)
         {
             attackPower += playerData.ArcaneDamage();
+        }
+
+        if(playerData.clawSpecialOn)
+        {
+            attackPower = Mathf.RoundToInt(attackPower * clawSpecialDamageMult);
         }
 
         return attackPower;
@@ -598,14 +607,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void PlayerEvents_onClawSpecial(object sender, System.EventArgs e)
+    {
+        playerScript.LoseMana(specialAttackProfiles[3].manaCost);
+        playerData.clawSpecialTimer = clawSpecialMaxTime;
+        playerData.clawSpecialOn = true;
+    }
+
     private void OnEnable()
     {
         playerEvents.onPlayerStagger += PlayerEvents_onPlayerStagger;
+        playerEvents.onClawSpecial += PlayerEvents_onClawSpecial;
     }
 
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= PlayerEvents_onPlayerStagger;
+        playerEvents.onClawSpecial -= PlayerEvents_onClawSpecial;
     }
 
     void SetUpControls()
