@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] GameObject pauseMenuPrefab;
     [SerializeField] ParticleSystem shoveVFX;
-    [SerializeField] ParticleSystem dodgeVFX;
     [SerializeField] GameObject totemObject;
     [SerializeField] Transform frontSwordTip;
     [SerializeField] Transform backSwordTip;
@@ -23,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
 
+    public ParticleSystem dodgeVFX;
     public Transform attackPoint;
     public LayerMask enemyLayers;
     public float moveSpeed;
@@ -41,10 +41,10 @@ public class PlayerController : MonoBehaviour
     GameObject pauseMenu;
     Vector3 mouseDirection;
     [System.NonSerialized] public Vector3 moveDirection;
-    Vector3 dashDirection;
+    [System.NonSerialized] public Vector3 dashDirection;
     float dashSpeed = 1000;
-    public float dashTime = 0;
-    float maxDashTime = 0.2f;
+    [System.NonSerialized] public float dashTime = 0;
+    [System.NonSerialized] public float maxDashTime = 0.2f;
     float dashStaminaCost = 30f;
     float lockOnDistance = 10;
     public bool preventInput = false;
@@ -130,46 +130,45 @@ public class PlayerController : MonoBehaviour
 
         if (knifeSpecialAttackOn)
         {
-            playerData.mana -= Time.deltaTime * specialAttackProfiles[2].manaCost;
-            if(playerData.mana <= 0)
-            {
-                EndSpecialAttack();
-                return;
-            }
+            UpdateKnifeSpecialAttack();
+        }
+    }
 
-            EnemyScript closestEnemy = null;
-            float distance = 10;
-            foreach(EnemyScript enemy in gm.enemies)
-            {
-                float enemyDistance = Vector3.Distance(enemy.transform.position, transform.position);
-                if (enemyDistance < distance)
-                {
-                    distance = enemyDistance;
-                    closestEnemy = enemy;
-                }
-            }
+    //FixedUpdate is similar to Update but should always be used when dealing with physics
+    private void FixedUpdate()
+    {
+        if (moveDirection.magnitude > 0 && (CanInput() || canWalk))
+        {
+            playerAnimation.walk = true;
+        }
+        else
+        {
+            playerAnimation.walk = false;
+        }
 
-            int boltsFrontOrBack = 0;
-            if(playerAnimation.facingDirection > 1)
-            {
-                boltsFrontOrBack = 1;
-            }
+        //move the player if they are not dashing or attacking
+        if (CanInput() || canWalk)
+        {
+            rb.velocity = new Vector3(moveDirection.x * Time.fixedDeltaTime * moveSpeed, rb.velocity.y, moveDirection.z * Time.fixedDeltaTime * moveSpeed);
+        }
+        //dash if the player has pressed the right mouse button
+        else if (dashTime > 0)
+        {
+            Dash();
+        }
 
-            if(closestEnemy != null)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
+        {
+            if (arcaneStepTimer < 0)
             {
-                bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f,0));
-                bolts.SoundOn();
-                boltdamage += playerData.dedication * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
-                if(boltdamage > 1)
-                {
-                    closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0);
-                    boltdamage = 0;
-                }
+                GameObject pathTrail;
+                pathTrail = Instantiate(pathTrailPrefab);
+                pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                arcaneStepTimer = arcaneStepMaxTime;
             }
             else
             {
-                bolts.SetPositions(away, away);
-                bolts.SoundOff();
+                arcaneStepTimer -= Time.deltaTime;
             }
         }
     }
@@ -350,6 +349,51 @@ public class PlayerController : MonoBehaviour
         knifeSpecialAttackOn = true;
     }
 
+    void UpdateKnifeSpecialAttack()
+    {
+        playerData.mana -= Time.deltaTime * specialAttackProfiles[2].manaCost;
+        if (playerData.mana <= 0)
+        {
+            EndSpecialAttack();
+            return;
+        }
+
+        EnemyScript closestEnemy = null;
+        float distance = 10;
+        foreach (EnemyScript enemy in gm.enemies)
+        {
+            float enemyDistance = Vector3.Distance(enemy.transform.position, transform.position);
+            if (enemyDistance < distance)
+            {
+                distance = enemyDistance;
+                closestEnemy = enemy;
+            }
+        }
+
+        int boltsFrontOrBack = 0;
+        if (playerAnimation.facingDirection > 1)
+        {
+            boltsFrontOrBack = 1;
+        }
+
+        if (closestEnemy != null)
+        {
+            bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f, 0));
+            bolts.SoundOn();
+            boltdamage += playerData.dedication * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
+            if (boltdamage > 1)
+            {
+                closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0);
+                boltdamage = 0;
+            }
+        }
+        else
+        {
+            bolts.SetPositions(away, away);
+            bolts.SoundOff();
+        }
+    }
+
     public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
     {
         PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
@@ -494,45 +538,6 @@ public class PlayerController : MonoBehaviour
         dashTime -= Time.fixedDeltaTime;
     }
 
-
-    //FixedUpdate is similar to Update but should always be used when dealing with physics
-    private void FixedUpdate()
-    {
-        if (moveDirection.magnitude > 0 && (CanInput() || canWalk))
-        {
-            playerAnimation.walk = true;
-        }
-        else
-        {
-            playerAnimation.walk = false;
-        }
-
-        //move the player if they are not dashing or attacking
-        if (CanInput() || canWalk)
-        {
-            rb.velocity = new Vector3(moveDirection.x * Time.fixedDeltaTime * moveSpeed, rb.velocity.y, moveDirection.z * Time.fixedDeltaTime * moveSpeed);
-        }
-        //dash if the player has pressed the right mouse button
-        else if (dashTime > 0)
-        {
-            Dash();
-        }
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
-        {
-            if (arcaneStepTimer < 0)
-            {
-                GameObject pathTrail;
-                pathTrail = Instantiate(pathTrailPrefab);
-                pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-                arcaneStepTimer = arcaneStepMaxTime;
-            }
-            else
-            {
-                arcaneStepTimer -= Time.deltaTime;
-            }
-        }
-    }
 
     public void PerfectDodge()
     {

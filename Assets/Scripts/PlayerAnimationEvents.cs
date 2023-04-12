@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 public class PlayerAnimationEvents : MonoBehaviour
 {
@@ -356,6 +357,15 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void IcePoof()
     {
         icePoof.Play();   
+    }
+
+    public void Backstep()
+    {
+        playerController.dodgeVFX.Play();
+        Vector3 direction = playerController.transform.position - playerController.attackPoint.position;
+        playerController.dashDirection = direction.normalized;
+        playerController.dashTime = playerController.maxDashTime * 2 / 3;
+        playerSound.Dodge();
     }
 
     public void AttackAnimationSpeed()
