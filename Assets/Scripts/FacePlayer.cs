@@ -8,7 +8,7 @@ public class FacePlayer : MonoBehaviour
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     EnemyController enemyController;
-    public Transform player;
+    [System.NonSerialized] public Transform player;
     Vector3 frontAnimatorPosition;
     Vector3 backAnimatorPosition;
     public Vector3 away = new Vector3(100, 100, 100);

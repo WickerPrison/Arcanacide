@@ -364,7 +364,7 @@ public class ElectricBossController : EnemyController
 
     public override void StartStagger(float staggerDuration)
     {
-        if (attacking) { return; }
+        if (attacking) return;
 
         base.StartStagger(staggerDuration);
     }

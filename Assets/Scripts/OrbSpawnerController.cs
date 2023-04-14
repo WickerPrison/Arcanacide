@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 [System.Serializable]
 public class OrbSpawnerController : EnemyController
@@ -8,6 +9,8 @@ public class OrbSpawnerController : EnemyController
     [SerializeField] GameObject lightningOrbPrefab;
     [SerializeField] Transform spawnPoint;
     [SerializeField] Transform orbSprite;
+    [SerializeField] GameObject sprite;
+    [SerializeField] GameObject brokenSprite;
     float maxSpawnTime = 5;
     float spawnTimer = 0;
     Vector3 minSize = new Vector3(0.01f, 0.01f, 0.01f);
@@ -56,6 +59,16 @@ public class OrbSpawnerController : EnemyController
 
     public override void StartDying()
     {
+        enemyScript.isDying = true;
+        orbSprite.gameObject.SetActive(false);
+        sprite.SetActive(false);
+        brokenSprite.SetActive(true);
+        StartCoroutine(DeathTimer());
+    }
+
+    IEnumerator DeathTimer()
+    {
+        yield return new WaitForSeconds(2f);
         enemyScript.Death();
     }
 
