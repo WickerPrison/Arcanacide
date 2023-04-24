@@ -1,16 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class IceBoss : EnemyController
 {
+    int smashDamage = 30;
+    float smashPoiseDamage = 30;
+
+    int ringBlastDamage = 40;
+    float ringBlastPoiseDamage = 50;
+
+    float damageCounter;
+    float fullyTransformedDamage = 4;
+
+
     [SerializeField] GameObject iciclePrefab;
+    [SerializeField] float[] limbTransitions;
+    [SerializeField] string[] limbAnimationNames;
+    [System.NonSerialized] public int currentLimb = 0;
     IceBossBeamCrystal beamCrystal;
+    [SerializeField] BossIceBreath iceBreath;
+    [SerializeField] AttackArcGenerator attackArc;
+    CameraFollow cameraScript;
 
     float playerDistance;
     float tooFarAway = 5;
+    float meleeRange = 3;
 
     float icicleTimer;
     float icicleMaxTime = 1;
@@ -22,13 +40,18 @@ public class IceBoss : EnemyController
     [SerializeField] Color blueColor;
     float alpha = 1;
     float aimValue;
-    float maxAimValue = 3;
+    float maxAimValue = 1.5f;
     float gradientOffset = .4f;
     Vector3 away = new Vector3(100, 100, 100);
+    [System.NonSerialized] public bool transforming = false;
+    [System.NonSerialized] public bool justTransformed = false;
+    bool fullyTransformed = false;
 
     public override void Start()
     {
         base.Start();
+
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
 
         beamCrystal = GetComponentInChildren<IceBossBeamCrystal>();
 
@@ -59,7 +82,7 @@ public class IceBoss : EnemyController
 
             playerDistance = Vector3.Distance(transform.position, playerController.transform.position);
 
-            if(playerDistance > tooFarAway)
+            if (playerDistance > tooFarAway)
             {
                 RainIcicles();
 
@@ -83,11 +106,121 @@ public class IceBoss : EnemyController
                 line.SetPosition(0, away);
                 line.SetPosition(1, away);
             }
+
+            if (playerDistance <= meleeRange && attackTime <= 0)
+            {
+                navAgent.velocity = Vector3.zero;
+                attackTime = attackMaxTime;
+                int randInt;
+                if(currentLimb < 4)
+                {
+                    randInt = Random.Range(0, currentLimb + 1);
+                }
+                else
+                {
+                    randInt = Random.Range(1, currentLimb);
+                }
+
+                if (justTransformed)
+                {
+                    randInt = currentLimb;
+                    //justTransformed = false;
+                }
+
+                attacking = true;
+                switch (randInt)
+                {
+                    case 0:
+                        frontAnimator.Play("BreathAttack");
+                        backAnimator.Play("BreathAttack");
+                        break;
+                    case 1:
+                        frontAnimator.Play("Smash");
+                        backAnimator.Play("Smash");
+                        break;
+                    case 2:
+                        frontAnimator.Play("Stomp");
+                        backAnimator.Play("Stomp");
+                        break;
+                    case 3:
+                        frontAnimator.Play("RingBlast");
+                        backAnimator.Play("RingBlast");
+                        break;
+                }
+            }
         }
 
-        if (attackTime > 0)
+        if (attackTime > 0 && !transforming)
         {
             attackTime -= Time.deltaTime;
+        }
+
+        if (fullyTransformed)
+        {
+            LoseHealth();
+        }
+    }
+
+    public void Smash()
+    {
+        StartCoroutine(cameraScript.ScreenShake(0.1f, 0.2f));
+        parryWindow = false;
+        enemySound.OtherSounds(0,2);
+
+        if (!canHitPlayer)
+        {
+            return;
+        }
+
+        if (playerController.gameObject.layer == 3)
+        {
+            int damage = smashDamage;
+            if (currentLimb > 2) damage += 15;
+            enemySound.SwordImpact();
+            playerScript.LoseHealth(damage, enemyScript);
+            playerScript.LosePoise(smashPoiseDamage);
+            AdditionalAttackEffects();
+        }
+        else if (playerController.gameObject.layer == 8)
+        {
+            playerController.PerfectDodge();
+        }
+    }
+
+    public void RingBlast(float lowerBound, float upperBound)
+    {
+        enemySound.OtherSounds(1, 2);
+        float playerDistance = Vector3.Distance(playerController.transform.position, transform.position);
+        if (playerDistance > lowerBound && playerDistance < upperBound)
+        {
+            if(playerController.gameObject.layer == 3)
+            {
+                playerScript.LoseHealth(ringBlastDamage);
+                playerScript.LosePoise(ringBlastPoiseDamage);
+            }
+            else if(playerController.gameObject.layer == 8)
+            {
+                playerController.PerfectDodge();
+            }
+        }
+    }
+
+    public IEnumerator InvincibleTimer()
+    {
+        yield return new WaitForSeconds(15);
+        fullyTransformed = true;
+    }
+
+    void LoseHealth()
+    {
+        damageCounter += fullyTransformedDamage * Time.deltaTime;
+
+        if(damageCounter > 1)
+        {
+            enemyScript.invincible = false;
+            enemyScript.LoseHealth(Mathf.RoundToInt(damageCounter), 0);
+            damageCounter = 0;
+            enemyScript.invincible = true;
         }
     }
 
@@ -144,5 +277,46 @@ public class IceBoss : EnemyController
         projectile.direction = playerController.transform.position - transform.position;
         float angle = Vector3.SignedAngle(Vector3.forward, projectile.direction, Vector3.up);
         projectile.transform.rotation = Quaternion.Euler(25, 0, -angle);
+    }
+
+    void TakeDamage(object sender, System.EventArgs e)
+    {
+        float enemyPercentHealth = (float)enemyScript.health / (float)enemyScript.maxHealth;
+        for(int i = currentLimb; i < limbTransitions.Length; i++)
+        {
+            if(enemyPercentHealth < limbTransitions[i])
+            {
+                attackArc.HideAttackArc();
+                iceBreath.StopIceBreath();
+                currentLimb++;
+                attacking = true;
+                transforming = true;
+                if(i == 1)
+                {
+                    frontAnimator.SetBool("IsTall", true);
+                    backAnimator.SetBool("IsTall", true);
+                }
+                frontAnimator.Play(limbAnimationNames[i]);
+                backAnimator.Play(limbAnimationNames[i]);
+            }
+        }
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        if (transforming) return;
+        base.StartStagger(staggerDuration);
+        attackArc.HideAttackArc();
+    }
+
+    public override void EndStagger()
+    {
+        navAgent.speed = 5;
+        base.EndStagger();
+    }
+
+    private void OnEnable()
+    {
+        enemyScript.OnTakeDamage += TakeDamage;
     }
 }

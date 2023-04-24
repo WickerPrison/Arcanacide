@@ -82,6 +82,11 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         enemyController.parryWindow = false;
     }
 
+    public virtual void ChangeArc(AnimationEvent angleAndRadius)
+    {
+        attackArc.ChangeArc(angleAndRadius.intParameter, angleAndRadius.floatParameter);
+    }
+
     public void ShowArc()
     {
         attackArc.ShowAttackArc();

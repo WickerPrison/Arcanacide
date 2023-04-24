@@ -20,7 +20,7 @@ public class EnemyScript : MonoBehaviour
     EnemyController enemyController;
     EnemySound enemySound;
     GameManager gm;
-    [SerializeField] int maxHealth;
+    public int maxHealth;
     [SerializeField] float maxPoise;
     [SerializeField] float poiseRegeneration;
     [SerializeField] float staggerDuration;
@@ -29,8 +29,10 @@ public class EnemyScript : MonoBehaviour
     [System.NonSerialized] public bool isDying = false;
     float DOT = 0;
     float damageDOT = 0;
+    public bool invincible = false;
 
     public EventHandler OnTakeDamage;
+    public EventHandler OnStagger;
 
     private void Awake()
     {
@@ -86,6 +88,7 @@ public class EnemyScript : MonoBehaviour
 
     public void LoseHealth(int damage, float poiseDamage)
     {
+        if (invincible) return;
         OnTakeDamage?.Invoke(this, EventArgs.Empty);
         hitVFX.Play();
         health -= damage;
@@ -126,7 +129,7 @@ public class EnemyScript : MonoBehaviour
 
         if (!enemyController.attacking && !isDying)
         {
-            enemyController.StartStagger(0.2f);
+            StartStagger(0.2f);
         }
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.heavy_blows))
@@ -137,13 +140,14 @@ public class EnemyScript : MonoBehaviour
 
         if (poise <= 0)
         {
-            enemyController.StartStagger(staggerDuration);
+            StartStagger(staggerDuration);
             poise = maxPoise;
         }
     }
 
     public void StartStagger(float staggerDuration)
     {
+        OnStagger?.Invoke(this, EventArgs.Empty);
         enemyController.StartStagger(staggerDuration);
     }
 

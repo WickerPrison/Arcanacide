@@ -77,7 +77,19 @@ public class AttackArcGenerator : MonoBehaviour
         viewMesh.RecalculateNormals();
         coneRenderer.material = whiteMaterial;
     }
-   
+
+    public void ChangeArc(int angle, float rad)
+    {
+        halfConeAngle = angle;
+        arcPoints = halfConeAngle * 2;
+        DestroyImmediate(viewMesh);
+        viewMesh = new Mesh();
+        viewMesh.name = "View Mesh";
+        meshFilter.mesh = viewMesh;
+        radius = rad;
+        CalculateAttackArc();
+    }
+
 
     public void ShowAttackArc()
     {

@@ -7,8 +7,8 @@ public class CrystalMotion : MonoBehaviour
     Transform movePoint;
     Vector3 startingPoint;
     Vector3 newPosition;
-    float cap = 0.3f;
-    float speed = 0.1f;
+    [SerializeField] float cap = 0.3f;
+    [SerializeField] float speed = 0.1f;
 
     // Start is called before the first frame update
     void Start()

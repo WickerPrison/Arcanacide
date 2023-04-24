@@ -7,7 +7,7 @@ public class FacePlayerSlow : FacePlayer
 {
     [SerializeField] Transform trackingPoint;
     [SerializeField] Transform attackAnchor;
-    [SerializeField] float rotateSpeed;
+    public float rotateSpeed;
 
     public override void Start()
     {

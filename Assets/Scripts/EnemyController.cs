@@ -43,11 +43,14 @@ public class EnemyController : MonoBehaviour
 
     float startDelay;
 
+    public virtual void Awake()
+    {
+        enemyScript = gameObject.GetComponent<EnemyScript>();
+    }
 
     // Start is called before the first frame update
     public virtual void Start()
     {
-        enemyScript = gameObject.GetComponent<EnemyScript>();
         enemySound = GetComponentInChildren<EnemySound>();
         smearScript = GetComponentInChildren<Smear>();
         player = GameObject.FindGameObjectWithTag("Player");
