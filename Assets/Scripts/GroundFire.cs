@@ -8,7 +8,7 @@ public class GroundFire : MonoBehaviour
     [SerializeField] GameObject fireTrailPrefab;
     public Transform target;
     NavMeshAgent navAgent;
-    float fireTrailMaxTime = 0.2f;
+    float fireTrailMaxTime = 0.4f;
     float fireTrailTime;
 
     private void Start()

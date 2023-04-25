@@ -29,7 +29,7 @@ public class BossController : EnemyController
     float fireTrailTime;
     float bonfireMaxCD = 15;
     float bonfireCD;
-    float strafeSpeed = 3;
+    float strafeSpeed = 1;
     float floatTimer;
     float floatMaxTime = 1;
     float floatSpeed = 0.3f;
