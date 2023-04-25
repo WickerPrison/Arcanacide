@@ -9,6 +9,7 @@ public class CrystalMotion : MonoBehaviour
     Vector3 newPosition;
     [SerializeField] float cap = 0.3f;
     [SerializeField] float speed = 0.1f;
+    [SerializeField] float closeEnough = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class CrystalMotion : MonoBehaviour
         Vector3 direction = movePoint.localPosition -transform.localPosition;
         transform.localPosition += direction.normalized * speed * Time.fixedDeltaTime;
 
-        if(Vector3.Distance(transform.localPosition, movePoint.localPosition) < 0.1)
+        if(Vector3.Distance(transform.localPosition, movePoint.localPosition) < closeEnough)
         {
             SetNewPosition();
         }

@@ -336,7 +336,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.25
-        value: {x: 0.1914997, y: -0.6539166, z: -0.30492646}
+        value: {x: 0.1914997, y: -0.6525502, z: -0.3042893}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -1391,7 +1391,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.25
-        value: -0.6539166
+        value: -0.6525502
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1419,7 +1419,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.25
-        value: -0.30492646
+        value: -0.3042893
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1723,7 +1723,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: PlayerFront/Body1/Body2/Head
+    path: PlayerFront/Body1/Body2/BackArm/Arm1/Arm2/Hammer
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1733,7 +1733,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: PlayerFront/Body1/Body2/Head
+    path: PlayerFront/Body1/Body2/BackArm/Arm1/Arm2/Hammer
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1743,7 +1743,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: PlayerFront/Body1/Body2/Head
+    path: PlayerFront/Body1/Body2/BackArm/Arm1/Arm2/Hammer
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1753,7 +1753,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: PlayerFront/Body1/BackLeg/BackLeg1/BackLeg2/BackFoot2
+    path: PlayerFront/Body1/Body2/Head
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1763,7 +1763,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: PlayerFront/Body1/BackLeg/BackLeg1/BackLeg2/BackFoot2
+    path: PlayerFront/Body1/Body2/Head
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1773,37 +1773,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: PlayerFront/Body1/BackLeg/BackLeg1/BackLeg2/BackFoot2
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: PlayerFront/Body1
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: PlayerFront/Body1
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: PlayerFront/Body1
+    path: PlayerFront/Body1/Body2/Head
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1873,7 +1843,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: PlayerFront/Body1/Body2/BackArm/Arm1/Arm2/Hammer
+    path: PlayerFront/Body1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1883,7 +1853,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: PlayerFront/Body1/Body2/BackArm/Arm1/Arm2/Hammer
+    path: PlayerFront/Body1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1893,7 +1863,37 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: PlayerFront/Body1/Body2/BackArm/Arm1/Arm2/Hammer
+    path: PlayerFront/Body1
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: PlayerFront/Body1/BackLeg/BackLeg1/BackLeg2/BackFoot2
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: PlayerFront/Body1/BackLeg/BackLeg1/BackLeg2/BackFoot2
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: PlayerFront/Body1/BackLeg/BackLeg1/BackLeg2/BackFoot2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1928,4 +1928,11 @@ AnimationClip:
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.25
+    functionName: EndAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

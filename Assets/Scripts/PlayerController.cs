@@ -303,7 +303,7 @@ public class PlayerController : MonoBehaviour
 
     public void SpecialAttack()
     {
-        if (!playerData.unlockedAbilities.Contains("SpecialAttack")) return;
+        if (!playerData.unlockedAbilities.Contains("Special Attack")) return;
 
         if(CanInput() && playerScript.stamina > 0 && playerData.mana > specialAttackProfiles[playerData.currentWeapon].manaCost)
         {
