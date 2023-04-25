@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ElectricAlly : MonoBehaviour
 {
-    int damage = 50;
-    float poiseDamage = 70;
+    int damage = 20;
+    float poiseDamage = 20;
     public bool isShielded = false;
     [SerializeField] SpriteRenderer shield;
     PlayerScript playerScript;

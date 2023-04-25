@@ -596,7 +596,7 @@ public class PlayerController : MonoBehaviour
     private void PlayerEvents_onPlayerStagger(object sender, System.EventArgs e)
     {
         EndArcaneStep();
-        if (knockback)
+        if (!knockback)
         {
             rb.velocity = Vector3.zero;
         }
