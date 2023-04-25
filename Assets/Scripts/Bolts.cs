@@ -47,4 +47,12 @@ public class Bolts : MonoBehaviour
         }
         soundOn = false;
     }
+
+    public void ToggleBolts(bool turnOn)
+    {
+        foreach(LightningBolt bolt in lightningBolts)
+        {
+            bolt.lineRenderer.enabled = turnOn;
+        }
+    }
 }

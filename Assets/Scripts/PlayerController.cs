@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerEvents = GetComponent<PlayerEvents>();
+        //bolts.ToggleBolts(false);
         bolts.SetPositions(away, away);
     }
 
