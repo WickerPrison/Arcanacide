@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
+    [SerializeField] ExternalLanternFairy lanternFairy;
 
     public ParticleSystem dodgeVFX;
     public Transform attackPoint;
@@ -357,9 +358,13 @@ public class PlayerController : MonoBehaviour
 
     public void AxeSpecialAttack()
     {
+        if (!lanternFairy.isInLantern) return;
+
         playerScript.LoseMana(specialAttackProfiles[1].manaCost);
-        GameObject totem = Instantiate(totemObject);
-        totem.transform.position = new Vector3(transform.position.x, 0, transform.position.z);    
+        TotemAnimationEvents totemAnimEvents = Instantiate(totemObject).GetComponentInChildren<TotemAnimationEvents>();
+        totemAnimEvents.transform.parent.position = new Vector3(transform.position.x, 0, transform.position.z);
+        totemAnimEvents.lanternFairy = lanternFairy;
+        playerEvents.AxeSpecialAttack();
     }
 
     public void KnifeSpecialAttack()

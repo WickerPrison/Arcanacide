@@ -8,6 +8,8 @@ public class TotemAnimationEvents : MonoBehaviour
     [SerializeField] ParticleSystem landingVFX;
     [SerializeField] AttackProfiles axeSpecial;
     [SerializeField] PlayerData playerData;
+    [System.NonSerialized] public ExternalLanternFairy lanternFairy;
+    [SerializeField] Transform fairySprite;
     CameraFollow cameraScript;
     TouchingCollider colliderScript;
     List<Collider> touchingCollider;
@@ -70,6 +72,7 @@ public class TotemAnimationEvents : MonoBehaviour
 
     public void SelfDestruct()
     {
+        lanternFairy.Return(fairySprite.position);
         Destroy(gameObject);
     }
 }
