@@ -6,16 +6,22 @@ using UnityEngine.AI;
 [System.Serializable]
 public class ElectricBossController : EnemyController
 {
+    public enum BossState
+    {
+        IDLE, RUNNINGAWAY, ATTACKING
+    }
+
+    [System.NonSerialized] public BossState bossState = BossState.IDLE;   
     [SerializeField] Transform[] firePoints;
     [SerializeField] GameObject hadokenPrefab;
     [SerializeField] MapData mapData;
     float playerDistance;
+    float meleeRange = 3;
     StepWithAttack stepWithAttack;
-    FacePlayer facePlayer;
+    [System.NonSerialized] public FacePlayer facePlayer;
     float fleeRadiusMin = 6;
     float fleeRadiusMax = 11;
     Vector3 fleePoint;
-    bool canUseAbility = true;
 
     [SerializeField] GameObject chargeIndicator;
     float chargeIndicatorWidth;
@@ -33,11 +39,12 @@ public class ElectricBossController : EnemyController
     [SerializeField] float chargeBurstPoiseDamage;
     [SerializeField] float chargeBurstStagger;
     bool isColliding;
-    int attackCounter = 0;
     [SerializeField] float[] hadokenAngles;
     public bool phase2 = false;
     int phaseTrigger = 200;
     [SerializeField] ParticleSystem bodyLightning;
+    float abilityTime;
+    float abilityMaxTime = 5;
 
     public override void Start()
     {
@@ -48,6 +55,7 @@ public class ElectricBossController : EnemyController
         playerMask = LayerMask.GetMask("Player");
         enemyCollider = GetComponent<CapsuleCollider>();
         chargeIndicatorWidth = enemyCollider.radius * 2;
+        abilityTime = abilityMaxTime;
         ChooseRandomPoint();
         if (mapData.electricBossKilled)
         {
@@ -80,54 +88,71 @@ public class ElectricBossController : EnemyController
         if (hasSeenPlayer)
         {
             playerDistance = Vector3.Distance(playerController.transform.position, transform.position);
-            if(attackTime > 0)
+            frontAnimator.SetFloat("PlayerDistance", playerDistance);
+            backAnimator.SetFloat("PlayerDistance", playerDistance);
+            
+            if(bossState == BossState.IDLE)
             {
-                if (canUseAbility && !attacking)
+                if(abilityTime <= 0)
                 {
-                    UseAbilty();
+                    RunAway();
                 }
-
-                if(Vector3.Distance(playerController.transform.position, fleePoint) < fleeRadiusMin)
+                else if(attackTime <= 0 && playerDistance < meleeRange)
                 {
-                    ChooseRandomPoint();
+                    Attack();
                 }
-
-                if (navAgent.enabled)
+                else
                 {
-                    navAgent.SetDestination(fleePoint);
-                    if(navAgent.velocity.magnitude  > 0)
-                    {
-                        facePlayer.SetDestination(fleePoint);
-                    }
-                    else
-                    {
-                        facePlayer.ResetDestination();
-                    }
+                    navAgent.SetDestination(playerController.transform.position);
                 }
-            }
-            else if(!attacking && playerDistance < 1.5)
-            {
-                ChooseRandomPoint();
-                attackCounter++;
-                if(attackCounter > 2)
-                {
-                    attackCounter = 0;
-                    attackTime = attackMaxTime;
-                }
-                attacking = true;
-                frontAnimator.Play("Attack");
-                backAnimator.Play("Attack");
-            }
-            else if(navAgent.enabled)
-            {
-                facePlayer.ResetDestination();
-                navAgent.SetDestination(playerController.transform.position);
             }
         }
 
-        if(attackTime > 0)
+        if (bossState == BossState.RUNNINGAWAY)
+        {
+            float distance = Vector3.Distance(transform.position, fleePoint);
+            if(distance <= navAgent.stoppingDistance)
+            {
+                UseAbilty();
+            }
+        }
+
+        if(abilityTime > 0 && bossState == BossState.IDLE)
+        {
+            abilityTime -= Time.deltaTime;
+        }
+
+        if (attackTime > 0 && bossState == BossState.IDLE)
         {
             attackTime -= Time.deltaTime;
+        }
+    }
+
+    void Attack()
+    {
+        attackTime = attackMaxTime;
+        attacking = true;
+        bossState = BossState.ATTACKING;
+        frontAnimator.Play("Attack");
+        backAnimator.Play("Attack");
+    }
+
+    void RunAway()
+    {
+        bossState = BossState.RUNNINGAWAY;
+        ChooseRandomPoint();
+
+        if (navAgent.enabled)
+        {
+            navAgent.SetDestination(fleePoint);
+            if (navAgent.velocity.magnitude > 0)
+            {
+                facePlayer.SetDestination(fleePoint);
+            }
+            else
+            {
+                facePlayer.ResetDestination();
+            }
         }
     }
 
@@ -176,15 +201,16 @@ public class ElectricBossController : EnemyController
 
     void UseAbilty()
     {
-        StartCoroutine(AbilityTimer());
         attacking = true;
+        abilityTime = abilityMaxTime;
+        bossState = BossState.ATTACKING;
 
-        int randInt = Random.Range(0, 3);
+        int randInt = Random.Range(0, 4);
         switch (randInt)
         {
             case 0:
-                frontAnimator.Play("Hadoken");
-                backAnimator.Play("Hadoken");
+                frontAnimator.Play("Beams");
+                backAnimator.Play("Beams");
                 break;
             case 1:
                 frontAnimator.Play("Summon");
@@ -192,6 +218,10 @@ public class ElectricBossController : EnemyController
                 break;
             case 2:
                 Charge();
+                break;
+            case 3: 
+                frontAnimator.Play("Hadoken");
+                backAnimator.Play("Hadoken");
                 break;
         }
     }
@@ -212,14 +242,6 @@ public class ElectricBossController : EnemyController
                 hadoken.direction = hadoken.RotateByAngle(hadoken.direction, angle);
             }
         }
-        attacking = false;
-    }
-
-    IEnumerator AbilityTimer()
-    {
-        canUseAbility = false;
-        yield return new WaitForSeconds(5);
-        canUseAbility = true;
     }
 
     void Charge()
@@ -301,7 +323,9 @@ public class ElectricBossController : EnemyController
         }
 
         navAgent.enabled = true;
+        facePlayer.ResetDestination();
         attacking = false;
+        bossState = BossState.IDLE;
     }
 
     void LayChargeIndicator(Vector3 initialPosition, Vector3 direction, float chargeDistance, Vector3 previousNormal)
@@ -364,9 +388,15 @@ public class ElectricBossController : EnemyController
 
     public override void StartStagger(float staggerDuration)
     {
-        if (attacking) return;
+        if (bossState == BossState.ATTACKING) return;
 
         base.StartStagger(staggerDuration);
+    }
+
+    public override void EndStagger()
+    {
+        base.EndStagger();
+        bossState = BossState.IDLE;
     }
 
     public override void Death()

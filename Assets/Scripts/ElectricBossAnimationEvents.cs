@@ -7,6 +7,7 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
 {
     [SerializeField] GameObject lightningOrbPrefab;
     [SerializeField] ParticleSystem swooshShock;
+    [SerializeField] ElectricBeams beams;
     ElectricBossController bossController;
     float spawnRadius = 1.3f;
     bool spawnOrb = true;
@@ -53,6 +54,28 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
     public void StartCharge()
     {
         bossController.StartCharge();
+    }
+
+    public void BeamIndicators()
+    {
+        beams.ActivateIndicators();
+    }
+
+    public void BeamBolts()
+    {
+        beams.ActivateLightning();
+    }
+
+    public void BeamsOff()
+    {
+        beams.BeamsOff();
+    }
+
+    public override void EnableMovement()
+    {
+        base.EnableMovement();
+        bossController.bossState = ElectricBossController.BossState.IDLE;
+        bossController.facePlayer.ResetDestination();
     }
 
     public override void Death()

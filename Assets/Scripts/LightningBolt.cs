@@ -8,10 +8,10 @@ public class LightningBolt : MonoBehaviour
     [SerializeField] Transform startPoint;
     [SerializeField] Transform endPoint;
     public LineRenderer lineRenderer;
-    [SerializeField] float noiseAmp = 1;
+    public float noiseAmp = 1;
     [SerializeField] List<LineRenderer> forks = new List<LineRenderer>();
     int forkPointNum = 5;
-    int frameDivider = 3;
+    [System.NonSerialized] public int frameDivider = 3;
     public int frameCounter = 0;
     Vector3[] points;
     Vector3 direction;
