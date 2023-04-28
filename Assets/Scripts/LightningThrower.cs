@@ -25,7 +25,7 @@ public class LightningThrower : EnemyController
     {
         base.EnemyAI();
 
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
@@ -54,7 +54,7 @@ public class LightningThrower : EnemyController
 
     void Attack()
     {
-        attacking = true;
+        state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
 
         frontAnimator.Play("Attack");
@@ -63,7 +63,7 @@ public class LightningThrower : EnemyController
 
     void Artillery()
     {
-        attacking = true;
+        state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
 
         frontAnimator.Play("Artillery");

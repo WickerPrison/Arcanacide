@@ -32,7 +32,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     public virtual void EnableMovement()
     {
         enemyController.navAgent.enabled = true;
-        enemyController.attacking = false;
+        enemyController.state = EnemyState.IDLE;
         enemyController.directionLock = false;
     }
 
@@ -43,7 +43,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
 
     public void EndAttack()
     {
-        enemyController.attacking = false;
+        enemyController.state = EnemyState.IDLE;
     }
 
     public void AttackHit(int smearSpeed)

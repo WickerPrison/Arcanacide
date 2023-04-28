@@ -19,7 +19,7 @@ public class FireMinionController : EnemyController
     {
         base.EnemyAI();
 
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
@@ -61,7 +61,7 @@ public class FireMinionController : EnemyController
             frontAnimator.Play("DoubleAttack");
             backAnimator.Play("DoubleAttack");
         }
-        attacking = true;
+        state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
     }
 

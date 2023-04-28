@@ -26,7 +26,6 @@ public class IceBoss : EnemyController
     [SerializeField] AttackArcGenerator attackArc;
     CameraFollow cameraScript;
 
-    float playerDistance;
     float tooFarAway = 5;
     float meleeRange = 3;
 
@@ -43,7 +42,6 @@ public class IceBoss : EnemyController
     float maxAimValue = 1.5f;
     float gradientOffset = .4f;
     Vector3 away = new Vector3(100, 100, 100);
-    [System.NonSerialized] public bool transforming = false;
     [System.NonSerialized] public bool justTransformed = false;
     bool fullyTransformed = false;
 
@@ -72,15 +70,13 @@ public class IceBoss : EnemyController
     {
         base.EnemyAI();
 
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
                 navAgent.SetDestination(playerController.transform.position);
             }
-
-            playerDistance = Vector3.Distance(transform.position, playerController.transform.position);
 
             if (playerDistance > tooFarAway)
             {
@@ -127,7 +123,7 @@ public class IceBoss : EnemyController
                     //justTransformed = false;
                 }
 
-                attacking = true;
+                state = EnemyState.ATTACKING;
                 switch (randInt)
                 {
                     case 0:
@@ -150,7 +146,7 @@ public class IceBoss : EnemyController
             }
         }
 
-        if (attackTime > 0 && !transforming)
+        if (attackTime > 0 && state != EnemyState.SPECIAL)
         {
             attackTime -= Time.deltaTime;
         }
@@ -289,8 +285,7 @@ public class IceBoss : EnemyController
                 attackArc.HideAttackArc();
                 iceBreath.StopIceBreath();
                 currentLimb++;
-                attacking = true;
-                transforming = true;
+                state = EnemyState.SPECIAL;
                 if(i == 1)
                 {
                     frontAnimator.SetBool("IsTall", true);
@@ -304,7 +299,7 @@ public class IceBoss : EnemyController
 
     public override void StartStagger(float staggerDuration)
     {
-        if (transforming) return;
+        if (state == EnemyState.SPECIAL) return;
         base.StartStagger(staggerDuration);
         attackArc.HideAttackArc();
     }

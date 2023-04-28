@@ -28,7 +28,7 @@ public class FireSwordsmanController : EnemyController
     {
         base.EnemyAI();
 
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
@@ -107,7 +107,7 @@ public class FireSwordsmanController : EnemyController
         }
         frontAnimator.Play("Attack");
         backAnimator.Play("Attack");
-        attacking = true;
+        state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
     }
 

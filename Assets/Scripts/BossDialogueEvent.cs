@@ -15,6 +15,6 @@ public class BossDialogueEvent : EndDialogueEvent
     public override void EndEvent()
     {
         base.EndEvent();
-        bossController.hasSeenPlayer = true;
+        bossController.state = EnemyState.IDLE;
     }
 }

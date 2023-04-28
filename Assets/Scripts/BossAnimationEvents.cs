@@ -111,7 +111,7 @@ public class BossAnimationEvents : EnemyAnimationEvents
         Dialogue dialogue = GetComponent<Dialogue>();
         dialogue.StartConversation();
         enemyScript.isDying = false;
-        bossController.isDisabled = true;
+        bossController.state = EnemyState.Disabled;
         bossController.hasSurrendered = true;  
     }
 

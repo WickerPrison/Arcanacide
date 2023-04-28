@@ -83,7 +83,7 @@ public class BossController : EnemyController
 
     public override void EnemyAI()
     {
-        if (!hasSeenPlayer)
+        if (state == EnemyState.UNAWARE)
         {
             return;
         }
@@ -113,14 +113,14 @@ public class BossController : EnemyController
                     }
                     else
                     {
-                        attacking = true;
+                        state = EnemyState.ATTACKING;
                         frontAnimator.Play("FireRing");
                         backAnimator.Play("FireRing");
                     }
                 }
                 else if (bonfireCD <= 0)
                 {
-                    attacking = true;
+                    state = EnemyState.ATTACKING;
                     pauseTimer = true;
                     frontAnimator.Play("Bonfires");
                     backAnimator.Play("Bonfires");
@@ -128,7 +128,7 @@ public class BossController : EnemyController
                 }
                 else if (fireBallCD <= 0)
                 {
-                    attacking = true;
+                    state = EnemyState.ATTACKING;
                     int num = Random.Range(1, phaseCounter);
                     if (num == 1)
                     {

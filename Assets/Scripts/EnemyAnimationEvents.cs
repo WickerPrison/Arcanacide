@@ -39,7 +39,7 @@ public class EnemyAnimationEvents : MonoBehaviour
     public virtual void EnableMovement()
     {
         enemyController.navAgent.enabled = true;
-        enemyController.attacking = false;
+        enemyController.state = EnemyState.IDLE;
     }
 
     public void Footstep()

@@ -12,7 +12,6 @@ public class LightningOrbController : EnemyController
     [SerializeField] AudioClip impactSFX;
     ElectricAlly allyScript;
     Vector3 playerDirection;
-    float playerDistance;
 
     public override void Update()
     {
@@ -28,15 +27,13 @@ public class LightningOrbController : EnemyController
     {
         base.EnemyAI();
 
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
                 navAgent.SetDestination(playerController.transform.position);
             }
-
-            playerDistance = Vector3.Distance(transform.position, playerController.transform.position);
 
             if(attackTime <= 0 && playerDistance <= attackRange)
             {

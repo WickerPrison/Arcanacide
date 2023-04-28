@@ -10,10 +10,8 @@ public class OldManController : EnemyController
     float chargeIndicatorWidth;
     [SerializeField] float maxChargeDistance;
     [SerializeField] Collider attackPointCollider;
-    float playerDistance;
     LayerMask layerMask;
     List<Vector3> chargePath = new List<Vector3>();
-    bool charging = false;
     [SerializeField] float chargeSpeed;
     float chargeDelay = 0.7f;
     CapsuleCollider enemyCollider;
@@ -36,13 +34,11 @@ public class OldManController : EnemyController
     {
         base.EnemyAI();
 
-        playerDistance = Vector3.Distance(transform.position, playerController.transform.position);
-
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         { 
-            if(attackTime <= 0 && !charging)
+            if(attackTime <= 0)
             {
-                attacking = true;
+                state = EnemyState.ATTACKING;
                 int randNum = Random.Range(1,3);
                 if(randNum == 1)
                 {
@@ -73,7 +69,7 @@ public class OldManController : EnemyController
 
     private void FixedUpdate()
     {
-        if (charging)
+        if (state == EnemyState.SPECIAL)
         {
             Charging();
         }
@@ -138,7 +134,7 @@ public class OldManController : EnemyController
 
     public override void SpellAttack()
     {
-        charging = true;
+        state = EnemyState.SPECIAL;
         frontAnimator.SetBool("Charging", true);
         backAnimator.SetBool("Charging", true);
         enemyCollider.isTrigger = true;
@@ -158,8 +154,7 @@ public class OldManController : EnemyController
             {
                 enemyCollider.isTrigger = false;
                 navAgent.enabled = true;
-                charging = false;
-                attacking = false;
+                state = EnemyState.IDLE;
                 frontAnimator.SetBool("Charging", false);
                 backAnimator.SetBool("Charging", false);
                 attackTime = attackMaxTime;
@@ -211,13 +206,13 @@ public class OldManController : EnemyController
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == 3 && charging && !isColliding)
+        if(other.gameObject.layer == 3 && state == EnemyState.SPECIAL && !isColliding)
         {
             isColliding = true;
             playerScript.LoseHealth(chargeDamage);
             enemySound.SwordImpact();
         }
-        else if(other.gameObject.layer == 8 && charging && !isColliding)
+        else if(other.gameObject.layer == 8 && state == EnemyState.SPECIAL && !isColliding)
         {
             isColliding = true;
             playerScript.GetComponent<PlayerController>().PerfectDodge();

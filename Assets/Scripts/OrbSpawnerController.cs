@@ -25,7 +25,7 @@ public class OrbSpawnerController : EnemyController
 
     public override void Update()
     {
-        if (enemyScript.isDying || isDisabled)
+        if (state == EnemyState.DYING)
         {
             return;
         }

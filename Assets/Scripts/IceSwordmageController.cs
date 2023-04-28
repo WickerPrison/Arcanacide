@@ -17,7 +17,7 @@ public class IceSwordmageController : EnemyController
     public override void EnemyAI()
     {
         base.EnemyAI();
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         {
             if (navAgent.enabled == true)
             {

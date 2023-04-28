@@ -127,7 +127,7 @@ public class EnemyScript : MonoBehaviour
         }
         enemyController.OnHit();
 
-        if (!enemyController.attacking && !isDying)
+        if (enemyController.state != EnemyState.ATTACKING && enemyController.state != EnemyState.DYING)
         {
             StartStagger(0.2f);
         }
@@ -184,10 +184,7 @@ public class EnemyScript : MonoBehaviour
         }
         gm.enemies.Remove(this);
         gm.enemiesInRange.Remove(this);
-        if (enemyController.detectionTrigger)
-        {
-            gm.awareEnemies -= 1;
-        }
+        gm.awareEnemies -= 1;
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
         {

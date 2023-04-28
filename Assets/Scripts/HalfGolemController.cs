@@ -34,7 +34,7 @@ public class HalfGolemController : EnemyController
     {
         base.EnemyAI();
 
-        if (hasSeenPlayer && !attacking)
+        if (state == EnemyState.IDLE)
         {
             if (attackTime > 0)
             {
@@ -66,7 +66,7 @@ public class HalfGolemController : EnemyController
             if (attackTime <= 0)
             {
                 attackTime = attackMaxTime;
-                attacking = true;
+                state = EnemyState.ATTACKING;
                 frontAnimator.Play("Attack" + remainingIce.ToString());
             }
         }
@@ -86,7 +86,7 @@ public class HalfGolemController : EnemyController
         if (attackTime <= 0 && Vector3.Distance(playerScript.transform.position, transform.position) < smashRange)
         {
             attackTime = unfrozenAttackMaxTime;
-            attacking = true;
+            state = EnemyState.ATTACKING;
             frontAnimator.Play("DoubleAttack");
         }
     }

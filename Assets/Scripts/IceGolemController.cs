@@ -29,7 +29,7 @@ public class IceGolemController : EnemyController
     {
         base.EnemyAI();
 
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
@@ -87,7 +87,7 @@ public class IceGolemController : EnemyController
         facePlayer.FacePlayerFast();
         directionLock = true;
         frontAnimator.Play("Smash");
-        attacking = true;
+        state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
     }
 
@@ -95,7 +95,7 @@ public class IceGolemController : EnemyController
     {
         facePlayer.FacePlayerFast();
         frontAnimator.Play("MultiSmash");
-        attacking = true;
+        state = EnemyState.ATTACKING;
         attackTime = attackMaxTime + 1;
     }
 
@@ -103,7 +103,7 @@ public class IceGolemController : EnemyController
     {
         facePlayer.FacePlayerFast();
         frontAnimator.Play("ShoulderCharge");
-        attacking = true;
+        state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
     }
 
@@ -111,7 +111,7 @@ public class IceGolemController : EnemyController
     {
         facePlayer.FacePlayerFast();
         frontAnimator.Play("IceRings");
-        attacking = true;
+        state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
     }
 

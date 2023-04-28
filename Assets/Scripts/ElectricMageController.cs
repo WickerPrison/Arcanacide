@@ -43,13 +43,9 @@ public class ElectricMageController : EnemyController
 
     public override void EnemyAI()
     {
-        if (hasSurrendered)
-        {
-            detectionTrigger = true;
-        }
         base.EnemyAI();
 
-        if (hasSeenPlayer && !hasSurrendered)
+        if (state != EnemyState.UNAWARE)
         {
             frontAnimator.SetBool("hasSeenPlayer", true);
             backAnimator.SetBool("hasSeenPlayer", true);
@@ -159,16 +155,6 @@ public class ElectricMageController : EnemyController
         {
             chainLightning[0].SoundOff();
         }
-    }
-
-
-    void Surrender()
-    {
-        hasSurrendered = true;
-        detectionTrigger = false;
-        gm.awareEnemies -= 1;
-        frontAnimator.Play("Surrender");
-        backAnimator.Play("Surrender");
     }
 
     void BoltAway()

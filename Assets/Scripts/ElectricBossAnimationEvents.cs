@@ -74,7 +74,6 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
     public override void EnableMovement()
     {
         base.EnableMovement();
-        bossController.bossState = ElectricBossController.BossState.IDLE;
         bossController.facePlayer.ResetDestination();
     }
 

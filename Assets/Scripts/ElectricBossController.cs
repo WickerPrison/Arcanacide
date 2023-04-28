@@ -6,16 +6,10 @@ using UnityEngine.AI;
 [System.Serializable]
 public class ElectricBossController : EnemyController
 {
-    public enum BossState
-    {
-        IDLE, RUNNINGAWAY, ATTACKING
-    }
-
-    [System.NonSerialized] public BossState bossState = BossState.IDLE;   
+    // special means running away
     [SerializeField] Transform[] firePoints;
     [SerializeField] GameObject hadokenPrefab;
     [SerializeField] MapData mapData;
-    float playerDistance;
     float meleeRange = 3;
     StepWithAttack stepWithAttack;
     [System.NonSerialized] public FacePlayer facePlayer;
@@ -85,30 +79,36 @@ public class ElectricBossController : EnemyController
         }
 
         base.EnemyAI();
-        if (hasSeenPlayer)
+        if (state == EnemyState.IDLE)
         {
-            playerDistance = Vector3.Distance(playerController.transform.position, transform.position);
             frontAnimator.SetFloat("PlayerDistance", playerDistance);
             backAnimator.SetFloat("PlayerDistance", playerDistance);
             
-            if(bossState == BossState.IDLE)
+            if(abilityTime <= 0)
             {
-                if(abilityTime <= 0)
-                {
-                    RunAway();
-                }
-                else if(attackTime <= 0 && playerDistance < meleeRange)
-                {
-                    Attack();
-                }
-                else
-                {
-                    navAgent.SetDestination(playerController.transform.position);
-                }
+                RunAway();
+            }
+            else if(attackTime <= 0 && playerDistance < meleeRange)
+            {
+                Attack();
+            }
+            else
+            {
+                navAgent.SetDestination(playerController.transform.position);
+            }
+
+            if (abilityTime > 0)
+            {
+                abilityTime -= Time.deltaTime;
+            }
+
+            if (attackTime > 0)
+            {
+                attackTime -= Time.deltaTime;
             }
         }
 
-        if (bossState == BossState.RUNNINGAWAY)
+        if (state == EnemyState.SPECIAL)
         {
             float distance = Vector3.Distance(transform.position, fleePoint);
             if(distance <= navAgent.stoppingDistance)
@@ -116,30 +116,19 @@ public class ElectricBossController : EnemyController
                 UseAbilty();
             }
         }
-
-        if(abilityTime > 0 && bossState == BossState.IDLE)
-        {
-            abilityTime -= Time.deltaTime;
-        }
-
-        if (attackTime > 0 && bossState == BossState.IDLE)
-        {
-            attackTime -= Time.deltaTime;
-        }
     }
 
     void Attack()
     {
         attackTime = attackMaxTime;
-        attacking = true;
-        bossState = BossState.ATTACKING;
+        state = EnemyState.ATTACKING;
         frontAnimator.Play("Attack");
         backAnimator.Play("Attack");
     }
 
     void RunAway()
     {
-        bossState = BossState.RUNNINGAWAY;
+        state = EnemyState.SPECIAL;
         ChooseRandomPoint();
 
         if (navAgent.enabled)
@@ -201,9 +190,8 @@ public class ElectricBossController : EnemyController
 
     void UseAbilty()
     {
-        attacking = true;
         abilityTime = abilityMaxTime;
-        bossState = BossState.ATTACKING;
+        state = EnemyState.ATTACKING;
 
         int randInt = Random.Range(0, 4);
         switch (randInt)
@@ -289,7 +277,7 @@ public class ElectricBossController : EnemyController
     {
         enemyCollider.isTrigger = false;
         charging = false;
-        attacking = false;
+        state = EnemyState.IDLE;
         frontAnimator.SetBool("Charging", false);
         backAnimator.SetBool("Charging", false);
         yield return new WaitForSeconds(.2f);
@@ -326,8 +314,6 @@ public class ElectricBossController : EnemyController
 
         navAgent.enabled = true;
         facePlayer.ResetDestination();
-        attacking = false;
-        bossState = BossState.IDLE;
     }
 
     void LayChargeIndicator(Vector3 initialPosition, Vector3 direction, float chargeDistance, Vector3 previousNormal)
@@ -390,15 +376,9 @@ public class ElectricBossController : EnemyController
 
     public override void StartStagger(float staggerDuration)
     {
-        if (bossState == BossState.ATTACKING) return;
+        if (state == EnemyState.ATTACKING) return;
 
         base.StartStagger(staggerDuration);
-    }
-
-    public override void EndStagger()
-    {
-        base.EndStagger();
-        bossState = BossState.IDLE;
     }
 
     public override void Death()

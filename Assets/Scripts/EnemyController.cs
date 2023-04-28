@@ -4,10 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
+    public enum EnemyState
+    {
+        UNAWARE, IDLE, ATTACKING, STAGGERED, DYING, SPECIAL, Disabled
+    }
+
 public class EnemyController : MonoBehaviour
 {
     //This script controls the actions of the enemy units. It will likely be inherited by all enemy types
 
+    [System.NonSerialized] public EnemyState state = EnemyState.UNAWARE;
     GameObject player;
     [System.NonSerialized] public GameManager gm;
     [System.NonSerialized] public Smear smearScript;
@@ -19,14 +25,12 @@ public class EnemyController : MonoBehaviour
     public Animator frontAnimator;
     public Animator backAnimator;
     public NavMeshAgent navAgent;
-    [System.NonSerialized] public bool hasSeenPlayer = false;
     public float attackMaxTime = 2;
     [System.NonSerialized] public float attackTime;
     public float detectRange = 10f;
     public float attackRange;
-    [System.NonSerialized] public bool attacking = false;
     public GameObject projectilePrefab;
-    [System.NonSerialized] public bool detectionTrigger = false;
+    [System.NonSerialized] public float playerDistance;
     [System.NonSerialized] public bool directionLock = false;
     [System.NonSerialized] public bool parryWindow = false;
     [System.NonSerialized] public bool isParrying = false;
@@ -36,8 +40,6 @@ public class EnemyController : MonoBehaviour
     public float hitPoiseDamage;
     [System.NonSerialized] public bool facingFront;
     float staggerTimer = 0;
-    [System.NonSerialized] public bool isStaggered = false;
-    [System.NonSerialized] public bool isDisabled;
 
     [System.NonSerialized] public bool canHitPlayer = false;
 
@@ -65,12 +67,9 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if (enemyScript.isDying || isDisabled)
-        {
-            return;
-        }
+        if (state == EnemyState.UNAWARE) return;
 
-        if (isStaggered)
+        if (state == EnemyState.STAGGERED)
         {
             staggerTimer -= Time.deltaTime;
             if (staggerTimer <= 0)
@@ -98,10 +97,11 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if (!detectionTrigger && Vector3.Distance(transform.position, playerController.transform.position) <= detectRange)
+        playerDistance = Vector3.Distance(transform.position, playerController.transform.position);
+
+        if (state == EnemyState.UNAWARE && playerDistance <= detectRange)
         {
-            detectionTrigger = true;
-            hasSeenPlayer = true;
+            state = EnemyState.IDLE;
             gm.awareEnemies += 1;
         }
     }
@@ -137,15 +137,14 @@ public class EnemyController : MonoBehaviour
 
     public virtual void StartStagger(float staggerDuration)
     {
-        if (enemyScript.isDying)
+        if (state == EnemyState.DYING)
         {
             return;
         }
 
         staggerTimer += staggerDuration;
-        isStaggered = true;
+        state = EnemyState.STAGGERED;
         navAgent.enabled = false;
-        attacking = false;
         directionLock = true;
         frontAnimator.Play("Stagger");
         backAnimator.Play("Stagger");
@@ -153,7 +152,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void EndStagger()
     {
-        isStaggered = false;
+        state = EnemyState.IDLE;
         navAgent.enabled = true;
         directionLock = false;
         frontAnimator.Play("Idle");

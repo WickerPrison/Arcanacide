@@ -86,7 +86,7 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
 
     public void DoneTransforming()
     {
-        bossController.transforming = false;
+        bossController.state = EnemyState.IDLE;
         bossController.justTransformed = true;
         bossController.attackTime = 1;
     }
