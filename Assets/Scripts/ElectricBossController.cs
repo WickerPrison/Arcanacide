@@ -322,6 +322,8 @@ public class ElectricBossController : EnemyController
             enemySound.OtherSounds(1, 1);
         }
 
+        yield return new WaitForSeconds(1);
+
         navAgent.enabled = true;
         facePlayer.ResetDestination();
         attacking = false;
@@ -357,7 +359,7 @@ public class ElectricBossController : EnemyController
         chargeIndicators.Add(indicator);
 
         DeathTimer deathTimer = indicator.GetComponent<DeathTimer>();
-        deathTimer.timeToDie = maxChargeDistance / chargeSpeed + chargeDelay + 1.3f;
+        deathTimer.timeToDie = maxChargeDistance / chargeSpeed + chargeDelay + 1f;
 
         if (chargeDistance > 0)
         {
