@@ -67,8 +67,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if (state == EnemyState.UNAWARE) return;
-
         if (state == EnemyState.STAGGERED)
         {
             staggerTimer -= Time.deltaTime;

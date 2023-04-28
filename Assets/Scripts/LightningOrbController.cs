@@ -15,7 +15,7 @@ public class LightningOrbController : EnemyController
 
     public override void Update()
     {
-        if (enemyScript.isDying)
+        if (state == EnemyState.DYING)
         {
             return;
         }

@@ -59,7 +59,7 @@ public class OrbSpawnerController : EnemyController
 
     public override void StartDying()
     {
-        enemyScript.isDying = true;
+        state = EnemyState.DYING;
         orbSprite.gameObject.SetActive(false);
         sprite.SetActive(false);
         brokenSprite.SetActive(true);

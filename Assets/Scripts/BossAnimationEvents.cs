@@ -110,7 +110,6 @@ public class BossAnimationEvents : EnemyAnimationEvents
         enemyScript.GainHealth(5);
         Dialogue dialogue = GetComponent<Dialogue>();
         dialogue.StartConversation();
-        enemyScript.isDying = false;
         bossController.state = EnemyState.Disabled;
         bossController.hasSurrendered = true;  
     }

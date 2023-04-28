@@ -26,7 +26,6 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float staggerDuration;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] ParticleSystem dotVFX;
-    [System.NonSerialized] public bool isDying = false;
     float DOT = 0;
     float damageDOT = 0;
     public bool invincible = false;
@@ -61,15 +60,15 @@ public class EnemyScript : MonoBehaviour
             poise += Time.deltaTime * poiseRegeneration;
         }
 
-        if(health <= 0 && !isDying)
+        if(health <= 0 && enemyController.state != EnemyState.DYING)
         {
-            isDying = true;
+            enemyController.state = EnemyState.DYING;
             dotVFX.Stop();
             dotVFX.Clear();
             enemyController.StartDying();
         }
 
-        if(DOT > 0 && !isDying)
+        if(DOT > 0 && enemyController.state != EnemyState.DYING)
         {
             DOT -= Time.deltaTime;
             damageDOT += Time.deltaTime * playerData.dedication;
