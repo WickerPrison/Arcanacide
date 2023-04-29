@@ -20,8 +20,6 @@ public class ElectricMageController : EnemyController
     [System.NonSerialized] public float boltMaxCD = 0.1f;
     [System.NonSerialized] public int boltDamage = 2;
     [System.NonSerialized] public float boltPoiseDamage = 4;
-    bool hasSurrendered = false;
-    bool isDying = false;
     ChainLightningLink closestLink;
     bool moving = false;
     bool getNewPoint = true;
@@ -45,7 +43,7 @@ public class ElectricMageController : EnemyController
     {
         base.EnemyAI();
 
-        if (state != EnemyState.UNAWARE)
+        if (state == EnemyState.IDLE)
         {
             frontAnimator.SetBool("hasSeenPlayer", true);
             backAnimator.SetBool("hasSeenPlayer", true);
@@ -55,7 +53,7 @@ public class ElectricMageController : EnemyController
 
     private void FixedUpdate()
     {
-        if (isDying)
+        if (state == EnemyState.DYING)
         {
             return;
         }
@@ -191,18 +189,10 @@ public class ElectricMageController : EnemyController
         getNewPoint = true;
     }
 
-    public override void StartStagger(float staggerDuration)
-    {
-        if (!hasSurrendered)
-        {
-            base.StartStagger(staggerDuration);
-        }
-    }
-
     public override void StartDying()
     {
         navAgent.enabled = false;
-        isDying = true;
+        state = EnemyState.DYING;
         boltCD = 10000;
         notElectrifiedLinks.Clear();
         notElectrifiedLinks = new List<ChainLightningLink>(chainLightningLinks);
@@ -210,15 +200,8 @@ public class ElectricMageController : EnemyController
         {
             Destroy(chainLightning[i].gameObject);
         }
-        if (hasSurrendered)
-        {
-            frontAnimator.Play("SurrenderDeath");
-            backAnimator.Play("SurrenderDeath");
-        }
-        else
-        {
-            frontAnimator.Play("StandingDeath");
-            backAnimator.Play("StandingDeath");
-        }
+
+        frontAnimator.Play("StandingDeath");
+        backAnimator.Play("StandingDeath");
     }
 }
