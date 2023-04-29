@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 [CreateAssetMenu]
 public class EmblemLibrary : ScriptableObject
 {
     [SerializeField] PlayerData playerData;
+    [System.NonSerialized] public Dictionary<string, string> emblemDictionary;
     public List<string> firstFloorPatches;
 
     public string magical_acceleration = "Magical Acceleration";
@@ -65,44 +65,33 @@ public class EmblemLibrary : ScriptableObject
         return playerData.dedication * 3 + 20;
     }
 
+    private void DefineDictionary()
+    {
+        emblemDictionary = new Dictionary<string, string>
+        {
+            {magical_acceleration, magical_acceleration_description},
+            {heavy_blows, heavy_blows_description },
+            {vampiric_strikes, vampiric_strikes_description },
+            {quickstep_, quickstep_description},
+            {pay_raise, pay_raise_description },
+            {quick_strikes, quick_strikes_description },
+            {shell_company,shell_company_description },
+            {close_call, close_call_description },
+            {arcane_remains, arcane_remains_description },
+            {arcane_step, arcane_step_description },
+            {confident_killer, confident_killer_description },
+            {adrenaline_rush, adrenaline_rush_description },
+            {rending_blows, rending_blows_description },
+            {durable_gem, durable_gem_description },
+            {explosive_healing, explosive_healing_description },
+            {protective_barrier, protective_barrier_description }
+        };
+    }
+
+    
     public string GetDescription(string name)
     {
-        switch (name)
-        {
-            case "Magical Acceleration":
-                return magical_acceleration_description;
-            case "Heavy Blows":
-                return heavy_blows_description;
-            case "Vampiric Strikes":
-                return vampiric_strikes_description;
-            case "Quickstep":
-                return quickstep_description;
-            case "Pay Raise":
-                return pay_raise_description;
-            case "Quick Strikes":
-                return quick_strikes_description;
-            case "Shell Company":
-                return shell_company_description;
-            case "Close Call":
-                return close_call_description;
-            case "Arcane Remains":
-                return arcane_remains_description;
-            case "Arcane Step":
-                return arcane_step_description;
-            case "Confident Killer":
-                return confident_killer_description;
-            case "Adrenaline Rush":
-                return adrenaline_rush_description;
-            case "Rending Blows":
-                return rending_blows_description;
-            case "Durable Gem":
-                return durable_gem_description;
-            case "Explosive Healing":
-                return explosive_healing_description;
-            case "Protective Barrier":
-                return protective_barrier_description;
-            default:
-                return "Error";
-        }
+        if (emblemDictionary == null) DefineDictionary();
+        return emblemDictionary[name];
     }
 }
