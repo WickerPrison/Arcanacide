@@ -44,6 +44,8 @@ public class EmblemLibrary : ScriptableObject
     public string explosive_healing_description = "Deal damage to nearby enemies whenever you use your Healing Gem";
     public float explosiveHealingRange = 5;
     public float explosiveHealingStagger = 1f;
+    public string charons_obol = "Charon's Obol";
+    public string charons_obol_description = "When you die you do not leave behind a Remnant and you retain half of your current money";
 
     public int CloseCallDamage()
     {
@@ -65,6 +67,12 @@ public class EmblemLibrary : ScriptableObject
         return playerData.dedication * 3 + 20;
     }
 
+    public string GetDescription(string name)
+    {
+        if (emblemDictionary == null) DefineDictionary();
+        return emblemDictionary[name];
+    }
+
     private void DefineDictionary()
     {
         emblemDictionary = new Dictionary<string, string>
@@ -84,14 +92,8 @@ public class EmblemLibrary : ScriptableObject
             {rending_blows, rending_blows_description },
             {durable_gem, durable_gem_description },
             {explosive_healing, explosive_healing_description },
-            {protective_barrier, protective_barrier_description }
+            {protective_barrier, protective_barrier_description },
+            {charons_obol, charons_obol_description }
         };
-    }
-
-    
-    public string GetDescription(string name)
-    {
-        if (emblemDictionary == null) DefineDictionary();
-        return emblemDictionary[name];
     }
 }

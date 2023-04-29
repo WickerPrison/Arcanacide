@@ -367,13 +367,22 @@ public class PlayerScript : MonoBehaviour
         playerData.healCharges = playerData.maxHealCharges;
         playerData.mana = playerData.maxMana;
         playerData.hasSpawned = false;
-        playerData.lostMoney = playerData.money;
-        playerData.money = 0;
+        if (playerData.equippedEmblems.Contains(emblemLibrary.charons_obol))
+        {
+            playerData.lostMoney = 0;
+            playerData.money = Mathf.RoundToInt(playerData.money / 2);
+            mapData.deathRoom = "none";
+        }
+        else
+        {
+            playerData.lostMoney = playerData.money;
+            playerData.money = 0;
+            mapData.deathRoom = SceneManager.GetActiveScene().name;
+        }
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();
         mapData.usedAltars.Clear();
         mapData.deathPosition = transform.position;
-        mapData.deathRoom = SceneManager.GetActiveScene().name;
         gm.SaveGame();
         string sceneName = gm.GetSceneName(playerData.lastSwordSite);
         SceneManager.LoadScene(sceneName);
