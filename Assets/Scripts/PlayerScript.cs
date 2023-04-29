@@ -104,6 +104,18 @@ public class PlayerScript : MonoBehaviour
                 damage = Mathf.CeilToInt(damage * clawSpecialTakeDamageMult);
             }
 
+            if (damage > playerData.health && playerData.equippedEmblems.Contains(emblemLibrary.arcane_preservation))
+            {
+                damage -= playerData.health;
+                playerData.health = 1;
+                LoseMana(damage);
+                damage = 0;
+                if(playerData.mana <= 0)
+                {
+                    playerData.health = 0;
+                }
+            }
+
             playerData.health -= damage;
             if(fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
             {

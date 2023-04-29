@@ -46,6 +46,8 @@ public class EmblemLibrary : ScriptableObject
     public float explosiveHealingStagger = 1f;
     public string charons_obol = "Charon's Obol";
     public string charons_obol_description = "When you die you do not leave behind a Remnant and you retain half of your current money";
+    public string arcane_preservation = "Arcane Preservation";
+    public string arcane_preservation_description = "If you are reduced to 0 health, lose Mana instead of dying";
 
     public int CloseCallDamage()
     {
@@ -93,7 +95,8 @@ public class EmblemLibrary : ScriptableObject
             {durable_gem, durable_gem_description },
             {explosive_healing, explosive_healing_description },
             {protective_barrier, protective_barrier_description },
-            {charons_obol, charons_obol_description }
+            {charons_obol, charons_obol_description },
+            {arcane_preservation, arcane_preservation_description }
         };
     }
 }
