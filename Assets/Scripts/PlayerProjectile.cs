@@ -12,10 +12,12 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField] float impactSFXvolume;
     [SerializeField] float lifetime;
     [SerializeField] PlayerData playerData;
+    [SerializeField] EmblemLibrary emblemLibrary;
     [System.NonSerialized] public AttackProfiles attackProfile;
     public Transform target;
     public float turnAngle;
     Vector3 offset = new Vector3(0, 1, 0);
+    float addedDOT;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -35,7 +37,12 @@ public class PlayerProjectile : MonoBehaviour
         int damage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
         int poiseDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.poiseDamageMultiplier);
         enemyScript.LoseHealth(damage, poiseDamage);
-        enemyScript.GainDOT(attackProfile.durationDOT);
+        if (playerData.equippedEmblems.Contains(emblemLibrary.burning_reflection))
+        {
+            addedDOT = 10;
+        }
+        else addedDOT = 0;
+        enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
         AudioSource.PlayClipAtPoint(enemyImpactSFX, transform.position, impactSFXvolume);
         Destroy(gameObject);
     }

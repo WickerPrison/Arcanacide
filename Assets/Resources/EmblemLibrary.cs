@@ -48,6 +48,12 @@ public class EmblemLibrary : ScriptableObject
     public string charons_obol_description = "When you die you do not leave behind a Remnant and you retain half of your current money";
     public string arcane_preservation = "Arcane Preservation";
     public string arcane_preservation_description = "If you are reduced to 0 health, lose Mana instead of dying";
+    public string burning_reflection = "Burning Reflection";
+    public string burning_reflection_description = "Deflecting spells inflicts damage over time";
+    public string opportune_strike = "Opportune Strike";
+    public string opportune_strike_description = "Attacking an enemy inflicted with damage over time deals extra damage";
+    public string burning_cloak = "Burning Cloak";
+    public string burning_cloak_description = "Inflict damage over time to any enemy that deals damage to you";
 
     public int CloseCallDamage()
     {
@@ -96,7 +102,10 @@ public class EmblemLibrary : ScriptableObject
             {explosive_healing, explosive_healing_description },
             {protective_barrier, protective_barrier_description },
             {charons_obol, charons_obol_description },
-            {arcane_preservation, arcane_preservation_description }
+            {arcane_preservation, arcane_preservation_description },
+            {burning_reflection, burning_reflection_description },
+            {opportune_strike, opportune_strike_description },
+            {burning_cloak, burning_cloak_description }
         };
     }
 }

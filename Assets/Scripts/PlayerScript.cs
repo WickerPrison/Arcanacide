@@ -117,9 +117,15 @@ public class PlayerScript : MonoBehaviour
             }
 
             playerData.health -= damage;
+
+            if (attackingEnemy != null && playerData.equippedEmblems.Contains(emblemLibrary.burning_cloak))
+            {
+                attackingEnemy.GainDOT(5);
+            }
+
             if(fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
             {
-                weaponManager.RemoveWeaponMagicSource(); ;
+                weaponManager.RemoveWeaponMagicSource();
             }
             fullHealth = false;
             hitVFX.Play();

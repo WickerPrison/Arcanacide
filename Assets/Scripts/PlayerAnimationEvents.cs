@@ -97,8 +97,13 @@ public class PlayerAnimationEvents : MonoBehaviour
             SFX.PlayOneShot(attackProfile.soundOnHit, attackProfile.soundOnHitVolume);
         }
 
-        enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
+        if (enemy.DOT > 0 && playerData.equippedEmblems.Contains(emblemLibrary.opportune_strike))
+        {
+            attackDamage = Mathf.RoundToInt(attackDamage * 1.2f);
+        }
 
+        enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
+        Debug.Log(attackDamage);
         if (attackProfile.heavyAttack && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
         {
             enemy.GainDOT(emblemLibrary.rendingBlowsDuration);

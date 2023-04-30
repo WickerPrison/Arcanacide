@@ -26,7 +26,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float staggerDuration;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] ParticleSystem dotVFX;
-    float DOT = 0;
+    [System.NonSerialized] public float DOT = 0;
     float damageDOT = 0;
     public bool invincible = false;
 
@@ -101,9 +101,9 @@ public class EnemyScript : MonoBehaviour
 
     public void GainDOT(float duration)
     {
-        if(duration > 0)
+        if(duration > DOT)
         {
-            DOT += duration;
+            DOT = duration;
             dotVFX.Play();
         }
     }
