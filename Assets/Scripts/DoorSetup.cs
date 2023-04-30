@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class DoorSetup : MonoBehaviour
 {
     [SerializeField] Transform openDoorMessage;
     [SerializeField] Transform notOpenMessage;
     [SerializeField] Transform wall;
+    SortingGroup sortingGroup;
+    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Vector3 offset;
     int direction = 1;
 
@@ -16,8 +19,10 @@ public class DoorSetup : MonoBehaviour
         {
             transform.localPosition = wall.localPosition + offset;
             transform.localRotation = Quaternion.Euler(0, wall.localEulerAngles.y, 0);
+            sortingGroup = wall.GetComponent<SortingGroup>();
+            spriteRenderer.sortingLayerName = sortingGroup.sortingLayerName;
         }
-   
+
         if(transform.localEulerAngles.y == 90)
         {
             direction = -1;
