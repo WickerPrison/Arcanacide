@@ -9,8 +9,10 @@ public class Shop : MonoBehaviour
     [SerializeField] TextAsset csvFile;
     [SerializeField] DialogueData dialogueData;
     [SerializeField] int firstTimeTalking;
+    [SerializeField] int alternateFirstTimeTalking;
     [SerializeField] int repeatableGreeting;
     [SerializeField] int farewell;
+    [System.NonSerialized] public bool useAlternate = false;
     CSVparser readCSV;
     GameObject shopWindow;
     Transform player;
@@ -62,7 +64,14 @@ public class Shop : MonoBehaviour
         else
         {
             dialogueData.patchworkGaryConversations.Add(firstTimeTalking);
-            StartConversation(firstTimeTalking);
+            if (useAlternate)
+            {
+                StartConversation(alternateFirstTimeTalking);
+            }
+            else
+            {
+                StartConversation(firstTimeTalking);
+            }
         }
     }
 
@@ -98,7 +107,7 @@ public class Shop : MonoBehaviour
         {
             Destroy(dialogue.gameObject);
             inDialogue = false;
-            if(conversationIndex == repeatableGreeting || conversationIndex == firstTimeTalking)
+            if(conversationIndex == repeatableGreeting || conversationIndex == firstTimeTalking || conversationIndex == alternateFirstTimeTalking)
             {
                 OpenShop();
             }
