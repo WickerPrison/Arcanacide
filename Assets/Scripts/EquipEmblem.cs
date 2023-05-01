@@ -36,7 +36,7 @@ public class EquipEmblem : MonoBehaviour
         {
             EmblemUnequip();
         }
-        else if(playerData.equippedEmblems.Count < 2)
+        else if(playerData.equippedEmblems.Count < playerData.maxPatches)
         { 
             EmblemEquip();
         }

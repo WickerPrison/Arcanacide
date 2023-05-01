@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
             playerData.unlockedAbilities = data.unlockedAbilities;
             playerData.emblems = data.emblems;
             playerData.equippedEmblems = data.equippedEmblems;
+            playerData.maxPatches = data.maxPatches;
             playerData.tutorials = data.tutorials;
             playerData.money = data.money;
             playerData.lostMoney = data.lostMoney;
@@ -116,6 +117,7 @@ public class GameManager : MonoBehaviour
         playerData.unlockedAbilities.Clear();
         playerData.emblems.Clear();
         playerData.equippedEmblems.Clear();
+        playerData.maxPatches = 2;
         playerData.tutorials = tutorialManager.allTutorials;
         playerData.money = money;
         playerData.lostMoney = lostMoney;
@@ -169,6 +171,7 @@ public class GameManager : MonoBehaviour
             playerData.emblems.Add(patch);
         }
         playerData.equippedEmblems.Clear();
+        playerData.maxPatches = 2;
         playerData.tutorials.Clear();
         playerData.money = 280;
         playerData.lostMoney = 0;

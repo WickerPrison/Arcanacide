@@ -15,6 +15,7 @@ public class SaveData
     public List<string> unlockedAbilities;
     public List<string> emblems;
     public List<string> equippedEmblems;
+    public int maxPatches;
     public List<string> tutorials;
     public int money;
     public int lostMoney;
@@ -62,6 +63,7 @@ public class SaveData
         unlockedAbilities = playerData.unlockedAbilities;
         emblems = playerData.emblems;
         equippedEmblems = playerData.equippedEmblems;
+        maxPatches = playerData.maxPatches;
         tutorials = playerData.tutorials;
         money = playerData.money;
         lostMoney = playerData.lostMoney;

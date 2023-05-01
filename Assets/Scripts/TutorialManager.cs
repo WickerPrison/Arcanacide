@@ -30,6 +30,7 @@ public class TutorialManager : MonoBehaviour
     string block = "Block";
     [SerializeField] GameObject specialAttackTutorial;
     string specialAttack = "Special Attack";
+    [SerializeField] GameObject morePatchesTutorial;
     [SerializeField] GameObject endOfDemoTutorial;
     string endOfDemo = "EndOfDemo";
     [SerializeField] GameObject altarTutorial;
@@ -152,6 +153,13 @@ public class TutorialManager : MonoBehaviour
                 currentMessage = Instantiate(specialAttackTutorial);
                 break;
         }
+        OpenMessage();
+    }
+
+    public void MorePatchesTutorial()
+    {
+        nextMessage = null;
+        currentMessage = Instantiate(morePatchesTutorial);
         OpenMessage();
     }
 

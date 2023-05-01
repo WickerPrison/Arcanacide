@@ -14,6 +14,7 @@ public class PlayerData : ScriptableObject
     public List<string> unlockedAbilities;
     public List<string> emblems;
     public List<string> equippedEmblems;
+    public int maxPatches;
     public List<string> tutorials;
     public int money;
     public int lostMoney;

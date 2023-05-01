@@ -116,7 +116,16 @@ public class Janitor : MonoBehaviour
     {
         playerData.unlockedAbilities.Add(ability);
         tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
-        tutorialManager.NewAbilityTutorial(ability);
+
+        if(ability.Contains("More Patches"))
+        {
+            playerData.maxPatches++;
+            tutorialManager.MorePatchesTutorial();
+        }
+        else
+        {
+            tutorialManager.NewAbilityTutorial(ability);
+        }
     } 
 
 
