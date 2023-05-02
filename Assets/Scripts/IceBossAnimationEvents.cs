@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +13,12 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
     [SerializeField] GameObject ringBlast1Circle;
     [SerializeField] ParticleSystem ringBlastVFX2;
     [SerializeField] GameObject ringBlast2Circle;
-    [SerializeField] SpriteRenderer[] humanLimbs;
-    [SerializeField] SpriteRenderer[] golemLimbs;
+    //[SerializeField] SpriteRenderer[] humanLimbs;
+    //[SerializeField] SpriteRenderer[] golemLimbs;
     [SerializeField] float delayTime;
     WaitForSeconds ringBlastDelay;
     IceBoss bossController;
+    public event Action<int> OnReplaceLimb;
 
     public override void Start()
     {
@@ -24,11 +26,13 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
         ringBlastDelay = new WaitForSeconds(delayTime);
         bossController = GetComponentInParent<IceBoss>();
 
+        /*
         for(int i = 0; i < golemLimbs.Length; i++)
         {
             humanLimbs[i].enabled = true;
             golemLimbs[i].enabled = false;
         }
+        */
     }
 
     public override void ChangeArc(AnimationEvent angleAndRadius)
@@ -63,12 +67,16 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
 
     public void ReplaceLimb(int limb)
     {
+        OnReplaceLimb?.Invoke(limb);
+
+        /*
         humanLimbs[limb].enabled = false;
         golemLimbs[limb].enabled = true;
         if(limb == 4)
         {
             humanLimbs[5].enabled = false;
         }
+        */
     }
 
     public void Smash()

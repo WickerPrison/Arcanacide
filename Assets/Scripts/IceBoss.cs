@@ -24,6 +24,7 @@ public class IceBoss : EnemyController
     IceBossBeamCrystal beamCrystal;
     [SerializeField] BossIceBreath iceBreath;
     [SerializeField] AttackArcGenerator attackArc;
+    public IceBossAnimationEvents animationEvents;
     CameraFollow cameraScript;
 
     float tooFarAway = 5;
@@ -120,7 +121,7 @@ public class IceBoss : EnemyController
                 if (justTransformed)
                 {
                     randInt = currentLimb;
-                    //justTransformed = false;
+                    justTransformed = false;
                 }
 
                 state = EnemyState.ATTACKING;
