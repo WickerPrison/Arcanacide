@@ -48,6 +48,8 @@ public class EnemyController : MonoBehaviour
     public virtual void Awake()
     {
         enemyScript = gameObject.GetComponent<EnemyScript>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerScript = player.GetComponent<PlayerScript>();
     }
 
     // Start is called before the first frame update
@@ -55,9 +57,7 @@ public class EnemyController : MonoBehaviour
     {
         enemySound = GetComponentInChildren<EnemySound>();
         smearScript = GetComponentInChildren<Smear>();
-        player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-        playerScript = player.GetComponent<PlayerScript>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         navAgent = GetComponent<NavMeshAgent>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
