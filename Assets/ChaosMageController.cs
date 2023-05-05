@@ -11,10 +11,11 @@ public class ChaosMageController : EnemyController
         OFF, INDICATOR, ON
     }
     BeamState beamState = BeamState.OFF;
-    [SerializeField] Transform frontAttackPoint;
-    [SerializeField] Transform backAttackPoint;
+    [SerializeField] Transform frontAttackOrigin;
+    [SerializeField] Transform backAttackOrigin;
     [SerializeField] LineRenderer lineRenderer;
-    Vector3 attackPoint;
+    [SerializeField] Transform attackPoint;
+    Vector3 attackOrigin;
     Vector3 targetDirection;
     Vector3 endPoint;
     LayerMask layerMask;
@@ -68,14 +69,15 @@ public class ChaosMageController : EnemyController
         if(beamState == BeamState.INDICATOR)
         {
             PerformRaycast();
-            lineRenderer.SetPosition(0, attackPoint);
-            lineRenderer.SetPosition(1, endPoint);
+            lineRenderer.SetPosition(0, attackOrigin);
+            lineRenderer.SetPosition(1, endPoint + Vector3.up);
         }
         else if(beamState == BeamState.ON)
         {
             PerformRaycast();
-            beam.transform.position = attackPoint + targetDirection.normalized * beamLength / 2;
-            Quaternion direction = Quaternion.LookRotation(targetDirection, Vector3.up);
+            Vector3 beamDirection = endPoint + Vector3.up - attackOrigin;
+            beam.transform.position = attackOrigin + beamDirection.normalized * beamLength / 2;
+            Quaternion direction = Quaternion.LookRotation(beamDirection, Vector3.up);
             beam.transform.rotation = direction;
             beam.transform.localScale = new Vector3(0.3f, 0.3f, beamLength);
         }
@@ -129,12 +131,11 @@ public class ChaosMageController : EnemyController
     {
         GetDirection();
         RaycastHit hit;
-        Physics.Raycast(attackPoint, targetDirection, out hit, attackRange, layerMask, QueryTriggerInteraction.Ignore);
-        endPoint = hit.point;
+        Physics.Raycast(transform.position + Vector3.up, targetDirection, out hit, attackRange, layerMask, QueryTriggerInteraction.Ignore);
    
         if (hit.collider == null)
         {
-            endPoint = attackPoint + targetDirection.normalized * attackRange;
+            endPoint = transform.position + Vector3.up + targetDirection.normalized * attackRange;
             beamLength = attackRange;
             return;
         }
@@ -174,16 +175,16 @@ public class ChaosMageController : EnemyController
 
     void GetDirection()
     {
-        Vector3 target = playerController.transform.position + Vector3.up;
+        Vector3 target = attackPoint.position;
         if (facingFront)
         {
-            attackPoint = frontAttackPoint.position;
+            attackOrigin = frontAttackOrigin.position;
         }
         else
         {
-            attackPoint = backAttackPoint.position;
+            attackOrigin = backAttackOrigin.position;
         }
-        targetDirection = (target - attackPoint).normalized;
+        targetDirection = (target - transform.position).normalized;
     }
 
     Vector3 RotateDirection(Vector3 oldDirection, float degrees)

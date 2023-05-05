@@ -33,6 +33,13 @@ public class EnemyAnimationEvents : MonoBehaviour
         enemyController.SpecialAbilityOff();
     }
 
+    public void SetNavagentSpeed(float speed)
+    {
+        enemyController.navAgent.speed = speed;
+    }
+
+
+
     //disabling the navAgent prevents the enemy from being able to walk
     public void DisableMovement()
     {
