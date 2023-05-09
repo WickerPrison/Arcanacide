@@ -88,8 +88,6 @@ public class FireSwordsmanController : EnemyController
                 charging = false;
             }
         }
-
-
     }
 
     void Attack()

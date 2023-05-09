@@ -50,7 +50,6 @@ public class ChaosMageController : EnemyController
             if (playerDistance < attackRange && attackTime <= 0)
             {
                 int randInt = Random.Range(0, 2);
-                randInt = 1;
                 if (randInt == 0)
                 {
                     attackTime = attackMaxTime;
@@ -95,6 +94,7 @@ public class ChaosMageController : EnemyController
         projectile = Instantiate(projectilePrefab);
         projectileScript = projectile.GetComponent<Projectile>();
         GetDirection();
+        projectile.transform.position = attackOrigin; 
         float randomAngle = Random.Range(-20, 20);
         projectileScript.direction = RotateDirection(targetDirection, randomAngle);
         projectileScript.poiseDamage = spellAttackPoiseDamage;

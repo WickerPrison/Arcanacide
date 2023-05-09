@@ -10,6 +10,7 @@ public class EnemySound : MonoBehaviour
     [SerializeField] AudioClip pain;
     [SerializeField] AudioClip swordImpact;
     [SerializeField] AudioClip enemySpell;
+    [SerializeField] AudioClip blockAttack;
     [SerializeField] List<AudioClip> otherSounds = new List<AudioClip>();
 
     private void Start()
@@ -30,6 +31,11 @@ public class EnemySound : MonoBehaviour
     public void SwordImpact()
     {
         SFX.PlayOneShot(swordImpact, 1f);
+    }
+
+    public void BlockAttack()
+    {
+        SFX.PlayOneShot(blockAttack, 1f);
     }
 
     public void Pain()

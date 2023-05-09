@@ -27,6 +27,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] ParticleSystem dotVFX;
     [System.NonSerialized] public float DOT = 0;
+    [System.NonSerialized] public bool blockAttack = false;
     float damageDOT = 0;
     public bool invincible = false;
 
