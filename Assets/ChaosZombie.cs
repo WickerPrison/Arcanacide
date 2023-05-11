@@ -7,6 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public class ChaosZombie : EnemyController
 {
+    [SerializeField] Transform handPustule;
+
     public override void EnemyAI()
     {
         base.EnemyAI();
@@ -19,11 +21,25 @@ public class ChaosZombie : EnemyController
                 navAgent.SetDestination(playerController.transform.position);
             }
 
+            if(attackTime <= 0)
+            {
+                attackTime = attackMaxTime;
+                frontAnimator.Play("Attack");
+                backAnimator.Play("Attack");
+            }
+
         }
 
         if (attackTime > 0)
         {
             attackTime -= Time.deltaTime;
         }
+    }
+
+    public override void SpellAttack()
+    {
+        PustuleScript pustule = Instantiate(projectilePrefab).GetComponent<PustuleScript>();
+        pustule.transform.position = handPustule.transform.position;
+        pustule.endPoint = playerController.transform.position;
     }
 }
