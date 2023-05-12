@@ -50,6 +50,7 @@ public class ChaosMageController : EnemyController
             if (playerDistance < attackRange && attackTime <= 0)
             {
                 int randInt = Random.Range(0, 2);
+                randInt = 1;
                 if (randInt == 0)
                 {
                     attackTime = attackMaxTime;
@@ -78,7 +79,7 @@ public class ChaosMageController : EnemyController
             beam.transform.position = attackOrigin + beamDirection.normalized * beamLength / 2;
             Quaternion direction = Quaternion.LookRotation(beamDirection, Vector3.up);
             beam.transform.rotation = direction;
-            beam.transform.localScale = new Vector3(0.3f, 0.3f, beamLength);
+            beam.transform.localScale = new Vector3(0.3f, 0.3f, beamLength * .8f);
         }
 
         if (attackTime > 0)

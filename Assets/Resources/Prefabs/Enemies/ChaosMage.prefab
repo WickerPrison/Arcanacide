@@ -5408,6 +5408,7 @@ MonoBehaviour:
   pain: {fileID: 8300000, guid: df5f068f3f63ec3489fd7f856124fda2, type: 3}
   swordImpact: {fileID: 0}
   enemySpell: {fileID: 8300000, guid: d59e58b599bf07d48a10526cdc2f860e, type: 3}
+  blockAttack: {fileID: 0}
   otherSounds:
   - {fileID: 8300000, guid: ac6530a0250f0ae44aca2d99535ed825, type: 3}
 --- !u!1 &1583302526627745160
@@ -7048,7 +7049,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3759594548479760560}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: -0.8191521, z: 0, w: 0.57357645}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7056,7 +7057,7 @@ Transform:
   - {fileID: 4656133897311181624}
   m_Father: {fileID: 3152495305549295389}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -110, z: 0}
 --- !u!1 &3784857153229492042
 GameObject:
   m_ObjectHideFlags: 0
@@ -17204,7 +17205,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.31370908, g: 0, b: 0.3490566, a: 0.9019608}
+      maxColor: {r: 0.31370908, g: 0, b: 0.3490566, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -17985,7 +17986,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 453017c28326606489eb3fd00339de80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
