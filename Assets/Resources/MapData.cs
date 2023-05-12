@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class MapData : ScriptableObject
 {
+    public Color floorColor;
+
     public int doorNumber;
 
     public List<int> deadEnemies;

@@ -5,6 +5,9 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class CameraFollow : MonoBehaviour
 {
+    [SerializeField] Color floorColor;
+    [SerializeField] Material menuShaderMaterial;
+    [SerializeField] Material gradientShaderMaterial;
     [SerializeField] PlayerData playerData;
 
     //This script makes the camera follow the player. Some delay is added to prevent jerking the camera when the player dashes.
@@ -12,6 +15,12 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] GameObject movePoint;
     PlayerController playerController;
     Vector3 offset = new Vector3(-0.4f, 7.4f, -7.7f);
+
+    private void Awake()
+    {
+        menuShaderMaterial.SetColor("_NewColor", floorColor);
+        gradientShaderMaterial.SetColor("_NewColor", floorColor);
+    }
 
     // Start is called before the first frame update
     void Start()

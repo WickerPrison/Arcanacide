@@ -1,17 +1,14 @@
-Shader "Unlit/ChaosBeam"
+Shader "Unlit/GradientColorChange"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Color ("Color", Color) = (1,1,1,1)
+        _NewColor ("Desired Color", Color) = (1,1,1,1)
     }
-    SubShader
+SubShader
     {
-        Tags { "RenderType" = "Opaque" }
-
+        Tags { "RenderType"="Transparent" "Queue" = "Transparent" }
         ZWrite Off
-        ZTest Off
-        Blend SrcAlpha OneMinusSrcAlpha
 
         Pass
         {
@@ -35,8 +32,7 @@ Shader "Unlit/ChaosBeam"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float4 _Color;
-            float _Darkness;
+            float4 _NewColor;
 
             v2f vert (appdata v)
             {
@@ -48,11 +44,12 @@ Shader "Unlit/ChaosBeam"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float4 baseline = _Color * i.uv.x;
+                // sample the texture
+                fixed4 col = tex2D(_MainTex, i.uv);
 
-                return baseline;
+                clip(col.a - 0.1);
 
-                return _Color;
+                return _NewColor * (1 - i.uv.x);
             }
             ENDCG
         }
