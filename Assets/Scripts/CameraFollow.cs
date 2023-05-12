@@ -9,6 +9,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] Material menuShaderMaterial;
     [SerializeField] Material gradientShaderMaterial;
     [SerializeField] PlayerData playerData;
+    [SerializeField] MapData mapData;
 
     //This script makes the camera follow the player. Some delay is added to prevent jerking the camera when the player dashes.
 
@@ -20,6 +21,7 @@ public class CameraFollow : MonoBehaviour
     {
         menuShaderMaterial.SetColor("_NewColor", floorColor);
         gradientShaderMaterial.SetColor("_NewColor", floorColor);
+        mapData.floorColor = floorColor;
     }
 
     // Start is called before the first frame update

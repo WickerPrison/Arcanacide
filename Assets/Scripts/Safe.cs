@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Safe : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Safe : MonoBehaviour
     [SerializeField] TextMeshProUGUI emblemMessageText;
     [SerializeField] PlayerData playerData;
     [SerializeField] string emblemName;
+    [SerializeField] Image newEmblemColorImage;
+    [SerializeField] MapData mapData;
     Transform player;
     TutorialManager tutorialManager;
     InputManager im;
@@ -27,6 +30,7 @@ public class Safe : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         newEmblemMessage.SetActive(false);
         sfx = GetComponent<AudioSource>();
+        newEmblemColorImage.color = mapData.floorColor;
     }
 
     void Update()
