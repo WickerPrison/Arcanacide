@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_ChaosBeam
-  m_Shader: {fileID: 4800000, guid: 4f02ed90fc5930448b94d606ca8727ee, type: 3}
+  m_Name: GradientColorChange
+  m_Shader: {fileID: 4800000, guid: 9d021d37d5c826046b4b74b82750e096, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -26,7 +26,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Darkness: 1
+    - _Threshold: 0.31
     m_Colors:
-    - _Color: {r: 0.39091983, g: 0, b: 0.4811321, a: 1}
+    - _NewColor: {r: 0.3254902, g: 0.8352942, b: 1, a: 1}
+    - _OldColor: {r: 0.8666667, g: 0.101960786, b: 0, a: 1}
   m_BuildTextureStacks: []
