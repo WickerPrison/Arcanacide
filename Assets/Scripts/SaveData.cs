@@ -95,6 +95,7 @@ public class SaveData
         secretaryConvo = mapData.secretaryConvo;
         electricBossKilled = mapData.electricBossKilled;
         iceBossKilled = mapData.iceBossKilled;
+        iceBossPosition = new float[3];
         iceBossPosition[0] = mapData.iceBossPosition.x;
         iceBossPosition[1] = mapData.iceBossPosition.y;
         iceBossPosition[2] = mapData.iceBossPosition.z;
