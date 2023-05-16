@@ -9,10 +9,6 @@ Shader "Unlit/ChaosBeam"
     {
         Tags { "RenderType" = "Opaque" }
 
-        ZWrite Off
-        ZTest Off
-        Blend SrcAlpha OneMinusSrcAlpha
-
         Pass
         {
             CGPROGRAM

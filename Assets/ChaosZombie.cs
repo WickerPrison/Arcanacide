@@ -8,6 +8,15 @@ using UnityEngine;
 public class ChaosZombie : EnemyController
 {
     [SerializeField] Transform handPustule;
+    ChaosSporesScript sporesScript;
+    float sporesDuration = 6;
+    float meleeRange = 3f;
+
+    public override void Start()
+    {
+        base.Start();
+        sporesScript = playerController.GetComponentInChildren<ChaosSporesScript>();
+    }
 
     public override void EnemyAI()
     {
@@ -21,9 +30,17 @@ public class ChaosZombie : EnemyController
                 navAgent.SetDestination(playerController.transform.position);
             }
 
-            if(attackTime <= 0)
+            if(playerDistance < meleeRange && attackTime < attackMaxTime / 2)
             {
                 attackTime = attackMaxTime;
+                state = EnemyState.ATTACKING;
+                frontAnimator.Play("ClawSwipe");
+                backAnimator.Play("ClawSwipe");
+            }
+            else if(playerDistance < attackRange && attackTime <= 0)
+            {
+                attackTime = attackMaxTime;
+                state = EnemyState.ATTACKING;
                 frontAnimator.Play("Attack");
                 backAnimator.Play("Attack");
             }
@@ -41,5 +58,11 @@ public class ChaosZombie : EnemyController
         PustuleScript pustule = Instantiate(projectilePrefab).GetComponent<PustuleScript>();
         pustule.transform.position = handPustule.transform.position;
         pustule.endPoint = playerController.transform.position;
+    }
+
+    public override void AdditionalAttackEffects()
+    {
+        base.AdditionalAttackEffects();
+        sporesScript.StartChaosSpores(sporesDuration);
     }
 }

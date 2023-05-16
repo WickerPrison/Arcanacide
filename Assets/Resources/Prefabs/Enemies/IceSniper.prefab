@@ -146,6 +146,7 @@ MonoBehaviour:
   pain: {fileID: 8300000, guid: df5f068f3f63ec3489fd7f856124fda2, type: 3}
   swordImpact: {fileID: 8300000, guid: 0d0b4a1b4b49c5b448714ecd1447022b, type: 3}
   enemySpell: {fileID: 0}
+  blockAttack: {fileID: 0}
   otherSounds:
   - {fileID: 8300000, guid: 54cb48a2171b5994687aba72e16c4c14, type: 3}
 --- !u!1 &271655768536283768
@@ -315,7 +316,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cb31ddf38ceb11244817a3d7e1005581, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -389,7 +390,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -686,6 +687,7 @@ MonoBehaviour:
   staggerDuration: 2
   hitVFX: {fileID: 3532542343043436695}
   dotVFX: {fileID: 8223620339926047539}
+  invincible: 0
 --- !u!114 &3603301266689244227
 MonoBehaviour:
   m_ObjectHideFlags: 0

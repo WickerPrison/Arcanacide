@@ -8,7 +8,7 @@ public class IceBossBeamCrystal : MonoBehaviour
     bool shrink = false;
     [System.NonSerialized] public bool spawnedIn = false;
     float growthTime = 1f;
-    float growSpeed = 0.5f;
+    float growSpeed = 0.3f;
     float currentSize;
 
 

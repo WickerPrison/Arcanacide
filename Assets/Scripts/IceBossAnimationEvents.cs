@@ -144,4 +144,11 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
         bossController.attackMaxTime = 2;
         StartCoroutine(bossController.InvincibleTimer());
     }
+
+    public void ClearAll()
+    {
+        HideArc();
+        ringBlast1Circle.SetActive(false);
+        ringBlast2Circle.SetActive(false);
+    }
 }

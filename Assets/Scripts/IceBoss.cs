@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class IceBoss : EnemyController
 {
+    [SerializeField] PlayerData playerData;
+    [SerializeField] EmblemLibrary emblemLibrary;
+
     int smashDamage = 30;
     float smashPoiseDamage = 30;
 
@@ -210,6 +214,8 @@ public class IceBoss : EnemyController
 
     void LoseHealth()
     {
+        if (state == EnemyState.DYING) return;
+
         damageCounter += fullyTransformedDamage * Time.deltaTime;
 
         if(damageCounter > 1)
@@ -310,6 +316,7 @@ public class IceBoss : EnemyController
         navAgent.speed = 5;
         base.EndStagger();
     }
+
 
     private void OnEnable()
     {

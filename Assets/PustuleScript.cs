@@ -24,6 +24,7 @@ public class PustuleScript : MonoBehaviour
     bool groundPustule = false;
     float pulseDamageCounter = 0;
     float pulseHealCounter = 0;
+    WaitForSeconds lifetime = new WaitForSeconds(15);
 
     private void Start()
     {
@@ -90,6 +91,7 @@ public class PustuleScript : MonoBehaviour
         airPustuleSprite.enabled = false;
         groundPustuleSprite.enabled = true;
         pulseEffect.enabled = true;
+        StartCoroutine(LifetimeCounter());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,5 +103,11 @@ public class PustuleScript : MonoBehaviour
             playerScript.LosePoise(poiseDamage);
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator LifetimeCounter()
+    {
+        yield return lifetime;
+        Destroy(gameObject);
     }
 }
