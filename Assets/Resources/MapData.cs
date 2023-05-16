@@ -27,6 +27,10 @@ public class MapData : ScriptableObject
 
     public bool electricBossKilled;
 
+    public bool iceBossKilled;
+    public Vector3 iceBossPosition;
+    public int iceBossDirection;
+
     public bool ACOn;
 
     private void OnEnable()

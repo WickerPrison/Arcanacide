@@ -7,7 +7,7 @@ using UnityEngine;
 public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
 {
     [SerializeField] BossIceBreath iceBreath;
-    [SerializeField] FacePlayerSlow facePlayer;
+    public FacePlayerSlow facePlayer;
     [SerializeField] GameObject iceRipplePrefab;
     [SerializeField] ParticleSystem ringBlast1VFX;
     [SerializeField] GameObject ringBlast1Circle;
@@ -150,5 +150,10 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
         HideArc();
         ringBlast1Circle.SetActive(false);
         ringBlast2Circle.SetActive(false);
+    }
+
+    public void IceBossDeath()
+    {
+        bossController.Death();
     }
 }

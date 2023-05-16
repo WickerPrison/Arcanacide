@@ -17,6 +17,7 @@ public class FacePlayer : MonoBehaviour
     public Vector3 faceDirection;
     Vector3 faceDestination;
     bool facePlayer = true;
+    [System.NonSerialized] public int faceDirectionID;
 
     public virtual void Start()
     {
@@ -102,8 +103,28 @@ public class FacePlayer : MonoBehaviour
         }
     }
 
+    public void FaceDirection(int directionID)
+    {
+        switch (directionID)
+        {
+            case 0:
+                FrontRight();
+                break;
+            case 1:
+                FrontLeft();
+                break;
+            case 2:
+                BackLeft();
+                break;
+            case 3:
+                BackRight();
+                break;
+        }
+    }
+
     public virtual void FrontRight()
     {
+        faceDirectionID = 0;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = frontAnimatorPosition;
         frontAnimator.transform.localScale = new Vector3(frontScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
@@ -111,6 +132,7 @@ public class FacePlayer : MonoBehaviour
 
     public virtual void FrontLeft()
     {
+        faceDirectionID = 1;
         backAnimator.transform.localPosition = away;
         frontAnimator.transform.localPosition = new Vector3(-frontAnimatorPosition.x, frontAnimatorPosition.y, frontAnimatorPosition.z);
         frontAnimator.transform.localScale = new Vector3(-frontScaleX, frontAnimator.transform.localScale.y, frontAnimator.transform.localScale.z);
@@ -118,6 +140,7 @@ public class FacePlayer : MonoBehaviour
 
     public virtual void BackRight()
     {
+        faceDirectionID = 3;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = backAnimatorPosition;
         backAnimator.transform.localScale = new Vector3(backScaleX, backAnimator.transform.localScale.y, backAnimator.transform.localScale.z);
@@ -125,6 +148,7 @@ public class FacePlayer : MonoBehaviour
 
     public virtual void BackLeft()
     {
+        faceDirectionID = 2;
         frontAnimator.transform.localPosition = away;
         backAnimator.transform.localPosition = new Vector3(-backAnimatorPosition.x, backAnimatorPosition.y, backAnimatorPosition.z);
         backAnimator.transform.localScale = new Vector3(-backScaleX, backAnimator.transform.localScale.y, backAnimator.transform.localScale.z);

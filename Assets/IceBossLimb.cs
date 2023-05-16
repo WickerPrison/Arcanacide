@@ -6,18 +6,29 @@ public class IceBossLimb : MonoBehaviour
 {
     [SerializeField] int limbID;
     [SerializeField] bool isHuman;
+    IceBoss iceBoss;
     IceBossAnimationEvents events;
     SpriteRenderer spriteRenderer;
+    MapData mapData;
 
     private void Awake()
     {
-        events = GetComponentInParent<IceBoss>().animationEvents;
+        iceBoss = GetComponentInParent<IceBoss>();
+        mapData = iceBoss.mapData;
+        events = iceBoss.animationEvents;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
     {
-        spriteRenderer.enabled = isHuman;
+        if (mapData.iceBossKilled)
+        {
+            spriteRenderer.enabled = !isHuman;
+        }
+        else
+        {
+            spriteRenderer.enabled = isHuman;
+        }
     }
 
     private void OnEnable()

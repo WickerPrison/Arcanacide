@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class IceBoss : EnemyController
 {
+    public MapData mapData;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
 
@@ -50,16 +50,35 @@ public class IceBoss : EnemyController
     [System.NonSerialized] public bool justTransformed = false;
     bool fullyTransformed = false;
 
+    public override void Awake()
+    {
+        if (mapData.iceBossKilled)
+        {
+            enemyScript = GetComponent<EnemyScript>();
+            enemyScript.enabled = false;
+            return;
+        }
+
+        base.Awake();
+    }
+
     public override void Start()
     {
-        base.Start();
-
-        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-
         beamCrystal = GetComponentInChildren<IceBossBeamCrystal>();
 
         line.SetPosition(0, away);
         line.SetPosition(1, away);
+
+        if (mapData.iceBossKilled)
+        {
+            SetupDeathPose();
+            return;
+        }
+
+        base.Start();
+
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+
 
         layerMask = LayerMask.GetMask("Default", "Player", "IFrames");
 
@@ -73,6 +92,8 @@ public class IceBoss : EnemyController
 
     public override void EnemyAI()
     {
+        if (mapData.iceBossKilled) return;
+
         base.EnemyAI();
 
         if (state == EnemyState.IDLE)
@@ -100,12 +121,7 @@ public class IceBoss : EnemyController
             }
             else
             {
-                if (beamCrystal.spawnedIn)
-                {
-                    beamCrystal.SpawnOut();
-                }
-                line.SetPosition(0, away);
-                line.SetPosition(1, away);
+                HideCrystal();
             }
 
             if (playerDistance <= meleeRange && attackTime <= 0)
@@ -116,17 +132,17 @@ public class IceBoss : EnemyController
                 if(currentLimb < 4)
                 {
                     randInt = Random.Range(0, currentLimb + 1);
+                    if (justTransformed)
+                    {
+                        randInt = currentLimb;
+                        justTransformed = false;
+                    }
                 }
                 else
                 {
                     randInt = Random.Range(1, currentLimb);
                 }
 
-                if (justTransformed)
-                {
-                    randInt = currentLimb;
-                    justTransformed = false;
-                }
 
                 state = EnemyState.ATTACKING;
                 switch (randInt)
@@ -153,10 +169,10 @@ public class IceBoss : EnemyController
 
         if (attackTime > 0 && state != EnemyState.SPECIAL)
         {
-            attackTime -= Time.deltaTime;
+           attackTime -= Time.deltaTime;
         }
 
-        if (fullyTransformed)
+        if (fullyTransformed && state != EnemyState.DYING)
         {
             LoseHealth();
         }
@@ -289,8 +305,7 @@ public class IceBoss : EnemyController
         {
             if(enemyPercentHealth < limbTransitions[i])
             {
-                attackArc.HideAttackArc();
-                iceBreath.StopIceBreath();
+                HideIndicators();
                 currentLimb++;
                 state = EnemyState.SPECIAL;
                 if(i == 1)
@@ -308,7 +323,7 @@ public class IceBoss : EnemyController
     {
         if (state == EnemyState.SPECIAL) return;
         base.StartStagger(staggerDuration);
-        attackArc.HideAttackArc();
+        HideIndicators();
     }
 
     public override void EndStagger()
@@ -317,6 +332,79 @@ public class IceBoss : EnemyController
         base.EndStagger();
     }
 
+    public override void StartDying()
+    {
+        HideIndicators();
+        HideCrystal();
+        base.StartDying();
+    }
+
+    public override void Death()
+    {
+        mapData.iceBossPosition = transform.position;
+        mapData.iceBossDirection = animationEvents.facePlayer.faceDirectionID;
+
+
+        playerData.killedEnemiesNum += 1;
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.pay_raise))
+        {
+            playerData.money += Mathf.RoundToInt(enemyScript.reward * 1.25f);
+        }
+        else
+        {
+            playerData.money += enemyScript.reward;
+        }
+        gm.enemies.Remove(enemyScript);
+        gm.enemiesInRange.Remove(enemyScript);
+        gm.awareEnemies -= 1;
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
+        {
+            PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
+            playerScript.PartialHeal(healAmount);
+        }
+
+        mapData.iceBossKilled = true;
+        playerScript.GainMaxHealCharges();
+        gm.awareEnemies -= 1;
+        GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
+        bossHealthbar.SetActive(false);
+        ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
+        managerVanquished.ShowMessage();
+        SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
+        sm.BossDefeated();
+        MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
+        musicManager.StartFadeOut(4);
+    }
+
+    void HideIndicators()
+    {
+        attackArc.HideAttackArc();
+        iceBreath.StopIceBreath();
+        animationEvents.ClearAll();
+    }
+
+    void HideCrystal()
+    {
+        if (beamCrystal.spawnedIn)
+        {
+            beamCrystal.SpawnOut();
+        }
+        line.SetPosition(0, away);
+        line.SetPosition(1, away);
+    }
+
+    void SetupDeathPose()
+    {
+        transform.position = mapData.iceBossPosition;
+        FacePlayer facePlayer = GetComponent<FacePlayer>();
+        facePlayer.FaceDirection(mapData.iceBossDirection);
+        directionLock = true;
+        frontAnimator.Play("DeathPose");
+        backAnimator.Play("DeathPose");
+    }
 
     private void OnEnable()
     {

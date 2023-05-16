@@ -41,6 +41,9 @@ public class SaveData
     public bool fireBossKilled;
     public bool secretaryConvo;
     public bool electricBossKilled;
+    public bool iceBossKilled;
+    public float[] iceBossPosition;
+    public int iceBossDirection;
     public bool ACOn;
 
     public int[] ORTHODOXQueue;
@@ -91,6 +94,12 @@ public class SaveData
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
         electricBossKilled = mapData.electricBossKilled;
+        iceBossKilled = mapData.iceBossKilled;
+        iceBossPosition[0] = mapData.iceBossPosition.x;
+        iceBossPosition[1] = mapData.iceBossPosition.y;
+        iceBossPosition[2] = mapData.iceBossPosition.z;
+        iceBossDirection = mapData.iceBossDirection;
+
         ACOn = mapData.ACOn;
 
         ORTHODOXQueue = dialogueData.ORTHODOXQueue.ToArray();
