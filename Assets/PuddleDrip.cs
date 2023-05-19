@@ -4,29 +4,37 @@ using UnityEngine;
 
 public class PuddleDrip : MonoBehaviour
 {
-    [SerializeField] Material dripShader;
-    [SerializeField] float loopTime;
-    float dripRange = 0.5f;
-    Vector2 dripShift;
+    [SerializeField] Vector2 dripShift;
+    [SerializeField] Vector2 dripScale;
+    float loopTime;
+    SpriteRenderer spriteRenderer;
     float time = 0;
 
-    private void Start()
+    private void Awake()
     {
-        dripShift.x = Random.Range(-dripRange, dripRange);
-        dripShift.y = Random.Range(-dripRange, dripRange);
-        dripShader.SetFloat("_XScale", transform.localScale.x * transform.parent.localScale.x);
-        dripShader.SetFloat("_YScale", transform.localScale.z * transform.parent.localScale.z);
-        dripShader.SetFloat("_XShift", dripShift.x);
-        dripShader.SetFloat("_YShift", dripShift.y);
+        loopTime = Random.Range(1f, 4f);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.material.SetFloat("_XScale", dripScale.x);
+        spriteRenderer.material.SetFloat("_YScale", dripScale.y);
+        spriteRenderer.material.SetFloat("_XShift", dripShift.x);
+        spriteRenderer.material.SetFloat("_YShift", dripShift.y);
     }
 
     private void Update()
     {
+        spriteRenderer.material.SetFloat("_XScale", dripScale.x);
+        spriteRenderer.material.SetFloat("_YScale", dripScale.y);
+        spriteRenderer.material.SetFloat("_XShift", dripShift.x);
+        spriteRenderer.material.SetFloat("_YShift", dripShift.y);
+
+
+
         time += Time.deltaTime;
         if(time > loopTime)
         {
+            loopTime = Random.Range(1f, 4f);
             time = 0;
         }
-        dripShader.SetFloat("_MyTime", time);
+        spriteRenderer.material.SetFloat("_MyTime", time);
     }
 }

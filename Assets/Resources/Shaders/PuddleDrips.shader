@@ -60,8 +60,8 @@ Shader "Unlit/PuddleDrips"
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
 
-                i.uv.x = (i.uv.x * _XScale - _XScale/2)*2;
-                i.uv.y = (i.uv.y * _YScale - _YScale/2)*2;
+                i.uv.x = (i.uv.x * _XScale - _XScale/2) * 2;
+                i.uv.y = (i.uv.y * _YScale - _YScale/2) * 2;
 
                 i.uv.x += _XShift;
                 i.uv.y += _YShift;

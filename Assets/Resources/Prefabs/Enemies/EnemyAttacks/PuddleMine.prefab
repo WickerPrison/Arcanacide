@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3125651191756380965}
   - component: {fileID: 3125651191756380966}
   - component: {fileID: 3772225654675827921}
+  - component: {fileID: 4586087400069204386}
   m_Layer: 4
   m_Name: TestPuddle
   m_TagString: Untagged
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 48b81d953df5aa541bcfd1c4d0dbd9c0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,6 +100,21 @@ CapsuleCollider:
   m_Height: 4.608017
   m_Direction: 0
   m_Center: {x: -0.033584118, y: 0.012959003, z: -0.079184055}
+--- !u!114 &4586087400069204386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3125651191756380967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf9f9687ea865f45809ea34f526ae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dripShift: {x: 0, y: 0}
+  dripScale: {x: 1.5, y: 1.5}
+  loopTime: 0
 --- !u!1 &8654289389462347234
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,6 +36,7 @@ public class IceBoss : EnemyController
 
     float icicleTimer;
     float icicleMaxTime = 1;
+    RaycastHit hit;
 
     LayerMask layerMask;
     [SerializeField] LineRenderer line;
@@ -96,32 +97,33 @@ public class IceBoss : EnemyController
 
         base.EnemyAI();
 
+        if (playerDistance > tooFarAway)
+        {
+            RainIcicles();
+
+            if (!beamCrystal.spawnedIn)
+            {
+                beamCrystal.SpawnIn();
+                line.SetPosition(0, away);
+                line.SetPosition(1, away);
+            }
+            else
+            {
+                ShowBeam();
+            }
+        }
+        else
+        {
+            HideCrystal();
+        }
+
+
         if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
                 navAgent.SetDestination(playerController.transform.position);
-            }
-
-            if (playerDistance > tooFarAway)
-            {
-                RainIcicles();
-
-                if (!beamCrystal.spawnedIn)
-                {
-                    beamCrystal.SpawnIn();
-                    line.SetPosition(0, away);
-                    line.SetPosition(1, away);
-                }
-                else
-                {
-                    ShowBeam();
-                }
-            }
-            else
-            {
-                HideCrystal();
             }
 
             if (playerDistance <= meleeRange && attackTime <= 0)
@@ -256,7 +258,6 @@ public class IceBoss : EnemyController
 
     void ShowBeam()
     {
-        RaycastHit hit;
         Physics.Linecast(transform.position, playerScript.transform.position, out hit, layerMask, QueryTriggerInteraction.Ignore);
         line.SetPosition(0, beamCrystal.transform.position);
 
@@ -291,9 +292,10 @@ public class IceBoss : EnemyController
 
     void Shoot()
     {
+
         Projectile projectile = Instantiate(projectilePrefab).GetComponent<Projectile>();
         projectile.transform.position = beamCrystal.transform.position;
-        projectile.direction = playerController.transform.position - transform.position;
+        projectile.direction = hit.point + offset - projectile.transform.position;
         float angle = Vector3.SignedAngle(Vector3.forward, projectile.direction, Vector3.up);
         projectile.transform.rotation = Quaternion.Euler(25, 0, -angle);
     }
