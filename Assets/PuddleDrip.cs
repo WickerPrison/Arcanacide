@@ -6,7 +6,7 @@ public class PuddleDrip : MonoBehaviour
 {
     [SerializeField] Vector2 dripShift;
     [SerializeField] Vector2 dripScale;
-    float loopTime;
+     float loopTime;
     SpriteRenderer spriteRenderer;
     float time = 0;
 
@@ -22,13 +22,6 @@ public class PuddleDrip : MonoBehaviour
 
     private void Update()
     {
-        spriteRenderer.material.SetFloat("_XScale", dripScale.x);
-        spriteRenderer.material.SetFloat("_YScale", dripScale.y);
-        spriteRenderer.material.SetFloat("_XShift", dripShift.x);
-        spriteRenderer.material.SetFloat("_YShift", dripShift.y);
-
-
-
         time += Time.deltaTime;
         if(time > loopTime)
         {
