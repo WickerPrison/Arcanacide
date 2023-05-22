@@ -7,6 +7,14 @@ public class ElementalistController : EnemyController
 {
     [SerializeField] Transform frontAttackPoint;
     [SerializeField] Transform backAttackPoint;
+    StepWithAttack stepWithAttack;
+    float meleeRange = 4;
+
+    public override void Start()
+    {
+        base.Start();
+        stepWithAttack = GetComponent<StepWithAttack>();
+    }
 
     public override void EnemyAI()
     {
@@ -20,7 +28,13 @@ public class ElementalistController : EnemyController
                 navAgent.SetDestination(playerController.transform.position);
             }
 
-            if(playerDistance < attackRange && attackTime <= 0)
+            if (playerDistance < meleeRange && attackTime <= 0)
+            {
+                frontAnimator.Play("SwordAttack");
+                backAnimator.Play("SwordAttack");
+                attackTime = attackMaxTime;
+            }
+            else if (playerDistance < attackRange && attackTime <= 0)
             {
                 frontAnimator.Play("CastSpell");
                 backAnimator.Play("CastSpell");
@@ -54,5 +68,34 @@ public class ElementalistController : EnemyController
         projectileScript.spellDamage = spellAttackDamage;
         projectileScript.enemyOfOrigin = enemyScript;
         enemySound.OtherSounds(0, 1);
+    }
+
+    public void SwingSword(int smearSpeed)
+    {
+        smearScript.particleSmear(smearSpeed);
+        stepWithAttack.Step(0.15f);
+        enemySound.SwordSwoosh();
+    }
+
+    public void SwooshShock()
+    {
+        if (!canHitPlayer)
+        {
+            enemySound.OtherSounds(2, 1);
+            return;
+        }
+
+        if (playerController.gameObject.layer == 3)
+        {
+            enemySound.OtherSounds(1, 1);
+            playerScript.LoseHealth(hitDamage, enemyScript);
+            playerScript.LosePoise(hitPoiseDamage);
+            AdditionalAttackEffects();
+        }
+        else if (playerController.gameObject.layer == 8)
+        {
+            enemySound.OtherSounds(2, 1);
+            playerController.PerfectDodge();
+        }
     }
 }
