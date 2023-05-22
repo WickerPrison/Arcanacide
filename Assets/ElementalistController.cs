@@ -7,8 +7,14 @@ public class ElementalistController : EnemyController
 {
     [SerializeField] Transform frontAttackPoint;
     [SerializeField] Transform backAttackPoint;
+    [SerializeField] GameObject iceRipplePrefab;
+    [SerializeField] GameObject chaosOrbPrefab;
+    [SerializeField] Transform chaosHead;
     StepWithAttack stepWithAttack;
     float meleeRange = 4;
+    int chaosOrbNum = 30;
+    float angleDiff = 15;
+    WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
 
     public override void Start()
     {
@@ -30,15 +36,32 @@ public class ElementalistController : EnemyController
 
             if (playerDistance < meleeRange && attackTime <= 0)
             {
+                state = EnemyState.ATTACKING;
                 frontAnimator.Play("SwordAttack");
                 backAnimator.Play("SwordAttack");
                 attackTime = attackMaxTime;
             }
             else if (playerDistance < attackRange && attackTime <= 0)
             {
-                frontAnimator.Play("CastSpell");
-                backAnimator.Play("CastSpell");
+                state = EnemyState.ATTACKING;
                 attackTime = attackMaxTime;
+                int randInt = Random.Range(0, 3);
+                randInt = 2;
+                switch (randInt)
+                {
+                    case 0:
+                        frontAnimator.Play("CastSpell");
+                        backAnimator.Play("CastSpell");
+                        break;
+                    case 1:
+                        frontAnimator.Play("IceStomp");
+                        backAnimator.Play("IceStomp");
+                        break;
+                    case 2:
+                        frontAnimator.Play("ChaosHead");
+                        backAnimator.Play("ChaosHead");
+                        break;
+                }
             }
         }
 
@@ -97,5 +120,39 @@ public class ElementalistController : EnemyController
             enemySound.OtherSounds(2, 1);
             playerController.PerfectDodge();
         }
+    }
+
+    public void IceStomp()
+    {
+        enemySound.OtherSounds(0, 1);
+        GameObject iceRipple = Instantiate(iceRipplePrefab);
+        iceRipple.transform.position = transform.position + new Vector3(0, 1, 0);
+    }
+
+    public IEnumerator ChaosHead()
+    {
+        Vector3 direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+        float angle = 0;
+
+        for(int i = 0; i < chaosOrbNum; i++)
+        {
+            Projectile chaosOrb = Instantiate(chaosOrbPrefab).GetComponent<Projectile>();
+            chaosOrb.transform.position = chaosHead.position;
+            chaosOrb.direction = RotateDirection(direction, angle);
+            chaosOrb.speed = 6;
+            angle += angleDiff;
+            yield return chaosOrbDelay;
+        }
+
+        frontAnimator.Play("ChaosHeadEnd");
+        backAnimator.Play("ChaosHeadEnd");
+    }
+
+    Vector3 RotateDirection(Vector3 oldDirection, float degrees)
+    {
+        Vector3 newDirection = Vector3.zero;
+        newDirection.x = Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.x - Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.z;
+        newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
+        return newDirection;
     }
 }

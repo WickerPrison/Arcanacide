@@ -25,4 +25,14 @@ public class ElementalistAnimationEvents : MeleeEnemyAnimationEvents
         controller.canHitPlayer = attackArc.CanHitPlayer();
         controller.SwooshShock();
     }
+
+    public void IceStomp()
+    {
+        controller.IceStomp();
+    }
+
+    public void ChaosHead()
+    {
+        StartCoroutine(controller.ChaosHead());
+    }
 }
