@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class ElementalistController : EnemyController
@@ -10,11 +11,13 @@ public class ElementalistController : EnemyController
     [SerializeField] GameObject iceRipplePrefab;
     [SerializeField] GameObject chaosOrbPrefab;
     [SerializeField] Transform chaosHead;
+    [SerializeField] GameObject plantLinePrefab;
     StepWithAttack stepWithAttack;
     float meleeRange = 4;
     int chaosOrbNum = 30;
     float angleDiff = 15;
     WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
+    float plantLineNum = 6;
 
     public override void Start()
     {
@@ -45,8 +48,8 @@ public class ElementalistController : EnemyController
             {
                 state = EnemyState.ATTACKING;
                 attackTime = attackMaxTime;
-                int randInt = Random.Range(0, 3);
-                randInt = 2;
+                int randInt = Random.Range(0, 4);
+                randInt = 3;
                 switch (randInt)
                 {
                     case 0:
@@ -60,6 +63,10 @@ public class ElementalistController : EnemyController
                     case 2:
                         frontAnimator.Play("ChaosHead");
                         backAnimator.Play("ChaosHead");
+                        break;
+                    case 3:
+                        frontAnimator.Play("PlantAttack");
+                        backAnimator.Play("PlantAttack");
                         break;
                 }
             }
@@ -146,6 +153,18 @@ public class ElementalistController : EnemyController
 
         frontAnimator.Play("ChaosHeadEnd");
         backAnimator.Play("ChaosHeadEnd");
+    }
+
+    public void PlantAttack()
+    {
+        for(int i = 0; i < plantLineNum; i++)
+        {
+            Vector3 startPos = transform.position + new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
+            NavMeshHit hit;
+            NavMesh.SamplePosition(startPos, out hit, 10, NavMesh.AllAreas);
+
+            Instantiate(plantLinePrefab).transform.position = hit.position;
+        }
     }
 
     Vector3 RotateDirection(Vector3 oldDirection, float degrees)
