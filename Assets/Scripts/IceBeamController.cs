@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -17,6 +18,7 @@ public class IceBeamController : EnemyController
     Vector3 away = new Vector3(100, 100, 100);
     int strafeLeftOrRight = -1;
     float strafeSpeed = 0.5f;
+    Vector3 initialPosition;
 
     // Start is called before the first frame update
     public override void Start()
@@ -65,7 +67,9 @@ public class IceBeamController : EnemyController
     {
         RaycastHit hit;
         Physics.Linecast(transform.position, playerScript.transform.position, out hit, layerMask, QueryTriggerInteraction.Ignore);
-        line.SetPosition(0, transform.position + offset);
+        initialPosition = transform.position + Vector3.up;
+        initialPosition += (playerScript.transform.position - transform.position).normalized * .5f;
+        line.SetPosition(0, initialPosition);
 
         if (hit.collider.CompareTag("Player"))
         {
