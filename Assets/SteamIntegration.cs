@@ -7,24 +7,33 @@ public class SteamIntegration : MonoBehaviour
 {
     [SerializeField] GameObject steamManagerPrefab;
     SteamManager steamManager;
+    GameObject playerControllerObject;
     PlayerController playerController;
     bool pausedBySteam = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        steamManager = GameObject.FindGameObjectWithTag("SteamManager").GetComponent<SteamManager>();
-        if(steamManager == null)
+        GameObject steamManagerObject = GameObject.FindGameObjectWithTag("SteamManager");
+        if(steamManagerObject == null)
         {
             steamManager = Instantiate(steamManagerPrefab).GetComponent<SteamManager>();
         }
+        else
+        {
+            steamManager = steamManagerObject.GetComponent<SteamManager>();
+        }
 
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerControllerObject = GameObject.FindGameObjectWithTag("Player");
+        if(playerControllerObject != null)
+        {
+            playerController = playerControllerObject.GetComponent<PlayerController>();
+        }
     }
 
     private void Update()
     {
-        if (playerController == null) return;
+        if (playerControllerObject == null) return;
 
         if(SteamUtils.IsOverlayEnabled() && !pausedBySteam && !playerController.pauseMenu)
         {
