@@ -83,21 +83,18 @@ public class BossController : EnemyController
 
     public override void EnemyAI()
     {
-        if (state == EnemyState.UNAWARE)
-        {
-            return;
-        }
+        base.EnemyAI();
 
         if (navAgent.enabled == true)
         {
             navAgent.SetDestination(playerController.transform.position);
         }
 
-        if (Vector3.Distance(transform.position, playerController.transform.position) < attackRange)
+        if (state == EnemyState.IDLE && playerDistance < attackRange)
         {
             if (navAgent.enabled)
             {
-                if(Vector3.Distance(transform.position, playerController.transform.position) > tooClose)
+                if(playerDistance > tooClose)
                 {
                     Strafe();
                 }
@@ -105,7 +102,7 @@ public class BossController : EnemyController
 
             if (attackCD <= 0)
             {
-                if (Vector3.Distance(transform.position, playerController.transform.position) < tooClose)
+                if (playerDistance < tooClose)
                 {
                     if(phase == 1)
                     {
