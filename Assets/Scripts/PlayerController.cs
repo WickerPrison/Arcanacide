@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     PlayerScript playerScript;
     PlayerSound playerSound;
     public Rigidbody rb;
-    GameObject pauseMenu;
+    [System.NonSerialized] public GameObject pauseMenu;
     Vector3 mouseDirection;
     [System.NonSerialized] public Vector3 moveDirection;
     [System.NonSerialized] public Vector3 dashDirection;
@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour
     float clawSpecialMaxTime = 15f;
     float clawSpecialDamageMult = 2;
 
+    bool usingGamepad;
+
     private void Awake()
     {
         playerEvents = GetComponent<PlayerEvents>();
@@ -100,6 +102,7 @@ public class PlayerController : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
+        usingGamepad = Gamepad.current != null;
     }
 
     // Update is called once per frame
@@ -148,6 +151,8 @@ public class PlayerController : MonoBehaviour
                 playerEvents.EndClawSpecialAttack();
             }
         }
+
+        CheckForController();
     }
 
     //FixedUpdate is similar to Update but should always be used when dealing with physics
@@ -596,6 +601,22 @@ public class PlayerController : MonoBehaviour
     {
         arcaneStepActive = false;
         arcaneStepTimer = 0;
+    }
+
+    void CheckForController()
+    {
+        if(Gamepad.current == null && usingGamepad)
+        {
+            if (!pauseMenu)
+            {
+                PauseMenu();
+            }
+            usingGamepad = false;
+        }
+        else if(Gamepad.current != null && !usingGamepad)
+        {
+            usingGamepad = true;
+        }
     }
 
     private void PlayerEvents_onPlayerStagger(object sender, System.EventArgs e)

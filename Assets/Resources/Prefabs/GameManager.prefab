@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5075726111561290587}
   - component: {fileID: -2421727946166535431}
   - component: {fileID: 479534431586172430}
+  - component: {fileID: 8736452697236013708}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -235,6 +236,19 @@ MonoBehaviour:
   fadeOutMusic: 1
   immediateStopMusic: 0
   trackNumber: 0
+--- !u!114 &8736452697236013708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298750023833986125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c2e3b7315323744a85a3d52d4d6444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steamManagerPrefab: {fileID: 7611346907279009438, guid: 93a7706057bb5294182c2d8d819673f8, type: 3}
 --- !u!1 &7165992904461564942
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +324,6 @@ MonoBehaviour:
   m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
