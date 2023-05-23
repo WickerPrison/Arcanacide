@@ -8,7 +8,7 @@ public class IceBeamController : EnemyController
 {
     LayerMask layerMask;
     [SerializeField] LineRenderer line;
-    Vector3 offset = new Vector3(0, 2, 0);
+    Vector3 offset = new Vector3(0, 1.8f, 0);
     Gradient gradient;
     [SerializeField] Color blueColor;
     float alpha = 1;
@@ -19,6 +19,12 @@ public class IceBeamController : EnemyController
     int strafeLeftOrRight = -1;
     float strafeSpeed = 0.5f;
     Vector3 initialPosition;
+    [SerializeField] Transform crystal;
+    float crystalStartPos;
+    float crystalFloatPos;
+    float crystalFloatDir = 1;
+    [SerializeField] float crystalFloatRate;
+    [SerializeField] float crystalFloatAmp;
 
     // Start is called before the first frame update
     public override void Start()
@@ -35,6 +41,14 @@ public class IceBeamController : EnemyController
         gradient.SetKeys(colorKey, alphaKey);
 
         aimValue = maxAimValue;
+
+        crystalStartPos = crystal.localPosition.y;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        Float();
     }
 
     public override void EnemyAI()
@@ -67,8 +81,8 @@ public class IceBeamController : EnemyController
     {
         RaycastHit hit;
         Physics.Linecast(transform.position, playerScript.transform.position, out hit, layerMask, QueryTriggerInteraction.Ignore);
-        initialPosition = transform.position + Vector3.up;
-        initialPosition += (playerScript.transform.position - transform.position).normalized * .5f;
+        initialPosition = transform.position + Vector3.up * 1.45f + Vector3.up * crystalFloatPos;
+        initialPosition += (playerScript.transform.position - transform.position).normalized * .6f;
         line.SetPosition(0, initialPosition);
 
         if (hit.collider.CompareTag("Player"))
@@ -117,6 +131,22 @@ public class IceBeamController : EnemyController
         playerToEnemy *= strafeLeftOrRight;
         Vector3 strafeDirection = Vector3.Cross(Vector3.up, playerToEnemy.normalized);
         navAgent.Move(strafeDirection.normalized * Time.deltaTime * strafeSpeed);
+    }
+
+    void Float()
+    {
+        float thing = (crystalFloatAmp - Mathf.Abs(crystalFloatPos)) / crystalFloatAmp;
+        float distanceTraveled = crystalFloatRate * Time.deltaTime * thing;
+        crystalFloatPos += distanceTraveled * crystalFloatDir;
+        if (crystalFloatDir == 1 && crystalFloatPos > crystalFloatAmp * 8/10)
+        {
+            crystalFloatDir = -1;
+        }
+        else if(crystalFloatDir == -1 && crystalFloatPos < -crystalFloatAmp * 8/10)
+        {
+            crystalFloatDir = 1;
+        }
+        crystal.localPosition = new Vector3(0, crystalFloatPos + crystalStartPos, 0);
     }
 
     public override void StartStagger(float staggerDuration)
