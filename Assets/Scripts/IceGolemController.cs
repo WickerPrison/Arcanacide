@@ -1,3 +1,4 @@
+using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,6 @@ public class IceGolemController : EnemyController
     [SerializeField] Transform trackingPoint;
     AttackArcGenerator attackArc;
     CameraFollow cameraScript;
-    public bool isCharging;
     FacePlayerSlow facePlayer;
     float minWalkAngle = 70;
     float chargeRange = 7;
@@ -29,16 +29,17 @@ public class IceGolemController : EnemyController
     {
         base.EnemyAI();
 
+        if (navAgent.enabled == true)
+        {
+            AngleMeasurement();
+            navAgent.SetDestination(playerController.transform.position);
+        }
+
         if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
-            if (navAgent.enabled == true)
-            {
-                AngleMeasurement();
-                navAgent.SetDestination(playerController.transform.position);
-            }
 
-            if(attackTime > 0)
+            if (attackTime > 0)
             {
                 attackTime -= Time.deltaTime;
                 return;
@@ -60,14 +61,14 @@ public class IceGolemController : EnemyController
                     IceRings();
                 }
             }
-            else if(Vector3.Distance(transform.position, playerController.transform.position) <= chargeRange)
+            else if (Vector3.Distance(transform.position, playerController.transform.position) <= chargeRange)
             {
                 int randN = Random.Range(0, 2);
-                if(randN == 0)
+                if (randN == 0)
                 {
                     ShoulderCharge();
                 }
-                else if(randN == 1)
+                else if (randN == 1)
                 {
                     IceRings();
                 }
@@ -79,7 +80,6 @@ public class IceGolemController : EnemyController
     {
         base.StartStagger(staggerDuration);
         attackArc.HideAttackArc();
-        isCharging = false;
     }
 
     void Smash()
@@ -146,7 +146,7 @@ public class IceGolemController : EnemyController
 
     void AngleMeasurement()
     {
-        if (isCharging)
+        if (state == EnemyState.SPECIAL)
         {
             facePlayer.FacePlayerFast();
             return;
@@ -167,7 +167,7 @@ public class IceGolemController : EnemyController
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!isCharging)
+        if (state != EnemyState.SPECIAL)
         {
             return;
         }

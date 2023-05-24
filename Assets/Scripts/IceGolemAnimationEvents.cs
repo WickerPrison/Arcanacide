@@ -37,7 +37,7 @@ public class IceGolemAnimationEvents : MonoBehaviour
         navAgent.acceleration = 15;
         navAgent.speed = 9;
         navAgent.stoppingDistance = 0;
-        iceGolemController.isCharging = true;
+        iceGolemController.state = EnemyState.SPECIAL;
         chargingTimer = chargingTimerMax;
     }
 
@@ -47,7 +47,7 @@ public class IceGolemAnimationEvents : MonoBehaviour
         navAgent.acceleration = defaultAcceleration;
         navAgent.speed = defaultSpeed;
         navAgent.stoppingDistance = defaultStoppingDistance;
-        iceGolemController.isCharging = false;
+        iceGolemController.state = EnemyState.IDLE;
         chargingTimer = 0;
     }
 }
