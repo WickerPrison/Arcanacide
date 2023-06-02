@@ -9,8 +9,9 @@ public class OrbSpawnerController : EnemyController
     [SerializeField] GameObject lightningOrbPrefab;
     [SerializeField] Transform spawnPoint;
     [SerializeField] Transform orbSprite;
-    [SerializeField] GameObject sprite;
-    [SerializeField] GameObject brokenSprite;
+    [SerializeField] SpriteRenderer sprite;
+    [SerializeField] SpriteRenderer brokenSprite;
+    SpriteEffects spriteEffects;
     float maxSpawnTime = 5;
     float spawnTimer = 0;
     Vector3 minSize = new Vector3(0.01f, 0.01f, 0.01f);
@@ -21,6 +22,7 @@ public class OrbSpawnerController : EnemyController
         base.Start();
 
         spawnTimer = maxSpawnTime;
+        spriteEffects = GetComponent<SpriteEffects>();
     }
 
     public override void Update()
@@ -61,14 +63,16 @@ public class OrbSpawnerController : EnemyController
     {
         state = EnemyState.DYING;
         orbSprite.gameObject.SetActive(false);
-        sprite.SetActive(false);
-        brokenSprite.SetActive(true);
+        sprite.enabled = false;
+        brokenSprite.enabled = true;
         StartCoroutine(DeathTimer());
     }
 
     IEnumerator DeathTimer()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(spriteEffects.Dissolve());
+        yield return new WaitForSeconds(1f);
         enemyScript.Death();
     }
 

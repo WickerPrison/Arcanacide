@@ -55,6 +55,7 @@ public class SpriteEffects : MonoBehaviour
 
     public IEnumerator Dissolve()
     {
+        dissolveProg = 0;
         dissolveSpeed = .8f / dissolveTime;
         while (dissolveProg < 1)
         {
