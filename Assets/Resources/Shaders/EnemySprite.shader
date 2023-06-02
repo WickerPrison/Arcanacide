@@ -1,67 +1,114 @@
 Shader "Unlit/EnemySprite"
 {
-    Properties
-    {
-        _MainTex ("Texture", 2D) = "white" {}
-        _DissolveTex ("Dissolve Texture", 2D) = "white" {}
-        _DissolveProg ("Dissolve Progression", range(0,1)) = 0
-    }
-    SubShader
-    {
-        Tags { "RenderType"="Transparent" "Queue" = "Transparent"}
-        ZWrite Off
-        Cull Off
+	Properties
+	{
+		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
+		_Color ("Tint", Color) = (1,1,1,1)
+		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 
-        Pass
-        {
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+		// These are the properties I added
+		_DissolveTex ("Dissolve Texture", 2D) = "white" {}
+		_DissolveProg ("Dissolve Progression", range(0,1)) = 0
+		_Density("Dissolve Density", float) = 0.5
+		_EdgeWidth("Edge Width", float) = 0.05
+	}
 
-            #include "UnityCG.cginc"
+	SubShader
+	{
+		Tags
+		{ 
+			"Queue"="Transparent" 
+			"IgnoreProjector"="True" 
+			"RenderType"="Transparent" 
+			"PreviewType"="Plane"
+			"CanUseSpriteAtlas"="True"
+		}
 
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
-            };
+		Cull Off
+		Lighting Off
+		ZWrite Off
+		Blend One OneMinusSrcAlpha
 
-            struct v2f
-            {
-                float2 uv : TEXCOORD0;
-                float4 vertex : SV_POSITION;
-            };
+		Pass
+		{
+		CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#pragma multi_compile _ PIXELSNAP_ON
+			#include "UnityCG.cginc"
+			
+			struct appdata_t
+			{
+				float4 vertex   : POSITION;
+				float4 color    : COLOR;
+				float2 texcoord : TEXCOORD0;
+			};
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-            sampler2D _DissolveTex;
-            float _DissolveProg;
+			struct v2f
+			{
+				float4 vertex   : SV_POSITION;
+				fixed4 color    : COLOR;
+				float2 texcoord  : TEXCOORD0;
+				float3 worldPos : TEXCOORD1;
+			};
+			
+			fixed4 _Color;
+			// my variables
+			sampler2D _DissolveTex;
+			float _DissolveProg;
+			float _Density;
+			float _EdgeWidth;
 
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                return o;
-            }
+			v2f vert(appdata_t IN)
+			{
+				v2f OUT;
+				OUT.worldPos = mul(unity_ObjectToWorld, IN.vertex);
+				OUT.vertex = UnityObjectToClipPos(IN.vertex);
+				OUT.texcoord = IN.texcoord;
+				OUT.color = IN.color * _Color;
+				#ifdef PIXELSNAP_ON
+				OUT.vertex = UnityPixelSnap (OUT.vertex);
+				#endif
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
+				return OUT;
+			}
 
-                fixed4 dissolveTex = tex2D(_DissolveTex, i.uv);
+			sampler2D _MainTex;
+			sampler2D _AlphaTex;
+			float _AlphaSplitEnabled;
+
+			fixed4 SampleSpriteTexture (float2 uv)
+			{
+				fixed4 color = tex2D (_MainTex, uv);
+
+#if UNITY_TEXTURE_ALPHASPLIT_ALLOWED
+				if (_AlphaSplitEnabled)
+					color.a = tex2D (_AlphaTex, uv).r;
+#endif //UNITY_TEXTURE_ALPHASPLIT_ALLOWED
+
+				return color;
+			}
+
+			fixed4 frag(v2f IN) : SV_Target
+			{
+				fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
+				c.rgb *= c.a;
+
+				// this is the stuff I added                       
+				clip(c.a - 0.5);
+                float2 projection = IN.worldPos.xy * _Density;
+                fixed4 dissolveTex = tex2D(_DissolveTex, projection);
 
                 float mask = dissolveTex - _DissolveProg;
                 clip(mask);
 
-                float edgeMask = mask < 0.05;
+                float edgeMask = mask < _EdgeWidth;
 
-                float3 outColor = lerp(col.xyz, (1,1,1), edgeMask);
+                float3 outColor = lerp(c.xyz, (1,1,1), edgeMask);
 
                 return float4(outColor, 1);
-            }
-            ENDCG
-        }
-    }
+			}
+		ENDCG
+		}
+	}
 }
