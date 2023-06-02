@@ -10,12 +10,14 @@ public class EnemyAnimationEvents : MonoBehaviour
     [SerializeField] AudioSource footstep;
     EnemyController enemyController;
     EnemyScript enemyScript;
+    SpriteEffects spriteEffects;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         enemyController = GetComponentInParent<EnemyController>();
         enemyScript = GetComponentInParent<EnemyScript>();
+        spriteEffects = GetComponentInParent<SpriteEffects>();
     }
 
     public void SpellAttack()
@@ -57,6 +59,11 @@ public class EnemyAnimationEvents : MonoBehaviour
     public void Footstep()
     {
         footstep.Play();
+    }
+
+    public void StartDissolve()
+    {
+        StartCoroutine(spriteEffects.Dissolve());
     }
 
     public virtual void Death()

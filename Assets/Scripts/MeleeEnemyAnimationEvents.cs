@@ -8,12 +8,14 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     EnemyScript enemyScript;
     [System.NonSerialized] public EnemySound enemySound;
     public AttackArcGenerator attackArc;
+    SpriteEffects spriteEffects;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         enemyController = GetComponentInParent<EnemyController>();
         enemyScript = GetComponentInParent<EnemyScript>();
+        spriteEffects = GetComponentInParent<SpriteEffects>();
         enemySound = transform.parent.GetComponentInChildren<EnemySound>();
         if(attackArc == null)
         {
@@ -105,6 +107,11 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     public void Footstep()
     {
         enemySound.Footstep();
+    }
+
+    public void StartDissolve()
+    {
+        StartCoroutine(spriteEffects.Dissolve());
     }
 
     public virtual void Death()

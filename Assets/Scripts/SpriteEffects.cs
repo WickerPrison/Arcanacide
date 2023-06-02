@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlashOnDamage : MonoBehaviour
+public class SpriteEffects : MonoBehaviour
 {
     EnemyScript enemyScript;
     [SerializeField] Material whiteMaterial;
@@ -12,6 +12,9 @@ public class FlashOnDamage : MonoBehaviour
     WaitForSecondsRealtime delayTime = new WaitForSecondsRealtime(0.3f);
     bool isFlashing = false;
     bool isDelayed = false;
+    float dissolveTime = 1f;
+    float dissolveSpeed;
+    float dissolveProg = 0;
 
     private void Awake()
     {
@@ -48,6 +51,20 @@ public class FlashOnDamage : MonoBehaviour
         isDelayed = true;
         yield return delayTime;
         isDelayed = false;
+    }
+
+    public IEnumerator Dissolve()
+    {
+        dissolveSpeed = .8f / dissolveTime;
+        while (dissolveProg < 1)
+        {
+            dissolveProg += dissolveSpeed * Time.deltaTime;
+            foreach(SpriteRenderer sprite in renderers)
+            {
+                sprite.material.SetFloat("_DissolveProg", dissolveProg);
+            }
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private void OnEnable()
