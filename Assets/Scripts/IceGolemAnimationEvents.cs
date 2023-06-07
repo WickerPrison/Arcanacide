@@ -8,6 +8,7 @@ public class IceGolemAnimationEvents : MonoBehaviour
     [SerializeField] NavMeshAgent navAgent;
     [SerializeField] IceGolemController iceGolemController;
     [SerializeField] Animator frontAnimator;
+    [SerializeField] Animator backAnimator;
     float defaultAcceleration;
     float defaultSpeed;
     float defaultStoppingDistance;
@@ -29,6 +30,7 @@ public class IceGolemAnimationEvents : MonoBehaviour
             chargingTimer -= Time.deltaTime;
         }
         frontAnimator.SetFloat("ChargingTimer", chargingTimer);
+        backAnimator.SetFloat("ChargingTimer", chargingTimer);
     }
 
     public void StartCharge()

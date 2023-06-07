@@ -87,6 +87,7 @@ public class IceGolemController : EnemyController
         facePlayer.FacePlayerFast();
         directionLock = true;
         frontAnimator.Play("Smash");
+        backAnimator.Play("Smash");
         state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
     }
@@ -95,6 +96,7 @@ public class IceGolemController : EnemyController
     {
         facePlayer.FacePlayerFast();
         frontAnimator.Play("MultiSmash");
+        backAnimator.Play("MultiSmash");
         state = EnemyState.ATTACKING;
         attackTime = attackMaxTime + 1;
     }
@@ -103,6 +105,7 @@ public class IceGolemController : EnemyController
     {
         facePlayer.FacePlayerFast();
         frontAnimator.Play("ShoulderCharge");
+        backAnimator.Play("ShoulderCharge");
         state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
     }
@@ -111,6 +114,7 @@ public class IceGolemController : EnemyController
     {
         facePlayer.FacePlayerFast();
         frontAnimator.Play("IceRings");
+        backAnimator.Play("IceRings");
         state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
     }
@@ -176,6 +180,7 @@ public class IceGolemController : EnemyController
         {
             enemySound.OtherSounds(2, 1);
             frontAnimator.Play("ChargeCollision");
+            backAnimator.Play("ChargeCollision");
             if(collision.gameObject.layer == 3)
             {
                 playerScript.LoseHealth(chargeDamage);
