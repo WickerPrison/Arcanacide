@@ -102,11 +102,12 @@ public class EmblemMenu : MonoBehaviour
         int index = buttons.IndexOf(currentButton);
         float position = (float)index / ((float)buttons.Count - 1);
         position = 1 - position;
+        position = Mathf.Round(position * 100f) / 100f;
 
         float scrollDiff = position - scrollRect.verticalNormalizedPosition;
         scrollDir = scrollDiff / Mathf.Abs(scrollDiff);
         float scrollDistance = scrollDiff * 2f * Time.deltaTime + scrollDir * .4f * Time.deltaTime;
-        if (Mathf.Abs(scrollDiff) < scrollDistance)
+        if (Mathf.Abs(scrollDiff) <= Mathf.Abs(scrollDistance))
         {
             scrollRect.verticalNormalizedPosition = position;
         }
