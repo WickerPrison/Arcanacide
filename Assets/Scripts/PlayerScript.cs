@@ -13,7 +13,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] AttackProfiles parryProfile;
+    public AttackProfiles parryProfile;
     public float stamina;
     public float poise;
     GameManager gm;
@@ -46,6 +46,8 @@ public class PlayerScript : MonoBehaviour
     float maxManaDelay = 2;
     int blockManaCost = 15;
     float manaRechargeRate = 4;
+
+    [System.NonSerialized] public bool deathAuraActive = false;
 
     [System.NonSerialized] public bool fullHealth;
 
@@ -271,6 +273,10 @@ public class PlayerScript : MonoBehaviour
         {
             manaDelay = maxManaDelay / 2;
         }
+        if (deathAuraActive)
+        {
+            manaDelay = maxManaDelay / 2;
+        }
     }
 
     // Update is called once per frame
@@ -311,6 +317,10 @@ public class PlayerScript : MonoBehaviour
             {
                 playerData.mana += Time.deltaTime * manaRechargeRate;
                 if (playerData.equippedEmblems.Contains("Magical Acceleration"))
+                {
+                    playerData.mana += Time.deltaTime * manaRechargeRate;
+                }
+                if (deathAuraActive)
                 {
                     playerData.mana += Time.deltaTime * manaRechargeRate;
                 }

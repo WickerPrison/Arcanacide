@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AttackType
+{
+    REGULAR, HEAVY, SPECIAL, DEFLECT
+}
+
 [CreateAssetMenu]
 public class AttackProfiles : ScriptableObject
 {
     public string hitboxType;
-    public bool heavyAttack;
+    public AttackType attackType;
 
     public int smearSpeed;
     public float stepWithAttack;

@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public bool arcaneStepActive = false;
     [System.NonSerialized] public bool arcaneRemainsActive = false;
     [SerializeField] GameObject pathTrailPrefab;
+    [System.NonSerialized] public float mirrorCloakTimer;
+    [System.NonSerialized] public float mirrorCloakMaxTime = 5;
 
     [System.NonSerialized] public float axeHeavyTimer = 0;
     [System.NonSerialized] public float axeHeavyMaxTime = 15;
@@ -130,6 +132,11 @@ public class PlayerController : MonoBehaviour
             {
                 weaponManager.RemoveWeaponMagicSource();
             }
+        }
+
+        if(mirrorCloakTimer > 0)
+        {
+            mirrorCloakTimer -= Time.deltaTime;
         }
 
         if (lockPosition)
@@ -409,6 +416,11 @@ public class PlayerController : MonoBehaviour
             bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f, 0));
             bolts.SoundOn();
             boltdamage += playerData.dedication * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            {
+                boltdamage += boltdamage * emblemLibrary.arcaneMasteryPercent;
+            }
+
             if (boltdamage > 1)
             {
                 closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0);
@@ -449,7 +461,14 @@ public class PlayerController : MonoBehaviour
 
         if(playerData.clawSpecialOn)
         {
-            attackPower = Mathf.RoundToInt(attackPower * clawSpecialDamageMult);
+            float damageMult;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            {
+                damageMult = clawSpecialDamageMult + clawSpecialDamageMult * emblemLibrary.arcaneMasteryPercent;
+            }
+            else damageMult = clawSpecialDamageMult;
+
+            attackPower = Mathf.RoundToInt(attackPower * damageMult);
         }
 
         return attackPower;
@@ -564,10 +583,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void PerfectDodge()
+    public void PerfectDodge(GameObject projectile = null, EnemyScript attackingEnemy = null)
     {
         //playerSound.PerfectDodge();
-
         if (playerData.equippedEmblems.Contains(emblemLibrary.close_call))
         {
             if(closeCallTimer <= 0)
@@ -580,6 +598,15 @@ public class PlayerController : MonoBehaviour
         if (playerData.equippedEmblems.Contains(emblemLibrary.adrenaline_rush))
         {
             playerScript.stamina = playerData.MaxStamina();
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && mirrorCloakTimer <= 0)
+        {
+            if(projectile != null && attackingEnemy != null) 
+            {
+                Destroy(projectile);
+                FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), playerScript.parryProfile);
+            }
         }
     }
 

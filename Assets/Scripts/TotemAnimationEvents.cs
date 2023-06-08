@@ -8,6 +8,7 @@ public class TotemAnimationEvents : MonoBehaviour
     [SerializeField] ParticleSystem landingVFX;
     [SerializeField] AttackProfiles axeSpecial;
     [SerializeField] PlayerData playerData;
+    [SerializeField] EmblemLibrary emblemLibrary;
     [System.NonSerialized] public ExternalLanternFairy lanternFairy;
     [SerializeField] Transform fairySprite;
     CameraFollow cameraScript;
@@ -31,6 +32,10 @@ public class TotemAnimationEvents : MonoBehaviour
         StartCoroutine(cameraScript.ScreenShake(axeSpecial.screenShakeNoHit.x, axeSpecial.screenShakeNoHit.y));
         touchingCollider = colliderScript.GetTouchingObjects();
         int damage = Mathf.RoundToInt(playerData.AttackPower() * axeSpecial.damageMultiplier);
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+        {
+            damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMasteryPercent);
+        }
         int poiseDamage = Mathf.RoundToInt(playerData.AttackPower() * axeSpecial.damageMultiplier);
         foreach(Collider collider in touchingCollider)
         {
@@ -66,6 +71,10 @@ public class TotemAnimationEvents : MonoBehaviour
             rippleBox.direction = Vector3.Normalize(rippleBox.transform.position - transform.position);
             WaveBox waveBox = rippleBox.gameObject.GetComponent<WaveBox>();
             waveBox.damage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
+            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            {
+                waveBox.damage += Mathf.RoundToInt(waveBox.damage * emblemLibrary.arcaneMasteryPercent);
+            }
             waveBox.poiseDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
         }
     }

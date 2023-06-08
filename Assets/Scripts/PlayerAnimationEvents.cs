@@ -103,7 +103,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
 
         enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
-        if (attackProfile.heavyAttack && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
+        if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
         {
             enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
         }
@@ -178,6 +178,12 @@ public class PlayerAnimationEvents : MonoBehaviour
         if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
         {
             attackDamage += emblemLibrary.ConfidentKillerDamage();
+        }
+
+        if(playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > emblemLibrary.spellswordManaCost)
+        {
+            attackDamage += emblemLibrary.SpellswordDamage();
+            playerScript.LoseMana(emblemLibrary.spellswordManaCost);
         }
 
         return attackDamage;
@@ -262,6 +268,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
             playerController.EndArcaneStep();
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerController.mirrorCloakTimer <= 0)
+        {
+            playerController.mirrorCloakTimer = playerController.mirrorCloakMaxTime;
         }
     }
 

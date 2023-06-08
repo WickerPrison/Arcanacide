@@ -12,12 +12,18 @@ public class Remnant : MonoBehaviour
     TutorialManager tutorialManager;
     InputManager im;
     PlayerControls controls;
+    PlayerScript playerScript;
+    PlayerController playerController;
+    WeaponManager weaponManager;
     float playerDistance = 100;
     float interactDistance = 2;
 
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        playerController = player.GetComponent<PlayerController>();
+        playerScript = player.GetComponent<PlayerScript>();
+        weaponManager = player.gameObject.GetComponent<WeaponManager>();
         
         controls = new PlayerControls();
         controls.Gameplay.Interact.performed += ctx => PickUpRemnant();
@@ -50,12 +56,13 @@ public class Remnant : MonoBehaviour
             mapData.deathRoom = "none";
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
-                WeaponManager weaponManager = player.gameObject.GetComponent<WeaponManager>();
                 weaponManager.RemoveWeaponMagicSource();
-                PlayerController playerController = player.gameObject.GetComponent<PlayerController>();
                 playerController.arcaneRemainsActive = true;
-                PlayerScript playerScript = player.gameObject.GetComponent<PlayerScript>();
                 playerScript.MaxHeal();
+            }
+            if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
+            {
+                playerData.mana = playerData.maxMana;
             }
             Destroy(gameObject);
         }
@@ -63,12 +70,18 @@ public class Remnant : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
+        if (other.CompareTag("Player"))
         {
-            WeaponManager weaponManager = player.gameObject.GetComponent<WeaponManager>();
-            weaponManager.AddWeaponMagicSource();
-            PlayerController playerController = weaponManager.gameObject.GetComponent<PlayerController>();
-            playerController.arcaneRemainsActive = true;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
+            {
+                weaponManager.AddWeaponMagicSource();
+                playerController.arcaneRemainsActive = true;
+            }
+
+            if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
+            {
+                playerScript.deathAuraActive = true;
+            }
         }
 
         if (playerData.tutorials.Contains("Remnant") && other.CompareTag("Player"))
@@ -80,12 +93,15 @@ public class Remnant : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
+        if (other.CompareTag("Player"))
         {
-            WeaponManager weaponManager = player.gameObject.GetComponent<WeaponManager>();
-            weaponManager.RemoveWeaponMagicSource();
-            PlayerController playerController = weaponManager.gameObject.GetComponent<PlayerController>();
-            playerController.arcaneRemainsActive = false;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
+            {
+                weaponManager.RemoveWeaponMagicSource();
+                playerController.arcaneRemainsActive = false;
+            }
+
+            playerScript.deathAuraActive = false;
         }
     }
 

@@ -26,7 +26,7 @@ public class EmblemLibrary : ScriptableObject
     public string close_call = "Close Call";
     public string close_call_description = "Add Arcane damage to all attacks for a short time after a Perfect Dodge";
     public string arcane_remains = "Arcane Remains";
-    public string arcane_remains_description = "Add Arcane damage to all attacks when near your Remnant. Collecting your remnant restores you to full health";
+    public string arcane_remains_description = "Add Arcane damage to all attacks when near your Remnant. Collecting your Remnant restores you to full health";
     public string arcane_step = "Arcane Step";
     public string arcane_step_description = "You can dodge through enemies. Leave a trail of Arcane damage when you dodge";
     public string confident_killer = "Confident Killer";
@@ -54,6 +54,16 @@ public class EmblemLibrary : ScriptableObject
     public string opportune_strike_description = "Attacking an enemy inflicted with damage over time deals extra damage";
     public string burning_cloak = "Burning Cloak";
     public string burning_cloak_description = "Inflict damage over time to any enemy that deals damage to you";
+    public string mirror_cloak = "Mirror Cloak";
+    public string mirror_cloak_description = "Every 5 seconds your dodge will also deflect spells";
+    public string _spellsword = "Spellsword";
+    public string _spellsword_description = "Your attacks deal extra Arcane damage but consume Mana";
+    public float spellswordManaCost = 15;
+    public string death_aura = "Death Aura";
+    public string death_aura_description = "Your regain Mana faster when near your Remnant. Collecting your Remnant restores you to full Mana";
+    public string arcane_mastery = "Arcane Mastery";
+    public string arcane_mastery_description = "Your Special Attacks do extra damage";
+    public float arcaneMasteryPercent = 0.3f;
 
     public int CloseCallDamage()
     {
@@ -73,6 +83,11 @@ public class EmblemLibrary : ScriptableObject
     public int ExplosiveHealingDamage()
     {
         return playerData.dedication * 3 + 20;
+    }
+
+    public int SpellswordDamage()
+    {
+        return playerData.dedication * 2 + 15;
     }
 
     public string GetDescription(string name)
@@ -105,7 +120,11 @@ public class EmblemLibrary : ScriptableObject
             {arcane_preservation, arcane_preservation_description },
             {burning_reflection, burning_reflection_description },
             {opportune_strike, opportune_strike_description },
-            {burning_cloak, burning_cloak_description }
+            {burning_cloak, burning_cloak_description },
+            {mirror_cloak, mirror_cloak_description },
+            {_spellsword, _spellsword_description },
+            {death_aura, death_aura_description },
+            {arcane_mastery, arcane_mastery_description }
         };
     }
 }

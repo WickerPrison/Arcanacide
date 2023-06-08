@@ -37,7 +37,7 @@ public class WaveBox : MonoBehaviour
             {
                 PlayerController playerController;
                 playerController = other.gameObject.GetComponent<PlayerController>();
-                playerController.PerfectDodge();
+                playerController.PerfectDodge(gameObject, enemyOfOrigin);
             }
         }
         else if(canHurtEnemies && other.gameObject.CompareTag("Enemy"))

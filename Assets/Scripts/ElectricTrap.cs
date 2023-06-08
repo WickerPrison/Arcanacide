@@ -6,6 +6,7 @@ using UnityEngine;
 public class ElectricTrap : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
+    [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] AudioClip electricDamage;
     AudioSource audioSource;
     float damage = 0;
@@ -41,6 +42,11 @@ public class ElectricTrap : MonoBehaviour
                 foreach(EnemyScript enemy in enemiesInRange)
                 {
                     enemy.LoseHealth(Mathf.FloorToInt(damage), 0);
+
+                    if (playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
+                    {
+                        enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
+                    }
                 }
 
                 if (canMakeDamageSound)

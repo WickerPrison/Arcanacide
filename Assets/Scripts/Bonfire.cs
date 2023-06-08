@@ -37,7 +37,7 @@ public class Bonfire : MonoBehaviour
             {
                 PlayerController playerController;
                 playerController = other.gameObject.GetComponent<PlayerController>();
-                playerController.PerfectDodge();
+                playerController.PerfectDodge(gameObject, enemyOfOrigin);
             }
         }
     }

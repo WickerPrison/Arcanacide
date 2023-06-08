@@ -126,7 +126,7 @@ public class HomingSoulmass : MonoBehaviour
     {
         PlayerController playerController;
         playerController = collision.gameObject.GetComponent<PlayerController>();
-        playerController.PerfectDodge();
+        playerController.PerfectDodge(gameObject, enemyOfOrigin);
     }
 
     public virtual void HitObject(Collider collision)
