@@ -55,6 +55,7 @@ public class BossController : EnemyController
         spellAttackDamage = fireBallDamage;
         bossDialogue = GetComponent<BossDialogue>();
         fireRing = GetComponentInChildren<FireRing>();
+        state = EnemyState.UNAWARE;
         if (mapData.fireBossKilled)
         {
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
@@ -83,7 +84,7 @@ public class BossController : EnemyController
 
     public override void EnemyAI()
     {
-        base.EnemyAI();
+        playerDistance = Vector3.Distance(transform.position, playerController.transform.position);
 
         if (navAgent.enabled == true)
         {

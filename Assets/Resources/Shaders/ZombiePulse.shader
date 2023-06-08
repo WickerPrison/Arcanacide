@@ -50,7 +50,7 @@ Shader "Unlit/ZombiePulse"
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 UNITY_TRANSFER_FOG(o,o.vertex);
-
+                o.tintColor = float4(1,1,1,1);
 
                 return o;
             }

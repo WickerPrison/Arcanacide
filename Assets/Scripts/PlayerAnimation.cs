@@ -106,7 +106,7 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.Play(animationName);
     }
 
-    void StaminaUpdate()
+    public void StaminaUpdate()
     {
         frontAnimator.SetFloat("Stamina", playerScript.stamina);
         backAnimator.SetFloat("Stamina", playerScript.stamina);

@@ -104,7 +104,7 @@ Shader "Unlit/EnemySprite"
 
                 float edgeMask = mask < _EdgeWidth;
 
-                float3 outColor = lerp(c.xyz, (1,1,1), edgeMask);
+                float3 outColor = lerp(c.xyz, float3(1,1,1), edgeMask);
 
                 return float4(outColor, 1);
 			}

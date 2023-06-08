@@ -255,6 +255,7 @@ public class PlayerScript : MonoBehaviour
         {
             stamina = 0;
         }
+        playerAnimation.StaminaUpdate();
         staminaDelay = maxStaminaDelay;
     }
 
