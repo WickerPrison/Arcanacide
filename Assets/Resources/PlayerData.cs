@@ -54,6 +54,10 @@ public class PlayerData : ScriptableObject
     public int AttackPower()
     {
         int attackPower = 18 + strength;
+        if(equippedEmblems.Contains("Reckless Attack") && health < MaxHealth() * .4f)
+        {
+            attackPower += Mathf.RoundToInt(attackPower * 0.5f);
+        }
         return attackPower;
     }
 

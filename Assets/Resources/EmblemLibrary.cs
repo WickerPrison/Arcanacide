@@ -64,6 +64,8 @@ public class EmblemLibrary : ScriptableObject
     public string arcane_mastery = "Arcane Mastery";
     public string arcane_mastery_description = "Your Special Attacks do extra damage";
     public float arcaneMasteryPercent = 0.3f;
+    public string reckless_attack = "Reckless Attack";
+    public string reckless_attack_description = "Increase the base damage of your attacks when you are low on health";
 
     public int CloseCallDamage()
     {
@@ -124,7 +126,8 @@ public class EmblemLibrary : ScriptableObject
             {mirror_cloak, mirror_cloak_description },
             {_spellsword, _spellsword_description },
             {death_aura, death_aura_description },
-            {arcane_mastery, arcane_mastery_description }
+            {arcane_mastery, arcane_mastery_description },
+            {reckless_attack, reckless_attack_description }
         };
     }
 }
