@@ -95,6 +95,10 @@ Shader "Unlit/DefaultSprite"
 				float4 hexTex = tex2D(_HexTex, i.uv + perlin);
 				c.rgb *= c.a;
 				c.rgb *= 1 - hexTex;
+
+				float fadeaway = 1 - length(i.uv.x * 2 - 1) + .2;
+				float fadeaway2 = 1 - length(i.uv.y * 2 - 1) + .2;
+				return c * fadeaway * fadeaway2;
 				return c;
 			}
 		ENDCG

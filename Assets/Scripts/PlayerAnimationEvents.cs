@@ -259,6 +259,14 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             playerController.StartArcaneStep();
         }
+
+        if(playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerController.mirrorCloakTimer <= 0)
+        {
+            playerSound.PlaySoundEffectFromList(11, 0.5f);
+            playerEvents.EndMirrorCloak();
+            playerScript.shield = true;
+            playerScript.parry = true;
+        }
     }
 
     //Layer 3 is the player layer, it can collide with terrain, enemies, and enemy projectiles
@@ -272,6 +280,8 @@ public class PlayerAnimationEvents : MonoBehaviour
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerController.mirrorCloakTimer <= 0)
         {
+            playerScript.shield = false;
+            playerScript.parry = false;
             playerController.mirrorCloakTimer = playerController.mirrorCloakMaxTime;
         }
     }

@@ -10,6 +10,8 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onAxeSpecial;
     public event EventHandler onClawSpecial;
     public event EventHandler onEndClawSpecial;
+    public event EventHandler onStartMirrorCloak;
+    public event EventHandler onEndMirrorCloak;
 
 
     public void PlayerStagger()
@@ -30,5 +32,15 @@ public class PlayerEvents : MonoBehaviour
     public void EndClawSpecialAttack()
     {
         onEndClawSpecial?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void StartMirrorCloak()
+    {
+        onStartMirrorCloak?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void EndMirrorCloak()
+    {
+        onEndMirrorCloak?.Invoke(this, EventArgs.Empty);
     }
 }

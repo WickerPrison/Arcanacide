@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform[] boltsOrigin;
     [SerializeField] ExternalLanternFairy lanternFairy;
 
+
     public ParticleSystem dodgeVFX;
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -136,6 +137,7 @@ public class PlayerController : MonoBehaviour
         if(mirrorCloakTimer > 0)
         {
             mirrorCloakTimer -= Time.deltaTime;
+            if(mirrorCloakTimer <= 0) playerEvents.StartMirrorCloak();
         }
 
         if (lockPosition)
@@ -262,6 +264,8 @@ public class PlayerController : MonoBehaviour
             {
                 staminaCost *= 2;
             }
+
+
 
             playerScript.LoseStamina(staminaCost);
             playerAnimation.PlayAnimation("Dash");
@@ -447,7 +451,7 @@ public class PlayerController : MonoBehaviour
     {
         playerScript.LoseMana(parryCost);
         playerScript.parry = true;
-        playerSound.PlaySoundEffectFromList(11, 1);
+        playerSound.PlaySoundEffectFromList(11, 0.5f);
         yield return parryWindow;
         playerScript.parry = false;
     }
@@ -600,13 +604,11 @@ public class PlayerController : MonoBehaviour
             playerScript.stamina = playerData.MaxStamina();
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && mirrorCloakTimer <= 0)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && mirrorCloakTimer <= 0 && attackingEnemy != null)
         {
-            if(projectile != null && attackingEnemy != null) 
-            {
-                Destroy(projectile);
-                FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), playerScript.parryProfile);
-            }
+            playerSound.Shield();
+
+            FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), playerScript.parryProfile);
         }
     }
 
