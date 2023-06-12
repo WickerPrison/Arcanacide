@@ -19,20 +19,26 @@ public class Shield : MonoBehaviour
             if (playerScript.parry)
             {
                 spriteRenderer.color = solid;
+                spriteRenderer.material.SetFloat("_PerlinSize", 0);
             }
             else
             {
                 spriteRenderer.color = transparent;
+                spriteRenderer.material.SetFloat("_PerlinSize", 2);
             }
         }
         else if (playerScript.barrier)
         {
             spriteRenderer.enabled = true;
             spriteRenderer.color = barrier;
+            spriteRenderer.material.SetFloat("_PerlinSize", 2);
         }
         else
         {
             spriteRenderer.enabled = false;
         }
     }
+
+
+
 }

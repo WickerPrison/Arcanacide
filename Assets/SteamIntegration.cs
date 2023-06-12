@@ -31,6 +31,7 @@ public class SteamIntegration : MonoBehaviour
         }
     }
 
+    /*
     private void Update()
     {
         if (playerControllerObject == null) return;
@@ -44,4 +45,5 @@ public class SteamIntegration : MonoBehaviour
             playerController.PauseMenu();
         }
     }
+    */
 }

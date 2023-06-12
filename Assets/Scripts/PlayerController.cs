@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
-using JetBrains.Annotations;
 
 public class PlayerController : MonoBehaviour
 {
@@ -68,7 +67,7 @@ public class PlayerController : MonoBehaviour
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
 
-    WaitForSeconds parryWindow = new WaitForSeconds(0.1f);
+    WaitForSeconds parryWindow = new WaitForSeconds(0.2f);
     float parryCost = 20;
 
     Vector2 rightStickValue;
@@ -448,6 +447,7 @@ public class PlayerController : MonoBehaviour
     {
         playerScript.LoseMana(parryCost);
         playerScript.parry = true;
+        playerSound.PlaySoundEffectFromList(11, 1);
         yield return parryWindow;
         playerScript.parry = false;
     }
