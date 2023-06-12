@@ -20,11 +20,13 @@ public class Shield : MonoBehaviour
             {
                 spriteRenderer.color = solid;
                 spriteRenderer.material.SetFloat("_PerlinSize", 0);
+                spriteRenderer.material.SetFloat("_EdgeDecay", 0);
             }
             else
             {
                 spriteRenderer.color = transparent;
                 spriteRenderer.material.SetFloat("_PerlinSize", 2);
+                spriteRenderer.material.SetFloat("_EdgeDecay", 0.6f);
             }
         }
         else if (playerScript.barrier)
@@ -32,6 +34,7 @@ public class Shield : MonoBehaviour
             spriteRenderer.enabled = true;
             spriteRenderer.color = barrier;
             spriteRenderer.material.SetFloat("_PerlinSize", 2);
+            spriteRenderer.material.SetFloat("_EdgeDecay", 0.6f);
         }
         else
         {

@@ -10,6 +10,7 @@ Shader "Unlit/DefaultSprite"
 		_HexTex ("Hexagon Texture", 2D) = "white" {}
 		_Perlin ("Perlin Noise", 2D) = "white" {}
 		_PerlinSize ("Perlin Size", float) = 2
+		_EdgeDecay ("Edge Decay", float) = 0.6
 	}
 
 	SubShader
@@ -73,6 +74,7 @@ Shader "Unlit/DefaultSprite"
 			sampler2D _HexTex;
 			sampler2D _Perlin;
 			float _PerlinSize;
+			float _EdgeDecay;
 
 			fixed4 SampleSpriteTexture (float2 uv)
 			{
@@ -93,8 +95,17 @@ Shader "Unlit/DefaultSprite"
 				// subtracting 0.47 centers the perlin noise around 0. This should be 0.5 instead but 0.47 ended up looking better
 				float perlin = tex2D(_Perlin, perlinUV / _PerlinSize) - 0.47;
 				float4 hexTex = tex2D(_HexTex, i.uv + perlin);
-				c.rgb *= c.a;
 				c.rgb *= 1 - hexTex;
+
+				float2 perlinUV2 = float2(i.uv.x + _Time.y /10, i.uv.y - _Time.y / 2);
+				float perlin2 = tex2D(_Perlin, perlinUV2);
+
+				float2 uvCentered = i.uv * 2 - 1;
+                float radialDist = 1 - length(uvCentered);
+
+				float mask = perlin2 + radialDist > _EdgeDecay;
+				c.a *= mask * 1.5;
+				c.rgb *= c.a;
 
 				float fadeaway = 1 - length(i.uv.x * 2 - 1) + .2;
 				float fadeaway2 = 1 - length(i.uv.y * 2 - 1) + .2;
