@@ -14,6 +14,7 @@ public class Remnant : MonoBehaviour
     PlayerControls controls;
     PlayerScript playerScript;
     PlayerController playerController;
+    PlayerAnimation playerAnimation;
     WeaponManager weaponManager;
     float playerDistance = 100;
     float interactDistance = 2;
@@ -22,6 +23,7 @@ public class Remnant : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerController = player.GetComponent<PlayerController>();
+        playerAnimation = player.GetComponent<PlayerAnimation>();
         playerScript = player.GetComponent<PlayerScript>();
         weaponManager = player.gameObject.GetComponent<WeaponManager>();
         
@@ -63,6 +65,8 @@ public class Remnant : MonoBehaviour
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
             {
                 playerData.mana = playerData.maxMana;
+                playerAnimation.EndBodyMagic();
+                playerScript.deathAuraActive = false;
             }
             Destroy(gameObject);
         }
@@ -80,6 +84,7 @@ public class Remnant : MonoBehaviour
 
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
             {
+                playerAnimation.StartBodyMagic();
                 playerScript.deathAuraActive = true;
             }
         }
@@ -101,7 +106,11 @@ public class Remnant : MonoBehaviour
                 playerController.arcaneRemainsActive = false;
             }
 
-            playerScript.deathAuraActive = false;
+            if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
+            {
+                playerAnimation.EndBodyMagic();
+                playerScript.deathAuraActive = false;
+            }
         }
     }
 

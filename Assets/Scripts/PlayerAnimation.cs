@@ -24,6 +24,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] Animator frontAnimator;
     [SerializeField] Animator backAnimator;
     [SerializeField] ParticleSystem bodyMagic;
+    int bodyMagicSources = 0;
     Camera cam;
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerController playerController;
@@ -155,12 +156,17 @@ public class PlayerAnimation : MonoBehaviour
 
     public void StartBodyMagic()
     {
+        bodyMagicSources += 1;
         bodyMagic.Play();
     }
 
     public void EndBodyMagic()
     {
-        bodyMagic.Stop();
+        bodyMagicSources -= 1;
+        if(bodyMagicSources <= 0)
+        {
+            bodyMagic.Stop();
+        }
     }
 
     void FaceJoystick()

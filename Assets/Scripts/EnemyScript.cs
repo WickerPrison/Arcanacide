@@ -19,6 +19,7 @@ public class EnemyScript : MonoBehaviour
     public EmblemLibrary emblemLibrary;
     EnemyController enemyController;
     EnemySound enemySound;
+    ImpactVFX impactVFX;
     GameManager gm;
     public int maxHealth;
     [SerializeField] float maxPoise;
@@ -49,6 +50,7 @@ public class EnemyScript : MonoBehaviour
         poise = maxPoise;
         enemyController = GetComponent<EnemyController>();
         enemySound = GetComponentInChildren<EnemySound>();
+        impactVFX = GetComponentInChildren<ImpactVFX>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gm.enemies.Add(this);
     }
@@ -98,6 +100,11 @@ public class EnemyScript : MonoBehaviour
         }
         LosePoise(poiseDamage);
         UpdateHealthbar();
+    }
+
+    public void ImpactVFX()
+    {
+        impactVFX.AttackImpact();
     }
 
     public void GainDOT(float duration)

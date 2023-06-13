@@ -103,6 +103,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
 
         enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
+        enemy.ImpactVFX();
         if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
         {
             enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
