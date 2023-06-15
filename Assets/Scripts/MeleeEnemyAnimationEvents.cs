@@ -9,6 +9,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     [System.NonSerialized] public EnemySound enemySound;
     public AttackArcGenerator attackArc;
     SpriteEffects spriteEffects;
+    FacePlayer facePlayer;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -17,6 +18,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         enemyScript = GetComponentInParent<EnemyScript>();
         spriteEffects = GetComponentInParent<SpriteEffects>();
         enemySound = transform.parent.GetComponentInChildren<EnemySound>();
+        facePlayer = GetComponentInParent<FacePlayer>();
         if(attackArc == null)
         {
             attackArc = transform.parent.GetComponentInChildren<AttackArcGenerator>();
@@ -41,6 +43,11 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     public virtual void EnableNavAgent()
     {
         enemyController.navAgent.enabled = true;
+    }
+
+    public void NavAgentSpeed(float speed)
+    {
+        enemyController.navAgent.speed = speed;
     }
 
     public void EndAttack()
@@ -107,6 +114,11 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     public void Footstep()
     {
         enemySound.Footstep();
+    }
+
+    public void ManualFace()
+    {
+        facePlayer.ManualFace();
     }
 
     public void StartDissolve()

@@ -11,8 +11,6 @@ public class HalfGolemController : EnemyController
     float smashRange = 3;
     [System.NonSerialized] public int remainingIce = 3;
     public event EventHandler onIceBreak;
-    [SerializeField] ParticleSystem frontPoof;
-    [SerializeField] ParticleSystem backPoof;
     [SerializeField] ParticleSystem poof;
     Renderer poofRenderer;
     AttackArcGenerator attackArc;
@@ -22,7 +20,7 @@ public class HalfGolemController : EnemyController
     public override void Start()
     {
         base.Start();
-        navAgent.enabled = false;
+        //navAgent.enabled = false;
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         facePlayer = GetComponent<FacePlayer>();
         attackArc = GetComponentInChildren<AttackArcGenerator>();
@@ -58,7 +56,6 @@ public class HalfGolemController : EnemyController
         if (navAgent.enabled == true)
         {
             navAgent.SetDestination(playerController.transform.position);
-            return;
         }
 
         if (Vector3.Distance(playerScript.transform.position, transform.position) < smashRange)
@@ -85,7 +82,7 @@ public class HalfGolemController : EnemyController
             navAgent.SetDestination(playerController.transform.position);
         }
 
-        if (attackTime <= 0 && Vector3.Distance(playerScript.transform.position, transform.position) < smashRange)
+        if (attackTime <= 0 && Vector3.Distance(playerScript.transform.position, transform.position) < smashRange && false)
         {
             attackTime = unfrozenAttackMaxTime;
             state = EnemyState.ATTACKING;
@@ -100,7 +97,7 @@ public class HalfGolemController : EnemyController
         {
             stepWithAttack.Step(0.15f);
         }
-        //enemySound.OtherSounds(1, 1);
+        enemySound.SwordSwoosh();
         parryWindow = false;
 
         if (!canHitPlayer)
@@ -110,6 +107,7 @@ public class HalfGolemController : EnemyController
 
         if (playerController.gameObject.layer == 3)
         {
+            enemySound.SwordImpact();
             playerScript.LoseHealth(hitDamage);
             playerScript.LosePoise(hitPoiseDamage);
         }
@@ -195,7 +193,7 @@ public class HalfGolemController : EnemyController
         base.EndStagger();
         if(remainingIce > 0)
         {
-            navAgent.enabled = false;
+            //navAgent.enabled = false;
         }
     }
 }

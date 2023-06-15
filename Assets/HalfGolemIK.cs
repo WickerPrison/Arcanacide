@@ -9,6 +9,7 @@ public class HalfGolemIK : MonoBehaviour
     [SerializeField] int limbID;
     HalfGolemController controller;
     LimbSolver2D limbSolver;
+    bool turnOn = false;
 
     private void Awake()
     {
@@ -20,7 +21,16 @@ public class HalfGolemIK : MonoBehaviour
     {
         if(limbID == controller.remainingIce)
         {
+            turnOn = true;
+        }
+    }
+
+    private void Update()
+    {
+        if(turnOn && controller.state == EnemyState.IDLE)
+        {
             limbSolver.weight = 1;
+            this.enabled = false;
         }
     }
 
