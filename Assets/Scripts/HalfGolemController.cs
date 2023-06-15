@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,12 @@ public class HalfGolemController : EnemyController
     CameraFollow cameraScript;
     FacePlayer facePlayer;
     float smashRange = 3;
-    int remainingIce = 3;
-    [SerializeField] List<GameObject> ice = new List<GameObject>();
-    [SerializeField] GameObject[] ikManagers;
+    [System.NonSerialized] public int remainingIce = 3;
+    public event EventHandler onIceBreak;
+    [SerializeField] ParticleSystem frontPoof;
+    [SerializeField] ParticleSystem backPoof;
     [SerializeField] ParticleSystem poof;
+    Renderer poofRenderer;
     AttackArcGenerator attackArc;
     StepWithAttack stepWithAttack;
     float unfrozenAttackMaxTime = 3;
@@ -24,10 +27,7 @@ public class HalfGolemController : EnemyController
         facePlayer = GetComponent<FacePlayer>();
         attackArc = GetComponentInChildren<AttackArcGenerator>();
         stepWithAttack = GetComponent<StepWithAttack>();
-        foreach(GameObject ikManager in ikManagers)
-        {
-            ikManager.SetActive(false);
-        }
+        poofRenderer = poof.GetComponent<Renderer>();
     }
 
     public override void EnemyAI()
@@ -68,11 +68,13 @@ public class HalfGolemController : EnemyController
                 attackTime = attackMaxTime;
                 state = EnemyState.ATTACKING;
                 frontAnimator.Play("Attack" + remainingIce.ToString());
+                backAnimator.Play("Attack" + remainingIce.ToString());
             }
         }
         else
         {
             frontAnimator.Play("Walk");
+            backAnimator.Play("Walk");
         }
     }
 
@@ -119,7 +121,15 @@ public class HalfGolemController : EnemyController
 
     public override void SpellAttack()
     {
-        //enemySound.OtherSounds(0, 1);
+        enemySound.OtherSounds(0, 1);
+        if(facePlayer.faceDirection.z < 0 && facePlayer.faceDirection.x < 0)
+        {
+            poofRenderer.sortingOrder = 10;
+        }
+        else
+        {
+            poofRenderer.sortingOrder = 0;
+        }
         poof.Play();
 
         if (!attackArc.CanHitPlayer()) 
@@ -141,7 +151,7 @@ public class HalfGolemController : EnemyController
     public override void SpecialAbility()
     {
         StartCoroutine(cameraScript.ScreenShake(.1f, .1f));
-        //enemySound.OtherSounds(1, 1);
+        enemySound.OtherSounds(1, 1);
         parryWindow = false;
 
         if (!canHitPlayer)
@@ -152,8 +162,8 @@ public class HalfGolemController : EnemyController
 
         if (playerController.gameObject.layer == 3)
         {
-           // playerScript.LoseHealth(hitDamage);
-           // playerScript.LosePoise(hitPoiseDamage);
+           playerScript.LoseHealth(hitDamage);
+           playerScript.LosePoise(hitPoiseDamage);
         }
         else if (playerController.gameObject.layer == 8)
         {
@@ -167,17 +177,12 @@ public class HalfGolemController : EnemyController
 
         if(remainingIce > 0)
         {
-            ice[0].SetActive(false);
-            ice.RemoveAt(0);
+            onIceBreak?.Invoke(this, EventArgs.Empty);
             remainingIce--;
             if (remainingIce == 0)
             {
-                foreach (GameObject ikManager in ikManagers)
-                {
-                    ikManager.SetActive(true);
-                }
-
                 frontAnimator.SetBool("IsFrozen", false);
+                backAnimator.SetBool("IsFrozen", false);
                 navAgent.enabled = true;
                 navAgent.speed = 5;
                 attackTime = 0;
