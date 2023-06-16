@@ -64,6 +64,7 @@ public class HalfGolemController : EnemyController
             {
                 attackTime = attackMaxTime;
                 state = EnemyState.ATTACKING;
+                navAgent.speed = 0;
                 frontAnimator.Play("Attack" + remainingIce.ToString());
                 backAnimator.Play("Attack" + remainingIce.ToString());
             }
@@ -82,11 +83,12 @@ public class HalfGolemController : EnemyController
             navAgent.SetDestination(playerController.transform.position);
         }
 
-        if (attackTime <= 0 && Vector3.Distance(playerScript.transform.position, transform.position) < smashRange && false)
+        if (attackTime <= 0 && Vector3.Distance(playerScript.transform.position, transform.position) < smashRange)
         {
             attackTime = unfrozenAttackMaxTime;
             state = EnemyState.ATTACKING;
             frontAnimator.Play("DoubleAttack");
+            backAnimator.Play("DoubleAttack");
         }
     }
 
@@ -183,7 +185,7 @@ public class HalfGolemController : EnemyController
                 backAnimator.SetBool("IsFrozen", false);
                 navAgent.enabled = true;
                 navAgent.speed = 5;
-                attackTime = 0;
+                attackTime = unfrozenAttackMaxTime;
             }
         }
     }
@@ -193,7 +195,7 @@ public class HalfGolemController : EnemyController
         base.EndStagger();
         if(remainingIce > 0)
         {
-            //navAgent.enabled = false;
+            navAgent.speed = 0;
         }
     }
 }
