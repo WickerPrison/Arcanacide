@@ -31,7 +31,7 @@ public class ChaosSporesScript : MonoBehaviour
             {
                 int damage = Mathf.FloorToInt(chaosSporesCounter);
                 chaosSporesCounter -= damage;
-                playerScript.LoseHealth(damage);
+                playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
             }
         }
     }

@@ -162,7 +162,7 @@ public class ChaosMageController : EnemyController
     void DealDamage()
     {
         StartCoroutine(HitPlayerDelay());
-        playerScript.LoseHealth(3, enemyScript);
+        playerScript.LoseHealth(3,EnemyAttackType.NONPARRIABLE, enemyScript);
         playerScript.LosePoise(3);
     }
 

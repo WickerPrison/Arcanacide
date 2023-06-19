@@ -24,6 +24,7 @@ public class ArcProjectile : MonoBehaviour
     [SerializeField] AudioClip impactSound;
     [SerializeField] float impactVolume;
     [SerializeField] float staggerDuration;
+    [System.NonSerialized] public EnemyScript enemyOfOrigin;
 
     private void Start()
     {
@@ -74,7 +75,7 @@ public class ArcProjectile : MonoBehaviour
         {
             explosion.GetComponent<AudioSource>().PlayOneShot(impactSound, impactVolume);
             player.StartStagger(staggerDuration);
-            player.LoseHealth(spellDamage);
+            player.LoseHealth(spellDamage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
             player.LosePoise(poiseDamage);
         }
 

@@ -29,7 +29,7 @@ public class FireTrail : MonoBehaviour
             damage += damagePerSecond * Time.deltaTime;
             if(damage > 1)
             {
-                playerScript.LoseHealth(Mathf.FloorToInt(damage));
+                playerScript.LoseHealth(Mathf.FloorToInt(damage), EnemyAttackType.NONPARRIABLE, null);
                 damage = 0;
             }
         }

@@ -177,7 +177,7 @@ public class ElectricBossController : EnemyController
         if (playerController.gameObject.layer == 3)
         {
             enemySound.OtherSounds(0, 1);
-            playerScript.LoseHealth(hitDamage, enemyScript);
+            playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
@@ -301,7 +301,7 @@ public class ElectricBossController : EnemyController
         if (hitPlayer)
         {
             enemySound.OtherSounds(0, 1);
-            playerScript.LoseHealth(chargeBurstDamage);
+            playerScript.LoseHealth(chargeBurstDamage, EnemyAttackType.NONPARRIABLE, null);
             playerScript.StartStagger(chargeBurstStagger);
             playerScript.LosePoise(chargeBurstPoiseDamage);
         }
@@ -364,7 +364,7 @@ public class ElectricBossController : EnemyController
         if (other.gameObject.layer == 3 && charging && !isColliding)
         {
             isColliding = true;
-            playerScript.LoseHealth(chargeDamage);
+            playerScript.LoseHealth(chargeDamage, EnemyAttackType.NONPARRIABLE, null);
             enemySound.SwordImpact();
         }
         else if (other.gameObject.layer == 8 && charging && !isColliding)

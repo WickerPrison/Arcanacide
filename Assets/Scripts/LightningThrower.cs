@@ -83,6 +83,7 @@ public class LightningThrower : EnemyController
             lightningBall.transform.position = backElectricityVFX.transform.position;
         }
         lightningBall.endPoint = new Vector3(playerController.transform.position.x, 0, playerController.transform.position.z);
+        lightningBall.enemyOfOrigin = enemyScript;
     }
 
     public override void StartStagger(float staggerDuration)
@@ -126,7 +127,7 @@ public class LightningThrower : EnemyController
             while (shockDamageBuildup > 1)
             {
                 shockDamageBuildup -= 1;
-                playerScript.LoseHealth(1);
+                playerScript.LoseHealth(1, EnemyAttackType.NONPARRIABLE, null);
             }
             playerScript.StartStagger(Time.fixedDeltaTime * 1.1f);
 

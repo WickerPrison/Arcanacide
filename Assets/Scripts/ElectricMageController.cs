@@ -145,7 +145,7 @@ public class ElectricMageController : EnemyController
         if (playerHit)
         {
             chainLightning[0].SoundOn();
-            playerScript.LoseHealth(boltDamage);
+            playerScript.LoseHealth(boltDamage, EnemyAttackType.NONPARRIABLE, null);
             playerScript.LosePoise(boltPoiseDamage);
             boltCD = boltMaxCD;
         }

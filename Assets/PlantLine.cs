@@ -62,7 +62,7 @@ public class PlantLine : MonoBehaviour
 
     void HitPlayer(PlayerScript playerScript)
     {
-        playerScript.LoseHealth(damage, enemyOfOrigin);
+        playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
         //AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
     }

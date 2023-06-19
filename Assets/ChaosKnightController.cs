@@ -134,7 +134,7 @@ public class ChaosKnightController : EnemyController
             if (playerController.gameObject.layer == 3)
             {
                 enemySound.SwordImpact();
-                playerScript.LoseHealth(jumpDamage, enemyScript);
+                playerScript.LoseHealth(jumpDamage, EnemyAttackType.MELEE, enemyScript);
                 playerScript.LosePoise(jumpPoiseDamage);
             }
             else if (playerController.gameObject.layer == 8)

@@ -51,6 +51,7 @@ public class FireMinionController : EnemyController
     void Attack()
     {
         int num = Random.Range(0, 3);
+        num = 2;
         if(num <= 1)
         {
             frontAnimator.Play("Attack");

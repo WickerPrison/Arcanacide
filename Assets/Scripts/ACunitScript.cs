@@ -69,7 +69,7 @@ public class ACunitScript : MonoBehaviour
             {
                 int amount = Mathf.FloorToInt(damageCounter);
                 damageCounter -= amount;
-                playerScript.LoseHealth(amount);
+                playerScript.LoseHealth(amount, EnemyAttackType.NONPARRIABLE, null);
             }
 
             staminaCounter += Time.deltaTime * staminaRate;

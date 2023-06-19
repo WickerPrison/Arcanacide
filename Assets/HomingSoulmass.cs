@@ -116,7 +116,7 @@ public class HomingSoulmass : MonoBehaviour
     public virtual void HitPlayer(Collider collision)
     {
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
-        playerScript.LoseHealth(spellDamage, enemyOfOrigin);
+        playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
         AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
         Destroy(gameObject);

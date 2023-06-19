@@ -28,7 +28,7 @@ public class Bonfire : MonoBehaviour
             {
                 PlayerScript playerScript;
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
-                playerScript.LoseHealth(damage, enemyOfOrigin);
+                playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
                 AudioSource.PlayClipAtPoint(impactSound, transform.position, 0.5f);
                 Destroy(gameObject);

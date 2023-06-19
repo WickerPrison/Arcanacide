@@ -28,7 +28,7 @@ public class ElectricAlly : MonoBehaviour
             return;
         }
 
-        playerScript.LoseHealth(damage);
+        playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
         playerScript.LosePoise(poiseDamage);
         playerScript.StartStagger(1);
     }

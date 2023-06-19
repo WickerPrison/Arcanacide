@@ -77,14 +77,13 @@ public class IceMageController : EnemyController
     public override void SpecialAbility()
     {
         iceRing.Explode();
-        if (playerScript.shield)
-        {
-            return;
-        }
 
         if (Vector3.Distance(transform.position, playerController.transform.position) < tooClose && playerController.gameObject.layer == 3)
         {
-            playerScript.LoseHealth(fireRingDamage);
+            playerScript.LoseHealth(fireRingDamage,EnemyAttackType.MELEE, enemyScript);
+
+            if (playerScript.shield) return;
+
             playerScript.LosePoise(fireRingPoiseDamage);
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
             Vector3 awayVector = playerController.transform.position - transform.position;

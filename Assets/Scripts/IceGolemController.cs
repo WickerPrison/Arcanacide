@@ -132,7 +132,7 @@ public class IceGolemController : EnemyController
 
         if (playerController.gameObject.layer == 3)
         {
-            playerScript.LoseHealth(hitDamage);
+            playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
         }
         else if (playerController.gameObject.layer == 8)
@@ -183,7 +183,7 @@ public class IceGolemController : EnemyController
             backAnimator.Play("ChargeCollision");
             if(collision.gameObject.layer == 3)
             {
-                playerScript.LoseHealth(chargeDamage);
+                playerScript.LoseHealth(chargeDamage, EnemyAttackType.NONPARRIABLE, null);
                 playerScript.LosePoise(chargePoiseDamage);
             }
             else if(collision.gameObject.layer == 8)

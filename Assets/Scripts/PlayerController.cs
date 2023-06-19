@@ -451,7 +451,6 @@ public class PlayerController : MonoBehaviour
     {
         playerScript.LoseMana(parryCost);
         playerScript.parry = true;
-        playerSound.PlaySoundEffectFromList(11, 0.5f);
         yield return parryWindow;
         playerScript.parry = false;
     }

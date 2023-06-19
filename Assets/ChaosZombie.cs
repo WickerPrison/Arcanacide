@@ -58,6 +58,7 @@ public class ChaosZombie : EnemyController
         PustuleScript pustule = Instantiate(projectilePrefab).GetComponent<PustuleScript>();
         pustule.transform.position = handPustule.transform.position;
         pustule.endPoint = playerController.transform.position;
+        pustule.enemyScript = enemyScript;
     }
 
     public override void AdditionalAttackEffects()

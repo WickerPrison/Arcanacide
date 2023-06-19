@@ -15,6 +15,7 @@ public class PustuleScript : MonoBehaviour
     Vector3 startPoint;
     [System.NonSerialized] public Vector3 endPoint;
     [System.NonSerialized] public Vector3 direction;
+    [System.NonSerialized] public EnemyScript enemyScript;
     [SerializeField] float timeToHit;
     [SerializeField] float arcHeight;
     float speed;
@@ -67,7 +68,7 @@ public class PustuleScript : MonoBehaviour
                 {
                     int pulseDamage = Mathf.RoundToInt(pulseDamageCounter);
                     pulseDamageCounter = 0;
-                    nearbyObject.GetComponent<PlayerScript>().LoseHealth(pulseDamage);
+                    nearbyObject.GetComponent<PlayerScript>().LoseHealth(pulseDamage, EnemyAttackType.NONPARRIABLE, null);
                 }
             }
             else if (nearbyObject.CompareTag("Enemy"))
@@ -99,7 +100,7 @@ public class PustuleScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerScript playerScript = other.GetComponent<PlayerScript>();
-            playerScript.LoseHealth(damage);
+            playerScript.LoseHealth(damage, EnemyAttackType.PROJECTILE, enemyScript);
             playerScript.LosePoise(poiseDamage);
             Destroy(gameObject);
         }

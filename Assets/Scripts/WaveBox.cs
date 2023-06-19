@@ -28,7 +28,7 @@ public class WaveBox : MonoBehaviour
             {
                 PlayerScript playerScript;
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
-                playerScript.LoseHealth(damage, enemyOfOrigin);
+                playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
                 AudioSource.PlayClipAtPoint(impactSFX, transform.position, 1);
                 Destroy(gameObject);

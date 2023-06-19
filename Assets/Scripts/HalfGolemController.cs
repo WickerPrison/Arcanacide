@@ -26,6 +26,7 @@ public class HalfGolemController : EnemyController
         attackArc = GetComponentInChildren<AttackArcGenerator>();
         stepWithAttack = GetComponent<StepWithAttack>();
         poofRenderer = poof.GetComponent<Renderer>();
+       
     }
 
     public override void EnemyAI()
@@ -110,7 +111,7 @@ public class HalfGolemController : EnemyController
         if (playerController.gameObject.layer == 3)
         {
             enemySound.SwordImpact();
-            playerScript.LoseHealth(hitDamage);
+            playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
         }
         else if (playerController.gameObject.layer == 8)
@@ -154,15 +155,12 @@ public class HalfGolemController : EnemyController
         enemySound.OtherSounds(1, 1);
         parryWindow = false;
 
-        if (!canHitPlayer)
-        {
-            return;
-        }
+        if (!attackArc.CanHitPlayer()) return;
 
 
         if (playerController.gameObject.layer == 3)
         {
-           playerScript.LoseHealth(hitDamage);
+           playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
            playerScript.LosePoise(hitPoiseDamage);
         }
         else if (playerController.gameObject.layer == 8)
@@ -170,12 +168,9 @@ public class HalfGolemController : EnemyController
             playerController.PerfectDodge();
         }
     }
-
-    public override void OnHit()
+    private void OnTakeDamage(object sender, EventArgs e)
     {
-        base.OnHit();
-
-        if(remainingIce > 0)
+        if (remainingIce > 0)
         {
             enemySound.OtherSounds(2, 1);
             onIceBreak?.Invoke(this, EventArgs.Empty);
@@ -191,6 +186,12 @@ public class HalfGolemController : EnemyController
         }
     }
 
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        attackArc.HideAttackArc();
+    }
+
     public override void EndStagger()
     {
         base.EndStagger();
@@ -198,5 +199,17 @@ public class HalfGolemController : EnemyController
         {
             navAgent.speed = 0;
         }
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        enemyScript.OnTakeDamage += OnTakeDamage;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        enemyScript.OnTakeDamage -= OnTakeDamage;
     }
 }

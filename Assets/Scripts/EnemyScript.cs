@@ -32,8 +32,8 @@ public class EnemyScript : MonoBehaviour
     float damageDOT = 0;
     public bool invincible = false;
 
-    public EventHandler OnTakeDamage;
-    public EventHandler OnStagger;
+    public event EventHandler OnTakeDamage;
+    public event EventHandler OnStagger;
 
     private void Awake()
     {

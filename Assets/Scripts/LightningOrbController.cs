@@ -62,7 +62,7 @@ public class LightningOrbController : EnemyController
     {
         if(playerDistance <= attackRange)
         {
-            playerScript.LoseHealth(spellAttackDamage);
+            playerScript.LoseHealth(spellAttackDamage, EnemyAttackType.NONPARRIABLE, null);
             playerScript.LosePoise(spellAttackPoiseDamage);
         }
     }
@@ -95,7 +95,7 @@ public class LightningOrbController : EnemyController
             {
                 explosion.GetComponent<AudioSource>().PlayOneShot(impactSFX, 2);
                 playerScript.StartStagger(0.1f);
-                playerScript.LoseHealth(spellAttackDamage);
+                playerScript.LoseHealth(spellAttackDamage, EnemyAttackType.NONPARRIABLE, null);
                 playerScript.LosePoise(spellAttackPoiseDamage);
             }
             else if(playerScript.gameObject.layer == 8)

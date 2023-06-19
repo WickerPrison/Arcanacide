@@ -143,7 +143,7 @@ public class ElectricBeams : MonoBehaviour
     void DealDamage()
     {
         StartCoroutine(HitPlayerDelay());
-        playerScript.LoseHealth(30, enemyScript);
+        playerScript.LoseHealth(30, EnemyAttackType.NONPARRIABLE, enemyScript);
         playerScript.LosePoise(30);
         playerScript.StartStagger(0.5f);
     }

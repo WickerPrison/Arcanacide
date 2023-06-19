@@ -117,7 +117,7 @@ public class ElementalistController : EnemyController
         if (playerController.gameObject.layer == 3)
         {
             enemySound.OtherSounds(1, 1);
-            playerScript.LoseHealth(hitDamage, enemyScript);
+            playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }

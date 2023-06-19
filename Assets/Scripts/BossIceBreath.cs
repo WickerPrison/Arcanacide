@@ -52,7 +52,7 @@ public class BossIceBreath : MonoBehaviour
             damageCounter += damage * Time.deltaTime;
             if(damageCounter > 1)
             {
-                playerScript.LoseHealth(Mathf.RoundToInt(damageCounter));
+                playerScript.LoseHealth(Mathf.RoundToInt(damageCounter), EnemyAttackType.NONPARRIABLE, null);
                 playerScript.LoseStamina(damageCounter * 3);
                 damageCounter = 0;
             }

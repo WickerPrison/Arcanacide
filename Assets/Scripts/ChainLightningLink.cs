@@ -130,7 +130,7 @@ public class ChainLightningLink : MonoBehaviour
                 playerScript.gameObject.GetComponent<PlayerController>().PerfectDodge();
                 return;
             }
-            playerScript.LoseHealth(electricMage.boltDamage);
+            playerScript.LoseHealth(electricMage.boltDamage, EnemyAttackType.NONPARRIABLE, null);
             playerScript.LosePoise(electricMage.boltPoiseDamage);
             boltCD = electricMage.boltMaxCD;
             bolts.SoundOn();

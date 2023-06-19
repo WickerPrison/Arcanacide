@@ -170,7 +170,7 @@ public class EnemyController : MonoBehaviour
         if (playerController.gameObject.layer == 3)
         {
             enemySound.SwordImpact();
-            playerScript.LoseHealth(hitDamage, enemyScript);
+            playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
@@ -192,6 +192,16 @@ public class EnemyController : MonoBehaviour
     }
 
     public virtual void Death()
+    {
+
+    }
+
+    public virtual void OnEnable()
+    {
+        
+    }
+
+    public virtual void OnDisable()
     {
 
     }

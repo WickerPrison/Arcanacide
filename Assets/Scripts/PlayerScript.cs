@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum EnemyAttackType
+{
+    NONPARRIABLE, PROJECTILE, MELEE
+}
+
 public class PlayerScript : MonoBehaviour
 {
     //This script is responsible for things that happen automatically without player input
@@ -21,6 +26,7 @@ public class PlayerScript : MonoBehaviour
     PlayerController playerController;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
+    PlayerSound playerSound;
     WeaponManager weaponManager;
     PlayerSound sfx;
     CameraFollow cameraScript;
@@ -69,6 +75,7 @@ public class PlayerScript : MonoBehaviour
         barrierTimer = 0;
         playerController = GetComponent<PlayerController>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerSound = GetComponentInChildren<PlayerSound>();
         weaponManager = GetComponent<WeaponManager>();
         sfx = GetComponentInChildren<PlayerSound>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
@@ -90,7 +97,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void LoseHealth(int damage, EnemyScript attackingEnemy = null)
+    public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)
     {
         if (!shield)
         {
@@ -149,9 +156,18 @@ public class PlayerScript : MonoBehaviour
         else
         {
             sfx.Shield();
-            if (parry & attackingEnemy != null)
+            if (!parry || attackingEnemy == null) return;
+            switch (attackType)
             {
-                playerController.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
+                case EnemyAttackType.PROJECTILE:
+                    playerSound.PlaySoundEffectFromList(11, 0.5f);
+                    playerController.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
+                    break;
+                case EnemyAttackType.MELEE:
+                    playerEvents.MeleeParry();
+                    playerSound.PlaySoundEffectFromList(11, 0.5f);
+                    attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.AttackPower()) * parryProfile.poiseDamageMultiplier);
+                    break;
             }
         }
     }

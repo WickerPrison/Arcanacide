@@ -73,7 +73,7 @@ public class ElectricPuddleScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerScript.LoseHealth(25);
+            playerScript.LoseHealth(25, EnemyAttackType.NONPARRIABLE, null);
             playerScript.StartStagger(staggerDuration);
             playerSound.PlaySoundEffect(damageSound, 1);
             staggerTimer = staggerDuration;

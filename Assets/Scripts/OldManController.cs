@@ -109,7 +109,7 @@ public class OldManController : EnemyController
         if (playerController.gameObject.layer == 3)
         {
             enemySound.OtherSounds(1, 1);
-            playerScript.LoseHealth(hitDamage, enemyScript);
+            playerScript.LoseHealth(hitDamage,EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
@@ -209,7 +209,7 @@ public class OldManController : EnemyController
         if(other.gameObject.layer == 3 && state == EnemyState.SPECIAL && !isColliding)
         {
             isColliding = true;
-            playerScript.LoseHealth(chargeDamage);
+            playerScript.LoseHealth(chargeDamage, EnemyAttackType.NONPARRIABLE, null);
             enemySound.SwordImpact();
         }
         else if(other.gameObject.layer == 8 && state == EnemyState.SPECIAL && !isColliding)

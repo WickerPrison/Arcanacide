@@ -196,7 +196,7 @@ public class IceBoss : EnemyController
             int damage = smashDamage;
             if (currentLimb > 2) damage += 15;
             enemySound.SwordImpact();
-            playerScript.LoseHealth(damage, enemyScript);
+            playerScript.LoseHealth(damage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(smashPoiseDamage);
             AdditionalAttackEffects();
         }
@@ -214,7 +214,7 @@ public class IceBoss : EnemyController
         {
             if(playerController.gameObject.layer == 3)
             {
-                playerScript.LoseHealth(ringBlastDamage);
+                playerScript.LoseHealth(ringBlastDamage, EnemyAttackType.NONPARRIABLE, null);
                 playerScript.LosePoise(ringBlastPoiseDamage);
             }
             else if(playerController.gameObject.layer == 8)
