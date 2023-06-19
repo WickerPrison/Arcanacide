@@ -130,4 +130,14 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     {
         enemyScript.Death();
     }
+
+    public void StartSound()
+    {
+        enemySound.Play();
+    }
+
+    public void PauseSound()
+    {
+        enemySound.Pause();
+    }
 }

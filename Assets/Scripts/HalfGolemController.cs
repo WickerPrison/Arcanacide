@@ -177,6 +177,7 @@ public class HalfGolemController : EnemyController
 
         if(remainingIce > 0)
         {
+            enemySound.OtherSounds(2, 1);
             onIceBreak?.Invoke(this, EventArgs.Empty);
             remainingIce--;
             if (remainingIce == 0)

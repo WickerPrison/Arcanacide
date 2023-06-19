@@ -52,4 +52,14 @@ public class EnemySound : MonoBehaviour
     {
         SFX.PlayOneShot(otherSounds[indexNumber], volume);
     }
+
+    public void Play()
+    {
+        SFX.Play();
+    }
+
+    public void Pause()
+    {
+        SFX.Pause();
+    }
 }
