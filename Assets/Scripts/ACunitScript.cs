@@ -13,13 +13,26 @@ public class ACunitScript : MonoBehaviour
     [SerializeField] float staminaRate;
     float staminaCounter;
     [SerializeField] MapData mapData;
+    [SerializeField] SpriteRenderer flashingLight;
+    [SerializeField] SpriteRenderer stableLight;
+    float lightMax = 4.5f;
+    float lightMin = 1.5f;
+    float slider = 4f;
+    float sliderDir = -1;
+    float sliderSpeed = 4;
 
     // Start is called before the first frame update
     void Start()
     {
         if (!mapData.ACOn)
         {
+            flashingLight.material.SetFloat("_slider", 15);
+            stableLight.material.SetFloat("_slider", 15);
             return;
+        }
+        else
+        {
+            stableLight.material.SetFloat("_slider", 1.5f);
         }
 
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -35,8 +48,18 @@ public class ACunitScript : MonoBehaviour
     {
         if (!mapData.ACOn)
         {
+            flashingLight.material.SetFloat("_slider", 15);
+            stableLight.material.SetFloat("_slider", 15);
             return;
         }
+
+        slider += sliderSpeed * Time.deltaTime * sliderDir;
+        flashingLight.material.SetFloat("_slider", slider);
+        if (slider > lightMax || slider < lightMin)
+        {
+            sliderDir *= -1;
+        }
+
 
         playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
         if(playerDistance < range)
