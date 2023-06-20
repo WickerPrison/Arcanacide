@@ -205,6 +205,11 @@ public class PlayerScript : MonoBehaviour
         }
 
         playerData.healCharges -= 1;
+        if(playerData.healCharges < 0 && playerData.tutorials.Contains("Broken Gem") && playerData.unlockedAbilities.Count > 0)
+        {
+            gm.GetComponent<TutorialManager>().BrokenGemTutorial();
+        }
+
         duckHealTimer = duckHealDuration;
         duckHealSpeed = playerData.MaxHealth() / duckHealDuration;
         sfx.Heal();

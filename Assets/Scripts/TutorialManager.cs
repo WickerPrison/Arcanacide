@@ -28,6 +28,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject blockTutorial1;
     [SerializeField] GameObject blockTutorial2;
     string block = "Block";
+    [SerializeField] GameObject brokenGemTutorial;
+    string broken_gem = "Broken Gem";
     [SerializeField] GameObject specialAttackTutorial;
     string specialAttack = "Special Attack";
     [SerializeField] GameObject morePatchesTutorial;
@@ -104,6 +106,14 @@ public class TutorialManager : MonoBehaviour
         playerData.tutorials.Remove(heal);
         nextMessage = null;
         currentMessage = Instantiate(healTutorial);
+        OpenMessage();
+    }
+
+    public void BrokenGemTutorial()
+    {
+        playerData.tutorials.Remove(broken_gem);
+        nextMessage = null;
+        currentMessage = Instantiate(brokenGemTutorial);
         OpenMessage();
     }
 
@@ -193,6 +203,7 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(texts);
         allTutorials.Add(attack);
         allTutorials.Add(heal);
+        allTutorials.Add(broken_gem);
         allTutorials.Add(dodge);
         allTutorials.Add(swordSite);
         allTutorials.Add(remnant);
