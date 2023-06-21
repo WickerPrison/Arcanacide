@@ -92,7 +92,7 @@ public class ElectricBossController : EnemyController
             {
                 Attack();
             }
-            else
+            else if(navAgent.enabled)
             {
                 navAgent.SetDestination(playerController.transform.position);
             }
