@@ -65,7 +65,7 @@ public class IceBeamController : EnemyController
                 gm.awareEnemies += 1;
             }
         }
-        else
+        else if(state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
@@ -147,6 +147,13 @@ public class IceBeamController : EnemyController
             crystalFloatDir = 1;
         }
         crystal.localPosition = new Vector3(0, crystalFloatPos + crystalStartPos, 0);
+    }
+
+    public override void StartDying()
+    {
+        line.SetPosition(0, away);
+        line.SetPosition(1, away);
+        base.StartDying();
     }
 
     public override void StartStagger(float staggerDuration)

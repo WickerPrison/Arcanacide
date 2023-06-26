@@ -6,6 +6,7 @@ using UnityEngine;
 public class IcicleScript : MonoBehaviour
 {
     Projectile projectileScript;
+    [SerializeField] ParticleSystem vfx;
 
     private void Awake()
     {
@@ -13,7 +14,6 @@ public class IcicleScript : MonoBehaviour
         projectileScript.direction = new Vector3(0, -1, 0);
     }
 
-    [SerializeField] ParticleSystem vfx;
     private void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.layer != 8)
