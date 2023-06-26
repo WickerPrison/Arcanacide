@@ -38,6 +38,13 @@ public class MainMenuButtons : MonoBehaviour
         SceneManager.LoadScene("ElectricHub");
     }
 
+    public void TestFloor3()
+    {
+        ButtonSound();
+        gm.StartAtFloor3();
+        SceneManager.LoadScene("IceHub1");
+    }
+
     public void QuitGame()
     {
         ButtonSound();

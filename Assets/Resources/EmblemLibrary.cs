@@ -8,6 +8,7 @@ public class EmblemLibrary : ScriptableObject
     [SerializeField] PlayerData playerData;
     [System.NonSerialized] public Dictionary<string, string> emblemDictionary;
     public List<string> firstFloorPatches;
+    public List<string> secondFloorPatches;
 
     public string magical_acceleration = "Magical Acceleration";
     public string magical_acceleration_description = "Mana recharges faster";
