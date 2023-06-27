@@ -344,7 +344,7 @@ public class IceBoss : EnemyController
     public override void Death()
     {
         mapData.iceBossPosition = transform.position;
-        mapData.iceBossDirection = animationEvents.facePlayer.faceDirectionID;
+        mapData.iceBossDirection = animationEvents.facePlayerSlow.faceDirectionID;
 
 
         playerData.killedEnemiesNum += 1;
@@ -408,8 +408,9 @@ public class IceBoss : EnemyController
         backAnimator.Play("DeathPose");
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         enemyScript.OnTakeDamage += TakeDamage;
     }
 }

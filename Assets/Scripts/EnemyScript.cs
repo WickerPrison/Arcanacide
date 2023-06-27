@@ -90,7 +90,7 @@ public class EnemyScript : MonoBehaviour
 
     public void LoseHealth(int damage, float poiseDamage)
     {
-        if (invincible) return;
+        if (invincible || enemyController.state == EnemyState.DYING) return;
         OnTakeDamage?.Invoke(this, EventArgs.Empty);
         hitVFX.Play();
         health -= damage;

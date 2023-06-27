@@ -7,7 +7,7 @@ using UnityEngine;
 public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
 {
     [SerializeField] BossIceBreath iceBreath;
-    public FacePlayerSlow facePlayer;
+    public FacePlayerSlow facePlayerSlow;
     [SerializeField] GameObject iceRipplePrefab;
     [SerializeField] ParticleSystem ringBlast1VFX;
     [SerializeField] GameObject ringBlast1Circle;
@@ -62,7 +62,7 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
 
     public void SetRotationSpeed(int speed)
     {
-        facePlayer.rotateSpeed = speed;
+        facePlayerSlow.rotateSpeed = speed;
     }
 
     public void ReplaceLimb(int limb)

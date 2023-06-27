@@ -133,4 +133,10 @@ public class LightningThrower : EnemyController
 
         }
     }
+
+    public override void StartDying()
+    {
+        SpecialAbilityOff();
+        base.StartDying();
+    }
 }

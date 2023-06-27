@@ -38,24 +38,10 @@ public class HUD : MonoBehaviour
 
     private void Update()
     {
-        /*
-        if (playerData.healCharges < 0)
-        {
-            healCounter.gameObject.SetActive(false);
-            manaBarCrack.SetActive(true);
-        }
-        else
-        {
-            healCounter.gameObject.SetActive(true);
-            manaBarCrack.SetActive(false);
-        }
-        */
-
         UpdateHealthbar();
         UpdateStaminaBar();
         UpdateManaBar();
         UpdateGemCracks();
-        //healCounter.text = playerData.healCharges.ToString();
     }
 
     void UpdateHealthbar()
