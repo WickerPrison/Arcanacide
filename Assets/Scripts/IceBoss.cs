@@ -97,7 +97,7 @@ public class IceBoss : EnemyController
 
         base.EnemyAI();
 
-        if (playerDistance > tooFarAway)
+        if (playerDistance > tooFarAway && state != EnemyState.DYING)
         {
             RainIcicles();
 
