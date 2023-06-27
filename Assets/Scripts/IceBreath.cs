@@ -47,7 +47,7 @@ public class IceBreath : MonoBehaviour
                 foreach (RaycastHit hit in hitTargets )
                 {
                     EnemyScript enemy = hit.collider.gameObject.GetComponent<EnemyScript>();
-                    enemy.LoseHealth(1, 1);
+                    enemy.LoseHealth(1, 0);
                 }                
             }
         }
