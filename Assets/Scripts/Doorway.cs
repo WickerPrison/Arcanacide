@@ -13,6 +13,7 @@ public class Doorway : MonoBehaviour
     [SerializeField] GameObject lockedMessage;
     [SerializeField] GameObject doorAudioPrefab;
     [SerializeField] int lockedDoorID;
+    [SerializeField] Material fogWallMaterial;
     GameObject doorAudio;
     public Transform player;
     GameManager gm;
@@ -20,6 +21,8 @@ public class Doorway : MonoBehaviour
     public float playerDistance = 100;
     float interactDistance = 2;
     float doorTimer = 0.5f;
+    bool fogOn = false;
+    float fadeDuration = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +33,7 @@ public class Doorway : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         doorOpen = true;
         message.SetActive(false);
+        fogWallMaterial.SetFloat("_FadeIn", 0);
     }
 
     public virtual void Update()
@@ -61,6 +65,48 @@ public class Doorway : MonoBehaviour
             message.SetActive(false);
             lockedMessage.SetActive(false);
         }
+
+        if (fogOn && gm.awareEnemies <= 0)
+        {
+            fogOn = false;
+            StartCoroutine(FogWallOff());
+        }
+        else if(!fogOn && gm.awareEnemies > 0)
+        {
+            fogOn = true;
+            StartCoroutine(FogWallOn());
+        }
+    }
+
+    IEnumerator FogWallOn()
+    {
+        float fadeTimer = fadeDuration;
+        float fadeRatio = fadeTimer / fadeDuration;
+        while(fadeTimer > 0)
+        {
+
+            fadeTimer -= Time.deltaTime;
+            fadeRatio = fadeTimer / fadeDuration;
+            fogWallMaterial.SetFloat("_FadeIn", 1 - fadeRatio);
+            yield return new WaitForEndOfFrame();
+        }
+        fogWallMaterial.SetFloat("_FadeIn", 1);
+    }
+
+    IEnumerator FogWallOff()
+    {
+        float fadeTimer = fadeDuration;
+        float fadeRatio = fadeTimer / fadeDuration;
+        while (fadeTimer > 0)
+        {
+
+            fadeTimer -= Time.deltaTime;
+            fadeRatio = fadeTimer / fadeDuration;
+            fogWallMaterial.SetFloat("_FadeIn", fadeRatio);
+            yield return new WaitForEndOfFrame();
+        }
+
+        fogWallMaterial.SetFloat("_FadeIn", 0);
     }
 
     void OpenDoor()
