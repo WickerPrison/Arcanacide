@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
+    [SerializeField] MapData mapData;
     [SerializeField] GameObject healbarFill;
     //[SerializeField] GameObject staminabarFill;
     [SerializeField] RectTransform staminaBarCover;
@@ -14,6 +15,7 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject manaBarFill;
     [SerializeField] GameObject manaBarCrack;
     [SerializeField] TextMeshProUGUI healCounter;
+    [SerializeField] Material youDiedTextMaterial;
     public List<Sprite> gemSprites = new List<Sprite>();
     [SerializeField] Sprite unbrokenGem;
     public Image gemImage;
@@ -29,6 +31,8 @@ public class HUD : MonoBehaviour
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = mainCamera;
+
+        youDiedTextMaterial.SetColor("_OutlineColor", mapData.floorColor);
 
         if (!playerData.hasHealthGem)
         {

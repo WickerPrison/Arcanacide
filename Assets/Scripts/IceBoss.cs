@@ -57,7 +57,7 @@ public class IceBoss : EnemyController
         {
             enemyScript = GetComponent<EnemyScript>();
             enemyScript.enabled = false;
-            return;
+           // return;
         }
 
         base.Awake();
@@ -70,13 +70,17 @@ public class IceBoss : EnemyController
         line.SetPosition(0, away);
         line.SetPosition(1, away);
 
+        base.Start();
+
         if (mapData.iceBossKilled)
         {
             SetupDeathPose();
-            return;
+            GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
+            bossHealthbar.SetActive(false);
+            MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
+            musicManager.ImmediateStop();
+            //return;
         }
-
-        base.Start();
 
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
 
