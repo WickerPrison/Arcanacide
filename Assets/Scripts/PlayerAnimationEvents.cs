@@ -34,6 +34,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     private void Awake()
     {
         bigClaws = transform.parent.GetComponentInChildren<BigClaws>();
+        playerEvents = GetComponentInParent<PlayerEvents>();
     }
 
     // Start is called before the first frame update
@@ -41,7 +42,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerAnimation = GetComponentInParent<PlayerAnimation>();
-        playerEvents = GetComponentInParent<PlayerEvents>();
         smear = transform.parent.GetComponentInChildren<PlayerSmear>();
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
         playerController = GetComponentInParent<PlayerController>();
@@ -429,5 +429,21 @@ public class PlayerAnimationEvents : MonoBehaviour
             frontAnimator.speed = 1;
             backAnimator.speed = 1;
         }
+    }
+    private void onPlayerStagger(object sender, EventArgs e)
+    {
+        SwitchWeaponSprite(playerData.currentWeapon);
+        EndWalkLayer();
+        StartInput();
+    }
+
+    private void OnEnable()
+    {
+        playerEvents.onPlayerStagger += onPlayerStagger;
+    }
+
+    private void OnDisable()
+    {
+        playerEvents.onPlayerStagger -= onPlayerStagger;
     }
 }

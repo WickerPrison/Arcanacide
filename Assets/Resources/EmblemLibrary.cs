@@ -75,7 +75,7 @@ public class EmblemLibrary : ScriptableObject
 
     public int ArcaneRemainsDamage()
     {
-        return playerData.dedication * 2 + 15;
+        return playerData.dedication * 2 + 10;
     }
 
     public int ConfidentKillerDamage()

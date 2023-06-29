@@ -59,7 +59,7 @@ public class Remnant : MonoBehaviour
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
                 weaponManager.RemoveWeaponMagicSource();
-                playerController.arcaneRemainsActive = true;
+                playerController.arcaneRemainsActive = false;
                 playerScript.MaxHeal();
             }
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
