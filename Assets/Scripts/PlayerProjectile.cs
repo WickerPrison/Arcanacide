@@ -35,12 +35,11 @@ public class PlayerProjectile : MonoBehaviour
     {
         EnemyScript enemyScript = collision.gameObject.GetComponent<EnemyScript>();
         int damage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
-        int poiseDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.poiseDamageMultiplier);
         if(attackProfile.attackType == AttackType.SPECIAL && playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
         {
             damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMasteryPercent);
         }
-        enemyScript.LoseHealth(damage, poiseDamage);
+        enemyScript.LoseHealth(damage, 0);
         if (playerData.equippedEmblems.Contains(emblemLibrary.burning_reflection) && attackProfile.attackType == AttackType.DEFLECT)
         {
             addedDOT = 10;

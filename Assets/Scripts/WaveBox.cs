@@ -9,7 +9,7 @@ public class WaveBox : MonoBehaviour
     public float poiseDamage;
     [SerializeField] bool canHurtEnemies = false;
     FireWave fireWave;
-    EnemyScript enemyOfOrigin;
+    [System.NonSerialized] public EnemyScript enemyOfOrigin;
 
     private void Start()
     {

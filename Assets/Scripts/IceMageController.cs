@@ -69,9 +69,11 @@ public class IceMageController : EnemyController
 
     public override void SpellAttack()
     {
-        GameObject projectile;
-        projectile = Instantiate(projectilePrefab);
-        projectile.transform.position = playerController.transform.position;
+        GameObject icicle;
+        icicle = Instantiate(projectilePrefab);
+        icicle.transform.position = playerController.transform.position;
+        Projectile projectile = icicle.GetComponentInChildren<Projectile>();
+        projectile.enemyOfOrigin = enemyScript;
     }
 
     public override void SpecialAbility()

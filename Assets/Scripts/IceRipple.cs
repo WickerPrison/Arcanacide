@@ -5,6 +5,7 @@ using UnityEngine;
 public class IceRipple : MonoBehaviour
 {
     [SerializeField] GameObject iceBoxPrefab;
+    [System.NonSerialized] public EnemyScript enemyOfOrigin;
     float startRadius = 2;
     int numberOfBoxes = 35;
     float rippleSpeed = 5;
@@ -22,6 +23,8 @@ public class IceRipple : MonoBehaviour
             iceBox.rippleSpeed = rippleSpeed;
             iceBox.lifeTime = lifeTime;
             iceBox.direction = Vector3.Normalize(iceBox.transform.position - transform.position);
+            WaveBox waveBox = iceBox.GetComponent<WaveBox>();
+            waveBox.enemyOfOrigin = enemyOfOrigin;
         }
     }
 

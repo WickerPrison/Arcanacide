@@ -257,6 +257,8 @@ public class IceBoss : EnemyController
             icicleTimer = icicleMaxTime;
             Transform icicle = Instantiate(iciclePrefab).transform;
             icicle.position = playerController.transform.position;
+            Projectile projectile = icicle.GetComponentInChildren<Projectile>();
+            projectile.enemyOfOrigin = enemyScript;
         }
     }
 
