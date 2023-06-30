@@ -168,8 +168,9 @@ public class HalfGolemController : EnemyController
             playerController.PerfectDodge();
         }
     }
-    private void OnTakeDamage(object sender, EventArgs e)
+    public override void OnTakeDamage(object sender, EventArgs e)
     {
+        base.OnTakeDamage(sender, e);
         if (remainingIce > 0)
         {
             enemySound.OtherSounds(2, 1);

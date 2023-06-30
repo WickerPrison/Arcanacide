@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpriteEffects : MonoBehaviour
@@ -7,7 +8,8 @@ public class SpriteEffects : MonoBehaviour
     EnemyScript enemyScript;
     [SerializeField] Material whiteMaterial;
     [SerializeField] Material spriteMaterial;
-    SpriteRenderer[] renderers;
+    SpriteRenderer[] allRenderers;
+    List<SpriteRenderer> renderers = new List<SpriteRenderer>();
     WaitForSecondsRealtime flashTime = new WaitForSecondsRealtime(.15f);
     WaitForSecondsRealtime delayTime = new WaitForSecondsRealtime(0.3f);
     bool isFlashing = false;
@@ -19,7 +21,14 @@ public class SpriteEffects : MonoBehaviour
     private void Awake()
     {
         enemyScript = GetComponent<EnemyScript>();
-        renderers = GetComponentsInChildren<SpriteRenderer>();
+        allRenderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach(SpriteRenderer renderer in allRenderers)
+        {
+            if(renderer.sharedMaterial == spriteMaterial)
+            {
+                renderers.Add(renderer);
+            }
+        }
     }
 
     void StartFlash(object sender, System.EventArgs e)

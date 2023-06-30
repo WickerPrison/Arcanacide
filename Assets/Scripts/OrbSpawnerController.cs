@@ -76,11 +76,6 @@ public class OrbSpawnerController : EnemyController
         enemyScript.Death();
     }
 
-    public override void OnHit()
-    {
-
-    }
-
     public override void StartStagger(float staggerDuration)
     {
         

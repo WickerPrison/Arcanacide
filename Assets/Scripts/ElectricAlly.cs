@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class ElectricAlly : MonoBehaviour
 {
-    int damage = 20;
     float poiseDamage = 20;
-    public bool isShielded = false;
-    [SerializeField] SpriteRenderer shield;
+    [System.NonSerialized] public bool isShielded = false;
+    SpriteRenderer shield;
     PlayerScript playerScript;
+    EnemyScript enemyScript;
+
+    private void Awake()
+    {
+        enemyScript = GetComponentInParent<EnemyScript>();
+    }
 
     private void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        shield = GetComponent<SpriteRenderer>();
     }
 
     public void ShieldOnOff(bool onOrOff)
@@ -21,15 +27,23 @@ public class ElectricAlly : MonoBehaviour
         isShielded = onOrOff;
     }
 
-    public void OnHit()
+    private void OnLosePoise(object sender, System.EventArgs e)
     {
-        if (!isShielded)
-        {
-            return;
-        }
+        if (!isShielded) return;
 
-        playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
         playerScript.LosePoise(poiseDamage);
         playerScript.StartStagger(1);
     }
+
+    private void OnEnable()
+    {
+        enemyScript.OnLosePoise += OnLosePoise;
+    }
+
+
+    private void OnDisable()
+    {
+        enemyScript.OnLosePoise -= OnLosePoise;
+    }
+
 }

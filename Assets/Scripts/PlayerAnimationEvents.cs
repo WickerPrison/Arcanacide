@@ -433,7 +433,9 @@ public class PlayerAnimationEvents : MonoBehaviour
     private void onPlayerStagger(object sender, EventArgs e)
     {
         SwitchWeaponSprite(playerData.currentWeapon);
-        EndWalkLayer();
+        playerController.canWalk = false;
+        frontAnimator.SetLayerWeight(1, 0);
+        backAnimator.SetLayerWeight(1, 0);
         StartInput();
     }
 

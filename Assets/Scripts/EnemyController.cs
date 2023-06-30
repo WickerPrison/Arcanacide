@@ -124,15 +124,6 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public virtual void OnHit()
-    {
-        ElectricAlly ally = GetComponent<ElectricAlly>();
-        if (ally != null)
-        {
-            ally.OnHit();
-        }
-    }
-
     public virtual void StartStagger(float staggerDuration)
     {
         if (state == EnemyState.DYING)
@@ -195,14 +186,26 @@ public class EnemyController : MonoBehaviour
     {
 
     }
-
-    public virtual void OnEnable()
+    public virtual void OnTakeDamage(object sender, System.EventArgs e)
     {
         
     }
 
+    public virtual void OnLosePoise(object sender, System.EventArgs e)
+    {
+        
+    }
+
+    public virtual void OnEnable()
+    {
+        enemyScript.OnTakeDamage += OnTakeDamage;
+        enemyScript.OnLosePoise += OnLosePoise;
+    }
+
+
     public virtual void OnDisable()
     {
-
+        enemyScript.OnTakeDamage -= OnTakeDamage;
+        enemyScript.OnLosePoise -= OnLosePoise;
     }
 }

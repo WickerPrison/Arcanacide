@@ -20,7 +20,7 @@ public class ChainLightningLink : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        electricAlly = GetComponentInParent<ElectricAlly>();
+        electricAlly = GetComponent<ElectricAlly>();
         puddle = GetComponent<ElectricPuddleScript>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -52,7 +52,7 @@ public class ChainLightningLink : MonoBehaviour
             bolts.SetPositions(away, away);
             if(electricAlly != null)
             {
-                electricAlly.ShieldOnOff(isElectrified);
+                electricAlly.ShieldOnOff(false);
             }
 
             if(puddle != null)
@@ -78,7 +78,7 @@ public class ChainLightningLink : MonoBehaviour
 
         if(electricAlly != null)
         {
-            electricAlly.ShieldOnOff(isElectrified);
+            electricAlly.ShieldOnOff(true);
         }
 
         if(puddle != null)

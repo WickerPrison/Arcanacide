@@ -195,9 +195,9 @@ public class BossController : EnemyController
         }
     }
 
-    public override void OnHit()
+    public override void OnLosePoise(object sender, System.EventArgs e)
     {
-        base.OnHit();
+        base.OnLosePoise(sender, e);
         if (canStagger)
         {
             canStagger = false;

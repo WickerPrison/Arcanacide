@@ -33,7 +33,9 @@ public class EnemyScript : MonoBehaviour
     public bool invincible = false;
 
     public event EventHandler OnTakeDamage;
+    public event EventHandler OnLosePoise;
     public event EventHandler OnStagger;
+    public event EventHandler OnDeath;
 
     private void Awake()
     {
@@ -132,7 +134,7 @@ public class EnemyScript : MonoBehaviour
         {
             return;
         }
-        enemyController.OnHit();
+        OnLosePoise?.Invoke(this, EventArgs.Empty);
 
         if (enemyController.state != EnemyState.ATTACKING && enemyController.state != EnemyState.DYING)
         {
@@ -199,6 +201,8 @@ public class EnemyScript : MonoBehaviour
             int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
             playerScript.PartialHeal(healAmount);
         }
+
+        OnDeath?.Invoke(this, EventArgs.Empty);
 
         Destroy(gameObject);
     }

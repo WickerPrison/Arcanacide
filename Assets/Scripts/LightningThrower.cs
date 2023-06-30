@@ -130,7 +130,6 @@ public class LightningThrower : EnemyController
                 playerScript.LoseHealth(1, EnemyAttackType.NONPARRIABLE, null);
             }
             playerScript.StartStagger(Time.fixedDeltaTime * 1.1f);
-
         }
     }
 
