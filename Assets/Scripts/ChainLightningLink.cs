@@ -41,10 +41,9 @@ public class ChainLightningLink : MonoBehaviour
 
     private void Update()
     {
-        if(electricMage == null)
-        {
-            return;
-        }
+        if (Time.timeScale == 0) bolts.SoundOff();
+
+        if (electricMage == null) return;
 
         if (isElectrified && electricMage.notElectrifiedLinks.Contains(this))
         {
@@ -145,6 +144,7 @@ public class ChainLightningLink : MonoBehaviour
     {
         if(electricMage != null && bolts != null)
         {
+            bolts.SoundOff();
             bolts.SetPositions(away, away);
             electricMage.chainLightningLinks.Remove(this);
         }
