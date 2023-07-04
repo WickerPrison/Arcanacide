@@ -18,7 +18,7 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
     [SerializeField] float delayTime;
     WaitForSeconds ringBlastDelay;
     IceBoss bossController;
-    EnemyScript enemyScript;
+    EnemyScript bossEnemyScript;
     public event Action<int> OnReplaceLimb;
 
     public override void Start()
@@ -26,7 +26,7 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
         base.Start();
         ringBlastDelay = new WaitForSeconds(delayTime);
         bossController = GetComponentInParent<IceBoss>();
-        enemyScript = bossController.GetComponent<EnemyScript>();
+        bossEnemyScript = bossController.GetComponent<EnemyScript>();
 
         /*
         for(int i = 0; i < golemLimbs.Length; i++)
@@ -92,7 +92,7 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
         enemySound.OtherSounds(1, 1);
         IceRipple iceRipple = Instantiate(iceRipplePrefab).GetComponent<IceRipple>();
         iceRipple.transform.position = bossController.transform.position + new Vector3(0, 1, 0);
-        iceRipple.enemyOfOrigin = enemyScript;
+        iceRipple.enemyOfOrigin = bossEnemyScript;
     }
 
     public void DoneTransforming()

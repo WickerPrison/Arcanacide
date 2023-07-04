@@ -417,6 +417,6 @@ public class IceBoss : EnemyController
     public override void OnEnable()
     {
         base.OnEnable();
-        enemyScript.OnTakeDamage += TakeDamage;
+        enemyEvents.OnTakeDamage += TakeDamage;
     }
 }

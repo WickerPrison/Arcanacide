@@ -8,11 +8,11 @@ public class ElectricAlly : MonoBehaviour
     [System.NonSerialized] public bool isShielded = false;
     SpriteRenderer shield;
     PlayerScript playerScript;
-    EnemyScript enemyScript;
+    EnemyEvents enemyEvents;
 
     private void Awake()
     {
-        enemyScript = GetComponentInParent<EnemyScript>();
+        enemyEvents = GetComponentInParent<EnemyEvents>();
     }
 
     private void Start()
@@ -37,13 +37,13 @@ public class ElectricAlly : MonoBehaviour
 
     private void OnEnable()
     {
-        enemyScript.OnLosePoise += OnLosePoise;
+        enemyEvents.OnLosePoise += OnLosePoise;
     }
 
 
     private void OnDisable()
     {
-        enemyScript.OnLosePoise -= OnLosePoise;
+        enemyEvents.OnLosePoise -= OnLosePoise;
     }
 
 }

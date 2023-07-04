@@ -205,12 +205,12 @@ public class HalfGolemController : EnemyController
     public override void OnEnable()
     {
         base.OnEnable();
-        enemyScript.OnTakeDamage += OnTakeDamage;
+        enemyEvents.OnTakeDamage += OnTakeDamage;
     }
 
     public override void OnDisable()
     {
         base.OnDisable();
-        enemyScript.OnTakeDamage -= OnTakeDamage;
+        enemyEvents.OnTakeDamage -= OnTakeDamage;
     }
 }

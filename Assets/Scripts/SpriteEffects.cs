@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpriteEffects : MonoBehaviour
 {
-    EnemyScript enemyScript;
+    EnemyEvents enemyEvents;
     [SerializeField] Material whiteMaterial;
     [SerializeField] Material spriteMaterial;
     SpriteRenderer[] allRenderers;
@@ -20,7 +20,7 @@ public class SpriteEffects : MonoBehaviour
 
     private void Awake()
     {
-        enemyScript = GetComponent<EnemyScript>();
+        enemyEvents = GetComponent<EnemyEvents>();
         allRenderers = GetComponentsInChildren<SpriteRenderer>();
         foreach(SpriteRenderer renderer in allRenderers)
         {
@@ -79,11 +79,11 @@ public class SpriteEffects : MonoBehaviour
 
     private void OnEnable()
     {
-        enemyScript.OnTakeDamage += StartFlash;
+        enemyEvents.OnTakeDamage += StartFlash;
     }
 
     private void OnDisable()
     {
-        enemyScript.OnTakeDamage -= StartFlash;
+        enemyEvents.OnTakeDamage -= StartFlash;
     }
 }

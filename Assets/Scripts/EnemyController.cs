@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour
     [System.NonSerialized] public GameManager gm;
     [System.NonSerialized] public Smear smearScript;
     [System.NonSerialized] public EnemyScript enemyScript;
+    [System.NonSerialized] public EnemyEvents enemyEvents;
     [System.NonSerialized] public EnemySound enemySound;
     [System.NonSerialized] public PlayerController playerController;
     [System.NonSerialized] public PlayerScript playerScript;
@@ -47,7 +48,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Awake()
     {
-        enemyScript = gameObject.GetComponent<EnemyScript>();
+        enemyEvents = GetComponent<EnemyEvents>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<PlayerScript>();
     }
@@ -55,6 +56,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
+        enemyScript = GetComponent<EnemyScript>();
         enemySound = GetComponentInChildren<EnemySound>();
         smearScript = GetComponentInChildren<Smear>();
         playerController = player.GetComponent<PlayerController>();
@@ -198,14 +200,14 @@ public class EnemyController : MonoBehaviour
 
     public virtual void OnEnable()
     {
-        enemyScript.OnTakeDamage += OnTakeDamage;
-        enemyScript.OnLosePoise += OnLosePoise;
+        enemyEvents.OnTakeDamage += OnTakeDamage;
+        enemyEvents.OnLosePoise += OnLosePoise;
     }
 
 
     public virtual void OnDisable()
     {
-        enemyScript.OnTakeDamage -= OnTakeDamage;
-        enemyScript.OnLosePoise -= OnLosePoise;
+        enemyEvents.OnTakeDamage -= OnTakeDamage;
+        enemyEvents.OnLosePoise -= OnLosePoise;
     }
 }

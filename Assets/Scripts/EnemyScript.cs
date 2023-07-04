@@ -18,24 +18,17 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] DialogueData phoneData;
     public EmblemLibrary emblemLibrary;
     EnemyController enemyController;
+    EnemyEvents enemyEvents;
     EnemySound enemySound;
-    ImpactVFX impactVFX;
     GameManager gm;
     public int maxHealth;
     [SerializeField] float maxPoise;
     [SerializeField] float poiseRegeneration;
     [SerializeField] float staggerDuration;
-    [SerializeField] ParticleSystem hitVFX;
-    [SerializeField] ParticleSystem dotVFX;
     [System.NonSerialized] public float DOT = 0;
     [System.NonSerialized] public bool blockAttack = false;
     float damageDOT = 0;
     public bool invincible = false;
-
-    public event EventHandler OnTakeDamage;
-    public event EventHandler OnLosePoise;
-    public event EventHandler OnStagger;
-    public event EventHandler OnDeath;
 
     private void Awake()
     {
@@ -51,8 +44,8 @@ public class EnemyScript : MonoBehaviour
         health = maxHealth;
         poise = maxPoise;
         enemyController = GetComponent<EnemyController>();
+        enemyEvents = GetComponent<EnemyEvents>();
         enemySound = GetComponentInChildren<EnemySound>();
-        impactVFX = GetComponentInChildren<ImpactVFX>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gm.enemies.Add(this);
     }
@@ -68,8 +61,7 @@ public class EnemyScript : MonoBehaviour
         if(health <= 0 && enemyController.state != EnemyState.DYING)
         {
             enemyController.state = EnemyState.DYING;
-            dotVFX.Stop();
-            dotVFX.Clear();
+            enemyEvents.StopDOT();
             enemyController.StartDying();
         }
 
@@ -85,7 +77,7 @@ public class EnemyScript : MonoBehaviour
 
             if(DOT <= 0)
             {
-                dotVFX.Stop();
+                enemyEvents.StopDOT();
             }
         }
     }
@@ -93,8 +85,7 @@ public class EnemyScript : MonoBehaviour
     public void LoseHealth(int damage, float poiseDamage)
     {
         if (invincible || enemyController.state == EnemyState.DYING) return;
-        OnTakeDamage?.Invoke(this, EventArgs.Empty);
-        hitVFX.Play();
+        enemyEvents.TakeDamage();
         health -= damage;
         if(health < 0)
         {
@@ -106,7 +97,7 @@ public class EnemyScript : MonoBehaviour
 
     public void ImpactVFX()
     {
-        impactVFX.AttackImpact();
+        enemyEvents.AttackImpact();
     }
 
     public void GainDOT(float duration)
@@ -114,7 +105,7 @@ public class EnemyScript : MonoBehaviour
         if(duration > DOT)
         {
             DOT = duration;
-            dotVFX.Play();
+            enemyEvents.StartDOT();
         }
     }
 
@@ -134,7 +125,7 @@ public class EnemyScript : MonoBehaviour
         {
             return;
         }
-        OnLosePoise?.Invoke(this, EventArgs.Empty);
+        enemyEvents.LosePoise();
 
         if (enemyController.state != EnemyState.ATTACKING && enemyController.state != EnemyState.DYING)
         {
@@ -156,7 +147,7 @@ public class EnemyScript : MonoBehaviour
 
     public void StartStagger(float staggerDuration)
     {
-        OnStagger?.Invoke(this, EventArgs.Empty);
+        enemyEvents.Stagger();
         enemyController.StartStagger(staggerDuration);
     }
 
@@ -202,7 +193,7 @@ public class EnemyScript : MonoBehaviour
             playerScript.PartialHeal(healAmount);
         }
 
-        OnDeath?.Invoke(this, EventArgs.Empty);
+        enemyEvents.Death();
 
         Destroy(gameObject);
     }

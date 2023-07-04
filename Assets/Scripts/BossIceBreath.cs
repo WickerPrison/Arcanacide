@@ -11,7 +11,7 @@ public class BossIceBreath : MonoBehaviour
     [SerializeField] AudioClip damageSFX;
     WaitForSeconds damageSFXdelay = new WaitForSeconds(.6f);
     bool canPlaySound = true;
-    EnemyScript enemyScript;
+    EnemyEvents enemyEvents;
     PlayerScript playerScript;
     bool iceBreathOn = false;
     bool hitPlayer;
@@ -20,7 +20,7 @@ public class BossIceBreath : MonoBehaviour
 
     private void Awake()
     {
-        enemyScript = GetComponentInParent<EnemyScript>();
+        enemyEvents = GetComponentInParent<EnemyEvents>();
     }
 
     // Start is called before the first frame update
@@ -87,6 +87,11 @@ public class BossIceBreath : MonoBehaviour
 
     private void OnEnable()
     {
-        enemyScript.OnStagger += OnStagger;
+        enemyEvents.OnStagger += OnStagger;
+    }
+
+    private void OnDisable()
+    {
+        enemyEvents.OnStagger -= OnStagger;
     }
 }
