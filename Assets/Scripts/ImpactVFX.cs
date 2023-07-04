@@ -11,6 +11,7 @@ public class ImpactVFX : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] ParticleSystem magicImpact;
+    [SerializeField] ParticleSystem impactVFX;
     [SerializeField] ParticleSystem dot;
     [SerializeField] ParticleSystem hitVFX;
     EnemyEvents enemyEvents;
@@ -66,6 +67,10 @@ public class ImpactVFX : MonoBehaviour
         if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > emblemLibrary.spellswordManaCost)
         {
             magicImpact.Play();
+        }
+        else
+        {
+            impactVFX.Play();
         }
     }
 
