@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerEvents : MonoBehaviour
 {
+    public event EventHandler onDashStart;
     public event EventHandler onPlayerStagger;
     public event EventHandler onAxeSpecial;
     public event EventHandler onClawSpecial;
@@ -14,6 +15,10 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onEndMirrorCloak;
     public event EventHandler onMeleeParry;
 
+    public void DashStart()
+    {
+        onDashStart?.Invoke(this, EventArgs.Empty);
+    }
 
     public void PlayerStagger()
     {

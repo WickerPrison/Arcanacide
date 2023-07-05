@@ -255,6 +255,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     //behaves the same as the player layer
     public void StartIFrames()
     {
+        playerEvents.DashStart();
         playerController.gameObject.layer = 8;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {

@@ -9,6 +9,7 @@ public class VFXmanager : MonoBehaviour
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] SpriteRenderer parryPulse1;
     [SerializeField] SpriteRenderer parryPulse2;
+    [SerializeField] ParticleSystem dashSmear;
     float parryPulseDuration = 0.2f;
     float parryPulseTimer;
     float parryPulseFadeaway = 0.1f;
@@ -42,6 +43,11 @@ public class VFXmanager : MonoBehaviour
         parryPulse2.color = tempColor;
         if (playerData.clawSpecialOn) clawSpecialVFX.Play();
         mirrorCloak.enabled = playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak);
+    }
+
+    private void onDashStart(object sender, System.EventArgs e)
+    {
+        //dashSmear.Play();
     }
 
     private void OnClawSpecial(object sender, System.EventArgs e)
@@ -118,6 +124,7 @@ public class VFXmanager : MonoBehaviour
 
     private void OnEnable()
     {
+        playerEvents.onDashStart += onDashStart;
         playerEvents.onClawSpecial += OnClawSpecial;
         playerEvents.onEndClawSpecial += OnEndClawSpecial;
         playerEvents.onStartMirrorCloak += onStartMirrorCloak;
@@ -128,6 +135,7 @@ public class VFXmanager : MonoBehaviour
 
     private void OnDisable()
     {
+        playerEvents.onDashStart -= onDashStart;
         playerEvents.onClawSpecial -= OnClawSpecial;
         playerEvents.onEndClawSpecial -= OnEndClawSpecial;
         playerEvents.onStartMirrorCloak -= onStartMirrorCloak;
