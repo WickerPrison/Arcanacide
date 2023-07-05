@@ -7,6 +7,7 @@ public class AfterImageController : MonoBehaviour
     [SerializeField] GameObject afterimagePrefab;
     [SerializeField] Transform frontAnimator;
     [SerializeField] Transform backAnimator;
+    [SerializeField] PlayerData playerData;
     PlayerEvents playerEvents;
     PlayerAnimation playerAnimation;
     WaitForSeconds imageRate;
@@ -47,7 +48,7 @@ public class AfterImageController : MonoBehaviour
                 playerTransform = backAnimator;
             }
 
-            afterImage.PlaceAfterImage(AfterimageWeapon.SWORD, playerAnimation.facingFront, playerTransform);
+            afterImage.PlaceAfterImage(playerData.currentWeapon, playerAnimation.facingFront, playerTransform);
 
             yield return imageRate;
         }
