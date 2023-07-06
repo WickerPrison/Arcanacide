@@ -8,6 +8,8 @@ public class PlayerEvents : MonoBehaviour
 {
     public event EventHandler onDashStart;
     public event EventHandler onDashEnd;
+    public event EventHandler onAttackImpact;
+    public event EventHandler onTakeDamage;
     public event EventHandler onPlayerStagger;
     public event EventHandler onAxeSpecial;
     public event EventHandler onClawSpecial;
@@ -24,6 +26,16 @@ public class PlayerEvents : MonoBehaviour
     public void DashEnd()
     {
         onDashEnd?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void AttackImpact()
+    {
+        onAttackImpact?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void TakeDamage()
+    {
+        onTakeDamage?.Invoke(this, EventArgs.Empty);
     }
 
     public void PlayerStagger()

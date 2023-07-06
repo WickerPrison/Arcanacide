@@ -99,6 +99,8 @@ public class PlayerScript : MonoBehaviour
 
     public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)
     {
+        if (attackType != EnemyAttackType.NONPARRIABLE) playerEvents.AttackImpact();
+
         if (!shield)
         {
             if (barrier)
@@ -126,6 +128,7 @@ public class PlayerScript : MonoBehaviour
             }
 
             playerData.health -= damage;
+            playerEvents.TakeDamage();
 
             if (attackingEnemy != null && playerData.equippedEmblems.Contains(emblemLibrary.burning_cloak))
             {

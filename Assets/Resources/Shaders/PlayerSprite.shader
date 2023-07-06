@@ -1,4 +1,4 @@
-Shader "Unlit/EnemySprite"
+Shader "Unlit/PlayerSprite"
 {
 	Properties
 	{
@@ -8,10 +8,6 @@ Shader "Unlit/EnemySprite"
 
 		// These are the properties I added
 		_FlashWhite ("Flash White", float) = 0
-		_DissolveTex ("Dissolve Texture", 2D) = "white" {}
-		_DissolveProg ("Dissolve Progression", range(0,1)) = 0
-		_Density("Dissolve Density", float) = 0.5
-		_EdgeWidth("Edge Width", float) = 0.05
 	}
 
 	SubShader
@@ -56,10 +52,6 @@ Shader "Unlit/EnemySprite"
 			fixed4 _Color;
 			// my variables
 			float _FlashWhite;
-			sampler2D _DissolveTex;
-			float _DissolveProg;
-			float _Density;
-			float _EdgeWidth;
 
 			v2f vert(appdata_t IN)
 			{
@@ -96,19 +88,8 @@ Shader "Unlit/EnemySprite"
 				fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
 				c.rgb *= c.a;
 
-				// this is the stuff I added                       
-				clip(c.a - 0.5);
-                float2 projection = IN.worldPos.xy * _Density;
-                fixed4 dissolveTex = tex2D(_DissolveTex, projection);
-
-                float mask = dissolveTex - _DissolveProg;
-                clip(mask);
-
-                float edgeMask = mask < _EdgeWidth;
-
-                float3 outColor = lerp(c.xyz, float3(1,1,1), edgeMask);
-
-                return float4(outColor + _FlashWhite, 1);
+				float4 outColor = float4(c.rgb + _FlashWhite, c.a);
+                return outColor;
 			}
 		ENDCG
 		}

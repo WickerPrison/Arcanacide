@@ -6,7 +6,6 @@ using UnityEngine;
 public class SpriteEffects : MonoBehaviour
 {
     EnemyEvents enemyEvents;
-    [SerializeField] Material whiteMaterial;
     [SerializeField] Material spriteMaterial;
     SpriteRenderer[] allRenderers;
     List<SpriteRenderer> renderers = new List<SpriteRenderer>();
@@ -45,12 +44,12 @@ public class SpriteEffects : MonoBehaviour
         isFlashing = true;
         foreach(SpriteRenderer sprite in renderers)
         {
-            sprite.material = whiteMaterial;
+            sprite.material.SetFloat("_FlashWhite", 1);
         }
         yield return flashTime;
         foreach (SpriteRenderer sprite in renderers)
         {
-            sprite.material = spriteMaterial;
+            sprite.material.SetFloat("_FlashWhite", 0);
         }
         isFlashing = false;
     }

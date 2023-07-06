@@ -7,9 +7,10 @@ public class VFXmanager : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] ParticleSystem dodgeVFX;
+    [SerializeField] ParticleSystem impactVFX;
     [SerializeField] SpriteRenderer parryPulse1;
     [SerializeField] SpriteRenderer parryPulse2;
-    [SerializeField] ParticleSystem dodgeVFX;
     float parryPulseDuration = 0.2f;
     float parryPulseTimer;
     float parryPulseFadeaway = 0.1f;
@@ -48,6 +49,11 @@ public class VFXmanager : MonoBehaviour
     private void onDashStart(object sender, System.EventArgs e)
     {
         dodgeVFX.Play();
+    }
+
+    private void onAttackImpact(object sender, System.EventArgs e)
+    {
+        impactVFX.Play();
     }
 
     private void OnClawSpecial(object sender, System.EventArgs e)
@@ -125,6 +131,7 @@ public class VFXmanager : MonoBehaviour
     private void OnEnable()
     {
         playerEvents.onDashStart += onDashStart;
+        playerEvents.onAttackImpact += onAttackImpact;
         playerEvents.onClawSpecial += OnClawSpecial;
         playerEvents.onEndClawSpecial += OnEndClawSpecial;
         playerEvents.onStartMirrorCloak += onStartMirrorCloak;
@@ -136,6 +143,7 @@ public class VFXmanager : MonoBehaviour
     private void OnDisable()
     {
         playerEvents.onDashStart -= onDashStart;
+        playerEvents.onAttackImpact -= onAttackImpact;
         playerEvents.onClawSpecial -= OnClawSpecial;
         playerEvents.onEndClawSpecial -= OnEndClawSpecial;
         playerEvents.onStartMirrorCloak -= onStartMirrorCloak;
