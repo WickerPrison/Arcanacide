@@ -40,6 +40,7 @@ public class PlayerProjectile : MonoBehaviour
             damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMasteryPercent);
         }
         enemyScript.LoseHealth(damage, 0);
+        enemyScript.ImpactVFX();
         if (playerData.equippedEmblems.Contains(emblemLibrary.burning_reflection) && attackProfile.attackType == AttackType.DEFLECT)
         {
             addedDOT = 10;

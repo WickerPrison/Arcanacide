@@ -99,7 +99,6 @@ public class PlayerScript : MonoBehaviour
 
     public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)
     {
-        if (attackType != EnemyAttackType.NONPARRIABLE) playerEvents.AttackImpact();
 
         if (!shield)
         {
@@ -129,6 +128,7 @@ public class PlayerScript : MonoBehaviour
 
             playerData.health -= damage;
             playerEvents.TakeDamage();
+            if (attackType != EnemyAttackType.NONPARRIABLE) playerEvents.AttackImpact();
 
             if (attackingEnemy != null && playerData.equippedEmblems.Contains(emblemLibrary.burning_cloak))
             {
@@ -170,6 +170,7 @@ public class PlayerScript : MonoBehaviour
                     playerEvents.MeleeParry();
                     playerSound.PlaySoundEffectFromList(11, 0.5f);
                     attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.AttackPower()) * parryProfile.poiseDamageMultiplier);
+                    attackingEnemy.ImpactVFX();
                     break;
             }
         }

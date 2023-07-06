@@ -41,7 +41,7 @@ public class ChainLightningLink : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale == 0) bolts.SoundOff();
+        if (Time.timeScale == 0 && bolts != null) bolts.SoundOff();
 
         if (electricMage == null) return;
 
