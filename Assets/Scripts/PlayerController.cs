@@ -22,8 +22,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform[] boltsOrigin;
     [SerializeField] ExternalLanternFairy lanternFairy;
 
-
-    public ParticleSystem dodgeVFX;
     public Transform attackPoint;
     public LayerMask enemyLayers;
     public float moveSpeed;
@@ -253,7 +251,6 @@ public class PlayerController : MonoBehaviour
         {
             //The player dashes in whatever direction they were already moving
             float staminaCost = dashStaminaCost;
-            dodgeVFX.Play();
             dashDirection = moveDirection.normalized;
             dashTime = maxDashTime;
             if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))

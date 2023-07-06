@@ -274,6 +274,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     //Layer 3 is the player layer, it can collide with terrain, enemies, and enemy projectiles
     public void EndIFrames()
     {
+        playerEvents.DashEnd();
         playerController.gameObject.layer = 3;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
@@ -416,7 +417,6 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void Backstep()
     {
-        playerController.dodgeVFX.Play();
         Vector3 direction = playerController.transform.position - playerController.attackPoint.position;
         playerController.dashDirection = direction.normalized;
         playerController.dashTime = playerController.maxDashTime * 2 / 3;

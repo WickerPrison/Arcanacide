@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4259516015393706199}
   - component: {fileID: 3182208930449237475}
   - component: {fileID: 3795954174776664053}
-  - component: {fileID: 6234916990005742559}
+  - component: {fileID: 26379605431543947}
   m_Layer: 12
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -105,14 +105,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5152996951802296328}
   m_Mesh: {fileID: 0}
---- !u!210 &6234916990005742559
-SortingGroup:
+--- !u!114 &26379605431543947
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5152996951802296328}
   m_Enabled: 1
-  m_SortingLayerID: 933306177
-  m_SortingLayer: -1
-  m_SortingOrder: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be82f884ba27b84d8fdf7a3346567c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingLayerName: Floor
+  sortingOrder: 1

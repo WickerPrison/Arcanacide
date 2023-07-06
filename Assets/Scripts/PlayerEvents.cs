@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerEvents : MonoBehaviour
 {
     public event EventHandler onDashStart;
+    public event EventHandler onDashEnd;
     public event EventHandler onPlayerStagger;
     public event EventHandler onAxeSpecial;
     public event EventHandler onClawSpecial;
@@ -18,6 +19,11 @@ public class PlayerEvents : MonoBehaviour
     public void DashStart()
     {
         onDashStart?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void DashEnd()
+    {
+        onDashEnd?.Invoke(this, EventArgs.Empty);
     }
 
     public void PlayerStagger()

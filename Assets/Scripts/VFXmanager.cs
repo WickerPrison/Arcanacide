@@ -9,7 +9,7 @@ public class VFXmanager : MonoBehaviour
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] SpriteRenderer parryPulse1;
     [SerializeField] SpriteRenderer parryPulse2;
-    [SerializeField] ParticleSystem dashSmear;
+    [SerializeField] ParticleSystem dodgeVFX;
     float parryPulseDuration = 0.2f;
     float parryPulseTimer;
     float parryPulseFadeaway = 0.1f;
@@ -47,7 +47,7 @@ public class VFXmanager : MonoBehaviour
 
     private void onDashStart(object sender, System.EventArgs e)
     {
-        //dashSmear.Play();
+        dodgeVFX.Play();
     }
 
     private void OnClawSpecial(object sender, System.EventArgs e)

@@ -154,6 +154,7 @@ public class EnemyController : MonoBehaviour
     {
         parryWindow = false;
         enemySound.SwordSwoosh();
+        enemyEvents.Attack();
 
         if (!canHitPlayer)
         {

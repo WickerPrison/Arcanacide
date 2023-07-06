@@ -10,6 +10,7 @@ public class AfterImageController : MonoBehaviour
     [SerializeField] PlayerData playerData;
     PlayerEvents playerEvents;
     PlayerAnimation playerAnimation;
+    IEnumerator coroutine;
     WaitForSeconds imageRate;
     bool effectPlaying = false;
     float maxTime = 0.2f;
@@ -25,7 +26,20 @@ public class AfterImageController : MonoBehaviour
 
     private void onDashStart(object sender, System.EventArgs e)
     {
-        if(!effectPlaying) StartCoroutine(PlaceAfterImages());
+        if (!effectPlaying)
+        {
+            coroutine = PlaceAfterImages();
+            StartCoroutine(coroutine);
+        }
+    }
+
+    private void onDashEnd(object sender, System.EventArgs e)
+    {
+        if (effectPlaying)
+        {
+            effectPlaying = false;
+            StopCoroutine(coroutine);
+        }
     }
 
     IEnumerator PlaceAfterImages()
@@ -59,11 +73,13 @@ public class AfterImageController : MonoBehaviour
     private void OnEnable()
     {
         playerEvents.onDashStart += onDashStart;
+        playerEvents.onDashEnd += onDashEnd;
     }
 
     private void OnDisable()
     {
         playerEvents.onDashStart -= onDashStart;
+        playerEvents.onDashEnd -= onDashEnd;
     }
 
 }

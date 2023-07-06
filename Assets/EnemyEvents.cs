@@ -12,6 +12,7 @@ public class EnemyEvents : MonoBehaviour
     public event EventHandler OnDeath;
     public event EventHandler OnStartDOT;
     public event EventHandler OnStopDOT;
+    public event EventHandler OnAttack;
 
 
     public void TakeDamage()
@@ -47,5 +48,10 @@ public class EnemyEvents : MonoBehaviour
     public void StopDOT()
     {
         OnStopDOT?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void Attack()
+    {
+        OnAttack?.Invoke(this, EventArgs.Empty);
     }
 }
