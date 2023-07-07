@@ -23,6 +23,8 @@ public class Doorway : MonoBehaviour
     float doorTimer = 0.5f;
     bool fogOn = false;
     float fadeDuration = 0.5f;
+    SpriteRenderer spriteRenderer;
+    [SerializeField] SpriteRenderer fogWallRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,8 @@ public class Doorway : MonoBehaviour
         doorOpen = true;
         message.SetActive(false);
         fogWallMaterial.SetFloat("_FadeIn", 0);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        fogWallRenderer.sortingLayerName = spriteRenderer.sortingLayerName;
     }
 
     public virtual void Update()

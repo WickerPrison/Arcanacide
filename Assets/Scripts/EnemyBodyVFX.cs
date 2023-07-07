@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImpactVFX : MonoBehaviour
+public class EnemyBodyVFX : MonoBehaviour
 {
     [SerializeField] Transform frontPoint;
     [SerializeField] Transform backPoint;

@@ -85,7 +85,7 @@ public class IceBeamController : EnemyController
         initialPosition += (playerScript.transform.position - transform.position).normalized * .6f;
         line.SetPosition(0, initialPosition);
 
-        if (hit.collider.CompareTag("Player"))
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             line.SetPosition(1, playerScript.transform.position + offset);
             aimValue -= Time.deltaTime; 

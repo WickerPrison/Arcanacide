@@ -77,6 +77,7 @@ public class EnemyScript : MonoBehaviour
 
             if(DOT <= 0)
             {
+                DOT = 0;
                 enemyEvents.StopDOT();
             }
         }
@@ -102,7 +103,7 @@ public class EnemyScript : MonoBehaviour
 
     public void GainDOT(float duration)
     {
-        if(duration > DOT)
+        if(duration > 0 && duration > DOT)
         {
             DOT = duration;
             enemyEvents.StartDOT();

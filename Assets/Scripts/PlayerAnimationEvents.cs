@@ -367,11 +367,6 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
     }
 
-    public void EndHealLayer()
-    {
-        frontAnimator.SetLayerWeight(2, 0);
-    }
-
     public void Shove()
     {
         shoveVFX.Play();

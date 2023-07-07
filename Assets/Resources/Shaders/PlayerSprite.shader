@@ -87,9 +87,9 @@ Shader "Unlit/PlayerSprite"
 			{
 				fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
 				c.rgb *= c.a;
+				clip(c.a - 0.5);
 
-				float4 outColor = float4(c.rgb + _FlashWhite, c.a);
-                return outColor;
+                return c + _FlashWhite;
 			}
 		ENDCG
 		}

@@ -11,6 +11,7 @@ public class DoorSetup : MonoBehaviour
     SortingGroup sortingGroup;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Vector3 offset;
+    [SerializeField] SpriteRenderer fogWall;
     int direction = 1;
 
     private void OnDrawGizmosSelected()
@@ -21,6 +22,7 @@ public class DoorSetup : MonoBehaviour
             transform.localRotation = Quaternion.Euler(0, wall.localEulerAngles.y, 0);
             sortingGroup = wall.GetComponent<SortingGroup>();
             spriteRenderer.sortingLayerName = sortingGroup.sortingLayerName;
+            fogWall.sortingLayerName = sortingGroup.sortingLayerName;
         }
 
         if(transform.localEulerAngles.y == 90)
