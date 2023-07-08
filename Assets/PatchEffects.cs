@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmblemEffects : MonoBehaviour
+public class PatchEffects : MonoBehaviour
 {
+    //Input in inspector
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] GameObject pathTrailPrefab;
+
+    //player scripts
     PlayerEvents playerEvents;
     WeaponManager weaponManager;
     PlayerScript playerScript;
     PlayerAbilities playerAbilities;
     PlayerSound playerSound;
 
+    //patch related variables
     [System.NonSerialized] public bool arcaneStepActive = false;
     [System.NonSerialized] public bool arcaneRemainsActive = false;
     float arcaneStepMaxTime = 0.03f;
@@ -19,7 +24,7 @@ public class EmblemEffects : MonoBehaviour
 
     float closeCallMaxTime = 5;
     [System.NonSerialized] public float closeCallTimer;
-    [SerializeField] GameObject pathTrailPrefab;
+
     [System.NonSerialized] public float mirrorCloakTimer;
     [System.NonSerialized] public float mirrorCloakMaxTime = 5;
 
@@ -70,7 +75,7 @@ public class EmblemEffects : MonoBehaviour
         }
     }
 
-    public void PerfectDog(GameObject projectile = null, EnemyScript attackingEnemy = null)
+    public void PerfectDodge(GameObject projectile = null, EnemyScript attackingEnemy = null)
     {
         if (playerData.equippedEmblems.Contains(emblemLibrary.close_call))
         {

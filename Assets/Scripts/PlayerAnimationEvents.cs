@@ -22,7 +22,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerSmear smear;
     StepWithAttack stepWithAttack;
     PlayerMovement playerMovement;
-    EmblemEffects emblemEffects;
+    PatchEffects emblemEffects;
     PlayerScript playerScript;
     PlayerSound playerSound;
     Animator frontAnimator;
@@ -48,7 +48,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAbilities = GetComponentInParent<PlayerAbilities>();
-        emblemEffects = GetComponentInParent<EmblemEffects>();
+        emblemEffects = GetComponentInParent<PatchEffects>();
         playerScript = GetComponentInParent<PlayerScript>();
         playerSound = transform.parent.GetComponentInChildren<PlayerSound>();
         frontAnimator = gameObject.GetComponent<Animator>();

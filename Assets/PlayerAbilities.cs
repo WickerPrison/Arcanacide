@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
+    //Input in inspector
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
@@ -15,6 +16,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
 
+    //player scripts
     PlayerMovement playerController;
     PlayerScript playerScript;
     PlayerAnimation playerAnimation;
@@ -22,28 +24,27 @@ public class PlayerAbilities : MonoBehaviour
     WeaponManager weaponManager;
     Rigidbody rb;
 
+    //managers
     GameManager gm;
     InputManager im;
+
+    //other variables
+    WaitForSeconds parryWindow = new WaitForSeconds(0.2f);
+    float parryCost = 20;
 
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
 
-    WaitForSeconds parryWindow = new WaitForSeconds(0.2f);
-    float parryCost = 20;
-
-    bool heavyAttackActive = false;
-    float clawSpecialMaxTime = 15f;
-    float clawSpecialDamageMult = 2;
-
-    bool knifeSpecialAttackOn = false;
-
-    float boltdamage = 0;
-
-    Vector3 away = Vector3.one * 100;
-
     [System.NonSerialized] public float axeHeavyTimer = 0;
     [System.NonSerialized] public float axeHeavyMaxTime = 15;
+    bool heavyAttackActive = false;
 
+    bool knifeSpecialAttackOn = false;
+    Vector3 away = Vector3.one * 100;
+    float boltdamage = 0;
+
+    float clawSpecialMaxTime = 15f;
+    float clawSpecialDamageMult = 2;
 
     private void Awake()
     {
@@ -233,6 +234,16 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
+    public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
+    {
+        PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
+        projectile.attackProfile = attackProfile;
+        projectile.transform.position = startingPosition;
+        projectile.transform.LookAt(enemy.transform.position + new Vector3(0, 1.1f, 0));
+        projectile.target = enemy.transform;
+        projectile.playerController = playerController;
+    }
+
     public void AxeSpecialAttack()
     {
         if (!lanternFairy.isInLantern) return;
@@ -306,15 +317,6 @@ public class PlayerAbilities : MonoBehaviour
         playerData.clawSpecialOn = true;
     }
 
-    public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
-    {
-        PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
-        projectile.attackProfile = attackProfile;
-        projectile.transform.position = startingPosition;
-        projectile.transform.LookAt(enemy.transform.position + new Vector3(0, 1.1f, 0));
-        projectile.target = enemy.transform;
-        projectile.playerController = playerController;
-    }
 
     private void onPlayerStagger(object sender, System.EventArgs e)
     {
@@ -344,7 +346,6 @@ public class PlayerAbilities : MonoBehaviour
         playerEvents.onPlayerStagger += onPlayerStagger;
         playerEvents.onClawSpecial += onClawSpecial;
     }
-
 
     private void OnDisable()
     {

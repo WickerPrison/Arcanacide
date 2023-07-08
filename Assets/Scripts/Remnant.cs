@@ -13,7 +13,7 @@ public class Remnant : MonoBehaviour
     InputManager im;
     PlayerControls controls;
     PlayerScript playerScript;
-    EmblemEffects emblemEffects;
+    PatchEffects emblemEffects;
     PlayerAnimation playerAnimation;
     WeaponManager weaponManager;
     float playerDistance = 100;
@@ -22,7 +22,7 @@ public class Remnant : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        emblemEffects = player.GetComponent<EmblemEffects>();
+        emblemEffects = player.GetComponent<PatchEffects>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         playerScript = player.GetComponent<PlayerScript>();
         weaponManager = player.gameObject.GetComponent<WeaponManager>();
