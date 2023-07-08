@@ -12,7 +12,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] List<GameObject> frontWeaponSprites;
     [SerializeField] List<GameObject> backWeaponSprites;
     [SerializeField] PlayerData playerData;
-    PlayerController playerController;
+    PlayerMovement playerController;
     InputManager im;
     int weaponMagicSources;
     int[] specificWeaponMagicSources = new int[4];
@@ -28,7 +28,7 @@ public class WeaponManager : MonoBehaviour
         im.controls.Gameplay.Knife.performed += ctx => SwitchWeapon(2);
         im.controls.Gameplay.Claws.performed += ctx => SwitchWeapon(3);
 
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerMovement>();
 
         SetWeapon(playerData.currentWeapon);
     }

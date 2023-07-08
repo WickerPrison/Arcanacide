@@ -115,7 +115,7 @@ public class OldManController : EnemyController
         }
         else if (playerController.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
@@ -215,7 +215,7 @@ public class OldManController : EnemyController
         else if(other.gameObject.layer == 8 && state == EnemyState.SPECIAL && !isColliding)
         {
             isColliding = true;
-            playerScript.GetComponent<PlayerController>().PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 

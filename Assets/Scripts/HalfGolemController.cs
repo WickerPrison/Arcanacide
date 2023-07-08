@@ -116,7 +116,7 @@ public class HalfGolemController : EnemyController
         }
         else if (playerController.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
@@ -145,7 +145,7 @@ public class HalfGolemController : EnemyController
         }
         else if (playerController.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
@@ -165,7 +165,7 @@ public class HalfGolemController : EnemyController
         }
         else if (playerController.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
     public override void OnTakeDamage(object sender, EventArgs e)

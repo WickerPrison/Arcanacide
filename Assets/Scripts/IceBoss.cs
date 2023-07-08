@@ -206,7 +206,7 @@ public class IceBoss : EnemyController
         }
         else if (playerController.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
@@ -223,7 +223,7 @@ public class IceBoss : EnemyController
             }
             else if(playerController.gameObject.layer == 8)
             {
-                playerController.PerfectDodge();
+                playerScript.PerfectDodge();
             }
         }
     }

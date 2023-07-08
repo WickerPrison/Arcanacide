@@ -17,10 +17,11 @@ public class PlayerAnimationEvents : MonoBehaviour
     ElectricTrap electricTrap;
     CameraFollow cameraScript;
     PlayerAnimation playerAnimation;
+    PlayerAbilities playerAbilities;
     PlayerEvents playerEvents;
     PlayerSmear smear;
     StepWithAttack stepWithAttack;
-    PlayerController playerController;
+    PlayerMovement playerController;
     PlayerScript playerScript;
     PlayerSound playerSound;
     Animator frontAnimator;
@@ -44,7 +45,8 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation = GetComponentInParent<PlayerAnimation>();
         smear = transform.parent.GetComponentInChildren<PlayerSmear>();
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
-        playerController = GetComponentInParent<PlayerController>();
+        playerController = GetComponentInParent<PlayerMovement>();
+        playerAbilities = GetComponentInParent<PlayerAbilities>();
         playerScript = GetComponentInParent<PlayerScript>();
         playerSound = transform.parent.GetComponentInChildren<PlayerSound>();
         frontAnimator = gameObject.GetComponent<Animator>();
@@ -77,7 +79,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         int attackDamage = Mathf.RoundToInt(playerData.AttackPower() * attackProfile.damageMultiplier);
         attackDamage = EmblemDamageModifiers(attackDamage);
         attackDamage += Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
-        attackDamage = playerController.DamageModifiers(attackDamage);
+        attackDamage = playerAbilities.DamageModifiers(attackDamage);
 
         switch (attackProfile.hitboxType)
         {
@@ -166,12 +168,12 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     int EmblemDamageModifiers(int attackDamage)
     {
-        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && playerController.closeCallTimer > 0)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && playerAbilities.closeCallTimer > 0)
         {
             attackDamage += emblemLibrary.CloseCallDamage();
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && playerController.arcaneRemainsActive)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && playerAbilities.arcaneRemainsActive)
         {
             attackDamage += emblemLibrary.ArcaneRemainsDamage();
         }
@@ -198,17 +200,17 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void SwordSpecialAttack()
     {
-        playerController.SwordSpecialAttack();
+        playerAbilities.SwordSpecialAttack();
     }
 
     public void AxeHeavy()
     {
-        playerController.axeHeavyTimer = playerController.axeHeavyMaxTime;
+        playerAbilities.axeHeavyTimer = playerAbilities.axeHeavyMaxTime;
     }
 
     public void AxeSpecialAttack()
     {
-        playerController.AxeSpecialAttack();
+        playerAbilities.AxeSpecialAttack();
     }
 
     public void KnifeHeavy()
@@ -224,7 +226,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void KnifeSpecialAttack()
     {
-        playerController.KnifeSpecialAttack();
+        playerAbilities.KnifeSpecialAttack();
     }
 
     public void ClawsSpecialAttack()
@@ -259,10 +261,10 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerController.gameObject.layer = 8;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
-            playerController.StartArcaneStep();
+            playerAbilities.StartArcaneStep();
         }
 
-        if(playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerController.mirrorCloakTimer <= 0)
+        if(playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerAbilities.mirrorCloakTimer <= 0)
         {
             playerSound.PlaySoundEffectFromList(11, 0.5f);
             playerEvents.EndMirrorCloak();
@@ -278,14 +280,14 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerController.gameObject.layer = 3;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
-            playerController.EndArcaneStep();
+            playerAbilities.EndArcaneStep();
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerController.mirrorCloakTimer <= 0)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerAbilities.mirrorCloakTimer <= 0)
         {
             playerScript.shield = false;
             playerScript.parry = false;
-            playerController.mirrorCloakTimer = playerController.mirrorCloakMaxTime;
+            playerAbilities.mirrorCloakTimer = playerAbilities.mirrorCloakMaxTime;
         }
     }
 

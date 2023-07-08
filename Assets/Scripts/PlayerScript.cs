@@ -23,7 +23,8 @@ public class PlayerScript : MonoBehaviour
     public float poise;
     GameManager gm;
     InputManager im;
-    PlayerController playerController;
+    PlayerMovement playerController;
+    PlayerAbilities playerAbilities;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
     PlayerSound playerSound;
@@ -73,7 +74,8 @@ public class PlayerScript : MonoBehaviour
         stamina = playerData.MaxStamina();
         poise = maxPoise;
         barrierTimer = 0;
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerMovement>();
+        playerAbilities = GetComponent<PlayerAbilities>();
         playerAnimation = GetComponent<PlayerAnimation>();
         playerSound = GetComponentInChildren<PlayerSound>();
         weaponManager = GetComponent<WeaponManager>();
@@ -164,7 +166,7 @@ public class PlayerScript : MonoBehaviour
             {
                 case EnemyAttackType.PROJECTILE:
                     playerSound.PlaySoundEffectFromList(11, 0.5f);
-                    playerController.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
+                    playerAbilities.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
                     break;
                 case EnemyAttackType.MELEE:
                     playerEvents.MeleeParry();
@@ -302,6 +304,11 @@ public class PlayerScript : MonoBehaviour
         {
             manaDelay = maxManaDelay / 2;
         }
+    }
+
+    public void PerfectDodge(GameObject projectile = null, EnemyScript attackingEnemy = null)
+    {
+        playerAbilities.PerfectDog(projectile, attackingEnemy);
     }
 
     // Update is called once per frame

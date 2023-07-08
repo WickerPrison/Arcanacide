@@ -50,9 +50,9 @@ public class Projectile : MonoBehaviour
 
     public virtual void PerfectDodge(Collider collision)
     {
-        PlayerController playerController;
-        playerController = collision.gameObject.GetComponent<PlayerController>();
-        playerController.PerfectDodge(gameObject, enemyOfOrigin);
+        PlayerScript playerScript;
+        playerScript = collision.gameObject.GetComponent<PlayerScript>();
+        playerScript.PerfectDodge(gameObject, enemyOfOrigin);
     }
 
     public virtual void HitObject(Collider collision)

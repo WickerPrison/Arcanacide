@@ -184,7 +184,7 @@ public class ElectricBossController : EnemyController
         else if (playerController.gameObject.layer == 8)
         {
             enemySound.OtherSounds(1, 1);
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
@@ -370,7 +370,7 @@ public class ElectricBossController : EnemyController
         else if (other.gameObject.layer == 8 && charging && !isColliding)
         {
             isColliding = true;
-            playerScript.GetComponent<PlayerController>().PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 

@@ -100,7 +100,7 @@ public class LightningOrbController : EnemyController
             }
             else if(playerScript.gameObject.layer == 8)
             {
-                playerController.PerfectDodge();
+                playerScript.PerfectDodge();
             }
 
         }

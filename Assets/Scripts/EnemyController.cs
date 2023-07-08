@@ -20,7 +20,8 @@ public class EnemyController : MonoBehaviour
     [System.NonSerialized] public EnemyScript enemyScript;
     [System.NonSerialized] public EnemyEvents enemyEvents;
     [System.NonSerialized] public EnemySound enemySound;
-    [System.NonSerialized] public PlayerController playerController;
+    [System.NonSerialized] public PlayerMovement playerController;
+    [System.NonSerialized] public PlayerAbilities playerAbilities;
     [System.NonSerialized] public PlayerScript playerScript;
     [System.NonSerialized] public PlayerAnimation playerAnimation;
     public Animator frontAnimator;
@@ -59,7 +60,8 @@ public class EnemyController : MonoBehaviour
         enemyScript = GetComponent<EnemyScript>();
         enemySound = GetComponentInChildren<EnemySound>();
         smearScript = GetComponentInChildren<Smear>();
-        playerController = player.GetComponent<PlayerController>();
+        playerController = player.GetComponent<PlayerMovement>();
+        playerAbilities = player.GetComponent<PlayerAbilities>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         navAgent = GetComponent<NavMeshAgent>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -170,7 +172,7 @@ public class EnemyController : MonoBehaviour
         }
         else if(playerController.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 

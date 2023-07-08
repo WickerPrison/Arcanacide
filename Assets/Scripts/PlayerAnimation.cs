@@ -27,7 +27,7 @@ public class PlayerAnimation : MonoBehaviour
     int bodyMagicSources = 0;
     Camera cam;
     [SerializeField] PlayerScript playerScript;
-    [SerializeField] PlayerController playerController;
+    [SerializeField] PlayerMovement playerController;
     [SerializeField] float rotationPointY;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] PlayerData playerData;

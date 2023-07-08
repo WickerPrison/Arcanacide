@@ -8,7 +8,7 @@ public class SteamIntegration : MonoBehaviour
     [SerializeField] GameObject steamManagerPrefab;
     SteamManager steamManager;
     GameObject playerControllerObject;
-    PlayerController playerController;
+    PlayerMovement playerController;
     bool pausedBySteam = false;
 
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class SteamIntegration : MonoBehaviour
         playerControllerObject = GameObject.FindGameObjectWithTag("Player");
         if(playerControllerObject != null)
         {
-            playerController = playerControllerObject.GetComponent<PlayerController>();
+            playerController = playerControllerObject.GetComponent<PlayerMovement>();
         }
     }
 

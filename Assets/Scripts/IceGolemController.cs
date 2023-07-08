@@ -137,7 +137,7 @@ public class IceGolemController : EnemyController
         }
         else if (playerController.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
@@ -190,7 +190,7 @@ public class IceGolemController : EnemyController
             }
             else if(collision.gameObject.layer == 8)
             {
-                playerController.PerfectDodge();
+                playerScript.PerfectDodge();
             }
         }
     }
