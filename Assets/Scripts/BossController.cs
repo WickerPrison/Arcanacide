@@ -16,6 +16,7 @@ public class BossController : EnemyController
     BossDialogue bossDialogue;
     FireRing fireRing;
     public int strafeLeftOrRight = 1;
+    PlayerMovement playerMovement;
 
     float tooClose = 3f;
     float runAwayTime;
@@ -50,6 +51,7 @@ public class BossController : EnemyController
     public override void Start()
     {
         base.Start();
+        playerMovement = playerScript.GetComponent<PlayerMovement>();
         bonfireCD = bonfireMaxCD;
         spellAttackPoiseDamage = fireBallPoiseDamage;
         spellAttackDamage = fireBallDamage;
@@ -84,11 +86,11 @@ public class BossController : EnemyController
 
     public override void EnemyAI()
     {
-        playerDistance = Vector3.Distance(transform.position, playerController.transform.position);
+        playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 
         if (navAgent.enabled == true)
         {
-            navAgent.SetDestination(playerController.transform.position);
+            navAgent.SetDestination(playerScript.transform.position);
         }
 
         if (state == EnemyState.IDLE && playerDistance < attackRange)
@@ -222,7 +224,7 @@ public class BossController : EnemyController
         int yDir = Random.Range(1, 3);
         float xPos = Random.Range(bonfireMinSummonRadius, bonfireSummonRadius);
         float zPos = Random.Range(bonfireMinSummonRadius, bonfireSummonRadius);
-        Vector3 startPos = playerController.transform.position + new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
+        Vector3 startPos = playerMovement.transform.position + new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
         NavMeshHit hit;
         NavMesh.SamplePosition(startPos, out hit, bonfireSummonRadius + 1, NavMesh.AllAreas);
         GameObject bonfire = Instantiate(bonfirePrefab);
@@ -238,13 +240,13 @@ public class BossController : EnemyController
         fireWave.transform.position = transform.position + attackOffset;
         FireWave fireWaveScript;
         fireWaveScript = fireWave.GetComponent<FireWave>();
-        fireWaveScript.target = playerController.transform.position + attackOffset;
+        fireWaveScript.target = playerScript.transform.position + attackOffset;
         fireWaveScript.enemyOfOrigin = enemyScript;
     }
 
     void RunAway()
     {
-        Vector3 awayDirection = transform.position - playerController.transform.position;
+        Vector3 awayDirection = transform.position - playerScript.transform.position;
         if (navAgent.enabled)
         {
             navAgent.Move(awayDirection.normalized * Time.deltaTime * runAwaySpeed);
@@ -254,7 +256,7 @@ public class BossController : EnemyController
     public void FireRing()
     {
         fireRing.Explode();
-        if (Vector3.Distance(transform.position, playerController.transform.position) < fireRingRadius && playerController.gameObject.layer == 3)
+        if (Vector3.Distance(transform.position, playerScript.transform.position) < fireRingRadius && playerScript.gameObject.layer == 3)
         {
             playerScript.LoseHealth(fireRingDamage,EnemyAttackType.MELEE, enemyScript);
 
@@ -262,11 +264,11 @@ public class BossController : EnemyController
 
             playerScript.LosePoise(fireRingPoiseDamage);
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
-            Vector3 awayVector = playerController.transform.position - transform.position;
-            PlayerAnimation playerAnimation = playerController.gameObject.GetComponent<PlayerAnimation>();
+            Vector3 awayVector = playerMovement.transform.position - transform.position;
+            PlayerAnimation playerAnimation = playerMovement.gameObject.GetComponent<PlayerAnimation>();
             playerAnimation.attacking = false;
             playerRB.velocity = Vector3.zero;
-            StartCoroutine(playerController.KnockBack(0.4f));
+            StartCoroutine(playerMovement.KnockBack(0.4f));
             playerRB.AddForce(awayVector.normalized * 7, ForceMode.VelocityChange);
         }
     }
@@ -287,7 +289,7 @@ public class BossController : EnemyController
         GameObject groundFire = Instantiate(groundFirePrefab);
         groundFire.transform.position = transform.position;
         GroundFire groundFireScript = groundFire.GetComponent<GroundFire>();
-        groundFireScript.target = playerController.transform;
+        groundFireScript.target = playerScript.transform;
     }
 
     public void FireBlast()
@@ -305,7 +307,7 @@ public class BossController : EnemyController
 
     void Strafe()
     {
-        Vector3 playerToBoss = transform.position - playerController.transform.position;
+        Vector3 playerToBoss = transform.position - playerScript.transform.position;
         playerToBoss *= strafeLeftOrRight;
         Vector3 strafeDirection = Vector3.Cross(Vector3.up, playerToBoss);
         navAgent.Move(strafeDirection.normalized * Time.deltaTime * strafeSpeed);
@@ -325,8 +327,8 @@ public class BossController : EnemyController
         {
             projectile.transform.position = backAttackPoint.position;
         }
-        projectile.transform.LookAt(playerController.transform.position);
-        projectileScript.target = playerController.transform;
+        projectile.transform.LookAt(playerScript.transform.position);
+        projectileScript.target = playerScript.transform;
         projectileScript.poiseDamage = spellAttackPoiseDamage;
         projectileScript.spellDamage = spellAttackDamage;
         projectileScript.enemyOfOrigin = enemyScript;

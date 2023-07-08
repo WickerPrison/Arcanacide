@@ -94,7 +94,7 @@ public class ElectricBossController : EnemyController
             }
             else if(navAgent.enabled)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
             if (abilityTime > 0)
@@ -151,7 +151,7 @@ public class ElectricBossController : EnemyController
         int yDir = Random.Range(1, 3);
         float xPos = Random.Range(fleeRadiusMin, fleeRadiusMax);
         float zPos = Random.Range(fleeRadiusMin, fleeRadiusMax);
-        Vector3 startPos = playerController.transform.position + new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
+        Vector3 startPos = playerScript.transform.position + new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
         NavMeshHit hit;
         NavMesh.SamplePosition(startPos, out hit, fleeRadiusMax + 1, NavMesh.AllAreas);
         fleePoint = hit.position;
@@ -174,14 +174,14 @@ public class ElectricBossController : EnemyController
             return;
         }
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             enemySound.OtherSounds(0, 1);
             playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
             enemySound.OtherSounds(1, 1);
             playerScript.PerfectDodge();
@@ -219,14 +219,14 @@ public class ElectricBossController : EnemyController
         Hadoken hadoken = Instantiate(hadokenPrefab).GetComponent<Hadoken>();
         int frontOrBack = facingFront ? 0 : 1;
         hadoken.transform.position = firePoints[frontOrBack].position;
-        hadoken.direction = playerController.transform.position + new Vector3(0, 1, 0) - firePoints[frontOrBack].position;
+        hadoken.direction = playerScript.transform.position + new Vector3(0, 1, 0) - firePoints[frontOrBack].position;
         if (phase2)
         {
             foreach(float angle in hadokenAngles)
             {
                 hadoken = Instantiate(hadokenPrefab).GetComponent<Hadoken>();
                 hadoken.transform.position = firePoints[frontOrBack].position;
-                hadoken.direction = playerController.transform.position + new Vector3(0, 1, 0) - firePoints[frontOrBack].position;
+                hadoken.direction = playerScript.transform.position + new Vector3(0, 1, 0) - firePoints[frontOrBack].position;
                 hadoken.direction = hadoken.RotateByAngle(hadoken.direction, angle);
             }
         }
@@ -234,7 +234,7 @@ public class ElectricBossController : EnemyController
 
     void Charge()
     {
-        Vector3 playerDirection = playerController.transform.position - transform.position;
+        Vector3 playerDirection = playerScript.transform.position - transform.position;
         playerDirection.y = 0;
 
         chargePath.Clear();

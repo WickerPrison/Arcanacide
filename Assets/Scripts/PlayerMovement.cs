@@ -6,51 +6,51 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //This script is responsible for accepting inputs from the player and performing actions 
-    //that those inputs dictate
-
+    //Input in inspector
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] GameObject pauseMenuPrefab;
-
-
-
     public Transform attackPoint;
     public LayerMask enemyLayers;
-    public float moveSpeed;
-    public bool knockback = false;
-    [System.NonSerialized] public bool canWalk = false;
 
+    //Managers
     InputManager im;
     GameManager gm;
     SoundManager sm;
+
+    //Player scripts
     PlayerAnimation playerAnimation;
-    PlayerAbilities playerAbilities;
     PlayerEvents playerEvents;
-    WeaponManager weaponManager;
     PlayerScript playerScript;
     PlayerSound playerSound;
-    public Rigidbody rb;
-    [System.NonSerialized] public GameObject pauseMenu;
-    Vector3 mouseDirection;
+    [System.NonSerialized] public Rigidbody rb;
+
+
+    //walk varibles
     [System.NonSerialized] public Vector3 moveDirection;
+    [System.NonSerialized] public float moveSpeed = 300;
+
+    //dash variables
     [System.NonSerialized] public Vector3 dashDirection;
-    float dashSpeed = 1000;
-    [System.NonSerialized] public float dashTime = 0;
     [System.NonSerialized] public float maxDashTime = 0.2f;
+    [System.NonSerialized] public float dashTime = 0;
+    float dashSpeed = 1000;
     float dashStaminaCost = 30f;
-    float lockOnDistance = 10;
-    public bool preventInput = false;
-    [System.NonSerialized] public bool lockPosition = false;
-
-
+    
+    //facing direction variables
+    Vector3 mouseDirection;
     Vector2 rightStickValue;
-    public Vector2 lookDir;
-    List<Transform> nearbyEnemies = new List<Transform>();
+    float lockOnDistance = 10;
+    [System.NonSerialized] public Vector2 lookDir;
+    [System.NonSerialized] public GameObject pauseMenu;
 
-    Vector3 away = Vector3.one * 100;
-
+    //toggles
+    [System.NonSerialized] public bool knockback = false;
+    [System.NonSerialized] public bool canWalk = false;
+    [System.NonSerialized] public bool preventInput = false;
+    [System.NonSerialized] public bool lockPosition = false;
     bool usingGamepad;
+
 
     private void Awake()
     {
@@ -63,20 +63,16 @@ public class PlayerMovement : MonoBehaviour
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         sm = gm.gameObject.GetComponent<SoundManager>();
         SetUpControls();
-        //Set references to other player scripts
+
         playerAnimation = GetComponent<PlayerAnimation>();
-        playerAbilities = GetComponent<PlayerAbilities>();
-        weaponManager = GetComponent<WeaponManager>();
         playerScript = GetComponent<PlayerScript>();
         playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
         usingGamepad = Gamepad.current != null;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //turn those inputs into a vector that cannot have a magnitude greater than 1
         moveDirection = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y);
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
 
@@ -100,7 +96,6 @@ public class PlayerMovement : MonoBehaviour
         CheckForController();
     }
 
-    //FixedUpdate is similar to Update but should always be used when dealing with physics
     private void FixedUpdate()
     {
         if (moveDirection.magnitude > 0 && (CanInput() || canWalk))
@@ -143,8 +138,6 @@ public class PlayerMovement : MonoBehaviour
                 staminaCost *= 2;
             }
 
-
-
             playerScript.LoseStamina(staminaCost);
             playerAnimation.PlayAnimation("Dash");
             playerSound.Dodge();
@@ -154,10 +147,7 @@ public class PlayerMovement : MonoBehaviour
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
     void AttackPointPosition()
     {
-        if (!CanInput() && !canWalk)
-        {
-            return;
-        }
+        if (!CanInput() && !canWalk) return;
 
         if (Gamepad.current == null)
         {
@@ -291,26 +281,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void PlayerEvents_onClawSpecial(object sender, System.EventArgs e)
-    {
-
-    }
-
     private void OnEnable()
     {
         playerEvents.onPlayerStagger += PlayerEvents_onPlayerStagger;
-        playerEvents.onClawSpecial += PlayerEvents_onClawSpecial;
     }
 
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= PlayerEvents_onPlayerStagger;
-        playerEvents.onClawSpecial -= PlayerEvents_onClawSpecial;
     }
 
     void SetUpControls()
     {
-        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im = gm.GetComponent<InputManager>();
 
         im.controls.Gameplay.Dodge.performed += ctx => Dodge();
         im.controls.Gameplay.PauseMenu.performed += ctx => PauseMenu();

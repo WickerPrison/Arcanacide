@@ -30,10 +30,10 @@ public class LightningThrower : EnemyController
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
-            if (Vector3.Distance(transform.position, playerController.transform.position) <= attackRange)
+            if (Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
             {
                 if (attackTime <= 0)
                 {
@@ -82,7 +82,7 @@ public class LightningThrower : EnemyController
         {
             lightningBall.transform.position = backElectricityVFX.transform.position;
         }
-        lightningBall.endPoint = new Vector3(playerController.transform.position.x, 0, playerController.transform.position.z);
+        lightningBall.endPoint = new Vector3(playerScript.transform.position.x, 0, playerScript.transform.position.z);
         lightningBall.enemyOfOrigin = enemyScript;
     }
 

@@ -41,9 +41,9 @@ public class ChaosKnightController : EnemyController
     {
         if (state != EnemyState.SPECIAL) return;
 
-        indicatorDirection = playerController.transform.position - indicatorCircle.transform.position;
+        indicatorDirection = playerScript.transform.position - indicatorCircle.transform.position;
 
-        if(Vector3.Distance(playerController.transform.position, indicatorCircle.transform.position) > indicatorCircleSpeed * Time.deltaTime)
+        if(Vector3.Distance(playerScript.transform.position, indicatorCircle.transform.position) > indicatorCircleSpeed * Time.deltaTime)
         {
             indicatorCircle.transform.position += indicatorDirection.normalized * indicatorCircleSpeed * Time.fixedDeltaTime;
         }
@@ -67,7 +67,7 @@ public class ChaosKnightController : EnemyController
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
             if(attackTime <= 0)
@@ -129,15 +129,15 @@ public class ChaosKnightController : EnemyController
         streak.Clear();
         StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
         enemySound.OtherSounds(0, 1);
-        if(Vector3.Distance(jumpPoint.position, playerController.transform.position) <= 3.5f)
+        if(Vector3.Distance(jumpPoint.position, playerScript.transform.position) <= 3.5f)
         {
-            if (playerController.gameObject.layer == 3)
+            if (playerScript.gameObject.layer == 3)
             {
                 enemySound.SwordImpact();
                 playerScript.LoseHealth(jumpDamage, EnemyAttackType.MELEE, enemyScript);
                 playerScript.LosePoise(jumpPoiseDamage);
             }
-            else if (playerController.gameObject.layer == 8)
+            else if (playerScript.gameObject.layer == 8)
             {
                 playerScript.PerfectDodge();
             }
@@ -161,7 +161,7 @@ public class ChaosKnightController : EnemyController
 
     void PlayerBehind()
     {
-        playerDirection = transform.position - playerController.transform.position;
+        playerDirection = transform.position - playerScript.transform.position;
         facingDirection = attackPoint.position - transform.position;
         float angle = Vector3.Angle(facingDirection, playerDirection);
         if(angle < backAngle)

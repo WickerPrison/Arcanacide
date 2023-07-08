@@ -32,7 +32,7 @@ public class IceGolemController : EnemyController
         if (navAgent.enabled == true)
         {
             AngleMeasurement();
-            navAgent.SetDestination(playerController.transform.position);
+            navAgent.SetDestination(playerScript.transform.position);
         }
 
         if (state == EnemyState.IDLE)
@@ -45,7 +45,7 @@ public class IceGolemController : EnemyController
                 return;
             }
 
-            if (Vector3.Distance(transform.position, playerController.transform.position) <= attackRange)
+            if (Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
             {
                 int randN = Random.Range(0, 3);
                 if (randN == 0)
@@ -61,7 +61,7 @@ public class IceGolemController : EnemyController
                     IceRings();
                 }
             }
-            else if (Vector3.Distance(transform.position, playerController.transform.position) <= chargeRange)
+            else if (Vector3.Distance(transform.position, playerScript.transform.position) <= chargeRange)
             {
                 int randN = Random.Range(0, 2);
                 if (randN == 0)
@@ -130,12 +130,12 @@ public class IceGolemController : EnemyController
             return;
         }
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
             playerScript.PerfectDodge();
         }

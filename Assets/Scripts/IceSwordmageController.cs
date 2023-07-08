@@ -21,12 +21,12 @@ public class IceSwordmageController : EnemyController
         {
             if (navAgent.enabled == true)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
             if(attackTime <= 0)
             {
-                if(Vector3.Distance(transform.position, playerController.transform.position) <= attackRange)
+                if(Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
                 {
                     int randNum = Random.Range(0, 2);
                     if(randNum == 0)
@@ -77,12 +77,12 @@ public class IceSwordmageController : EnemyController
             return;
         }
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             playerScript.LosePoise(100);
             AdditionalAttackEffects();
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
             playerScript.PerfectDodge();
         }

@@ -15,7 +15,7 @@ public class ChaosZombie : EnemyController
     public override void Start()
     {
         base.Start();
-        sporesScript = playerController.GetComponentInChildren<ChaosSporesScript>();
+        sporesScript = playerScript.GetComponentInChildren<ChaosSporesScript>();
     }
 
     public override void EnemyAI()
@@ -27,7 +27,7 @@ public class ChaosZombie : EnemyController
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
             if(playerDistance < meleeRange && attackTime < attackMaxTime / 2)
@@ -57,7 +57,7 @@ public class ChaosZombie : EnemyController
     {
         PustuleScript pustule = Instantiate(projectilePrefab).GetComponent<PustuleScript>();
         pustule.transform.position = handPustule.transform.position;
-        pustule.endPoint = playerController.transform.position;
+        pustule.endPoint = playerScript.transform.position;
         pustule.enemyScript = enemyScript;
     }
 

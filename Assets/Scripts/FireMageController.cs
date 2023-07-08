@@ -8,6 +8,7 @@ public class FireMageController : EnemyController
     [SerializeField] FireRing fireRing;
     [SerializeField] Transform frontAttackPoint;
     [SerializeField] Transform backAttackPoint;
+    PlayerMovement playerMovement;
     float tooClose = 3.5f;
     int fireBallDamage = 15;
     int fireBallPoiseDamage = 15;
@@ -17,6 +18,7 @@ public class FireMageController : EnemyController
     public override void Start()
     {
         base.Start();
+        playerMovement = playerScript.GetComponent<PlayerMovement>();
         spellAttackDamage = fireBallDamage;
         spellAttackPoiseDamage = fireBallPoiseDamage;
     }
@@ -30,10 +32,10 @@ public class FireMageController : EnemyController
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
-            if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose)
+            if(Vector3.Distance(transform.position, playerScript.transform.position) < tooClose)
             {
                 if(attackTime <= 0)
                 {
@@ -42,7 +44,7 @@ public class FireMageController : EnemyController
                     attackTime = attackMaxTime;
                 }
             }
-            else if (Vector3.Distance(transform.position, playerController.transform.position) < attackRange)
+            else if (Vector3.Distance(transform.position, playerScript.transform.position) < attackRange)
             {
                 if (attackTime <= 0)
                 {
@@ -62,7 +64,7 @@ public class FireMageController : EnemyController
 
     void BackUp()
     {
-        Vector3 awayDirection = transform.position - playerController.transform.position;
+        Vector3 awayDirection = transform.position - playerScript.transform.position;
         if (navAgent.enabled)
         {
             navAgent.Move(awayDirection.normalized * Time.deltaTime * navAgent.speed / 2);
@@ -73,7 +75,7 @@ public class FireMageController : EnemyController
     {
         fireRing.Explode();
 
-        if(Vector3.Distance(transform.position, playerController.transform.position) < tooClose && playerController.gameObject.layer == 3)
+        if(Vector3.Distance(transform.position, playerScript.transform.position) < tooClose && playerScript.gameObject.layer == 3)
         {
             playerScript.LoseHealth(fireRingDamage, EnemyAttackType.MELEE, enemyScript);
 
@@ -81,11 +83,11 @@ public class FireMageController : EnemyController
 
             playerScript.LosePoise(fireRingPoiseDamage);
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
-            Vector3 awayVector = playerController.transform.position - transform.position;
-            PlayerAnimation playerAnimation = playerController.gameObject.GetComponent<PlayerAnimation>();
+            Vector3 awayVector = playerScript.transform.position - transform.position;
+            PlayerAnimation playerAnimation = playerScript.gameObject.GetComponent<PlayerAnimation>();
             playerAnimation.attacking = false;
             playerRB.velocity = Vector3.zero;
-            StartCoroutine(playerController.KnockBack(0.4f));
+            StartCoroutine(playerMovement.KnockBack(0.4f));
             playerRB.AddForce(awayVector.normalized * 7, ForceMode.VelocityChange);
         }
     }
@@ -104,8 +106,8 @@ public class FireMageController : EnemyController
         {
             projectile.transform.position = backAttackPoint.position;
         }
-        projectile.transform.LookAt(playerController.transform.position);
-        projectileScript.target = playerController.transform;
+        projectile.transform.LookAt(playerScript.transform.position);
+        projectileScript.target = playerScript.transform;
         projectileScript.poiseDamage = spellAttackPoiseDamage;
         projectileScript.spellDamage = spellAttackDamage;
         projectileScript.enemyOfOrigin = enemyScript;

@@ -79,7 +79,6 @@ public class PlayerAbilities : MonoBehaviour
 
     private void Update()
     {
-
         if (knifeSpecialAttackOn)
         {
             UpdateKnifeSpecialAttack();
@@ -93,7 +92,6 @@ public class PlayerAbilities : MonoBehaviour
                 weaponManager.RemoveSpecificWeaponSource(1);
             }
         }
-
 
         if (closeCallTimer > 0)
         {
@@ -109,7 +107,6 @@ public class PlayerAbilities : MonoBehaviour
             mirrorCloakTimer -= Time.deltaTime;
             if (mirrorCloakTimer <= 0) playerEvents.StartMirrorCloak();
         }
-
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
         {
@@ -151,7 +148,6 @@ public class PlayerAbilities : MonoBehaviour
 
     public void PerfectDog(GameObject projectile = null, EnemyScript attackingEnemy = null)
     {
-        //playerSound.PerfectDodge();
         if (playerData.equippedEmblems.Contains(emblemLibrary.close_call))
         {
             if (closeCallTimer <= 0)
