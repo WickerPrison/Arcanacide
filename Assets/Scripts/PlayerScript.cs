@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviour
     InputManager im;
     PlayerMovement playerController;
     PlayerAbilities playerAbilities;
+    EmblemEffects emblemEffects;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
     PlayerSound playerSound;
@@ -76,6 +77,7 @@ public class PlayerScript : MonoBehaviour
         barrierTimer = 0;
         playerController = GetComponent<PlayerMovement>();
         playerAbilities = GetComponent<PlayerAbilities>();
+        emblemEffects = GetComponent<EmblemEffects>();
         playerAnimation = GetComponent<PlayerAnimation>();
         playerSound = GetComponentInChildren<PlayerSound>();
         weaponManager = GetComponent<WeaponManager>();
@@ -308,7 +310,7 @@ public class PlayerScript : MonoBehaviour
 
     public void PerfectDodge(GameObject projectile = null, EnemyScript attackingEnemy = null)
     {
-        playerAbilities.PerfectDog(projectile, attackingEnemy);
+        emblemEffects.PerfectDog(projectile, attackingEnemy);
     }
 
     // Update is called once per frame

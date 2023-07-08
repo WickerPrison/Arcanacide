@@ -13,7 +13,7 @@ public class Remnant : MonoBehaviour
     InputManager im;
     PlayerControls controls;
     PlayerScript playerScript;
-    PlayerAbilities playerAbilities;
+    EmblemEffects emblemEffects;
     PlayerAnimation playerAnimation;
     WeaponManager weaponManager;
     float playerDistance = 100;
@@ -22,7 +22,7 @@ public class Remnant : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerAbilities = player.GetComponent<PlayerAbilities>();
+        emblemEffects = player.GetComponent<EmblemEffects>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         playerScript = player.GetComponent<PlayerScript>();
         weaponManager = player.gameObject.GetComponent<WeaponManager>();
@@ -59,7 +59,7 @@ public class Remnant : MonoBehaviour
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
                 weaponManager.RemoveWeaponMagicSource();
-                playerAbilities.arcaneRemainsActive = false;
+                emblemEffects.arcaneRemainsActive = false;
                 playerScript.MaxHeal();
             }
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
@@ -79,7 +79,7 @@ public class Remnant : MonoBehaviour
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
                 weaponManager.AddWeaponMagicSource();
-                playerAbilities.arcaneRemainsActive = true;
+                emblemEffects.arcaneRemainsActive = true;
             }
 
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
@@ -103,7 +103,7 @@ public class Remnant : MonoBehaviour
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
                 weaponManager.RemoveWeaponMagicSource();
-                playerAbilities.arcaneRemainsActive = false;
+                emblemEffects.arcaneRemainsActive = false;
             }
 
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))

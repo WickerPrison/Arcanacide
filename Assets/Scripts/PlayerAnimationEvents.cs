@@ -21,7 +21,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerEvents playerEvents;
     PlayerSmear smear;
     StepWithAttack stepWithAttack;
-    PlayerMovement playerController;
+    PlayerMovement playerMovement;
+    EmblemEffects emblemEffects;
     PlayerScript playerScript;
     PlayerSound playerSound;
     Animator frontAnimator;
@@ -45,13 +46,14 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation = GetComponentInParent<PlayerAnimation>();
         smear = transform.parent.GetComponentInChildren<PlayerSmear>();
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
-        playerController = GetComponentInParent<PlayerMovement>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
         playerAbilities = GetComponentInParent<PlayerAbilities>();
+        emblemEffects = GetComponentInParent<EmblemEffects>();
         playerScript = GetComponentInParent<PlayerScript>();
         playerSound = transform.parent.GetComponentInChildren<PlayerSound>();
         frontAnimator = gameObject.GetComponent<Animator>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-        attackArc = playerController.attackPoint.gameObject.GetComponent<PlayerAttackArc>();
+        attackArc = playerMovement.attackPoint.gameObject.GetComponent<PlayerAttackArc>();
         SFX = transform.parent.GetComponentInChildren<AudioSource>();
         weaponManager = GetComponentInParent<WeaponManager>();
         iceBreath = playerScript.gameObject.GetComponentInChildren<IceBreath>();
@@ -168,12 +170,12 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     int EmblemDamageModifiers(int attackDamage)
     {
-        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && playerAbilities.closeCallTimer > 0)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && emblemEffects.closeCallTimer > 0)
         {
             attackDamage += emblemLibrary.CloseCallDamage();
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && playerAbilities.arcaneRemainsActive)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && emblemEffects.arcaneRemainsActive)
         {
             attackDamage += emblemLibrary.ArcaneRemainsDamage();
         }
@@ -245,7 +247,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation.attacking = false;
         frontAnimator.speed = 1;
         backAnimator.speed = 1;
-        playerController.lockPosition = false;
+        playerMovement.lockPosition = false;
     }
 
     public void Heal()
@@ -258,13 +260,13 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void StartIFrames()
     {
         playerEvents.DashStart();
-        playerController.gameObject.layer = 8;
+        playerMovement.gameObject.layer = 8;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
-            playerAbilities.StartArcaneStep();
+            emblemEffects.StartArcaneStep();
         }
 
-        if(playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerAbilities.mirrorCloakTimer <= 0)
+        if(playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && emblemEffects.mirrorCloakTimer <= 0)
         {
             playerSound.PlaySoundEffectFromList(11, 0.5f);
             playerEvents.EndMirrorCloak();
@@ -277,46 +279,46 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void EndIFrames()
     {
         playerEvents.DashEnd();
-        playerController.gameObject.layer = 3;
+        playerMovement.gameObject.layer = 3;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
-            playerAbilities.EndArcaneStep();
+            emblemEffects.EndArcaneStep();
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && playerAbilities.mirrorCloakTimer <= 0)
+        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && emblemEffects.mirrorCloakTimer <= 0)
         {
             playerScript.shield = false;
             playerScript.parry = false;
-            playerAbilities.mirrorCloakTimer = playerAbilities.mirrorCloakMaxTime;
+           emblemEffects.mirrorCloakTimer = emblemEffects.mirrorCloakMaxTime;
         }
     }
 
     public void LockPosition()
     {
-        playerController.lockPosition = true;
+        playerMovement.lockPosition = true;
     }
 
     public void UnlockPosition()
     {
-        playerController.lockPosition = false;
+        playerMovement.lockPosition = false;
     }
 
     public void StopInput()
     {
-        playerController.preventInput = true;
+        playerMovement.preventInput = true;
     }
 
     public void StartInput()
     {
-        playerController.preventInput = false;
+        playerMovement.preventInput = false;
     }
 
     public void StartShield()
     {
-        if (playerController.gameObject.layer == 8)
+        if (playerMovement.gameObject.layer == 8)
         {
             EndIFrames();
-            playerController.dashTime = 0;
+            playerMovement.dashTime = 0;
         }
         playerAnimation.attacking = false;
         playerScript.shield = true;
@@ -352,17 +354,17 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void StartWalkLayer()
     {
-        playerController.canWalk = true;
+        playerMovement.canWalk = true;
         frontAnimator.SetLayerWeight(1, 1);
         backAnimator.SetLayerWeight(1, 1);
     }
 
     public void EndWalkLayer()
     {
-        playerController.canWalk = false;
+        playerMovement.canWalk = false;
         frontAnimator.SetLayerWeight(1, 0);
         backAnimator.SetLayerWeight(1, 0);
-        if (playerController.moveDirection.magnitude > 0)
+        if (playerMovement.moveDirection.magnitude > 0)
         {
             frontAnimator.Play("Walk", 0, frontAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime);
             backAnimator.Play("Walk", 0, backAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime);
@@ -414,9 +416,9 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void Backstep()
     {
-        Vector3 direction = playerController.transform.position - playerController.attackPoint.position;
-        playerController.dashDirection = direction.normalized;
-        playerController.dashTime = playerController.maxDashTime * 2 / 3;
+        Vector3 direction = playerMovement.transform.position - playerMovement.attackPoint.position;
+        playerMovement.dashDirection = direction.normalized;
+        playerMovement.dashTime = playerMovement.maxDashTime * 2 / 3;
         playerSound.Dodge();
     }
 
@@ -436,7 +438,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     private void onPlayerStagger(object sender, EventArgs e)
     {
         SwitchWeaponSprite(playerData.currentWeapon);
-        playerController.canWalk = false;
+        playerMovement.canWalk = false;
         frontAnimator.SetLayerWeight(1, 0);
         backAnimator.SetLayerWeight(1, 0);
         StartInput();

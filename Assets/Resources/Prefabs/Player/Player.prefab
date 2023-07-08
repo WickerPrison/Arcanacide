@@ -52671,6 +52671,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4614688894240553596}
   - component: {fileID: 1231466633719985042}
+  - component: {fileID: 4701307368279904392}
   - component: {fileID: 4614688894240553599}
   - component: {fileID: 4614688894240553598}
   - component: {fileID: 4614688894240553584}
@@ -52724,7 +52725,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  shoveVFX: {fileID: 6321697753119861189}
   specialAttackProfiles:
   - {fileID: 11400000, guid: 41f8649f66f3f424fab8049a06e26e92, type: 2}
   - {fileID: 11400000, guid: 46afc5238137393429b972b4b56001f1, type: 2}
@@ -52740,6 +52740,18 @@ MonoBehaviour:
   backSwordTip: {fileID: 4373143805650122359}
   totemPrefab: {fileID: 7099582005832935722, guid: 99bdc7866ca1fa2449c00d734853cd56, type: 3}
   pathTrailPrefab: {fileID: 4858251652121785841, guid: 1e836e9d474f207419a199a40ad04d17, type: 3}
+--- !u!114 &4701307368279904392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614688894240553594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030adda6ef60af4459454ca155655371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4614688894240553599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52759,11 +52771,6 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  moveSpeed: 300
-  knockback: 0
-  rb: {fileID: 0}
-  preventInput: 0
-  lookDir: {x: 0, y: 0}
 --- !u!114 &4614688894240553598
 MonoBehaviour:
   m_ObjectHideFlags: 0

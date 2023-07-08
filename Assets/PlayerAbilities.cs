@@ -6,7 +6,6 @@ public class PlayerAbilities : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] ParticleSystem shoveVFX;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
@@ -21,13 +20,11 @@ public class PlayerAbilities : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
     WeaponManager weaponManager;
-    PlayerSound playerSound;
     Rigidbody rb;
 
     GameManager gm;
     InputManager im;
 
-    float shoveManaCost = 20;
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
 
@@ -47,16 +44,6 @@ public class PlayerAbilities : MonoBehaviour
     [System.NonSerialized] public float axeHeavyTimer = 0;
     [System.NonSerialized] public float axeHeavyMaxTime = 15;
 
-    [System.NonSerialized] public bool arcaneStepActive = false;
-    [System.NonSerialized] public bool arcaneRemainsActive = false;
-    float arcaneStepMaxTime = 0.03f;
-    float arcaneStepTimer;
-
-    float closeCallMaxTime = 5;
-    [System.NonSerialized] public float closeCallTimer;
-    [SerializeField] GameObject pathTrailPrefab;
-    [System.NonSerialized] public float mirrorCloakTimer;
-    [System.NonSerialized] public float mirrorCloakMaxTime = 5;
 
     private void Awake()
     {
@@ -71,7 +58,6 @@ public class PlayerAbilities : MonoBehaviour
         playerController = GetComponent<PlayerMovement>();
         playerScript = GetComponent<PlayerScript>();
         weaponManager = GetComponent<WeaponManager>();
-        playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
 
         SetupControls();
@@ -90,36 +76,6 @@ public class PlayerAbilities : MonoBehaviour
             if (axeHeavyTimer <= 0)
             {
                 weaponManager.RemoveSpecificWeaponSource(1);
-            }
-        }
-
-        if (closeCallTimer > 0)
-        {
-            closeCallTimer -= Time.deltaTime;
-            if (closeCallTimer <= 0)
-            {
-                weaponManager.RemoveWeaponMagicSource();
-            }
-        }
-
-        if (mirrorCloakTimer > 0)
-        {
-            mirrorCloakTimer -= Time.deltaTime;
-            if (mirrorCloakTimer <= 0) playerEvents.StartMirrorCloak();
-        }
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
-        {
-            if (arcaneStepTimer < 0)
-            {
-                GameObject pathTrail;
-                pathTrail = Instantiate(pathTrailPrefab);
-                pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-                arcaneStepTimer = arcaneStepMaxTime;
-            }
-            else
-            {
-                arcaneStepTimer -= Time.deltaTime;
             }
         }
     }
@@ -146,37 +102,10 @@ public class PlayerAbilities : MonoBehaviour
         return attackPower;
     }
 
-    public void PerfectDog(GameObject projectile = null, EnemyScript attackingEnemy = null)
-    {
-        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call))
-        {
-            if (closeCallTimer <= 0)
-            {
-                weaponManager.AddWeaponMagicSource();
-            }
-            closeCallTimer = closeCallMaxTime;
-        }
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary.adrenaline_rush))
-        {
-            playerScript.stamina = playerData.MaxStamina();
-        }
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && mirrorCloakTimer <= 0 && attackingEnemy != null)
-        {
-            playerSound.Shield();
-
-            FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), playerScript.parryProfile);
-        }
-    }
-
     public void Shield()
     {
-        if (!playerData.unlockedAbilities.Contains("Block") || !playerController.CanInput())
-        {
-            return;
-        }
-
+        if (!playerData.unlockedAbilities.Contains("Block") || !playerController.CanInput()) return;
+        
         if (playerData.mana > 0)
         {
             rb.velocity = Vector3.zero;
@@ -185,25 +114,8 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
-    void Shove()
+    public void Shove()
     {
-        if (!playerData.unlockedAbilities.Contains("Shove") || !playerController.CanInput())
-        {
-            return;
-        }
-
-        if (playerData.mana > shoveManaCost)
-        {
-            playerScript.LoseMana(shoveManaCost);
-            rb.velocity = Vector3.zero;
-            playerAnimation.PlayAnimation("Shove");
-        }
-    }
-
-
-    public void ShoveEffect()
-    {
-        shoveVFX.Play();
         foreach (EnemyScript enemy in gm.enemies)
         {
             if (Vector3.Distance(transform.position, enemy.transform.position) <= shoveRadius)
@@ -404,21 +316,8 @@ public class PlayerAbilities : MonoBehaviour
         projectile.playerController = playerController;
     }
 
-    public void StartArcaneStep()
-    {
-        arcaneStepActive = true;
-        arcaneStepTimer = arcaneStepMaxTime;
-    }
-
-    public void EndArcaneStep()
-    {
-        arcaneStepActive = false;
-        arcaneStepTimer = 0;
-    }
-
     private void onPlayerStagger(object sender, System.EventArgs e)
     {
-        EndArcaneStep();
         if (playerData.currentWeapon == 2 && knifeSpecialAttackOn)
         {
             knifeSpecialAttackOn = false;
