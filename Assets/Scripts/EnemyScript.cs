@@ -29,6 +29,7 @@ public class EnemyScript : MonoBehaviour
     [System.NonSerialized] public bool blockAttack = false;
     float damageDOT = 0;
     public bool invincible = false;
+    [System.NonSerialized] public bool dying = false;
 
     private void Awake()
     {
@@ -60,6 +61,7 @@ public class EnemyScript : MonoBehaviour
 
         if(health <= 0 && enemyController.state != EnemyState.DYING)
         {
+            dying = true;
             enemyController.state = EnemyState.DYING;
             enemyEvents.StopDOT();
             enemyController.StartDying();

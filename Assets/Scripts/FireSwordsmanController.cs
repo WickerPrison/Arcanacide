@@ -154,6 +154,7 @@ public class FireSwordsmanController : EnemyController
     {
         base.StartStagger(staggerDuration);
         attackArc.HideAttackArc();
+        HideChargeIndicator();
         charging = false;
     }
 
@@ -196,5 +197,11 @@ public class FireSwordsmanController : EnemyController
         smearScript.particleSmear(smearSpeed);
         stepWithAttack.Step(0.15f);
         base.AttackHit(smearSpeed);
+    }
+
+    public override void StartDying()
+    {
+        base.StartDying();
+        HideChargeIndicator();
     }
 }

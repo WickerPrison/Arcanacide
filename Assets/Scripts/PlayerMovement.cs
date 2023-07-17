@@ -186,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
         float currentDistance = lockOnDistance;
         for (int enemy = 0; enemy < gm.enemies.Count; enemy++)
         {
-            if (Vector3.Distance(transform.position, gm.enemies[enemy].transform.position) < currentDistance)
+            if (Vector3.Distance(transform.position, gm.enemies[enemy].transform.position) < currentDistance && !gm.enemies[enemy].dying)
             {
                 lockOnTarget = gm.enemies[enemy].transform;
                 currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
