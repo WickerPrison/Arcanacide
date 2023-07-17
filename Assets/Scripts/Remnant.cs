@@ -13,7 +13,7 @@ public class Remnant : MonoBehaviour
     InputManager im;
     PlayerControls controls;
     PlayerScript playerScript;
-    PlayerController playerController;
+    PatchEffects patchEffects;
     PlayerAnimation playerAnimation;
     WeaponManager weaponManager;
     float playerDistance = 100;
@@ -22,7 +22,7 @@ public class Remnant : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerController = player.GetComponent<PlayerController>();
+        patchEffects = player.GetComponent<PatchEffects>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         playerScript = player.GetComponent<PlayerScript>();
         weaponManager = player.gameObject.GetComponent<WeaponManager>();
@@ -59,14 +59,15 @@ public class Remnant : MonoBehaviour
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
                 weaponManager.RemoveWeaponMagicSource();
-                playerController.arcaneRemainsActive = false;
-                playerScript.MaxHeal();
+                patchEffects.arcaneRemainsActive = false;
+                PlayerHealth playerHealth = playerScript.GetComponent<PlayerHealth>();
+                playerHealth.MaxHeal();
             }
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
             {
                 playerData.mana = playerData.maxMana;
                 playerAnimation.EndBodyMagic();
-                playerScript.deathAuraActive = false;
+                patchEffects.deathAuraActive = false;
             }
             Destroy(gameObject);
         }
@@ -79,13 +80,13 @@ public class Remnant : MonoBehaviour
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
                 weaponManager.AddWeaponMagicSource();
-                playerController.arcaneRemainsActive = true;
+                patchEffects.arcaneRemainsActive = true;
             }
 
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
             {
                 playerAnimation.StartBodyMagic();
-                playerScript.deathAuraActive = true;
+                patchEffects.deathAuraActive = true;
             }
         }
 
@@ -103,13 +104,13 @@ public class Remnant : MonoBehaviour
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
             {
                 weaponManager.RemoveWeaponMagicSource();
-                playerController.arcaneRemainsActive = false;
+                patchEffects.arcaneRemainsActive = false;
             }
 
             if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
             {
                 playerAnimation.EndBodyMagic();
-                playerScript.deathAuraActive = false;
+                patchEffects.deathAuraActive = false;
             }
         }
     }

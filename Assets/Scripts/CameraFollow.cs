@@ -14,7 +14,7 @@ public class CameraFollow : MonoBehaviour
     //This script makes the camera follow the player. Some delay is added to prevent jerking the camera when the player dashes.
 
     [SerializeField] GameObject movePoint;
-    PlayerController playerController;
+    PlayerMovement playerController;
     Vector3 offset = new Vector3(-0.4f, 7.4f, -7.7f);
 
     private void Awake()
@@ -29,7 +29,7 @@ public class CameraFollow : MonoBehaviour
     {
         //break the parent/child relationship of the camera and the movePoint so they can move independently
         movePoint.transform.parent = null;
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame

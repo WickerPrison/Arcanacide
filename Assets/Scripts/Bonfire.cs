@@ -35,9 +35,9 @@ public class Bonfire : MonoBehaviour
             }
             else if(other.gameObject.layer == 8)
             {
-                PlayerController playerController;
-                playerController = other.gameObject.GetComponent<PlayerController>();
-                playerController.PerfectDodge(gameObject, enemyOfOrigin);
+                PlayerScript playerScript;
+                playerScript = other.gameObject.GetComponent<PlayerScript>();
+                playerScript.PerfectDodge(gameObject, enemyOfOrigin);
             }
         }
     }

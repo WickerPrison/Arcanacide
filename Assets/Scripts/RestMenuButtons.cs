@@ -22,7 +22,7 @@ public class RestMenuButtons : MonoBehaviour
     public Transform spawnPoint;
     public int altarNumber;
     Transform player;
-    PlayerController playerController;
+    PlayerMovement playerController;
     PlayerScript playerScript;
     public PlayerControls controls;
     SoundManager sm;
@@ -37,7 +37,7 @@ public class RestMenuButtons : MonoBehaviour
     {
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerController = player.gameObject.GetComponent<PlayerController>();
+        playerController = player.gameObject.GetComponent<PlayerMovement>();
         playerScript = player.gameObject.GetComponent<PlayerScript>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);

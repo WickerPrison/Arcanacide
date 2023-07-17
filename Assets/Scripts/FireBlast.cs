@@ -17,10 +17,10 @@ public class FireBlast : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerScript playerScript;
-            PlayerController playerController;
+            PlayerMovement playerController;
             Rigidbody playerRB;
             playerScript = other.gameObject.GetComponent<PlayerScript>();
-            playerController = other.gameObject.GetComponent<PlayerController>();
+            playerController = other.gameObject.GetComponent<PlayerMovement>();
             playerScript.LoseHealth(spellDamage, EnemyAttackType.NONPARRIABLE, null);
             playerScript.StartStagger(1);
             playerRB = playerController.gameObject.GetComponent<Rigidbody>();

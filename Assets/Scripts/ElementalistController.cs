@@ -34,7 +34,7 @@ public class ElementalistController : EnemyController
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
             if (playerDistance < meleeRange && attackTime <= 0)
@@ -91,8 +91,8 @@ public class ElementalistController : EnemyController
         {
             projectile.transform.position = backAttackPoint.position;
         }
-        projectile.transform.LookAt(playerController.transform.position);
-        projectileScript.target = playerController.transform;
+        projectile.transform.LookAt(playerScript.transform.position);
+        projectileScript.target = playerScript.transform;
         projectileScript.poiseDamage = spellAttackPoiseDamage;
         projectileScript.spellDamage = spellAttackDamage;
         projectileScript.enemyOfOrigin = enemyScript;
@@ -114,17 +114,17 @@ public class ElementalistController : EnemyController
             return;
         }
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             enemySound.OtherSounds(1, 1);
             playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
             enemySound.OtherSounds(2, 1);
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 

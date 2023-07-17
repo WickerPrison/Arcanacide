@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerProjectile : MonoBehaviour
 {
     public int speed;
-    public PlayerController playerController;
+    public PlayerMovement playerController;
     [SerializeField] AudioClip enemyImpactSFX;
     [SerializeField] AudioClip impactSFX;
     [SerializeField] float impactSFXvolume;

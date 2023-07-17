@@ -126,7 +126,7 @@ public class ChainLightningLink : MonoBehaviour
 
             if(hit.collider.gameObject.layer == 8)
             {
-                playerScript.gameObject.GetComponent<PlayerController>().PerfectDodge();
+                playerScript.PerfectDodge();
                 return;
             }
             playerScript.LoseHealth(electricMage.boltDamage, EnemyAttackType.NONPARRIABLE, null);

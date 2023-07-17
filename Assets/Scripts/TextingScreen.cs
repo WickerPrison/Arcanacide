@@ -50,10 +50,11 @@ public class TextingScreen : MonoBehaviour
         contactNameText.text = contactName;
         conversations = textingLibrary.GetConversations(contactName, this);
         SpawnOldTexts();
-        if(conversationQueue.Count > 0)
+        if (conversationQueue.Count > 0)
         {
             NewTexts();
         }
+        else StartCoroutine(ReactivateBackButton());
     }
 
     private void Update()

@@ -20,7 +20,8 @@ public class EnemyController : MonoBehaviour
     [System.NonSerialized] public EnemyScript enemyScript;
     [System.NonSerialized] public EnemyEvents enemyEvents;
     [System.NonSerialized] public EnemySound enemySound;
-    [System.NonSerialized] public PlayerController playerController;
+    //[System.NonSerialized] public PlayerMovement playerMovement;
+    [System.NonSerialized] public PlayerAbilities playerAbilities;
     [System.NonSerialized] public PlayerScript playerScript;
     [System.NonSerialized] public PlayerAnimation playerAnimation;
     public Animator frontAnimator;
@@ -59,7 +60,8 @@ public class EnemyController : MonoBehaviour
         enemyScript = GetComponent<EnemyScript>();
         enemySound = GetComponentInChildren<EnemySound>();
         smearScript = GetComponentInChildren<Smear>();
-        playerController = player.GetComponent<PlayerController>();
+        //playerMovement = player.GetComponent<PlayerMovement>();
+        playerAbilities = player.GetComponent<PlayerAbilities>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         navAgent = GetComponent<NavMeshAgent>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -97,7 +99,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        playerDistance = Vector3.Distance(transform.position, playerController.transform.position);
+        playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 
         if (state == EnemyState.UNAWARE && playerDistance <= detectRange)
         {
@@ -161,16 +163,16 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             enemySound.SwordImpact();
             playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
-        else if(playerController.gameObject.layer == 8)
+        else if(playerScript.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 

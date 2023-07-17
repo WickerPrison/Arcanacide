@@ -187,12 +187,7 @@ public class EnemyScript : MonoBehaviour
         gm.enemiesInRange.Remove(this);
         gm.awareEnemies -= 1;
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
-        {
-            PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
-            playerScript.PartialHeal(healAmount);
-        }
+        GlobalEvents.instance.EnemyKilled();
 
         enemyEvents.Death();
 

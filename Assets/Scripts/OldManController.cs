@@ -6,7 +6,6 @@ using UnityEngine;
 public class OldManController : EnemyController
 {
     [SerializeField] GameObject chargeIndicator;
-    [SerializeField] List<string> layerNames = new List<string>();
     float chargeIndicatorWidth;
     [SerializeField] float maxChargeDistance;
     [SerializeField] Collider attackPointCollider;
@@ -80,7 +79,7 @@ public class OldManController : EnemyController
         enemySound.OtherSounds(2, 2);
         float yDirection = Random.Range(-1f, 1f);
         Vector3 direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
-        navAgent.Warp(playerController.transform.position + direction.normalized * 1.5f);
+        navAgent.Warp(playerScript.transform.position + direction.normalized * 1.5f);
     }
 
     public override void SpecialEffect()
@@ -106,22 +105,22 @@ public class OldManController : EnemyController
             return;
         }
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             enemySound.OtherSounds(1, 1);
             playerScript.LoseHealth(hitDamage,EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
     void Charge()
     { 
-        Vector3 playerDirection = playerController.transform.position - transform.position;
+        Vector3 playerDirection = playerScript.transform.position - transform.position;
         playerDirection.y = 0;
 
         chargePath.Clear();
@@ -215,7 +214,7 @@ public class OldManController : EnemyController
         else if(other.gameObject.layer == 8 && state == EnemyState.SPECIAL && !isColliding)
         {
             isColliding = true;
-            playerScript.GetComponent<PlayerController>().PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class PauseMenuButtons : MonoBehaviour
 {
     public GameObject resumeButton;
-    PlayerController playerController;
+    PlayerMovement playerController;
     SoundManager sm;
     GameObject textMenu;
     [SerializeField] GameObject textMenuPrefab;
@@ -26,7 +26,7 @@ public class PauseMenuButtons : MonoBehaviour
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(resumeButton);
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     private void Update()

@@ -127,7 +127,7 @@ public class IceBoss : EnemyController
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
             if (playerDistance <= meleeRange && attackTime <= 0)
@@ -195,7 +195,7 @@ public class IceBoss : EnemyController
             return;
         }
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             int damage = smashDamage;
             if (currentLimb > 2) damage += 15;
@@ -204,26 +204,26 @@ public class IceBoss : EnemyController
             playerScript.LosePoise(smashPoiseDamage);
             AdditionalAttackEffects();
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
     public void RingBlast(float lowerBound, float upperBound)
     {
         enemySound.OtherSounds(1, 2);
-        float playerDistance = Vector3.Distance(playerController.transform.position, transform.position);
+        float playerDistance = Vector3.Distance(playerScript.transform.position, transform.position);
         if (playerDistance > lowerBound && playerDistance < upperBound)
         {
-            if(playerController.gameObject.layer == 3)
+            if(playerScript.gameObject.layer == 3)
             {
                 playerScript.LoseHealth(ringBlastDamage, EnemyAttackType.NONPARRIABLE, null);
                 playerScript.LosePoise(ringBlastPoiseDamage);
             }
-            else if(playerController.gameObject.layer == 8)
+            else if(playerScript.gameObject.layer == 8)
             {
-                playerController.PerfectDodge();
+                playerScript.PerfectDodge();
             }
         }
     }
@@ -256,7 +256,7 @@ public class IceBoss : EnemyController
         {
             icicleTimer = icicleMaxTime;
             Transform icicle = Instantiate(iciclePrefab).transform;
-            icicle.position = playerController.transform.position;
+            icicle.position = playerScript.transform.position;
             Projectile projectile = icicle.GetComponentInChildren<Projectile>();
             projectile.enemyOfOrigin = enemyScript;
         }
@@ -367,24 +367,13 @@ public class IceBoss : EnemyController
         gm.enemiesInRange.Remove(enemyScript);
         gm.awareEnemies -= 1;
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
-        {
-            PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
-            playerScript.PartialHeal(healAmount);
-        }
+        GlobalEvents.instance.EnemyKilled();
 
         mapData.iceBossKilled = true;
-        playerScript.GainMaxHealCharges();
         gm.awareEnemies -= 1;
         GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
         bossHealthbar.SetActive(false);
-        ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
-        managerVanquished.ShowMessage();
-        SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
-        sm.BossDefeated();
-        MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
-        musicManager.StartFadeOut(4);
+        GlobalEvents.instance.BossKilled();
     }
 
     void HideIndicators()

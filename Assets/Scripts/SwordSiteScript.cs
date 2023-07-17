@@ -10,7 +10,7 @@ public class SwordSiteScript : MonoBehaviour
     [SerializeField] int swordSiteNumber;
     [SerializeField] Vector3 mapPlayerFacePosition;
     Transform player;
-    PlayerController playerController;
+    PlayerMovement playerController;
     GameObject restMenu;
     RestMenuButtons restMenuButtons;
     InputManager im;
@@ -24,7 +24,7 @@ public class SwordSiteScript : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => OpenRestMenu();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerController = player.gameObject.GetComponent<PlayerController>();
+        playerController = player.gameObject.GetComponent<PlayerMovement>();
     }
 
     private void Update()

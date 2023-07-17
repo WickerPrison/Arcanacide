@@ -14,8 +14,7 @@ public class SoundManager : MonoBehaviour
     {
         SFX = GetComponent<AudioSource>();
     }
-
-    public void BossDefeated()
+    private void onBossKilled(object sender, System.EventArgs e)
     {
         SFX.PlayOneShot(bossDefeated, 1);
     }
@@ -37,5 +36,15 @@ public class SoundManager : MonoBehaviour
         GameObject restAudio = Instantiate(restAudioPrefab);
         DontDestroyOnLoad(restAudio);
         restAudio.GetComponent<AudioSource>().Play();
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onBossKilled += onBossKilled;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onBossKilled -= onBossKilled;
     }
 }

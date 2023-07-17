@@ -24,10 +24,10 @@ public class FireMinionController : EnemyController
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
-                navAgent.SetDestination(playerController.transform.position);
+                navAgent.SetDestination(playerScript.transform.position);
             }
 
-            if (Vector3.Distance(transform.position, playerController.transform.position) <= attackRange)
+            if (Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
             {
                 if (attackTime <= 0)
                 {

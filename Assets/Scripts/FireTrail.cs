@@ -20,15 +20,16 @@ public class FireTrail : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && other.gameObject.layer == 3)
         {
-            PlayerScript playerScript;
-            playerScript = other.gameObject.GetComponent<PlayerScript>();
-            if (playerScript.shield)
+            PlayerAbilities playerAbilities;
+            playerAbilities = other.gameObject.GetComponent<PlayerAbilities>();
+            if (playerAbilities.shield)
             {
                 return;
             }
             damage += damagePerSecond * Time.deltaTime;
             if(damage > 1)
             {
+                PlayerScript playerScript = playerAbilities.GetComponent<PlayerScript>();
                 playerScript.LoseHealth(Mathf.FloorToInt(damage), EnemyAttackType.NONPARRIABLE, null);
                 damage = 0;
             }

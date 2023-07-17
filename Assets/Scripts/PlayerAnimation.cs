@@ -27,7 +27,7 @@ public class PlayerAnimation : MonoBehaviour
     int bodyMagicSources = 0;
     Camera cam;
     [SerializeField] PlayerScript playerScript;
-    [SerializeField] PlayerController playerController;
+    [SerializeField] PlayerMovement playerController;
     [SerializeField] float rotationPointY;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] PlayerData playerData;
@@ -125,7 +125,7 @@ public class PlayerAnimation : MonoBehaviour
     public void HealAnimation()
     {
         if (!playerData.hasHealthGem) return;
-        if(playerController.CanInput() && playerScript.playerData.healCharges >= 0)
+        if(playerController.CanInput() && playerData.healCharges >= 0)
         {
             //frontAnimator.SetLayerWeight(1, 1);
             //backAnimator.SetLayerWeight(1, 1);

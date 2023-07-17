@@ -56,7 +56,7 @@ public class HalfGolemController : EnemyController
         //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
         if (navAgent.enabled == true)
         {
-            navAgent.SetDestination(playerController.transform.position);
+            navAgent.SetDestination(playerScript.transform.position);
         }
 
         if (Vector3.Distance(playerScript.transform.position, transform.position) < smashRange)
@@ -81,7 +81,7 @@ public class HalfGolemController : EnemyController
     {
         if (navAgent.enabled)
         {
-            navAgent.SetDestination(playerController.transform.position);
+            navAgent.SetDestination(playerScript.transform.position);
         }
 
         if (attackTime <= 0 && Vector3.Distance(playerScript.transform.position, transform.position) < smashRange)
@@ -108,15 +108,15 @@ public class HalfGolemController : EnemyController
             return;
         }
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             enemySound.SwordImpact();
             playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
@@ -139,13 +139,13 @@ public class HalfGolemController : EnemyController
         }
 
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
             playerScript.LoseStamina(60);
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
 
@@ -158,14 +158,14 @@ public class HalfGolemController : EnemyController
         if (!attackArc.CanHitPlayer()) return;
 
 
-        if (playerController.gameObject.layer == 3)
+        if (playerScript.gameObject.layer == 3)
         {
            playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
            playerScript.LosePoise(hitPoiseDamage);
         }
-        else if (playerController.gameObject.layer == 8)
+        else if (playerScript.gameObject.layer == 8)
         {
-            playerController.PerfectDodge();
+            playerScript.PerfectDodge();
         }
     }
     public override void OnTakeDamage(object sender, EventArgs e)

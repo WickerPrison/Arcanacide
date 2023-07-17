@@ -47,4 +47,20 @@ public class MusicManager : MonoBehaviour
     {
         musicSource.Stop();
     }
+
+    private void onBossKilled(object sender, System.EventArgs e)
+    {
+        StartFadeOut(4);
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onBossKilled += onBossKilled;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onBossKilled -= onBossKilled;
+    }
+
 }
