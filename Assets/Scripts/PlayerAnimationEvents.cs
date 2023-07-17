@@ -273,6 +273,14 @@ public class PlayerAnimationEvents : MonoBehaviour
         icePoof.Play();   
     }
 
+    public void Backstep()
+    {
+        Vector3 direction = playerMovement.transform.position - playerMovement.attackPoint.position;
+        playerMovement.dashDirection = direction.normalized;
+        playerMovement.dashTime = playerMovement.maxDashTime * 2 / 3;
+        playerSound.Dodge();
+    }
+
     private void onPlayerStagger(object sender, EventArgs e)
     {
         SwitchWeaponSprite(playerData.currentWeapon);
