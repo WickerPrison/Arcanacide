@@ -7,12 +7,21 @@ public class GlobalEvents : MonoBehaviour
 {
     public static GlobalEvents instance { get; private set; }
 
+    InputManager im;
+
     public event EventHandler onEnemyKilled;
     public event EventHandler onBossKilled;
+    public event EventHandler onTestButton;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        im = GetComponent<InputManager>();
+        im.controls.Gameplay.TestButton.performed += ctx => onTestButton?.Invoke(this, EventArgs.Empty);
     }
 
     public void EnemyKilled()

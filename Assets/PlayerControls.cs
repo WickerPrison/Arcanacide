@@ -152,6 +152,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TestButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""cfcec8e2-6891-4bb0-8d1f-f6e3f437b498"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -495,6 +504,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Knife"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""028fda4c-8f7c-4953-9f07-5046b7d655fc"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -705,6 +725,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Axe = m_Gameplay.FindAction("Axe", throwIfNotFound: true);
         m_Gameplay_Claws = m_Gameplay.FindAction("Claws", throwIfNotFound: true);
         m_Gameplay_Knife = m_Gameplay.FindAction("Knife", throwIfNotFound: true);
+        m_Gameplay_TestButton = m_Gameplay.FindAction("TestButton", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_Select = m_Tutorial.FindAction("Select", throwIfNotFound: true);
@@ -790,6 +811,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Axe;
     private readonly InputAction m_Gameplay_Claws;
     private readonly InputAction m_Gameplay_Knife;
+    private readonly InputAction m_Gameplay_TestButton;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -808,6 +830,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Axe => m_Wrapper.m_Gameplay_Axe;
         public InputAction @Claws => m_Wrapper.m_Gameplay_Claws;
         public InputAction @Knife => m_Wrapper.m_Gameplay_Knife;
+        public InputAction @TestButton => m_Wrapper.m_Gameplay_TestButton;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -859,6 +882,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Knife.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKnife;
                 @Knife.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKnife;
                 @Knife.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnKnife;
+                @TestButton.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTestButton;
+                @TestButton.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTestButton;
+                @TestButton.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTestButton;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -905,6 +931,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Knife.started += instance.OnKnife;
                 @Knife.performed += instance.OnKnife;
                 @Knife.canceled += instance.OnKnife;
+                @TestButton.started += instance.OnTestButton;
+                @TestButton.performed += instance.OnTestButton;
+                @TestButton.canceled += instance.OnTestButton;
             }
         }
     }
@@ -1048,6 +1077,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnAxe(InputAction.CallbackContext context);
         void OnClaws(InputAction.CallbackContext context);
         void OnKnife(InputAction.CallbackContext context);
+        void OnTestButton(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {

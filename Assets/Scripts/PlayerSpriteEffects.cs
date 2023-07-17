@@ -14,6 +14,7 @@ public class PlayerSpriteEffects : MonoBehaviour
     void Awake()
     {
         playerEvents = GetComponent<PlayerEvents>();
+        spriteMaterial.SetFloat("_FlashWhite", 0);
     }
 
     private void onTakeDamage(object sender, System.EventArgs e)

@@ -104,9 +104,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void EndAttack()
     {
         playerAnimation.attacking = false;
-        frontAnimator.speed = 1;
-        backAnimator.speed = 1;
         playerMovement.lockPosition = false;
+        playerAnimation.EndChain();
     }
 
     public void Heal()

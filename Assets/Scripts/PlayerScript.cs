@@ -69,6 +69,13 @@ public class PlayerScript : MonoBehaviour
         playerSound = GetComponentInChildren<PlayerSound>();
         playerHealth = GetComponent<PlayerHealth>();
         sfx = GetComponentInChildren<PlayerSound>();
+
+        GlobalEvents.instance.onTestButton += Instance_onTestButton;
+    }
+
+    private void Instance_onTestButton(object sender, System.EventArgs e)
+    {
+        StartStagger(1.1f);
     }
 
     public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)
