@@ -91,18 +91,33 @@ public class LevelUpMenu : MonoBehaviour
 
     public void HideDescription()
     {
+        listItems.Remove(description);
+        listItems.Add(description);
+
         StartCoroutine(ShrinkDescription());
     }
 
     IEnumerator ShrinkDescription()
     {
-        float timer = descriptionTransitionTime;
+        float timer = transitionTime;
+        List<Vector3> initialPositions = new List<Vector3>();
         Vector3 initialScale = childDescription.localScale;
-        while( timer > 0 )
+        foreach (Transform item in listItems)
+        {
+            initialPositions.Add(item.localPosition);
+        }
+
+        while (timer > 0)
         {
             timer -= Time.unscaledDeltaTime;
             float ratio = timer / transitionTime;
+            for (int i = 0; i < listItems.Count; i++)
+            {
+                listItems[i].transform.localPosition = Vector3.Lerp(positions[i], initialPositions[i], ratio);
+            }
+
             childDescription.localScale = Vector3.Lerp(descriptScaleMin, initialScale, ratio);
+
             yield return new WaitForEndOfFrame();
         }
     }
