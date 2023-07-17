@@ -367,24 +367,13 @@ public class IceBoss : EnemyController
         gm.enemiesInRange.Remove(enemyScript);
         gm.awareEnemies -= 1;
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
-        {
-            PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
-            playerScript.PartialHeal(healAmount);
-        }
+        GlobalEvents.instance.EnemyKilled();
 
         mapData.iceBossKilled = true;
-        playerScript.GainMaxHealCharges();
         gm.awareEnemies -= 1;
         GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
         bossHealthbar.SetActive(false);
-        ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
-        managerVanquished.ShowMessage();
-        SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
-        sm.BossDefeated();
-        MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
-        musicManager.StartFadeOut(4);
+        GlobalEvents.instance.BossKilled();
     }
 
     void HideIndicators()

@@ -10,57 +10,47 @@ public enum EnemyAttackType
 
 public class PlayerScript : MonoBehaviour
 {
-    //This script is responsible for things that happen automatically without player input
-    //such as health and stamina
+    //This Script manages stamina, mana, as well as the player state
+    //This should normally be the only player script an enemy has to reference
 
-    public PlayerData playerData;
+    //input in inspector
+    [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
     [SerializeField] DialogueData dialogueData;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] EmblemLibrary emblemLibrary;
-    public AttackProfiles parryProfile;
-    public float stamina;
-    public float poise;
-    GameManager gm;
-    InputManager im;
-    PlayerMovement playerController;
+    [SerializeField] AttackProfiles parryProfile;
+
+    //player scripts
     PlayerAbilities playerAbilities;
     PatchEffects patchEffects;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
     PlayerSound playerSound;
-    WeaponManager weaponManager;
+    PlayerHealth playerHealth;
     PlayerSound sfx;
-    CameraFollow cameraScript;
+
+    //other scripts
+    GameManager gm;
+
+    //stagger variables
+    [System.NonSerialized] public float stamina;
+    [System.NonSerialized] public bool isStaggered = false;
     float maxStaminaDelay = 1f;
     float staminaDelay;
     float staminaRate = 40;
+    float staggerTimer = 0;
+
+    //poise variables
+    [System.NonSerialized] public float poise;
     float maxPoise = 100;
     float poiseRate = 5;
-    float staggerTimer = 0;
     float poiseBreakStagger = 1;
-    public bool isStaggered = false;
-    public float duckHealTimer = 0;
-    float duckHealDuration = 2;
-    float duckHealCounter = 0;
-    float duckHealSpeed = 0;
-    [System.NonSerialized] public bool barrier = false;
-    float barrierTimer;
-    float maxBarrierTimer = 10f;
-    public bool shield;
-    public bool parry;
 
+    //mana variables
     float manaDelay;
     float maxManaDelay = 2;
-    int blockManaCost = 15;
     float manaRechargeRate = 4;
-
-    [System.NonSerialized] public bool deathAuraActive = false;
-
-    [System.NonSerialized] public bool fullHealth;
-
-    float clawSpecialStamCostMult = 2;
-    float clawSpecialTakeDamageMult = 0.5f;
 
     private void Awake()
     {
@@ -71,99 +61,27 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        im = gm.gameObject.GetComponent<InputManager>();
         stamina = playerData.MaxStamina();
         poise = maxPoise;
-        barrierTimer = 0;
-        playerController = GetComponent<PlayerMovement>();
         playerAbilities = GetComponent<PlayerAbilities>();
         patchEffects = GetComponent<PatchEffects>();
         playerAnimation = GetComponent<PlayerAnimation>();
         playerSound = GetComponentInChildren<PlayerSound>();
-        weaponManager = GetComponent<WeaponManager>();
+        playerHealth = GetComponent<PlayerHealth>();
         sfx = GetComponentInChildren<PlayerSound>();
-        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-        if(playerData.health == playerData.MaxHealth())
-        {
-            fullHealth = true;
-            if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
-            {
-                weaponManager.AddWeaponMagicSource();
-            }
-        }
-        if(playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
-        {
-            Physics.IgnoreLayerCollision(8, 6, true);
-        }
-        else
-        {
-            Physics.IgnoreLayerCollision(8, 6, false);
-        }
     }
 
     public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)
     {
-
-        if (!shield)
+        if (!playerAbilities.shield)
         {
-            if (barrier)
-            {
-                barrier = false;
-                barrierTimer = maxBarrierTimer;
-                return;
-            }
-
-            if (playerData.clawSpecialOn)
-            {
-                damage = Mathf.CeilToInt(damage * clawSpecialTakeDamageMult);
-            }
-
-            if (damage > playerData.health && playerData.equippedEmblems.Contains(emblemLibrary.arcane_preservation))
-            {
-                damage -= playerData.health;
-                playerData.health = 1;
-                LoseMana(damage);
-                damage = 0;
-                if(playerData.mana <= 0)
-                {
-                    playerData.health = 0;
-                }
-            }
-
-            playerData.health -= damage;
-            playerEvents.TakeDamage();
-            if (attackType != EnemyAttackType.NONPARRIABLE) playerEvents.AttackImpact();
-
-            if (attackingEnemy != null && playerData.equippedEmblems.Contains(emblemLibrary.burning_cloak))
-            {
-                attackingEnemy.GainDOT(5);
-            }
-
-            if(fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
-            {
-                weaponManager.RemoveWeaponMagicSource();
-            }
-            fullHealth = false;
-            hitVFX.Play();
-            float screenShakeMagnitude = (float)damage / (float)playerData.MaxHealth() * .1f;
-            StartCoroutine(cameraScript.ScreenShake(.1f, screenShakeMagnitude));
-            if(playerData.health <= 0)
-            {
-                im.DisableAll();
-                playerController.preventInput = true;
-                YouDied youDied = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<YouDied>();
-                youDied.playerScript = this;
-                youDied.ShowMessage();
-                SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
-                sm.DeathSoundEffect();
-                MusicManager musicManager = gm.gameObject.GetComponentInChildren<MusicManager>();
-                musicManager.StartFadeOut(1);
-            }
+            playerHealth.LoseHealth(damage, attackType, attackingEnemy);
         }
         else
         {
+            // eventually move this to playerAbilities and connect with playerEvents
             sfx.Shield();
-            if (!parry || attackingEnemy == null) return;
+            if (!playerAbilities.parry || attackingEnemy == null) return;
             switch (attackType)
             {
                 case EnemyAttackType.PROJECTILE:
@@ -180,70 +98,9 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void MaxHeal()
-    {
-        playerData.health = playerData.MaxHealth();
-        if (!fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
-        {
-            weaponManager.AddWeaponMagicSource();
-        }
-        fullHealth = true;
-        sfx.Heal();
-    }
-
-    public void PartialHeal(int healAmount)
-    {
-        playerData.health += healAmount;
-        if(playerData.health >= playerData.MaxHealth())
-        {
-            playerData.health = playerData.MaxHealth();
-            if (!fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
-            {
-                weaponManager.AddWeaponMagicSource();
-            }
-            fullHealth = true;
-        }
-    }
-
-    public void Heal()
-    {
-        if (playerData.healCharges < 0)
-        {
-            return;
-        }
-
-        playerData.healCharges -= 1;
-        if(playerData.healCharges < 0 && playerData.tutorials.Contains("Broken Gem") && playerData.unlockedAbilities.Count > 0)
-        {
-            gm.GetComponent<TutorialManager>().BrokenGemTutorial();
-        }
-
-        duckHealTimer = duckHealDuration;
-        duckHealSpeed = playerData.MaxHealth() / duckHealDuration;
-        sfx.Heal();
-        playerAnimation.StartBodyMagic();
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary.explosive_healing))
-        {
-            StartCoroutine(cameraScript.ScreenShake(0.1f, 0.3f));
-            sfx.PlaySoundEffectFromList(10, 1);
-            playerAnimation.shoveVFX.Play();
-
-            foreach (EnemyScript enemy in gm.enemies)
-            {
-                if (Vector3.Distance(enemy.transform.position, transform.position) < emblemLibrary.explosiveHealingRange)
-                {
-                    enemy.LoseHealth(emblemLibrary.ExplosiveHealingDamage(), emblemLibrary.ExplosiveHealingDamage());
-                    EnemyController enemyController = enemy.GetComponent<EnemyController>();
-                    enemyController.StartStagger(emblemLibrary.explosiveHealingStagger);
-                }
-            }
-        }
-    }
-
     public void LosePoise(float poiseDamage)
     {
-        if (!shield)
+        if (!playerAbilities.shield)
         {
             poise -= poiseDamage;
             if(poise <= 0)
@@ -261,7 +118,7 @@ public class PlayerScript : MonoBehaviour
 
     public void StartStagger(float staggerDuration)
     {
-        if(staggerDuration > 0 && !shield)
+        if(staggerDuration > 0 && !playerAbilities.shield)
         {
             staggerTimer += staggerDuration;
             isStaggered = true;
@@ -279,7 +136,7 @@ public class PlayerScript : MonoBehaviour
 
     public void LoseStamina(float amount)
     {
-        if (playerData.clawSpecialOn) amount *= clawSpecialStamCostMult;
+        if (playerData.clawSpecialOn) amount *= playerAbilities.clawSpecialStamCostMult;
 
         stamina -= amount;
         if(stamina < 0)
@@ -302,7 +159,7 @@ public class PlayerScript : MonoBehaviour
         {
             manaDelay = maxManaDelay / 2;
         }
-        if (deathAuraActive)
+        if (patchEffects.deathAuraActive)
         {
             manaDelay = maxManaDelay / 2;
         }
@@ -328,23 +185,6 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (shield)
-        {
-            if (playerData.equippedEmblems.Contains(emblemLibrary.shell_company))
-            {
-                LoseMana(Time.deltaTime * blockManaCost / 2);
-            }
-            else
-            {
-                LoseMana(Time.deltaTime * blockManaCost);
-            }
-
-            if(playerData.mana <= 0)
-            {
-                playerAnimation.PlayAnimation("StopBlocking");
-            }
-        }
-
         if(manaDelay <= 0)
         {
             if(playerData.mana < playerData.maxMana)
@@ -354,7 +194,7 @@ public class PlayerScript : MonoBehaviour
                 {
                     playerData.mana += Time.deltaTime * manaRechargeRate;
                 }
-                if (deathAuraActive)
+                if (patchEffects.deathAuraActive)
                 {
                     playerData.mana += Time.deltaTime * manaRechargeRate;
                 }
@@ -389,31 +229,6 @@ public class PlayerScript : MonoBehaviour
                 EndStagger();
             }
         }
-
-        if (duckHealTimer > 0)
-        {
-            duckHealTimer -= Time.deltaTime;
-            if(duckHealTimer <= 0)
-            {
-                playerAnimation.EndBodyMagic();
-            }
-            duckHealCounter += duckHealSpeed * Time.deltaTime;
-            if(duckHealCounter >= 1)
-            {
-                int amount = Mathf.FloorToInt(duckHealCounter);
-                PartialHeal(amount);
-                duckHealCounter -= amount;
-            }
-        }
-
-        if(barrierTimer > 0)
-        {
-            barrierTimer -= Time.deltaTime;
-        }
-        else if (playerData.equippedEmblems.Contains(emblemLibrary.protective_barrier))
-        {
-            barrier = true;
-        }
     }
 
     public void Death()
@@ -426,7 +241,7 @@ public class PlayerScript : MonoBehaviour
                 break;
         }
 
-        MaxHeal();
+        playerHealth.MaxHeal();
         playerData.healCharges = playerData.maxHealCharges;
         playerData.mana = playerData.maxMana;
         playerData.hasSpawned = false;
@@ -453,7 +268,7 @@ public class PlayerScript : MonoBehaviour
 
     public void Rest()
     {
-        MaxHeal();
+        playerHealth.MaxHeal();
         playerData.mana = playerData.maxMana;
         playerData.healCharges = playerData.maxHealCharges;
         if (playerData.equippedEmblems.Contains(emblemLibrary.durable_gem))
@@ -463,11 +278,5 @@ public class PlayerScript : MonoBehaviour
         playerData.hasSpawned = false;
         gm.SaveGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void GainMaxHealCharges()
-    {
-        playerData.maxHealCharges++;
-        playerData.healCharges++;
     }
 }

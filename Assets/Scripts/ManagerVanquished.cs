@@ -11,7 +11,7 @@ public class ManagerVanquished : MonoBehaviour
 
     float messageTime = 3;
 
-    public void ShowMessage()
+    private void onBossKilled(object sender, System.EventArgs e)
     {
         text.gameObject.SetActive(true);
         StartCoroutine(VanquishedMessage());
@@ -31,5 +31,15 @@ public class ManagerVanquished : MonoBehaviour
     {
         TutorialManager tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
         tutorialManager.EndOfDemoTutorial();
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onBossKilled += onBossKilled;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onBossKilled -= onBossKilled;
     }
 }

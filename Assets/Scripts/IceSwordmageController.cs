@@ -61,7 +61,7 @@ public class IceSwordmageController : EnemyController
 
     public override void AdditionalAttackEffects()
     {
-        if (!playerScript.shield)
+        if (!playerAbilities.shield)
         {
             playerScript.LoseStamina(20);
         }

@@ -30,7 +30,10 @@ public class PlayerAbilities : MonoBehaviour
 
     //other variables
     WaitForSeconds parryWindow = new WaitForSeconds(0.2f);
+    [System.NonSerialized] public bool parry;
+    [System.NonSerialized] public bool shield;
     float parryCost = 20;
+    int blockManaCost = 15;
 
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
@@ -45,6 +48,8 @@ public class PlayerAbilities : MonoBehaviour
 
     float clawSpecialMaxTime = 15f;
     float clawSpecialDamageMult = 2;
+    [System.NonSerialized] public float clawSpecialStamCostMult = 2;
+    [System.NonSerialized] public float clawSpecialTakeDamageMult = 0.5f;
 
     private void Awake()
     {
@@ -77,6 +82,23 @@ public class PlayerAbilities : MonoBehaviour
             if (axeHeavyTimer <= 0)
             {
                 weaponManager.RemoveSpecificWeaponSource(1);
+            }
+        }
+
+        if (shield)
+        {
+            if (playerData.equippedEmblems.Contains(emblemLibrary.shell_company))
+            {
+                playerScript.LoseMana(Time.deltaTime * blockManaCost / 2);
+            }
+            else
+            {
+                playerScript.LoseMana(Time.deltaTime * blockManaCost);
+            }
+
+            if (playerData.mana <= 0)
+            {
+                playerAnimation.PlayAnimation("StopBlocking");
             }
         }
     }
@@ -130,7 +152,7 @@ public class PlayerAbilities : MonoBehaviour
 
     void Attack()
     {
-        if (playerScript.shield && !playerScript.parry)
+        if (shield && !parry)
         {
             StartCoroutine(Parry());
             return;
@@ -151,9 +173,9 @@ public class PlayerAbilities : MonoBehaviour
     IEnumerator Parry()
     {
         playerScript.LoseMana(parryCost);
-        playerScript.parry = true;
+        parry = true;
         yield return parryWindow;
-        playerScript.parry = false;
+        parry = false;
     }
 
     void HeavyAttack()

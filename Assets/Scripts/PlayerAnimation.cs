@@ -125,7 +125,7 @@ public class PlayerAnimation : MonoBehaviour
     public void HealAnimation()
     {
         if (!playerData.hasHealthGem) return;
-        if(playerController.CanInput() && playerScript.playerData.healCharges >= 0)
+        if(playerController.CanInput() && playerData.healCharges >= 0)
         {
             //frontAnimator.SetLayerWeight(1, 1);
             //backAnimator.SetLayerWeight(1, 1);

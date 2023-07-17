@@ -11,7 +11,7 @@ public class AltarScript : MonoBehaviour
     [SerializeField] Transform water;
     bool hasBeenUsed = false;
     Transform player;
-    PlayerScript playerScript;
+    PlayerHealth playerHealth;
     InputManager im;
     //TutorialManager tutorialManager;
     float playerDistance = 100;
@@ -24,7 +24,7 @@ public class AltarScript : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => Charge();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerScript = player.GetComponent<PlayerScript>();
+        playerHealth = player.GetComponent<PlayerHealth>();
         if (mapData.usedAltars.Contains(altarID))
         {
             hasBeenUsed = true;
@@ -39,12 +39,6 @@ public class AltarScript : MonoBehaviour
     private void Update()
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
-
-        //if(playerData.tutorials.Contains("Altar") && playerDistance <= 4)
-        //{
-        //    tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
-        //    tutorialManager.AltarTutorial();
-        //}
 
         if (playerDistance <= interactDistance && !hasBeenUsed)
         {
@@ -71,7 +65,7 @@ public class AltarScript : MonoBehaviour
 
         if(playerDistance <= interactDistance && !hasBeenUsed)
         {
-            playerScript.MaxHeal();
+            playerHealth.MaxHeal();
             hasBeenUsed = true;
             mapData.usedAltars.Add(altarID);
         }

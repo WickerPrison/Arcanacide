@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    [SerializeField] PlayerScript playerScript;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Color transparent;
     [SerializeField] Color solid;
     [SerializeField] Color barrier;
+    
+    PatchEffects patchEffects;
+    PlayerAbilities playerAbilities;
+
+    private void Start()
+    {
+        patchEffects = GetComponentInParent<PatchEffects>();
+        playerAbilities = patchEffects.GetComponent<PlayerAbilities>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerScript.shield)
+        if (playerAbilities.shield)
         {
             spriteRenderer.enabled = true;
-            if (playerScript.parry)
+            if (playerAbilities.parry)
             {
                 spriteRenderer.color = solid;
                 //spriteRenderer.material.SetFloat("_PerlinSize", 0);
@@ -29,7 +37,7 @@ public class Shield : MonoBehaviour
                 spriteRenderer.material.SetFloat("_EdgeDecay", 0.6f);
             }
         }
-        else if (playerScript.barrier)
+        else if (patchEffects.barrier)
         {
             spriteRenderer.enabled = true;
             spriteRenderer.color = barrier;

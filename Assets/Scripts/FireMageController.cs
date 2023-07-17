@@ -79,7 +79,7 @@ public class FireMageController : EnemyController
         {
             playerScript.LoseHealth(fireRingDamage, EnemyAttackType.MELEE, enemyScript);
 
-            if (playerScript.shield) return;
+            if (playerAbilities.shield) return;
 
             playerScript.LosePoise(fireRingPoiseDamage);
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();

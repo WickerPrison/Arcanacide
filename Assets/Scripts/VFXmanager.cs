@@ -9,6 +9,7 @@ public class VFXmanager : MonoBehaviour
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] ParticleSystem dodgeVFX;
     [SerializeField] ParticleSystem impactVFX;
+    [SerializeField] ParticleSystem bloodVFX;
     [SerializeField] SpriteRenderer parryPulse1;
     [SerializeField] SpriteRenderer parryPulse2;
     float parryPulseDuration = 0.2f;
@@ -54,6 +55,11 @@ public class VFXmanager : MonoBehaviour
     private void onAttackImpact(object sender, System.EventArgs e)
     {
         impactVFX.Play();
+    }
+
+    private void onTakeDamage(object sender, System.EventArgs e)
+    {
+        bloodVFX.Play();
     }
 
     private void OnClawSpecial(object sender, System.EventArgs e)
@@ -132,6 +138,7 @@ public class VFXmanager : MonoBehaviour
     {
         playerEvents.onDashStart += onDashStart;
         playerEvents.onAttackImpact += onAttackImpact;
+        playerEvents.onTakeDamage += onTakeDamage;
         playerEvents.onClawSpecial += OnClawSpecial;
         playerEvents.onEndClawSpecial += OnEndClawSpecial;
         playerEvents.onStartMirrorCloak += onStartMirrorCloak;
@@ -144,6 +151,7 @@ public class VFXmanager : MonoBehaviour
     {
         playerEvents.onDashStart -= onDashStart;
         playerEvents.onAttackImpact -= onAttackImpact;
+        playerEvents.onTakeDamage -= onTakeDamage;
         playerEvents.onClawSpecial -= OnClawSpecial;
         playerEvents.onEndClawSpecial -= OnEndClawSpecial;
         playerEvents.onStartMirrorCloak -= onStartMirrorCloak;

@@ -21,6 +21,11 @@ public class ChargeIndicator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ReStart();
+    }
+
+    public void ReStart()
+    {
         viewConeMaterial = new Material(whiteMaterial);
         coneRenderer = gameObject.GetComponent<Renderer>();
         coneRenderer.material = viewConeMaterial;
@@ -29,7 +34,6 @@ public class ChargeIndicator : MonoBehaviour
         meshFilter.mesh = viewMesh;
         direction = initialPosition - finalPosition;
         CalculateAttackArc();
-
     }
 
     public void CalculateAttackArc()

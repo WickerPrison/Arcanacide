@@ -5711,7 +5711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46af2cff8cf5af44ca2aee29f23ac894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerScript: {fileID: 4614688894240553584}
   spriteRenderer: {fileID: 4759480112261120680}
   transparent: {r: 1, g: 1, b: 1, a: 0.3764706}
   solid: {r: 1, g: 1, b: 1, a: 1}
@@ -52672,16 +52671,17 @@ GameObject:
   - component: {fileID: 4614688894240553596}
   - component: {fileID: 1231466633719985042}
   - component: {fileID: 4701307368279904392}
-  - component: {fileID: 4614688894240553599}
   - component: {fileID: 4614688894240553598}
   - component: {fileID: 4614688894240553584}
   - component: {fileID: 3569056454526843162}
+  - component: {fileID: 4614688894240553599}
   - component: {fileID: 4614688894240553597}
   - component: {fileID: 614590855892894281}
   - component: {fileID: 4614688894240553585}
   - component: {fileID: 8228743117170218323}
   - component: {fileID: 5789285288393966520}
   - component: {fileID: 5271526235694559231}
+  - component: {fileID: 8750950683635077094}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -52739,7 +52739,6 @@ MonoBehaviour:
   frontSwordTip: {fileID: 3079022714272363465}
   backSwordTip: {fileID: 4373143805650122359}
   totemPrefab: {fileID: 7099582005832935722, guid: 99bdc7866ca1fa2449c00d734853cd56, type: 3}
-  pathTrailPrefab: {fileID: 4858251652121785841, guid: 1e836e9d474f207419a199a40ad04d17, type: 3}
 --- !u!114 &4701307368279904392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52752,25 +52751,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030adda6ef60af4459454ca155655371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4614688894240553599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4614688894240553594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e303fd55ae2a4b44929c622309e4777, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  pauseMenuPrefab: {fileID: 5157593405333099836, guid: f5e837e11e9b9794b811643c07ffbb07, type: 3}
-  attackPoint: {fileID: 566375568958682984}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 64
+  pathTrailPrefab: {fileID: 4858251652121785841, guid: 1e836e9d474f207419a199a40ad04d17, type: 3}
+  parryProfile: {fileID: 11400000, guid: 8f4a8ad5bdacc634bb539dad6ddab79c, type: 2}
 --- !u!114 &4614688894240553598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52811,12 +52795,6 @@ MonoBehaviour:
   hitVFX: {fileID: 780656707513652994}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
   parryProfile: {fileID: 11400000, guid: 8f4a8ad5bdacc634bb539dad6ddab79c, type: 2}
-  stamina: 0
-  poise: 0
-  isStaggered: 0
-  duckHealTimer: 0
-  shield: 0
-  parry: 0
 --- !u!114 &3569056454526843162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52852,6 +52830,25 @@ MonoBehaviour:
   - {fileID: 4101213123070827847}
   - {fileID: 246970868213114919}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+--- !u!114 &4614688894240553599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614688894240553594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e303fd55ae2a4b44929c622309e4777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  pauseMenuPrefab: {fileID: 5157593405333099836, guid: f5e837e11e9b9794b811643c07ffbb07, type: 3}
+  attackPoint: {fileID: 566375568958682984}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!136 &4614688894240553597
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -52928,6 +52925,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: 1c40fcc057cd8a545ae12768b6cc56d4, type: 2}
+--- !u!114 &8750950683635077094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614688894240553594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbd3603246a35b6498a52a8f2ca3ca54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
 --- !u!1 &4624565988039198084
 GameObject:
   m_ObjectHideFlags: 0
@@ -87996,6 +88007,7 @@ MonoBehaviour:
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
   dodgeVFX: {fileID: 8482747864393254857}
   impactVFX: {fileID: 1730542168581300154}
+  bloodVFX: {fileID: 780656707513652994}
   parryPulse1: {fileID: 4120103470295788012}
   parryPulse2: {fileID: 5078426685371862098}
   clawSpecialVFX: {fileID: 7229230866768341832}
@@ -103555,6 +103567,7 @@ GameObject:
   - component: {fileID: 9164096235062687383}
   - component: {fileID: 2403207429206742158}
   - component: {fileID: 6337882464766197022}
+  - component: {fileID: 811765765522517873}
   - component: {fileID: 2878037202980228874}
   m_Layer: 3
   m_Name: PlayerFront
@@ -103646,6 +103659,20 @@ MonoBehaviour:
   electricTrapPrefab: {fileID: 1386911096606851195, guid: 09f6c75215515e94fbf13c647f3c98cf, type: 3}
   icePoof: {fileID: 7877529065753639892}
   backAnimator: {fileID: 2743549938435777060}
+--- !u!114 &811765765522517873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395915469892964241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad788580a335bd4bb08c7bf539f6066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
 --- !u!95 &2878037202980228874
 Animator:
   serializedVersion: 4
@@ -103656,7 +103683,7 @@ Animator:
   m_GameObject: {fileID: 7395915469892964241}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bbf5fde34f5efea4191d98e90a48c98a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 45ec4a45fc92f6e47b1b244ef930cbcd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -11,7 +11,7 @@ public class EmblemMenu : MonoBehaviour
     [SerializeField] GameObject equipEmblemPrefab;
     [SerializeField] Transform canvas;
     [SerializeField] GameObject noEmblemsMessage;
-    [SerializeField] Transform content;
+    public Transform content;
     [SerializeField] ScrollRect scrollRect;
     public GameObject leaveButton;
     Button leaveButtonButton;
@@ -85,6 +85,8 @@ public class EmblemMenu : MonoBehaviour
             GameObject equipEmblem = Instantiate(equipEmblemPrefab);
             buttons.Add(equipEmblem);
             equipEmblem.transform.SetParent(content);
+            PatchButton patchButton = equipEmblem.GetComponent<PatchButton>();
+            patchButton.contentRect = content.GetComponent<RectTransform>();
             EquipEmblem equipEmblemScript = equipEmblem.GetComponent<EquipEmblem>();
             equipEmblemScript.emblemName = playerData.emblems[i];
             equipEmblemScript.emblemMenu = this;

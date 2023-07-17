@@ -9,12 +9,21 @@ public class EquipEmblem : MonoBehaviour
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] PlayerData playerData;
     [SerializeField] GameObject check;
+    [SerializeField] GameObject box;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI descriptionText;
     public EmblemMenu emblemMenu;
     Button button;
     public string emblemName;
     SoundManager sm;
+    Vector3 maxCheckSize;
+    float transitionTime = 0.1f;
+    Vector3 boxPosition;
+    Vector3 leftPosition;
+    Vector3 rightPosition;
+    float vibrateAmp = 2;
+    float vibrateDuration = 0.3f;
+    float vibrateFreq = 40;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +32,14 @@ public class EquipEmblem : MonoBehaviour
         SetUpMenuControls();
         nameText.text = emblemName;
         descriptionText.text = emblemLibrary.GetDescription(emblemName);
+        maxCheckSize = check.transform.localScale;
         if (!playerData.equippedEmblems.Contains(emblemName))
         {
-            check.SetActive(false);
+            check.transform.localScale = Vector3.zero;
         }
+        boxPosition = box.transform.localPosition;
+        leftPosition = boxPosition - Vector3.right * vibrateAmp;
+        rightPosition = boxPosition + Vector3.right * vibrateAmp;
     }
 
     public void ButtonPressed()
@@ -40,18 +53,54 @@ public class EquipEmblem : MonoBehaviour
         { 
             EmblemEquip();
         }
+        else
+        {
+            StartCoroutine(VibrateBox());
+        }
     }
 
     void EmblemEquip()
     {
         playerData.equippedEmblems.Add(emblemName);
-        check.SetActive(true);
+        StopAllCoroutines();
+        box.transform.localPosition = boxPosition;
+        StartCoroutine(ScaleAnimation(check.transform.localScale, maxCheckSize));
     }
 
     void EmblemUnequip()
     {
         playerData.equippedEmblems.Remove(emblemName);
-        check.SetActive(false);
+        StopAllCoroutines();
+        box.transform.localPosition = boxPosition;
+        StartCoroutine(ScaleAnimation(check.transform.localScale, Vector3.zero));
+    }
+
+    IEnumerator ScaleAnimation(Vector3 currentScale, Vector3 targetScale)
+    {
+        float timer = transitionTime;
+
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            float ratio = timer / transitionTime;
+
+            check.transform.localScale = Vector3.Lerp(targetScale, currentScale, ratio);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    IEnumerator VibrateBox()
+    {
+        float timer = vibrateDuration;
+
+        while (timer > 0)
+        {
+            timer -= Time.unscaledDeltaTime;
+            float input = Mathf.Cos(timer * vibrateFreq) * 0.5f + 0.5f;
+            box.transform.localPosition = Vector3.Lerp(leftPosition, rightPosition, input);
+            yield return new WaitForEndOfFrame();
+        }
+        box.transform.localPosition = boxPosition;
     }
 
     void SetUpMenuControls()

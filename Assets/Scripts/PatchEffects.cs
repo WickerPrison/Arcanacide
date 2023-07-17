@@ -8,11 +8,13 @@ public class PatchEffects : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] GameObject pathTrailPrefab;
+    [SerializeField] AttackProfiles parryProfile;
 
     //player scripts
     PlayerEvents playerEvents;
     WeaponManager weaponManager;
     PlayerScript playerScript;
+    PlayerHealth playerHealth;
     PlayerAbilities playerAbilities;
     PlayerSound playerSound;
 
@@ -28,6 +30,12 @@ public class PatchEffects : MonoBehaviour
     [System.NonSerialized] public float mirrorCloakTimer;
     [System.NonSerialized] public float mirrorCloakMaxTime = 5;
 
+    [System.NonSerialized] public bool barrier = false;
+    [System.NonSerialized] public float barrierTimer;
+    [System.NonSerialized] public float maxBarrierTimer = 10f;
+
+    [System.NonSerialized] public bool deathAuraActive = false;
+
 
     private void Awake()
     {
@@ -39,7 +47,18 @@ public class PatchEffects : MonoBehaviour
         weaponManager = GetComponent<WeaponManager>();
         playerScript = GetComponent<PlayerScript>();
         playerAbilities = GetComponent<PlayerAbilities>();
+        playerHealth = GetComponent<PlayerHealth>();
         playerSound = GetComponentInChildren<PlayerSound>();
+        barrierTimer = 0;
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
+        {
+            Physics.IgnoreLayerCollision(8, 6, true);
+        }
+        else
+        {
+            Physics.IgnoreLayerCollision(8, 6, false);
+        }
     }
 
     private void Update()
@@ -73,6 +92,15 @@ public class PatchEffects : MonoBehaviour
                 arcaneStepTimer -= Time.deltaTime;
             }
         }
+
+        if (barrierTimer > 0)
+        {
+            barrierTimer -= Time.deltaTime;
+        }
+        else if (playerData.equippedEmblems.Contains(emblemLibrary.protective_barrier))
+        {
+            barrier = true;
+        }
     }
 
     public void PerfectDodge(GameObject projectile = null, EnemyScript attackingEnemy = null)
@@ -95,8 +123,34 @@ public class PatchEffects : MonoBehaviour
         {
             playerSound.Shield();
 
-            playerAbilities.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), playerScript.parryProfile);
+            playerAbilities.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
         }
+    }
+
+    public int PatchDamageModifiers(int attackDamage)
+    {
+        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && closeCallTimer > 0)
+        {
+            attackDamage += emblemLibrary.CloseCallDamage();
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && arcaneRemainsActive)
+        {
+            attackDamage += emblemLibrary.ArcaneRemainsDamage();
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
+        {
+            attackDamage += emblemLibrary.ConfidentKillerDamage();
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > emblemLibrary.spellswordManaCost)
+        {
+            attackDamage += emblemLibrary.SpellswordDamage();
+            playerScript.LoseMana(emblemLibrary.spellswordManaCost);
+        }
+
+        return attackDamage;
     }
 
     private void onPlayerStagger(object sender, System.EventArgs e)
@@ -116,13 +170,25 @@ public class PatchEffects : MonoBehaviour
         arcaneStepTimer = 0;
     }
 
+    private void onEnemyKilled(object sender, System.EventArgs e)
+    {
+        if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
+        {
+            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
+            playerHealth.PartialHeal(healAmount);
+        }
+    }
+
     private void OnEnable()
     {
         playerEvents.onPlayerStagger += onPlayerStagger;
+        GlobalEvents.instance.onEnemyKilled += onEnemyKilled;
     }
+
 
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= onPlayerStagger;
+        GlobalEvents.instance.onEnemyKilled -= onEnemyKilled;
     }
 }

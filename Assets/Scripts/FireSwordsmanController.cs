@@ -7,21 +7,30 @@ public class FireSwordsmanController : EnemyController
 {
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject fireArcPrefab;
+    [SerializeField] ChargeIndicator indicator;
     AttackArcGenerator attackArc;
     StepWithAttack stepWithAttack;
+    LayerMask layerMask;
     Vector3 chargeDestination;
     float chargeRange = 6;
     float chargeSpeed = 7;
     float fireTrailMaxTime = 0.01f;
     float fireTrailTime;
+    float chargeDistance = 1000;
     bool charging = false;
     float previousChargeDistance = 0;
+    float chargeIndicatorWidth = 3.5f;
+    Vector3 away = new Vector3(100, 100, 100);
+    FacePlayer facePlayer;
 
     public override void Start()
     {
         base.Start();
+        indicator.transform.parent = null;
+        layerMask = LayerMask.GetMask("Default", "Player", "IFrames");
         attackArc = GetComponentInChildren<AttackArcGenerator>();
         stepWithAttack = GetComponent<StepWithAttack>();
+        facePlayer = GetComponent<FacePlayer>();
     }
 
     public override void EnemyAI()
@@ -48,11 +57,21 @@ public class FireSwordsmanController : EnemyController
                 if(attackTime <= 0)
                 {
                     attackTime = attackMaxTime;
-                    directionLock = true;
+                    state = EnemyState.SPECIAL;
+                    LayChargeIndicator();
                     frontAnimator.Play("ChargeWarmup");
                     backAnimator.Play("ChargeWarmup");
                 }
             }
+        }
+        
+        if (state == EnemyState.SPECIAL)
+        {
+            LayChargeIndicator();
+        }
+        else if(!charging)
+        {
+            HideChargeIndicator();
         }
 
         if (attackTime > 0)
@@ -88,6 +107,28 @@ public class FireSwordsmanController : EnemyController
                 charging = false;
             }
         }
+    }
+
+    void LayChargeIndicator()
+    {
+        Vector3 playerDirection = playerScript.transform.position - transform.position;
+        RaycastHit hit;
+        Physics.Raycast(transform.position, playerDirection, out hit, chargeDistance, layerMask, QueryTriggerInteraction.Ignore);
+
+        indicator.transform.position = Vector3.zero;
+        indicator.initialPosition = transform.position;
+        indicator.finalPosition = transform.position + playerDirection.normalized * (hit.distance + 2);
+        indicator.indicatorWidth = chargeIndicatorWidth;
+        indicator.initialNormal = playerDirection;
+        indicator.finalNormal = -playerDirection;
+        indicator.ReStart();
+
+        facePlayer.ManualFace();
+    }
+
+    void HideChargeIndicator()
+    {
+        indicator.transform.position = away;
     }
 
     void Attack()
@@ -129,8 +170,10 @@ public class FireSwordsmanController : EnemyController
     public override void SpecialAbility()
     {
         navAgent.enabled = true;
+        directionLock = true;
         chargeDestination = playerScript.transform.position;
         charging = true;
+        state = EnemyState.ATTACKING;
     }
 
     public void FireTrail()

@@ -126,10 +126,10 @@ public class Doorway : MonoBehaviour
             DontDestroyOnLoad(doorAudio);
             doorAudio.GetComponent<AudioSource>().Play();
             mapData.doorNumber = doorNumber;
-            PlayerScript playerScript = player.gameObject.GetComponent<PlayerScript>();
-            if (playerScript.duckHealTimer > 0)
+            PlayerHealth playerHealth = player.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth.gemHealTimer > 0)
             {
-                playerScript.MaxHeal();
+                playerHealth.MaxHeal();
             }
             SceneManager.LoadScene(nextRoom);
         }

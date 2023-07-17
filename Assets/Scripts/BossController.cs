@@ -260,7 +260,7 @@ public class BossController : EnemyController
         {
             playerScript.LoseHealth(fireRingDamage,EnemyAttackType.MELEE, enemyScript);
 
-            if (playerScript.shield) return;
+            if (playerAbilities.shield) return;
 
             playerScript.LosePoise(fireRingPoiseDamage);
             Rigidbody playerRB = playerScript.gameObject.GetComponent<Rigidbody>();
@@ -355,15 +355,9 @@ public class BossController : EnemyController
         base.Death();
         bossDialogue.EndLookUpDialogue();
         mapData.fireBossKilled = true;
-        playerScript.GainMaxHealCharges();
         gm.awareEnemies -= 1;
         GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
         bossHealthbar.SetActive(false);
-        ManagerVanquished managerVanquished = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<ManagerVanquished>();
-        managerVanquished.ShowMessage();
-        SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
-        sm.BossDefeated();
-        MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
-        musicManager.StartFadeOut(4);
+        GlobalEvents.instance.BossKilled();
     }
 }

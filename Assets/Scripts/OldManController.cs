@@ -6,7 +6,6 @@ using UnityEngine;
 public class OldManController : EnemyController
 {
     [SerializeField] GameObject chargeIndicator;
-    [SerializeField] List<string> layerNames = new List<string>();
     float chargeIndicatorWidth;
     [SerializeField] float maxChargeDistance;
     [SerializeField] Collider attackPointCollider;
