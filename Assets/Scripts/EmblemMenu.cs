@@ -84,7 +84,7 @@ public class EmblemMenu : MonoBehaviour
         {
             GameObject equipEmblem = Instantiate(equipEmblemPrefab);
             buttons.Add(equipEmblem);
-            equipEmblem.transform.SetParent(content);
+            equipEmblem.transform.SetParent(content, false);
             PatchButton patchButton = equipEmblem.GetComponent<PatchButton>();
             patchButton.contentRect = content.GetComponent<RectTransform>();
             EquipEmblem equipEmblemScript = equipEmblem.GetComponent<EquipEmblem>();

@@ -40,7 +40,7 @@ public class TextingMenu : MonoBehaviour
         for (int i = 0; i < contacts.Count; i++)
         {
             GameObject contact = Instantiate(contactPrefab);
-            contact.transform.SetParent(content);
+            contact.transform.SetParent(content, false);
             contactButtons.Add(contact);
             ContactButton button = contact.GetComponent<ContactButton>();
             button.contactName = contacts[i];

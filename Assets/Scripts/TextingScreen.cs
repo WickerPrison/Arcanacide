@@ -93,7 +93,7 @@ public class TextingScreen : MonoBehaviour
         for (int i = 0; i < previousConversations.Count; i++)
         {
             Transform line = Instantiate(linePrefab).transform;
-            line.SetParent(content);
+            line.SetParent(content, false);
             int conversationIndex = previousConversations[i];
             List<string> currentConversation = conversations[conversationIndex];
             for(int n = 0; n < currentConversation.Count; n++)
@@ -114,7 +114,7 @@ public class TextingScreen : MonoBehaviour
         if (currentLine[0] != "Agent")
         {
             Transform newLine = Instantiate(newLinePrefab).transform;
-            newLine.SetParent(content);
+            newLine.SetParent(content, false);
             NextText();
         }
         else
@@ -133,7 +133,7 @@ public class TextingScreen : MonoBehaviour
         if (spawnLine)
         {
             Transform newLine = Instantiate(newLinePrefab).transform;
-            newLine.SetParent(content);
+            newLine.SetParent(content, false);
             spawnLine = false;
         }
 
@@ -161,7 +161,7 @@ public class TextingScreen : MonoBehaviour
     {
         audioSource.Play();
         GameObject textBox = Instantiate(textBoxPrefab);
-        textBox.transform.SetParent(content);
+        textBox.transform.SetParent(content, false);
         TextBox textBoxScript = textBox.GetComponentInChildren<TextBox>();
         TextMeshProUGUI textBoxText = textBox.GetComponentInChildren<TextMeshProUGUI>();
         string[] currentLine = currentConversation[lineIndex].Split('|');
