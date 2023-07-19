@@ -30,7 +30,7 @@ public class ManagerVanquished : MonoBehaviour
     void EndOfDemoMessage()
     {
         TutorialManager tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
-        tutorialManager.EndOfDemoTutorial();
+        tutorialManager.Tutorial("End Of Demo");
     }
 
     private void OnEnable()

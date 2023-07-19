@@ -21,13 +21,13 @@ public class TutorialAfterDialogue : MonoBehaviour, IEndDialogue
             case "Attack":
                 if (playerData.tutorials.Contains("Attack"))
                 {
-                    tm.AttackTutorial();
+                    tm.Tutorial("Attack");
                 }
                 break;
             case "Texts":
                 if (playerData.tutorials.Contains("Texts"))
                 {
-                    tm.TextsTutorial();
+                    tm.Tutorial("Texts");
                 }
                 break;
         }

@@ -44,7 +44,7 @@ public class GetHealingGem : MonoBehaviour
     {
         if (playerDistance <= interactDistance && !playerData.hasHealthGem)
         {
-            tutorialManager.HealTutorial();   
+            tutorialManager.Tutorial("Heal");   
             mapData.unlockedDoors.Add(3);
             playerData.hasHealthGem = true;
             healthGemIcon.SetActive(true);

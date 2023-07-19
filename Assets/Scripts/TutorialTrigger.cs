@@ -22,13 +22,13 @@ public class TutorialTrigger : MonoBehaviour
                 case "Dodge":
                     if (playerData.tutorials.Contains("Dodge"))
                     {
-                        tutorialManager.DodgeTutorial();
+                        tutorialManager.Tutorial("Dodge");
                     }
                     break;
                 case "Sword Site":
                     if(playerData.tutorials.Contains("Sword Site"))
                     {
-                        tutorialManager.SwordSiteTutorial();
+                        tutorialManager.Tutorial("Sword Site", "Sword Site 2");
                     }
                     break;
             }
@@ -45,7 +45,7 @@ public class TutorialTrigger : MonoBehaviour
                     GameManager gm = tutorialManager.gameObject.GetComponent<GameManager>();
                     if (playerData.tutorials.Contains("Heal") && gm.enemies.Count <= 0)
                     {
-                        tutorialManager.HealTutorial();
+                        tutorialManager.Tutorial("Heal");
                     }
                     break;
             }

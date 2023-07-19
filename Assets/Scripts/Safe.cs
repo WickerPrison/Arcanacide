@@ -75,7 +75,7 @@ public class Safe : MonoBehaviour
         {
             tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
             im.controls.Tutorial.Disable();
-            tutorialManager.EmblemTutorial();
+            tutorialManager.Tutorial("Emblem");
         }
     }
 }
