@@ -7,12 +7,9 @@ public class DialogueData : ScriptableObject
 {
     public List<string> conversationsHad;
 
-    string ORTHODOX = "ORTHODOX";
-    public List<int> ORTHODOXQueue;
-    public List<int> ORTHODOXPreviousConversations;
-    string TRENCH = "TRENCH";
-    public List<int> TRENCHQueue;
-    public List<int> TRENCHPreviousConversations;
+    string directorWilkins = "Director Wilkins";
+    public List<int> directorQueue;
+    public List<int> directorPreviousConversations;
     string UnkownNumber = "Unknown Number";
     public List<int> UnknownNumberQueue;
     public List<int> UnknownNumberPreviousConversations;
@@ -24,14 +21,9 @@ public class DialogueData : ScriptableObject
     {
         List<string> newMessages = new List<string>();
 
-        if(ORTHODOXQueue.Count > 0)
+        if(directorQueue.Count > 0)
         {
-            newMessages.Add(ORTHODOX);
-        }
-
-        if(TRENCHQueue.Count > 0)
-        {
-            newMessages.Add(TRENCH);
+            newMessages.Add(directorWilkins);
         }
 
         if(UnknownNumberQueue.Count > 0)
@@ -47,21 +39,12 @@ public class DialogueData : ScriptableObject
         contacts = new List<string>();
         newMessages = new List<string>();
 
-        if(ORTHODOXQueue.Count + ORTHODOXPreviousConversations.Count > 0)
+        if(directorQueue.Count + directorPreviousConversations.Count > 0)
         {
-            contacts.Add(ORTHODOX);
-            if(ORTHODOXQueue.Count > 0)
+            contacts.Add(directorWilkins);
+            if(directorQueue.Count > 0)
             {
-                newMessages.Add(ORTHODOX);
-            }
-        }
-
-        if(TRENCHQueue.Count + TRENCHPreviousConversations.Count > 0)
-        {
-            contacts.Add(TRENCH);
-            if(TRENCHQueue.Count > 0)
-            {
-                newMessages.Add(TRENCH);
+                newMessages.Add(directorWilkins);
             }
         }
 

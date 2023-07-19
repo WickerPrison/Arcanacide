@@ -105,10 +105,8 @@ public class SaveData
         ACOn = mapData.ACOn;
 
         conversationsHad = dialogueData.conversationsHad;
-        ORTHODOXQueue = dialogueData.ORTHODOXQueue.ToArray();
-        ORTHODOXPreviousConversations = dialogueData.ORTHODOXPreviousConversations.ToArray();
-        TRENCHQueue = dialogueData.TRENCHQueue.ToArray();
-        TRENCHPreviousConversations = dialogueData.TRENCHPreviousConversations.ToArray();
+        ORTHODOXQueue = dialogueData.directorQueue.ToArray();
+        ORTHODOXPreviousConversations = dialogueData.directorPreviousConversations.ToArray();
         QuestionMarksQueue = dialogueData.UnknownNumberQueue.ToArray();
         QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();

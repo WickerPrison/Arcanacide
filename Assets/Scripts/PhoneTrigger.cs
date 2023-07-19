@@ -13,15 +13,9 @@ public class PhoneTrigger : MonoBehaviour
         switch (contactName)
         {
             case "ORTHODOX":
-                if(!phoneData.ORTHODOXQueue.Contains(conversationNum) && !phoneData.ORTHODOXPreviousConversations.Contains(conversationNum))
+                if(!phoneData.directorQueue.Contains(conversationNum) && !phoneData.directorPreviousConversations.Contains(conversationNum))
                 {
-                    phoneData.ORTHODOXQueue.Add(conversationNum);
-                }
-                break;
-            case "TRENCH":
-                if (!phoneData.TRENCHQueue.Contains(conversationNum) && !phoneData.TRENCHPreviousConversations.Contains(conversationNum))
-                {
-                    phoneData.TRENCHQueue.Add(conversationNum);
+                    phoneData.directorQueue.Add(conversationNum);
                 }
                 break;
             case "??????":

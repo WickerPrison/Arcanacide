@@ -97,10 +97,8 @@ public class GameManager : MonoBehaviour
             mapData.iceBossDirection = data.iceBossDirection;
 
             dialogueData.conversationsHad = data.conversationsHad;
-            dialogueData.ORTHODOXQueue = data.ORTHODOXQueue.ToList();
-            dialogueData.ORTHODOXPreviousConversations = data.ORTHODOXPreviousConversations.ToList();
-            dialogueData.TRENCHQueue = data.TRENCHQueue.ToList();
-            dialogueData.TRENCHPreviousConversations = data.TRENCHPreviousConversations.ToList();
+            dialogueData.directorQueue = data.ORTHODOXQueue.ToList();
+            dialogueData.directorPreviousConversations = data.ORTHODOXPreviousConversations.ToList();
             dialogueData.UnknownNumberQueue = data.QuestionMarksQueue.ToList();
             dialogueData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations.ToList();
             dialogueData.patchworkGaryConversations = data.patchworkGaryConversations.ToList();
@@ -155,13 +153,11 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
 
         dialogueData.conversationsHad.Clear();
-        dialogueData.ORTHODOXQueue.Clear();
-        dialogueData.ORTHODOXPreviousConversations.Clear();
-        dialogueData.TRENCHQueue.Clear();
-        dialogueData.TRENCHPreviousConversations.Clear();
+        dialogueData.directorQueue.Clear();
+        dialogueData.directorPreviousConversations.Clear();
         dialogueData.UnknownNumberQueue.Clear();
         dialogueData.UnknownNumberPreviousConversations.Clear();
-        dialogueData.ORTHODOXQueue.Add(0);
+        dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
     }
@@ -214,13 +210,11 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
 
         dialogueData.conversationsHad.Clear();
-        dialogueData.ORTHODOXQueue.Clear();
-        dialogueData.ORTHODOXPreviousConversations.Clear();
-        dialogueData.TRENCHQueue.Clear();
-        dialogueData.TRENCHPreviousConversations.Clear();
+        dialogueData.directorQueue.Clear();
+        dialogueData.directorPreviousConversations.Clear();
         dialogueData.UnknownNumberQueue.Clear();
         dialogueData.UnknownNumberPreviousConversations.Clear();
-        dialogueData.ORTHODOXQueue.Add(0);
+        dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
     }
@@ -279,13 +273,11 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
 
         dialogueData.conversationsHad.Clear();
-        dialogueData.ORTHODOXQueue.Clear();
-        dialogueData.ORTHODOXPreviousConversations.Clear();
-        dialogueData.TRENCHQueue.Clear();
-        dialogueData.TRENCHPreviousConversations.Clear();
+        dialogueData.directorQueue.Clear();
+        dialogueData.directorPreviousConversations.Clear();
         dialogueData.UnknownNumberQueue.Clear();
         dialogueData.UnknownNumberPreviousConversations.Clear();
-        dialogueData.ORTHODOXQueue.Add(0);
+        dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
     }

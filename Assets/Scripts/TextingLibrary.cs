@@ -8,9 +8,7 @@ public class TextingLibrary : MonoBehaviour
     [SerializeField] GameObject dialogueBox;
 
     [SerializeField] TextAsset ORTHODOXtexts;
-    [SerializeField] TextAsset TRENCHtexts;
     [SerializeField] TextAsset UnknownNumberTexts;
-    [SerializeField] TextAsset HeadOfITtexts;
 
     List<List<string>> conversations = new List<List<string>>();
 
@@ -18,15 +16,10 @@ public class TextingLibrary : MonoBehaviour
     {
         switch (contactName)
         {
-            case "ORTHODOX":
+            case "Director Wilkins":
                 SetUpConversation(ORTHODOXtexts);
-                textingScreen.previousConversations = phoneData.ORTHODOXPreviousConversations;
-                textingScreen.conversationQueue = phoneData.ORTHODOXQueue;
-                break;
-            case "TRENCH":
-                SetUpConversation(TRENCHtexts);
-                textingScreen.previousConversations = phoneData.TRENCHPreviousConversations;
-                textingScreen.conversationQueue = phoneData.TRENCHQueue;
+                textingScreen.previousConversations = phoneData.directorPreviousConversations;
+                textingScreen.conversationQueue = phoneData.directorQueue;
                 break;
             case "Unknown Number":
                 SetUpConversation(UnknownNumberTexts);
@@ -41,15 +34,15 @@ public class TextingLibrary : MonoBehaviour
 
     public void AddToQueue(string contactName, int conversationIndex)
     {
-        switch (contactName)
-        {
-            case "ORTHODOX":
-                if (conversationIndex == 0)
-                {
-                    phoneData.TRENCHQueue.Add(0);
-                }
-                break;
-        }
+        //switch (contactName)
+        //{
+        //    case "ORTHODOX":
+        //        if (conversationIndex == 0)
+        //        {
+        //            phoneData.TRENCHQueue.Add(0);
+        //        }
+        //        break;
+        //}
     }
 
     void SetUpConversation(TextAsset csvFile)

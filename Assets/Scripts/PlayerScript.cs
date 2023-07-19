@@ -244,7 +244,7 @@ public class PlayerScript : MonoBehaviour
         switch (playerData.deathNum)
         {
             case 1:
-                dialogueData.ORTHODOXQueue.Add(1);
+                dialogueData.directorQueue.Add(1);
                 break;
         }
 
