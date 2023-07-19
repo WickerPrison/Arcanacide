@@ -46,6 +46,7 @@ public class SaveData
     public int iceBossDirection;
     public bool ACOn;
 
+    public List<string> conversationsHad;
     public int[] ORTHODOXQueue;
     public int[] ORTHODOXPreviousConversations;
     public int[] TRENCHQueue;
@@ -54,8 +55,8 @@ public class SaveData
     public int[] QuestionMarksPreviousConversations;
     public int[] HeadOfITQueue;
     public int[] HeadOfITPreviousConversations;
-    public int[] conversationsHad;
     public int[] patchworkGaryConversations;
+    public int[] whistleblowerConversations;
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData)
     {
@@ -103,13 +104,14 @@ public class SaveData
 
         ACOn = mapData.ACOn;
 
+        conversationsHad = dialogueData.conversationsHad;
         ORTHODOXQueue = dialogueData.ORTHODOXQueue.ToArray();
         ORTHODOXPreviousConversations = dialogueData.ORTHODOXPreviousConversations.ToArray();
         TRENCHQueue = dialogueData.TRENCHQueue.ToArray();
         TRENCHPreviousConversations = dialogueData.TRENCHPreviousConversations.ToArray();
         QuestionMarksQueue = dialogueData.UnknownNumberQueue.ToArray();
         QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations.ToArray();
-        conversationsHad = dialogueData.conversationsHad.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();
+        whistleblowerConversations = dialogueData.whistleBlowerConversations.ToArray();
     }
 }

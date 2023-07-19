@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class DialogueData : ScriptableObject
 {
+    public List<string> conversationsHad;
+
     string ORTHODOX = "ORTHODOX";
     public List<int> ORTHODOXQueue;
     public List<int> ORTHODOXPreviousConversations;
@@ -15,8 +17,8 @@ public class DialogueData : ScriptableObject
     public List<int> UnknownNumberQueue;
     public List<int> UnknownNumberPreviousConversations;
 
-    public List<int> conversationsHad;
     public List<int> patchworkGaryConversations;
+    public List<int> whistleBlowerConversations;
 
     public List<string> GetNewMessages()
     {

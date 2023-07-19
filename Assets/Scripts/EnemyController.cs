@@ -6,7 +6,7 @@ using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
     public enum EnemyState
     {
-        UNAWARE, IDLE, ATTACKING, STAGGERED, DYING, SPECIAL, Disabled
+        UNAWARE, IDLE, ATTACKING, STAGGERED, DYING, SPECIAL, DISABLED
     }
 
 public class EnemyController : MonoBehaviour

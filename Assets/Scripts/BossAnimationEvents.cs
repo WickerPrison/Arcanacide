@@ -110,10 +110,14 @@ public class BossAnimationEvents : EnemyAnimationEvents
         enemyScript.GainHealth(5);
         Dialogue dialogue = GetComponent<Dialogue>();
         dialogue.StartConversation();
-        bossController.state = EnemyState.Disabled;
+        bossController.state = EnemyState.DISABLED;
         bossController.hasSurrendered = true;  
     }
 
+    public void SetStateSpecial()
+    {
+        bossController.state = EnemyState.SPECIAL;
+    }
 
     public override void Death()
     {
