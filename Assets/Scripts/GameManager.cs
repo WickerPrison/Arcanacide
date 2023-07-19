@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
             playerData.equippedEmblems = data.equippedEmblems;
             playerData.maxPatches = data.maxPatches;
             playerData.tutorials = data.tutorials;
+            playerData.evidenceFound = data.evidenceFound;
             playerData.money = data.money;
             playerData.lostMoney = data.lostMoney;
             playerData.strength = data.strength;
@@ -121,6 +122,7 @@ public class GameManager : MonoBehaviour
         playerData.equippedEmblems.Clear();
         playerData.maxPatches = 2;
         playerData.tutorials = tutorialManager.allTutorials;
+        playerData.evidenceFound.Clear();
         playerData.money = money;
         playerData.lostMoney = lostMoney;
         playerData.strength = 1;
@@ -178,6 +180,7 @@ public class GameManager : MonoBehaviour
         playerData.equippedEmblems.Clear();
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
+        playerData.evidenceFound.Clear();
         playerData.money = 280;
         playerData.lostMoney = 0;
         playerData.strength = 1;
@@ -240,6 +243,7 @@ public class GameManager : MonoBehaviour
         playerData.equippedEmblems.Clear();
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
+        playerData.evidenceFound.Clear();
         playerData.money = 2000;
         playerData.lostMoney = 0;
         playerData.strength = 1;

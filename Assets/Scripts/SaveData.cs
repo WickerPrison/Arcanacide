@@ -17,6 +17,7 @@ public class SaveData
     public List<string> equippedEmblems;
     public int maxPatches;
     public List<string> tutorials;
+    public List<string> evidenceFound;
     public int money;
     public int lostMoney;
     public string path;
@@ -69,6 +70,7 @@ public class SaveData
         equippedEmblems = playerData.equippedEmblems;
         maxPatches = playerData.maxPatches;
         tutorials = playerData.tutorials;
+        evidenceFound = playerData.evidenceFound;
         money = playerData.money;
         lostMoney = playerData.lostMoney;
         strength = playerData.strength;

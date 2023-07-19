@@ -8,11 +8,11 @@ public class WeaponPickup : MonoBehaviour
     [SerializeField] GameObject message;
     [SerializeField] PlayerData playerData;
     [SerializeField] int weaponID;
+    [SerializeField] float interactDistance = 2;
     Transform player;
     InputManager im;
     TutorialManager tutorialManager;
     float playerDistance = 100;
-    float interactDistance = 2;
 
     void Start()
     {
@@ -24,6 +24,7 @@ public class WeaponPickup : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 
     private void Update()
     {
