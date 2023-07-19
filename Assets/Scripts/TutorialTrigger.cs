@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialTrigger : MonoBehaviour
 {
     [SerializeField] string tutorialName;
+    [SerializeField] string nextMessageName;
     [SerializeField] PlayerData playerData;
     TutorialManager tutorialManager;
 
@@ -15,40 +16,9 @@ public class TutorialTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && playerData.tutorials.Contains(tutorialName))
         {
-            switch (tutorialName)
-            {
-                case "Dodge":
-                    if (playerData.tutorials.Contains("Dodge"))
-                    {
-                        tutorialManager.Tutorial("Dodge");
-                    }
-                    break;
-                case "Sword Site":
-                    if(playerData.tutorials.Contains("Sword Site"))
-                    {
-                        tutorialManager.Tutorial("Sword Site", "Sword Site 2");
-                    }
-                    break;
-            }
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            switch (tutorialName)
-            {
-                case "Heal":
-                    GameManager gm = tutorialManager.gameObject.GetComponent<GameManager>();
-                    if (playerData.tutorials.Contains("Heal") && gm.enemies.Count <= 0)
-                    {
-                        tutorialManager.Tutorial("Heal");
-                    }
-                    break;
-            }
+            tutorialManager.Tutorial(tutorialName, nextMessageName);
         }
     }
 }

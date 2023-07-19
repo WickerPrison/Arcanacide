@@ -55,7 +55,7 @@ public class WeaponPickup : MonoBehaviour
         {
             tutorialManager = im.gameObject.GetComponent<TutorialManager>();
             im.controls.Tutorial.Disable();
-            tutorialManager.Tutorial("New Weapon", "null");
+            tutorialManager.Tutorial("New Weapon");
         }
     }
 

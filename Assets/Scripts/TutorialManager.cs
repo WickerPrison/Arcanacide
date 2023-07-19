@@ -35,7 +35,7 @@ public class TutorialManager : MonoBehaviour
     string specialAttack = "Special Attack";
     [SerializeField] GameObject morePatchesTutorial;
     [SerializeField] GameObject endOfDemoTutorial;
-    string endOfDemo = "EndOfDemo";
+    string endOfDemo = "End Of Demo";
     [SerializeField] GameObject altarTutorial;
     string altar = "Altar";
     [SerializeField] GameObject newWeaponTutorial;
@@ -88,7 +88,7 @@ public class TutorialManager : MonoBehaviour
         Destroy(currentMessage);
     }
 
-    public void Tutorial(string tutorialName, string nextMessageName = "null")
+    public void Tutorial(string tutorialName, string nextMessageName = "")
     {
         playerData.tutorials.Remove(tutorialName);
         nextMessage = tutorialDict[nextMessageName];
@@ -129,6 +129,7 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(broken_gem);
         allTutorials.Add(dodge);
         allTutorials.Add(swordSite);
+        allTutorials.Add(swordSite2);
         allTutorials.Add(remnant);
         allTutorials.Add(emblem);
         allTutorials.Add(block);
@@ -142,7 +143,7 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialDict = new Dictionary<string, GameObject>
         {
-            {"null", null },
+            {"", null },
             {attack, attackTutorial },
             {heal, healTutorial },
             {broken_gem, brokenGemTutorial },
