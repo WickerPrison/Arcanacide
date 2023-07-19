@@ -378,6 +378,7 @@ public class BossController : EnemyController, IEndDialogue
             im.Dialogue();
             frontAnimator.Play("StandUp");
             backAnimator.Play("StandUp");
+            navAgent.enabled = false;
             navAgent.stoppingDistance = 0;
         }
     }
