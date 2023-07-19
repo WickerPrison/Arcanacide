@@ -51,18 +51,14 @@ public class CollectEvidence : MonoBehaviour
         {
             message.SetActive(false);
         }
-
-
     }
 
     void Investigate()
     {
-        if (hasCollectedEvidence) return;
-
-        if(playerDistance <= interactDistance)
+        if(!hasCollectedEvidence && playerDistance <= interactDistance)
         {
             playerData.evidenceFound.Add(evidenceName);
-            hasCollectedEvidence= true;
+            hasCollectedEvidence = true;
             dialogue.StartConversation();
         }
     }
