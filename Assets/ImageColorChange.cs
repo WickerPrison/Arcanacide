@@ -9,11 +9,16 @@ public class ImageColorChange : MonoBehaviour
     Image image;
     CameraFollow mainCamera;
 
+    private void Awake()
+    {
+        image = GetComponent<Image>();
+        image.material = new Material(image.material);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-        image = GetComponent<Image>();
     }
 
     private void Update()
