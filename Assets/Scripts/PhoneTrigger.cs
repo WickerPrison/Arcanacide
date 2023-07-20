@@ -24,6 +24,9 @@ public class PhoneTrigger : MonoBehaviour
                     phoneData.UnknownNumberQueue.Add(conversationNum);
                 }
                 break;
+            default:
+                Debug.Log(contactName + "is not a valid contact name");
+                break;
         }
     }
 

@@ -281,14 +281,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void onEndPlayerStagger(object sender, System.EventArgs e)
+    {
+        preventInput = false;
+    }
+
     private void OnEnable()
     {
         playerEvents.onPlayerStagger += PlayerEvents_onPlayerStagger;
+        playerEvents.onEndPlayerStagger += onEndPlayerStagger;
     }
+
 
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= PlayerEvents_onPlayerStagger;
+        playerEvents.onEndPlayerStagger -= onEndPlayerStagger;
     }
 
     void SetUpControls()
