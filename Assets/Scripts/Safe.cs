@@ -55,6 +55,7 @@ public class Safe : MonoBehaviour
             newEmblemMessage.SetActive(true);
             emblemMessageText.text = emblemName;
             im.Dialogue();
+            Time.timeScale = 0;
         }
     }
 
@@ -65,6 +66,7 @@ public class Safe : MonoBehaviour
         {
             newEmblemMessage.SetActive(false);
             im.Gameplay();
+            Time.timeScale = 1;
             TriggerTutorial();
         }
     }
