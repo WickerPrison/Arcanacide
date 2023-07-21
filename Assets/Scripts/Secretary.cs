@@ -28,10 +28,8 @@ public class Secretary : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isColliding)
-        {
-            return;
-        }
+        if (!other.CompareTag("Player")) return;
+        if (isColliding) return;
 
         isColliding = true;
         if (!mapData.secretaryConvo)
@@ -46,13 +44,13 @@ public class Secretary : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!other.CompareTag("Player")) return;
         isColliding = false;
         isInConversation = false;
     }
 
     void Talk()
     {
-        if (!isInConversation) return;
         sm.ButtonSound();
         switch (tracker)
         {
