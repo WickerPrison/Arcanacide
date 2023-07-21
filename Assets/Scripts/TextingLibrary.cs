@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class TextingLibrary : MonoBehaviour
 {
-    [SerializeField] DialogueData phoneData;
+    [SerializeField] DialogueData dialogueData;
     [SerializeField] GameObject dialogueBox;
 
-    [SerializeField] TextAsset ORTHODOXtexts;
-    [SerializeField] TextAsset UnknownNumberTexts;
+    [SerializeField] TextAsset directorWilkinsTexts;
+    [SerializeField] TextAsset agentFreiTexts;
+    [SerializeField] TextAsset unknownNumberTexts;
 
     List<List<string>> conversations = new List<List<string>>();
 
@@ -17,14 +18,19 @@ public class TextingLibrary : MonoBehaviour
         switch (contactName)
         {
             case "Director Wilkins":
-                SetUpConversation(ORTHODOXtexts);
-                textingScreen.previousConversations = phoneData.directorPreviousConversations;
-                textingScreen.conversationQueue = phoneData.directorQueue;
+                SetUpConversation(directorWilkinsTexts);
+                textingScreen.previousConversations = dialogueData.directorPreviousConversations;
+                textingScreen.conversationQueue = dialogueData.directorQueue;
+                break;
+            case "Agent Frei":
+                SetUpConversation(agentFreiTexts);
+                textingScreen.previousConversations = dialogueData.freiPreviousConversations;
+                textingScreen.conversationQueue = dialogueData.freiQueue;
                 break;
             case "Unknown Number":
-                SetUpConversation(UnknownNumberTexts);
-                textingScreen.previousConversations = phoneData.UnknownNumberPreviousConversations;
-                textingScreen.conversationQueue = phoneData.UnknownNumberQueue;
+                SetUpConversation(unknownNumberTexts);
+                textingScreen.previousConversations = dialogueData.UnknownNumberPreviousConversations;
+                textingScreen.conversationQueue = dialogueData.UnknownNumberQueue;
                 break;
         }
 
@@ -34,15 +40,15 @@ public class TextingLibrary : MonoBehaviour
 
     public void AddToQueue(string contactName, int conversationIndex)
     {
-        //switch (contactName)
-        //{
-        //    case "ORTHODOX":
-        //        if (conversationIndex == 0)
-        //        {
-        //            phoneData.TRENCHQueue.Add(0);
-        //        }
-        //        break;
-        //}
+        switch (contactName)
+        {
+            case "Agent Frei":
+                if (conversationIndex == 0)
+                {
+                    dialogueData.directorQueue.Add(2);
+                }
+             break;
+        }
     }
 
     void SetUpConversation(TextAsset csvFile)

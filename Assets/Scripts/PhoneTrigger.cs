@@ -6,22 +6,28 @@ public class PhoneTrigger : MonoBehaviour
 {
     [SerializeField] string contactName;
     [SerializeField] int conversationNum;
-    [SerializeField] DialogueData phoneData;
+    [SerializeField] DialogueData dialogueData;
 
     private void Start()
     {
         switch (contactName)
         {
-            case "ORTHODOX":
-                if(!phoneData.directorQueue.Contains(conversationNum) && !phoneData.directorPreviousConversations.Contains(conversationNum))
+            case "DirectorWilkins":
+                if(!dialogueData.directorQueue.Contains(conversationNum) && !dialogueData.directorPreviousConversations.Contains(conversationNum))
                 {
-                    phoneData.directorQueue.Add(conversationNum);
+                    dialogueData.directorQueue.Add(conversationNum);
+                }
+                break;
+            case "AgentFrei":
+                if(!dialogueData.freiQueue.Contains(conversationNum) && !dialogueData.freiPreviousConversations.Contains(conversationNum))
+                {
+                    dialogueData.freiQueue.Add(conversationNum);
                 }
                 break;
             case "??????":
-                if (!phoneData.UnknownNumberQueue.Contains(conversationNum) && !phoneData.UnknownNumberPreviousConversations.Contains(conversationNum))
+                if (!dialogueData.UnknownNumberQueue.Contains(conversationNum) && !dialogueData.UnknownNumberPreviousConversations.Contains(conversationNum))
                 {
-                    phoneData.UnknownNumberQueue.Add(conversationNum);
+                    dialogueData.UnknownNumberQueue.Add(conversationNum);
                 }
                 break;
             default:

@@ -10,6 +10,9 @@ public class DialogueData : ScriptableObject
     string directorWilkins = "Director Wilkins";
     public List<int> directorQueue;
     public List<int> directorPreviousConversations;
+    string agentFrei = "Agent Frei";
+    public List<int> freiQueue;
+    public List<int> freiPreviousConversations;
     string UnkownNumber = "Unknown Number";
     public List<int> UnknownNumberQueue;
     public List<int> UnknownNumberPreviousConversations;
@@ -24,6 +27,11 @@ public class DialogueData : ScriptableObject
         if(directorQueue.Count > 0)
         {
             newMessages.Add(directorWilkins);
+        }
+
+        if(freiQueue.Count > 0)
+        {
+            newMessages.Add(agentFrei);
         }
 
         if(UnknownNumberQueue.Count > 0)
@@ -45,6 +53,15 @@ public class DialogueData : ScriptableObject
             if(directorQueue.Count > 0)
             {
                 newMessages.Add(directorWilkins);
+            }
+        }
+
+        if(freiQueue.Count + freiPreviousConversations.Count > 0)
+        {
+            contacts.Add(agentFrei);
+            if(freiQueue.Count > 0)
+            {
+                newMessages.Add(agentFrei);
             }
         }
 

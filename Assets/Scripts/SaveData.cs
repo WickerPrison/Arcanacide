@@ -48,14 +48,12 @@ public class SaveData
     public bool ACOn;
 
     public List<string> conversationsHad;
-    public int[] ORTHODOXQueue;
-    public int[] ORTHODOXPreviousConversations;
-    public int[] TRENCHQueue;
-    public int[] TRENCHPreviousConversations;
+    public int[] directorWilkinsQueue;
+    public int[] directorWilkinsPreviousConversations;
+    public int[] agentFreiQueue;
+    public int[] agentFreiPreviousConversations;
     public int[] QuestionMarksQueue;
     public int[] QuestionMarksPreviousConversations;
-    public int[] HeadOfITQueue;
-    public int[] HeadOfITPreviousConversations;
     public int[] patchworkGaryConversations;
     public int[] whistleblowerConversations;
 
@@ -107,8 +105,10 @@ public class SaveData
         ACOn = mapData.ACOn;
 
         conversationsHad = dialogueData.conversationsHad;
-        ORTHODOXQueue = dialogueData.directorQueue.ToArray();
-        ORTHODOXPreviousConversations = dialogueData.directorPreviousConversations.ToArray();
+        directorWilkinsQueue = dialogueData.directorQueue.ToArray();
+        directorWilkinsPreviousConversations = dialogueData.directorPreviousConversations.ToArray();
+        agentFreiQueue = dialogueData.freiQueue.ToArray();
+        agentFreiPreviousConversations = dialogueData.freiPreviousConversations.ToArray();
         QuestionMarksQueue = dialogueData.UnknownNumberQueue.ToArray();
         QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();
