@@ -6,8 +6,8 @@ public class BossDialogue : MonoBehaviour
 {
     [SerializeField] GameObject dialoguePrefab;
     DialogueScript dialogue;
-
-    string lookUpDialogue = "Now where did I save that incantation?";
+    [SerializeField] string[] lookUpDialogue;
+    int randInt = 0;
 
     private void Start()
     {
@@ -19,7 +19,8 @@ public class BossDialogue : MonoBehaviour
     {
         dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
         dialogue.SetImage("Head of IT");
-        dialogue.SetText(lookUpDialogue);
+        dialogue.SetText(lookUpDialogue[randInt]);
+        randInt = Random.Range(0, 3);
     }
 
     public void EndLookUpDialogue()
