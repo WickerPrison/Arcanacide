@@ -13,8 +13,8 @@ public class TextingMenu : MonoBehaviour
     Button leaveButtonButton;
     public RestMenuButtons restMenuScript;
     public PauseMenuButtons pauseMenuScript;
-    List<string> contacts;
-    List<string> newMessages;
+    List<PhoneContacts> contacts;
+    List<PhoneContacts> newMessages;
     public PlayerControls controls;
     SoundManager sm;
     public GameObject firstButton;

@@ -170,8 +170,6 @@ public class EnemyScript : MonoBehaviour
 
     public void Death()
     {
-        playerData.killedEnemiesNum += 1;
-
         if(enemyID != 0)
         {
             mapData.deadEnemies.Add(enemyID);

@@ -7,7 +7,7 @@ public class TextingLibrary : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     [SerializeField] GameObject dialogueBox;
 
-    Dictionary<string, TextAsset> textsDict = new Dictionary<string, TextAsset>();
+    Dictionary<PhoneContacts, TextAsset> textsDict = new Dictionary<PhoneContacts, TextAsset>();
     [SerializeField] TextAsset directorWilkinsTexts;
     [SerializeField] TextAsset agentFreiTexts;
     [SerializeField] TextAsset bonsaiTexts;
@@ -17,15 +17,15 @@ public class TextingLibrary : MonoBehaviour
 
     private void Awake()
     {
-        textsDict = new Dictionary<string, TextAsset>()
+        textsDict = new Dictionary<PhoneContacts, TextAsset>()
         {
-            {"Director Wilkins", directorWilkinsTexts},
-            {"Agent Frei", agentFreiTexts},
-            {"Bonsai", bonsaiTexts }
+            {PhoneContacts.DIRECTORWILKINS, directorWilkinsTexts},
+            {PhoneContacts.AGENTFREI, agentFreiTexts},
+            {PhoneContacts.BONSAI, bonsaiTexts }
         };
     }
 
-    public List<List<string>> GetConversations(string contactName, TextingScreen textingScreen)
+    public List<List<string>> GetConversations(PhoneContacts contactName, TextingScreen textingScreen)
     {
         SetUpConversation(textsDict[contactName]);
         textingScreen.previousConversations = dialogueData.GetPreviousConversations(contactName);
@@ -34,11 +34,11 @@ public class TextingLibrary : MonoBehaviour
     }
 
 
-    public void AddToQueue(string contactName, int conversationIndex)
+    public void AddToQueue(PhoneContacts contactName, int conversationIndex)
     {
         switch (contactName)
         {
-            case "Agent Frei":
+            case PhoneContacts.AGENTFREI:
                 if (conversationIndex == 0)
                 {
                     dialogueData.directorQueue.Add(2);

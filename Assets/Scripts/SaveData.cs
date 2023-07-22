@@ -30,6 +30,7 @@ public class SaveData
     public float mana;
     public int deathNum;
     public int killedEnemiesNum;
+    public int killedEnemiesAtGetShield;
     public List<int> unlockedWeapons;
     public int currentWeapon;
 
@@ -81,6 +82,7 @@ public class SaveData
         mana = playerData.mana;
         deathNum = playerData.deathNum;
         killedEnemiesNum = playerData.killedEnemiesNum;
+        killedEnemiesAtGetShield = playerData.killedEnemiesAtGetShield;
         unlockedWeapons = playerData.unlockedWeapons;
         currentWeapon = playerData.currentWeapon;
 

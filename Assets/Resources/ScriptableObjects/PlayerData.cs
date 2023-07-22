@@ -30,6 +30,7 @@ public class PlayerData : ScriptableObject
 
     public int deathNum;
     public int killedEnemiesNum;
+    public int killedEnemiesAtGetShield;
 
     public Vector2 moveDir;
 

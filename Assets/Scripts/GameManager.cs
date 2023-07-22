@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if(SceneManager.GetActiveScene().name == mapData.deathRoom)
+        if (SceneManager.GetActiveScene().name == mapData.deathRoom)
         {
             GameObject moneyDrop;
             moneyDrop = Instantiate(moneyDropPrefab);
@@ -47,6 +47,36 @@ public class GameManager : MonoBehaviour
         }
         tutorialManager = gameObject.GetComponent<TutorialManager>();
     }
+
+    private void onEnemyKilled(object sender, System.EventArgs e)
+    {
+        playerData.killedEnemiesNum++;
+        switch (playerData.killedEnemiesNum)
+        {
+            case 5:
+                dialogueData.bonsaiQueue.Add(1);
+                break;
+            case 15:
+                dialogueData.bonsaiQueue.Add(2);
+                break;
+        }
+
+        if(playerData.unlockedAbilities.Contains("Block") && playerData.killedEnemiesNum - playerData.killedEnemiesAtGetShield == 11)
+        {
+            dialogueData.bonsaiQueue.Add(3);
+        }
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onEnemyKilled += onEnemyKilled;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onEnemyKilled -= onEnemyKilled;
+    }
+
 
     public string GetSceneName(int swordSiteNumber) => sceneNames[swordSiteNumber];
 
@@ -81,6 +111,7 @@ public class GameManager : MonoBehaviour
             playerData.mana = data.mana;
             playerData.deathNum = data.deathNum;
             playerData.killedEnemiesNum = data.killedEnemiesNum;
+            playerData.killedEnemiesAtGetShield = data.killedEnemiesAtGetShield;
             playerData.unlockedWeapons = data.unlockedWeapons;
             playerData.currentWeapon = data.currentWeapon;
 
@@ -138,6 +169,7 @@ public class GameManager : MonoBehaviour
         playerData.mana = playerData.maxMana;
         playerData.deathNum = 0;
         playerData.killedEnemiesNum = 0;
+        playerData.killedEnemiesAtGetShield = 0;
         playerData.unlockedWeapons.Clear();
         playerData.unlockedWeapons.Add(0);
         playerData.currentWeapon = 0;
@@ -200,6 +232,7 @@ public class GameManager : MonoBehaviour
         playerData.mana = playerData.maxMana;
         playerData.deathNum = 0;
         playerData.killedEnemiesNum = 0;
+        playerData.killedEnemiesAtGetShield = 0;
         playerData.unlockedWeapons.Clear();
         playerData.unlockedWeapons.Add(0);
         playerData.unlockedWeapons.Add(1);
@@ -267,6 +300,7 @@ public class GameManager : MonoBehaviour
         playerData.mana = playerData.maxMana;
         playerData.deathNum = 0;
         playerData.killedEnemiesNum = 0;
+        playerData.killedEnemiesAtGetShield = 0;
         playerData.unlockedWeapons.Clear();
         playerData.unlockedWeapons.Add(0);
         playerData.unlockedWeapons.Add(1);

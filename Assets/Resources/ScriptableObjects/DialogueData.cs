@@ -1,7 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+
+public enum PhoneContacts
+{
+    DIRECTORWILKINS, AGENTFREI, BONSAI
+}
 
 [CreateAssetMenu]
 public class DialogueData : ScriptableObject
@@ -25,31 +31,46 @@ public class DialogueData : ScriptableObject
     public List<int> whistleBlowerConversations;
 
 
-    public List<int> GetQueue(string name)
+    public List<int> GetQueue(PhoneContacts name)
     {
         switch (name)
         {
-            case "Director Wilkins":
+            case PhoneContacts.DIRECTORWILKINS:
                 return directorQueue;
-            case "Agent Frei":
+            case PhoneContacts.AGENTFREI:
                 return freiQueue;
-            case "Bonsai":
+            case PhoneContacts.BONSAI:
                 return bonsaiQueue;
             default:
                 return null;
         }
     }
 
-    public List<int> GetPreviousConversations(string name)
+    public List<int> GetPreviousConversations(PhoneContacts name)
     {
         switch (name)
         {
-            case "Director Wilkins":
+            case PhoneContacts.DIRECTORWILKINS:
                 return directorPreviousConversations;
-            case "Agent Frei":
+            case PhoneContacts.AGENTFREI:
                 return freiPreviousConversations;
-            case "Bonsai":
+            case PhoneContacts.BONSAI:
                 return bonsaiPreviousConversations;
+            default:
+                return null;
+        }
+    }
+
+    public string GetContactString(PhoneContacts name)
+    {
+        switch (name)
+        {
+            case PhoneContacts.DIRECTORWILKINS:
+                return directorWilkins;
+            case PhoneContacts.AGENTFREI:
+                return agentFrei;
+            case PhoneContacts.BONSAI:
+                return bonsai;
             default:
                 return null;
         }
@@ -82,44 +103,35 @@ public class DialogueData : ScriptableObject
         return newMessages;
     }
 
-    public void GetContacts(out List<string> contacts, out List<string> newMessages)
+    public void GetContacts(out List<PhoneContacts> contacts, out List<PhoneContacts> newMessages)
     {
-        contacts = new List<string>();
-        newMessages = new List<string>();
+        contacts = new List<PhoneContacts>();
+        newMessages = new List<PhoneContacts>();
 
         if(directorQueue.Count + directorPreviousConversations.Count > 0)
         {
-            contacts.Add(directorWilkins);
+            contacts.Add(PhoneContacts.DIRECTORWILKINS);
             if(directorQueue.Count > 0)
             {
-                newMessages.Add(directorWilkins);
+                newMessages.Add(PhoneContacts.DIRECTORWILKINS);
             }
         }
 
         if(freiQueue.Count + freiPreviousConversations.Count > 0)
         {
-            contacts.Add(agentFrei);
+            contacts.Add(PhoneContacts.AGENTFREI);
             if(freiQueue.Count > 0)
             {
-                newMessages.Add(agentFrei);
+                newMessages.Add(PhoneContacts.AGENTFREI);
             }
         }
 
         if(bonsaiQueue.Count + bonsaiPreviousConversations.Count > 0)
         {
-            contacts.Add(bonsai);
+            contacts.Add(PhoneContacts.BONSAI);
             if(bonsaiQueue.Count > 0)
             {
-                newMessages.Add(bonsai);
-            }
-        }
-
-        if(UnknownNumberQueue.Count + UnknownNumberPreviousConversations.Count > 0)
-        {
-            contacts.Add(UnkownNumber);
-            if(UnknownNumberQueue.Count > 0)
-            {
-                newMessages.Add(UnkownNumber);
+                newMessages.Add(PhoneContacts.BONSAI);
             }
         }
     }

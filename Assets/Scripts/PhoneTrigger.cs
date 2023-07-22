@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PhoneTrigger : MonoBehaviour
 {
-    [SerializeField] string contactName;
+    [SerializeField] PhoneContacts contactName;
     [SerializeField] int conversationNum;
     [SerializeField] DialogueData dialogueData;
 
