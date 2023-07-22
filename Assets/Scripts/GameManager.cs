@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
             dialogueData.directorPreviousConversations = data.directorWilkinsPreviousConversations.ToList();
             dialogueData.freiQueue = data.agentFreiQueue.ToList();
             dialogueData.freiPreviousConversations = data.agentFreiPreviousConversations.ToList();
+            dialogueData.bonsaiQueue = data.bonsaiQueue.ToList();
+            dialogueData.bonsaiPreviousConversations = data.bonsaiPreviousConversations.ToList();
             dialogueData.UnknownNumberQueue = data.QuestionMarksQueue.ToList();
             dialogueData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations.ToList();
             dialogueData.patchworkGaryConversations = data.patchworkGaryConversations.ToList();
@@ -161,6 +163,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorPreviousConversations.Clear();
         dialogueData.freiQueue.Clear();
         dialogueData.freiPreviousConversations.Clear();
+        dialogueData.bonsaiQueue.Clear();
+        dialogueData.bonsaiPreviousConversations.Clear();
         dialogueData.UnknownNumberQueue.Clear();
         dialogueData.UnknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);
@@ -221,6 +225,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorPreviousConversations.Clear();
         dialogueData.freiQueue.Clear();
         dialogueData.freiPreviousConversations.Clear();
+        dialogueData.bonsaiQueue.Clear();
+        dialogueData.bonsaiPreviousConversations.Clear();
         dialogueData.UnknownNumberQueue.Clear();
         dialogueData.UnknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);
@@ -287,6 +293,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorPreviousConversations.Clear();
         dialogueData.freiQueue.Clear();
         dialogueData.freiPreviousConversations.Clear();
+        dialogueData.bonsaiQueue.Clear();
+        dialogueData.bonsaiPreviousConversations.Clear();
         dialogueData.UnknownNumberQueue.Clear();
         dialogueData.UnknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);

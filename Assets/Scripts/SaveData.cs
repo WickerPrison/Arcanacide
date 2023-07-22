@@ -52,6 +52,8 @@ public class SaveData
     public int[] directorWilkinsPreviousConversations;
     public int[] agentFreiQueue;
     public int[] agentFreiPreviousConversations;
+    public int[] bonsaiQueue;
+    public int[] bonsaiPreviousConversations;
     public int[] QuestionMarksQueue;
     public int[] QuestionMarksPreviousConversations;
     public int[] patchworkGaryConversations;
@@ -109,6 +111,8 @@ public class SaveData
         directorWilkinsPreviousConversations = dialogueData.directorPreviousConversations.ToArray();
         agentFreiQueue = dialogueData.freiQueue.ToArray();
         agentFreiPreviousConversations = dialogueData.freiPreviousConversations.ToArray();
+        bonsaiQueue = dialogueData.bonsaiQueue.ToArray();
+        bonsaiPreviousConversations = dialogueData.bonsaiPreviousConversations.ToArray();
         QuestionMarksQueue = dialogueData.UnknownNumberQueue.ToArray();
         QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();

@@ -10,30 +10,9 @@ public class PhoneTrigger : MonoBehaviour
 
     private void Start()
     {
-        switch (contactName)
+        if (!dialogueData.GetQueue(contactName).Contains(conversationNum) && !dialogueData.GetPreviousConversations(contactName).Contains(conversationNum))
         {
-            case "DirectorWilkins":
-                if(!dialogueData.directorQueue.Contains(conversationNum) && !dialogueData.directorPreviousConversations.Contains(conversationNum))
-                {
-                    dialogueData.directorQueue.Add(conversationNum);
-                }
-                break;
-            case "AgentFrei":
-                if(!dialogueData.freiQueue.Contains(conversationNum) && !dialogueData.freiPreviousConversations.Contains(conversationNum))
-                {
-                    dialogueData.freiQueue.Add(conversationNum);
-                }
-                break;
-            case "??????":
-                if (!dialogueData.UnknownNumberQueue.Contains(conversationNum) && !dialogueData.UnknownNumberPreviousConversations.Contains(conversationNum))
-                {
-                    dialogueData.UnknownNumberQueue.Add(conversationNum);
-                }
-                break;
-            default:
-                Debug.Log(contactName + "is not a valid contact name");
-                break;
+            dialogueData.GetQueue(contactName).Add(conversationNum);
         }
     }
-
 }

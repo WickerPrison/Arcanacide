@@ -7,33 +7,29 @@ public class TextingLibrary : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     [SerializeField] GameObject dialogueBox;
 
+    Dictionary<string, TextAsset> textsDict = new Dictionary<string, TextAsset>();
     [SerializeField] TextAsset directorWilkinsTexts;
     [SerializeField] TextAsset agentFreiTexts;
+    [SerializeField] TextAsset bonsaiTexts;
     [SerializeField] TextAsset unknownNumberTexts;
 
     List<List<string>> conversations = new List<List<string>>();
 
+    private void Awake()
+    {
+        textsDict = new Dictionary<string, TextAsset>()
+        {
+            {"Director Wilkins", directorWilkinsTexts},
+            {"Agent Frei", agentFreiTexts},
+            {"Bonsai", bonsaiTexts }
+        };
+    }
+
     public List<List<string>> GetConversations(string contactName, TextingScreen textingScreen)
     {
-        switch (contactName)
-        {
-            case "Director Wilkins":
-                SetUpConversation(directorWilkinsTexts);
-                textingScreen.previousConversations = dialogueData.directorPreviousConversations;
-                textingScreen.conversationQueue = dialogueData.directorQueue;
-                break;
-            case "Agent Frei":
-                SetUpConversation(agentFreiTexts);
-                textingScreen.previousConversations = dialogueData.freiPreviousConversations;
-                textingScreen.conversationQueue = dialogueData.freiQueue;
-                break;
-            case "Unknown Number":
-                SetUpConversation(unknownNumberTexts);
-                textingScreen.previousConversations = dialogueData.UnknownNumberPreviousConversations;
-                textingScreen.conversationQueue = dialogueData.UnknownNumberQueue;
-                break;
-        }
-
+        SetUpConversation(textsDict[contactName]);
+        textingScreen.previousConversations = dialogueData.GetPreviousConversations(contactName);
+        textingScreen.conversationQueue = dialogueData.GetQueue(contactName);
         return conversations;
     }
 
