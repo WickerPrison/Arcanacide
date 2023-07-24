@@ -8,6 +8,8 @@ public class PlayerEvents : MonoBehaviour
 {
     public event EventHandler onDashStart;
     public event EventHandler onDashEnd;
+    public event EventHandler onBackstepStart;
+    [System.NonSerialized] public int backstepInt;
     public event EventHandler onAttackImpact;
     public event EventHandler onTakeDamage;
     public event EventHandler onPlayerStagger;
@@ -26,6 +28,12 @@ public class PlayerEvents : MonoBehaviour
     public void DashEnd()
     {
         onDashEnd?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void BackstepStart(int num)
+    {
+        backstepInt = num;
+        onBackstepStart?.Invoke(this, EventArgs.Empty);
     }
 
     public void AttackImpact()

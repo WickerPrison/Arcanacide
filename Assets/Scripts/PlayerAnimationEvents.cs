@@ -272,12 +272,20 @@ public class PlayerAnimationEvents : MonoBehaviour
         icePoof.Play();   
     }
 
-    public void Backstep()
+    public void Backstep(int num)
     {
+        playerMovement.gameObject.layer = 8;
+        playerEvents.BackstepStart(num);
         Vector3 direction = playerMovement.transform.position - playerMovement.attackPoint.position;
         playerMovement.dashDirection = direction.normalized;
         playerMovement.dashTime = playerMovement.maxDashTime * 2 / 3;
         playerSound.Dodge();
+    }
+
+    public void EndBackstep()
+    {
+        playerMovement.gameObject.layer = 3;
+        playerEvents.DashEnd();
     }
 
     private void onPlayerStagger(object sender, EventArgs e)

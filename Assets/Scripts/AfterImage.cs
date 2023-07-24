@@ -23,7 +23,8 @@ public class AfterImage : MonoBehaviour
         {0, "SwordDash" },
         {1, "LanternDash" },
         {2, "KnifeDash" },
-        {3, "ClawsDash" }
+        {3, "ClawsDash" },
+        {4, "LanternCombo" }
     };
     SpriteRenderer[] renderers;
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
@@ -43,6 +44,7 @@ public class AfterImage : MonoBehaviour
                     frontSword.gameObject.SetActive(true);
                     break;
                 case 1:
+                case 4:
                     frontLantern.gameObject.SetActive(true);
                     break;
                 case 2:
@@ -65,6 +67,7 @@ public class AfterImage : MonoBehaviour
                     backSword.gameObject.SetActive(true);
                     break;
                 case 1:
+                case 4:
                     backLantern.gameObject.SetActive(true);
                     break;
                 case 2:
