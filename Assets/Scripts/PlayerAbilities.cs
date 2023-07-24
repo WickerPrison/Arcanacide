@@ -9,6 +9,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] AttackProfiles axeHeavyProfile;
+    [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
@@ -45,6 +46,10 @@ public class PlayerAbilities : MonoBehaviour
     float shovePoiseDamage = 100;
 
     bool heavyAttackActive = false;
+
+    bool backstepActive = false;
+    float backstepTimer;
+    float backstepMaxTime = 0.015f;
 
     bool knifeSpecialAttackOn = false;
     Vector3 away = Vector3.one * 100;
@@ -96,6 +101,21 @@ public class PlayerAbilities : MonoBehaviour
             if (playerData.mana <= 0)
             {
                 playerAnimation.PlayAnimation("StopBlocking");
+            }
+        }
+
+        if (playerData.currentWeapon == 1 && backstepActive)
+        {
+            if (backstepTimer <= 0)
+            {
+                GameObject pathTrail;
+                pathTrail = Instantiate(fireTrailPrefab);
+                pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                backstepTimer = backstepMaxTime;
+            }
+            else
+            {
+                backstepTimer -= Time.deltaTime;
             }
         }
     }
@@ -401,6 +421,16 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
+    private void onBackstepStart(object sender, System.EventArgs e)
+    {
+        backstepActive = true;
+    }
+
+    private void PlayerEvents_onDashEnd(object sender, System.EventArgs e)
+    {
+        backstepActive = false;
+    }
+
     void SetupControls()
     {
         im = gm.GetComponent<InputManager>();
@@ -419,11 +449,16 @@ public class PlayerAbilities : MonoBehaviour
     {
         playerEvents.onPlayerStagger += onPlayerStagger;
         playerEvents.onClawSpecial += onClawSpecial;
+        playerEvents.onBackstepStart += onBackstepStart;
+        playerEvents.onDashEnd += PlayerEvents_onDashEnd;
     }
+
 
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= onPlayerStagger;
         playerEvents.onClawSpecial -= onClawSpecial;
+        playerEvents.onBackstepStart -= onBackstepStart;
+        playerEvents.onDashEnd -= PlayerEvents_onDashEnd;
     }
 }

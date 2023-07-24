@@ -288,6 +288,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerEvents.DashEnd();
     }
 
+    public void LoseStamina(AttackProfiles profile)
+    {
+        playerScript.LoseStamina(profile.staminaCost);
+    }
+
     private void onPlayerStagger(object sender, EventArgs e)
     {
         SwitchWeaponSprite(playerData.currentWeapon);
