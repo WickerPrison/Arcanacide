@@ -73,7 +73,7 @@ public class SaveData
         strength = playerData.strength;
         dexterity = playerData.dexterity;
         vitality = playerData.vitality;
-        dedication = playerData.dedication;
+        dedication = playerData.arcane;
         maxMana = playerData.maxMana;
         mana = playerData.mana;
         deathNum = playerData.deathNum;

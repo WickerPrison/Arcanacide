@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
             playerData.strength = data.strength;
             playerData.dexterity = data.dexterity;
             playerData.vitality = data.vitality;
-            playerData.dedication = data.dedication;
+            playerData.arcane = data.dedication;
             playerData.maxMana = data.maxMana;
             playerData.mana = data.mana;
             playerData.deathNum = data.deathNum;
@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
         playerData.strength = 1;
         playerData.dexterity = 1;
         playerData.vitality = 1;
-        playerData.dedication = 1;
+        playerData.arcane = 1;
         playerData.health = playerData.MaxHealth();
         playerData.maxMana = 50;
         playerData.mana = playerData.maxMana;
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
         playerData.strength = 1;
         playerData.dexterity = 1;
         playerData.vitality = 1;
-        playerData.dedication = 1;
+        playerData.arcane = 1;
         playerData.health = playerData.MaxHealth();
         playerData.maxMana = 50;
         playerData.mana = playerData.maxMana;
@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
         playerData.strength = 1;
         playerData.dexterity = 1;
         playerData.vitality = 1;
-        playerData.dedication = 1;
+        playerData.arcane = 1;
         playerData.health = playerData.MaxHealth();
         playerData.maxMana = 50;
         playerData.mana = playerData.maxMana;

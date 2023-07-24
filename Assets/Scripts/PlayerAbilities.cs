@@ -8,19 +8,24 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
+    [SerializeField] AttackProfiles axeHeavyProfile;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
     [SerializeField] ExternalLanternFairy lanternFairy;
+    [SerializeField] Transform[] internalLanternFairies;
+    [SerializeField] GameObject fairyProjectilePrefab;
     [SerializeField] Transform frontSwordTip;
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
+    [SerializeField] Transform attackPoint;
 
     //player scripts
     PlayerMovement playerController;
     PlayerScript playerScript;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
+    PatchEffects patchEffects;
     WeaponManager weaponManager;
     Rigidbody rb;
 
@@ -38,8 +43,6 @@ public class PlayerAbilities : MonoBehaviour
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
 
-    [System.NonSerialized] public float axeHeavyTimer = 0;
-    [System.NonSerialized] public float axeHeavyMaxTime = 15;
     bool heavyAttackActive = false;
 
     bool knifeSpecialAttackOn = false;
@@ -63,6 +66,7 @@ public class PlayerAbilities : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerController = GetComponent<PlayerMovement>();
         playerScript = GetComponent<PlayerScript>();
+        patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
         rb = GetComponent<Rigidbody>();
 
@@ -74,15 +78,6 @@ public class PlayerAbilities : MonoBehaviour
         if (knifeSpecialAttackOn)
         {
             UpdateKnifeSpecialAttack();
-        }
-
-        if (axeHeavyTimer > 0)
-        {
-            axeHeavyTimer -= Time.deltaTime;
-            if (axeHeavyTimer <= 0)
-            {
-                weaponManager.RemoveSpecificWeaponSource(1);
-            }
         }
 
         if (shield)
@@ -103,13 +98,22 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
+    public int DetermineAttackDamage(AttackProfiles attackProfile)
+    {
+        int physicalDamage = Mathf.RoundToInt(playerData.AttackPower() * attackProfile.damageMultiplier);
+        physicalDamage = patchEffects.PhysicalDamageModifiers(physicalDamage);
+
+        int arcaneDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
+        arcaneDamage = patchEffects.ArcaneDamageModifiers(arcaneDamage);
+
+        int totalDamage = physicalDamage + arcaneDamage;
+        totalDamage = patchEffects.TotalDamageModifiers(totalDamage);
+        totalDamage = DamageModifiers(totalDamage);
+        return totalDamage; 
+    }
+
     public int DamageModifiers(int attackPower)
     {
-        if (playerData.currentWeapon == 1 && axeHeavyTimer > 0)
-        {
-            attackPower += playerData.ArcaneDamage();
-        }
-
         if (playerData.clawSpecialOn)
         {
             float damageMult;
@@ -186,6 +190,7 @@ public class PlayerAbilities : MonoBehaviour
         }
         else if (playerController.CanInput() && playerScript.stamina > 0)
         {
+            if (playerData.currentWeapon == 1 && !lanternFairy.isInLantern) return;
             heavyAttackActive = true;
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = playerData.currentWeapon != 3;
@@ -201,6 +206,22 @@ public class PlayerAbilities : MonoBehaviour
         }
 
         heavyAttackActive = false;
+    }
+
+    public void AxeHeavy()
+    {
+        playerScript.LoseStamina(axeHeavyProfile.staminaCost);
+        FairyProjectile fairyProjectile = Instantiate(fairyProjectilePrefab).GetComponent<FairyProjectile>();
+        if (playerAnimation.facingFront)
+        {
+            fairyProjectile.transform.position = internalLanternFairies[0].transform.position;
+        }
+        else
+        {
+            fairyProjectile.transform.position = internalLanternFairies[1].transform.position;
+        }
+        fairyProjectile.direction = attackPoint.position - transform.position;
+        fairyProjectile.lanternFairy = lanternFairy;
     }
 
     public void SpecialAttack()
@@ -313,7 +334,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f, 0));
             bolts.SoundOn();
-            boltdamage += playerData.dedication * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
+            boltdamage += playerData.arcane * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
             {
                 boltdamage += boltdamage * emblemLibrary.arcaneMasteryPercent;

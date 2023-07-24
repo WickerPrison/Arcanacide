@@ -66,7 +66,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void AxeHeavy()
     {
-        playerAbilities.axeHeavyTimer = playerAbilities.axeHeavyMaxTime;
+        playerAbilities.AxeHeavy();
     }
 
     public void AxeSpecialAttack()

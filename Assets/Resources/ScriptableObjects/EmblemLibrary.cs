@@ -70,27 +70,27 @@ public class EmblemLibrary : ScriptableObject
 
     public int CloseCallDamage()
     {
-        return playerData.dedication * 2 + 10;
+        return playerData.arcane * 2 + 10;
     }
 
     public int ArcaneRemainsDamage()
     {
-        return playerData.dedication * 2 + 10;
+        return playerData.arcane * 2 + 10;
     }
 
     public int ConfidentKillerDamage()
     {
-        return playerData.dedication * 2 + 15;
+        return playerData.arcane * 2 + 15;
     }
 
     public int ExplosiveHealingDamage()
     {
-        return playerData.dedication * 3 + 20;
+        return playerData.arcane * 3 + 20;
     }
 
     public int SpellswordDamage()
     {
-        return playerData.dedication * 2 + 15;
+        return playerData.arcane * 2 + 15;
     }
 
     public string GetDescription(string name)

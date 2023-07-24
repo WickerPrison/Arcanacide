@@ -58,10 +58,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeNoHit.x, attackProfile.screenShakeNoHit.y));
         }
 
-        int attackDamage = Mathf.RoundToInt(playerData.AttackPower() * attackProfile.damageMultiplier);
-        attackDamage = patchEffects.PatchDamageModifiers(attackDamage);
-        attackDamage += Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
-        attackDamage = playerAbilities.DamageModifiers(attackDamage);
+        int attackDamage = playerAbilities.DetermineAttackDamage(attackProfile);
 
         switch (attackProfile.hitboxType)
         {

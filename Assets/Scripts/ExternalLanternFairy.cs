@@ -43,7 +43,7 @@ public class ExternalLanternFairy : MonoBehaviour
         }
 
         Vector3 direction = movePoint.localPosition - transform.localPosition;
-        transform.localPosition += direction.normalized * speed * Time.fixedDeltaTime;
+        transform.localPosition += speed * Time.fixedDeltaTime * direction.normalized;
 
         if (Vector3.Distance(transform.localPosition, movePoint.localPosition) < speed * Time.fixedDeltaTime)
         {
@@ -84,7 +84,7 @@ public class ExternalLanternFairy : MonoBehaviour
         returning = true;
     }
 
-    void ToggleSprites(bool spritesOn)
+    public void ToggleSprites(bool spritesOn)
     {
         isInLantern = spritesOn;
         foreach(SpriteRenderer sprite in lanternFairies)

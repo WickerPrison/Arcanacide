@@ -74,7 +74,7 @@ public class PlayerAnimation : MonoBehaviour
         StaminaUpdate();
 
         //While attacking the player won't change what direction he is facing. Otherwise he faces the mouse
-        if (playerController.CanInput())
+        if (playerController.CanInput() || playerController.canWalk)
         {
             if(Gamepad.current == null)
             {

@@ -40,7 +40,7 @@ public class IceBreath : MonoBehaviour
 
         if (hitTargets.Length > 0 )
         {
-            damageCounter += damage * Time.deltaTime * playerData.dedication;
+            damageCounter += damage * Time.deltaTime * playerData.arcane;
             if (damageCounter > 1)
             {
                 damageCounter = 0;

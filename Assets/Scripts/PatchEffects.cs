@@ -127,30 +127,40 @@ public class PatchEffects : MonoBehaviour
         }
     }
 
-    public int PatchDamageModifiers(int attackDamage)
+    public int PhysicalDamageModifiers(int physicalDamage)
+    {
+        return physicalDamage;
+    }
+
+    public int ArcaneDamageModifiers(int arcaneDamage)
     {
         if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && closeCallTimer > 0)
         {
-            attackDamage += emblemLibrary.CloseCallDamage();
+            arcaneDamage += emblemLibrary.CloseCallDamage();
         }
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && arcaneRemainsActive)
         {
-            attackDamage += emblemLibrary.ArcaneRemainsDamage();
+            arcaneDamage += emblemLibrary.ArcaneRemainsDamage();
         }
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
         {
-            attackDamage += emblemLibrary.ConfidentKillerDamage();
+            arcaneDamage += emblemLibrary.ConfidentKillerDamage();
         }
 
         if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > emblemLibrary.spellswordManaCost)
         {
-            attackDamage += emblemLibrary.SpellswordDamage();
+            arcaneDamage += emblemLibrary.SpellswordDamage();
             playerScript.LoseMana(emblemLibrary.spellswordManaCost);
         }
 
-        return attackDamage;
+        return arcaneDamage;
+    }
+
+    public int TotalDamageModifiers(int totalDamage)
+    {
+        return totalDamage;
     }
 
     private void onPlayerStagger(object sender, System.EventArgs e)

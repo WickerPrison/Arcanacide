@@ -22,7 +22,7 @@ public class PlayerData : ScriptableObject
     public int strength;
     public int dexterity;
     public int vitality;
-    public int dedication;
+    public int arcane;
 
     public float maxMana = 50;
     public float mana;
@@ -63,13 +63,13 @@ public class PlayerData : ScriptableObject
 
     public int ArcaneDamage()
     {
-        int pathDamage = 18 + dedication;
+        int pathDamage = 18 + arcane;
         return pathDamage;
     }
 
     public int GetLevel()
     {
-        int level = strength + dexterity + vitality + dedication - 3;
+        int level = strength + dexterity + vitality + arcane - 3;
         return level;
     }
 }
