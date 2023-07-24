@@ -63,7 +63,7 @@ public class PlayerData : ScriptableObject
 
     public int ArcaneDamage()
     {
-        int pathDamage = 10 + 2 * dedication;
+        int pathDamage = 18 + dedication;
         return pathDamage;
     }
 
