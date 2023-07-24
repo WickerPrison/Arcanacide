@@ -27,6 +27,7 @@ public class PlayerAbilities : MonoBehaviour
     PlayerEvents playerEvents;
     PatchEffects patchEffects;
     WeaponManager weaponManager;
+    AudioSource SFX;
     Rigidbody rb;
 
     //managers
@@ -68,6 +69,7 @@ public class PlayerAbilities : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
+        SFX = GetComponentInChildren<AudioSource>();
         rb = GetComponent<Rigidbody>();
 
         SetupControls();
@@ -110,6 +112,34 @@ public class PlayerAbilities : MonoBehaviour
         totalDamage = patchEffects.TotalDamageModifiers(totalDamage);
         totalDamage = DamageModifiers(totalDamage);
         return totalDamage; 
+    }
+
+    public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile)
+    {
+        if (attackProfile.soundOnHit != null)
+        {
+            SFX.PlayOneShot(attackProfile.soundOnHit, attackProfile.soundOnHitVolume);
+        }
+
+        if (enemy.DOT > 0 && playerData.equippedEmblems.Contains(emblemLibrary.opportune_strike))
+        {
+            damage = Mathf.RoundToInt(damage * 1.2f);
+        }
+
+        enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
+        enemy.ImpactVFX();
+        if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
+        {
+            enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
+        }
+
+        enemy.GainDOT(attackProfile.durationDOT);
+
+        if (attackProfile.staggerDuration > 0)
+        {
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            enemyController.StartStagger(attackProfile.staggerDuration);
+        }
     }
 
     public int DamageModifiers(int attackPower)
@@ -222,6 +252,7 @@ public class PlayerAbilities : MonoBehaviour
         }
         fairyProjectile.direction = attackPoint.position - transform.position;
         fairyProjectile.lanternFairy = lanternFairy;
+        fairyProjectile.playerAbilities = this;
     }
 
     public void SpecialAttack()

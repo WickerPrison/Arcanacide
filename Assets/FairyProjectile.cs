@@ -6,8 +6,10 @@ public class FairyProjectile : MonoBehaviour
 {
     [System.NonSerialized] public ExternalLanternFairy lanternFairy;
     [System.NonSerialized] public Vector3 direction;
+    [System.NonSerialized] public PlayerAbilities playerAbilities;
     [SerializeField] AttackProfiles axeHeavyProfile;
     [SerializeField] ParticleSystem explosion;
+    AudioSource sfx;
     ParticleSystem trail;
     GameManager gm;
     Transform target;
@@ -20,6 +22,7 @@ public class FairyProjectile : MonoBehaviour
     private void Start()
     {
         trail = gameObject.GetComponent<ParticleSystem>();
+        sfx = GetComponent<AudioSource>();
         lanternFairy.ToggleSprites(false);
         initialPos = transform.position;
 
@@ -63,14 +66,16 @@ public class FairyProjectile : MonoBehaviour
         stop = true;
         yield return new WaitForSeconds(.2f);
         explosion.Play();
+        int damage = playerAbilities.DetermineAttackDamage(axeHeavyProfile);
+        sfx.PlayOneShot(axeHeavyProfile.soundNoHit, axeHeavyProfile.soundNoHitVolume);
         foreach(EnemyScript enemy in gm.enemies)
         {
             if(Vector3.Distance(enemy.transform.position, transform.position) < axeHeavyProfile.attackRange)
             {
-               
+                playerAbilities.DamageEnemy(enemy, damage, axeHeavyProfile);
             }
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         Return();
     }
 
