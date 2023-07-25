@@ -114,4 +114,9 @@ public class PlayerAttackHitEvents : MonoBehaviour
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
         }
     }
+
+    public void SwordSwoosh(AttackProfiles attackProfile)
+    {
+        smear.particleSmear(attackProfile);
+    }
 }
