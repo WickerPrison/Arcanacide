@@ -14,6 +14,8 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onTakeDamage;
     public event EventHandler onPlayerStagger;
     public event EventHandler onAxeSpecial;
+    public event EventHandler onLanternCombo;
+    public event EventHandler onEndLanternCombo;
     public event EventHandler onClawSpecial;
     public event EventHandler onEndClawSpecial;
     public event EventHandler onStartMirrorCloak;
@@ -54,6 +56,16 @@ public class PlayerEvents : MonoBehaviour
     public void AxeSpecialAttack()
     {
         onAxeSpecial?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void LanternCombo()
+    {
+        onLanternCombo?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void EndLanternCombo()
+    {
+        onEndLanternCombo?.Invoke(this, EventArgs.Empty);
     }
 
     public void ClawSpecialAttack()

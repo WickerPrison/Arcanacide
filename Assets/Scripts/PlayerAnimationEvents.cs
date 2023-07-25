@@ -14,6 +14,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] GameObject electricTrapPrefab;
     [SerializeField] ParticleSystem icePoof;
     [SerializeField] Animator backAnimator;
+    [SerializeField] ExternalLanternFairy lanternFairy;
+    [SerializeField] AttackProfiles lanternComboNoFairy;
 
     //player scripts
     PlayerScript playerScript;
@@ -24,6 +26,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     PlayerSound playerSound;
     PatchEffects patchEffects;
     PlayerHealth playerHealth;
+    PlayerAttackHitEvents playerAttackHitEvents;
 
     //other scripts
     Animator frontAnimator;
@@ -31,6 +34,9 @@ public class PlayerAnimationEvents : MonoBehaviour
     ElectricTrap electricTrap;
     WeaponManager weaponManager;
     BigClaws bigClaws;
+
+    //variables
+    bool doLanternCombo;
 
     private void Awake()
     {
@@ -50,6 +56,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerHealth = GetComponentInParent<PlayerHealth>();
         frontAnimator = gameObject.GetComponent<Animator>();
         weaponManager = GetComponentInParent<WeaponManager>();
+        playerAttackHitEvents = GetComponent<PlayerAttackHitEvents>();
         iceBreath = playerScript.gameObject.GetComponentInChildren<IceBreath>();
     }
 
@@ -67,6 +74,30 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void AxeHeavy()
     {
         playerAbilities.AxeHeavy();
+    }
+
+    public void LanternCombo()
+    {
+        if (lanternFairy.isInLantern)
+        {
+            doLanternCombo = true;
+            playerEvents.LanternCombo();
+        }
+        else doLanternCombo = false;
+    }
+
+    public void EndLanternCombo(AttackProfiles attackProfile)
+    {
+        if (doLanternCombo)
+        {
+            playerEvents.EndLanternCombo();
+            playerAttackHitEvents.AttackHit(attackProfile);
+        }
+        else
+        {
+            Shove();
+            playerAttackHitEvents.AttackHit(lanternComboNoFairy);
+        }
     }
 
     public void AxeSpecialAttack()
@@ -278,7 +309,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerEvents.BackstepStart(num);
         Vector3 direction = playerMovement.transform.position - playerMovement.attackPoint.position;
         playerMovement.dashDirection = direction.normalized;
-        playerMovement.dashTime = playerMovement.maxDashTime * 2 / 3;
+        playerMovement.dashTime = playerMovement.maxDashTime;
         playerSound.Dodge();
     }
 

@@ -453,7 +453,6 @@ public class PlayerAbilities : MonoBehaviour
         playerEvents.onDashEnd += PlayerEvents_onDashEnd;
     }
 
-
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= onPlayerStagger;
