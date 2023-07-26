@@ -50,8 +50,6 @@ public class PatchEffects : MonoBehaviour
     float explosiveHealingRange = 5;
     float explosiveHealingStagger = 1f;
 
-    float spellswordManaCost = 15;
-
     [System.NonSerialized] public bool deathAuraActive = false;
 
     float recklessAttackHealthMax = 0.3f;
@@ -158,10 +156,10 @@ public class PatchEffects : MonoBehaviour
             extraDamage += physicalDamage * closeCallDamage;
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > spellswordManaCost)
+        if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > emblemLibrary.spellswordManaCost)
         {
             extraDamage += physicalDamage * spellswordDamage;
-            playerScript.LoseMana(spellswordManaCost);
+            playerScript.LoseMana(emblemLibrary.spellswordManaCost);
         }
 
         return physicalDamage + Mathf.RoundToInt(extraDamage);

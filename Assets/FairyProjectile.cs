@@ -16,7 +16,7 @@ public class FairyProjectile : MonoBehaviour
     Vector3 offset = new Vector3(0, 1.5f, 0);
     Vector3 initialPos;
     float speed = 30;
-    float range = 10;
+    float range = 7;
     bool stop = false;
 
     private void Start()
