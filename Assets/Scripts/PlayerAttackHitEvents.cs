@@ -11,7 +11,6 @@ public class PlayerAttackHitEvents : MonoBehaviour
     //player scripts
     PlayerScript playerScript;
     PlayerAnimation playerAnimation;
-    PatchEffects patchEffects;
     PlayerAbilities playerAbilities;
     PlayerMovement playerMovement;
 
@@ -27,7 +26,6 @@ public class PlayerAttackHitEvents : MonoBehaviour
     {
         playerScript = GetComponentInParent<PlayerScript>();
         playerAnimation = playerScript.GetComponent<PlayerAnimation>();
-        patchEffects = playerScript.GetComponent<PatchEffects>();
         playerAbilities = playerScript.GetComponent<PlayerAbilities>();
         playerMovement = playerScript.GetComponent<PlayerMovement>();
 
@@ -58,10 +56,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeNoHit.x, attackProfile.screenShakeNoHit.y));
         }
 
-        int attackDamage = Mathf.RoundToInt(playerData.AttackPower() * attackProfile.damageMultiplier);
-        attackDamage = patchEffects.PatchDamageModifiers(attackDamage);
-        attackDamage += Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
-        attackDamage = playerAbilities.DamageModifiers(attackDamage);
+        int attackDamage = playerAbilities.DetermineAttackDamage(attackProfile);
 
         switch (attackProfile.hitboxType)
         {
@@ -74,34 +69,6 @@ public class PlayerAttackHitEvents : MonoBehaviour
         }
     }
 
-    void AttackHitEachEnemy(EnemyScript enemy, int attackDamage, AttackProfiles attackProfile)
-    {
-        if (attackProfile.soundOnHit != null)
-        {
-            SFX.PlayOneShot(attackProfile.soundOnHit, attackProfile.soundOnHitVolume);
-        }
-
-        if (enemy.DOT > 0 && playerData.equippedEmblems.Contains(emblemLibrary.opportune_strike))
-        {
-            attackDamage = Mathf.RoundToInt(attackDamage * 1.2f);
-        }
-
-        enemy.LoseHealth(attackDamage, attackDamage * attackProfile.poiseDamageMultiplier);
-        enemy.ImpactVFX();
-        if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
-        {
-            enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
-        }
-
-        enemy.GainDOT(attackProfile.durationDOT);
-
-        if (attackProfile.staggerDuration > 0)
-        {
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            enemyController.StartStagger(attackProfile.staggerDuration);
-        }
-    }
-
     void AttackArcHitbox(AttackProfiles attackProfile, int attackDamage)
     {
         attackArc.ChangeArc(attackProfile);
@@ -110,7 +77,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
         {
             if (!enemy.blockAttack)
             {
-                AttackHitEachEnemy(enemy, attackDamage, attackProfile);
+                playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
             }
             else
             {
@@ -133,7 +100,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
             {
                 if (!enemy.blockAttack)
                 {
-                    AttackHitEachEnemy(enemy, attackDamage, attackProfile);
+                    playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
                 }
                 else
                 {
@@ -146,5 +113,10 @@ public class PlayerAttackHitEvents : MonoBehaviour
         {
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
         }
+    }
+
+    public void SwordSwoosh(AttackProfiles attackProfile)
+    {
+        smear.particleSmear(attackProfile);
     }
 }

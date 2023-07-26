@@ -24,7 +24,7 @@ public class EnemyScript : MonoBehaviour
     public int maxHealth;
     [SerializeField] float maxPoise;
     [SerializeField] float poiseRegeneration;
-    [SerializeField] float staggerDuration;
+    float staggerDuration = 2;
     [System.NonSerialized] public float DOT = 0;
     [System.NonSerialized] public bool blockAttack = false;
     float damageDOT = 0;
@@ -70,7 +70,7 @@ public class EnemyScript : MonoBehaviour
         if(DOT > 0 && enemyController.state != EnemyState.DYING)
         {
             DOT -= Time.deltaTime;
-            damageDOT += Time.deltaTime * playerData.dedication;
+            damageDOT += Time.deltaTime * (playerData.arcane + 2);
             if(damageDOT >= 1)
             {
                 LoseHealth(1, 0); ;

@@ -98,7 +98,7 @@ public class PlayerScript : MonoBehaviour
                 case EnemyAttackType.MELEE:
                     playerEvents.MeleeParry();
                     playerSound.PlaySoundEffectFromList(11, 0.5f);
-                    attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.AttackPower()) * parryProfile.poiseDamageMultiplier);
+                    attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.PhysicalDamage()) * parryProfile.poiseDamageMultiplier);
                     attackingEnemy.ImpactVFX();
                     break;
             }

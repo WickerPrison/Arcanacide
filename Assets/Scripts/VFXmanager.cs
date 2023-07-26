@@ -12,6 +12,7 @@ public class VFXmanager : MonoBehaviour
     [SerializeField] ParticleSystem bloodVFX;
     [SerializeField] SpriteRenderer parryPulse1;
     [SerializeField] SpriteRenderer parryPulse2;
+    [SerializeField] FireRing fireRing;
     float parryPulseDuration = 0.2f;
     float parryPulseTimer;
     float parryPulseFadeaway = 0.1f;
@@ -60,6 +61,11 @@ public class VFXmanager : MonoBehaviour
     private void onTakeDamage(object sender, System.EventArgs e)
     {
         bloodVFX.Play();
+    }
+
+    private void EndLanternCombo(object sender, System.EventArgs e)
+    {
+        fireRing.Explode();
     }
 
     private void OnClawSpecial(object sender, System.EventArgs e)
@@ -144,6 +150,7 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onStartMirrorCloak += onStartMirrorCloak;
         playerEvents.onEndMirrorCloak += onEndMirrorCloak;
         playerEvents.onMeleeParry += onMeleeParry;
+        playerEvents.onEndLanternCombo += EndLanternCombo;
     }
 
 
@@ -157,5 +164,6 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onStartMirrorCloak -= onStartMirrorCloak;
         playerEvents.onEndMirrorCloak -= onEndMirrorCloak;
         playerEvents.onMeleeParry -= onMeleeParry;
+        playerEvents.onEndLanternCombo -= EndLanternCombo;
     }
 }

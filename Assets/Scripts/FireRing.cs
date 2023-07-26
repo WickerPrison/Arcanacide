@@ -7,12 +7,7 @@ public class FireRing : MonoBehaviour
     [SerializeField] ParticleSystem fireRingFront;
     [SerializeField] ParticleSystem fireRingBack;
     [SerializeField] AudioClip fireRingSFX;
-    AudioSource SFX;
-
-    private void Start()
-    {
-        SFX = transform.parent.GetComponentInChildren<AudioSource>();
-    }
+    [SerializeField] AudioSource SFX;
 
     public void Explode()
     {

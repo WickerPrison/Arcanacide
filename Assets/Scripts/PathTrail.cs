@@ -15,7 +15,7 @@ public class PathTrail : MonoBehaviour
     private void Start()
     {
         VFX = GetComponent<ParticleSystem>();
-        damagePerSecond = playerData.dedication * 2;
+        damagePerSecond = 5 + playerData.arcane;
         sfx = GetComponent<AudioSource>();
         sfx.time += Random.Range(0, 0.5f);
     }
@@ -58,5 +58,6 @@ public class PathTrail : MonoBehaviour
     {
         dead = true;
         VFX.Stop();
+        sfx.Stop(); 
     }
 }

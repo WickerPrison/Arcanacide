@@ -20,7 +20,7 @@ public class ElectricTrap : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        damagePerSecond = playerData.dedication * 2;
+        damagePerSecond = playerData.arcane * 2;
     }
 
     private void Update()

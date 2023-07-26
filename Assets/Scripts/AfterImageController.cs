@@ -1,3 +1,6 @@
+using Newtonsoft.Json.Bson;
+using Packages.Rider.Editor.UnitTesting;
+using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +19,7 @@ public class AfterImageController : MonoBehaviour
     float maxTime = 0.2f;
     float timer;
     float afterImageRate = 0.02f;
+    int backstepNum = 0;
 
     private void Awake()
     {
@@ -28,8 +32,19 @@ public class AfterImageController : MonoBehaviour
     {
         if (!effectPlaying)
         {
+            backstepNum = 0;
             coroutine = PlaceAfterImages();
             StartCoroutine(coroutine);
+        }
+    }
+
+    private void onBackstepStart(object sender, System.EventArgs e)
+    {
+        if (!effectPlaying)
+        {
+            backstepNum = playerEvents.backstepInt;
+            coroutine = PlaceAfterImages();
+            StartCoroutine (coroutine);
         }
     }
 
@@ -62,7 +77,16 @@ public class AfterImageController : MonoBehaviour
                 playerTransform = backAnimator;
             }
 
-            afterImage.PlaceAfterImage(playerData.currentWeapon, playerAnimation.facingFront, playerTransform);
+            int weaponInt;
+            if(backstepNum != 0)
+            {
+                weaponInt = backstepNum;
+            }
+            else
+            {
+                weaponInt = playerData.currentWeapon;
+            }
+            afterImage.PlaceAfterImage(weaponInt, playerAnimation.facingFront, playerTransform);
 
             yield return imageRate;
         }
@@ -74,7 +98,9 @@ public class AfterImageController : MonoBehaviour
     {
         playerEvents.onDashStart += onDashStart;
         playerEvents.onDashEnd += onDashEnd;
+        playerEvents.onBackstepStart += onBackstepStart;
     }
+
 
     private void OnDisable()
     {

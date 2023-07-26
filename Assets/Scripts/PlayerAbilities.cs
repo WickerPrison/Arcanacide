@@ -8,20 +8,27 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
+    [SerializeField] AttackProfiles axeHeavyProfile;
+    [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
     [SerializeField] ExternalLanternFairy lanternFairy;
+    [SerializeField] Transform[] internalLanternFairies;
+    [SerializeField] GameObject fairyProjectilePrefab;
     [SerializeField] Transform frontSwordTip;
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
+    [SerializeField] Transform attackPoint;
 
     //player scripts
     PlayerMovement playerController;
     PlayerScript playerScript;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
+    PatchEffects patchEffects;
     WeaponManager weaponManager;
+    AudioSource SFX;
     Rigidbody rb;
 
     //managers
@@ -38,9 +45,11 @@ public class PlayerAbilities : MonoBehaviour
     float shoveRadius = 3;
     float shovePoiseDamage = 100;
 
-    [System.NonSerialized] public float axeHeavyTimer = 0;
-    [System.NonSerialized] public float axeHeavyMaxTime = 15;
     bool heavyAttackActive = false;
+
+    bool backstepActive = false;
+    float backstepTimer;
+    float backstepMaxTime = 0.015f;
 
     bool knifeSpecialAttackOn = false;
     Vector3 away = Vector3.one * 100;
@@ -63,26 +72,30 @@ public class PlayerAbilities : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerController = GetComponent<PlayerMovement>();
         playerScript = GetComponent<PlayerScript>();
+        patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
+        SFX = GetComponentInChildren<AudioSource>();
         rb = GetComponent<Rigidbody>();
+
+        if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(1);
 
         SetupControls();
     }
 
     private void Update()
     {
+        if(playerData.swordSpecialTimer > 0)
+        {
+            playerData.swordSpecialTimer -= Time.deltaTime;
+            if(playerData.swordSpecialTimer <= 0)
+            {
+                weaponManager.RemoveSpecificWeaponSource(0);
+            }    
+        }
+
         if (knifeSpecialAttackOn)
         {
             UpdateKnifeSpecialAttack();
-        }
-
-        if (axeHeavyTimer > 0)
-        {
-            axeHeavyTimer -= Time.deltaTime;
-            if (axeHeavyTimer <= 0)
-            {
-                weaponManager.RemoveSpecificWeaponSource(1);
-            }
         }
 
         if (shield)
@@ -101,28 +114,89 @@ public class PlayerAbilities : MonoBehaviour
                 playerAnimation.PlayAnimation("StopBlocking");
             }
         }
+
+        if (playerData.currentWeapon == 1 && backstepActive)
+        {
+            if (backstepTimer <= 0)
+            {
+                GameObject pathTrail;
+                pathTrail = Instantiate(fireTrailPrefab);
+                pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                backstepTimer = backstepMaxTime;
+            }
+            else
+            {
+                backstepTimer -= Time.deltaTime;
+            }
+        }
+    }
+
+    public int DetermineAttackDamage(AttackProfiles attackProfile)
+    {
+        int physicalDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * attackProfile.damageMultiplier);
+        physicalDamage = patchEffects.PhysicalDamageModifiers(physicalDamage);
+
+        int arcaneDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
+        arcaneDamage = patchEffects.ArcaneDamageModifiers(arcaneDamage);
+
+        int totalDamage = physicalDamage + arcaneDamage;
+        totalDamage = patchEffects.TotalDamageModifiers(totalDamage);
+        totalDamage = DamageModifiers(totalDamage);
+        return totalDamage; 
+    }
+
+    public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile)
+    {
+        if (attackProfile.soundOnHit != null)
+        {
+            SFX.PlayOneShot(attackProfile.soundOnHit, attackProfile.soundOnHitVolume);
+        }
+
+        if (enemy.DOT > 0 && playerData.equippedEmblems.Contains(emblemLibrary.opportune_strike))
+        {
+            damage = Mathf.RoundToInt(damage * 1.2f);
+        }
+
+        enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
+        enemy.ImpactVFX();
+        if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
+        {
+            enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
+        }
+
+        enemy.GainDOT(attackProfile.durationDOT);
+
+        if (attackProfile.staggerDuration > 0)
+        {
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            enemyController.StartStagger(attackProfile.staggerDuration);
+        }
     }
 
     public int DamageModifiers(int attackPower)
     {
-        if (playerData.currentWeapon == 1 && axeHeavyTimer > 0)
+        float extraDamage = 0;
+        if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0)
         {
-            attackPower += playerData.ArcaneDamage();
+            extraDamage += attackPower * specialAttackProfiles[0].damageMultiplier;
+
+            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            {
+                extraDamage += attackPower * emblemLibrary.arcaneMasteryPercent;
+            }
         }
 
         if (playerData.clawSpecialOn)
         {
-            float damageMult;
+            extraDamage += attackPower * clawSpecialDamageMult;
+
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
             {
-                damageMult = clawSpecialDamageMult + clawSpecialDamageMult * emblemLibrary.arcaneMasteryPercent;
+                extraDamage += attackPower * emblemLibrary.arcaneMasteryPercent;
             }
-            else damageMult = clawSpecialDamageMult;
-
-            attackPower = Mathf.RoundToInt(attackPower * damageMult);
         }
 
-        return attackPower;
+        return attackPower + Mathf.RoundToInt(extraDamage);
     }
 
     public void Shield()
@@ -186,6 +260,7 @@ public class PlayerAbilities : MonoBehaviour
         }
         else if (playerController.CanInput() && playerScript.stamina > 0)
         {
+            if (playerData.currentWeapon == 1 && !lanternFairy.isInLantern) return;
             heavyAttackActive = true;
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = playerData.currentWeapon != 3;
@@ -203,11 +278,28 @@ public class PlayerAbilities : MonoBehaviour
         heavyAttackActive = false;
     }
 
+    public void AxeHeavy()
+    {
+        playerScript.LoseStamina(axeHeavyProfile.staminaCost);
+        FairyProjectile fairyProjectile = Instantiate(fairyProjectilePrefab).GetComponent<FairyProjectile>();
+        if (playerAnimation.facingFront)
+        {
+            fairyProjectile.transform.position = internalLanternFairies[0].transform.position;
+        }
+        else
+        {
+            fairyProjectile.transform.position = internalLanternFairies[1].transform.position;
+        }
+        fairyProjectile.direction = attackPoint.position - transform.position;
+        fairyProjectile.lanternFairy = lanternFairy;
+        fairyProjectile.playerAbilities = this;
+    }
+
     public void SpecialAttack()
     {
         if (!playerData.unlockedAbilities.Contains("Special Attack")) return;
 
-        if (playerController.CanInput() && playerScript.stamina > 0 && playerData.mana > specialAttackProfiles[playerData.currentWeapon].manaCost)
+        if (playerController.CanInput() && playerScript.stamina > 0 && playerData.mana >= specialAttackProfiles[playerData.currentWeapon].manaCost)
         {
             if (playerData.currentWeapon == 1)
             {
@@ -237,23 +329,9 @@ public class PlayerAbilities : MonoBehaviour
     {
         playerScript.LoseStamina(specialAttackProfiles[0].staminaCost);
         playerScript.LoseMana(specialAttackProfiles[0].manaCost);
-        Transform origin;
-        if (playerAnimation.facingFront)
-        {
-            origin = frontSwordTip;
-        }
-        else
-        {
-            origin = backSwordTip;
-        }
 
-        foreach (EnemyScript enemy in gm.enemies)
-        {
-            if (Vector3.Distance(transform.position, enemy.transform.position) <= specialAttackProfiles[0].attackRange)
-            {
-                FireProjectile(enemy, origin.position, specialAttackProfiles[0]);
-            }
-        }
+        playerData.swordSpecialTimer = specialAttackProfiles[0].bonusEffectDuration;
+        weaponManager.AddSpecificWeaponSource(0);
     }
 
     public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
@@ -313,7 +391,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f, 0));
             bolts.SoundOn();
-            boltdamage += playerData.dedication * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
+            boltdamage += playerData.arcane * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
             {
                 boltdamage += boltdamage * emblemLibrary.arcaneMasteryPercent;
@@ -349,6 +427,16 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
+    private void onBackstepStart(object sender, System.EventArgs e)
+    {
+        backstepActive = true;
+    }
+
+    private void PlayerEvents_onDashEnd(object sender, System.EventArgs e)
+    {
+        backstepActive = false;
+    }
+
     void SetupControls()
     {
         im = gm.GetComponent<InputManager>();
@@ -367,11 +455,15 @@ public class PlayerAbilities : MonoBehaviour
     {
         playerEvents.onPlayerStagger += onPlayerStagger;
         playerEvents.onClawSpecial += onClawSpecial;
+        playerEvents.onBackstepStart += onBackstepStart;
+        playerEvents.onDashEnd += PlayerEvents_onDashEnd;
     }
 
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= onPlayerStagger;
         playerEvents.onClawSpecial -= onClawSpecial;
+        playerEvents.onBackstepStart -= onBackstepStart;
+        playerEvents.onDashEnd -= PlayerEvents_onDashEnd;
     }
 }

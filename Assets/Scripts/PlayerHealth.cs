@@ -179,19 +179,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.explosive_healing))
         {
-            StartCoroutine(cameraScript.ScreenShake(0.1f, 0.3f));
-            sfx.PlaySoundEffectFromList(10, 1);
-            playerAnimation.shoveVFX.Play();
-
-            foreach (EnemyScript enemy in gm.enemies)
-            {
-                if (Vector3.Distance(enemy.transform.position, transform.position) < emblemLibrary.explosiveHealingRange)
-                {
-                    enemy.LoseHealth(emblemLibrary.ExplosiveHealingDamage(), emblemLibrary.ExplosiveHealingDamage());
-                    EnemyController enemyController = enemy.GetComponent<EnemyController>();
-                    enemyController.StartStagger(emblemLibrary.explosiveHealingStagger);
-                }
-            }
+            patchEffects.ExplosiveHealing();
         }
     }
 

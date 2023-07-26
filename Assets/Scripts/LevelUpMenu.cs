@@ -172,7 +172,7 @@ public class LevelUpMenu : MonoBehaviour
         {
             dedicationButton.LevelUp();
             playerData.money -= requiredMoney;
-            playerData.dedication += 1;
+            playerData.arcane += 1;
             UpdateText();
         }
         else dedicationButton.FailToLevelUp();
@@ -201,7 +201,7 @@ public class LevelUpMenu : MonoBehaviour
         strengthAmount.text = playerData.strength.ToString();
         dexterityAmount.text = playerData.dexterity.ToString();
         vitalityAmount.text = playerData.vitality.ToString();
-        dedicationAmount.text = playerData.dedication.ToString();
+        dedicationAmount.text = playerData.arcane.ToString();
     }
 
     void RequiredMoney()

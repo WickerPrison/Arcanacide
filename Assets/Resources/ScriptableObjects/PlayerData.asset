@@ -12,26 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fc18a103c2fe948bf5dadf32370d3d, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  health: 85
+  health: 100
   hasHealthGem: 1
   maxHealCharges: 1
-  healCharges: 1
+  healCharges: -1
   hasSpawned: 0
   lastSwordSite: 3
   unlockedAbilities:
-  - Block
+  - Special Attack
   emblems:
-  - Quickstep
-  - Arcane Step
-  - Pay Raise
-  - Shell Company
+  - 
   equippedEmblems:
-  - Quickstep
-  - Arcane Step
+  - Explosive Healing
   maxPatches: 2
   tutorials:
-  - Texts
-  - Broken Gem
+  - Attack
+  - Heal
+  - Dodge
+  - Sword Site
   - Remnant
   - Special Attack
   - End Of Demo
@@ -41,16 +39,17 @@ MonoBehaviour:
   - Deleted Emails
   money: 17
   lostMoney: 0
-  strength: 3
-  dexterity: 3
-  vitality: 3
-  dedication: 2
+  strength: 1
+  dexterity: 2
+  vitality: 4
+  arcane: 0
   maxMana: 50
-  mana: 50
+  mana: 0
   deathNum: 0
   killedEnemiesNum: 21
   moveDir: {x: 0, y: 0}
-  unlockedWeapons: 0000000001000000
+  unlockedWeapons: 000000000100000003000000
   currentWeapon: 0
+  swordSpecialTimer: -0.008443121
   clawSpecialOn: 0
   clawSpecialTimer: -0.009507867

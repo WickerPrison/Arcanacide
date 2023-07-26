@@ -23,7 +23,7 @@ public class PlayerData : ScriptableObject
     public int strength;
     public int dexterity;
     public int vitality;
-    public int dedication;
+    public int arcane;
 
     public float maxMana = 50;
     public float mana;
@@ -37,6 +37,7 @@ public class PlayerData : ScriptableObject
     public List<int> unlockedWeapons;
     public int currentWeapon;
 
+    public float swordSpecialTimer;
     public bool clawSpecialOn;
     public float clawSpecialTimer;
 
@@ -53,25 +54,21 @@ public class PlayerData : ScriptableObject
         return maxStamina;
     }
 
-    public int AttackPower()
+    public int PhysicalDamage()
     {
         int attackPower = 18 + strength;
-        if(equippedEmblems.Contains("Reckless Attack") && health < MaxHealth() * .4f)
-        {
-            attackPower += Mathf.RoundToInt(attackPower * 0.5f);
-        }
         return attackPower;
     }
 
     public int ArcaneDamage()
     {
-        int pathDamage = 10 + 2 * dedication;
+        int pathDamage = 18 + arcane;
         return pathDamage;
     }
 
     public int GetLevel()
     {
-        int level = strength + dexterity + vitality + dedication - 3;
+        int level = strength + dexterity + vitality + arcane - 3;
         return level;
     }
 }
