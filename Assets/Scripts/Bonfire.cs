@@ -6,6 +6,7 @@ public class Bonfire : MonoBehaviour
 {
     [SerializeField] AudioClip impactSound;
     public EnemyScript enemyOfOrigin;
+    BossController bossController;
     AudioSource sfx;
     Transform player;
     float duration = 7;
@@ -18,6 +19,7 @@ public class Bonfire : MonoBehaviour
         sfx = GetComponent<AudioSource>();
         sfx.time = Random.Range(0, 0.5f);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        bossController = enemyOfOrigin.GetComponent<BossController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,6 +48,11 @@ public class Bonfire : MonoBehaviour
     {
         duration -= Time.deltaTime;
         if(duration <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+        if (bossController.hasSurrendered)
         {
             Destroy(gameObject);
         }

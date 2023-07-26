@@ -51,6 +51,7 @@ public class Secretary : MonoBehaviour
 
     void Talk()
     {
+        if(!isInConversation) return;
         sm.ButtonSound();
         switch (tracker)
         {

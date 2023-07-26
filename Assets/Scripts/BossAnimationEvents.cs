@@ -8,12 +8,14 @@ public class BossAnimationEvents : EnemyAnimationEvents
     BossController bossController;
     BossDialogue bossDialogue;
     [SerializeField] ParticleSystem deathFire;
+    FacePlayer facePlayer;
 
     public override void Start()
     {
         base.Start();
         bossController = GetComponentInParent<BossController>();
         bossDialogue = GetComponentInParent<BossDialogue>();
+        facePlayer = GetComponentInParent<FacePlayer>();
     }
 
     public void FireTral()
@@ -117,6 +119,12 @@ public class BossAnimationEvents : EnemyAnimationEvents
     public void SetStateSpecial()
     {
         bossController.state = EnemyState.SPECIAL;
+    }
+
+    public void ManualFacePlayer()
+    {
+        facePlayer.ResetDestination();
+        facePlayer.ManualFace();
     }
 
     public override void Death()
