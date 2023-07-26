@@ -11,6 +11,7 @@ public class Secretary : MonoBehaviour
     DialogueScript dialogue;
     int tracker = 0;
     bool isColliding = false;
+    bool isInConversation = false;
 
     string dialogue1 = "If you want to see the Boss you'll have to file a support ticket first. Let me check and see if there's one in the system.";
     string dialogue2 = "Hmmm....\nJust give me one second.";
@@ -27,14 +28,13 @@ public class Secretary : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isColliding)
-        {
-            return;
-        }
+        if (!other.CompareTag("Player")) return;
+        if (isColliding) return;
 
         isColliding = true;
         if (!mapData.secretaryConvo)
         {
+            isInConversation = true;
             dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();
             dialogue.SetImage("Secretary");
             dialogue.SetText(dialogue1);
@@ -44,7 +44,9 @@ public class Secretary : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!other.CompareTag("Player")) return;
         isColliding = false;
+        isInConversation = false;
     }
 
     void Talk()

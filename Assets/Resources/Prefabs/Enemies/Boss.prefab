@@ -5350,9 +5350,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543030c0d6bbdab4e9996ade5838c38e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endDialogueObject: {fileID: 5619636744262080949}
   dialoguePrefab: {fileID: 6286585989320248928, guid: 8fb30ecf51e1b064ab6d94ebfcaeaac7, type: 3}
   CSVfile: {fileID: 4900000, guid: 5507530c013235746a0541d466a2de7f, type: 3}
-  conversationNumber: 3
+  conversationName: 
+  conversationNum: 1
   stopEnemy: 1
   dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   repeatable: 1
@@ -10994,13 +10996,14 @@ MonoBehaviour:
   backAnimator: {fileID: 5979803923402093841}
   navAgent: {fileID: 5619636744262080954}
   attackMaxTime: 2
-  detectRange: 10
+  detectRange: 15
   attackRange: 8
   projectilePrefab: {fileID: 7086795160678116252, guid: 3cedf55e3cd5a214297e811b67b22bee, type: 3}
   spellAttackDamage: 15
   spellAttackPoiseDamage: 15
   hitDamage: 0
   hitPoiseDamage: 0
+  exitDoor: {fileID: 0}
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   fireTrailPrefab: {fileID: 8120567399107066, guid: 14c74eaa539125c42aba4c9dd97d78d6, type: 3}
   bonfirePrefab: {fileID: 6002190749465052700, guid: 06ae8010139dcb943a6c904b708e679f, type: 3}
@@ -11025,6 +11028,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePrefab: {fileID: 6286585989320248928, guid: 8fb30ecf51e1b064ab6d94ebfcaeaac7, type: 3}
+  lookUpDialogue:
+  - Give me a sec. I always forget how to do my super attack.
+  - Hold on, let me look up this incantation.
+  - Time out. I can never remember where I saved the instructions for this spell.
 --- !u!114 &-5864115168128347477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11999,7 +12006,8 @@ PrefabInstance:
       propertyPath: InitialModule.gravityModifier.scalar
       value: -1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5350843782395009001, guid: b68f66a86b2cd1d4fb55bcea8fa1a571, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b68f66a86b2cd1d4fb55bcea8fa1a571, type: 3}
 --- !u!4 &7419332097900736227 stripped
 Transform:
@@ -12156,6 +12164,14 @@ PrefabInstance:
       propertyPath: stopEnemy
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3288883533411561059, guid: 72efecd897027f84384f7330e73809f0, type: 3}
+      propertyPath: repeatable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3288883533411561059, guid: 72efecd897027f84384f7330e73809f0, type: 3}
+      propertyPath: endDialogueObject
+      value: 
+      objectReference: {fileID: 5619636744262080949}
     - target: {fileID: 3288883533411561059, guid: 72efecd897027f84384f7330e73809f0, type: 3}
       propertyPath: conversationNumber
       value: 2

@@ -11,13 +11,18 @@ public class DialogueScript : MonoBehaviour
     [SerializeField] Image speakerImage;
     [SerializeField] Sprite playerImage;
     [SerializeField] Sprite janitorImage;
-    [SerializeField] Sprite secretaryImage;
+    [SerializeField] Sprite mageImage;
     [SerializeField] Sprite patchworkGaryImage;
     [SerializeField] Sprite headOfITImage;
-    [SerializeField] Sprite ORTHODOXImage;
-    [SerializeField] Sprite TRENCHImage;
     [SerializeField] Sprite QuestionMarksImage;
     [SerializeField] Sprite fatManImage;
+    [SerializeField] Sprite headOfHRImage;
+    Dictionary<string, Sprite> imageDict;
+
+    private void Awake()
+    {
+        SetupDictionary();
+    }
 
     public void SetText(string dialogue)
     {
@@ -27,38 +32,22 @@ public class DialogueScript : MonoBehaviour
     public void SetImage(string characterName)
     {
         nameText.text = characterName + ":";
-        switch (characterName)
+        speakerImage.sprite = imageDict[characterName];
+    }
+
+    void SetupDictionary()
+    {
+        imageDict = new Dictionary<string, Sprite>
         {
-            case "Agent":
-                speakerImage.sprite = playerImage;
-                break;
-            case "Agent Adams":
-                speakerImage.sprite = playerImage;
-                break;
-            case "Ernie":
-                speakerImage.sprite = janitorImage;
-                break;
-            case "Secretary":
-                speakerImage.sprite = secretaryImage;
-                break;
-            case "Patchwork Gary":
-                speakerImage.sprite = patchworkGaryImage;
-                break;
-            case "Head of IT":
-                speakerImage.sprite = headOfITImage;
-                break;
-            case "ORTHODOX":
-                speakerImage.sprite = ORTHODOXImage;
-                break;
-            case "TRENCH":
-                speakerImage.sprite = TRENCHImage;
-                break;
-            case "??????":
-                speakerImage.sprite = QuestionMarksImage;
-                break;
-            case "Fat Man":
-                speakerImage.sprite = fatManImage;
-                break;
-        }
+            {"Agent", playerImage },
+            {"Agent Adams", playerImage },
+            {"Ernie", janitorImage },
+            {"Mage", mageImage },
+            {"Secretary", mageImage },
+            {"Patchwork Gary", patchworkGaryImage},
+            {"Head of IT", headOfITImage },
+            {"Fat Man", fatManImage },
+            {"Catherine Pope", headOfHRImage }
+        };
     }
 }

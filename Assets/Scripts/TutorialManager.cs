@@ -19,8 +19,9 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject dodgeTutorial;
     string dodge = "Dodge";
     [SerializeField] GameObject swordSiteTutorial;
-    [SerializeField] GameObject swordSiteTutorial2;
     string swordSite = "Sword Site";
+    [SerializeField] GameObject swordSiteTutorial2;
+    string swordSite2 = "Sword Site 2";
     [SerializeField] GameObject remnantTutorial;
     string remnant = "Remnant";
     [SerializeField] GameObject emblemTutorial;
@@ -34,18 +35,20 @@ public class TutorialManager : MonoBehaviour
     string specialAttack = "Special Attack";
     [SerializeField] GameObject morePatchesTutorial;
     [SerializeField] GameObject endOfDemoTutorial;
-    string endOfDemo = "EndOfDemo";
+    string endOfDemo = "End Of Demo";
     [SerializeField] GameObject altarTutorial;
     string altar = "Altar";
     [SerializeField] GameObject newWeaponTutorial;
-    string newWeapon = "NewWeapon";
+    string newWeapon = "New Weapon";
     public List<string> allTutorials;
+    Dictionary<string, GameObject> tutorialDict;
 
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         sm = im.gameObject.GetComponent<SoundManager>();
         im.controls.Tutorial.Select.performed += ctx => NextMessage();
+        SetupTutorialDictionary();
         TutorialList();
     }
 
@@ -58,7 +61,7 @@ public class TutorialManager : MonoBehaviour
 
         sm.ButtonSound();
 
-        if(nextMessage != null)
+        if (nextMessage != null)
         {
             Destroy(currentMessage);
             currentMessage = Instantiate(nextMessage);
@@ -85,67 +88,11 @@ public class TutorialManager : MonoBehaviour
         Destroy(currentMessage);
     }
 
-    public void TextsTutorial()
+    public void Tutorial(string tutorialName, string nextMessageName = "")
     {
-        playerData.tutorials.Remove(texts);
-        nextMessage = null;
-        currentMessage = Instantiate(textsTutorial);
-        OpenMessage();
-    }
-
-    public void AttackTutorial()
-    {
-        playerData.tutorials.Remove(attack);
-        nextMessage = null;
-        currentMessage = Instantiate(attackTutorial);
-        OpenMessage();
-    }
-
-    public void HealTutorial()
-    {
-        playerData.tutorials.Remove(heal);
-        nextMessage = null;
-        currentMessage = Instantiate(healTutorial);
-        OpenMessage();
-    }
-
-    public void BrokenGemTutorial()
-    {
-        playerData.tutorials.Remove(broken_gem);
-        nextMessage = null;
-        currentMessage = Instantiate(brokenGemTutorial);
-        OpenMessage();
-    }
-
-    public void DodgeTutorial()
-    {
-        playerData.tutorials.Remove(dodge);
-        nextMessage = null;
-        currentMessage = Instantiate(dodgeTutorial);
-        OpenMessage();
-    }
-
-    public void SwordSiteTutorial()
-    {
-        playerData.tutorials.Remove(swordSite);
-        nextMessage = swordSiteTutorial2;
-        currentMessage = Instantiate(swordSiteTutorial);
-        OpenMessage();
-    }
-
-    public void RemnantTutorial()
-    {
-        playerData.tutorials.Remove("Remnant");
-        nextMessage = null;
-        currentMessage = Instantiate(remnantTutorial);
-        OpenMessage();
-    }
-
-    public void EmblemTutorial()
-    {
-        playerData.tutorials.Remove("Emblem");
-        nextMessage = null;
-        currentMessage = Instantiate(emblemTutorial);
+        playerData.tutorials.Remove(tutorialName);
+        nextMessage = tutorialDict[nextMessageName];
+        currentMessage = Instantiate(tutorialDict[tutorialName]);
         OpenMessage();
     }
 
@@ -173,30 +120,6 @@ public class TutorialManager : MonoBehaviour
         OpenMessage();
     }
 
-    public void NewWeaponTutorial()
-    {
-        playerData.tutorials.Remove("NewWeapon");
-        nextMessage = null;
-        currentMessage = Instantiate(newWeaponTutorial);
-        OpenMessage();
-    }
-
-    public void EndOfDemoTutorial()
-    {
-        playerData.tutorials.Remove("EndOfDemo");
-        nextMessage = null;
-        currentMessage = Instantiate(endOfDemoTutorial);
-        OpenMessage();
-    }
-
-    public void AltarTutorial()
-    {
-        playerData.tutorials.Remove("Altar");
-        nextMessage = null;
-        currentMessage = Instantiate(altarTutorial);
-        OpenMessage();
-    }
-
     void TutorialList()
     {
         allTutorials.Clear();
@@ -206,6 +129,7 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(broken_gem);
         allTutorials.Add(dodge);
         allTutorials.Add(swordSite);
+        allTutorials.Add(swordSite2);
         allTutorials.Add(remnant);
         allTutorials.Add(emblem);
         allTutorials.Add(block);
@@ -213,5 +137,24 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(endOfDemo);
         allTutorials.Add(altar);
         allTutorials.Add(newWeapon);
+    }
+
+    void SetupTutorialDictionary()
+    {
+        tutorialDict = new Dictionary<string, GameObject>
+        {
+            {"", null },
+            {attack, attackTutorial },
+            {heal, healTutorial },
+            {broken_gem, brokenGemTutorial },
+            {dodge, dodgeTutorial },
+            {swordSite, swordSiteTutorial },
+            {swordSite2, swordSiteTutorial2 },
+            {remnant, remnantTutorial },
+            {emblem, emblemTutorial },
+            {endOfDemo, endOfDemoTutorial },
+            {altar, altarTutorial},
+            {newWeapon, newWeaponTutorial}
+        };
     }
 }

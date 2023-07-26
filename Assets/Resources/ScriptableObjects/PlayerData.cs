@@ -16,6 +16,7 @@ public class PlayerData : ScriptableObject
     public List<string> equippedEmblems;
     public int maxPatches;
     public List<string> tutorials;
+    public List<string> evidenceFound;
     public int money;
     public int lostMoney;
 
@@ -29,6 +30,7 @@ public class PlayerData : ScriptableObject
 
     public int deathNum;
     public int killedEnemiesNum;
+    public int killedEnemiesAtGetShield;
 
     public Vector2 moveDir;
 

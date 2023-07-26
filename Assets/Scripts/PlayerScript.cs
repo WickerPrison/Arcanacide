@@ -75,7 +75,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Instance_onTestButton(object sender, System.EventArgs e)
     {
-        StartStagger(1.1f);
+        StartStagger(0.5f);
     }
 
     public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)
@@ -139,6 +139,7 @@ public class PlayerScript : MonoBehaviour
         staggerTimer = 0;
         isStaggered = false;
         playerAnimation.PlayAnimation("Idle");
+        playerEvents.EndPlayerStagger();
     }
 
     public void LoseStamina(float amount)
@@ -244,7 +245,7 @@ public class PlayerScript : MonoBehaviour
         switch (playerData.deathNum)
         {
             case 1:
-                dialogueData.ORTHODOXQueue.Add(1);
+                dialogueData.directorQueue.Add(1);
                 break;
         }
 

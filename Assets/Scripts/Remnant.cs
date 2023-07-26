@@ -93,7 +93,7 @@ public class Remnant : MonoBehaviour
         if (playerData.tutorials.Contains("Remnant") && other.CompareTag("Player"))
         {
             tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
-            tutorialManager.RemnantTutorial();
+            tutorialManager.Tutorial("Remnant");
         }
     }
 

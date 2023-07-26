@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class TutorialAfterDialogue : EndDialogueEvent
+public class TutorialAfterDialogue : MonoBehaviour, IEndDialogue
 {
     [SerializeField] PlayerData playerData;
     TutorialManager tm;
@@ -14,21 +14,20 @@ public class TutorialAfterDialogue : EndDialogueEvent
         tm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
     }
 
-    public override void EndEvent()
+    public void EndDialogue()
     {
-        base.EndEvent();
         switch (tutorialName)
         {
             case "Attack":
                 if (playerData.tutorials.Contains("Attack"))
                 {
-                    tm.AttackTutorial();
+                    tm.Tutorial("Attack");
                 }
                 break;
             case "Texts":
                 if (playerData.tutorials.Contains("Texts"))
                 {
-                    tm.TextsTutorial();
+                    tm.Tutorial("Texts");
                 }
                 break;
         }

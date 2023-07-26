@@ -13,6 +13,7 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onAttackImpact;
     public event EventHandler onTakeDamage;
     public event EventHandler onPlayerStagger;
+    public event EventHandler onEndPlayerStagger;
     public event EventHandler onAxeSpecial;
     public event EventHandler onLanternCombo;
     public event EventHandler onEndLanternCombo;
@@ -51,6 +52,11 @@ public class PlayerEvents : MonoBehaviour
     public void PlayerStagger()
     {
         onPlayerStagger?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void EndPlayerStagger()
+    {
+        onEndPlayerStagger?.Invoke(this, EventArgs.Empty);
     }
 
     public void AxeSpecialAttack()

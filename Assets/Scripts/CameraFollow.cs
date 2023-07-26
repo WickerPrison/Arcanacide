@@ -5,7 +5,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] Color floorColor;
+    public Color floorColor;
     [SerializeField] Material menuShaderMaterial;
     [SerializeField] Material gradientShaderMaterial;
     [SerializeField] PlayerData playerData;

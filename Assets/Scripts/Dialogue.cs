@@ -5,9 +5,11 @@ using UnityEngine.AI;
 
 public class Dialogue : MonoBehaviour
 {
+    [SerializeField] GameObject endDialogueObject;
     [SerializeField] GameObject dialoguePrefab;
     [SerializeField] TextAsset CSVfile;
-    [SerializeField] int conversationNumber;
+    [SerializeField] string conversationName;
+    [SerializeField] int conversationNum;
     [SerializeField] bool stopEnemy;
     [SerializeField] DialogueData dialogueData;
     [SerializeField] bool repeatable = false;
@@ -26,7 +28,7 @@ public class Dialogue : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         readCSV = GetComponent<CSVparser>();
         conversations = readCSV.ParseConversation(CSVfile);
-        thisConversation = conversations[conversationNumber];
+        thisConversation = conversations[conversationNum];
         im.controls.Dialogue.Next.performed += ctx => NextLine();
         if (stopEnemy)
         {
@@ -39,18 +41,14 @@ public class Dialogue : MonoBehaviour
     {
         if (!repeatable)
         {
-            if (dialogueData.conversationsHad.Contains(conversationNumber))
+            if (dialogueData.conversationsHad.Contains(conversationName))
             {
                 return;
             }
             else
             {
-                dialogueData.conversationsHad.Add(conversationNumber);
+                dialogueData.conversationsHad.Add(conversationName);
             }
-        }
-        else
-        {
-            dialogueData.conversationsHad.Add(conversationNumber);
         }
 
 
@@ -83,10 +81,11 @@ public class Dialogue : MonoBehaviour
             {
                 navAgent.speed = speed;
             }
-            EndDialogueEvent endEvent = GetComponent<EndDialogueEvent>();
-            if(endEvent != null)
+
+            if(endDialogueObject != null)
             {
-                endEvent.EndEvent();
+                IEndDialogue endDialogue = endDialogueObject.GetComponent<IEndDialogue>();
+                endDialogue.EndDialogue();
             }
         }
         else

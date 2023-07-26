@@ -17,10 +17,11 @@ public class TextingScreen : MonoBehaviour
     [SerializeField] GameObject continueMessage;
     [SerializeField] Button leaveButton;
     [SerializeField] ScrollRect scrollRect;
+    [SerializeField] DialogueData dialogueData;
     AudioSource audioSource;
     public TextingMenu textingMenu;
     TextingLibrary textingLibrary;
-    public string contactName;
+    public PhoneContacts contactName;
     PlayerControls controls;
     SoundManager sm;
     public List<int> previousConversations;
@@ -47,7 +48,7 @@ public class TextingScreen : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         textingLibrary = GetComponent<TextingLibrary>();
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
-        contactNameText.text = contactName;
+        contactNameText.text = dialogueData.GetContactString(contactName);
         conversations = textingLibrary.GetConversations(contactName, this);
         SpawnOldTexts();
         if (conversationQueue.Count > 0)

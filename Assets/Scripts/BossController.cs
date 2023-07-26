@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [System.Serializable]
-public class BossController : EnemyController
+public class BossController : EnemyController, IEndDialogue
 {
+    [SerializeField] Transform exitDoor;
     [SerializeField] MapData mapData;
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject bonfirePrefab;
@@ -14,9 +15,11 @@ public class BossController : EnemyController
     [SerializeField] Transform frontAttackPoint;
     [SerializeField] Transform backAttackPoint;
     BossDialogue bossDialogue;
+    FacePlayer facePlayer;
     FireRing fireRing;
     public int strafeLeftOrRight = 1;
     PlayerMovement playerMovement;
+    InputManager im;
 
     float tooClose = 3f;
     float runAwayTime;
@@ -51,6 +54,8 @@ public class BossController : EnemyController
     public override void Start()
     {
         base.Start();
+        im = gm.GetComponent<InputManager>();
+        facePlayer = GetComponent<FacePlayer>();
         playerMovement = playerScript.GetComponent<PlayerMovement>();
         bonfireCD = bonfireMaxCD;
         spellAttackPoiseDamage = fireBallPoiseDamage;
@@ -148,6 +153,18 @@ public class BossController : EnemyController
                     fireBallCD = fireBallMaxCD;
                 }
                 attackCD = attackMaxCD;
+            }
+        }
+        else if(state == EnemyState.SPECIAL)
+        {
+            navAgent.enabled = true;
+            navAgent.SetDestination(exitDoor.position);
+            facePlayer.SetDestination(exitDoor.position);
+            facePlayer.ManualFace();
+            if(Vector3.Distance(exitDoor.position, transform.position) < 2)
+            {
+                enemyScript.Death();
+                Death();
             }
         }
 
@@ -350,9 +367,26 @@ public class BossController : EnemyController
         }
     }
 
+    public void EndDialogue()
+    {
+        if(state == EnemyState.UNAWARE)
+        {
+            state = EnemyState.IDLE;
+        }
+        else
+        {
+            im.Dialogue();
+            frontAnimator.Play("StandUp");
+            backAnimator.Play("StandUp");
+            navAgent.enabled = false;
+            navAgent.stoppingDistance = 0;
+        }
+    }
+
     public override void Death()
     {
         base.Death();
+        im.Gameplay();
         bossDialogue.EndLookUpDialogue();
         mapData.fireBossKilled = true;
         gm.awareEnemies -= 1;

@@ -54,7 +54,6 @@ public class FileTicket : MonoBehaviour
             sfx.Play();
             mapData.ticketFiled = true;
             screenText.text = screenText2;
-            phoneData.UnknownNumberQueue.Add(1);
         }
     }
 }

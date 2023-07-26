@@ -1,35 +1,98 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+
+public enum PhoneContacts
+{
+    DIRECTORWILKINS, AGENTFREI, BONSAI
+}
 
 [CreateAssetMenu]
 public class DialogueData : ScriptableObject
 {
-    string ORTHODOX = "ORTHODOX";
-    public List<int> ORTHODOXQueue;
-    public List<int> ORTHODOXPreviousConversations;
-    string TRENCH = "TRENCH";
-    public List<int> TRENCHQueue;
-    public List<int> TRENCHPreviousConversations;
+    public List<string> conversationsHad;
+
+    string directorWilkins = "Director Wilkins";
+    public List<int> directorQueue;
+    public List<int> directorPreviousConversations;
+    string agentFrei = "Agent Frei";
+    public List<int> freiQueue;
+    public List<int> freiPreviousConversations;
+    string bonsai = "Bonsai";
+    public List<int> bonsaiQueue;
+    public List<int> bonsaiPreviousConversations;
     string UnkownNumber = "Unknown Number";
     public List<int> UnknownNumberQueue;
     public List<int> UnknownNumberPreviousConversations;
 
-    public List<int> conversationsHad;
     public List<int> patchworkGaryConversations;
+    public List<int> whistleBlowerConversations;
+
+
+    public List<int> GetQueue(PhoneContacts name)
+    {
+        switch (name)
+        {
+            case PhoneContacts.DIRECTORWILKINS:
+                return directorQueue;
+            case PhoneContacts.AGENTFREI:
+                return freiQueue;
+            case PhoneContacts.BONSAI:
+                return bonsaiQueue;
+            default:
+                return null;
+        }
+    }
+
+    public List<int> GetPreviousConversations(PhoneContacts name)
+    {
+        switch (name)
+        {
+            case PhoneContacts.DIRECTORWILKINS:
+                return directorPreviousConversations;
+            case PhoneContacts.AGENTFREI:
+                return freiPreviousConversations;
+            case PhoneContacts.BONSAI:
+                return bonsaiPreviousConversations;
+            default:
+                return null;
+        }
+    }
+
+    public string GetContactString(PhoneContacts name)
+    {
+        switch (name)
+        {
+            case PhoneContacts.DIRECTORWILKINS:
+                return directorWilkins;
+            case PhoneContacts.AGENTFREI:
+                return agentFrei;
+            case PhoneContacts.BONSAI:
+                return bonsai;
+            default:
+                return null;
+        }
+    }
 
     public List<string> GetNewMessages()
     {
         List<string> newMessages = new List<string>();
 
-        if(ORTHODOXQueue.Count > 0)
+        if(directorQueue.Count > 0)
         {
-            newMessages.Add(ORTHODOX);
+            newMessages.Add(directorWilkins);
         }
 
-        if(TRENCHQueue.Count > 0)
+        if(freiQueue.Count > 0)
         {
-            newMessages.Add(TRENCH);
+            newMessages.Add(agentFrei);
+        }
+
+        if(bonsaiQueue.Count > 0)
+        {
+            newMessages.Add(bonsai);
         }
 
         if(UnknownNumberQueue.Count > 0)
@@ -40,35 +103,35 @@ public class DialogueData : ScriptableObject
         return newMessages;
     }
 
-    public void GetContacts(out List<string> contacts, out List<string> newMessages)
+    public void GetContacts(out List<PhoneContacts> contacts, out List<PhoneContacts> newMessages)
     {
-        contacts = new List<string>();
-        newMessages = new List<string>();
+        contacts = new List<PhoneContacts>();
+        newMessages = new List<PhoneContacts>();
 
-        if(ORTHODOXQueue.Count + ORTHODOXPreviousConversations.Count > 0)
+        if(directorQueue.Count + directorPreviousConversations.Count > 0)
         {
-            contacts.Add(ORTHODOX);
-            if(ORTHODOXQueue.Count > 0)
+            contacts.Add(PhoneContacts.DIRECTORWILKINS);
+            if(directorQueue.Count > 0)
             {
-                newMessages.Add(ORTHODOX);
+                newMessages.Add(PhoneContacts.DIRECTORWILKINS);
             }
         }
 
-        if(TRENCHQueue.Count + TRENCHPreviousConversations.Count > 0)
+        if(freiQueue.Count + freiPreviousConversations.Count > 0)
         {
-            contacts.Add(TRENCH);
-            if(TRENCHQueue.Count > 0)
+            contacts.Add(PhoneContacts.AGENTFREI);
+            if(freiQueue.Count > 0)
             {
-                newMessages.Add(TRENCH);
+                newMessages.Add(PhoneContacts.AGENTFREI);
             }
         }
 
-        if(UnknownNumberQueue.Count + UnknownNumberPreviousConversations.Count > 0)
+        if(bonsaiQueue.Count + bonsaiPreviousConversations.Count > 0)
         {
-            contacts.Add(UnkownNumber);
-            if(UnknownNumberQueue.Count > 0)
+            contacts.Add(PhoneContacts.BONSAI);
+            if(bonsaiQueue.Count > 0)
             {
-                newMessages.Add(UnkownNumber);
+                newMessages.Add(PhoneContacts.BONSAI);
             }
         }
     }

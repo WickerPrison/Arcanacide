@@ -11,9 +11,10 @@ public class ContactButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     [SerializeField] GameObject textingScreenPrefab;
     [SerializeField] Image backgroundImage;
     [SerializeField] GameObject newIcon;
+    [SerializeField] DialogueData dialogueData;
     Material mat;
     public TextingMenu textingMenu;
-    public string contactName;
+    public PhoneContacts contactName;
     public bool newMessage;
     public int listIndex;
     public RectTransform content;
@@ -31,7 +32,7 @@ public class ContactButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         SetUpMenuControls();
-        text.text = contactName;
+        text.text = dialogueData.GetContactString(contactName);
         if (!newMessage)
         {
             newIcon.SetActive(false);

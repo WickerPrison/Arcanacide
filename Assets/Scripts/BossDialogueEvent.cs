@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class BossDialogueEvent : EndDialogueEvent
+public class BossDialogueEvent : MonoBehaviour, IEndDialogue
 {
     BossController bossController;
 
@@ -12,9 +12,8 @@ public class BossDialogueEvent : EndDialogueEvent
         bossController = GetComponentInParent<BossController>();
     }
 
-    public override void EndEvent()
+    public void EndDialogue()
     {
-        base.EndEvent();
         bossController.state = EnemyState.IDLE;
     }
 }

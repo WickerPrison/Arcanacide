@@ -4,33 +4,15 @@ using UnityEngine;
 
 public class PhoneTrigger : MonoBehaviour
 {
-    [SerializeField] string contactName;
+    [SerializeField] PhoneContacts contactName;
     [SerializeField] int conversationNum;
-    [SerializeField] DialogueData phoneData;
+    [SerializeField] DialogueData dialogueData;
 
     private void Start()
     {
-        switch (contactName)
+        if (!dialogueData.GetQueue(contactName).Contains(conversationNum) && !dialogueData.GetPreviousConversations(contactName).Contains(conversationNum))
         {
-            case "ORTHODOX":
-                if(!phoneData.ORTHODOXQueue.Contains(conversationNum) && !phoneData.ORTHODOXPreviousConversations.Contains(conversationNum))
-                {
-                    phoneData.ORTHODOXQueue.Add(conversationNum);
-                }
-                break;
-            case "TRENCH":
-                if (!phoneData.TRENCHQueue.Contains(conversationNum) && !phoneData.TRENCHPreviousConversations.Contains(conversationNum))
-                {
-                    phoneData.TRENCHQueue.Add(conversationNum);
-                }
-                break;
-            case "??????":
-                if (!phoneData.UnknownNumberQueue.Contains(conversationNum) && !phoneData.UnknownNumberPreviousConversations.Contains(conversationNum))
-                {
-                    phoneData.UnknownNumberQueue.Add(conversationNum);
-                }
-                break;
+            dialogueData.GetQueue(contactName).Add(conversationNum);
         }
     }
-
 }

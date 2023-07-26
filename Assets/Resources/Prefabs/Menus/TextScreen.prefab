@@ -799,8 +799,9 @@ MonoBehaviour:
   continueMessage: {fileID: 1494273473335319717}
   leaveButton: {fileID: 8603517960021666177}
   scrollRect: {fileID: 8320728897033902}
+  dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   textingMenu: {fileID: 0}
-  contactName: Contact Name
+  contactName: 0
   previousConversations: 
   conversationQueue: 
 --- !u!114 &6888211969779910601
@@ -815,12 +816,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0689c2ffb9d80d44fba41e23259a87f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   dialogueBox: {fileID: 0}
-  ORTHODOXtexts: {fileID: 4900000, guid: 566bffe2c9981b54b8869310552823c3, type: 3}
-  TRENCHtexts: {fileID: 4900000, guid: be00fad626fc40c45b9ab097076f9181, type: 3}
-  UnknownNumberTexts: {fileID: 4900000, guid: bf07466e6ccb2594abfb2ab014f10413, type: 3}
-  HeadOfITtexts: {fileID: 4900000, guid: 32d170f2bf685c74e8c48492776a8d69, type: 3}
+  directorWilkinsTexts: {fileID: 4900000, guid: 566bffe2c9981b54b8869310552823c3, type: 3}
+  agentFreiTexts: {fileID: 4900000, guid: 6ba1198c65272214ebd1b63feeeaaaf1, type: 3}
+  bonsaiTexts: {fileID: 4900000, guid: c16d92bff33596f47bde815860b27297, type: 3}
+  unknownNumberTexts: {fileID: 4900000, guid: bf07466e6ccb2594abfb2ab014f10413, type: 3}
 --- !u!82 &4943496949133399878
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1008,7 +1009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4505510232854006389, guid: c9d3c6176c22f864d955ed5e84b72d12, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8085426757988267627, guid: c9d3c6176c22f864d955ed5e84b72d12, type: 3}
       propertyPath: m_Pivot.x

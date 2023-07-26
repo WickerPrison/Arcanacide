@@ -4,51 +4,46 @@ using UnityEngine;
 
 public class TextingLibrary : MonoBehaviour
 {
-    [SerializeField] DialogueData phoneData;
+    [SerializeField] DialogueData dialogueData;
     [SerializeField] GameObject dialogueBox;
 
-    [SerializeField] TextAsset ORTHODOXtexts;
-    [SerializeField] TextAsset TRENCHtexts;
-    [SerializeField] TextAsset UnknownNumberTexts;
-    [SerializeField] TextAsset HeadOfITtexts;
+    Dictionary<PhoneContacts, TextAsset> textsDict = new Dictionary<PhoneContacts, TextAsset>();
+    [SerializeField] TextAsset directorWilkinsTexts;
+    [SerializeField] TextAsset agentFreiTexts;
+    [SerializeField] TextAsset bonsaiTexts;
+    [SerializeField] TextAsset unknownNumberTexts;
 
     List<List<string>> conversations = new List<List<string>>();
 
-    public List<List<string>> GetConversations(string contactName, TextingScreen textingScreen)
+    private void Awake()
     {
-        switch (contactName)
+        textsDict = new Dictionary<PhoneContacts, TextAsset>()
         {
-            case "ORTHODOX":
-                SetUpConversation(ORTHODOXtexts);
-                textingScreen.previousConversations = phoneData.ORTHODOXPreviousConversations;
-                textingScreen.conversationQueue = phoneData.ORTHODOXQueue;
-                break;
-            case "TRENCH":
-                SetUpConversation(TRENCHtexts);
-                textingScreen.previousConversations = phoneData.TRENCHPreviousConversations;
-                textingScreen.conversationQueue = phoneData.TRENCHQueue;
-                break;
-            case "Unknown Number":
-                SetUpConversation(UnknownNumberTexts);
-                textingScreen.previousConversations = phoneData.UnknownNumberPreviousConversations;
-                textingScreen.conversationQueue = phoneData.UnknownNumberQueue;
-                break;
-        }
+            {PhoneContacts.DIRECTORWILKINS, directorWilkinsTexts},
+            {PhoneContacts.AGENTFREI, agentFreiTexts},
+            {PhoneContacts.BONSAI, bonsaiTexts }
+        };
+    }
 
+    public List<List<string>> GetConversations(PhoneContacts contactName, TextingScreen textingScreen)
+    {
+        SetUpConversation(textsDict[contactName]);
+        textingScreen.previousConversations = dialogueData.GetPreviousConversations(contactName);
+        textingScreen.conversationQueue = dialogueData.GetQueue(contactName);
         return conversations;
     }
 
 
-    public void AddToQueue(string contactName, int conversationIndex)
+    public void AddToQueue(PhoneContacts contactName, int conversationIndex)
     {
         switch (contactName)
         {
-            case "ORTHODOX":
+            case PhoneContacts.AGENTFREI:
                 if (conversationIndex == 0)
                 {
-                    phoneData.TRENCHQueue.Add(0);
+                    dialogueData.directorQueue.Add(2);
                 }
-                break;
+             break;
         }
     }
 

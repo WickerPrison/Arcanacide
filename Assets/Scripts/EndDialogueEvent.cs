@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndDialogueEvent : MonoBehaviour
+public interface IEndDialogue
 {
-    public virtual void EndEvent()
-    {
-
-    }
+    void EndDialogue();
 }

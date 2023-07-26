@@ -169,7 +169,7 @@ public class PlayerHealth : MonoBehaviour
         playerData.healCharges -= 1;
         if (playerData.healCharges < 0 && playerData.tutorials.Contains("Broken Gem") && playerData.unlockedAbilities.Count > 0)
         {
-            gm.GetComponent<TutorialManager>().BrokenGemTutorial();
+            gm.GetComponent<TutorialManager>().Tutorial("Broken Gem");
         }
 
         gemHealTimer = gemHealDuration;

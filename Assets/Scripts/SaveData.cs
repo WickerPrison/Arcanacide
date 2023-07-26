@@ -17,6 +17,7 @@ public class SaveData
     public List<string> equippedEmblems;
     public int maxPatches;
     public List<string> tutorials;
+    public List<string> evidenceFound;
     public int money;
     public int lostMoney;
     public string path;
@@ -29,6 +30,7 @@ public class SaveData
     public float mana;
     public int deathNum;
     public int killedEnemiesNum;
+    public int killedEnemiesAtGetShield;
     public List<int> unlockedWeapons;
     public int currentWeapon;
 
@@ -46,16 +48,17 @@ public class SaveData
     public int iceBossDirection;
     public bool ACOn;
 
-    public int[] ORTHODOXQueue;
-    public int[] ORTHODOXPreviousConversations;
-    public int[] TRENCHQueue;
-    public int[] TRENCHPreviousConversations;
+    public List<string> conversationsHad;
+    public int[] directorWilkinsQueue;
+    public int[] directorWilkinsPreviousConversations;
+    public int[] agentFreiQueue;
+    public int[] agentFreiPreviousConversations;
+    public int[] bonsaiQueue;
+    public int[] bonsaiPreviousConversations;
     public int[] QuestionMarksQueue;
     public int[] QuestionMarksPreviousConversations;
-    public int[] HeadOfITQueue;
-    public int[] HeadOfITPreviousConversations;
-    public int[] conversationsHad;
     public int[] patchworkGaryConversations;
+    public int[] whistleblowerConversations;
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData)
     {
@@ -68,6 +71,7 @@ public class SaveData
         equippedEmblems = playerData.equippedEmblems;
         maxPatches = playerData.maxPatches;
         tutorials = playerData.tutorials;
+        evidenceFound = playerData.evidenceFound;
         money = playerData.money;
         lostMoney = playerData.lostMoney;
         strength = playerData.strength;
@@ -78,6 +82,7 @@ public class SaveData
         mana = playerData.mana;
         deathNum = playerData.deathNum;
         killedEnemiesNum = playerData.killedEnemiesNum;
+        killedEnemiesAtGetShield = playerData.killedEnemiesAtGetShield;
         unlockedWeapons = playerData.unlockedWeapons;
         currentWeapon = playerData.currentWeapon;
 
@@ -103,13 +108,16 @@ public class SaveData
 
         ACOn = mapData.ACOn;
 
-        ORTHODOXQueue = dialogueData.ORTHODOXQueue.ToArray();
-        ORTHODOXPreviousConversations = dialogueData.ORTHODOXPreviousConversations.ToArray();
-        TRENCHQueue = dialogueData.TRENCHQueue.ToArray();
-        TRENCHPreviousConversations = dialogueData.TRENCHPreviousConversations.ToArray();
+        conversationsHad = dialogueData.conversationsHad;
+        directorWilkinsQueue = dialogueData.directorQueue.ToArray();
+        directorWilkinsPreviousConversations = dialogueData.directorPreviousConversations.ToArray();
+        agentFreiQueue = dialogueData.freiQueue.ToArray();
+        agentFreiPreviousConversations = dialogueData.freiPreviousConversations.ToArray();
+        bonsaiQueue = dialogueData.bonsaiQueue.ToArray();
+        bonsaiPreviousConversations = dialogueData.bonsaiPreviousConversations.ToArray();
         QuestionMarksQueue = dialogueData.UnknownNumberQueue.ToArray();
         QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations.ToArray();
-        conversationsHad = dialogueData.conversationsHad.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();
+        whistleblowerConversations = dialogueData.whistleBlowerConversations.ToArray();
     }
 }
