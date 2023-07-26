@@ -35,6 +35,7 @@ public class PlayerData : ScriptableObject
     public List<int> unlockedWeapons;
     public int currentWeapon;
 
+    public float swordSpecialTimer;
     public bool clawSpecialOn;
     public float clawSpecialTimer;
 

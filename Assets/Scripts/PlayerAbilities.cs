@@ -77,11 +77,22 @@ public class PlayerAbilities : MonoBehaviour
         SFX = GetComponentInChildren<AudioSource>();
         rb = GetComponent<Rigidbody>();
 
+        if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(1);
+
         SetupControls();
     }
 
     private void Update()
     {
+        if(playerData.swordSpecialTimer > 0)
+        {
+            playerData.swordSpecialTimer -= Time.deltaTime;
+            if(playerData.swordSpecialTimer <= 0)
+            {
+                weaponManager.RemoveSpecificWeaponSource(0);
+            }    
+        }
+
         if (knifeSpecialAttackOn)
         {
             UpdateKnifeSpecialAttack();
@@ -164,6 +175,11 @@ public class PlayerAbilities : MonoBehaviour
 
     public int DamageModifiers(int attackPower)
     {
+        if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0)
+        {
+            attackPower *= Mathf.RoundToInt(specialAttackProfiles[0].damageMultiplier);
+        }
+
         if (playerData.clawSpecialOn)
         {
             float damageMult;
@@ -279,7 +295,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         if (!playerData.unlockedAbilities.Contains("Special Attack")) return;
 
-        if (playerController.CanInput() && playerScript.stamina > 0 && playerData.mana > specialAttackProfiles[playerData.currentWeapon].manaCost)
+        if (playerController.CanInput() && playerScript.stamina > 0 && playerData.mana >= specialAttackProfiles[playerData.currentWeapon].manaCost)
         {
             if (playerData.currentWeapon == 1)
             {
@@ -309,23 +325,9 @@ public class PlayerAbilities : MonoBehaviour
     {
         playerScript.LoseStamina(specialAttackProfiles[0].staminaCost);
         playerScript.LoseMana(specialAttackProfiles[0].manaCost);
-        Transform origin;
-        if (playerAnimation.facingFront)
-        {
-            origin = frontSwordTip;
-        }
-        else
-        {
-            origin = backSwordTip;
-        }
 
-        foreach (EnemyScript enemy in gm.enemies)
-        {
-            if (Vector3.Distance(transform.position, enemy.transform.position) <= specialAttackProfiles[0].attackRange)
-            {
-                FireProjectile(enemy, origin.position, specialAttackProfiles[0]);
-            }
-        }
+        playerData.swordSpecialTimer = specialAttackProfiles[0].bonusEffectDuration;
+        weaponManager.AddSpecificWeaponSource(0);
     }
 
     public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)

@@ -23,6 +23,7 @@ public class AttackProfiles : ScriptableObject
     public float staminaCost;
     public float manaCost;
 
+    public float bonusEffectDuration;
     public float durationDOT;
     public float staggerDuration;
 
