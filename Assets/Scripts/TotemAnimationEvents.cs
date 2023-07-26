@@ -31,12 +31,12 @@ public class TotemAnimationEvents : MonoBehaviour
         landingVFX.Play();
         StartCoroutine(cameraScript.ScreenShake(axeSpecial.screenShakeNoHit.x, axeSpecial.screenShakeNoHit.y));
         touchingCollider = colliderScript.GetTouchingObjects();
-        int damage = Mathf.RoundToInt(playerData.AttackPower() * axeSpecial.damageMultiplier);
+        int damage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
         {
             damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMasteryPercent);
         }
-        int poiseDamage = Mathf.RoundToInt(playerData.AttackPower() * axeSpecial.damageMultiplier);
+        int poiseDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
         foreach(Collider collider in touchingCollider)
         {
             if(collider != null)

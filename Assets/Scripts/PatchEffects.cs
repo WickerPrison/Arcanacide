@@ -17,6 +17,18 @@ public class PatchEffects : MonoBehaviour
     PlayerHealth playerHealth;
     PlayerAbilities playerAbilities;
     PlayerSound playerSound;
+    PlayerAnimation playerAnimation;
+
+    //other scripts
+    CameraFollow cameraScript;
+    GameManager gm;
+
+    //damage multipliers
+    float closeCallDamage = 0.3f;
+    float arcaneRemainsDamage = 0.5f;
+    float confidentKillerDamage = 0.4f;
+    float spellswordDamage = 0.5f;
+    float recklessAttackDamage = 0.6f;
 
     //patch related variables
     [System.NonSerialized] public bool arcaneStepActive = false;
@@ -34,7 +46,15 @@ public class PatchEffects : MonoBehaviour
     [System.NonSerialized] public float barrierTimer;
     [System.NonSerialized] public float maxBarrierTimer = 10f;
 
+    int explosiveHealingDamage;
+    float explosiveHealingRange = 5;
+    float explosiveHealingStagger = 1f;
+
+    float spellswordManaCost = 15;
+
     [System.NonSerialized] public bool deathAuraActive = false;
+
+    float recklessAttackHealthMax = 0.3f;
 
 
     private void Awake()
@@ -48,7 +68,10 @@ public class PatchEffects : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         playerAbilities = GetComponent<PlayerAbilities>();
         playerHealth = GetComponent<PlayerHealth>();
+        playerAnimation = GetComponent<PlayerAnimation>();
         playerSound = GetComponentInChildren<PlayerSound>();
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+        gm = GlobalEvents.instance.gameObject.GetComponent<GameManager>();
         barrierTimer = 0;
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
@@ -129,43 +152,69 @@ public class PatchEffects : MonoBehaviour
 
     public int PhysicalDamageModifiers(int physicalDamage)
     {
-        return physicalDamage;
+        float extraDamage = 0;
+        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && closeCallTimer > 0)
+        {
+            extraDamage += physicalDamage * closeCallDamage;
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > spellswordManaCost)
+        {
+            extraDamage += physicalDamage * spellswordDamage;
+            playerScript.LoseMana(spellswordManaCost);
+        }
+
+        return physicalDamage + Mathf.RoundToInt(extraDamage);
     }
 
     public int ArcaneDamageModifiers(int arcaneDamage)
     {
-        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && closeCallTimer > 0)
-        {
-            arcaneDamage += emblemLibrary.CloseCallDamage();
-        }
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && arcaneRemainsActive)
-        {
-            arcaneDamage += emblemLibrary.ArcaneRemainsDamage();
-        }
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
-        {
-            arcaneDamage += emblemLibrary.ConfidentKillerDamage();
-        }
-
-        if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > emblemLibrary.spellswordManaCost)
-        {
-            arcaneDamage += emblemLibrary.SpellswordDamage();
-            playerScript.LoseMana(emblemLibrary.spellswordManaCost);
-        }
-
         return arcaneDamage;
     }
 
     public int TotalDamageModifiers(int totalDamage)
     {
-        return totalDamage;
+        float extraDamage = 0;
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && arcaneRemainsActive)
+        {
+            extraDamage += totalDamage * arcaneRemainsDamage;
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
+        {
+            extraDamage += totalDamage * confidentKillerDamage;
+        }
+
+        if (playerData.equippedEmblems.Contains(emblemLibrary.reckless_attack) && playerData.health < playerData.MaxHealth() * recklessAttackHealthMax)
+        {
+            extraDamage += totalDamage * recklessAttackDamage;
+        }
+
+        return totalDamage + Mathf.RoundToInt(extraDamage);
     }
 
     private void onPlayerStagger(object sender, System.EventArgs e)
     {
         EndArcaneStep();
+    }
+
+    public void ExplosiveHealing()
+    {
+        StartCoroutine(cameraScript.ScreenShake(0.1f, 0.3f));
+        playerSound.PlaySoundEffectFromList(10, 1);
+        playerAnimation.shoveVFX.Play();
+        explosiveHealingDamage = playerData.ArcaneDamage() * 3;
+
+        foreach (EnemyScript enemy in gm.enemies)
+        {
+            if (Vector3.Distance(enemy.transform.position, transform.position) < explosiveHealingRange)
+            {
+
+                enemy.LoseHealth(explosiveHealingDamage, explosiveHealingDamage);
+                EnemyController enemyController = enemy.GetComponent<EnemyController>();
+                enemyController.StartStagger(explosiveHealingStagger);
+            }
+        }
     }
 
     public void StartArcaneStep()

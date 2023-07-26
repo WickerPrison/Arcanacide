@@ -52,13 +52,9 @@ public class PlayerData : ScriptableObject
         return maxStamina;
     }
 
-    public int AttackPower()
+    public int PhysicalDamage()
     {
         int attackPower = 18 + strength;
-        if(equippedEmblems.Contains("Reckless Attack") && health < MaxHealth() * .4f)
-        {
-            attackPower += Mathf.RoundToInt(attackPower * 0.5f);
-        }
         return attackPower;
     }
 

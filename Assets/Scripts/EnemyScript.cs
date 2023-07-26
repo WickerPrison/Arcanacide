@@ -70,7 +70,7 @@ public class EnemyScript : MonoBehaviour
         if(DOT > 0 && enemyController.state != EnemyState.DYING)
         {
             DOT -= Time.deltaTime;
-            damageDOT += Time.deltaTime * playerData.arcane;
+            damageDOT += Time.deltaTime * (playerData.arcane + 2);
             if(damageDOT >= 1)
             {
                 LoseHealth(1, 0); ;

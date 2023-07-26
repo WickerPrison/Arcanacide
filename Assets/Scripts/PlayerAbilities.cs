@@ -133,7 +133,7 @@ public class PlayerAbilities : MonoBehaviour
 
     public int DetermineAttackDamage(AttackProfiles attackProfile)
     {
-        int physicalDamage = Mathf.RoundToInt(playerData.AttackPower() * attackProfile.damageMultiplier);
+        int physicalDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * attackProfile.damageMultiplier);
         physicalDamage = patchEffects.PhysicalDamageModifiers(physicalDamage);
 
         int arcaneDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
@@ -175,24 +175,28 @@ public class PlayerAbilities : MonoBehaviour
 
     public int DamageModifiers(int attackPower)
     {
+        float extraDamage = 0;
         if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0)
         {
-            attackPower *= Mathf.RoundToInt(specialAttackProfiles[0].damageMultiplier);
+            extraDamage += attackPower * specialAttackProfiles[0].damageMultiplier;
+
+            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            {
+                extraDamage += attackPower * emblemLibrary.arcaneMasteryPercent;
+            }
         }
 
         if (playerData.clawSpecialOn)
         {
-            float damageMult;
+            extraDamage += attackPower * clawSpecialDamageMult;
+
             if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
             {
-                damageMult = clawSpecialDamageMult + clawSpecialDamageMult * emblemLibrary.arcaneMasteryPercent;
+                extraDamage += attackPower * emblemLibrary.arcaneMasteryPercent;
             }
-            else damageMult = clawSpecialDamageMult;
-
-            attackPower = Mathf.RoundToInt(attackPower * damageMult);
         }
 
-        return attackPower;
+        return attackPower + Mathf.RoundToInt(extraDamage);
     }
 
     public void Shield()
