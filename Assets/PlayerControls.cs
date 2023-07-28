@@ -596,6 +596,42 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Sword"",
+                    ""type"": ""Button"",
+                    ""id"": ""13dee87d-ec54-4eca-a110-670b335d2e34"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Lantern"",
+                    ""type"": ""Button"",
+                    ""id"": ""36b1b0a3-5420-4d58-8391-316c6eb78a8d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Knife"",
+                    ""type"": ""Button"",
+                    ""id"": ""92716e77-f47e-4e72-bfcb-33c595d15e7f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Claws"",
+                    ""type"": ""Button"",
+                    ""id"": ""a92faedc-9d19-4b42-b29d-01e51de7ee7e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -662,6 +698,94 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ControllerDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6fcfc698-1ba6-4aab-98c4-8f0c835a2838"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sword"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86885af3-3f91-4c51-9752-1831ebdad13e"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sword"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""978c677a-5321-425d-9f5d-2ac29227b480"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lantern"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd58ceda-9ce3-4809-a658-3a8ad6817482"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lantern"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e79aebd6-d01b-4c3c-b9eb-223f04e0fef4"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Knife"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc8ee224-74da-4db0-8558-e9be00065d62"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Knife"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a973cb24-1c5f-4fac-8fa4-5227fe149e57"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Claws"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10f2e7c9-3029-40bd-aab5-226163608e3b"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Claws"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -735,6 +859,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Menu_Back = m_Menu.FindAction("Back", throwIfNotFound: true);
         m_Menu_Scroll = m_Menu.FindAction("Scroll", throwIfNotFound: true);
         m_Menu_ControllerDirection = m_Menu.FindAction("ControllerDirection", throwIfNotFound: true);
+        m_Menu_Sword = m_Menu.FindAction("Sword", throwIfNotFound: true);
+        m_Menu_Lantern = m_Menu.FindAction("Lantern", throwIfNotFound: true);
+        m_Menu_Knife = m_Menu.FindAction("Knife", throwIfNotFound: true);
+        m_Menu_Claws = m_Menu.FindAction("Claws", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_Next = m_Dialogue.FindAction("Next", throwIfNotFound: true);
@@ -979,6 +1107,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menu_Back;
     private readonly InputAction m_Menu_Scroll;
     private readonly InputAction m_Menu_ControllerDirection;
+    private readonly InputAction m_Menu_Sword;
+    private readonly InputAction m_Menu_Lantern;
+    private readonly InputAction m_Menu_Knife;
+    private readonly InputAction m_Menu_Claws;
     public struct MenuActions
     {
         private @PlayerControls m_Wrapper;
@@ -987,6 +1119,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Back => m_Wrapper.m_Menu_Back;
         public InputAction @Scroll => m_Wrapper.m_Menu_Scroll;
         public InputAction @ControllerDirection => m_Wrapper.m_Menu_ControllerDirection;
+        public InputAction @Sword => m_Wrapper.m_Menu_Sword;
+        public InputAction @Lantern => m_Wrapper.m_Menu_Lantern;
+        public InputAction @Knife => m_Wrapper.m_Menu_Knife;
+        public InputAction @Claws => m_Wrapper.m_Menu_Claws;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1008,6 +1144,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ControllerDirection.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnControllerDirection;
                 @ControllerDirection.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnControllerDirection;
                 @ControllerDirection.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnControllerDirection;
+                @Sword.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnSword;
+                @Sword.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnSword;
+                @Sword.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnSword;
+                @Lantern.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnLantern;
+                @Lantern.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnLantern;
+                @Lantern.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnLantern;
+                @Knife.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnKnife;
+                @Knife.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnKnife;
+                @Knife.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnKnife;
+                @Claws.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnClaws;
+                @Claws.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnClaws;
+                @Claws.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnClaws;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -1024,6 +1172,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ControllerDirection.started += instance.OnControllerDirection;
                 @ControllerDirection.performed += instance.OnControllerDirection;
                 @ControllerDirection.canceled += instance.OnControllerDirection;
+                @Sword.started += instance.OnSword;
+                @Sword.performed += instance.OnSword;
+                @Sword.canceled += instance.OnSword;
+                @Lantern.started += instance.OnLantern;
+                @Lantern.performed += instance.OnLantern;
+                @Lantern.canceled += instance.OnLantern;
+                @Knife.started += instance.OnKnife;
+                @Knife.performed += instance.OnKnife;
+                @Knife.canceled += instance.OnKnife;
+                @Claws.started += instance.OnClaws;
+                @Claws.performed += instance.OnClaws;
+                @Claws.canceled += instance.OnClaws;
             }
         }
     }
@@ -1089,6 +1249,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnBack(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
         void OnControllerDirection(InputAction.CallbackContext context);
+        void OnSword(InputAction.CallbackContext context);
+        void OnLantern(InputAction.CallbackContext context);
+        void OnKnife(InputAction.CallbackContext context);
+        void OnClaws(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {

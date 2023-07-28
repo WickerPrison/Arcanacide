@@ -10,7 +10,9 @@ public class PauseMenuButtons : MonoBehaviour
     PlayerMovement playerController;
     SoundManager sm;
     GameObject textMenu;
+    GameObject weaponMenu;
     [SerializeField] GameObject textMenuPrefab;
+    [SerializeField] GameObject weaponMenuPrefab;
     [SerializeField] GameObject newMessage;
     [SerializeField] DialogueData dialogueData;
     public PlayerControls controls;
@@ -47,6 +49,14 @@ public class PauseMenuButtons : MonoBehaviour
         sm.ButtonSound();
         textMenu = Instantiate(textMenuPrefab);
         textMenu.GetComponent<TextingMenu>().pauseMenuScript = this;
+        controls.Disable();
+    }
+
+    public void OpenWeaponMenu()
+    {
+        sm.ButtonSound();
+        weaponMenu = Instantiate(weaponMenuPrefab);
+        weaponMenu.GetComponent<WeaponMenu>().pauseMenu = this;
         controls.Disable();
     }
 
