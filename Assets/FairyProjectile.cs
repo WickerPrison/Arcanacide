@@ -68,9 +68,10 @@ public class FairyProjectile : MonoBehaviour
         explosion.Play();
         int damage = playerAbilities.DetermineAttackDamage(axeHeavyProfile);
         sfx.PlayOneShot(axeHeavyProfile.soundNoHit, axeHeavyProfile.soundNoHitVolume);
+        Vector3 groundPosition = new Vector3(transform.position.x, 0, transform.position.z);
         foreach(EnemyScript enemy in gm.enemies)
         {
-            if(Vector3.Distance(enemy.transform.position, transform.position) < axeHeavyProfile.attackRange)
+            if(Vector3.Distance(enemy.transform.position, groundPosition) < axeHeavyProfile.attackRange)
             {
                 playerAbilities.DamageEnemy(enemy, damage, axeHeavyProfile);
             }

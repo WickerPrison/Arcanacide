@@ -11,6 +11,7 @@ public class RestMenuButtons : MonoBehaviour
     [SerializeField] GameObject levelUpMenuPrefab;
     [SerializeField] GameObject mapMenuPrefab;
     [SerializeField] GameObject textMenuPrefab;
+    [SerializeField] GameObject weaponMenuPrefab;
     [SerializeField] GameObject newMessage;
     [SerializeField] DialogueData dialogueData;
     public Vector3 mapPlayerFacePosition;
@@ -19,6 +20,7 @@ public class RestMenuButtons : MonoBehaviour
     GameObject levelUpMenu;
     GameObject mapMenu;
     GameObject textMenu;
+    GameObject weaponMenu;
     public Transform spawnPoint;
     public int altarNumber;
     Transform player;
@@ -78,6 +80,14 @@ public class RestMenuButtons : MonoBehaviour
         sm.ButtonSound();
         textMenu = Instantiate(textMenuPrefab);
         textMenu.GetComponent<TextingMenu>().restMenuScript = this;
+        controls.Disable();
+    }
+
+    public void OpenWeaponMenu()
+    {
+        sm.ButtonSound();
+        weaponMenu = Instantiate(weaponMenuPrefab);
+        weaponMenu.GetComponent<WeaponMenu>().restMenu = this;
         controls.Disable();
     }
 

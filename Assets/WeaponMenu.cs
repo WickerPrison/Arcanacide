@@ -26,6 +26,7 @@ public class WeaponMenu : MonoBehaviour
     SoundManager sm;
     PlayerControls controls;
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
+    [System.NonSerialized] public RestMenuButtons restMenu;
     [System.NonSerialized] public MenuWeaponSelected weaponSelected = MenuWeaponSelected.NONE;
     Dictionary<MenuWeaponSelected, Vector3> iconDict;
     Dictionary<MenuWeaponSelected, int> intDict;
@@ -199,6 +200,11 @@ public class WeaponMenu : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
             pauseMenu.controls.Enable();
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(restMenu.firstButton);
+            restMenu.controls.Enable();
         }
         Destroy(gameObject);
     }
