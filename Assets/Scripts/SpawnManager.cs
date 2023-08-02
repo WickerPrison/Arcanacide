@@ -17,6 +17,7 @@ public class SpawnManager : MonoBehaviour
         {
             mapData.visitedRooms.Add(roomNumber);
         }
+        mapData.currentRoom = roomNumber;
     }
 
     public void SpawnPosition()

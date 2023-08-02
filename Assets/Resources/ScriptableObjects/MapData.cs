@@ -15,6 +15,8 @@ public class MapData : ScriptableObject
 
     public List<int> visitedRooms;
 
+    public int currentRoom;
+
     public List<int> usedAltars;
 
     public List<int> powerSwitchesFlipped;
