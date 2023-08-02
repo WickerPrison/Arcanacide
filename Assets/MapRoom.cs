@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class MapRoom : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] MapData mapData;
+    [SerializeField] int roomId;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        if(!mapData.visitedRooms.Contains(roomId)) gameObject.SetActive(false);
     }
 }
