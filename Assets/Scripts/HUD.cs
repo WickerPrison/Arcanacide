@@ -16,6 +16,7 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject manaBarCrack;
     [SerializeField] TextMeshProUGUI healCounter;
     [SerializeField] Material youDiedTextMaterial;
+    [SerializeField] GameObject map;
     public List<Sprite> gemSprites = new List<Sprite>();
     [SerializeField] Sprite unbrokenGem;
     public Image gemImage;
@@ -24,9 +25,14 @@ public class HUD : MonoBehaviour
     float healthbarScale = 1;
     Canvas canvas;
     Camera mainCamera;
+    InputManager im;
+    bool mapOpen = false;
 
     private void Start()
     {
+        im = GlobalEvents.instance.GetComponent<InputManager>();
+        im.controls.Gameplay.Map.performed += ctx => Map();
+
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         canvas = GetComponent<Canvas>();
@@ -86,5 +92,19 @@ public class HUD : MonoBehaviour
             gemImage.sprite = gemSprites[playerData.healCharges + 1];
             gemProtection.enabled = false;
         }
+    }
+
+    void Map()
+    {
+        if (mapOpen)
+        {
+            map.SetActive(false);
+        }
+        else
+        {
+            map.SetActive(true);
+        }
+
+        mapOpen = !mapOpen;
     }
 }

@@ -362,8 +362,8 @@ public class BossController : EnemyController, IEndDialogue
         }
         else
         {
-            frontAnimator.Play("Death");
-            backAnimator.Play("Death");
+            //frontAnimator.Play("Death");
+            //backAnimator.Play("Death");
         }
     }
 
