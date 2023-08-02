@@ -9,7 +9,7 @@ public class SpawnManager : MonoBehaviour
     public List<Transform> spawnPoints;
     Transform player;
 
-    private void Start()
+    private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         SpawnPosition();

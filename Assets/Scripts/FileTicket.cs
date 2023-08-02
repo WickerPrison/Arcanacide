@@ -53,6 +53,7 @@ public class FileTicket : MonoBehaviour
         {
             sfx.Play();
             mapData.ticketFiled = true;
+            GlobalEvents.instance.TicketFiled();
             screenText.text = screenText2;
         }
     }
