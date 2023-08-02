@@ -12,7 +12,6 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler onEnemyKilled;
     public event EventHandler onBossKilled;
     public event EventHandler onTestButton;
-    public event EventHandler onTicketFiled;
 
     private void Awake()
     {
@@ -33,10 +32,5 @@ public class GlobalEvents : MonoBehaviour
     public void BossKilled()
     {
         onBossKilled?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void TicketFiled()
-    {
-        onTicketFiled?.Invoke(this, EventArgs.Empty);
     }
 }
