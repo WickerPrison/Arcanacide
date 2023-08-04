@@ -6,6 +6,7 @@ using UnityEngine;
 public class MapData : ScriptableObject
 {
     public Color floorColor;
+    public int floor;
 
     public int doorNumber;
 

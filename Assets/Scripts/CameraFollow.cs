@@ -5,6 +5,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class CameraFollow : MonoBehaviour
 {
+    [SerializeField] int floor;
     public Color floorColor;
     [SerializeField] Material menuShaderMaterial;
     [SerializeField] Material gradientShaderMaterial;
@@ -22,6 +23,7 @@ public class CameraFollow : MonoBehaviour
         menuShaderMaterial.SetColor("_NewColor", floorColor);
         gradientShaderMaterial.SetColor("_NewColor", floorColor);
         mapData.floorColor = floorColor;
+        mapData.floor = floor;
     }
 
     // Start is called before the first frame update

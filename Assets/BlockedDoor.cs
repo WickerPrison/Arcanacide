@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class BlockedDoor : MonoBehaviour
 {
-    private enum BlockageType
+    public enum BlockageType
     {
-        LOCK, SUPPORTTICKET
+        LOCK, SUPPORTTICKET, ELECTRICPUDDLE
     }
 
-    [SerializeField] BlockageType blockageType;
-    [SerializeField] int blockageID;
-    [SerializeField] List<int> adjacentRooms = new List<int>();
-    [SerializeField] List<Image> x = new List<Image>();
-    [SerializeField] MapData mapData;
+    public BlockageType blockageType;
+    public int blockageID;
+    public List<int> adjacentRooms = new List<int>();
+    public List<Image> x = new List<Image>();
+    public MapData mapData;
     private void OnEnable()
     {
         SetIcon();
@@ -35,7 +35,7 @@ public class BlockedDoor : MonoBehaviour
         if (adjacencyNum == 0) SetX(false);
     }
 
-    bool IsOpen()
+    public virtual bool IsOpen()
     {
         bool isOpen = false;
         switch(blockageType)
@@ -45,6 +45,9 @@ public class BlockedDoor : MonoBehaviour
                 break;
             case BlockageType.SUPPORTTICKET:
                 isOpen = mapData.ticketFiled;
+                break;
+            case BlockageType.ELECTRICPUDDLE:
+                isOpen = mapData.powerSwitchesFlipped.Contains(blockageID);
                 break;
         }
         return isOpen;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MapRoom : MonoBehaviour
 {
     [SerializeField] MapData mapData;
-    [SerializeField] int roomId;
+    public int roomId;
     Image image;
 
     private void Start()
