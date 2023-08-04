@@ -7,7 +7,7 @@ public class BlockedDoor : MonoBehaviour
 {
     public enum BlockageType
     {
-        LOCK, SUPPORTTICKET, ELECTRICPUDDLE
+        LOCK, SUPPORTTICKET, ELECTRICPUDDLE, ICEBLOCK
     }
 
     public BlockageType blockageType;
@@ -48,6 +48,9 @@ public class BlockedDoor : MonoBehaviour
                 break;
             case BlockageType.ELECTRICPUDDLE:
                 isOpen = mapData.powerSwitchesFlipped.Contains(blockageID);
+                break;
+            case BlockageType.ICEBLOCK:
+                isOpen = !mapData.ACOn;
                 break;
         }
         return isOpen;
