@@ -48,7 +48,8 @@ public class DialogueScript : MonoBehaviour
             {"Patchwork Gary", patchworkGaryImage},
             {"Head of IT", headOfITImage },
             {"Fat Man", fatManImage },
-            {"Catherine Pope", whistleblowerImage }
+            {"Catherine Pope", whistleblowerImage },
+            {"Carol", headOfHRImage }
         };
     }
 }

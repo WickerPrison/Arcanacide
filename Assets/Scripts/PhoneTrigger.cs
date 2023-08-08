@@ -8,7 +8,12 @@ public class PhoneTrigger : MonoBehaviour
     [SerializeField] int conversationNum;
     [SerializeField] DialogueData dialogueData;
 
-    private void Start()
+    public virtual void Start()
+    {
+        SetTexts();
+    }
+
+    public void SetTexts()
     {
         if (!dialogueData.GetQueue(contactName).Contains(conversationNum) && !dialogueData.GetPreviousConversations(contactName).Contains(conversationNum))
         {

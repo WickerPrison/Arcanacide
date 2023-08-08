@@ -21,7 +21,8 @@ public class TextingLibrary : MonoBehaviour
         {
             {PhoneContacts.DIRECTORWILKINS, directorWilkinsTexts},
             {PhoneContacts.AGENTFREI, agentFreiTexts},
-            {PhoneContacts.BONSAI, bonsaiTexts }
+            {PhoneContacts.BONSAI, bonsaiTexts },
+            {PhoneContacts.UNKNOWNNUMBER, unknownNumberTexts }
         };
     }
 

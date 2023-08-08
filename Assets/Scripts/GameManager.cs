@@ -135,8 +135,8 @@ public class GameManager : MonoBehaviour
             dialogueData.freiPreviousConversations = data.agentFreiPreviousConversations.ToList();
             dialogueData.bonsaiQueue = data.bonsaiQueue.ToList();
             dialogueData.bonsaiPreviousConversations = data.bonsaiPreviousConversations.ToList();
-            dialogueData.UnknownNumberQueue = data.QuestionMarksQueue.ToList();
-            dialogueData.UnknownNumberPreviousConversations = data.QuestionMarksPreviousConversations.ToList();
+            dialogueData.unknownNumberQueue = data.QuestionMarksQueue.ToList();
+            dialogueData.unknownNumberPreviousConversations = data.QuestionMarksPreviousConversations.ToList();
             dialogueData.patchworkGaryConversations = data.patchworkGaryConversations.ToList();
             dialogueData.whistleBlowerConversations = data.whistleblowerConversations.ToList();
         }
@@ -197,8 +197,8 @@ public class GameManager : MonoBehaviour
         dialogueData.freiPreviousConversations.Clear();
         dialogueData.bonsaiQueue.Clear();
         dialogueData.bonsaiPreviousConversations.Clear();
-        dialogueData.UnknownNumberQueue.Clear();
-        dialogueData.UnknownNumberPreviousConversations.Clear();
+        dialogueData.unknownNumberQueue.Clear();
+        dialogueData.unknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
@@ -260,8 +260,8 @@ public class GameManager : MonoBehaviour
         dialogueData.freiPreviousConversations.Clear();
         dialogueData.bonsaiQueue.Clear();
         dialogueData.bonsaiPreviousConversations.Clear();
-        dialogueData.UnknownNumberQueue.Clear();
-        dialogueData.UnknownNumberPreviousConversations.Clear();
+        dialogueData.unknownNumberQueue.Clear();
+        dialogueData.unknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
@@ -329,8 +329,8 @@ public class GameManager : MonoBehaviour
         dialogueData.freiPreviousConversations.Clear();
         dialogueData.bonsaiQueue.Clear();
         dialogueData.bonsaiPreviousConversations.Clear();
-        dialogueData.UnknownNumberQueue.Clear();
-        dialogueData.UnknownNumberPreviousConversations.Clear();
+        dialogueData.unknownNumberQueue.Clear();
+        dialogueData.unknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();

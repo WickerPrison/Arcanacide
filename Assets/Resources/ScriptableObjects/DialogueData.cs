@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum PhoneContacts
 {
-    DIRECTORWILKINS, AGENTFREI, BONSAI
+    DIRECTORWILKINS, AGENTFREI, BONSAI, UNKNOWNNUMBER
 }
 
 [CreateAssetMenu]
@@ -23,9 +23,9 @@ public class DialogueData : ScriptableObject
     string bonsai = "Bonsai";
     public List<int> bonsaiQueue;
     public List<int> bonsaiPreviousConversations;
-    string UnkownNumber = "Unknown Number";
-    public List<int> UnknownNumberQueue;
-    public List<int> UnknownNumberPreviousConversations;
+    string unkownNumber = "Unknown Number";
+    public List<int> unknownNumberQueue;
+    public List<int> unknownNumberPreviousConversations;
 
     public List<int> patchworkGaryConversations;
     public List<int> whistleBlowerConversations;
@@ -41,6 +41,8 @@ public class DialogueData : ScriptableObject
                 return freiQueue;
             case PhoneContacts.BONSAI:
                 return bonsaiQueue;
+            case PhoneContacts.UNKNOWNNUMBER:
+                return unknownNumberQueue;
             default:
                 return null;
         }
@@ -56,6 +58,8 @@ public class DialogueData : ScriptableObject
                 return freiPreviousConversations;
             case PhoneContacts.BONSAI:
                 return bonsaiPreviousConversations;
+            case PhoneContacts.UNKNOWNNUMBER:
+                return unknownNumberPreviousConversations;
             default:
                 return null;
         }
@@ -71,6 +75,8 @@ public class DialogueData : ScriptableObject
                 return agentFrei;
             case PhoneContacts.BONSAI:
                 return bonsai;
+            case PhoneContacts.UNKNOWNNUMBER:
+                return unkownNumber;
             default:
                 return null;
         }
@@ -95,9 +101,9 @@ public class DialogueData : ScriptableObject
             newMessages.Add(bonsai);
         }
 
-        if(UnknownNumberQueue.Count > 0)
+        if(unknownNumberQueue.Count > 0)
         {
-            newMessages.Add(UnkownNumber);
+            newMessages.Add(unkownNumber);
         }
 
         return newMessages;
@@ -132,6 +138,15 @@ public class DialogueData : ScriptableObject
             if(bonsaiQueue.Count > 0)
             {
                 newMessages.Add(PhoneContacts.BONSAI);
+            }
+        }
+
+        if(unknownNumberQueue.Count + unknownNumberPreviousConversations.Count > 0)
+        {
+            contacts.Add(PhoneContacts.UNKNOWNNUMBER);
+            if(unknownNumberQueue.Count > 0)
+            {
+                newMessages.Add(PhoneContacts.UNKNOWNNUMBER);
             }
         }
     }

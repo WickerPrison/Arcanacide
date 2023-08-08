@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [System.Serializable]
-public class ElectricBossController : EnemyController
+public class ElectricBossController : EnemyController, IEndDialogue
 {
     // special means running away
     [SerializeField] Transform[] firePoints;
@@ -379,6 +379,11 @@ public class ElectricBossController : EnemyController
         if (state == EnemyState.ATTACKING) return;
 
         base.StartStagger(staggerDuration);
+    }
+
+    public void EndDialogue()
+    { 
+        state = EnemyState.IDLE;
     }
 
     public override void Death()

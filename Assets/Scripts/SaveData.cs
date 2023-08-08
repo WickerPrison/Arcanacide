@@ -115,8 +115,8 @@ public class SaveData
         agentFreiPreviousConversations = dialogueData.freiPreviousConversations.ToArray();
         bonsaiQueue = dialogueData.bonsaiQueue.ToArray();
         bonsaiPreviousConversations = dialogueData.bonsaiPreviousConversations.ToArray();
-        QuestionMarksQueue = dialogueData.UnknownNumberQueue.ToArray();
-        QuestionMarksPreviousConversations = dialogueData.UnknownNumberPreviousConversations.ToArray();
+        QuestionMarksQueue = dialogueData.unknownNumberQueue.ToArray();
+        QuestionMarksPreviousConversations = dialogueData.unknownNumberPreviousConversations.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();
         whistleblowerConversations = dialogueData.whistleBlowerConversations.ToArray();
     }
