@@ -51,6 +51,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         chargeIndicatorWidth = enemyCollider.radius * 2;
         abilityTime = abilityMaxTime;
         ChooseRandomPoint();
+        gm.awareEnemies += 1;
         if (mapData.electricBossKilled)
         {
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
@@ -78,7 +79,8 @@ public class ElectricBossController : EnemyController, IEndDialogue
             bodyLightning.Play();
         }
 
-        base.EnemyAI();
+        playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
+
         if (state == EnemyState.IDLE)
         {
             frontAnimator.SetFloat("PlayerDistance", playerDistance);
@@ -194,6 +196,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         state = EnemyState.ATTACKING;
 
         int randInt = Random.Range(0, 4);
+        randInt = 0;
         switch (randInt)
         {
             case 0:
