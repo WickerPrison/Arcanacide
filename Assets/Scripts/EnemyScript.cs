@@ -156,6 +156,7 @@ public class EnemyScript : MonoBehaviour
 
     void UpdateHealthbar()
     {
+        if (healthbar == null) return;
         float healthbarRatio = (float)health / (float)maxHealth;
         if(health > 0)
         {
