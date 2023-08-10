@@ -6,11 +6,14 @@ public class TotemAnimationEvents : MonoBehaviour
 {
     [SerializeField] GameObject ripplePrefab;
     [SerializeField] ParticleSystem landingVFX;
+    [SerializeField] AudioClip landingSFX;
+    [SerializeField] AudioClip rippleSFX;
     [SerializeField] AttackProfiles axeSpecial;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [System.NonSerialized] public ExternalLanternFairy lanternFairy;
     [SerializeField] Transform fairySprite;
+    AudioSource sfx;
     CameraFollow cameraScript;
     TouchingCollider colliderScript;
     List<Collider> touchingCollider;
@@ -24,11 +27,13 @@ public class TotemAnimationEvents : MonoBehaviour
     {
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         colliderScript = GetComponentInParent<TouchingCollider>();
+        sfx = GetComponent<AudioSource>();
     }
 
     public void Landing()
     {
         landingVFX.Play();
+        sfx.PlayOneShot(landingSFX, 1);
         StartCoroutine(cameraScript.ScreenShake(axeSpecial.screenShakeNoHit.x, axeSpecial.screenShakeNoHit.y));
         touchingCollider = colliderScript.GetTouchingObjects();
         int damage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
@@ -60,6 +65,7 @@ public class TotemAnimationEvents : MonoBehaviour
 
     public void Ripple()
     {
+        sfx.PlayOneShot(rippleSFX, 1);
         float rotateAngle = 360 / numberOfBoxes;
         for(int box = 0; box < numberOfBoxes; box++)
         {
