@@ -157,7 +157,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
         if(playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && patchEffects.mirrorCloakTimer <= 0)
         {
-            playerSound.PlaySoundEffectFromList(11, 0.5f);
+            //playerSound.PlaySoundEffectFromList(11, 0.5f);
             playerEvents.EndMirrorCloak();
             playerAbilities.shield = true;
             playerAbilities.parry = true;

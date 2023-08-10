@@ -7,6 +7,7 @@ public class PlayerAbilities : MonoBehaviour
     //Input in inspector
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] AttackProfiles parryProfile;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] AttackProfiles axeHeavyProfile;
     [SerializeField] GameObject fireTrailPrefab;
@@ -28,6 +29,7 @@ public class PlayerAbilities : MonoBehaviour
     PlayerEvents playerEvents;
     PatchEffects patchEffects;
     WeaponManager weaponManager;
+    PlayerSound playerSound;
     AudioSource SFX;
     Rigidbody rb;
 
@@ -74,6 +76,7 @@ public class PlayerAbilities : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
+        playerSound = GetComponentInChildren<PlayerSound>();
         SFX = GetComponentInChildren<AudioSource>();
         rb = GetComponent<Rigidbody>();
 
@@ -208,6 +211,23 @@ public class PlayerAbilities : MonoBehaviour
             rb.velocity = Vector3.zero;
             playerAnimation.PlayAnimation("Block");
             playerAnimation.continueBlocking = true;
+        }
+    }
+
+    public void BlockOrParry(EnemyAttackType attackType, EnemyScript attackingEnemy)
+    {
+        switch (attackType)
+        {
+            case EnemyAttackType.PROJECTILE:
+                playerSound.PlaySoundEffectFromList(11, 0.5f);
+                FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
+                break;
+            case EnemyAttackType.MELEE:
+                playerEvents.MeleeParry();
+                playerSound.PlaySoundEffectFromList(11, 0.5f);
+                attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.PhysicalDamage()) * parryProfile.poiseDamageMultiplier);
+                attackingEnemy.ImpactVFX();
+                break;
         }
     }
 

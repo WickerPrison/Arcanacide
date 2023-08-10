@@ -139,7 +139,7 @@ public class ChaosKnightController : EnemyController
             }
             else if (playerScript.gameObject.layer == 8)
             {
-                playerScript.PerfectDodge();
+                playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
             }
         }
     }

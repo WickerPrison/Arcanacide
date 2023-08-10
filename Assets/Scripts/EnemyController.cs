@@ -172,7 +172,7 @@ public class EnemyController : MonoBehaviour
         }
         else if(playerScript.gameObject.layer == 8)
         {
-            playerScript.PerfectDodge();
+            playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
         }
     }
 

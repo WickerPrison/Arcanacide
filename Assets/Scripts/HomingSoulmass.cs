@@ -126,7 +126,7 @@ public class HomingSoulmass : MonoBehaviour
     {
         PlayerScript playerScript;
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
-        playerScript.PerfectDodge(gameObject, enemyOfOrigin);
+        playerScript.PerfectDodge(EnemyAttackType.PROJECTILE, enemyOfOrigin, gameObject);
     }
 
     public virtual void HitObject(Collider collision)

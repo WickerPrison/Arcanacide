@@ -124,7 +124,7 @@ public class PatchEffects : MonoBehaviour
         }
     }
 
-    public void PerfectDodge(GameObject projectile = null, EnemyScript attackingEnemy = null)
+    public void PerfectDodge(EnemyAttackType enemyAttackType, GameObject projectile = null, EnemyScript attackingEnemy = null)
     {
         if (playerData.equippedEmblems.Contains(emblemLibrary.close_call))
         {
@@ -143,8 +143,7 @@ public class PatchEffects : MonoBehaviour
         if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && mirrorCloakTimer <= 0 && attackingEnemy != null)
         {
             playerSound.Shield();
-
-            playerAbilities.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
+            playerAbilities.BlockOrParry(enemyAttackType, attackingEnemy);
         }
     }
 

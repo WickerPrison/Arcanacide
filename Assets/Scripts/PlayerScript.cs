@@ -19,16 +19,14 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] AttackProfiles parryProfile;
 
     //player scripts
     PlayerAbilities playerAbilities;
     PatchEffects patchEffects;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
-    PlayerSound playerSound;
     PlayerHealth playerHealth;
-    PlayerSound sfx;
+    PlayerSound playerSound;
 
     //other scripts
     GameManager gm;
@@ -66,9 +64,8 @@ public class PlayerScript : MonoBehaviour
         playerAbilities = GetComponent<PlayerAbilities>();
         patchEffects = GetComponent<PatchEffects>();
         playerAnimation = GetComponent<PlayerAnimation>();
-        playerSound = GetComponentInChildren<PlayerSound>();
         playerHealth = GetComponent<PlayerHealth>();
-        sfx = GetComponentInChildren<PlayerSound>();
+        playerSound = GetComponentInChildren<PlayerSound>();
 
         GlobalEvents.instance.onTestButton += Instance_onTestButton;
     }
@@ -86,22 +83,9 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            // eventually move this to playerAbilities and connect with playerEvents
-            sfx.Shield();
-            if (!playerAbilities.parry || attackingEnemy == null) return;
-            switch (attackType)
-            {
-                case EnemyAttackType.PROJECTILE:
-                    playerSound.PlaySoundEffectFromList(11, 0.5f);
-                    playerAbilities.FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
-                    break;
-                case EnemyAttackType.MELEE:
-                    playerEvents.MeleeParry();
-                    playerSound.PlaySoundEffectFromList(11, 0.5f);
-                    attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.PhysicalDamage()) * parryProfile.poiseDamageMultiplier);
-                    attackingEnemy.ImpactVFX();
-                    break;
-            }
+            playerSound.Shield();
+            if (playerAbilities.parry || attackingEnemy == null) return;
+            playerAbilities.BlockOrParry(attackType, attackingEnemy);
         }
     }
 
@@ -173,9 +157,9 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void PerfectDodge(GameObject projectile = null, EnemyScript attackingEnemy = null)
+    public void PerfectDodge(EnemyAttackType attackType, EnemyScript attackingEnemy = null, GameObject projectile = null)
     {
-        patchEffects.PerfectDodge(projectile, attackingEnemy);
+        patchEffects.PerfectDodge(attackType, projectile, attackingEnemy);
     }
 
     // Update is called once per frame

@@ -39,7 +39,7 @@ public class Bonfire : MonoBehaviour
             {
                 PlayerScript playerScript;
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
-                playerScript.PerfectDodge(gameObject, enemyOfOrigin);
+                playerScript.PerfectDodge(EnemyAttackType.PROJECTILE, enemyOfOrigin, gameObject);
             }
         }
     }

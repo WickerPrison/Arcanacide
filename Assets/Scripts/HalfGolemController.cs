@@ -116,7 +116,7 @@ public class HalfGolemController : EnemyController
         }
         else if (playerScript.gameObject.layer == 8)
         {
-            playerScript.PerfectDodge();
+            playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
         }
     }
 
@@ -145,7 +145,7 @@ public class HalfGolemController : EnemyController
         }
         else if (playerScript.gameObject.layer == 8)
         {
-            playerScript.PerfectDodge();
+            playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE);
         }
     }
 
@@ -165,7 +165,7 @@ public class HalfGolemController : EnemyController
         }
         else if (playerScript.gameObject.layer == 8)
         {
-            playerScript.PerfectDodge();
+            playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
         }
     }
     public override void OnTakeDamage(object sender, EventArgs e)

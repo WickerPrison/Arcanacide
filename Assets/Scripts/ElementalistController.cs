@@ -124,7 +124,7 @@ public class ElementalistController : EnemyController
         else if (playerScript.gameObject.layer == 8)
         {
             enemySound.OtherSounds(2, 1);
-            playerScript.PerfectDodge();
+            playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
         }
     }
 
