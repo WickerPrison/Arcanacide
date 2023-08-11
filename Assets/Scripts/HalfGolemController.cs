@@ -201,16 +201,4 @@ public class HalfGolemController : EnemyController
             navAgent.speed = 0;
         }
     }
-
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        enemyEvents.OnTakeDamage += OnTakeDamage;
-    }
-
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        enemyEvents.OnTakeDamage -= OnTakeDamage;
-    }
 }
