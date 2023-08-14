@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -10,31 +12,57 @@ public class RebindControlsMenu : MonoBehaviour
     [SerializeField] GameObject firstButton;
     InputManager im;
 
-    private void Start()
+    public event Action rebindComplete;
+    public event Action rebindCanceled;
+    public event Action<InputAction, int> rebindStarted;
+
+    private void Awake()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+    }
+
+    private void Start()
+    {
+        //im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
-    public void RebindMapButton()
+    public void DoRebind(string actionName, int bindingIndex, TextMeshProUGUI statusText)
     {
-        var rebindOperation = im.controls.Gameplay.Map.PerformInteractiveRebinding()
-            .WithControlsExcluding("Mouse")
-            .OnMatchWaitForAnother(0.1f)
-            .Start();
+        InputAction actionToRebind = im.controls.asset.FindAction(actionName);
+        if (actionToRebind == null || actionToRebind.bindings.Count <= bindingIndex) return;
 
-        rebindOperation.OnComplete(operation => operation.Dispose());
+        statusText.text = $"Press a {actionToRebind.expectedControlType}";
+
+        actionToRebind.Disable();
+
+        var rebind = actionToRebind.PerformInteractiveRebinding(bindingIndex);
+
+        rebind.OnComplete(operation =>
+        {
+            actionToRebind.Enable();
+            operation.Dispose();
+
+            rebindComplete?.Invoke();
+        });
+
+        rebind.OnCancel(operation =>
+        {
+            actionToRebind.Enable();
+            operation.Dispose();
+
+            rebindCanceled?.Invoke();
+        });
+
+        rebindStarted?.Invoke(actionToRebind, bindingIndex);
+        rebind.Start();
     }
 
-    public void RebindButton(InputAction action)
+    public string GetBindingName(string actionName, int bindingIndex)
     {
-        var rebind = action.PerformInteractiveRebinding()
-            .WithControlsExcluding("Mouse")
-            .OnMatchWaitForAnother(0.1f)
-            .Start();
-
-        rebind.OnComplete(operation => operation.Dispose());
+        InputAction action = im.controls.asset.FindAction(actionName);
+        return action.GetBindingDisplayString(bindingIndex);
     }
 
     public void LeaveMenu()
