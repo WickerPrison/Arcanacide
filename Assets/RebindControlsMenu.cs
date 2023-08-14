@@ -11,6 +11,7 @@ public class RebindControlsMenu : MonoBehaviour
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
     [SerializeField] GameObject firstButton;
     InputManager im;
+    PlayerControls menuControls;
 
     public event Action rebindComplete;
     public event Action rebindCanceled;
@@ -19,6 +20,8 @@ public class RebindControlsMenu : MonoBehaviour
     private void Awake()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        menuControls = new PlayerControls();
+        menuControls.Menu.Back.performed += ctx => LeaveMenu();
     }
 
     private void Start()
@@ -43,6 +46,7 @@ public class RebindControlsMenu : MonoBehaviour
         {
             actionToRebind.Enable();
             operation.Dispose();
+            im.Menu();
 
             rebindComplete?.Invoke();
         });
@@ -51,6 +55,7 @@ public class RebindControlsMenu : MonoBehaviour
         {
             actionToRebind.Enable();
             operation.Dispose();
+            im.Menu();
 
             rebindCanceled?.Invoke();
         });
@@ -73,5 +78,15 @@ public class RebindControlsMenu : MonoBehaviour
         pauseMenu.controls.Enable();
         
         Destroy(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        menuControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        menuControls.Disable();
     }
 }
