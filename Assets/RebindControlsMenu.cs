@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class RebindControlsMenu : MonoBehaviour
 {
-    [System.NonSerialized] public PauseMenuButtons pauseMenu;
+    [System.NonSerialized] public SettingsMenu settingsMenu;
     [SerializeField] GameObject firstButton;
     InputManager im;
     PlayerControls menuControls;
@@ -74,8 +74,8 @@ public class RebindControlsMenu : MonoBehaviour
     {
         //sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
-        pauseMenu.controls.Enable();
+        EventSystem.current.SetSelectedGameObject(settingsMenu.firstButton);
+        settingsMenu.controls.Enable();
         
         Destroy(gameObject);
     }

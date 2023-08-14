@@ -1411,7 +1411,7 @@ MonoBehaviour:
   resumeButton: {fileID: 4382035613468908250}
   textMenuPrefab: {fileID: 2345311323977469767, guid: 6558d094fc91b7e4895f8bc3d6ba146c, type: 3}
   weaponMenuPrefab: {fileID: 6299275153229652052, guid: 6dab6797cdb070749a8b6d12beab444f, type: 3}
-  rebindControlsMenuPrefab: {fileID: 2518029338057065025, guid: b0128592bb708e24f963072582b21609, type: 3}
+  settingsMenuPrefab: {fileID: 5588705412702762548, guid: e0761bee94ad36345b74b17f7f24b55a, type: 3}
   newMessage: {fileID: 1134838528811114099}
   dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
 --- !u!1 &5420009077473000778
@@ -1480,7 +1480,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rebind Controls
+  m_text: Settings
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
   m_sharedMaterial: {fileID: -4503134213540977879, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
@@ -1564,7 +1564,7 @@ GameObject:
   - component: {fileID: 2367125580539388022}
   - component: {fileID: 2618947502270998966}
   m_Layer: 5
-  m_Name: RebindControls
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1675,7 +1675,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7081518500326978179}
         m_TargetAssemblyTypeName: PauseMenuButtons, Assembly-CSharp
-        m_MethodName: OpenRebindControlsMenu
+        m_MethodName: OpenSettingsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
