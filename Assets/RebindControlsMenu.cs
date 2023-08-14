@@ -60,6 +60,12 @@ public class RebindControlsMenu : MonoBehaviour
             rebindCanceled?.Invoke();
         });
 
+        rebind.WithCancelingThrough("<Keyboard>/escape");
+        rebind.WithControlsExcluding("<Gamepad>/rightStick");
+        rebind.WithControlsExcluding("<Gamepad>/leftStick");
+        rebind.WithControlsExcluding("<Gamepad>/Start");
+        rebind.WithControlsExcluding("<Gamepad>/Select");
+
         rebindStarted?.Invoke(actionToRebind, bindingIndex);
         rebind.Start();
     }

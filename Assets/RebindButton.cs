@@ -81,10 +81,12 @@ public class RebindButton : MonoBehaviour
     private void OnEnable()
     {
         menu.rebindComplete += UpdateUI;
+        menu.rebindCanceled += UpdateUI;
     }
 
     private void OnDisable()
     {
         menu.rebindComplete -= UpdateUI;
+        menu.rebindCanceled -= UpdateUI;
     }
 }
