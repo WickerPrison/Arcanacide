@@ -14,7 +14,6 @@ public class RebindButton : MonoBehaviour
     [Header("Binding Infor - DO NOT EDIT")]
     [SerializeField] InputBinding inputBinding;
     int bindingIndex;
-    [SerializeField] TextMeshProUGUI actionText;
     [SerializeField] TextMeshProUGUI rebindText;
     RebindControlsMenu menu;
 
@@ -61,11 +60,6 @@ public class RebindButton : MonoBehaviour
 
     void UpdateUI()
     {
-        if(actionText != null)
-        {
-            actionText.text = actionName;
-        }
-
         if(rebindText != null)
         {
             if (Application.isPlaying)

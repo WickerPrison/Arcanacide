@@ -28,6 +28,8 @@ public class RebindControlsMenu : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         menuControls = new PlayerControls();
         menuControls.Menu.Back.performed += ctx => LeaveMenu();
+        menuControls.Menu.Scroll.performed += ctx => scrollDir = ctx.ReadValue<Vector2>().y;
+        menuControls.Menu.Scroll.canceled += ctx => scrollDir = 0;
     }
 
     private void Start()
@@ -54,7 +56,7 @@ public class RebindControlsMenu : MonoBehaviour
         InputAction actionToRebind = im.controls.asset.FindAction(actionName);
         if (actionToRebind == null || actionToRebind.bindings.Count <= bindingIndex) return;
 
-        statusText.text = $"Press a {actionToRebind.expectedControlType}";
+        statusText.text = "Press a Button";
 
         actionToRebind.Disable();
 
@@ -90,6 +92,7 @@ public class RebindControlsMenu : MonoBehaviour
 
     public string GetBindingName(string actionName, int bindingIndex)
     {
+        if (actionName == null || bindingIndex < 0) return "null";
         InputAction action = im.controls.asset.FindAction(actionName);
         return action.GetBindingDisplayString(bindingIndex);
     }
