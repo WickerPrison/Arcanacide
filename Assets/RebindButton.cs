@@ -25,6 +25,7 @@ public class RebindButton : MonoBehaviour
 
     private void Start()
     {
+        menu.buttons.Add(gameObject);
         if(inputActionReference != null)
         {
             GetBindingInfo();

@@ -5,13 +5,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class RebindControlsMenu : MonoBehaviour
 {
     [System.NonSerialized] public SettingsMenu settingsMenu;
+    [SerializeField] ScrollRect scrollRect;
     [SerializeField] GameObject firstButton;
+    public List<GameObject> buttons;
     InputManager im;
     PlayerControls menuControls;
+
+    float scrollDir;
+    float scrollSpeed = .1f;
 
     public event Action rebindComplete;
     public event Action rebindCanceled;
@@ -29,6 +35,18 @@ public class RebindControlsMenu : MonoBehaviour
         //im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
+    }
+
+    private void Update()
+    {
+        if (Gamepad.current == null)
+        {
+            MouseScrollPosition();
+        }
+        else
+        {
+            ControllerScrollPosition();
+        } 
     }
 
     public void DoRebind(string actionName, int bindingIndex, TextMeshProUGUI statusText)
@@ -84,6 +102,46 @@ public class RebindControlsMenu : MonoBehaviour
         settingsMenu.controls.Enable();
         
         Destroy(gameObject);
+    }
+
+    void ControllerScrollPosition()
+    {
+        GameObject currentButton = EventSystem.current.currentSelectedGameObject;
+        if (!buttons.Contains(currentButton))
+        {
+            return;
+        }
+
+        int index = buttons.IndexOf(currentButton);
+        float position = (float)index / ((float)buttons.Count - 1);
+        position = 1 - position;
+        position = Mathf.Round(position * 100f) / 100f;
+
+        float scrollDiff = position - scrollRect.verticalNormalizedPosition;
+        scrollDir = scrollDiff / Mathf.Abs(scrollDiff);
+        float scrollDistance = scrollDiff * 2f * Time.unscaledDeltaTime + scrollDir * .4f * Time.unscaledDeltaTime;
+        if (Mathf.Abs(scrollDiff) <= Mathf.Abs(scrollDistance))
+        {
+            scrollRect.verticalNormalizedPosition = position;
+        }
+        else
+        {
+            scrollRect.verticalNormalizedPosition += scrollDistance;
+        }
+    }
+
+    void MouseScrollPosition()
+    {
+        scrollDir /= 120;
+        scrollRect.verticalNormalizedPosition += scrollDir * scrollSpeed;
+        if (scrollRect.verticalNormalizedPosition > 1)
+        {
+            scrollRect.verticalNormalizedPosition = 1;
+        }
+        else if (scrollRect.verticalNormalizedPosition < 0)
+        {
+            scrollRect.verticalNormalizedPosition = 0;
+        }
     }
 
     private void OnEnable()
