@@ -10,6 +10,7 @@ public class SettingsData : ScriptableObject
 
     public void CreateBindingDictionary(string[] keys, string[] values)
     {
+        if(keys == null || values == null) return;
         if (keys.Length != values.Length) 
             Debug.Log("Error: Different number of keys and values");
 

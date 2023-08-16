@@ -111,7 +111,8 @@ public class RebindControlsMenu : MonoBehaviour
         }
 
         int index = buttons.IndexOf(currentButton);
-        float position = (float)index / ((float)buttons.Count - 1);
+        if (index % 2 != 0) index--; 
+        float position = index / ((float)buttons.Count - 1);
         position = 1 - position;
         position = Mathf.Round(position * 100f) / 100f;
 
