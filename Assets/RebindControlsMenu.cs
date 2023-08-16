@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ public class RebindControlsMenu : MonoBehaviour
     [System.NonSerialized] public SettingsMenu settingsMenu;
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] GameObject firstButton;
+    [SerializeField] SettingsData settingsData;
     public List<GameObject> buttons;
     InputManager im;
     PlayerControls menuControls;
@@ -67,7 +69,7 @@ public class RebindControlsMenu : MonoBehaviour
             actionToRebind.Enable();
             operation.Dispose();
             im.Menu();
-
+            SaveBinding(actionToRebind);
             rebindComplete?.Invoke();
         });
 
@@ -88,6 +90,41 @@ public class RebindControlsMenu : MonoBehaviour
 
         rebindStarted?.Invoke(actionToRebind, bindingIndex);
         rebind.Start();
+    }
+
+    void SaveBinding(InputAction inputAction)
+    {
+        for(int i = 0; i < inputAction.bindings.Count; i++)
+        {
+            string key = inputAction.actionMap + inputAction.name + i;
+
+            if (inputAction.bindings[i].overridePath != null)
+            {
+                if (settingsData.bindings.ContainsKey(key))
+                {
+                    settingsData.bindings[key] = inputAction.bindings[i].overridePath;
+                }
+                else
+                {
+                    settingsData.bindings.Add(key, inputAction.bindings[i].overridePath);
+                }
+            }
+        }
+    }
+
+    public void LoadBinding(string actionName)
+    {
+        InputAction inputAction = im.controls.asset.FindAction(actionName);
+        if (inputAction == null) return;
+
+        for (int i = 0;i < inputAction.bindings.Count;i++)
+        {
+            string key = inputAction.actionMap + inputAction.name + i;
+            if (settingsData.bindings.ContainsKey(key))
+            {
+                inputAction.ApplyBindingOverride(i, settingsData.bindings[key]);
+            }
+        }
     }
 
     public string GetBindingName(string actionName, int bindingIndex)

@@ -27,6 +27,11 @@ public class RebindButton : MonoBehaviour
         menu.buttons.Add(gameObject);
         if(inputActionReference != null)
         {
+            if (inputActionReference.action != null)
+            {
+                actionName = inputActionReference.action.name;
+                menu.LoadBinding(actionName);
+            }
             GetBindingInfo();
             UpdateUI();
         }
@@ -34,7 +39,7 @@ public class RebindButton : MonoBehaviour
 
     private void OnValidate()
     {
-        if (inputActionReference == null) return;
+        if (inputActionReference == null || Application.isPlaying) return;
         GetBindingInfo();
         UpdateUI();
     }
