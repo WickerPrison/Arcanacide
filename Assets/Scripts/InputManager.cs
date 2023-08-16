@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     public PlayerControls controls;
+    [SerializeField] SettingsData settingsData;
+    [SerializeField] List<InputActionReference> actions;
     GameObject player;
 
     private void Awake()
@@ -15,6 +17,10 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
+        foreach(InputActionReference inputAction in actions)
+        {
+            LoadBinding(inputAction.action.name);
+        }
         player = GameObject.FindGameObjectWithTag("Player");
         if(player != null)
         {
@@ -32,6 +38,48 @@ public class InputManager : MonoBehaviour
         {
             Cursor.visible = false;
         }
+    }
+
+    public void SaveBinding(InputAction inputAction)
+    {
+        for (int i = 0; i < inputAction.bindings.Count; i++)
+        {
+            string key = inputAction.actionMap + inputAction.name + i;
+
+            if (inputAction.bindings[i].overridePath != null)
+            {
+                if (settingsData.bindings.ContainsKey(key))
+                {
+                    settingsData.bindings[key] = inputAction.bindings[i].overridePath;
+                }
+                else
+                {
+                    settingsData.bindings.Add(key, inputAction.bindings[i].overridePath);
+                }
+            }
+        }
+    }
+
+    public void LoadBinding(string actionName)
+    {
+        InputAction inputAction = controls.asset.FindAction(actionName);
+        if (inputAction == null) return;
+
+        for (int i = 0; i < inputAction.bindings.Count; i++)
+        {
+            string key = inputAction.actionMap + inputAction.name + i;
+            if (settingsData.bindings.ContainsKey(key))
+            {
+                inputAction.ApplyBindingOverride(i, settingsData.bindings[key]);
+            }
+        }
+    }
+
+    public string GetBindingName(string actionName, int bindingIndex)
+    {
+        if (actionName == null || bindingIndex < 0) return "null";
+        InputAction action = controls.asset.FindAction(actionName);
+        return action.GetBindingDisplayString(bindingIndex);
     }
 
     public void Gameplay()

@@ -16,6 +16,7 @@ public class RebindButton : MonoBehaviour
     int bindingIndex;
     [SerializeField] TextMeshProUGUI rebindText;
     RebindControlsMenu menu;
+    InputManager im;
 
     private void Awake()
     {
@@ -24,14 +25,17 @@ public class RebindButton : MonoBehaviour
 
     private void Start()
     {
+        im = menu.im;
         menu.buttons.Add(gameObject);
         if(inputActionReference != null)
         {
+            /*
             if (inputActionReference.action != null)
             {
                 actionName = inputActionReference.action.name;
-                menu.LoadBinding(actionName);
+                im.LoadBinding(actionName);
             }
+            */
             GetBindingInfo();
             UpdateUI();
         }
@@ -69,7 +73,7 @@ public class RebindButton : MonoBehaviour
         {
             if (Application.isPlaying)
             {
-                rebindText.text = menu.GetBindingName(actionName, bindingIndex);
+                rebindText.text = im.GetBindingName(actionName, bindingIndex);
             }
             else
             {

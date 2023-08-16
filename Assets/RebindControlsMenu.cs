@@ -15,7 +15,7 @@ public class RebindControlsMenu : MonoBehaviour
     [SerializeField] GameObject firstButton;
     [SerializeField] SettingsData settingsData;
     public List<GameObject> buttons;
-    InputManager im;
+    [System.NonSerialized] public InputManager im;
     PlayerControls menuControls;
 
     float scrollDir;
@@ -69,7 +69,7 @@ public class RebindControlsMenu : MonoBehaviour
             actionToRebind.Enable();
             operation.Dispose();
             im.Menu();
-            SaveBinding(actionToRebind);
+            im.SaveBinding(actionToRebind);
             rebindComplete?.Invoke();
         });
 
@@ -90,48 +90,6 @@ public class RebindControlsMenu : MonoBehaviour
 
         rebindStarted?.Invoke(actionToRebind, bindingIndex);
         rebind.Start();
-    }
-
-    void SaveBinding(InputAction inputAction)
-    {
-        for(int i = 0; i < inputAction.bindings.Count; i++)
-        {
-            string key = inputAction.actionMap + inputAction.name + i;
-
-            if (inputAction.bindings[i].overridePath != null)
-            {
-                if (settingsData.bindings.ContainsKey(key))
-                {
-                    settingsData.bindings[key] = inputAction.bindings[i].overridePath;
-                }
-                else
-                {
-                    settingsData.bindings.Add(key, inputAction.bindings[i].overridePath);
-                }
-            }
-        }
-    }
-
-    public void LoadBinding(string actionName)
-    {
-        InputAction inputAction = im.controls.asset.FindAction(actionName);
-        if (inputAction == null) return;
-
-        for (int i = 0;i < inputAction.bindings.Count;i++)
-        {
-            string key = inputAction.actionMap + inputAction.name + i;
-            if (settingsData.bindings.ContainsKey(key))
-            {
-                inputAction.ApplyBindingOverride(i, settingsData.bindings[key]);
-            }
-        }
-    }
-
-    public string GetBindingName(string actionName, int bindingIndex)
-    {
-        if (actionName == null || bindingIndex < 0) return "null";
-        InputAction action = im.controls.asset.FindAction(actionName);
-        return action.GetBindingDisplayString(bindingIndex);
     }
 
     public void LeaveMenu()
