@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -60,7 +61,10 @@ public class SaveData
     public int[] patchworkGaryConversations;
     public int[] whistleblowerConversations;
 
-    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData)
+    public string[] bindingDictionaryKeys;
+    public string[] bindingDictionaryValues;
+
+    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, SettingsData settingsData)
     {
         hasHealthGem = playerData.hasHealthGem;
         maxHealCharges = playerData.maxHealCharges;
@@ -119,5 +123,8 @@ public class SaveData
         QuestionMarksPreviousConversations = dialogueData.unknownNumberPreviousConversations.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();
         whistleblowerConversations = dialogueData.whistleBlowerConversations.ToArray();
+
+        bindingDictionaryKeys = settingsData.bindings.Keys.ToArray();
+        bindingDictionaryValues = settingsData.bindings.Values.ToArray();
     }
 }
