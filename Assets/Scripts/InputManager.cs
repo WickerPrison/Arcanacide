@@ -79,6 +79,7 @@ public class InputManager : MonoBehaviour
     {
         if (actionName == null || bindingIndex < 0) return "null";
         InputAction action = controls.asset.FindAction(actionName);
+        Debug.Log(action);
         return action.GetBindingDisplayString(bindingIndex);
     }
 

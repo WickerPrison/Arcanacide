@@ -4,9 +4,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class RebindButton : MonoBehaviour
 {
+    [SerializeField] bool isGamepad;
     [SerializeField] InputActionReference inputActionReference;
     string actionName;
     [Range(0,10)] [SerializeField] int selectedBinding;
@@ -15,8 +17,10 @@ public class RebindButton : MonoBehaviour
     [SerializeField] InputBinding inputBinding;
     int bindingIndex;
     [SerializeField] TextMeshProUGUI rebindText;
+    [SerializeField] Image rebindSprite;
     RebindControlsMenu menu;
     InputManager im;
+    Color transparent = new Color(1, 1, 1, 0);
 
     private void Awake()
     {
@@ -72,7 +76,27 @@ public class RebindButton : MonoBehaviour
         {
             if (Application.isPlaying)
             {
-                rebindText.text = im.GetBindingName(actionName, bindingIndex);
+                string initialString = im.GetBindingName(actionName, bindingIndex);
+                Debug.Log(initialString);
+                if (isGamepad && menu.spriteDict.ContainsKey(initialString))
+                {
+                    rebindText.text = menu.displayStringDict[initialString];
+                    rebindSprite.sprite = menu.spriteDict[initialString];
+                    if (menu.spriteDict[initialString] == null)
+                    {
+                        rebindSprite.color = transparent;
+                    }
+                    else
+                    {
+                        rebindSprite.color = Color.white;
+                    }
+                }
+                else
+                {
+                    rebindText.text = im.GetBindingName(actionName, bindingIndex);
+                    rebindSprite.sprite = null;
+                    rebindSprite.color = transparent;
+                }
             }
             else
             {
