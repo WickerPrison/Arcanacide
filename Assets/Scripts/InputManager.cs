@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,19 +9,20 @@ public class InputManager : MonoBehaviour
     public PlayerControls controls;
     [SerializeField] SettingsData settingsData;
     [SerializeField] List<InputActionReference> actions;
+    [SerializeField] List<InputActionReference> selectActions;
     GameObject player;
 
     private void Awake()
     {
         controls = new PlayerControls();
-    }
-
-    private void Start()
-    {
         foreach(InputActionReference inputAction in actions)
         {
             LoadBinding(inputAction.action.name);
         }
+    }
+
+    private void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
         if(player != null)
         {
@@ -60,6 +62,17 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void ResetAllBindings()
+    {
+        settingsData.bindings.Clear();
+        foreach(InputActionReference inputActionReference in actions)
+        {
+            InputAction inputAction = controls.asset.FindAction(inputActionReference.action.name);
+            if (inputAction == null) continue;
+            inputAction.RemoveAllBindingOverrides();
+        }
+    }
+
     public void LoadBinding(string actionName)
     {
         InputAction inputAction = controls.asset.FindAction(actionName);
@@ -73,13 +86,45 @@ public class InputManager : MonoBehaviour
                 inputAction.ApplyBindingOverride(i, settingsData.bindings[key]);
             }
         }
+
+        string noIndexKey = inputAction.actionMap + inputAction.name;
+        if(actionName == "Interact")
+        {
+            CopyBindings(selectActions[0], noIndexKey);
+            CopyBindings(selectActions[1], noIndexKey);
+        }
+    }
+
+    void CopyBindings(InputActionReference copyTo, string noIndexKey)
+    {
+        bool hasBinding = false;
+        foreach(KeyValuePair<string, string> pair in settingsData.bindings)
+        {
+            if(pair.Key.Contains(noIndexKey))
+            {
+                hasBinding = true;
+                break;
+            }
+        }
+        if (!hasBinding) return;
+
+        InputAction action = controls.asset.FindAction(copyTo.name);
+        if (action == null) return;
+
+        for(int i = 0; i < action.bindings.Count; i++)
+        {
+            string key = noIndexKey + i;
+            if(settingsData.bindings.ContainsKey(key))
+            {
+                action.ApplyBindingOverride(i, settingsData.bindings[key]);
+            }
+        }
     }
 
     public string GetBindingName(string actionName, int bindingIndex)
     {
         if (actionName == null || bindingIndex < 0) return "null";
         InputAction action = controls.asset.FindAction(actionName);
-        Debug.Log(action);
         return action.GetBindingDisplayString(bindingIndex);
     }
 

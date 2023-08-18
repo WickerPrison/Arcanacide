@@ -18,9 +18,13 @@ public class RebindButton : MonoBehaviour
     int bindingIndex;
     [SerializeField] TextMeshProUGUI rebindText;
     [SerializeField] Image rebindSprite;
+    [SerializeField] SettingsData settingsData;
     RebindControlsMenu menu;
     InputManager im;
     Color transparent = new Color(1, 1, 1, 0);
+
+    Dictionary<string, string> displayStringDict;
+    Dictionary<string, Sprite> spriteDict;
 
     private void Awake()
     {
@@ -76,13 +80,15 @@ public class RebindButton : MonoBehaviour
         {
             if (Application.isPlaying)
             {
+                displayStringDict = settingsData.GetStringDictionary();
+                spriteDict = settingsData.GetSpriteDictionary();
+
                 string initialString = im.GetBindingName(actionName, bindingIndex);
-                Debug.Log(initialString);
-                if (isGamepad && menu.spriteDict.ContainsKey(initialString))
+                if (isGamepad && spriteDict.ContainsKey(initialString))
                 {
-                    rebindText.text = menu.displayStringDict[initialString];
-                    rebindSprite.sprite = menu.spriteDict[initialString];
-                    if (menu.spriteDict[initialString] == null)
+                    rebindText.text = displayStringDict[initialString];
+                    rebindSprite.sprite = spriteDict[initialString];
+                    if (spriteDict[initialString] == null)
                     {
                         rebindSprite.color = transparent;
                     }

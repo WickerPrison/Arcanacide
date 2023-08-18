@@ -472,22 +472,22 @@
                 },
                 {
                     "name": "",
-                    "id": "6387d8d1-d0ba-4002-95c6-53bad8ee8ee1",
-                    "path": "<Gamepad>/dpad/left",
+                    "id": "a87bb013-8174-4ef5-a433-c63f559be2d6",
+                    "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "Keyboard",
                     "action": "Knife",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "a87bb013-8174-4ef5-a433-c63f559be2d6",
-                    "path": "<Keyboard>/3",
+                    "id": "6387d8d1-d0ba-4002-95c6-53bad8ee8ee1",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Gamepad",
                     "action": "Knife",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -532,7 +532,7 @@
             "id": "0fcc6a3d-106e-44fe-8046-d8fe2484c323",
             "actions": [
                 {
-                    "name": "Select",
+                    "name": "TutorialSelect",
                     "type": "Button",
                     "id": "2654a781-79ec-46e4-b80d-503c6c7eed9b",
                     "expectedControlType": "Button",
@@ -549,7 +549,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Select",
+                    "action": "TutorialSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -560,7 +560,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Select",
+                    "action": "TutorialSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -607,7 +607,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Sword",
+                    "name": "MenuSword",
                     "type": "Button",
                     "id": "13dee87d-ec54-4eca-a110-670b335d2e34",
                     "expectedControlType": "Button",
@@ -616,7 +616,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Lantern",
+                    "name": "MenuLantern",
                     "type": "Button",
                     "id": "36b1b0a3-5420-4d58-8391-316c6eb78a8d",
                     "expectedControlType": "Button",
@@ -625,7 +625,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Knife",
+                    "name": "MenuKnife",
                     "type": "Button",
                     "id": "92716e77-f47e-4e72-bfcb-33c595d15e7f",
                     "expectedControlType": "Button",
@@ -634,7 +634,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Claws",
+                    "name": "MenuClaws",
                     "type": "Button",
                     "id": "a92faedc-9d19-4b42-b29d-01e51de7ee7e",
                     "expectedControlType": "Button",
@@ -647,7 +647,7 @@
                 {
                     "name": "",
                     "id": "a2dbf909-714d-4c33-854a-4b7de41e0aaf",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -712,34 +712,23 @@
                 },
                 {
                     "name": "",
-                    "id": "6fcfc698-1ba6-4aab-98c4-8f0c835a2838",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Sword",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "86885af3-3f91-4c51-9752-1831ebdad13e",
                     "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Sword",
+                    "action": "MenuSword",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "978c677a-5321-425d-9f5d-2ac29227b480",
-                    "path": "<Gamepad>/dpad/right",
+                    "id": "6fcfc698-1ba6-4aab-98c4-8f0c835a2838",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Lantern",
+                    "action": "MenuSword",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -750,18 +739,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Lantern",
+                    "action": "MenuLantern",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "e79aebd6-d01b-4c3c-b9eb-223f04e0fef4",
-                    "path": "<Gamepad>/dpad/left",
+                    "id": "978c677a-5321-425d-9f5d-2ac29227b480",
+                    "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Knife",
+                    "action": "MenuLantern",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -772,18 +761,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Knife",
+                    "action": "MenuKnife",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "a973cb24-1c5f-4fac-8fa4-5227fe149e57",
-                    "path": "<Gamepad>/dpad/down",
+                    "id": "e79aebd6-d01b-4c3c-b9eb-223f04e0fef4",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Claws",
+                    "action": "MenuKnife",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -794,7 +783,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Claws",
+                    "action": "MenuClaws",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a973cb24-1c5f-4fac-8fa4-5227fe149e57",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MenuClaws",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

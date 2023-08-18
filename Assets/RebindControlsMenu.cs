@@ -16,12 +16,6 @@ public class RebindControlsMenu : MonoBehaviour
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] GameObject firstButton;
     [SerializeField] SettingsData settingsData;
-    [SerializeField] Sprite northButton;
-    [SerializeField] Sprite westButton;
-    [SerializeField] Sprite eastButton;
-    [SerializeField] Sprite southButton;
-    public Dictionary<string, Sprite> spriteDict;
-    public Dictionary<string, string> displayStringDict;
     public List<GameObject> buttons;
     [System.NonSerialized] public InputManager im;
     PlayerControls menuControls;
@@ -44,7 +38,6 @@ public class RebindControlsMenu : MonoBehaviour
 
     private void Start()
     {
-        SetupDictionaries();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
     }
@@ -78,6 +71,7 @@ public class RebindControlsMenu : MonoBehaviour
             operation.Dispose();
             im.Menu();
             im.SaveBinding(actionToRebind);
+            im.LoadBinding(actionToRebind.name);
             rebindComplete?.Invoke();
         });
 
@@ -98,6 +92,11 @@ public class RebindControlsMenu : MonoBehaviour
 
         rebindStarted?.Invoke(actionToRebind, bindingIndex);
         rebind.Start();
+    }
+
+    public void ResetToDefaults()
+    {
+        im.ResetAllBindings();
     }
 
     public void LeaveMenu()
@@ -149,58 +148,6 @@ public class RebindControlsMenu : MonoBehaviour
         {
             scrollRect.verticalNormalizedPosition = 0;
         }
-    }
-
-    void SetupDictionaries()
-    {
-        if(Gamepad.current is XInputController)
-        {
-            SetupXboxDictionaries();
-        }
-        else if(Gamepad.current is DualShockGamepad)
-        {
-            SetupPlaystationDictionaries();
-        }
-    }
-
-    void SetupXboxDictionaries()
-    {
-        Debug.Log("XBox controller detected");
-        spriteDict = new Dictionary<string, Sprite>
-        {
-            {"Y", northButton },
-            {"B", eastButton },
-            {"X", westButton },
-            {"A", southButton },
-        };
-
-        displayStringDict = new Dictionary<string, string>
-        {
-            {"Y", "" },
-            {"B", "" },
-            {"X", "" },
-            {"A", "" }
-        };
-    }
-
-    void SetupPlaystationDictionaries()
-    {
-        spriteDict = new Dictionary<string, Sprite>
-        {
-            {"<Gamepad>/buttonNorth", northButton },
-            {"<Gamepad>/buttonEast", eastButton },
-            {"<Gamepad>/buttonWest", westButton },
-            {"<Gamepad>/buttonSouth", southButton }
-        };
-
-        displayStringDict = new Dictionary<string, string>
-        {
-            {"<Gamepad>/buttonNorth", "" },
-            {"<Gamepad>/buttonEast", "" },
-            {"<Gamepad>/buttonWest", "" },
-            {"<Gamepad>/buttonSouth", "" }
-
-        };
     }
 
     private void OnEnable()
