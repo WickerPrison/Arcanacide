@@ -7,6 +7,7 @@ using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.XInput;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using TMPro;
 
 [CreateAssetMenu]
 public class SettingsData : ScriptableObject
@@ -15,10 +16,9 @@ public class SettingsData : ScriptableObject
 
     private Dictionary<string, Sprite> spriteDict;
     private Dictionary<string, string> displayStringDict;
-    [SerializeField] Sprite northButton;
-    [SerializeField] Sprite westButton;
-    [SerializeField] Sprite eastButton;
-    [SerializeField] Sprite southButton;
+    public List<Sprite> buttonIconSprites = new List<Sprite>();
+    public List<TMP_SpriteAsset> buttonIconTMProSprites = new List<TMP_SpriteAsset>();
+
 
     private enum ControllerType
     {
@@ -100,10 +100,10 @@ public class SettingsData : ScriptableObject
         controllerType = ControllerType.XBOX;
         spriteDict = new Dictionary<string, Sprite>
         {
-            {"Y", northButton },
-            {"B", eastButton },
-            {"X", westButton },
-            {"A", southButton },
+            {"Y", buttonIconSprites[0] },
+            {"B", buttonIconSprites[1] },
+            {"A", buttonIconSprites[2] },
+            {"X", buttonIconSprites[3] },
             {"LS", null },
             {"RS", null },
             {"Left Stick Press", null },
@@ -114,8 +114,8 @@ public class SettingsData : ScriptableObject
         {
             {"Y", "" },
             {"B", "" },
-            {"X", "" },
             {"A", "" },
+            {"X", "" },
             {"LS", "Left Stick" },
             {"RS", "Right Stick" },
             {"Left Stick Press", "L3" },
@@ -128,18 +128,18 @@ public class SettingsData : ScriptableObject
         controllerType = ControllerType.PLAYSTATION;
         spriteDict = new Dictionary<string, Sprite>
         {
-            {"<Gamepad>/buttonNorth", northButton },
-            {"<Gamepad>/buttonEast", eastButton },
-            {"<Gamepad>/buttonWest", westButton },
-            {"<Gamepad>/buttonSouth", southButton }
+            {"<Gamepad>/buttonNorth", buttonIconSprites[0] },
+            {"<Gamepad>/buttonEast", buttonIconSprites[1] },
+            {"<Gamepad>/buttonSouth", buttonIconSprites[2] },
+            {"<Gamepad>/buttonWest", buttonIconSprites[3] }
         };
 
         displayStringDict = new Dictionary<string, string>
         {
             {"<Gamepad>/buttonNorth", "" },
             {"<Gamepad>/buttonEast", "" },
-            {"<Gamepad>/buttonWest", "" },
-            {"<Gamepad>/buttonSouth", "" }
+            {"<Gamepad>/buttonSouth", "" },
+            {"<Gamepad>/buttonWest", "" }
 
         };
     }

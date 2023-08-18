@@ -97,6 +97,7 @@ public class RebindControlsMenu : MonoBehaviour
     public void ResetToDefaults()
     {
         im.ResetAllBindings();
+        rebindComplete?.Invoke();
     }
 
     public void LeaveMenu()

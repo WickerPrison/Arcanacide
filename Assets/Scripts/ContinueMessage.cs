@@ -39,6 +39,14 @@ public class ContinueMessage : MonoBehaviour
 
     private void Update()
     {
+        UpdateText();
+
+        pulseValue = Mathf.Cos(Time.unscaledTime * pulseSpeed) * 0.5f + 0.5f;
+        transform.localScale = Vector3.Lerp(initialScale * scaleMultiplier, initialScale, pulseValue);
+    }
+
+    void UpdateText()
+    {
         if (Gamepad.current == null) bindingIndex = 0;
         else bindingIndex = 1;
 
@@ -56,8 +64,5 @@ public class ContinueMessage : MonoBehaviour
         else buttonPromptString = bindingName;
 
         continueMessage.text = "Continue: " + buttonPromptString;
-
-        pulseValue = Mathf.Cos(Time.unscaledTime * pulseSpeed) * 0.5f + 0.5f;
-        transform.localScale = Vector3.Lerp(initialScale * scaleMultiplier, initialScale, pulseValue);
     }
 }

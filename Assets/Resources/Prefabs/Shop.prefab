@@ -421,6 +421,7 @@ MonoBehaviour:
   csvFile: {fileID: 4900000, guid: 59221f0bdc198784a820cf2a3c581d3f, type: 3}
   dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   firstTimeTalking: 0
+  alternateFirstTimeTalking: 0
   repeatableGreeting: 0
   farewell: 0
   dialoguePrefab: {fileID: 6286585989320248928, guid: 8fb30ecf51e1b064ab6d94ebfcaeaac7, type: 3}
@@ -1600,6 +1601,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5193289624116260237, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
+      propertyPath: prompt
+      value: '|: Talk'
+      objectReference: {fileID: 0}
     - target: {fileID: 5214026991396969680, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1710,25 +1715,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
---- !u!1 &2597604144323676121 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2618074340044300004, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
-  m_PrefabInstance: {fileID: 25279461731146045}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6619333940303039963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2597604144323676121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba8560697905e0b43ba33049ab4a8a9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KBMprompt: 'E: Talk'
-  GPprompt: '<sprite index= 0>: Talk'
 --- !u!1 &5188778325121353185 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5214026991396969692, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}

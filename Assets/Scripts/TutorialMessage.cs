@@ -7,11 +7,10 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class TutorialMessage : MonoBehaviour
 {
-    [SerializeField] List<InputActionReference> action;
+    [SerializeField] TextMeshProUGUI tutorialMessage;
+    [SerializeField] List<InputActionReference> actions;
     [SerializeField] string tutorialText;
     [SerializeField] SettingsData settingsData;
-    [SerializeField] Sprite[] buttonIconSprites;
-    [SerializeField] TMP_SpriteAsset[] buttonIconTMProSprites;
     Dictionary<Sprite, TMP_SpriteAsset> TMPSpriteDict;
     InputManager im;
     Dictionary<string, string> displayStringDict;
@@ -20,21 +19,13 @@ public class TutorialMessage : MonoBehaviour
     string finalText;
 
 
-    [SerializeField] TextMeshProUGUI continueMessage;
-    string KBMcontinue = "Continue: E";
-    string GPcontinue = "Continue: <sprite index= 0>";
-    [SerializeField] TextMeshProUGUI tutorialMessage;
-    [SerializeField] string KBMtutorial;
-    [SerializeField] string GPtutorial;
-
-
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         TMPSpriteDict = new Dictionary<Sprite, TMP_SpriteAsset>();
-        for(int i = 0; i < buttonIconSprites.Length; i++)
+        for(int i = 0; i < settingsData.buttonIconSprites.Count; i++)
         {
-            TMPSpriteDict.Add(buttonIconSprites[i], buttonIconTMProSprites[i]);
+            TMPSpriteDict.Add(settingsData.buttonIconSprites[i], settingsData.buttonIconTMProSprites[i]);
         }
     }
 
@@ -78,19 +69,19 @@ public class TutorialMessage : MonoBehaviour
 
         int bindingIndex;
         string bindingName = "";
-        for(int i = 0; i < action[index].action.bindings.Count; i++)
+        for(int i = 0; i < actions[index].action.bindings.Count; i++)
         {
-            if(Gamepad.current != null && action[index].action.bindings[i].groups.Contains("Gamepad"))
+            if(Gamepad.current != null && actions[index].action.bindings[i].groups.Contains("Gamepad"))
             {
                 bindingIndex = i;
-                bindingName = im.GetBindingName(action[index].action.name, bindingIndex);
+                bindingName = im.GetBindingName(actions[index].action.name, bindingIndex);
             }
-            else if(Gamepad.current == null && action[index].action.bindings[i].groups.Contains("Keyboard"))
+            else if(Gamepad.current == null && actions[index].action.bindings[i].groups.Contains("Keyboard"))
             {
                 bindingIndex = i;
-                bindingName = im.GetBindingName(action[index].action.name, bindingIndex);
+                bindingName = im.GetBindingName(actions[index].action.name, bindingIndex);
             }
-            else if(Gamepad.current == null && action[index].action.bindings[i].isComposite)
+            else if(Gamepad.current == null && actions[index].action.bindings[i].isComposite)
             {
                 bindingName = "W, A, S, D";
             }
