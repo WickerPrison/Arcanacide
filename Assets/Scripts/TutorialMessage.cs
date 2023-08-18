@@ -11,6 +11,8 @@ public class TutorialMessage : MonoBehaviour
     [SerializeField] List<InputActionReference> actions;
     [SerializeField] string tutorialText;
     [SerializeField] SettingsData settingsData;
+    [SerializeField] string[] gamepadText;
+    [SerializeField] string[] keyboardText;
     Dictionary<Sprite, TMP_SpriteAsset> TMPSpriteDict;
     InputManager im;
     Dictionary<string, string> displayStringDict;
@@ -32,6 +34,7 @@ public class TutorialMessage : MonoBehaviour
     private void Update()
     {
         InsertButtonPrompt();
+        InsertControlSpecificString();
         tutorialMessage.text = finalText.Replace("\\n", "\n");
 
         /*
@@ -97,5 +100,26 @@ public class TutorialMessage : MonoBehaviour
             else return displayStringDict[bindingName];
         }
         else return bindingName;
+    }
+
+    void InsertControlSpecificString()
+    {
+        textSegments = finalText.Split("*");
+        finalText = "";
+        for(int i = 0; i < textSegments.Length; i++)
+        {
+            finalText += textSegments[i];
+            if(i < textSegments.Length - 1)
+            {
+                if(Gamepad.current == null)
+                {
+                    finalText += keyboardText[i];
+                }
+                else
+                {
+                    finalText += gamepadText[i];
+                }
+            }
+        }
     }
 }
