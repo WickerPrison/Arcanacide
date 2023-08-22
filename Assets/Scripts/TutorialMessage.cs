@@ -13,7 +13,6 @@ public class TutorialMessage : MonoBehaviour
     [SerializeField] SettingsData settingsData;
     [SerializeField] string[] gamepadText;
     [SerializeField] string[] keyboardText;
-    Dictionary<Sprite, TMP_SpriteAsset> TMPSpriteDict;
     InputManager im;
     Dictionary<string, string> displayStringDict;
     Dictionary<string, Sprite> displaySpriteDict;
@@ -24,11 +23,6 @@ public class TutorialMessage : MonoBehaviour
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        TMPSpriteDict = new Dictionary<Sprite, TMP_SpriteAsset>();
-        for(int i = 0; i < settingsData.buttonIconSprites.Count; i++)
-        {
-            TMPSpriteDict.Add(settingsData.buttonIconSprites[i], settingsData.buttonIconTMProSprites[i]);
-        }
     }
 
     private void Update()
@@ -94,8 +88,8 @@ public class TutorialMessage : MonoBehaviour
         {
             if (displayStringDict[bindingName] == "")
             {
-                tutorialMessage.spriteAsset = TMPSpriteDict[displaySpriteDict[bindingName]];
-                return "<sprite index=0>";
+                int test = settingsData.buttonIconSprites.IndexOf(displaySpriteDict[bindingName]);
+                return "<sprite=" + test.ToString() + ">";
             }
             else return displayStringDict[bindingName];
         }
