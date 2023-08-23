@@ -31,7 +31,7 @@ public class EmblemLibrary : ScriptableObject
     [System.NonSerialized] public string confident_killer = "Confident Killer";
     [System.NonSerialized] public string confident_killer_description = "Increase the damage of all attacks when you have full health";
     [System.NonSerialized] public string adrenaline_rush = "Adrenaline Rush";
-    [System.NonSerialized] public string adrenaline_rush_description = "Regain all Stamina after a Perfect     Dodge";
+    [System.NonSerialized] public string adrenaline_rush_description = "Regain all Stamina after a Perfect Dodge";
     [System.NonSerialized] public string rending_blows = "Rending Blows";
     [System.NonSerialized] public string rending_blows_description = "Heavy Attacks inflict Arcane damage over time";
     [System.NonSerialized] public float rendingBlowsDuration = 5;
