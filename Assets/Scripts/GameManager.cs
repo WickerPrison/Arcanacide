@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] PlayerData playerData;
     [SerializeField] DialogueData dialogueData;
+    [SerializeField] SettingsData settingsData;
     [SerializeField] GameObject moneyDropPrefab;
     [SerializeField] string[] sceneNames;
     TutorialManager tutorialManager;
@@ -82,7 +83,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveSystem.SaveGame(playerData, mapData, dialogueData);
+        SaveSystem.SaveGame(playerData, mapData, dialogueData, settingsData);
     }
 
     public void LoadGame()
@@ -139,6 +140,8 @@ public class GameManager : MonoBehaviour
             dialogueData.unknownNumberPreviousConversations = data.QuestionMarksPreviousConversations.ToList();
             dialogueData.patchworkGaryConversations = data.patchworkGaryConversations.ToList();
             dialogueData.whistleBlowerConversations = data.whistleblowerConversations.ToList();
+
+            settingsData.CreateBindingDictionary(data.bindingDictionaryKeys, data.bindingDictionaryValues);
         }
         else
         {
@@ -202,6 +205,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
+
+        settingsData.bindings.Clear();
     }
 
     public void StartAtFloor2()
@@ -265,6 +270,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
+
+        settingsData.bindings.Clear();
     }
 
     public void StartAtFloor3()
@@ -334,5 +341,7 @@ public class GameManager : MonoBehaviour
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
+
+        settingsData.bindings.Clear();
     }
 }

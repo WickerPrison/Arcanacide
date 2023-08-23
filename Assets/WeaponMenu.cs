@@ -47,10 +47,10 @@ public class WeaponMenu : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerControls();
-        controls.Menu.Sword.performed += ctx => SelectWeapon(MenuWeaponSelected.SWORD);
-        controls.Menu.Lantern.performed += ctx => SelectWeapon(MenuWeaponSelected.LANTERN);
-        controls.Menu.Knife.performed += ctx => SelectWeapon(MenuWeaponSelected.KNIFE);
-        controls.Menu.Claws.performed += ctx => SelectWeapon(MenuWeaponSelected.CLAWS);
+        controls.Menu.MenuSword.performed += ctx => SelectWeapon(MenuWeaponSelected.SWORD);
+        controls.Menu.MenuLantern.performed += ctx => SelectWeapon(MenuWeaponSelected.LANTERN);
+        controls.Menu.MenuKnife.performed += ctx => SelectWeapon(MenuWeaponSelected.KNIFE);
+        controls.Menu.MenuClaws.performed += ctx => SelectWeapon(MenuWeaponSelected.CLAWS);
         controls.Menu.Back.performed += ctx => LeaveMenu();
     }
 

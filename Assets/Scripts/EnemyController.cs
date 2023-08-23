@@ -193,7 +193,7 @@ public class EnemyController : MonoBehaviour
     }
     public virtual void OnTakeDamage(object sender, System.EventArgs e)
     {
-        Debug.Log("e");
+
     }
 
     public virtual void OnLosePoise(object sender, System.EventArgs e)

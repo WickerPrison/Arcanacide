@@ -49,7 +49,7 @@ public class TutorialManager : MonoBehaviour
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         sm = im.gameObject.GetComponent<SoundManager>();
-        im.controls.Tutorial.Select.performed += ctx => NextMessage();
+        im.controls.Tutorial.TutorialSelect.performed += ctx => NextMessage();
         SetupTutorialDictionary();
         TutorialList();
     }

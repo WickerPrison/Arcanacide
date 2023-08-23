@@ -42,4 +42,35 @@ public class PhoneMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
             yield return new WaitForEndOfFrame();
         }
     }
+
+    public void ButtonPressAnimation()
+    {
+        StopAllCoroutines();
+        StartCoroutine(ButtonPress(transform.localScale));
+    }
+
+    IEnumerator ButtonPress(Vector3 currentScale)
+    {
+        float timer = transitionTime;
+
+        while (timer > 0)
+        {
+            timer -= Time.unscaledDeltaTime;
+            float ratio = timer / transitionTime;
+
+            transform.localScale = Vector3.Lerp(initialScale * 0.8f, currentScale, ratio);
+            yield return new WaitForEndOfFrame();
+        }
+
+        timer = transitionTime;
+
+        while (timer > 0)
+        {
+            timer -= Time.unscaledDeltaTime;
+            float ratio = timer / transitionTime;
+
+            transform.localScale = Vector3.Lerp(initialScale * scaleMultiplier, initialScale * 0.8f, ratio);
+            yield return new WaitForEndOfFrame();
+        }
+    }
 }

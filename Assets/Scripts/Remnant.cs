@@ -11,7 +11,6 @@ public class Remnant : MonoBehaviour
     Transform player;
     TutorialManager tutorialManager;
     InputManager im;
-    PlayerControls controls;
     PlayerScript playerScript;
     PatchEffects patchEffects;
     PlayerAnimation playerAnimation;
@@ -27,10 +26,8 @@ public class Remnant : MonoBehaviour
         playerScript = player.GetComponent<PlayerScript>();
         weaponManager = player.gameObject.GetComponent<WeaponManager>();
         
-        controls = new PlayerControls();
-        controls.Gameplay.Interact.performed += ctx => PickUpRemnant();
-
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        im.controls.Gameplay.Interact.performed += ctx => PickUpRemnant();
     }
 
     // Update is called once per frame
@@ -113,15 +110,5 @@ public class Remnant : MonoBehaviour
                 patchEffects.deathAuraActive = false;
             }
         }
-    }
-
-    private void OnEnable()
-    {
-        controls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.Disable();
     }
 }
