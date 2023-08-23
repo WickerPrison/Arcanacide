@@ -23,25 +23,24 @@ public class TutorialMessage : MonoBehaviour
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        InsertButtonPrompt();
+        InsertControlSpecificString();
+        tutorialMessage.text = finalText.Replace("\\n", "\n");
     }
 
-    private void Update()
+    private void ChangedSetting(object sender, System.EventArgs e)
     {
         InsertButtonPrompt();
         InsertControlSpecificString();
         tutorialMessage.text = finalText.Replace("\\n", "\n");
+    }
 
+    private void Update()
+    {
         /*
-        if(Gamepad.current == null)
-        {
-            continueMessage.text = KBMcontinue;
-            tutorialMessage.text = KBMtutorial.Replace("\\n", "\n");
-        }
-        else
-        {
-            continueMessage.text = GPcontinue;
-            tutorialMessage.text = GPtutorial.Replace("\\n", "\n"); ;
-        }
+        InsertButtonPrompt();
+        InsertControlSpecificString();
+        tutorialMessage.text = finalText.Replace("\\n", "\n"); 
         */
     }
 
@@ -115,5 +114,15 @@ public class TutorialMessage : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onChangedSetting += ChangedSetting;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onChangedSetting -= ChangedSetting;
     }
 }

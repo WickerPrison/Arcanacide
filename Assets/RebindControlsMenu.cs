@@ -73,6 +73,7 @@ public class RebindControlsMenu : MonoBehaviour
             im.SaveBinding(actionToRebind);
             im.LoadBinding(actionToRebind.name);
             rebindComplete?.Invoke();
+            GlobalEvents.instance.OnChangedSetting();
         });
 
         rebind.OnCancel(operation =>

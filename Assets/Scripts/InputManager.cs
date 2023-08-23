@@ -71,6 +71,7 @@ public class InputManager : MonoBehaviour
             if (inputAction == null) continue;
             inputAction.RemoveAllBindingOverrides();
         }
+        GlobalEvents.instance.OnChangedSetting();
     }
 
     public void LoadBinding(string actionName)

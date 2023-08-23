@@ -9,6 +9,7 @@ public class GlobalEvents : MonoBehaviour
 
     InputManager im;
 
+    public event EventHandler onChangedSetting;
     public event EventHandler onEnemyKilled;
     public event EventHandler onBossKilled;
     public event EventHandler onTestButton;
@@ -22,6 +23,11 @@ public class GlobalEvents : MonoBehaviour
     {
         im = GetComponent<InputManager>();
         im.controls.Gameplay.TestButton.performed += ctx => onTestButton?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OnChangedSetting()
+    {
+        onChangedSetting?.Invoke(this, EventArgs.Empty);
     }
 
     public void EnemyKilled()

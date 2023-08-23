@@ -17,8 +17,6 @@ public class ContinueMessage : MonoBehaviour
     string buttonPromptString;
     TextMeshProUGUI continueMessage;
     InputManager im;
-    string KBMcontinue = "Continue: E";
-    string GPcontinue = "Continue: <sprite index= 0>";
 
     Vector3 initialScale;
     float scaleMultiplier = 1.07f;
