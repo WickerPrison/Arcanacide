@@ -23,25 +23,13 @@ public class TutorialMessage : MonoBehaviour
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        InsertButtonPrompt();
-        InsertControlSpecificString();
-        tutorialMessage.text = finalText.Replace("\\n", "\n");
-    }
-
-    private void ChangedSetting(object sender, System.EventArgs e)
-    {
-        InsertButtonPrompt();
-        InsertControlSpecificString();
-        tutorialMessage.text = finalText.Replace("\\n", "\n");
     }
 
     private void Update()
     {
-        /*
         InsertButtonPrompt();
         InsertControlSpecificString();
         tutorialMessage.text = finalText.Replace("\\n", "\n"); 
-        */
     }
 
     void InsertButtonPrompt()
@@ -114,15 +102,5 @@ public class TutorialMessage : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void OnEnable()
-    {
-        GlobalEvents.instance.onChangedSetting += ChangedSetting;
-    }
-
-    private void OnDisable()
-    {
-        GlobalEvents.instance.onChangedSetting -= ChangedSetting;
     }
 }

@@ -261,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(Gamepad.current == null && usingGamepad)
         {
-            if (!pauseMenu)
+            if (!pauseMenu && im.controlMode == ControlMode.GAMEPLAY)
             {
                 PauseMenu();
             }

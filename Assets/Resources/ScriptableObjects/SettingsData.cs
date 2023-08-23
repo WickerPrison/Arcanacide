@@ -19,6 +19,8 @@ public class SettingsData : ScriptableObject
     public List<Sprite> buttonIconSprites = new List<Sprite>();
     public List<TMP_SpriteAsset> buttonIconTMProSprites = new List<TMP_SpriteAsset>();
 
+    public bool showArrow;
+
 
     private enum ControllerType
     {

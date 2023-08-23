@@ -142,6 +142,7 @@ public class GameManager : MonoBehaviour
             dialogueData.whistleBlowerConversations = data.whistleblowerConversations.ToList();
 
             settingsData.CreateBindingDictionary(data.bindingDictionaryKeys, data.bindingDictionaryValues);
+            settingsData.showArrow = data.showArrow;
         }
         else
         {
@@ -207,6 +208,7 @@ public class GameManager : MonoBehaviour
         dialogueData.whistleBlowerConversations.Clear();
 
         settingsData.bindings.Clear();
+        settingsData.showArrow = true;
     }
 
     public void StartAtFloor2()
@@ -272,6 +274,7 @@ public class GameManager : MonoBehaviour
         dialogueData.whistleBlowerConversations.Clear();
 
         settingsData.bindings.Clear();
+        settingsData.showArrow = true;
     }
 
     public void StartAtFloor3()
@@ -343,5 +346,6 @@ public class GameManager : MonoBehaviour
         dialogueData.whistleBlowerConversations.Clear();
 
         settingsData.bindings.Clear();
+        settingsData.showArrow = true;
     }
 }

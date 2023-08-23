@@ -63,6 +63,7 @@ public class SaveData
 
     public string[] bindingDictionaryKeys;
     public string[] bindingDictionaryValues;
+    public bool showArrow;
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, SettingsData settingsData)
     {
@@ -126,5 +127,6 @@ public class SaveData
 
         bindingDictionaryKeys = settingsData.bindings.Keys.ToArray();
         bindingDictionaryValues = settingsData.bindings.Values.ToArray();
+        showArrow = settingsData.showArrow;
     }
 }

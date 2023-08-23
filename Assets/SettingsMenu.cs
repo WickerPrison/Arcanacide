@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] GameObject rebindControlsMenuPrefab;
     public PlayerControls controls;
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
+    [SerializeField] SettingsData settingsData;
+    [SerializeField] TextMeshProUGUI direcitonalArrowText;
 
     private void Awake()
     {
@@ -24,8 +27,15 @@ public class SettingsMenu : MonoBehaviour
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
+        UpdateMenu();
     }
 
+    void UpdateMenu()
+    {
+        if (settingsData.showArrow) direcitonalArrowText.text = "On";
+        else direcitonalArrowText.text = "Off";
+        GlobalEvents.instance.OnChangedSetting();
+    }
 
     public void OpenRebindControlsMenu()
     {
@@ -33,6 +43,12 @@ public class SettingsMenu : MonoBehaviour
         rebindControlsMenu = Instantiate(rebindControlsMenuPrefab);
         rebindControlsMenu.GetComponent<RebindControlsMenu>().settingsMenu = this;
         controls.Disable();
+    }
+
+    public void ToggleDirectionalArrow()
+    {
+        settingsData.showArrow = !settingsData.showArrow;
+        UpdateMenu();
     }
 
     public void LeaveMenu()

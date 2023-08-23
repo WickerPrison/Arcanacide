@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum ControlMode
+{
+    GAMEPLAY, TUTORIAL, MENU, DIALOGUE, DISABLED
+}
+
 public class InputManager : MonoBehaviour
 {
     public PlayerControls controls;
@@ -11,6 +16,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] List<InputActionReference> actions;
     [SerializeField] List<InputActionReference> selectActions;
     GameObject player;
+    [System.NonSerialized] public ControlMode controlMode;
 
     private void Awake()
     {
@@ -131,6 +137,7 @@ public class InputManager : MonoBehaviour
 
     public void Gameplay()
     {
+        controlMode = ControlMode.GAMEPLAY;
         player.layer = 3;
         controls.Menu.Disable();
         controls.Tutorial.Disable();
@@ -140,6 +147,7 @@ public class InputManager : MonoBehaviour
 
     public void Tutorial()
     {
+        controlMode = ControlMode.TUTORIAL;
         player.layer = 8;
         controls.Menu.Disable();
         controls.Gameplay.Disable();
@@ -149,6 +157,7 @@ public class InputManager : MonoBehaviour
 
     public void Menu()
     {
+        controlMode = ControlMode.MENU;
         player.layer = 3;
         controls.Tutorial.Disable();
         controls.Gameplay.Disable();
@@ -158,6 +167,7 @@ public class InputManager : MonoBehaviour
 
     public void Dialogue()
     {
+        controlMode = ControlMode.DIALOGUE;
         player.layer = 8;
         controls.Tutorial.Disable();
         controls.Gameplay.Disable();
@@ -167,6 +177,7 @@ public class InputManager : MonoBehaviour
 
     public void DisableAll()
     {
+        controlMode = ControlMode.DISABLED;
         controls.Tutorial.Disable();
         controls.Gameplay.Disable();
         controls.Menu.Disable();
