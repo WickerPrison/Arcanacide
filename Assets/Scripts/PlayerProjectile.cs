@@ -13,6 +13,7 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField] float lifetime;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] GameObject playAtPointPrefab;
     [System.NonSerialized] public AttackProfiles attackProfile;
     public Transform target;
     public float turnAngle;
@@ -47,13 +48,13 @@ public class PlayerProjectile : MonoBehaviour
         }
         else addedDOT = 0;
         enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
-        AudioSource.PlayClipAtPoint(enemyImpactSFX, transform.position, impactSFXvolume);
+        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(enemyImpactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 
     public virtual void HitObject(Collider collision)
     {
-        AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
+        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(impactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 

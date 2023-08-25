@@ -9,7 +9,6 @@ public class Hadoken : Projectile
     [SerializeField] int projectileNum;
     [SerializeField] float spawnRadius;
 
-
     public override void HitObject(Collider collision)
     {
         Explode();
@@ -18,7 +17,7 @@ public class Hadoken : Projectile
 
     void Explode()
     {
-        AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
+        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(impactSFX, impactSFXvolume, transform.position);
         for (int i = 0; i < projectileNum; i++)
         {
             Projectile projectile = Instantiate(smallerProjectilePrefab).GetComponent<Projectile>();

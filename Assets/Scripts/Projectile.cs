@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public GameObject playAtPointPrefab;
     [System.NonSerialized] public Vector3 direction;
     public int spellDamage;
     public int poiseDamage;
@@ -44,7 +45,7 @@ public class Projectile : MonoBehaviour
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
         playerScript.LoseHealth(spellDamage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
-        AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
+        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(playerImpactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 
@@ -57,7 +58,7 @@ public class Projectile : MonoBehaviour
 
     public virtual void HitObject(Collider collision)
     {
-        AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
+        Instantiate(playAtPointPrefab).GetComponent <PlayAtPoint>().PlayClip(impactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 

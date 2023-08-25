@@ -31,8 +31,6 @@ public class ArcProjectile : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerCollider = player.gameObject.GetComponent<Collider>();
 
-        
-        
 
         startPoint = transform.position;
         direction = new Vector3(endPoint.x, 0, endPoint.z) - new Vector3(startPoint.x, 0, startPoint.z);

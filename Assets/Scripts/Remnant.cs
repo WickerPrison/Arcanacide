@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Remnant : MonoBehaviour
 {
@@ -27,7 +29,6 @@ public class Remnant : MonoBehaviour
         weaponManager = player.gameObject.GetComponent<WeaponManager>();
         
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        im.controls.Gameplay.Interact.performed += ctx => PickUpRemnant();
     }
 
     // Update is called once per frame
@@ -42,11 +43,9 @@ public class Remnant : MonoBehaviour
         {
             message.SetActive(false);
         }
-
-
     }
 
-    void PickUpRemnant()
+    void PickUpRemnant(InputAction.CallbackContext obj)
     {
         if(playerDistance <= interactDistance && im.controls.Gameplay.enabled)
         {
@@ -110,5 +109,15 @@ public class Remnant : MonoBehaviour
                 patchEffects.deathAuraActive = false;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        im.controls.Gameplay.Interact.performed += PickUpRemnant;
+    }
+
+    private void OnDisable()
+    {
+        im.controls.Gameplay.Interact.performed -= PickUpRemnant;
     }
 }

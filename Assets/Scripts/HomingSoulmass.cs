@@ -16,6 +16,7 @@ public class HomingSoulmass : MonoBehaviour
     [SerializeField] AudioClip playerImpactSFX;
     [SerializeField] AudioClip impactSFX;
     [SerializeField] float impactSFXvolume;
+    [SerializeField] GameObject playAtPointPrefab;
     float speed = 10;
     float rotationSpeed = 100;
     int spellDamage = 10;
@@ -118,7 +119,7 @@ public class HomingSoulmass : MonoBehaviour
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
         playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
-        AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
+        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(playerImpactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 
@@ -133,7 +134,7 @@ public class HomingSoulmass : MonoBehaviour
     {
         if(state == HomingSoulmassState.PROJECTILE)
         {
-            AudioSource.PlayClipAtPoint(impactSFX, transform.position, impactSFXvolume);
+            Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(impactSFX, impactSFXvolume, transform.position);
             Destroy(gameObject);
         }
     }

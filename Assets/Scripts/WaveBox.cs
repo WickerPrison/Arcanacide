@@ -10,6 +10,7 @@ public class WaveBox : MonoBehaviour
     [SerializeField] bool canHurtEnemies = false;
     FireWave fireWave;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
+    [SerializeField] GameObject playAtPointPrefab;
 
     private void Start()
     {
@@ -30,7 +31,7 @@ public class WaveBox : MonoBehaviour
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
                 playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
-                AudioSource.PlayClipAtPoint(impactSFX, transform.position, 1);
+                Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(impactSFX, 1, transform.position);
                 Destroy(gameObject);
             }
             else if(other.gameObject.layer == 8)
