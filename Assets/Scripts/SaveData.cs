@@ -64,6 +64,9 @@ public class SaveData
     public string[] bindingDictionaryKeys;
     public string[] bindingDictionaryValues;
     public bool showArrow;
+    public float masterVol;
+    public float sfxVol;
+    public float musicVol;
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, SettingsData settingsData)
     {
@@ -128,5 +131,8 @@ public class SaveData
         bindingDictionaryKeys = settingsData.bindings.Keys.ToArray();
         bindingDictionaryValues = settingsData.bindings.Values.ToArray();
         showArrow = settingsData.showArrow;
+        masterVol = settingsData.masterVol;
+        sfxVol = settingsData.sfxVol;
+        musicVol = settingsData.musicVol;
     }
 }

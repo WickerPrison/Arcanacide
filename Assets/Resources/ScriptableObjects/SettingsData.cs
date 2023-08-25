@@ -8,10 +8,18 @@ using UnityEngine.InputSystem.XInput;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
 using TMPro;
+using UnityEngine.Audio;
+
+public enum VolumeChannel
+{
+    MASTER, MUSIC, SFX
+}
 
 [CreateAssetMenu]
 public class SettingsData : ScriptableObject
 {
+    [SerializeField] AudioMixer audioMixer;
+
     public Dictionary<string, string> bindings = new Dictionary<string, string>();
 
     private Dictionary<string, Sprite> spriteDict;
@@ -21,12 +29,36 @@ public class SettingsData : ScriptableObject
 
     public bool showArrow;
 
+    public float masterVol;
+    public float sfxVol;
+    public float musicVol;
+
 
     private enum ControllerType
     {
         KBM, XBOX, PLAYSTATION, OTHER, NONE
     };
     ControllerType controllerType = ControllerType.NONE;
+
+    public void SetVolume(VolumeChannel channel, float normalizedVolume)
+    {
+        float volume = Mathf.Lerp(-80, 0, normalizedVolume);
+        switch (channel)
+        {
+            case VolumeChannel.MASTER:
+                audioMixer.SetFloat("masterVol", volume); 
+                masterVol = normalizedVolume;
+                break;
+            case VolumeChannel.SFX:
+                audioMixer.SetFloat("sfxVol", volume);
+                sfxVol = normalizedVolume;
+                break;
+            case VolumeChannel.MUSIC:
+                audioMixer.SetFloat("musicVol", volume);
+                musicVol = normalizedVolume;
+                break;
+        }
+    }
 
     public void CreateBindingDictionary(string[] keys, string[] values)
     {

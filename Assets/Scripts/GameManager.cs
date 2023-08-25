@@ -143,6 +143,9 @@ public class GameManager : MonoBehaviour
 
             settingsData.CreateBindingDictionary(data.bindingDictionaryKeys, data.bindingDictionaryValues);
             settingsData.showArrow = data.showArrow;
+            settingsData.SetVolume(VolumeChannel.MASTER, data.masterVol);
+            settingsData.SetVolume(VolumeChannel.SFX, data.sfxVol);
+            settingsData.SetVolume(VolumeChannel.MUSIC, data.musicVol);
         }
         else
         {
@@ -209,6 +212,9 @@ public class GameManager : MonoBehaviour
 
         settingsData.bindings.Clear();
         settingsData.showArrow = true;
+        settingsData.SetVolume(VolumeChannel.MASTER, 1);
+        settingsData.SetVolume(VolumeChannel.SFX, 1);
+        settingsData.SetVolume(VolumeChannel.MUSIC, 1);
     }
 
     public void StartAtFloor2()
@@ -275,6 +281,9 @@ public class GameManager : MonoBehaviour
 
         settingsData.bindings.Clear();
         settingsData.showArrow = true;
+        settingsData.SetVolume(VolumeChannel.MASTER, 1);
+        settingsData.SetVolume(VolumeChannel.SFX, 1);
+        settingsData.SetVolume(VolumeChannel.MUSIC, 1);
     }
 
     public void StartAtFloor3()
@@ -347,5 +356,8 @@ public class GameManager : MonoBehaviour
 
         settingsData.bindings.Clear();
         settingsData.showArrow = true;
+        settingsData.SetVolume(VolumeChannel.MASTER, 1);
+        settingsData.SetVolume(VolumeChannel.SFX, 1);
+        settingsData.SetVolume(VolumeChannel.MUSIC, 1);
     }
 }

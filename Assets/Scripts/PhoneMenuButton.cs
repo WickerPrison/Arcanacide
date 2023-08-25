@@ -9,7 +9,7 @@ public class PhoneMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     TextMeshProUGUI buttonText;
     Vector3 initialScale;
     float transitionTime = 0.1f;
-    float scaleMultiplier = 1.15f;
+    [SerializeField] float scaleMultiplier = 1.15f;
 
     private void Awake()
     {
@@ -19,13 +19,13 @@ public class PhoneMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
-        buttonText.color = Color.white;
+        if(buttonText != null) buttonText.color = Color.white;
         StartCoroutine(ScaleAnimation(transform.localScale, initialScale * scaleMultiplier));
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        buttonText.color = Color.black;
+        if (buttonText != null) buttonText.color = Color.black;
         StartCoroutine(ScaleAnimation(transform.localScale, initialScale));
     }
 
