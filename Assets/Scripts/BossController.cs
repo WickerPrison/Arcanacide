@@ -354,6 +354,7 @@ public class BossController : EnemyController, IEndDialogue
 
     public override void StartDying()
     {
+        enemyScript.invincible = true;
         bossDialogue.EndLookUpDialogue();
         if (!hasSurrendered)
         {
