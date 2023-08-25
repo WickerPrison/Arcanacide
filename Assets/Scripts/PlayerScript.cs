@@ -84,7 +84,7 @@ public class PlayerScript : MonoBehaviour
         else
         {
             playerSound.Shield();
-            if (playerAbilities.parry || attackingEnemy == null) return;
+            if (!playerAbilities.parry || attackingEnemy == null) return;
             playerAbilities.BlockOrParry(attackType, attackingEnemy);
         }
     }
