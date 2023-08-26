@@ -10,6 +10,8 @@ public class PhoneMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     Vector3 initialScale;
     float transitionTime = 0.1f;
     [SerializeField] float scaleMultiplier = 1.15f;
+    Color selectedColor = Color.white;
+    Color unselectedColor = Color.black;
 
     private void Awake()
     {
@@ -19,13 +21,13 @@ public class PhoneMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
-        if(buttonText != null) buttonText.color = Color.white;
+        if(buttonText != null) buttonText.color = selectedColor;
         StartCoroutine(ScaleAnimation(transform.localScale, initialScale * scaleMultiplier));
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        if (buttonText != null) buttonText.color = Color.black;
+        if (buttonText != null) buttonText.color = unselectedColor;
         StartCoroutine(ScaleAnimation(transform.localScale, initialScale));
     }
 

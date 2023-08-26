@@ -14,7 +14,8 @@ public class SettingsMenu : MonoBehaviour
     public PlayerControls controls;
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
     [SerializeField] SettingsData settingsData;
-    [SerializeField] TextMeshProUGUI direcitonalArrowText;
+    TextMeshProUGUI direcitonalArrowText;
+    [SerializeField] ToggleUI arrowToggle;
 
     private void Awake()
     {
@@ -27,13 +28,23 @@ public class SettingsMenu : MonoBehaviour
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
+        
+        direcitonalArrowText = arrowToggle.GetComponentInChildren<TextMeshProUGUI>();
         UpdateMenu();
     }
 
     void UpdateMenu()
     {
-        if (settingsData.showArrow) direcitonalArrowText.text = "On";
-        else direcitonalArrowText.text = "Off";
+        if (settingsData.showArrow)
+        {
+            arrowToggle.ToggleSwitch(true);
+            direcitonalArrowText.text = "On";
+        }
+        else
+        {
+            arrowToggle.ToggleSwitch(false);
+            direcitonalArrowText.text = "Off";
+        }
         GlobalEvents.instance.OnChangedSetting();
     }
 
