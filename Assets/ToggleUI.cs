@@ -7,12 +7,25 @@ using UnityEngine.UI;
 public class ToggleUI : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     [SerializeField] Image bar;
-    [System.NonSerialized] public bool on;
     [SerializeField] Vector2 onPos;
     [SerializeField] Vector2 offPos;
     float switchTime = 0.1f;
     [SerializeField] Image inner;
     [SerializeField] Image outer;
+
+    public void SetToggleInstant(bool turnOn)
+    {
+        if (turnOn)
+        {
+            transform.localPosition = onPos;
+            bar.transform.localScale = new Vector3(1, bar.transform.localScale.y, bar.transform.localScale.z);
+        }
+        else
+        {
+            transform.localPosition = offPos;
+            bar.transform.localScale = new Vector3(0, bar.transform.localScale.y, bar.transform.localScale.z);
+        }
+    }
 
     public void ToggleSwitch(bool turnOn)
     {

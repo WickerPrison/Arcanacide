@@ -67,6 +67,7 @@ public class SaveData
     public float masterVol;
     public float sfxVol;
     public float musicVol;
+    public bool fullscreenMode;
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, SettingsData settingsData)
     {
@@ -134,5 +135,6 @@ public class SaveData
         masterVol = settingsData.masterVol;
         sfxVol = settingsData.sfxVol;
         musicVol = settingsData.musicVol;
+        fullscreenMode = settingsData.fullscreenMode;
     }
 }

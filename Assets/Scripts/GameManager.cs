@@ -30,6 +30,20 @@ public class GameManager : MonoBehaviour
     bool fireBossKilled = false;
     bool secretaryConvo = false;
 
+    //This function is called very first, before the splash screen
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
+    static void SetFullscreenMode()
+    {
+        SaveData data = SaveSystem.LoadGame();
+        if (data == null || data.fullscreenMode)
+        {
+            Screen.fullScreen = true;
+            Resolution currentResolution = Screen.currentResolution;
+            Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
+        }
+        else Screen.fullScreen = false;
+    }
+
     private void Awake()
     {
         if (GameObject.FindGameObjectWithTag("MusicPlayer") == null)
@@ -146,6 +160,7 @@ public class GameManager : MonoBehaviour
             settingsData.SetVolume(VolumeChannel.MASTER, data.masterVol);
             settingsData.SetVolume(VolumeChannel.SFX, data.sfxVol);
             settingsData.SetVolume(VolumeChannel.MUSIC, data.musicVol);
+            settingsData.fullscreenMode = data.fullscreenMode;
         }
         else
         {

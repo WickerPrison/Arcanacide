@@ -15,13 +15,13 @@ public class SliderUI : MonoBehaviour, ISelectHandler, IDeselectHandler
     bool selected = false;
     PlayerControls controls;
     Vector2 moveDir;
-    [SerializeField] float slideAmp;
-    Vector2 centerPos;
-    Vector2 leftPos;
-    Vector2 rightPos;
+    [SerializeField] Vector2 maxPos;
+    [SerializeField] Vector2 minPos;
     float slideSpeed = 0.75f;
+    float slideAmp;
     [System.NonSerialized] public float slidePosNorm;
     TextMeshProUGUI buttonText;
+    float localToWorld;
 
     private void Awake()
     {
@@ -33,9 +33,8 @@ public class SliderUI : MonoBehaviour, ISelectHandler, IDeselectHandler
     public virtual void Start()
     {
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
-        centerPos = transform.position;
-        leftPos = centerPos - new Vector2(slideAmp, 0);
-        rightPos = centerPos + new Vector2(slideAmp, 0);
+        slideAmp = Vector2.Distance(minPos, maxPos);
+        localToWorld = transform.position.x - transform.localPosition.x;
     }
 
     private void Update()
@@ -51,16 +50,17 @@ public class SliderUI : MonoBehaviour, ISelectHandler, IDeselectHandler
     public virtual void MoveSlider()
     {
         slidePosNorm = Mathf.Clamp(slidePosNorm + moveDir.x * Time.unscaledDeltaTime * slideSpeed, 0, 1);
-        transform.position = Vector2.Lerp(leftPos, rightPos, slidePosNorm);
+        transform.localPosition = Vector2.Lerp(minPos, maxPos, slidePosNorm);
         bar.transform.localScale = new Vector3(slidePosNorm, bar.transform.localScale.y, bar.transform.localScale.z);
         buttonText.text = Mathf.RoundToInt(slidePosNorm * 100).ToString();
     }
 
     public void DragSlider()
     {
-        float distance = Mouse.current.position.ReadValue().x - centerPos.x;
-        slidePosNorm = Mathf.Clamp((distance + slideAmp) / (2 * slideAmp), 0, 1);
-        transform.position = Vector2.Lerp(leftPos, rightPos, slidePosNorm);
+        float distance = Mouse.current.position.ReadValue().x - (minPos.x + localToWorld);
+        slidePosNorm = Mathf.Clamp(distance / slideAmp, 0, 1);
+        Debug.Log(transform.position);
+        transform.localPosition = Vector2.Lerp(minPos, maxPos, slidePosNorm);
         bar.transform.localScale = new Vector3(slidePosNorm, bar.transform.localScale.y, bar.transform.localScale.z);
         buttonText.text = Mathf.RoundToInt(slidePosNorm * 100).ToString();
     }

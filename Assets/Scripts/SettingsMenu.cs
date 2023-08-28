@@ -16,6 +16,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] SettingsData settingsData;
     TextMeshProUGUI direcitonalArrowText;
     [SerializeField] ToggleUI arrowToggle;
+    TextMeshProUGUI fullscreenText;
+    [SerializeField] ToggleUI fullscreenToggle;
 
     private void Awake()
     {
@@ -30,6 +32,9 @@ public class SettingsMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstButton);
         
         direcitonalArrowText = arrowToggle.GetComponentInChildren<TextMeshProUGUI>();
+        arrowToggle.SetToggleInstant(settingsData.showArrow);
+        fullscreenText = fullscreenToggle.GetComponentInChildren<TextMeshProUGUI>();
+        fullscreenToggle.SetToggleInstant(settingsData.fullscreenMode);
         UpdateMenu();
     }
 
@@ -45,6 +50,17 @@ public class SettingsMenu : MonoBehaviour
             arrowToggle.ToggleSwitch(false);
             direcitonalArrowText.text = "Off";
         }
+
+        if (settingsData.fullscreenMode)
+        {
+            fullscreenToggle.ToggleSwitch(true);
+            fullscreenText.text = "On";
+        }
+        else
+        {
+            fullscreenToggle.ToggleSwitch(false);
+            fullscreenText.text = "Off";
+        }
         GlobalEvents.instance.OnChangedSetting();
     }
 
@@ -59,6 +75,18 @@ public class SettingsMenu : MonoBehaviour
     public void ToggleDirectionalArrow()
     {
         settingsData.showArrow = !settingsData.showArrow;
+        UpdateMenu();
+    }
+
+    public void ToggleFullScreenMode()
+    {
+        settingsData.fullscreenMode = !settingsData.fullscreenMode;
+        Screen.fullScreen = settingsData.fullscreenMode;
+        if (settingsData.fullscreenMode)
+        {
+            Resolution currentResolution = Screen.currentResolution;
+            Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
+        }
         UpdateMenu();
     }
 

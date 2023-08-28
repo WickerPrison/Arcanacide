@@ -33,6 +33,8 @@ public class SettingsData : ScriptableObject
     public float sfxVol;
     public float musicVol;
 
+    public bool fullscreenMode;
+
 
     private enum ControllerType
     {
