@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class SliderUI : MonoBehaviour, ISelectHandler, IDeselectHandler
@@ -55,6 +56,15 @@ public class SliderUI : MonoBehaviour, ISelectHandler, IDeselectHandler
         buttonText.text = Mathf.RoundToInt(slidePosNorm * 100).ToString();
     }
 
+    public void DragSlider()
+    {
+        float distance = Mouse.current.position.ReadValue().x - centerPos.x;
+        slidePosNorm = Mathf.Clamp((distance + slideAmp) / (2 * slideAmp), 0, 1);
+        transform.position = Vector2.Lerp(leftPos, rightPos, slidePosNorm);
+        bar.transform.localScale = new Vector3(slidePosNorm, bar.transform.localScale.y, bar.transform.localScale.z);
+        buttonText.text = Mathf.RoundToInt(slidePosNorm * 100).ToString();
+    }
+
     public void OnSelect(BaseEventData eventData)
     {
         selected = true;
@@ -66,7 +76,7 @@ public class SliderUI : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         selected = false;
         inner.color = Color.white;
-        outer.color = Color.black; ;
+        outer.color = Color.black;
     }
 
     private void OnEnable()
