@@ -55,11 +55,10 @@ public class SliderUI : MonoBehaviour, ISelectHandler, IDeselectHandler
         buttonText.text = Mathf.RoundToInt(slidePosNorm * 100).ToString();
     }
 
-    public void DragSlider()
+    public virtual void DragSlider()
     {
         float distance = Mouse.current.position.ReadValue().x - (minPos.x + localToWorld);
         slidePosNorm = Mathf.Clamp(distance / slideAmp, 0, 1);
-        Debug.Log(transform.position);
         transform.localPosition = Vector2.Lerp(minPos, maxPos, slidePosNorm);
         bar.transform.localScale = new Vector3(slidePosNorm, bar.transform.localScale.y, bar.transform.localScale.z);
         buttonText.text = Mathf.RoundToInt(slidePosNorm * 100).ToString();

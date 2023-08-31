@@ -8,6 +8,8 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] GameManager gm;
     [SerializeField] PlayerData playerData;
     [SerializeField] GameObject buttonAudioPrefab;
+    [SerializeField] GameObject optionsMenuPrefab;
+    [SerializeField] GameObject firstButton;
     SoundManager sm;
 
     private void Start()
@@ -29,6 +31,13 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.NewGame();
         SceneManager.LoadScene("IntroCutscene");
+    }
+
+    public void Options()
+    {
+        SettingsMenu settingsMenu = Instantiate(optionsMenuPrefab).GetComponent<SettingsMenu>();
+        settingsMenu.ActivateBackground();
+        settingsMenu.firstMainMenuButton = firstButton;
     }
 
     public void TestFloor2()

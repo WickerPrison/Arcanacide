@@ -41,7 +41,10 @@ public class GameManager : MonoBehaviour
             Resolution currentResolution = Screen.currentResolution;
             Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
         }
-        else Screen.fullScreen = false;
+        else
+        {
+            Screen.fullScreen = false;
+        }
     }
 
     private void Awake()
@@ -230,6 +233,7 @@ public class GameManager : MonoBehaviour
         settingsData.SetVolume(VolumeChannel.MASTER, 1);
         settingsData.SetVolume(VolumeChannel.SFX, 1);
         settingsData.SetVolume(VolumeChannel.MUSIC, 1);
+        SaveGame();
     }
 
     public void StartAtFloor2()

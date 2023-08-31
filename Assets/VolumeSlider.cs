@@ -32,4 +32,10 @@ public class VolumeSlider : SliderUI
         base.MoveSlider();
         settingsData.SetVolume(volumeChannel, slidePosNorm);
     }
+
+    public override void DragSlider()
+    {
+        base.DragSlider();
+        settingsData.SetVolume(volumeChannel, slidePosNorm);
+    }
 }

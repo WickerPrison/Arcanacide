@@ -7,6 +7,7 @@ public class MusicPlayer : MonoBehaviour
     public int currentTrack;
     [SerializeField] AudioSource audioSource;
     [SerializeField] List<AudioClip> audioClips;
+    [SerializeField] SettingsData settingsData;
     Coroutine musicFade;
 
     // Start is called before the first frame update
@@ -22,6 +23,8 @@ public class MusicPlayer : MonoBehaviour
         audioSource.clip = audioClips[musicIndex];
         audioSource.Play();
         audioSource.volume = volume;
+        settingsData.SetVolume(VolumeChannel.MASTER, settingsData.masterVol);
+        settingsData.SetVolume(VolumeChannel.MUSIC, settingsData.musicVol);
     }
 
     public void StartFadeOut(float duration)

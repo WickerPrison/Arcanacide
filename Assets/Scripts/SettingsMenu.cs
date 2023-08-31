@@ -4,10 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
     public GameObject firstButton;
+    GameManager gm;
     SoundManager sm;
     GameObject rebindControlsMenu;
     [SerializeField] GameObject rebindControlsMenuPrefab;
@@ -18,6 +20,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] ToggleUI arrowToggle;
     TextMeshProUGUI fullscreenText;
     [SerializeField] ToggleUI fullscreenToggle;
+    [SerializeField] Image background;
+    [System.NonSerialized] public GameObject firstMainMenuButton;
 
     private void Awake()
     {
@@ -28,9 +32,10 @@ public class SettingsMenu : MonoBehaviour
     private void Start()
     {
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
+        gm = sm.GetComponent<GameManager>();
+        gm.LoadGame();
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(firstButton);
-        
+        EventSystem.current.SetSelectedGameObject(firstButton);     
         direcitonalArrowText = arrowToggle.GetComponentInChildren<TextMeshProUGUI>();
         arrowToggle.SetToggleInstant(settingsData.showArrow);
         fullscreenText = fullscreenToggle.GetComponentInChildren<TextMeshProUGUI>();
@@ -61,6 +66,7 @@ public class SettingsMenu : MonoBehaviour
             fullscreenToggle.ToggleSwitch(false);
             fullscreenText.text = "Off";
         }
+        gm.SaveGame();
         GlobalEvents.instance.OnChangedSetting();
     }
 
@@ -92,12 +98,27 @@ public class SettingsMenu : MonoBehaviour
 
     public void LeaveMenu()
     {
-        sm.ButtonSound();
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
-        pauseMenu.controls.Enable();
+        gm.SaveGame();
+        if(background.enabled == false)
+        {
+            sm.ButtonSound();
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
+            pauseMenu.controls.Enable();
+        }
+        else
+        {
+            sm.ButtonSound();
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(firstMainMenuButton);
+        }
 
         Destroy(gameObject);
+    }
+
+    public void ActivateBackground()
+    {
+        background.enabled = true;
     }
 
     private void OnEnable()

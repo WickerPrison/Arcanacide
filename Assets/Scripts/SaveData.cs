@@ -63,11 +63,11 @@ public class SaveData
 
     public string[] bindingDictionaryKeys;
     public string[] bindingDictionaryValues;
-    public bool showArrow;
+    public bool showArrow = true;
     public float masterVol;
     public float sfxVol;
     public float musicVol;
-    public bool fullscreenMode;
+    public bool fullscreenMode = true;
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, SettingsData settingsData)
     {
