@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class ChaosZombie : EnemyController
 {
-    [SerializeField] Transform handPustule;
+    [SerializeField] Transform[] handPustule;
     ChaosSporesScript sporesScript;
     float sporesDuration = 6;
     float meleeRange = 3f;
@@ -56,7 +56,13 @@ public class ChaosZombie : EnemyController
     public override void SpellAttack()
     {
         PustuleScript pustule = Instantiate(projectilePrefab).GetComponent<PustuleScript>();
-        pustule.transform.position = handPustule.transform.position;
+
+        if (facingFront)
+            pustule.transform.position = handPustule[0].transform.position;
+        else
+            pustule.transform.position = handPustule[1].transform.position;
+
+
         pustule.endPoint = playerScript.transform.position;
         pustule.enemyScript = enemyScript;
     }
