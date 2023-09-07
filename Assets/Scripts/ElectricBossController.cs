@@ -109,8 +109,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
                 attackTime -= Time.deltaTime;
             }
         }
-
-        if (state == EnemyState.SPECIAL)
+        else if (state == EnemyState.SPECIAL)
         {
             float distance = Vector3.Distance(transform.position, fleePoint);
             if(distance <= navAgent.stoppingDistance)
