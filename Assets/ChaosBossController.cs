@@ -8,8 +8,8 @@ using UnityEngine.UIElements;
 public class ChaosBossController : EnemyController
 {
     [System.NonSerialized] public FacePlayer facePlayer;
-    float fleeRadiusMin = 11;
-    float fleeRadiusMax = 20;
+    float fleeRadiusMin = 0;
+    float fleeRadiusMax = 25;
     Vector3 fleePoint;
 
     public override void Start()
@@ -25,6 +25,7 @@ public class ChaosBossController : EnemyController
 
         if (state == EnemyState.SPECIAL)
         {
+            facePlayer.SetDestination(fleePoint);
             float distance = Vector3.Distance(transform.position, fleePoint);
             if (distance <= navAgent.stoppingDistance)
             {
@@ -51,14 +52,6 @@ public class ChaosBossController : EnemyController
         if (navAgent.enabled)
         {
             navAgent.SetDestination(fleePoint);
-            if (navAgent.velocity.magnitude > 0)
-            {
-                facePlayer.SetDestination(fleePoint);
-            }
-            else
-            {
-                facePlayer.ResetDestination();
-            }
         }
     }
 
@@ -68,18 +61,20 @@ public class ChaosBossController : EnemyController
         int yDir = Random.Range(1, 3);
         float xPos = Random.Range(fleeRadiusMin, fleeRadiusMax);
         float zPos = Random.Range(fleeRadiusMin, fleeRadiusMax);
-        Vector3 startPos = playerScript.transform.position + new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
+        Vector3 startPos = new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
         NavMeshHit hit;
-        NavMesh.SamplePosition(startPos, out hit, fleeRadiusMax + 1, NavMesh.AllAreas);
+        NavMesh.SamplePosition(startPos, out hit, 10, NavMesh.AllAreas);
         fleePoint = hit.position;
     }
 
     public override void OnTakeDamage(object sender, System.EventArgs e)
     {
         base.OnTakeDamage(sender, e);
-        if(state == EnemyState.IDLE)
-        {
-            RunAway();
-        }
+    }
+
+    public override void EndStagger()
+    {
+        base.EndStagger();
+        RunAway();
     }
 }
