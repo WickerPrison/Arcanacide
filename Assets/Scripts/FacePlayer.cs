@@ -5,16 +5,16 @@ using UnityEngine;
 public class FacePlayer : MonoBehaviour
 {
     public Transform attackPoint;
-    [SerializeField] Animator frontAnimator;
-    [SerializeField] Animator backAnimator;
+    public Animator frontAnimator;
+    public Animator backAnimator;
     EnemyController enemyController;
     [System.NonSerialized] public Transform player;
-    Vector3 frontAnimatorPosition;
-    Vector3 backAnimatorPosition;
-    public Vector3 away = new Vector3(100, 100, 100);
-    float frontScaleX;
-    float backScaleX;
-    public Vector3 faceDirection;
+    [System.NonSerialized] public Vector3 frontAnimatorPosition;
+    [System.NonSerialized] public Vector3 backAnimatorPosition;
+    [System.NonSerialized] public Vector3 away = new Vector3(100, 100, 100);
+    [System.NonSerialized] public float frontScaleX;
+    [System.NonSerialized] public float backScaleX;
+    [System.NonSerialized] public Vector3 faceDirection;
     Vector3 faceDestination;
     bool facePlayer = true;
     [System.NonSerialized] public int faceDirectionID;
@@ -29,7 +29,7 @@ public class FacePlayer : MonoBehaviour
         backAnimatorPosition = backAnimator.transform.localPosition;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (enemyController.navAgent.enabled && !enemyController.directionLock)
         {
@@ -75,7 +75,7 @@ public class FacePlayer : MonoBehaviour
         }
     }
 
-    public void FaceAttackPoint()
+    public virtual void FaceAttackPoint()
     {
         if (attackPoint.position.z < transform.position.z)
         {
