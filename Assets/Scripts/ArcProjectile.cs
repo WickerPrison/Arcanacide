@@ -10,7 +10,7 @@ public class ArcProjectile : MonoBehaviour
     TouchingCollider touchingCircle;
     [SerializeField] float explosionRadius;
     public Vector3 direction;
-    [SerializeField] float timeToHit;
+    public float timeToHit;
     float speed;
     [SerializeField] int spellDamage;
     [SerializeField] int poiseDamage;
@@ -19,12 +19,16 @@ public class ArcProjectile : MonoBehaviour
     public Vector3 endPoint;
     Vector3 startPoint;
     [SerializeField] float arcHeight;
-    float midpoint;
-    float arcWidth;
+    [SerializeField] float thirdPointX;
     [SerializeField] AudioClip impactSound;
     [SerializeField] float impactVolume;
     [SerializeField] float staggerDuration;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
+
+    float totDist;
+    float a;
+    float b;
+    float c;
 
     private void Start()
     {
@@ -34,13 +38,15 @@ public class ArcProjectile : MonoBehaviour
 
         startPoint = transform.position;
         direction = new Vector3(endPoint.x, 0, endPoint.z) - new Vector3(startPoint.x, 0, startPoint.z);
-        float distance = Vector2.Distance(new Vector2(startPoint.x, startPoint.z), new Vector2(endPoint.x, endPoint.z));
 
-        speed = distance / timeToHit;
+        totDist = Vector2.Distance(new Vector2(startPoint.x, startPoint.z), new Vector2(endPoint.x, endPoint.z));
 
-        midpoint = distance / 2;
-        arcWidth = arcHeight / Mathf.Pow(midpoint, 2);
+        speed = totDist / timeToHit;
 
+        float w2 = Mathf.Pow(thirdPointX, 2);
+        a = -((arcHeight + startPoint.y * w2) / (thirdPointX - w2));
+        b = (arcHeight + startPoint.y * w2)/(thirdPointX - w2) - startPoint.y;
+        c = startPoint.y;
 
         IndicatorCircle indicatorCircle = Instantiate(indicatorCirclePrefab).GetComponent<IndicatorCircle>();
         indicatorCircle.transform.position = new Vector3(endPoint.x, 0, endPoint.z);
@@ -53,10 +59,12 @@ public class ArcProjectile : MonoBehaviour
     void FixedUpdate()
     {
         transform.position = transform.position + direction.normalized * Time.fixedDeltaTime * speed;
-        float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(startPoint.x, startPoint.z));
-        float currentHeight = -arcWidth * Mathf.Pow(distance - midpoint, 2) + arcHeight;
+
+        float xVal = InverseLerpSetY0(startPoint, endPoint, transform.position);
+        float currentHeight = a * Mathf.Pow(xVal, 2) + b * xVal + c;
         transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
-        if(transform.position.y <= 0)
+
+        if (transform.position.y <= 0.3f)
         {
             Explosion();
         }
@@ -73,9 +81,19 @@ public class ArcProjectile : MonoBehaviour
         {
             explosion.GetComponent<AudioSource>().PlayOneShot(impactSound, impactVolume);
             player.StartStagger(staggerDuration);
-            player.LoseHealth(spellDamage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
+            player.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
             player.LosePoise(poiseDamage);
         }
 
+    }
+
+    float InverseLerpSetY0(Vector3 startPos, Vector3 endPos, Vector3 currentPos)
+    {
+        endPos = new Vector3(endPos.x, 0, endPos.z);
+        startPos = new Vector3(startPos.x, 0, startPos.z);
+        currentPos = new Vector3(currentPos.x,0, currentPos.z);
+        Vector3 diff =  endPos - startPos;
+        Vector3 currentDiff = currentPos - startPos;
+        return Vector3.Dot(currentDiff, diff)/Vector3.Dot(diff, diff);
     }
 }
