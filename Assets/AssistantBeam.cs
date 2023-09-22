@@ -12,6 +12,7 @@ public class AssistantBeam : MonoBehaviour
     float chargeIndicatorWidth = 0.5f;
     int damage = 50;
     float poiseDamage = 50;
+    float extensionLength = 0.11f;
 
     private void Awake()
     {
@@ -33,9 +34,9 @@ public class AssistantBeam : MonoBehaviour
 
         indicator = GetComponentInChildren<ChargeIndicator>();
         transform.position = Vector3.zero;
-        indicator.initialPosition = hit1.point;
+        indicator.initialPosition = hit1.point + direction * extensionLength;
         indicator.initialNormal = hit1.normal;
-        indicator.finalPosition = hit2.point;
+        indicator.finalPosition = hit2.point - direction * extensionLength;
         indicator.finalNormal = hit2.normal;
         indicator.indicatorWidth = chargeIndicatorWidth;
     }
