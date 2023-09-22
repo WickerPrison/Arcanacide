@@ -16,8 +16,8 @@ public class AssistantAnimationEvents : MonoBehaviour
         controller.EndAttack();
     }
 
-    public void ThrowBomb()
+    public void ThrowBomb(int hand)
     {
-        controller.ThrowBomb();
+        controller.ThrowBomb(hand);
     }
 }

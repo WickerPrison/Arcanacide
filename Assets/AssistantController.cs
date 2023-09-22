@@ -44,10 +44,10 @@ public class AssistantController : MonoBehaviour
         }
     }
 
-    public void ThrowBomb()
+    public void ThrowBomb(int hand)
     {
         ArcProjectile bomb = Instantiate(bombPrefab).GetComponent<ArcProjectile>();
-        bomb.transform.position = frontArmbombs[0].transform.position;
+        bomb.transform.position = frontArmbombs[hand].transform.position;
         bomb.endPoint = playerScript.transform.position;
     }
 
