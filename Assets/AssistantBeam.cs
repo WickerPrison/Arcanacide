@@ -9,7 +9,7 @@ public class AssistantBeam : MonoBehaviour
     ChargeIndicator indicator;
     LayerMask mask;
     LayerMask playerMask;
-    float chargeIndicatorWidth = 0.5f;
+    float chargeIndicatorWidth = 1f;
     int damage = 50;
     float poiseDamage = 50;
     float extensionLength = 0.11f;
@@ -19,8 +19,8 @@ public class AssistantBeam : MonoBehaviour
         mask = LayerMask.GetMask("Default");
         playerMask = LayerMask.GetMask("Player");
 
-        float xPos = Random.Range(-15, 15);
-        float zPos = Random.Range(-15, 15);
+        float xPos = Random.Range(-12, 12);
+        float zPos = Random.Range(-12, 12);
         transform.position = new Vector3(xPos, 0, zPos);
 
         float xDir = Random.Range(-1f, 1f);
@@ -39,6 +39,16 @@ public class AssistantBeam : MonoBehaviour
         indicator.finalPosition = hit2.point - direction * extensionLength;
         indicator.finalNormal = hit2.normal;
         indicator.indicatorWidth = chargeIndicatorWidth;
+
+        StartCoroutine(BeamTimer());
+    }
+
+    IEnumerator BeamTimer()
+    {
+        yield return new WaitForSeconds(2);
+        PlayerDetection();
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 
     void PlayerDetection()

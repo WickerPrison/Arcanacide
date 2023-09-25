@@ -13,12 +13,14 @@ public class AssistantController : MonoBehaviour
     [SerializeField] Animator frontAnimator;
     [SerializeField] GameObject bombPrefab;
     [SerializeField] Transform[] frontArmbombs;
+    [SerializeField] GameObject beamPrefab;
 
     NavMeshAgent navAgent;
     PlayerScript playerScript;
     AssistantState state = AssistantState.IDLE;
     float attackTime = 5;
     float attackTimer = 0;
+    int beamsNum = 10;
 
 
     // Start is called before the first frame update
@@ -38,8 +40,20 @@ public class AssistantController : MonoBehaviour
             if(attackTimer < 0)
             {
                 attackTimer = attackTime;
-                state = AssistantState.ATTACKING;
-                frontAnimator.Play("ThrowBombs");
+
+                int randInt = Random.Range(0, 2);
+                randInt = 1;
+                switch (randInt)
+                {
+                    case 0:
+                        state = AssistantState.ATTACKING;
+                        frontAnimator.Play("ThrowBombs");
+                        break;
+                    case 1:
+                        state = AssistantState.ATTACKING;
+                        frontAnimator.Play("Beams");
+                        break;
+                }
             }
         }
     }
@@ -49,6 +63,14 @@ public class AssistantController : MonoBehaviour
         ArcProjectile bomb = Instantiate(bombPrefab).GetComponent<ArcProjectile>();
         bomb.transform.position = frontArmbombs[hand].transform.position;
         bomb.endPoint = playerScript.transform.position;
+    }
+
+    public void SummonBeams()
+    {
+        for(int i = 0; i < beamsNum; i++)
+        {
+            Instantiate(beamPrefab);
+        }
     }
 
     public void EndAttack()

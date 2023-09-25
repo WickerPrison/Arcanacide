@@ -9,7 +9,7 @@ public class ChaosBossController : EnemyController
 {
     [System.NonSerialized] public FacePlayer facePlayer;
     float fleeRadiusMin = 0;
-    float fleeRadiusMax = 25;
+    float fleeRadiusMax = 12;
     Vector3 fleePoint;
 
     public override void Start()
@@ -65,6 +65,10 @@ public class ChaosBossController : EnemyController
         NavMeshHit hit;
         NavMesh.SamplePosition(startPos, out hit, 10, NavMesh.AllAreas);
         fleePoint = hit.position;
+        if(Vector3.Distance(fleePoint, transform.position) < 5)
+        {
+            ChooseRandomPoint();
+        }
     }
 
     public override void OnTakeDamage(object sender, System.EventArgs e)

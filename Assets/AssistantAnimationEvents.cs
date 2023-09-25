@@ -20,4 +20,9 @@ public class AssistantAnimationEvents : MonoBehaviour
     {
         controller.ThrowBomb(hand);
     }
+
+    public void Beams()
+    {
+        controller.SummonBeams();
+    }
 }
