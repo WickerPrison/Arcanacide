@@ -25,4 +25,14 @@ public class AssistantAnimationEvents : MonoBehaviour
     {
         controller.SummonBeams();
     }
+
+    public void StartBolts()
+    {
+        controller.StartBolts();
+    }
+
+    public void EndBolts()
+    {
+        controller.EndBolts();
+    }
 }

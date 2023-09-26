@@ -65,7 +65,10 @@ public class AssistantBeam : MonoBehaviour
 
     void HitPlayer(PlayerScript playerScript)
     {
-        playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
-        playerScript.LosePoise(poiseDamage);
+        if(playerScript.gameObject.layer == 3)
+        {
+            playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
+            playerScript.LosePoise(poiseDamage);
+        }
     }
 }

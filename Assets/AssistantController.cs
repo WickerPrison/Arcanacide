@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class AssistantController : MonoBehaviour
     [SerializeField] GameObject bombPrefab;
     [SerializeField] Transform[] frontArmbombs;
     [SerializeField] GameObject beamPrefab;
+    [SerializeField] GameObject boltsPrefab;
+    public Transform boltOrigin;
 
     NavMeshAgent navAgent;
     PlayerScript playerScript;
@@ -21,6 +24,9 @@ public class AssistantController : MonoBehaviour
     float attackTime = 5;
     float attackTimer = 0;
     int beamsNum = 10;
+    int boltsNum = 3;
+
+    public event EventHandler onEndBolts;
 
 
     // Start is called before the first frame update
@@ -41,8 +47,8 @@ public class AssistantController : MonoBehaviour
             {
                 attackTimer = attackTime;
 
-                int randInt = Random.Range(0, 2);
-                randInt = 1;
+                int randInt = UnityEngine.Random.Range(0, 3);
+                randInt = 2;
                 switch (randInt)
                 {
                     case 0:
@@ -52,6 +58,10 @@ public class AssistantController : MonoBehaviour
                     case 1:
                         state = AssistantState.ATTACKING;
                         frontAnimator.Play("Beams");
+                        break;
+                    case 2:
+                        state = AssistantState.ATTACKING;
+                        frontAnimator.Play("Bolts");
                         break;
                 }
             }
@@ -71,6 +81,19 @@ public class AssistantController : MonoBehaviour
         {
             Instantiate(beamPrefab);
         }
+    }
+
+    public void StartBolts()
+    {
+        for (int i = 0; i < boltsNum; i++)
+        {
+            Instantiate(boltsPrefab);
+        }
+    }
+
+    public void EndBolts()
+    {
+        onEndBolts?.Invoke(this, EventArgs.Empty);
     }
 
     public void EndAttack()
