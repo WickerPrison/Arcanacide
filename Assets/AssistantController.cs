@@ -25,6 +25,7 @@ public class AssistantController : MonoBehaviour
     float attackTimer = 0;
     int beamsNum = 10;
     int boltsNum = 3;
+    [System.NonSerialized] public List<AssistantBolt> assistantBolts = new List<AssistantBolt>();
 
     public event EventHandler onEndBolts;
 
@@ -85,9 +86,12 @@ public class AssistantController : MonoBehaviour
 
     public void StartBolts()
     {
+        assistantBolts.Clear();
         for (int i = 0; i < boltsNum; i++)
         {
-            Instantiate(boltsPrefab);
+            AssistantBolt bolt = Instantiate(boltsPrefab).GetComponent<AssistantBolt>();
+            assistantBolts.Add(bolt);
+            bolt.pathfindingMethod = i;
         }
     }
 

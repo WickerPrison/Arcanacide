@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5852644601534776357}
   - component: {fileID: 5852644601534776359}
   - component: {fileID: 5852644601534776358}
+  - component: {fileID: 8961341457317180697}
   m_Layer: 0
   m_Name: AssistantBolt
   m_TagString: Untagged
@@ -47,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cac5fbf12ffc24a9b163057164b41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boidsForce: 10
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
 --- !u!195 &5852644601534776358
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -57,8 +60,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 15
-  m_Acceleration: 8
+  m_Speed: 12
+  m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -69,6 +72,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
+--- !u!54 &8961341457317180697
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5852644601534776352}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &6555849746386224974
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 6555849746386224974}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5852644601534776357}

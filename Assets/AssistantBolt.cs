@@ -15,6 +15,9 @@ public class AssistantBolt : MonoBehaviour
     int damage;
     float dps = 50;
     float damageCounter = 0;
+    [System.NonSerialized] public int pathfindingMethod;
+    [SerializeField] PlayerData playerData;
+    float offset = 5;
 
 
     private void Awake()
@@ -32,9 +35,7 @@ public class AssistantBolt : MonoBehaviour
         bolts = GetComponentInChildren<Bolts>();
         origin = controller.boltOrigin;
 
-        float xPos = Random.Range(-10, 10);
-        float zPos = Random.Range(-10, 10);
-        transform.position = new Vector3(xPos, 0, zPos);
+        FindRandomPosition();
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class AssistantBolt : MonoBehaviour
     {
         bolts.SetPositions(transform.position, origin.position);
 
-        navAgent.SetDestination(playerScript.transform.position);
+        navAgent.SetDestination(FindDestination());
 
         foreach(Collider collider in colliders)
         {
@@ -57,6 +58,36 @@ public class AssistantBolt : MonoBehaviour
                     damageCounter -= damage;
                 }
             }
+        }
+    }
+
+    Vector3 FindDestination()
+    {
+        Vector3 predictDir;
+        switch (pathfindingMethod)
+        {
+            case 0:
+                return playerScript.transform.position;
+            case 1:
+                predictDir = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y).normalized * offset;
+                return playerScript.transform.position + predictDir;
+            case 2:
+                predictDir = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y).normalized * -offset;
+                return playerScript.transform.position + predictDir;
+            default:
+                return playerScript.transform.position;
+        }
+    }
+
+    void FindRandomPosition()
+    {
+        float xPos = Random.Range(-10, 10);
+        float zPos = Random.Range(-10, 10);
+        transform.position = new Vector3(xPos, 0, zPos);
+
+        if(Vector3.Distance(transform.position, playerScript.transform.position) < 5)
+        {
+            FindRandomPosition();
         }
     }
 
