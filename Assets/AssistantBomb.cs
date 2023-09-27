@@ -40,6 +40,7 @@ public class AssistantBomb : ArcProjectile
             NavMeshHit hit;
             NavMesh.SamplePosition(endPosition, out hit, 6, NavMesh.AllAreas);
             miniBomb.endPoint = hit.position;
+            miniBomb.timeToHit += Random.Range(-0.3f, 0.3f);
         }
 
         base.Explosion();

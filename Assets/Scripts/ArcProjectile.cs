@@ -52,7 +52,7 @@ public class ArcProjectile : MonoBehaviour
         indicatorCircle.transform.position = new Vector3(endPoint.x, 0, endPoint.z);
         indicatorCircle.finalScale = explosionRadius;
         indicatorCircle.startScale = explosionRadius;
-        indicatorCircle.deathTime = 1.5f;
+        indicatorCircle.deathTime = timeToHit + 0.1f;
         touchingCircle = indicatorCircle.gameObject.GetComponentInChildren<TouchingCollider>();
     }
 
