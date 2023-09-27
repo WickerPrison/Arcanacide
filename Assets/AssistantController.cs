@@ -17,6 +17,8 @@ public class AssistantController : MonoBehaviour
     [SerializeField] GameObject beamPrefab;
     [SerializeField] GameObject boltsPrefab;
     public Transform boltOrigin;
+    [SerializeField] GameObject ACPrefab;
+    [SerializeField] Transform ACorigin;
 
     NavMeshAgent navAgent;
     PlayerScript playerScript;
@@ -40,16 +42,17 @@ public class AssistantController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        navAgent.SetDestination(playerScript.transform.position);
+
         if(state == AssistantState.IDLE)
         {
-            navAgent.SetDestination(playerScript.transform.position);
             attackTimer -= Time.deltaTime;
             if(attackTimer < 0)
             {
                 attackTimer = attackTime;
 
-                int randInt = UnityEngine.Random.Range(0, 3);
-                randInt = 0;
+                int randInt = UnityEngine.Random.Range(0, 4);
+                randInt = 3;
                 switch (randInt)
                 {
                     case 0:
@@ -63,6 +66,10 @@ public class AssistantController : MonoBehaviour
                     case 2:
                         state = AssistantState.ATTACKING;
                         frontAnimator.Play("Bolts");
+                        break;
+                    case 3:
+                        state = AssistantState.ATTACKING;
+                        frontAnimator.Play("IceRing");
                         break;
                 }
             }
@@ -98,6 +105,13 @@ public class AssistantController : MonoBehaviour
     public void EndBolts()
     {
         onEndBolts?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ThrowAC()
+    {
+        ArcProjectile ac = Instantiate(ACPrefab).GetComponent<ArcProjectile>();
+        ac.transform.position = ACorigin.position;
+        ac.endPoint = playerScript.transform.position;
     }
 
     public void EndAttack()

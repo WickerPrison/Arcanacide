@@ -48,15 +48,10 @@ public class ArcProjectile : MonoBehaviour
         b = (arcHeight + startPoint.y * w2)/(thirdPointX - w2) - startPoint.y;
         c = startPoint.y;
 
-        IndicatorCircle indicatorCircle = Instantiate(indicatorCirclePrefab).GetComponent<IndicatorCircle>();
-        indicatorCircle.transform.position = new Vector3(endPoint.x, 0, endPoint.z);
-        indicatorCircle.finalScale = explosionRadius;
-        indicatorCircle.startScale = explosionRadius;
-        indicatorCircle.deathTime = timeToHit + 0.1f;
-        touchingCircle = indicatorCircle.gameObject.GetComponentInChildren<TouchingCollider>();
+        SpawnIndicator();
     }
 
-    void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         transform.position = transform.position + direction.normalized * Time.fixedDeltaTime * speed;
 
@@ -68,6 +63,16 @@ public class ArcProjectile : MonoBehaviour
         {
             Explosion();
         }
+    }
+
+    public virtual void SpawnIndicator()
+    {
+        IndicatorCircle indicatorCircle = Instantiate(indicatorCirclePrefab).GetComponent<IndicatorCircle>();
+        indicatorCircle.transform.position = new Vector3(endPoint.x, 0, endPoint.z);
+        indicatorCircle.finalScale = explosionRadius;
+        indicatorCircle.startScale = explosionRadius;
+        indicatorCircle.deathTime = timeToHit + 0.1f;
+        touchingCircle = indicatorCircle.gameObject.GetComponentInChildren<TouchingCollider>();
     }
 
     public virtual void Explosion()

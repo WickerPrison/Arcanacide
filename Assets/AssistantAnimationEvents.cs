@@ -35,4 +35,9 @@ public class AssistantAnimationEvents : MonoBehaviour
     {
         controller.EndBolts();
     }
+
+    public void ThrowAC()
+    {
+        controller.ThrowAC();
+    }
 }
