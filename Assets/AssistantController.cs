@@ -49,7 +49,7 @@ public class AssistantController : MonoBehaviour
                 attackTimer = attackTime;
 
                 int randInt = UnityEngine.Random.Range(0, 3);
-                randInt = 2;
+                randInt = 0;
                 switch (randInt)
                 {
                     case 0:

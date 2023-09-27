@@ -30,7 +30,7 @@ public class ArcProjectile : MonoBehaviour
     float b;
     float c;
 
-    private void Start()
+    public virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerCollider = player.gameObject.GetComponent<Collider>();
@@ -70,7 +70,7 @@ public class ArcProjectile : MonoBehaviour
         }
     }
 
-    void Explosion()
+    public virtual void Explosion()
     {
         GameObject explosion = Instantiate(explosionPrefab);
         explosion.transform.position = new Vector3(endPoint.x, .3f, endPoint.z);

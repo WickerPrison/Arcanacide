@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1960598760395357478}
-  - component: {fileID: 7444925691929951341}
-  - component: {fileID: 5557777709201909193}
   - component: {fileID: 1215313701591997485}
+  - component: {fileID: 5557777709201909193}
   m_Layer: 7
   m_Name: AssistantBomb
   m_TagString: Untagged
@@ -36,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7444925691929951341
+--- !u!114 &1215313701591997485
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2133317422168920642}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec50610ace4b6de45b4adcd9aa7537e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 2afbd2976e1e5cf498cbb74e5f068bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 3284791711765906126, guid: 4d5bd7b8dac83504ab22c5a5d3758717, type: 3}
@@ -61,6 +60,8 @@ MonoBehaviour:
   impactSound: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
   impactVolume: 2
   staggerDuration: 0.1
+  miniBombPrefab: {fileID: 7303025943706412911, guid: f3fd08ec44903c143ac324b323e1679d, type: 3}
+  spriteRenderer: {fileID: 304665642965956516}
 --- !u!135 &5557777709201909193
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -74,19 +75,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1215313701591997485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133317422168920642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2afbd2976e1e5cf498cbb74e5f068bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 304665642965956516}
 --- !u!1 &6936808832336582817
 GameObject:
   m_ObjectHideFlags: 0
