@@ -9,10 +9,11 @@ public class AssistantBeam : MonoBehaviour
     ChargeIndicator indicator;
     LayerMask mask;
     LayerMask playerMask;
-    float chargeIndicatorWidth = 1f;
+    float chargeIndicatorWidth = 1.2f;
     int damage = 50;
     float poiseDamage = 50;
     float extensionLength = 0.11f;
+    [SerializeField] ParticleSystem particleSys;
 
     private void Awake()
     {
@@ -40,7 +41,25 @@ public class AssistantBeam : MonoBehaviour
         indicator.finalNormal = hit2.normal;
         indicator.indicatorWidth = chargeIndicatorWidth;
 
+        SetupParticleSystem();
+
         StartCoroutine(BeamTimer());
+    }
+
+
+    void SetupParticleSystem()
+    {
+        ParticleSystem.ShapeModule shapeModule = particleSys.shape;
+        shapeModule.scale = new Vector3(chargeIndicatorWidth * 0.8f, Vector3.Distance(indicator.initialPosition, indicator.finalPosition), 0);
+
+        particleSys.transform.position = (indicator.initialPosition + indicator.finalPosition) / 2;
+
+        shapeModule.rotation = Quaternion.LookRotation(particleSys.transform.position - indicator.initialPosition).eulerAngles;
+        shapeModule.rotation = new Vector3(-90, shapeModule.rotation.y, shapeModule.rotation.z);
+        ParticleSystem.EmissionModule emissionModule = particleSys.emission;
+        Burst burst = emissionModule.GetBurst(0);
+        burst.count = Mathf.RoundToInt(5 * shapeModule.scale.y);
+        emissionModule.SetBurst(0, burst);
     }
 
     IEnumerator BeamTimer()

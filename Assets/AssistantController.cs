@@ -53,7 +53,7 @@ public class AssistantController : MonoBehaviour
                 attackTimer = attackTime;
 
                 int randInt = UnityEngine.Random.Range(0, 2 + bossController.phase);
-                randInt = 3;
+                randInt = 1;
                 state = AssistantState.ATTACKING;
                 switch (randInt)
                 {
