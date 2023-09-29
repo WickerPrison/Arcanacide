@@ -11,17 +11,26 @@ public class ChaosBossController : EnemyController
     float fleeRadiusMin = 0;
     float fleeRadiusMax = 12;
     Vector3 fleePoint;
+    [System.NonSerialized] public int phase = 1;
+    float phaseTriggerPercent = 1.1f;
+    float phaseTrigger;
 
     public override void Start()
     {
         base.Start();
         ChooseRandomPoint();
         facePlayer = GetComponent<FacePlayer>();
+        phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
     }
 
     public override void EnemyAI()
     {
         base.EnemyAI();
+
+        if (phase == 1 && enemyScript.health < phaseTrigger)
+        {
+            phase = 2;
+        }
 
         if (state == EnemyState.SPECIAL)
         {

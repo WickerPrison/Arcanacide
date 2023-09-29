@@ -11,9 +11,9 @@ public class AssistantAnimationEvents : MonoBehaviour
         controller = GetComponentInParent<AssistantController>();
     }
 
-    public void EndAttack()
+    public void EndAttack(float attackTime)
     {
-        controller.EndAttack();
+        controller.EndAttack(attackTime);
     }
 
     public void ThrowBomb(int hand)

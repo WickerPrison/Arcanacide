@@ -19,13 +19,14 @@ public class AssistantController : MonoBehaviour
     public Transform boltOrigin;
     [SerializeField] GameObject ACPrefab;
     [SerializeField] Transform ACorigin;
+    [SerializeField] ChaosBossController bossController;
 
     NavMeshAgent navAgent;
     PlayerScript playerScript;
     AssistantState state = AssistantState.IDLE;
     float attackTime = 5;
     float attackTimer = 0;
-    int beamsNum = 10;
+    int beamsNum = 5;
     int boltsNum = 3;
     [System.NonSerialized] public List<AssistantBolt> assistantBolts = new List<AssistantBolt>();
 
@@ -51,25 +52,25 @@ public class AssistantController : MonoBehaviour
             {
                 attackTimer = attackTime;
 
-                int randInt = UnityEngine.Random.Range(0, 4);
+                int randInt = UnityEngine.Random.Range(0, 2 + bossController.phase);
                 randInt = 3;
+                state = AssistantState.ATTACKING;
                 switch (randInt)
                 {
                     case 0:
-                        state = AssistantState.ATTACKING;
                         frontAnimator.Play("ThrowBombs");
                         break;
                     case 1:
-                        state = AssistantState.ATTACKING;
                         frontAnimator.Play("Beams");
                         break;
                     case 2:
-                        state = AssistantState.ATTACKING;
-                        frontAnimator.Play("Bolts");
+                        if (bossController.phase == 1)
+                            frontAnimator.Play("IceRing");
+                        else
+                            frontAnimator.Play("IceRing2");
                         break;
                     case 3:
-                        state = AssistantState.ATTACKING;
-                        frontAnimator.Play("IceRing");
+                        frontAnimator.Play("Bolts");
                         break;
                 }
             }
@@ -78,14 +79,16 @@ public class AssistantController : MonoBehaviour
 
     public void ThrowBomb(int hand)
     {
-        ArcProjectile bomb = Instantiate(bombPrefab).GetComponent<ArcProjectile>();
+        AssistantBomb bomb = Instantiate(bombPrefab).GetComponent<AssistantBomb>();
         bomb.transform.position = frontArmbombs[hand].transform.position;
         bomb.endPoint = playerScript.transform.position;
+        bomb.phase = bossController.phase;
     }
 
     public void SummonBeams()
     {
-        for(int i = 0; i < beamsNum; i++)
+        
+        for(int i = 0; i < beamsNum * bossController.phase; i++)
         {
             Instantiate(beamPrefab);
         }
@@ -114,9 +117,9 @@ public class AssistantController : MonoBehaviour
         ac.endPoint = playerScript.transform.position;
     }
 
-    public void EndAttack()
+    public void EndAttack(float time)
     {
         state = AssistantState.IDLE;
-        attackTimer = attackTime;
+        attackTimer = time;
     }
 }

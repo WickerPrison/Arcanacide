@@ -38,13 +38,16 @@ public class AssistantBolt : MonoBehaviour
         FindRandomPosition();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        bolts.SetPositions(transform.position, origin.position);
-
+        bolts.SetPositions(origin.position, transform.position);
+        
         navAgent.SetDestination(FindDestination());
+    }
 
+    // Update is called once per frame
+    void FixedUpdate()
+    {
         foreach(Collider collider in colliders)
         {
             if (collider.gameObject.CompareTag("Player") && collider.gameObject.layer == 3)

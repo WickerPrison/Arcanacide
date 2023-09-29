@@ -6,10 +6,11 @@ public class IceRipple : MonoBehaviour
 {
     [SerializeField] GameObject iceBoxPrefab;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
-    float startRadius = 2;
-    int numberOfBoxes = 35;
-    float rippleSpeed = 5;
-    float lifeTime = 2;
+    [System.NonSerialized] public float startRadius = 2;
+    [System.NonSerialized] public int numberOfBoxes = 35;
+    [System.NonSerialized] public float rippleSpeed = 5;
+    [System.NonSerialized] public float lifeTime = 2;
+    [System.NonSerialized] public Color boxColor;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,11 @@ public class IceRipple : MonoBehaviour
             iceBox.rippleSpeed = rippleSpeed;
             iceBox.lifeTime = lifeTime;
             iceBox.direction = Vector3.Normalize(iceBox.transform.position - transform.position);
+            if(boxColor != null)
+            {
+                ParticleSystem.MainModule particleSystem = iceBox.GetComponent<ParticleSystem>().main;
+                particleSystem.startColor = boxColor;
+            }
             WaveBox waveBox = iceBox.GetComponent<WaveBox>();
             waveBox.enemyOfOrigin = enemyOfOrigin;
         }

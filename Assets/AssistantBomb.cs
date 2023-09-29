@@ -10,6 +10,7 @@ public class AssistantBomb : ArcProjectile
     float miniBombRadius = 5f;
     [SerializeField] GameObject miniBombPrefab;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [System.NonSerialized] public int phase = 1;
 
     // Start is called before the first frame update
     public override void Start()
@@ -30,6 +31,12 @@ public class AssistantBomb : ArcProjectile
 
     public override void Explosion()
     {
+        if(phase == 1)
+        {
+            base.Explosion();
+            return;
+        }
+
         for(int i = 0; i < bombCount; i++)
         {
             ArcProjectile miniBomb = Instantiate(miniBombPrefab).GetComponent<ArcProjectile>();

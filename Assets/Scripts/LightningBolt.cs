@@ -9,6 +9,7 @@ public class LightningBolt : MonoBehaviour
     [SerializeField] Transform endPoint;
     public LineRenderer lineRenderer;
     public float noiseAmp = 1;
+    public float endNoiseAmp = 1;
     [SerializeField] List<LineRenderer> forks = new List<LineRenderer>();
     int forkPointNum = 5;
     [System.NonSerialized] public int frameDivider = 3;
@@ -24,11 +25,13 @@ public class LightningBolt : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if(frameCounter < frameDivider)
         {
             frameCounter += 1;
+            points[pointNum - 1] = endPoint.position + Noise(endNoiseAmp);
+            lineRenderer.SetPositions(points);
             return;
         }
 
@@ -40,10 +43,10 @@ public class LightningBolt : MonoBehaviour
         for(int i = 1; i < pointNum - 1; i++)
         {
             float distance = length * i / (pointNum - 1);
-            Vector3 position = startPoint.position + direction.normalized * distance + Noise();
+            Vector3 position = startPoint.position + direction.normalized * distance + Noise(noiseAmp);
             points[i] = position;
         }
-        points[pointNum - 1] = endPoint.position + Noise();
+        points[pointNum - 1] = endPoint.position + Noise(endNoiseAmp);
         lineRenderer.positionCount = points.Length;
         lineRenderer.SetPositions(points);
 
@@ -54,13 +57,13 @@ public class LightningBolt : MonoBehaviour
         }
     }
 
-    Vector3 Noise()
+    Vector3 Noise(float noise)
     {
         Vector3 noiseVector;
         float x = Random.Range(-1f, 1f);
         float y = Random.Range(-1f, 1f);
         float z = Random.Range(-1f, 1f);
-        noiseVector = new Vector3(x, y, z) * noiseAmp;
+        noiseVector = new Vector3(x, y, z) * noise;
         return noiseVector;
     }
 
@@ -68,11 +71,11 @@ public class LightningBolt : MonoBehaviour
     {
         int node = Random.Range(1, pointNum - 1);
         Vector3[] forkPoints = new Vector3[forkPointNum];
-        Vector3 noiseVector = Noise() * 0.5f;
+        Vector3 noiseVector = Noise(noiseAmp) * 0.5f;
         forkPoints[0] = points[node];
         for(int i = 1; i < forkPointNum; i++)
         {
-            forkPoints[i] = forkPoints[i - 1] + noiseVector + Noise() * 0.5f;
+            forkPoints[i] = forkPoints[i - 1] + noiseVector + Noise(noiseAmp) * 0.5f;
         }
 
         fork.positionCount = forkPoints.Length;
