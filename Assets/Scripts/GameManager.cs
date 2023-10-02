@@ -72,16 +72,16 @@ public class GameManager : MonoBehaviour
         switch (playerData.killedEnemiesNum)
         {
             case 5:
-                dialogueData.bonsaiQueue.Add(1);
+                dialogueData.smackGPTQueue.Add(1);
                 break;
             case 15:
-                dialogueData.bonsaiQueue.Add(2);
+                dialogueData.smackGPTQueue.Add(2);
                 break;
         }
 
         if(playerData.unlockedAbilities.Contains("Block") && playerData.killedEnemiesNum - playerData.killedEnemiesAtGetShield == 11)
         {
-            dialogueData.bonsaiQueue.Add(3);
+            dialogueData.smackGPTQueue.Add(3);
         }
     }
 
@@ -151,8 +151,8 @@ public class GameManager : MonoBehaviour
             dialogueData.directorPreviousConversations = data.directorWilkinsPreviousConversations.ToList();
             dialogueData.freiQueue = data.agentFreiQueue.ToList();
             dialogueData.freiPreviousConversations = data.agentFreiPreviousConversations.ToList();
-            dialogueData.bonsaiQueue = data.bonsaiQueue.ToList();
-            dialogueData.bonsaiPreviousConversations = data.bonsaiPreviousConversations.ToList();
+            dialogueData.smackGPTQueue = data.bonsaiQueue.ToList();
+            dialogueData.smackGPTPreviousConversations = data.bonsaiPreviousConversations.ToList();
             dialogueData.unknownNumberQueue = data.QuestionMarksQueue.ToList();
             dialogueData.unknownNumberPreviousConversations = data.QuestionMarksPreviousConversations.ToList();
             dialogueData.patchworkGaryConversations = data.patchworkGaryConversations.ToList();
@@ -220,8 +220,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorPreviousConversations.Clear();
         dialogueData.freiQueue.Clear();
         dialogueData.freiPreviousConversations.Clear();
-        dialogueData.bonsaiQueue.Clear();
-        dialogueData.bonsaiPreviousConversations.Clear();
+        dialogueData.smackGPTQueue.Clear();
+        dialogueData.smackGPTPreviousConversations.Clear();
         dialogueData.unknownNumberQueue.Clear();
         dialogueData.unknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);
@@ -290,8 +290,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorPreviousConversations.Clear();
         dialogueData.freiQueue.Clear();
         dialogueData.freiPreviousConversations.Clear();
-        dialogueData.bonsaiQueue.Clear();
-        dialogueData.bonsaiPreviousConversations.Clear();
+        dialogueData.smackGPTQueue.Clear();
+        dialogueData.smackGPTPreviousConversations.Clear();
         dialogueData.unknownNumberQueue.Clear();
         dialogueData.unknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);
@@ -365,8 +365,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorPreviousConversations.Clear();
         dialogueData.freiQueue.Clear();
         dialogueData.freiPreviousConversations.Clear();
-        dialogueData.bonsaiQueue.Clear();
-        dialogueData.bonsaiPreviousConversations.Clear();
+        dialogueData.smackGPTQueue.Clear();
+        dialogueData.smackGPTPreviousConversations.Clear();
         dialogueData.unknownNumberQueue.Clear();
         dialogueData.unknownNumberPreviousConversations.Clear();
         dialogueData.directorQueue.Add(0);

@@ -122,8 +122,8 @@ public class SaveData
         directorWilkinsPreviousConversations = dialogueData.directorPreviousConversations.ToArray();
         agentFreiQueue = dialogueData.freiQueue.ToArray();
         agentFreiPreviousConversations = dialogueData.freiPreviousConversations.ToArray();
-        bonsaiQueue = dialogueData.bonsaiQueue.ToArray();
-        bonsaiPreviousConversations = dialogueData.bonsaiPreviousConversations.ToArray();
+        bonsaiQueue = dialogueData.smackGPTQueue.ToArray();
+        bonsaiPreviousConversations = dialogueData.smackGPTPreviousConversations.ToArray();
         QuestionMarksQueue = dialogueData.unknownNumberQueue.ToArray();
         QuestionMarksPreviousConversations = dialogueData.unknownNumberPreviousConversations.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();

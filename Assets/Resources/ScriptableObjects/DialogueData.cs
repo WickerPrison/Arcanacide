@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum PhoneContacts
 {
-    DIRECTORWILKINS, AGENTFREI, BONSAI, UNKNOWNNUMBER
+    DIRECTORWILKINS, AGENTFREI, SMACKGPT, UNKNOWNNUMBER
 }
 
 [CreateAssetMenu]
@@ -20,9 +20,9 @@ public class DialogueData : ScriptableObject
     string agentFrei = "Agent Frei";
     public List<int> freiQueue;
     public List<int> freiPreviousConversations;
-    string bonsai = "Bonsai";
-    public List<int> bonsaiQueue;
-    public List<int> bonsaiPreviousConversations;
+    string smackGPT = "SmackGPT";
+    public List<int> smackGPTQueue;
+    public List<int> smackGPTPreviousConversations;
     string unkownNumber = "Unknown Number";
     public List<int> unknownNumberQueue;
     public List<int> unknownNumberPreviousConversations;
@@ -40,8 +40,8 @@ public class DialogueData : ScriptableObject
                 return directorQueue;
             case PhoneContacts.AGENTFREI:
                 return freiQueue;
-            case PhoneContacts.BONSAI:
-                return bonsaiQueue;
+            case PhoneContacts.SMACKGPT:
+                return smackGPTQueue;
             case PhoneContacts.UNKNOWNNUMBER:
                 return unknownNumberQueue;
             default:
@@ -57,8 +57,8 @@ public class DialogueData : ScriptableObject
                 return directorPreviousConversations;
             case PhoneContacts.AGENTFREI:
                 return freiPreviousConversations;
-            case PhoneContacts.BONSAI:
-                return bonsaiPreviousConversations;
+            case PhoneContacts.SMACKGPT:
+                return smackGPTPreviousConversations;
             case PhoneContacts.UNKNOWNNUMBER:
                 return unknownNumberPreviousConversations;
             default:
@@ -74,8 +74,8 @@ public class DialogueData : ScriptableObject
                 return directorWilkins;
             case PhoneContacts.AGENTFREI:
                 return agentFrei;
-            case PhoneContacts.BONSAI:
-                return bonsai;
+            case PhoneContacts.SMACKGPT:
+                return smackGPT;
             case PhoneContacts.UNKNOWNNUMBER:
                 return unkownNumber;
             default:
@@ -97,9 +97,9 @@ public class DialogueData : ScriptableObject
             newMessages.Add(agentFrei);
         }
 
-        if(bonsaiQueue.Count > 0)
+        if(smackGPTQueue.Count > 0)
         {
-            newMessages.Add(bonsai);
+            newMessages.Add(smackGPT);
         }
 
         if(unknownNumberQueue.Count > 0)
@@ -133,12 +133,12 @@ public class DialogueData : ScriptableObject
             }
         }
 
-        if(bonsaiQueue.Count + bonsaiPreviousConversations.Count > 0)
+        if(smackGPTQueue.Count + smackGPTPreviousConversations.Count > 0)
         {
-            contacts.Add(PhoneContacts.BONSAI);
-            if(bonsaiQueue.Count > 0)
+            contacts.Add(PhoneContacts.SMACKGPT);
+            if(smackGPTQueue.Count > 0)
             {
-                newMessages.Add(PhoneContacts.BONSAI);
+                newMessages.Add(PhoneContacts.SMACKGPT);
             }
         }
 
