@@ -29,6 +29,7 @@ public class DialogueData : ScriptableObject
 
     public List<int> patchworkGaryConversations;
     public List<int> whistleBlowerConversations;
+    public List<int> freiConversations;
 
 
     public List<int> GetQueue(PhoneContacts name)
