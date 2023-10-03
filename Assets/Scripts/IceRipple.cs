@@ -10,7 +10,7 @@ public class IceRipple : MonoBehaviour
     [System.NonSerialized] public int numberOfBoxes = 35;
     [System.NonSerialized] public float rippleSpeed = 5;
     [System.NonSerialized] public float lifeTime = 2;
-    [System.NonSerialized] public Color boxColor;
+    public Color boxColor;
 
     // Start is called before the first frame update
     void Start()
