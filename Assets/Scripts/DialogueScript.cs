@@ -19,6 +19,7 @@ public class DialogueScript : MonoBehaviour
     [SerializeField] Sprite headOfHRImage;
     [SerializeField] Sprite whistleblowerImage;
     [SerializeField] Sprite freiImage;
+    [SerializeField] Sprite headOfAccountingImage;
     Dictionary<string, Sprite> imageDict;
 
     private void Awake()
@@ -51,7 +52,8 @@ public class DialogueScript : MonoBehaviour
             {"Fat Man", fatManImage },
             {"Catherine Pope", whistleblowerImage },
             {"Carol", headOfHRImage },
-            {"Agent Frei", freiImage }
+            {"Agent Frei", freiImage },
+            {"Head of Accounting", headOfAccountingImage }
         };
     }
 }
