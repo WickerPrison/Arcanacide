@@ -81,6 +81,11 @@ public class IceBoss : EnemyController
             musicManager.ImmediateStop();
             //return;
         }
+        else
+        {
+            gm.awareEnemies += 1;
+            state = EnemyState.IDLE;
+        }
 
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
 
@@ -99,7 +104,8 @@ public class IceBoss : EnemyController
     {
         if (mapData.iceBossKilled) return;
 
-        base.EnemyAI();
+
+        playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 
         if (playerDistance > tooFarAway && state != EnemyState.DYING)
         {

@@ -51,7 +51,6 @@ public class ElectricBossController : EnemyController, IEndDialogue
         chargeIndicatorWidth = enemyCollider.radius * 2;
         abilityTime = abilityMaxTime;
         ChooseRandomPoint();
-        gm.awareEnemies += 1;
         if (mapData.electricBossKilled)
         {
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
@@ -60,6 +59,10 @@ public class ElectricBossController : EnemyController, IEndDialogue
             musicManager.ImmediateStop();
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
+        }
+        else
+        {
+            gm.awareEnemies += 1;
         }
     }
 

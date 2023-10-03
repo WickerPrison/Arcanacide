@@ -9,12 +9,6 @@ public class BossDialogue : MonoBehaviour
     [SerializeField] string[] lookUpDialogue;
     int randInt = 0;
 
-    private void Start()
-    {
-        GameManager gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        gm.awareEnemies += 1;
-    }
-
     public void LookUpDialogue()
     {
         dialogue = Instantiate(dialoguePrefab).GetComponent<DialogueScript>();

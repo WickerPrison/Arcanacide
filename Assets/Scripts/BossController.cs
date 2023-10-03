@@ -72,6 +72,10 @@ public class BossController : EnemyController, IEndDialogue
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
         }
+        else
+        {
+            gm.awareEnemies += 1;
+        }
     }
 
     public override void Update()
