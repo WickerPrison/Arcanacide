@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerSFX
+{
+    FOOTSTEP, DODGE
+}
+
 public class PlayerSound : MonoBehaviour
 {
     AudioSource SFX;
@@ -10,11 +15,17 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] List<AudioClip> soundEffects = new List<AudioClip>();
     [SerializeField] EventReference[] fmodSoundEffects;
     StudioEventEmitter fmodEmitter;
+    Dictionary<PlayerSFX, int> playerSFXDict;
 
     private void Start()
     {
         SFX = GetComponent<AudioSource>();
         fmodEmitter = GetComponent<StudioEventEmitter>();
+        playerSFXDict = new Dictionary<PlayerSFX, int>()
+        {
+            {PlayerSFX.FOOTSTEP, 0 },
+            {PlayerSFX.DODGE, 1 }
+        };
     }
 
     public void PlaySoundEffect(AudioClip clip, float volume)
@@ -22,20 +33,14 @@ public class PlayerSound : MonoBehaviour
         SFX.PlayOneShot(clip, volume); 
     }
 
-    public void PlaySoundEffectFromList(int index, float volume)
+    public void PlaySoundEffectFromList(PlayerSFX playerSFX)
+    {
+        RuntimeManager.PlayOneShot(fmodSoundEffects[playerSFXDict[playerSFX]], transform.position);
+    }
+
+    public void PlaySoundEffectFromList2(int index, float volume)
     {
         SFX.PlayOneShot(soundEffects[index], volume);
-    }
-
-    public void Footstep()
-    {
-        FMODUnity.RuntimeManager.PlayOneShot(fmodSoundEffects[0], transform.position);
-        //SFX.PlayOneShot(soundEffects[0], 0.75f);
-    }
-
-    public void SwordSwoosh()
-    {
-        SFX.PlayOneShot(soundEffects[1], 2);
     }
 
     public void Pain()

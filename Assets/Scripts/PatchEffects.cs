@@ -198,7 +198,7 @@ public class PatchEffects : MonoBehaviour
     public void ExplosiveHealing()
     {
         StartCoroutine(cameraScript.ScreenShake(0.1f, 0.3f));
-        playerSound.PlaySoundEffectFromList(10, 1);
+        playerSound.PlaySoundEffectFromList2(10, 1);
         playerAnimation.shoveVFX.Play();
         explosiveHealingDamage = playerData.ArcaneDamage() * 3;
 

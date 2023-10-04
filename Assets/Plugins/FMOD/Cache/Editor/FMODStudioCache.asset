@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8766238779032152254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SwordSwoosh
+  m_EditorClassIdentifier: 
+  Path: event:/SwordSwoosh
+  Guid:
+    Data1: -1119663120
+    Data2: 1316255712
+    Data3: -94480492
+    Data4: -263120505
+  Banks:
+  - {fileID: 8193188396472513740}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-7127162057430413395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Dodge
+  m_EditorClassIdentifier: 
+  Path: event:/Dodge
+  Guid:
+    Data1: 114530977
+    Data2: 1187012008
+    Data3: -449336136
+    Data4: 379505842
+  Banks:
+  - {fileID: 8193188396472513740}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-1115713915784914040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,10 +69,10 @@ MonoBehaviour:
   Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638320288639517423
+  lastModified: 638320327256119277
   FileSizes:
   - Name: Desktop
-    Value: 804
+    Value: 894
   Exists: 1
 --- !u!114 &-222169150420776843
 MonoBehaviour:
@@ -35,7 +89,7 @@ MonoBehaviour:
   Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638320288639471035
+  lastModified: 638320327256098738
   FileSizes:
   - Name: Desktop
     Value: 1036
@@ -58,12 +112,14 @@ MonoBehaviour:
   - {fileID: 8193188396472513740}
   EditorEvents:
   - {fileID: 3209535521247426296}
+  - {fileID: -8766238779032152254}
+  - {fileID: -7127162057430413395}
   EditorParameters: []
   MasterBanks:
   - {fileID: -222169150420776843}
   StringsBanks:
   - {fileID: -1115713915784914040}
-  cacheTime: 638320288641036575
+  cacheTime: 638320327257432806
   cacheVersion: 131607
 --- !u!114 &3209535521247426296
 MonoBehaviour:
@@ -107,8 +163,8 @@ MonoBehaviour:
   Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638320288641036575
+  lastModified: 638320327257432806
   FileSizes:
   - Name: Desktop
-    Value: 2528
+    Value: 9216
   Exists: 1

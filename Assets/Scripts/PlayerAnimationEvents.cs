@@ -280,7 +280,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void Footstep()
     {
-        playerSound.Footstep();
+        playerSound.PlaySoundEffectFromList(PlayerSFX.FOOTSTEP);
     }
 
     public void ElectricSmear()
