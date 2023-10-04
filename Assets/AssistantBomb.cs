@@ -11,6 +11,8 @@ public class AssistantBomb : ArcProjectile
     [SerializeField] GameObject miniBombPrefab;
     [SerializeField] SpriteRenderer spriteRenderer;
     [System.NonSerialized] public int phase = 1;
+    [SerializeField] float initialAngle;
+    [SerializeField] float finalAngle;
 
     // Start is called before the first frame update
     public override void Start()
@@ -27,6 +29,10 @@ public class AssistantBomb : ArcProjectile
         {
             spriteRenderer.sortingOrder = 0;
         }
+
+        float progress = (timer + timeToHit / 2) / timeToHit;
+        float zAngle = Mathf.Lerp(finalAngle, initialAngle, progress) * Mathf.Sign(direction.x);
+        spriteRenderer.transform.rotation = Quaternion.Euler(25, 0, zAngle);
     }
 
     public override void Explosion()
