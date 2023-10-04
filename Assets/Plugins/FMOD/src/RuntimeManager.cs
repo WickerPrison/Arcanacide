@@ -1189,6 +1189,41 @@ retry:
             instance.release();
         }
 
+        // Versions of PlayOneShot functions modified by me to have volume controls
+        public static void PlayOneShot(EventReference eventReference, float volume, Vector3 position = new Vector3())
+        {
+            try
+            {
+                PlayOneShot(eventReference.Guid, volume, position);
+            }
+            catch (EventNotFoundException)
+            {
+                RuntimeUtils.DebugLogWarning("[FMOD] Event not found: " + eventReference);
+            }
+        }
+
+        public static void PlayOneShot(string path, float volume, Vector3 position = new Vector3())
+        {
+            try
+            {
+                PlayOneShot(PathToGUID(path), volume, position);
+            }
+            catch (EventNotFoundException)
+            {
+                RuntimeUtils.DebugLogWarning("[FMOD] Event not found: " + path);
+            }
+        }
+
+        public static void PlayOneShot(FMOD.GUID guid, float volume, Vector3 position = new Vector3())
+        {
+            var instance = CreateInstance(guid);
+            instance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+            instance.setVolume(volume);
+            instance.start();
+            instance.release();
+        }
+        // end of my modified functions
+
         public static void PlayOneShotAttached(EventReference eventReference, GameObject gameObject)
         {
             try
