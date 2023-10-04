@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638320177925735702
+  lastModified: 638320288639517423
   FileSizes:
   - Name: Desktop
-    Value: 712
+    Value: 804
   Exists: 1
 --- !u!114 &-222169150420776843
 MonoBehaviour:
@@ -35,7 +35,7 @@ MonoBehaviour:
   Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638320177925699846
+  lastModified: 638320288639471035
   FileSizes:
   - Name: Desktop
     Value: 1036
@@ -55,11 +55,60 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -1115713915784914040}
   - {fileID: -222169150420776843}
-  EditorEvents: []
+  - {fileID: 8193188396472513740}
+  EditorEvents:
+  - {fileID: 3209535521247426296}
   EditorParameters: []
   MasterBanks:
   - {fileID: -222169150420776843}
   StringsBanks:
   - {fileID: -1115713915784914040}
-  cacheTime: 638320177925735702
+  cacheTime: 638320288641036575
   cacheVersion: 131607
+--- !u!114 &3209535521247426296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Footstep1
+  m_EditorClassIdentifier: 
+  Path: event:/Footstep1
+  Guid:
+    Data1: -1917788007
+    Data2: 1211726891
+    Data3: -17211514
+    Data4: -1360929873
+  Banks:
+  - {fileID: 8193188396472513740}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8193188396472513740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SFX.bank
+  m_EditorClassIdentifier: 
+  Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 638320288641036575
+  FileSizes:
+  - Name: Desktop
+    Value: 2528
+  Exists: 1

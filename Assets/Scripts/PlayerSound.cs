@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,13 @@ public class PlayerSound : MonoBehaviour
     AudioSource SFX;
     [SerializeField] AudioSource weaponMagicSFX;
     [SerializeField] List<AudioClip> soundEffects = new List<AudioClip>();
+    [SerializeField] EventReference[] fmodSoundEffects;
+    StudioEventEmitter fmodEmitter;
 
     private void Start()
     {
         SFX = GetComponent<AudioSource>();
+        fmodEmitter = GetComponent<StudioEventEmitter>();
     }
 
     public void PlaySoundEffect(AudioClip clip, float volume)
@@ -25,7 +29,8 @@ public class PlayerSound : MonoBehaviour
 
     public void Footstep()
     {
-        SFX.PlayOneShot(soundEffects[0], 0.75f);
+        FMODUnity.RuntimeManager.PlayOneShot(fmodSoundEffects[0], transform.position);
+        //SFX.PlayOneShot(soundEffects[0], 0.75f);
     }
 
     public void SwordSwoosh()

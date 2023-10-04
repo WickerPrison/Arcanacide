@@ -26540,7 +26540,7 @@ MonoBehaviour:
   fireRingFront: {fileID: 6010390981590943170}
   fireRingBack: {fileID: 4612196735818730321}
   fireRingSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
-  SFX: {fileID: 4116005553368199396}
+  SFX: {fileID: 0}
 --- !u!1 &2568100877013533464
 GameObject:
   m_ObjectHideFlags: 0
@@ -97856,8 +97856,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8139104323338895727}
-  - component: {fileID: 4116005553368199396}
   - component: {fileID: 6450793552521445422}
+  - component: {fileID: 1449370670409865263}
   m_Layer: 0
   m_Name: SFX
   m_TagString: Untagged
@@ -97880,102 +97880,6 @@ Transform:
   m_Father: {fileID: 677686415837854654}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &4116005553368199396
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6359409453525058910}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 2779259429043090197, guid: 6e0d7c839c7f064458a0feca33c0eac0, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 855cdc3f64af74c4e8f0d913828cc18a, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &6450793552521445422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98002,6 +97906,44 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 935c49e9ebaa3d04d99b28c3806152c3, type: 3}
   - {fileID: 8300000, guid: d7902a3cbc4c0d0489d1c7fa1bbaf1e9, type: 3}
   - {fileID: 8300000, guid: 9e28f544dcf35cd4e936252b22a5ef85, type: 3}
+  fmodSoundEffects:
+  - Guid:
+      Data1: -1917788007
+      Data2: 1211726891
+      Data3: -17211514
+      Data4: -1360929873
+    Path: event:/Footstep1
+--- !u!114 &1449370670409865263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6359409453525058910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1917788007
+      Data2: 1211726891
+      Data3: -17211514
+      Data4: -1360929873
+    Path: event:/Footstep1
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &6484169723317312126
 GameObject:
   m_ObjectHideFlags: 0
