@@ -219,12 +219,12 @@ public class PlayerAbilities : MonoBehaviour
         switch (attackType)
         {
             case EnemyAttackType.PROJECTILE:
-                playerSound.PlaySoundEffectFromList2(11, 0.5f);
+                playerSound.PlaySoundEffect(PlayerSFX.RING, 0.5f);
                 FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
                 break;
             case EnemyAttackType.MELEE:
                 playerEvents.MeleeParry();
-                playerSound.PlaySoundEffectFromList2(11, 0.5f);
+                playerSound.PlaySoundEffect(PlayerSFX.RING, 0.5f);
                 attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.PhysicalDamage()) * parryProfile.poiseDamageMultiplier);
                 attackingEnemy.ImpactVFX();
                 break;

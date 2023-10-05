@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum PlayerSFX
 {
-    FOOTSTEP, DODGE, HEAL
+    FOOTSTEP, DODGE, HEAL, SHIELD, BIGSMASH, RING
 }
 
 public class PlayerSound : MonoBehaviour
@@ -23,7 +23,10 @@ public class PlayerSound : MonoBehaviour
         {
             {PlayerSFX.FOOTSTEP, 0 },
             {PlayerSFX.DODGE, 1 },
-            {PlayerSFX.HEAL, 2 }
+            {PlayerSFX.HEAL, 2 },
+            {PlayerSFX.SHIELD, 3 },
+            {PlayerSFX.BIGSMASH, 4 },
+            {PlayerSFX.RING, 5 }
         };
     }
 
@@ -35,50 +38,5 @@ public class PlayerSound : MonoBehaviour
     public void PlaySoundEffect(PlayerSFX playerSFX, float volume)
     {
         RuntimeManager.PlayOneShot(fmodSoundEffects[playerSFXDict[playerSFX]], volume, transform.position);
-    }
-
-    public void PlaySoundEffectFromList2(int index, float volume)
-    {
-        SFX.PlayOneShot(soundEffects[index], volume);
-    }
-
-    public void Pain()
-    {
-        SFX.PlayOneShot(soundEffects[2], 0.05f);
-    }
-
-    public void SwordImpact()
-    {
-        SFX.PlayOneShot(soundEffects[3], .5f);
-    }
-
-    public void SwordClang()
-    {
-        SFX.PlayOneShot(soundEffects[4], 1);
-    }
-
-    public void WeaponMagic()
-    {
-        weaponMagicSFX.Play();
-    }
-
-    public void StopWeaponMagic()
-    {
-        weaponMagicSFX.Stop();
-    }
-
-    public void PerfectDodge()
-    {
-        SFX.PlayOneShot(soundEffects[8], 2f);
-    }
-
-    public void Shield()
-    {
-        SFX.PlayOneShot(soundEffects[9], 1);
-    }
-
-    public void StopSoundEffect()
-    {
-        SFX.Stop();
     }
 }

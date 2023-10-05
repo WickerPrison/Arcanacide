@@ -27,6 +27,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-8211353311225780104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BigSmash
+  m_EditorClassIdentifier: 
+  Path: event:/BigSmash
+  Guid:
+    Data1: 596054096
+    Data2: 1089662140
+    Data3: 1063899299
+    Data4: -513444934
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-7127162057430413395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +81,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-6712315488157543711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Shield
+  m_EditorClassIdentifier: 
+  Path: event:/Shield
+  Guid:
+    Data1: -262177400
+    Data2: 1222448959
+    Data3: 1645458339
+    Data4: 991622819
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-2543849127298854081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +123,7 @@ MonoBehaviour:
   Path: Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638320900486900645
+  lastModified: 638320939924149235
   FileSizes: []
   Exists: 1
 --- !u!114 &11400000
@@ -93,13 +147,43 @@ MonoBehaviour:
   - {fileID: -8766238779032152254}
   - {fileID: -7127162057430413395}
   - {fileID: 3683915527685191077}
+  - {fileID: -6712315488157543711}
+  - {fileID: -8211353311225780104}
+  - {fileID: 3138614870328589192}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6154116738536693301}
   StringsBanks:
   - {fileID: 7272457121581144135}
-  cacheTime: 638320900486900645
+  cacheTime: 638320939924149235
   cacheVersion: 131607
+--- !u!114 &3138614870328589192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ring
+  m_EditorClassIdentifier: 
+  Path: event:/Ring
+  Guid:
+    Data1: -2042937651
+    Data2: 1247458533
+    Data3: 1634775701
+    Data4: -616225254
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &3209535521247426296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +253,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638320900486538924
+  lastModified: 638320939922771692
   FileSizes: []
   Exists: 1
 --- !u!114 &7272457121581144135
@@ -187,8 +271,8 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638320900486554159
+  lastModified: 638320939922798085
   FileSizes:
   - Name: 
-    Value: 930
+    Value: 1052
   Exists: 1

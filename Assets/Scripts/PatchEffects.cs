@@ -142,7 +142,7 @@ public class PatchEffects : MonoBehaviour
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && mirrorCloakTimer <= 0 && attackingEnemy != null)
         {
-            playerSound.Shield();
+            playerSound.PlaySoundEffect(PlayerSFX.SHIELD, 1);
             playerAbilities.BlockOrParry(enemyAttackType, attackingEnemy);
         }
     }
@@ -198,7 +198,7 @@ public class PatchEffects : MonoBehaviour
     public void ExplosiveHealing()
     {
         StartCoroutine(cameraScript.ScreenShake(0.1f, 0.3f));
-        playerSound.PlaySoundEffectFromList2(10, 1);
+        playerSound.PlaySoundEffect(PlayerSFX.BIGSMASH, 1);
         playerAnimation.shoveVFX.Play();
         explosiveHealingDamage = playerData.ArcaneDamage() * 3;
 
