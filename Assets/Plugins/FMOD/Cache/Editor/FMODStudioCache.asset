@@ -19,7 +19,7 @@ MonoBehaviour:
     Data3: -94480492
     Data4: -263120505
   Banks:
-  - {fileID: 8193188396472513740}
+  - {fileID: -2543849127298854081}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -46,7 +46,7 @@ MonoBehaviour:
     Data3: -449336136
     Data4: 379505842
   Banks:
-  - {fileID: 8193188396472513740}
+  - {fileID: -2543849127298854081}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -54,7 +54,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-1115713915784914040
+--- !u!114 &-2543849127298854081
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,35 +64,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
+  m_Name: bank:/SFX.bank
   m_EditorClassIdentifier: 
-  Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638320327256119277
-  FileSizes:
-  - Name: Desktop
-    Value: 894
-  Exists: 1
---- !u!114 &-222169150420776843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638320327256098738
-  FileSizes:
-  - Name: Desktop
-    Value: 1036
+  Path: Desktop/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 638320900486900645
+  FileSizes: []
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -107,19 +85,20 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -1115713915784914040}
-  - {fileID: -222169150420776843}
-  - {fileID: 8193188396472513740}
+  - {fileID: 7272457121581144135}
+  - {fileID: 6154116738536693301}
+  - {fileID: -2543849127298854081}
   EditorEvents:
   - {fileID: 3209535521247426296}
   - {fileID: -8766238779032152254}
   - {fileID: -7127162057430413395}
+  - {fileID: 3683915527685191077}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -222169150420776843}
+  - {fileID: 6154116738536693301}
   StringsBanks:
-  - {fileID: -1115713915784914040}
-  cacheTime: 638320327257432806
+  - {fileID: 7272457121581144135}
+  cacheTime: 638320900486900645
   cacheVersion: 131607
 --- !u!114 &3209535521247426296
 MonoBehaviour:
@@ -140,7 +119,7 @@ MonoBehaviour:
     Data3: -17211514
     Data4: -1360929873
   Banks:
-  - {fileID: 8193188396472513740}
+  - {fileID: -2543849127298854081}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -148,7 +127,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &8193188396472513740
+--- !u!114 &3683915527685191077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Heal
+  m_EditorClassIdentifier: 
+  Path: event:/Heal
+  Guid:
+    Data1: -715055504
+    Data2: 1213131997
+    Data3: -501385805
+    Data4: -1907511051
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &6154116738536693301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,13 +164,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/SFX.bank
+  m_Name: bank:/Master.bank
   m_EditorClassIdentifier: 
-  Path: ../Documents/FMOD Studio/ArcaneAudit/Build/Desktop/SFX.bank
-  Name: SFX
-  StudioPath: bank:/SFX
-  lastModified: 638320327257432806
+  Path: Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638320900486538924
+  FileSizes: []
+  Exists: 1
+--- !u!114 &7272457121581144135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638320900486554159
   FileSizes:
-  - Name: Desktop
-    Value: 9216
+  - Name: 
+    Value: 930
   Exists: 1

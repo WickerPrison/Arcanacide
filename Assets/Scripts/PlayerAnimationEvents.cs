@@ -280,7 +280,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void Footstep()
     {
-        playerSound.PlaySoundEffectFromList(PlayerSFX.FOOTSTEP);
+        playerSound.PlaySoundEffect(PlayerSFX.FOOTSTEP, 1);
     }
 
     public void ElectricSmear()
@@ -310,7 +310,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         Vector3 direction = playerMovement.transform.position - playerMovement.attackPoint.position;
         playerMovement.dashDirection = direction.normalized;
         playerMovement.dashTime = playerMovement.maxDashTime;
-        playerSound.Dodge();
+        playerSound.PlaySoundEffect(PlayerSFX.DODGE, 0.5f);
     }
 
     public void EndBackstep()

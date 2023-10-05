@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
 
             playerScript.LoseStamina(staminaCost);
             playerAnimation.PlayAnimation("Dash");
-            playerSound.Dodge();
+            playerSound.PlaySoundEffect(PlayerSFX.DODGE, 0.5f);
         }
     }
 

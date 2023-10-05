@@ -142,7 +142,7 @@ public class PlayerHealth : MonoBehaviour
             weaponManager.AddWeaponMagicSource();
         }
         fullHealth = true;
-        sfx.Heal();
+        sfx.PlaySoundEffect(PlayerSFX.HEAL, 0.6f);
     }
 
     public void PartialHeal(int healAmount)
@@ -174,7 +174,7 @@ public class PlayerHealth : MonoBehaviour
 
         gemHealTimer = gemHealDuration;
         gemHealSpeed = playerData.MaxHealth() / gemHealDuration;
-        sfx.Heal();
+        sfx.PlaySoundEffect(PlayerSFX.HEAL, 0.6f);
         playerAnimation.StartBodyMagic();
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.explosive_healing))
