@@ -23,14 +23,27 @@ MonoBehaviour:
   poiseDamageMultiplier: 0
   staminaCost: 20
   manaCost: 0
+  bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0
   screenShakeOnHit: {x: 0.15, y: 0.08}
   screenShakeNoHit: {x: 0, y: 0}
-  soundOnHit: {fileID: 0}
+  soundOnHitEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHitVolume: 0
-  soundNoHit: {fileID: 8300000, guid: 084ddb136b4bce44698b009b414e93e7, type: 3}
-  soundNoHitVolume: 2
+  noHitSoundEvent:
+    Guid:
+      Data1: -1119663120
+      Data2: 1316255712
+      Data3: -94480492
+      Data4: -263120505
+    Path: event:/SwordSwoosh
+  soundNoHitVolume: 1
   smearPositions:
   - {x: -0.4, y: 0, z: 0.6}
   - {x: 0.4, y: 0, z: 0.6}

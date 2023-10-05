@@ -150,9 +150,9 @@ public class PlayerAbilities : MonoBehaviour
 
     public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile)
     {
-        if (attackProfile.soundOnHit != null)
+        if (!attackProfile.soundOnHitEvent.IsNull)
         {
-            SFX.PlayOneShot(attackProfile.soundOnHit, attackProfile.soundOnHitVolume);
+            playerSound.PlaySoundEffect(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume);
         }
 
         if (enemy.DOT > 0 && playerData.equippedEmblems.Contains(emblemLibrary.opportune_strike))

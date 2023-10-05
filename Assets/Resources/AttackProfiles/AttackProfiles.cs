@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,9 +31,9 @@ public class AttackProfiles : ScriptableObject
     public Vector2 screenShakeOnHit;
     public Vector2 screenShakeNoHit;
 
-    public AudioClip soundOnHit;
+    public EventReference soundOnHitEvent;
     public float soundOnHitVolume;
-    public AudioClip soundNoHit;
+    public EventReference noHitSoundEvent;
     public float soundNoHitVolume;
 
     public List<Vector3> smearPositions;

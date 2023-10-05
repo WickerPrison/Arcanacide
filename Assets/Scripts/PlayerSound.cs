@@ -10,15 +10,11 @@ public enum PlayerSFX
 
 public class PlayerSound : MonoBehaviour
 {
-    AudioSource SFX;
-    [SerializeField] AudioSource weaponMagicSFX;
-    [SerializeField] List<AudioClip> soundEffects = new List<AudioClip>();
     [SerializeField] EventReference[] fmodSoundEffects;
     Dictionary<PlayerSFX, int> playerSFXDict;
 
     private void Start()
     {
-        SFX = GetComponent<AudioSource>();
         playerSFXDict = new Dictionary<PlayerSFX, int>()
         {
             {PlayerSFX.FOOTSTEP, 0 },
@@ -30,9 +26,9 @@ public class PlayerSound : MonoBehaviour
         };
     }
 
-    public void PlaySoundEffect(AudioClip clip, float volume)
+    public void PlaySoundEffect(EventReference fmodEvent, float volume)
     {
-        SFX.PlayOneShot(clip, volume); 
+        RuntimeManager.PlayOneShot(fmodEvent, volume);
     }
 
     public void PlaySoundEffect(PlayerSFX playerSFX, float volume)
