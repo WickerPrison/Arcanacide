@@ -8,7 +8,6 @@ public class ElectricTrap : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] AudioClip electricDamage;
-    AudioSource audioSource;
     float damage = 0;
     float damagePerSecond;
     float duration = 3;
@@ -19,7 +18,6 @@ public class ElectricTrap : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         damagePerSecond = playerData.arcane * 2;
     }
 
@@ -51,7 +49,7 @@ public class ElectricTrap : MonoBehaviour
 
                 if (canMakeDamageSound)
                 {
-                    audioSource.PlayOneShot(electricDamage, .2f);
+                    //audioSource.PlayOneShot(electricDamage, .2f);
                     StartCoroutine(SFXtimer());
                 }
                 damage = 0;

@@ -1,16 +1,16 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveBox : MonoBehaviour
 {
-    [SerializeField] AudioClip impactSFX;
+    [SerializeField] EventReference impactSFX;
     public int damage;
     public float poiseDamage;
     [SerializeField] bool canHurtEnemies = false;
     FireWave fireWave;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
-    [SerializeField] GameObject playAtPointPrefab;
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class WaveBox : MonoBehaviour
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
                 playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
-                Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(impactSFX, 1, transform.position);
+                RuntimeManager.PlayOneShot(impactSFX, 1, transform.position);
                 Destroy(gameObject);
             }
             else if(other.gameObject.layer == 8)
@@ -45,6 +45,7 @@ public class WaveBox : MonoBehaviour
         {
             EnemyScript enemyScript = other.gameObject.GetComponent<EnemyScript>();
             enemyScript.LoseHealth(damage, poiseDamage);
+            RuntimeManager.PlayOneShot(impactSFX, 1, transform.position);
             Destroy(gameObject);
         }
         else
@@ -53,6 +54,7 @@ public class WaveBox : MonoBehaviour
             {
                 fireWave.boxNum -= 1;
             }
+            RuntimeManager.PlayOneShot(impactSFX, 1, transform.position);
             Destroy(gameObject);
         }
     }

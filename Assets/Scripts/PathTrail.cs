@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class PathTrail : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     ParticleSystem VFX;
-    AudioSource sfx;
+    StudioEventEmitter sfx;
     float duration = 3;
     float damagePerSecond;
     float damage;
@@ -16,8 +17,9 @@ public class PathTrail : MonoBehaviour
     {
         VFX = GetComponent<ParticleSystem>();
         damagePerSecond = 5 + playerData.arcane;
-        sfx = GetComponent<AudioSource>();
-        sfx.time += Random.Range(0, 0.5f);
+        sfx = GetComponent<StudioEventEmitter>();
+        sfx.Play();
+        sfx.EventInstance.setTimelinePosition(Random.Range(0, 2000));
     }
 
     private void OnTriggerStay(Collider other)
