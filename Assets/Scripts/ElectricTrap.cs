@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,7 +8,7 @@ public class ElectricTrap : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] AudioClip electricDamage;
+    [SerializeField] EventReference electricDamage;
     float damage = 0;
     float damagePerSecond;
     float duration = 3;
@@ -15,10 +16,12 @@ public class ElectricTrap : MonoBehaviour
     Vector3 away = Vector3.one * 100;
     bool canMakeDamageSound = true;
     List<EnemyScript> enemiesInRange = new List<EnemyScript>();
+    StudioEventEmitter sfx;
 
     private void Awake()
     {
         damagePerSecond = playerData.arcane * 2;
+        sfx = GetComponent<StudioEventEmitter>();
     }
 
     private void Update()
@@ -29,6 +32,7 @@ public class ElectricTrap : MonoBehaviour
             if(timer < 0 )
             {
                 transform.position = away;
+                sfx.Stop();
             }
         }
 
@@ -49,7 +53,7 @@ public class ElectricTrap : MonoBehaviour
 
                 if (canMakeDamageSound)
                 {
-                    //audioSource.PlayOneShot(electricDamage, .2f);
+                    RuntimeManager.PlayOneShot(electricDamage, 0.2f, transform.position);
                     StartCoroutine(SFXtimer());
                 }
                 damage = 0;
@@ -76,12 +80,15 @@ public class ElectricTrap : MonoBehaviour
     IEnumerator SFXtimer()
     {
         canMakeDamageSound = false;
-        yield return new WaitForSeconds(electricDamage.length);
+        int lengthMilliseconds;
+        RuntimeManager.GetEventDescription(electricDamage).getLength(out lengthMilliseconds);
+        yield return new WaitForSeconds(lengthMilliseconds * 1000);
         canMakeDamageSound = true;
     }
 
     public void StartTimer()
     {
         timer = duration;
+        sfx.Play();
     }
 }

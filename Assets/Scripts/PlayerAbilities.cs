@@ -30,7 +30,6 @@ public class PlayerAbilities : MonoBehaviour
     PatchEffects patchEffects;
     WeaponManager weaponManager;
     PlayerSound playerSound;
-    AudioSource SFX;
     Rigidbody rb;
 
     //managers
@@ -76,8 +75,7 @@ public class PlayerAbilities : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
-        playerSound = GetComponentInChildren<PlayerSound>();
-        SFX = GetComponentInChildren<AudioSource>();
+        playerSound = GetComponentInChildren<PlayerSound>();;
         rb = GetComponent<Rigidbody>();
 
         if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(1);
