@@ -258,9 +258,36 @@ MonoBehaviour:
   Path: Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638321805365797332
+  lastModified: 638321859384062989
   FileSizes: []
   Exists: 1
+--- !u!114 &-465027178733999018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/OpenDoor
+  m_EditorClassIdentifier: 
+  Path: event:/OpenDoor
+  Guid:
+    Data1: 271981987
+    Data2: 1216019639
+    Data3: -1449504378
+    Data4: 1951388348
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,12 +324,14 @@ MonoBehaviour:
   - {fileID: 1658539484196042578}
   - {fileID: -5347391882066551071}
   - {fileID: -5061178052576880408}
+  - {fileID: -465027178733999018}
+  - {fileID: 2896701898029331025}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6154116738536693301}
   StringsBanks:
   - {fileID: 7272457121581144135}
-  cacheTime: 638321809522537587
+  cacheTime: 638321859384062989
   cacheVersion: 131607
 --- !u!114 &1078889348495024400
 MonoBehaviour:
@@ -412,6 +441,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 7410
+--- !u!114 &2896701898029331025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Stapler
+  m_EditorClassIdentifier: 
+  Path: event:/Stapler
+  Guid:
+    Data1: -140916314
+    Data2: 1242534591
+    Data3: 1741365936
+    Data4: 221224492
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &3138614870328589192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,7 +591,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638321809522517061
+  lastModified: 638321859382549472
   FileSizes: []
   Exists: 1
 --- !u!114 &6936588679804666003
@@ -607,8 +663,8 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638321809522537587
+  lastModified: 638321859382565007
   FileSizes:
   - Name: 
-    Value: 1654
+    Value: 1730
   Exists: 1

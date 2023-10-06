@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,7 @@ public class SoundManager : MonoBehaviour
     AudioSource SFX;
     [SerializeField] AudioClip bossDefeated;
     [SerializeField] AudioClip death;
-    [SerializeField] GameObject buttonAudioPrefab;
-    [SerializeField] GameObject restAudioPrefab;
+    [SerializeField] EventReference buttonSFX;
 
     private void Start()
     {
@@ -26,16 +26,7 @@ public class SoundManager : MonoBehaviour
 
     public void ButtonSound()
     {
-        GameObject buttonAudio = Instantiate(buttonAudioPrefab);
-        DontDestroyOnLoad(buttonAudio);
-        buttonAudio.GetComponent<AudioSource>().Play();
-    }
-
-    public void RestSound()
-    {
-        GameObject restAudio = Instantiate(restAudioPrefab);
-        DontDestroyOnLoad(restAudio);
-        restAudio.GetComponent<AudioSource>().Play();
+        RuntimeManager.PlayOneShot(buttonSFX);
     }
 
     private void OnEnable()
