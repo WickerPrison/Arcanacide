@@ -1,63 +1,58 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Music
+{
+    NONE, MAINMENU
+}
+
 public class MusicPlayer : MonoBehaviour
 {
-    public int currentTrack;
-    [SerializeField] AudioSource audioSource;
+    public Music currentTrack = Music.NONE;
     [SerializeField] List<AudioClip> audioClips;
+    [SerializeField] EventReference[] fmodEvents;
     [SerializeField] SettingsData settingsData;
+    Dictionary<Music, EventReference> playlistDict;
+    EventInstance musicInstance;
     Coroutine musicFade;
+
+    private void Awake()
+    {
+        playlistDict = new Dictionary<Music, EventReference>()
+        {
+            {Music.MAINMENU, fmodEvents[0]}
+        };
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        //audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlayMusic(int musicIndex, float volume)
+    public void PlayMusic(Music musicOption)
     {
-        currentTrack = musicIndex;
-        audioSource.clip = audioClips[musicIndex];
-        audioSource.Play();
-        audioSource.volume = volume;
+        musicInstance.release();
+        musicInstance = RuntimeManager.CreateInstance(playlistDict[musicOption]);
+        musicInstance.start();
+        currentTrack = musicOption;
+
         settingsData.SetVolume(VolumeChannel.MASTER, settingsData.masterVol);
         settingsData.SetVolume(VolumeChannel.MUSIC, settingsData.musicVol);
     }
 
-    public void StartFadeOut(float duration)
+    public void StopFadeOut()
     {
-        musicFade = StartCoroutine(FadeOut(duration));
+        musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        musicInstance.release();
     }
 
-    public void EndFadeOut()
+    public void StopImmediate()
     {
-        if(musicFade == null)
-        {
-            return;
-        }
-
-        StopCoroutine(musicFade);
-        audioSource.volume = 1;
-    }
-
-    IEnumerator FadeOut(float duration)
-    {
-        float rate = audioSource.volume / duration;
-
-        float timer = duration;
-
-        while (timer > 0)
-        {
-            timer -= Time.unscaledDeltaTime;
-            audioSource.volume -= rate * Time.unscaledDeltaTime;
-
-            yield return null;
-        }
-
-        audioSource.Stop();
-        audioSource.volume = 1;
+        musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        musicInstance.release();
     }
 }

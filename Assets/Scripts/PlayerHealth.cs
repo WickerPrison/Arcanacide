@@ -130,7 +130,7 @@ public class PlayerHealth : MonoBehaviour
             SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
             sm.DeathSoundEffect();
             MusicManager musicManager = gm.gameObject.GetComponentInChildren<MusicManager>();
-            musicManager.StartFadeOut(1);
+            musicManager.StopFadeOut();
         }
     }
 

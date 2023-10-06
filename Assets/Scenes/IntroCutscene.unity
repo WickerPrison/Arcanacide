@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 470385256}
   - component: {fileID: 470385255}
-  - component: {fileID: 470385254}
+  - component: {fileID: 470385257}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -141,14 +141,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &470385254
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470385253}
-  m_Enabled: 1
 --- !u!20 &470385255
 Camera:
   m_ObjectHideFlags: 0
@@ -207,6 +199,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
+--- !u!114 &470385257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470385253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &673507581
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +401,10 @@ PrefabInstance:
     - target: {fileID: 298750023833986127, guid: f0da49de1fb1b6741885e48da0ecc43d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 479534431586172430, guid: f0da49de1fb1b6741885e48da0ecc43d, type: 3}
+      propertyPath: musicOption
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 479534431586172430, guid: f0da49de1fb1b6741885e48da0ecc43d, type: 3}
       propertyPath: trackNumber

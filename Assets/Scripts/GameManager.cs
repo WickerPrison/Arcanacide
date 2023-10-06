@@ -6,7 +6,6 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject musicPlayer;
     [SerializeField] MapData mapData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] PlayerData playerData;
@@ -44,14 +43,6 @@ public class GameManager : MonoBehaviour
         else
         {
             Screen.fullScreen = false;
-        }
-    }
-
-    private void Awake()
-    {
-        if (GameObject.FindGameObjectWithTag("MusicPlayer") == null)
-        {
-            Instantiate(musicPlayer);
         }
     }
 
