@@ -17,7 +17,6 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField] SettingsData settingsData;
     Dictionary<Music, EventReference> playlistDict;
     EventInstance musicInstance;
-    Coroutine musicFade;
 
     private void Awake()
     {

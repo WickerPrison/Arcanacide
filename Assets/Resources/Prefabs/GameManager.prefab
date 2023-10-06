@@ -52,7 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9743356fb469b4392483333338f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPlayer: {fileID: 7810724621619239520, guid: 1559891dd7e335948af469e87a742220, type: 3}
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
@@ -144,7 +143,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossDefeated: {fileID: 8300000, guid: 757029df6773944498687524203b7dff, type: 3}
-  death: {fileID: 8300000, guid: 635c5dd471aed524a9f0b432508e5708, type: 3}
+  death:
+    Guid:
+      Data1: -1019176513
+      Data2: 1257947657
+      Data3: -1431469440
+      Data4: -1034422772
+    Path: event:/DeathSFX
   buttonSFX:
     Guid:
       Data1: -140916314
@@ -261,16 +266,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicPlayerPrefab: {fileID: 7810724621619239520, guid: 1559891dd7e335948af469e87a742220, type: 3}
-  fadeOutMusic: 1
   immediateStopMusic: 0
-  trackNumber: 0
-  mainMenuMusic:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  musicOption: 0
 --- !u!114 &8736452697236013708
 MonoBehaviour:
   m_ObjectHideFlags: 0

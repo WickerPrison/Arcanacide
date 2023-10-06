@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2394176891928480627}
   - component: {fileID: -4889463723334904620}
   - component: {fileID: 1715551022362621492}
+  - component: {fileID: 9093055500568165794}
   m_Layer: 9
   m_Name: FireWave
   m_TagString: Untagged
@@ -160,6 +161,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9093055500568165794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849592477973554572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1524705629
+      Data2: 1323206716
+      Data3: 192105145
+      Data4: -686053850
+    Path: event:/Fire
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params:
+  - Name: Volume
+    Value: 0.69
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1355490426307441436
 GameObject:
   m_ObjectHideFlags: 0
@@ -5003,11 +5037,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &2550038376479961647
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9867,11 +9906,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &2098379818774459586
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14731,11 +14775,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &616876926731128172
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19595,11 +19644,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &4206753452746286832
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -24459,11 +24513,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &5994386937823207536
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29323,11 +29382,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &2091400367852470733
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -34187,11 +34251,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &6037861122202757893
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -39051,11 +39120,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &1765262538773183321
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -43915,11 +43989,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &6893999247132754109
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -48779,11 +48858,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &3552512765059399564
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -53643,11 +53727,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &496633522472848116
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -58507,11 +58596,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &5179343114099632109
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -63371,11 +63465,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &1998837994003341242
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -68235,11 +68334,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
+  impactSFX:
+    Guid:
+      Data1: 1601765032
+      Data2: 1174263198
+      Data3: -1547339624
+      Data4: -1287736626
+    Path: event:/FireImpact
   damage: 10
   poiseDamage: 20
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
 --- !u!54 &7129400480981511307
 Rigidbody:
   m_ObjectHideFlags: 0

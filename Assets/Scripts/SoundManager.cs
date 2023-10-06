@@ -7,7 +7,7 @@ public class SoundManager : MonoBehaviour
 {
     AudioSource SFX;
     [SerializeField] AudioClip bossDefeated;
-    [SerializeField] AudioClip death;
+    [SerializeField] EventReference death;
     [SerializeField] EventReference buttonSFX;
 
     private void Start()
@@ -21,7 +21,7 @@ public class SoundManager : MonoBehaviour
 
     public void DeathSoundEffect()
     {
-        SFX.PlayOneShot(death, 1);
+        RuntimeManager.PlayOneShot(death, 1f);
     }
 
     public void ButtonSound()
