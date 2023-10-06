@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using FMODUnity;
 
 public class TextingScreen : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class TextingScreen : MonoBehaviour
     [SerializeField] Button leaveButton;
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] DialogueData dialogueData;
-    AudioSource audioSource;
+    [SerializeField] EventReference textingSFX;
     public TextingMenu textingMenu;
     TextingLibrary textingLibrary;
     public PhoneContacts contactName;
@@ -44,7 +45,6 @@ public class TextingScreen : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         EventSystem.current.SetSelectedGameObject(null);
         textingLibrary = GetComponent<TextingLibrary>();
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
@@ -160,7 +160,7 @@ public class TextingScreen : MonoBehaviour
 
     void SpawnTextBox(List<string> currentConversation, int lineIndex)
     {
-        audioSource.Play();
+        RuntimeManager.PlayOneShot(textingSFX);
         GameObject textBox = Instantiate(textBoxPrefab);
         textBox.transform.SetParent(content, false);
         TextBox textBoxScript = textBox.GetComponentInChildren<TextBox>();
