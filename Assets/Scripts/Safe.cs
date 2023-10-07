@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using FMODUnity;
 
 public class Safe : MonoBehaviour
 {
@@ -13,11 +14,11 @@ public class Safe : MonoBehaviour
     [SerializeField] string emblemName;
     [SerializeField] Image newEmblemColorImage;
     [SerializeField] MapData mapData;
+    [SerializeField] EventReference safeSFX;
     Transform player;
     TutorialManager tutorialManager;
     InputManager im;
     SoundManager sm;
-    AudioSource sfx;
     float playerDistance = 100;
     float interactDistance = 2;
 
@@ -29,7 +30,6 @@ public class Safe : MonoBehaviour
         im.controls.Dialogue.Next.performed += ctx => CloseNewEmblemMessage();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         newEmblemMessage.SetActive(false);
-        sfx = GetComponent<AudioSource>();
         newEmblemColorImage.color = mapData.floorColor;
     }
 
@@ -50,7 +50,7 @@ public class Safe : MonoBehaviour
     {
         if(playerDistance <= interactDistance && !playerData.emblems.Contains(emblemName))
         {
-            sfx.Play();
+            RuntimeManager.PlayOneShot(safeSFX);
             playerData.emblems.Add(emblemName);
             newEmblemMessage.SetActive(true);
             emblemMessageText.text = emblemName;

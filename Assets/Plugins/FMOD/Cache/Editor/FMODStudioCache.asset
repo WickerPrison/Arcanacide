@@ -216,6 +216,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 8410
+--- !u!114 &-4566390969593210513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Safe
+  m_EditorClassIdentifier: 
+  Path: event:/Safe
+  Guid:
+    Data1: 1506252838
+    Data2: 1106693593
+    Data3: -1031240312
+    Data4: 1523882499
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-2824081367774191291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,7 +263,7 @@ MonoBehaviour:
     Data4: -1982605329
   Banks:
   - {fileID: 9191651919568267865}
-  IsStream: 1
+  IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters: []
@@ -285,7 +312,7 @@ MonoBehaviour:
   Path: Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638322644475948686
+  lastModified: 638322686443916957
   FileSizes: []
   Exists: 1
 --- !u!114 &-465027178733999018
@@ -360,12 +387,13 @@ MonoBehaviour:
   - {fileID: 1082948936472835270}
   - {fileID: 1988247878072291523}
   - {fileID: -2824081367774191291}
+  - {fileID: -4566390969593210513}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6154116738536693301}
   StringsBanks:
   - {fileID: 7272457121581144135}
-  cacheTime: 638322644475948686
+  cacheTime: 638322686443916957
   cacheVersion: 131607
 --- !u!114 &479839459612566957
 MonoBehaviour:
@@ -833,7 +861,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638322644470418065
+  lastModified: 638322686437018746
   FileSizes: []
   Exists: 1
 --- !u!114 &6936588679804666003
@@ -907,10 +935,10 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638322644470460334
+  lastModified: 638322686437039060
   FileSizes:
   - Name: 
-    Value: 2132
+    Value: 2166
   Exists: 1
 --- !u!114 &9191651919568267865
 MonoBehaviour:
@@ -927,6 +955,6 @@ MonoBehaviour:
   Path: Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638322053950274514
+  lastModified: 638322686440539772
   FileSizes: []
   Exists: 1
