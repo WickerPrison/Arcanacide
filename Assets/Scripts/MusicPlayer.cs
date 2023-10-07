@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum Music
 {
-    NONE, MAINMENU
+    NONE, MAINMENU, PEACEFUL
 }
 
 public class MusicPlayer : MonoBehaviour
@@ -22,7 +22,8 @@ public class MusicPlayer : MonoBehaviour
     {
         playlistDict = new Dictionary<Music, EventReference>()
         {
-            {Music.MAINMENU, fmodEvents[0]}
+            {Music.MAINMENU, fmodEvents[0]},
+            {Music.PEACEFUL, fmodEvents[1]}
         };
     }
 
@@ -45,12 +46,14 @@ public class MusicPlayer : MonoBehaviour
 
     public void StopFadeOut()
     {
+        currentTrack = Music.NONE;
         musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         musicInstance.release();
     }
 
     public void StopImmediate()
     {
+        currentTrack = Music.NONE;
         musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         musicInstance.release();
     }

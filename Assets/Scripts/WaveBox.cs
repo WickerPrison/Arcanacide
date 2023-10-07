@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class WaveBox : MonoBehaviour
 {
+    [SerializeField] float maxAudioDistance;
     [SerializeField] EventReference impactSFX;
     public int damage;
     public float poiseDamage;
     [SerializeField] bool canHurtEnemies = false;
     FireWave fireWave;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
+    [SerializeField] bool sound3D = false;
+    [SerializeField] float maxDistance;
 
     private void Start()
     {
@@ -31,7 +34,7 @@ public class WaveBox : MonoBehaviour
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
                 playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
-                RuntimeManager.PlayOneShot(impactSFX, 1, transform.position);
+                PlaySound();
                 Destroy(gameObject);
             }
             else if(other.gameObject.layer == 8)
@@ -45,7 +48,7 @@ public class WaveBox : MonoBehaviour
         {
             EnemyScript enemyScript = other.gameObject.GetComponent<EnemyScript>();
             enemyScript.LoseHealth(damage, poiseDamage);
-            RuntimeManager.PlayOneShot(impactSFX, 1, transform.position);
+            PlaySound();
             Destroy(gameObject);
         }
         else
@@ -54,8 +57,20 @@ public class WaveBox : MonoBehaviour
             {
                 fireWave.boxNum -= 1;
             }
-            RuntimeManager.PlayOneShot(impactSFX, 1, transform.position);
+            PlaySound();
             Destroy(gameObject);
+        }
+    }
+
+    void PlaySound()
+    {
+        if (sound3D)
+        {
+            AudioMethods.PlayOneShot(impactSFX, "MaxDistance", maxDistance, transform.position);
+        }
+        else
+        {
+            RuntimeManager.PlayOneShot(impactSFX, 1, transform.position);
         }
     }
 }

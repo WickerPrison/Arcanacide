@@ -216,6 +216,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 8410
+--- !u!114 &-2824081367774191291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Peaceful
+  m_EditorClassIdentifier: 
+  Path: event:/Peaceful
+  Guid:
+    Data1: -1875886692
+    Data2: 1164439270
+    Data3: 1715658375
+    Data4: -1982605329
+  Banks:
+  - {fileID: 9191651919568267865}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 305454
 --- !u!114 &-2588092396594817406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +285,7 @@ MonoBehaviour:
   Path: Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638322050162830224
+  lastModified: 638322644475948686
   FileSizes: []
   Exists: 1
 --- !u!114 &-465027178733999018
@@ -332,13 +359,38 @@ MonoBehaviour:
   - {fileID: 1512140869168395754}
   - {fileID: 1082948936472835270}
   - {fileID: 1988247878072291523}
+  - {fileID: -2824081367774191291}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6154116738536693301}
   StringsBanks:
   - {fileID: 7272457121581144135}
-  cacheTime: 638322050162830224
+  cacheTime: 638322644475948686
   cacheVersion: 131607
+--- !u!114 &479839459612566957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/FireImpact3d/MaxDistance
+  m_EditorClassIdentifier: 
+  Name: MaxDistance
+  StudioPath: 
+  Min: 0
+  Max: 50
+  Default: 15
+  ID:
+    data1: 718452705
+    data2: 1204599700
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &1078889348495024400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,6 +608,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 15
   Length: 7410
+--- !u!114 &2722654563179431335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/FireImpact3d/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 1
+  ID:
+    data1: 1997225662
+    data2: 490011113
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &2896701898029331025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,7 +833,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638322050157107643
+  lastModified: 638322644470418065
   FileSizes: []
   Exists: 1
 --- !u!114 &6936588679804666003
@@ -810,8 +886,10 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
+  Parameters:
+  - {fileID: 479839459612566957}
+  - {fileID: 2722654563179431335}
+  MinDistance: 0
   MaxDistance: 15
   Length: 0
 --- !u!114 &7272457121581144135
@@ -829,10 +907,10 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638322050157133116
+  lastModified: 638322644470460334
   FileSizes:
   - Name: 
-    Value: 2040
+    Value: 2132
   Exists: 1
 --- !u!114 &9191651919568267865
 MonoBehaviour:
@@ -849,6 +927,6 @@ MonoBehaviour:
   Path: Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638321971828815847
+  lastModified: 638322053950274514
   FileSizes: []
   Exists: 1
