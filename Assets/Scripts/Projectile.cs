@@ -1,16 +1,17 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public GameObject playAtPointPrefab;
     [System.NonSerialized] public Vector3 direction;
     public int spellDamage;
     public int poiseDamage;
     public int speed;
-    [SerializeField] AudioClip playerImpactSFX;
-    public AudioClip impactSFX;
+    [SerializeField] EventReference playerImpactSFX;
+    public EventReference impactSFX;
+
     public float impactSFXvolume;
     public float lifetime;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
@@ -45,7 +46,7 @@ public class Projectile : MonoBehaviour
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
         playerScript.LoseHealth(spellDamage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
-        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(playerImpactSFX, impactSFXvolume, transform.position);
+        RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 
@@ -58,7 +59,7 @@ public class Projectile : MonoBehaviour
 
     public virtual void HitObject(Collider collision)
     {
-        Instantiate(playAtPointPrefab).GetComponent <PlayAtPoint>().PlayClip(impactSFX, impactSFXvolume, transform.position);
+        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 

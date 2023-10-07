@@ -14,6 +14,7 @@ public class WaveBox : MonoBehaviour
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
     [SerializeField] bool sound3D = false;
     [SerializeField] float maxDistance;
+    [SerializeField] float volume;
 
     private void Start()
     {
@@ -66,7 +67,10 @@ public class WaveBox : MonoBehaviour
     {
         if (sound3D)
         {
-            AudioMethods.PlayOneShot(impactSFX, "MaxDistance", maxDistance, transform.position);
+            string[] parameters = { "MaxDistance", "Volume" };
+            float[] values = { maxDistance, volume };
+
+            AudioMethods.PlayOneShot(impactSFX, parameters, values, transform.position);
         }
         else
         {

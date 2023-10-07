@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using FMODUnity;
 
 public class FileTicket : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class FileTicket : MonoBehaviour
     string screenText2 = "Support Ticket Filed";
     Transform player;
     InputManager im;
-    AudioSource sfx;
+    [SerializeField] EventReference sfx;
     float playerDistance;
     float interactDistance = 2;
 
@@ -22,7 +23,6 @@ public class FileTicket : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => FileSupportTicket();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        sfx = GetComponent<AudioSource>();
         if (mapData.ticketFiled)
         {
             screenText.text = screenText2;
@@ -51,7 +51,7 @@ public class FileTicket : MonoBehaviour
     {
         if(playerDistance <= interactDistance && !mapData.ticketFiled)
         {
-            sfx.Play();
+            RuntimeManager.PlayOneShot(sfx, 2);
             mapData.ticketFiled = true;
             screenText.text = screenText2;
         }

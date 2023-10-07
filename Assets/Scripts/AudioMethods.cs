@@ -15,4 +15,16 @@ public static class AudioMethods
         instance.start();
         instance.release();
     }
+
+    public static void PlayOneShot(EventReference fmodEvent, string[] parameters, float[] values, Vector3 position)
+    {
+        EventInstance instance = RuntimeManager.CreateInstance(fmodEvent);
+        for(int i = 0; i < parameters.Length; i++)
+        {
+            instance.setParameterByName(parameters[i], values[i]);
+        }
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+        instance.start();
+        instance.release();
+    }
 }

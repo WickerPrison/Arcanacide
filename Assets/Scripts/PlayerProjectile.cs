@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,8 @@ public class PlayerProjectile : MonoBehaviour
 {
     public int speed;
     public PlayerMovement playerController;
-    [SerializeField] AudioClip enemyImpactSFX;
-    [SerializeField] AudioClip impactSFX;
+    [SerializeField] EventReference enemyImpactSFX;
+    [SerializeField] EventReference impactSFX;
     [SerializeField] float impactSFXvolume;
     [SerializeField] float lifetime;
     [SerializeField] PlayerData playerData;
@@ -48,13 +49,13 @@ public class PlayerProjectile : MonoBehaviour
         }
         else addedDOT = 0;
         enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
-        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(enemyImpactSFX, impactSFXvolume, transform.position);
+        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 
     public virtual void HitObject(Collider collision)
     {
-        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(impactSFX, impactSFXvolume, transform.position);
+        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 

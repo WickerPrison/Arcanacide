@@ -1,15 +1,16 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NPCAnimationEvents : MonoBehaviour
 {
-    [SerializeField] AudioSource sfx;
     [SerializeField] ParticleSystem vfx;
+    [SerializeField] EventReference fmodEvent;
 
-    public void SoundEffect()
+    public void SoundEffect(float volume)
     {
-        sfx.Play();
+        RuntimeManager.PlayOneShot(fmodEvent, volume, transform.position);
     }
 
     public void VideoEffects()
