@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,7 @@ public class ElectricBeams : MonoBehaviour
     WaitForSeconds hitDelay = new WaitForSeconds(0.2f);
     PlayerScript playerScript;
     EnemyScript enemyScript;
+    [SerializeField] EventReference electricDamage;
 
 
     private void Start()
@@ -143,6 +145,7 @@ public class ElectricBeams : MonoBehaviour
     void DealDamage()
     {
         StartCoroutine(HitPlayerDelay());
+        RuntimeManager.PlayOneShot(electricDamage);
         playerScript.LoseHealth(30, EnemyAttackType.NONPARRIABLE, enemyScript);
         playerScript.LosePoise(30);
         playerScript.StartStagger(0.5f);

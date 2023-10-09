@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,8 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
     [SerializeField] GameObject lightningOrbPrefab;
     [SerializeField] ParticleSystem swooshShock;
     [SerializeField] ElectricBeams beams;
-    [SerializeField] AudioSource sfx;
+    [SerializeField] EventReference beamSound;
+    [SerializeField] float beamVolume;
     ElectricBossController bossController;
     float spawnRadius = 1.3f;
     bool spawnOrb = true;
@@ -65,13 +67,13 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
     public void BeamBolts()
     {
         beams.ActivateLightning();
-        sfx.Play();
+        enemySound.Play(beamSound, beamVolume);
     }
 
     public void BeamsOff()
     {
         beams.BeamsOff();
-        sfx.Stop();
+        enemySound.Stop();
     }
 
     public override void EnableMovement()

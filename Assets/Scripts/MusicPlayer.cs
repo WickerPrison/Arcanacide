@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum Music
 {
-    NONE, MAINMENU, PEACEFUL, FIREBOSS
+    NONE, MAINMENU, PEACEFUL, FIREBOSS, ELECTRICBOSS
 }
 
 public class MusicPlayer : MonoBehaviour
@@ -24,7 +24,8 @@ public class MusicPlayer : MonoBehaviour
         {
             {Music.MAINMENU, fmodEvents[0]},
             {Music.PEACEFUL, fmodEvents[1]},
-            {Music.FIREBOSS, fmodEvents[2]}
+            {Music.FIREBOSS, fmodEvents[2]},
+            {Music.ELECTRICBOSS, fmodEvents[3]}
         };
     }
 
