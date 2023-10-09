@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum Music
 {
-    NONE, MAINMENU, PEACEFUL
+    NONE, MAINMENU, PEACEFUL, FIREBOSS
 }
 
 public class MusicPlayer : MonoBehaviour
@@ -23,7 +23,8 @@ public class MusicPlayer : MonoBehaviour
         playlistDict = new Dictionary<Music, EventReference>()
         {
             {Music.MAINMENU, fmodEvents[0]},
-            {Music.PEACEFUL, fmodEvents[1]}
+            {Music.PEACEFUL, fmodEvents[1]},
+            {Music.FIREBOSS, fmodEvents[2]}
         };
     }
 

@@ -4941,7 +4941,6 @@ GameObject:
   - component: {fileID: 8017924578328047857}
   - component: {fileID: 7303409678600739474}
   - component: {fileID: 3717929803068101188}
-  - component: {fileID: 6281468443864356944}
   m_Layer: 4
   m_Name: ElectricPuddle
   m_TagString: Untagged
@@ -4989,6 +4988,14 @@ MonoBehaviour:
       Data3: 1646198689
       Data4: -1662717014
     Path: event:/ElectricImpact
+  fmodEvent:
+    Guid:
+      Data1: 489370024
+      Data2: 1247799218
+      Data3: 1549830589
+      Data4: -660053618
+    Path: event:/ElectricPuddle3D
+  volume: 1.5
 --- !u!208 &8017924578328047857
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -5035,34 +5042,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   powerSwitchNumber: 0
---- !u!114 &6281468443864356944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8979945774285855026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 489370024
-      Data2: 1247799218
-      Data3: 1549830589
-      Data4: -660053618
-    Path: event:/ElectricPuddle3D
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 10

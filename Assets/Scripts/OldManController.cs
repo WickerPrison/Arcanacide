@@ -107,7 +107,7 @@ public class OldManController : EnemyController
 
         if (playerScript.gameObject.layer == 3)
         {
-            enemySound.OtherSounds(1, 1);
+            enemySound.OtherSounds(1, 2);
             playerScript.LoseHealth(hitDamage,EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();

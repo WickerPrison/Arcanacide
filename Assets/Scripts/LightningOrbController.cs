@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class LightningOrbController : EnemyController
     [SerializeField] ParticleSystem lightning;
     [SerializeField] ParticleSystem attack;
     [SerializeField] float selfDestructTime;
-    [SerializeField] AudioClip impactSFX;
+    [SerializeField] EventReference impactSFX;
     ElectricAlly allyScript;
     Vector3 playerDirection;
 
@@ -93,7 +94,7 @@ public class LightningOrbController : EnemyController
         {
             if(playerScript.gameObject.layer == 3)
             {
-                explosion.GetComponent<AudioSource>().PlayOneShot(impactSFX, 2);
+                RuntimeManager.PlayOneShot(impactSFX, 2);
                 playerScript.StartStagger(0.1f);
                 playerScript.LoseHealth(spellAttackDamage, EnemyAttackType.NONPARRIABLE, null);
                 playerScript.LosePoise(spellAttackPoiseDamage);

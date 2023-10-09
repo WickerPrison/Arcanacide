@@ -1,13 +1,16 @@
+using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PathTrail : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     ParticleSystem VFX;
-    StudioEventEmitter sfx;
+    [SerializeField] EventReference fmodEvent;
+    EventInstance fmodInstance;
     float duration = 3;
     float damagePerSecond;
     float damage;
@@ -17,9 +20,10 @@ public class PathTrail : MonoBehaviour
     {
         VFX = GetComponent<ParticleSystem>();
         damagePerSecond = 5 + playerData.arcane;
-        sfx = GetComponent<StudioEventEmitter>();
-        sfx.Play();
-        sfx.EventInstance.setTimelinePosition(Random.Range(0, 2000));
+        fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
+        fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        fmodInstance.start();
+        fmodInstance.setTimelinePosition(Random.Range(0, 2000));
     }
 
     private void OnTriggerStay(Collider other)
@@ -60,6 +64,7 @@ public class PathTrail : MonoBehaviour
     {
         dead = true;
         VFX.Stop();
-        sfx.Stop(); 
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        fmodInstance.release();
     }
 }

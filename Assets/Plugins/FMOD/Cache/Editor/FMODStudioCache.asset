@@ -189,6 +189,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-5323420407614386163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GrenadeLauncher
+  m_EditorClassIdentifier: 
+  Path: event:/GrenadeLauncher
+  Guid:
+    Data1: 517840056
+    Data2: 1321744072
+    Data3: 2134991257
+    Data4: -1547231516
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-5061178052576880408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,7 +366,7 @@ MonoBehaviour:
   Path: Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638322755628794158
+  lastModified: 638324438377495607
   FileSizes: []
   Exists: 1
 --- !u!114 &-2533865439236919589
@@ -369,6 +396,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-1331508846519976925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/ElectricZap/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 1
+  ID:
+    data1: 1997225662
+    data2: 490011113
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-465027178733999018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,12 +496,17 @@ MonoBehaviour:
   - {fileID: -4004028205433338781}
   - {fileID: -2533865439236919589}
   - {fileID: 1328242747696987188}
+  - {fileID: 8210077182250968125}
+  - {fileID: 8219394180919781383}
+  - {fileID: -5323420407614386163}
+  - {fileID: 6081295963901508132}
+  - {fileID: 943197959557140876}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6154116738536693301}
   StringsBanks:
   - {fileID: 7272457121581144135}
-  cacheTime: 638322755628794158
+  cacheTime: 638324438377495607
   cacheVersion: 131607
 --- !u!114 &479839459612566957
 MonoBehaviour:
@@ -476,6 +532,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &943197959557140876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ElectricDamageLoop
+  m_EditorClassIdentifier: 
+  Path: event:/ElectricDamageLoop
+  Guid:
+    Data1: 1086017793
+    Data2: 1284176931
+    Data3: -836308337
+    Data4: 193312250
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 233
 --- !u!114 &1078889348495024400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,7 +584,7 @@ MonoBehaviour:
   IsOneShot: 0
   Parameters: []
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 15
   Length: 8410
 --- !u!114 &1082948936472835270
 MonoBehaviour:
@@ -926,6 +1009,34 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
+  Parameters:
+  - {fileID: -1331508846519976925}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &6081295963901508132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Teleport
+  m_EditorClassIdentifier: 
+  Path: event:/Teleport
+  Guid:
+    Data1: 1839076326
+    Data2: 1191710487
+    Data3: 1303815053
+    Data4: 1147163421
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
@@ -945,7 +1056,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638322755626668797
+  lastModified: 638324438371650499
   FileSizes: []
   Exists: 1
 --- !u!114 &6936588679804666003
@@ -1019,11 +1130,65 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638322755626684047
+  lastModified: 638324438371687285
   FileSizes:
   - Name: 
-    Value: 2298
+    Value: 2520
   Exists: 1
+--- !u!114 &8210077182250968125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FireBossMusic
+  m_EditorClassIdentifier: 
+  Path: event:/FireBossMusic
+  Guid:
+    Data1: -1664995287
+    Data2: 1215820313
+    Data3: 1571845553
+    Data4: 849283556
+  Banks:
+  - {fileID: 9191651919568267865}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 309345
+--- !u!114 &8219394180919781383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/VictorySFX
+  m_EditorClassIdentifier: 
+  Path: event:/VictorySFX
+  Guid:
+    Data1: -907861535
+    Data2: 1290453497
+    Data3: 406837382
+    Data4: 1745920831
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &9191651919568267865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,6 +1204,6 @@ MonoBehaviour:
   Path: Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638322723682993285
+  lastModified: 638324438376486671
   FileSizes: []
   Exists: 1

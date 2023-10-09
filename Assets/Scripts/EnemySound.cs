@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,6 @@ using UnityEngine;
 
 public class EnemySound : MonoBehaviour
 {
-    [System.NonSerialized] public AudioSource SFX;
     [SerializeField] EventReference footstep;
     [SerializeField] EventReference swordSwoosh;
     [SerializeField] EventReference swordImpact;
@@ -13,11 +13,7 @@ public class EnemySound : MonoBehaviour
     [SerializeField] EventReference blockAttack;
     [SerializeField] List<AudioClip> otherSounds = new List<AudioClip>();
     [SerializeField] EventReference[] otherSFX;
-
-    private void Start()
-    {
-        SFX = GetComponent<AudioSource>();
-    }
+    EventInstance fmodInstance;
 
     public void Footstep()
     {
@@ -47,5 +43,25 @@ public class EnemySound : MonoBehaviour
     public void OtherSounds(int indexNumber, float volume)
     {
         RuntimeManager.PlayOneShot(otherSFX[indexNumber], volume, transform.position);
+    }
+
+    public void Play(EventReference fmodEvent, float volume) 
+    {
+        fmodInstance.release();
+        fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
+        fmodInstance.start();
+        fmodInstance.setVolume(volume);
+    }
+
+    public void Stop()
+    {
+        fmodInstance.release();
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+    }
+
+    private void OnDisable()
+    {
+        fmodInstance.release();
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 }

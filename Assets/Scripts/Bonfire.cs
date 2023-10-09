@@ -1,13 +1,16 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Bonfire : MonoBehaviour
 {
-    [SerializeField] AudioClip impactSound;
+    [SerializeField] EventReference impactSound;
+    [SerializeField] EventReference fireSound;
+    EventInstance fmodInstance;
     public EnemyScript enemyOfOrigin;
     BossController bossController;
-    AudioSource sfx;
     Transform player;
     float duration = 7;
     int damage = 20;
@@ -16,8 +19,9 @@ public class Bonfire : MonoBehaviour
 
     private void Start()
     {
-        sfx = GetComponent<AudioSource>();
-        sfx.time = Random.Range(0, 0.5f);
+        fmodInstance = RuntimeManager.CreateInstance(fireSound);
+        fmodInstance.start();
+        fmodInstance.setTimelinePosition(Random.Range(0, 2000));
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         bossController = enemyOfOrigin.GetComponent<BossController>();
     }
@@ -32,8 +36,8 @@ public class Bonfire : MonoBehaviour
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
                 playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
-                AudioSource.PlayClipAtPoint(impactSound, transform.position, 0.5f);
-                Destroy(gameObject);
+                RuntimeManager.PlayOneShot(impactSound, 0.5f, transform.position);
+                DestroyBonfire();
             }
             else if(other.gameObject.layer == 8)
             {
@@ -49,12 +53,12 @@ public class Bonfire : MonoBehaviour
         duration -= Time.deltaTime;
         if(duration <= 0)
         {
-            Destroy(gameObject);
+            DestroyBonfire();
         }
 
         if (bossController.hasSurrendered)
         {
-            Destroy(gameObject);
+            DestroyBonfire();
         }
     }
 
@@ -62,5 +66,12 @@ public class Bonfire : MonoBehaviour
     {
         Vector3 direction = player.position - transform.position;
         transform.Translate(direction.normalized * Time.fixedDeltaTime * speed);
+    }
+
+    void DestroyBonfire()
+    {
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        fmodInstance.release();
+        Destroy(gameObject);
     }
 }
