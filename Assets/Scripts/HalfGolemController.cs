@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,12 +11,14 @@ public class HalfGolemController : EnemyController
     FacePlayer facePlayer;
     float smashRange = 3;
     [System.NonSerialized] public int remainingIce = 3;
-    public event EventHandler onIceBreak;
+    public event System.EventHandler onIceBreak;
     [SerializeField] ParticleSystem poof;
     Renderer poofRenderer;
     AttackArcGenerator attackArc;
     StepWithAttack stepWithAttack;
     float unfrozenAttackMaxTime = 3;
+    [SerializeField] EventReference draggingEvent;
+    [SerializeField] float draggingVolume;
 
     public override void Start()
     {
@@ -26,7 +29,8 @@ public class HalfGolemController : EnemyController
         attackArc = GetComponentInChildren<AttackArcGenerator>();
         stepWithAttack = GetComponent<StepWithAttack>();
         poofRenderer = poof.GetComponent<Renderer>();
-       
+        enemySound.Play(draggingEvent, draggingVolume);
+        enemySound.SetPaused(true);
     }
 
     public override void EnemyAI()

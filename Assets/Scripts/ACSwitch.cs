@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using FMODUnity;
 
 public class ACSwitch : MonoBehaviour
 {
     [SerializeField] GameObject message;
     [SerializeField] MapData mapData;
     [SerializeField] TextMeshProUGUI readout;
-    [SerializeField] AudioClip beep;
-    AudioSource sfx;
+    [SerializeField] EventReference beep;
     bool hasBeenUsed = false;
     Transform player;
     InputManager im;
@@ -21,7 +21,6 @@ public class ACSwitch : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => FlipSwitch();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        sfx = GetComponent<AudioSource>();
         readout.text = "Max";
         if (!mapData.ACOn)
         {
@@ -51,7 +50,7 @@ public class ACSwitch : MonoBehaviour
             hasBeenUsed = true;
             mapData.ACOn = false;
             readout.text = "Off";
-            sfx.PlayOneShot(beep, 1);
+            RuntimeManager.PlayOneShot(beep);
         }
     }
 }

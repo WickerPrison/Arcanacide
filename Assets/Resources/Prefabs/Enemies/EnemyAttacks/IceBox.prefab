@@ -4841,11 +4841,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b5a3200d103fc4e9590afcb73fbb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactSFX: {fileID: 8300000, guid: 7ae8940842f2bc64db2b72b6e4ae3c95, type: 3}
+  maxAudioDistance: 0
+  playerImpactSFX:
+    Guid:
+      Data1: -603102044
+      Data2: 1128938890
+      Data3: -1731959668
+      Data4: 321853005
+    Path: event:/IceImpact
+  playerImpactVolume: 0.8
+  impactSFX:
+    Guid:
+      Data1: -603102044
+      Data2: 1128938890
+      Data3: -1731959668
+      Data4: 321853005
+    Path: event:/IceImpact
+  impactVolume: 0
   damage: 7
   poiseDamage: 10
   canHurtEnemies: 0
-  playAtPointPrefab: {fileID: 5772946082500838026, guid: 7fdac181a1d8503419a57a410e55126f, type: 3}
+  sound3D: 0
+  maxDistance: 0
 --- !u!114 &7928172648554856065
 MonoBehaviour:
   m_ObjectHideFlags: 0

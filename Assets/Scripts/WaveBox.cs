@@ -6,7 +6,10 @@ using UnityEngine;
 public class WaveBox : MonoBehaviour
 {
     [SerializeField] float maxAudioDistance;
+    [SerializeField] EventReference playerImpactSFX;
+    [SerializeField] float playerImpactVolume = 0.8f;
     [SerializeField] EventReference impactSFX;
+    [SerializeField] float impactVolume = 0.8f;
     public int damage;
     public float poiseDamage;
     [SerializeField] bool canHurtEnemies = false;
@@ -14,7 +17,6 @@ public class WaveBox : MonoBehaviour
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
     [SerializeField] bool sound3D = false;
     [SerializeField] float maxDistance;
-    [SerializeField] float volume;
 
     private void Start()
     {
@@ -35,7 +37,7 @@ public class WaveBox : MonoBehaviour
                 playerScript = other.gameObject.GetComponent<PlayerScript>();
                 playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
-                PlaySound();
+                PlaySound(playerImpactSFX, playerImpactVolume);
                 Destroy(gameObject);
             }
             else if(other.gameObject.layer == 8)
@@ -49,7 +51,7 @@ public class WaveBox : MonoBehaviour
         {
             EnemyScript enemyScript = other.gameObject.GetComponent<EnemyScript>();
             enemyScript.LoseHealth(damage, poiseDamage);
-            PlaySound();
+            PlaySound(playerImpactSFX, playerImpactVolume);
             Destroy(gameObject);
         }
         else
@@ -58,23 +60,23 @@ public class WaveBox : MonoBehaviour
             {
                 fireWave.boxNum -= 1;
             }
-            PlaySound();
+            PlaySound(impactSFX, impactVolume);
             Destroy(gameObject);
         }
     }
 
-    void PlaySound()
+    void PlaySound(EventReference sound, float volume)
     {
         if (sound3D)
         {
             string[] parameters = { "MaxDistance", "Volume" };
             float[] values = { maxDistance, volume };
 
-            AudioMethods.PlayOneShot(impactSFX, parameters, values, transform.position);
+            AudioMethods.PlayOneShot(sound, parameters, values, transform.position);
         }
         else
         {
-            RuntimeManager.PlayOneShot(impactSFX, 1, transform.position);
+            RuntimeManager.PlayOneShot(sound, volume, transform.position);
         }
     }
 }

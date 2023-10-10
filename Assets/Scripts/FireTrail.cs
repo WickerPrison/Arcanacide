@@ -49,14 +49,13 @@ public class FireTrail : MonoBehaviour
 
         if(duration <= 0)
         {
-            Death();
+            Destroy(gameObject);
         }
     }
 
-    void Death()
+    private void OnDisable()
     {
         fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        fmodInstance.release();
-        Destroy(gameObject);
+        fmodInstance.release();        
     }
 }

@@ -53,6 +53,11 @@ public class EnemySound : MonoBehaviour
         fmodInstance.setVolume(volume);
     }
 
+    public void SetPaused(bool isPaused)
+    {
+        fmodInstance.setPaused(isPaused);
+    }
+
     public void Stop()
     {
         fmodInstance.release();

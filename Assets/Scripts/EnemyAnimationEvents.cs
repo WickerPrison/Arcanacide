@@ -7,7 +7,7 @@ public class EnemyAnimationEvents : MonoBehaviour
 {
     //This is the only script that can be called by enemy animations
     //It will be inherited by the BossAnimationEvents script and many enemy types
-    [SerializeField] AudioSource footstep;
+    EnemySound enemySound;
     EnemyController enemyController;
     EnemyScript enemyScript;
     SpriteEffects spriteEffects;
@@ -18,6 +18,7 @@ public class EnemyAnimationEvents : MonoBehaviour
         enemyController = GetComponentInParent<EnemyController>();
         enemyScript = GetComponentInParent<EnemyScript>();
         spriteEffects = GetComponentInParent<SpriteEffects>();
+        enemySound = enemyController.gameObject.GetComponentInChildren<EnemySound>();
     }
 
     public void SpellAttack()
@@ -58,7 +59,7 @@ public class EnemyAnimationEvents : MonoBehaviour
 
     public void Footstep()
     {
-        footstep.Play();
+        enemySound.Footstep();
     }
 
     public void StartDissolve()
