@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,6 @@ public class Doorway : MonoBehaviour
     [SerializeField] GameObject doorAudioPrefab;
     [SerializeField] int lockedDoorID;
     [SerializeField] Material fogWallMaterial;
-    GameObject doorAudio;
     public Transform player;
     GameManager gm;
     InputManager im;
@@ -25,6 +25,7 @@ public class Doorway : MonoBehaviour
     float fadeDuration = 0.5f;
     SpriteRenderer spriteRenderer;
     [SerializeField] SpriteRenderer fogWallRenderer;
+    [SerializeField] EventReference doorSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -122,9 +123,7 @@ public class Doorway : MonoBehaviour
 
         if(playerDistance <= interactDistance && doorOpen)
         {
-            doorAudio = Instantiate(doorAudioPrefab);
-            DontDestroyOnLoad(doorAudio);
-            doorAudio.GetComponent<AudioSource>().Play();
+            RuntimeManager.PlayOneShot(doorSFX);
             mapData.doorNumber = doorNumber;
             PlayerHealth playerHealth = player.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth.gemHealTimer > 0)

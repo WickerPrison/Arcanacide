@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -622290233402536838}
   - component: {fileID: 5470271128496654666}
   - component: {fileID: 5075726111561290587}
-  - component: {fileID: -2421727946166535431}
   - component: {fileID: 479534431586172430}
   - component: {fileID: 8736452697236013708}
   - component: {fileID: 906774313460583990}
@@ -52,7 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9743356fb469b4392483333338f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPlayer: {fileID: 7810724621619239520, guid: 1559891dd7e335948af469e87a742220, type: 3}
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
@@ -143,106 +141,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ec9805aff0e094e8c0e1dd857538a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossDefeated: {fileID: 8300000, guid: 757029df6773944498687524203b7dff, type: 3}
-  death: {fileID: 8300000, guid: 635c5dd471aed524a9f0b432508e5708, type: 3}
-  buttonAudioPrefab: {fileID: 8106109093987376933, guid: 44c5fef9c1c9df446a1acd791463c7d4, type: 3}
-  restAudioPrefab: {fileID: 6417356423725665538, guid: b983157c2044e4a4daad5fa64e3b06a4, type: 3}
---- !u!82 &-2421727946166535431
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298750023833986125}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 2779259429043090197, guid: 6e0d7c839c7f064458a0feca33c0eac0, type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  bossDefeated:
+    Guid:
+      Data1: -907861535
+      Data2: 1290453497
+      Data3: 406837382
+      Data4: 1745920831
+    Path: event:/VictorySFX
+  death:
+    Guid:
+      Data1: -1019176513
+      Data2: 1257947657
+      Data3: -1431469440
+      Data4: -1034422772
+    Path: event:/DeathSFX
+  buttonSFX:
+    Guid:
+      Data1: -140916314
+      Data2: 1242534591
+      Data3: 1741365936
+      Data4: 221224492
+    Path: event:/Stapler
 --- !u!114 &479534431586172430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,9 +174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826fa3fe5d88ccc48a391ea1f641b15a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutMusic: 1
+  musicPlayerPrefab: {fileID: 7810724621619239520, guid: 1559891dd7e335948af469e87a742220, type: 3}
   immediateStopMusic: 0
-  trackNumber: 0
+  musicOption: 0
 --- !u!114 &8736452697236013708
 MonoBehaviour:
   m_ObjectHideFlags: 0

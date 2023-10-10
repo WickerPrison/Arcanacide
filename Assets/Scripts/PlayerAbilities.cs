@@ -30,7 +30,6 @@ public class PlayerAbilities : MonoBehaviour
     PatchEffects patchEffects;
     WeaponManager weaponManager;
     PlayerSound playerSound;
-    AudioSource SFX;
     Rigidbody rb;
 
     //managers
@@ -76,8 +75,7 @@ public class PlayerAbilities : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
-        playerSound = GetComponentInChildren<PlayerSound>();
-        SFX = GetComponentInChildren<AudioSource>();
+        playerSound = GetComponentInChildren<PlayerSound>();;
         rb = GetComponent<Rigidbody>();
 
         if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(1);
@@ -150,9 +148,9 @@ public class PlayerAbilities : MonoBehaviour
 
     public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile)
     {
-        if (attackProfile.soundOnHit != null)
+        if (!attackProfile.soundOnHitEvent.IsNull)
         {
-            SFX.PlayOneShot(attackProfile.soundOnHit, attackProfile.soundOnHitVolume);
+            playerSound.PlaySoundEffect(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume);
         }
 
         if (enemy.DOT > 0 && playerData.equippedEmblems.Contains(emblemLibrary.opportune_strike))
@@ -219,12 +217,12 @@ public class PlayerAbilities : MonoBehaviour
         switch (attackType)
         {
             case EnemyAttackType.PROJECTILE:
-                playerSound.PlaySoundEffectFromList(11, 0.5f);
+                playerSound.PlaySoundEffect(PlayerSFX.RING, 0.5f);
                 FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
                 break;
             case EnemyAttackType.MELEE:
                 playerEvents.MeleeParry();
-                playerSound.PlaySoundEffectFromList(11, 0.5f);
+                playerSound.PlaySoundEffect(PlayerSFX.RING, 0.5f);
                 attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.PhysicalDamage()) * parryProfile.poiseDamageMultiplier);
                 attackingEnemy.ImpactVFX();
                 break;

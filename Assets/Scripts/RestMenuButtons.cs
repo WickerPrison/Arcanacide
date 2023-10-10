@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,7 @@ public class RestMenuButtons : MonoBehaviour
     PlayerScript playerScript;
     public PlayerControls controls;
     SoundManager sm;
+    [SerializeField] EventReference healSFX;
 
     private void Awake()
     {
@@ -111,7 +113,7 @@ public class RestMenuButtons : MonoBehaviour
 
     void Rest()
     {
-        sm.RestSound();
+        RuntimeManager.PlayOneShot(healSFX, 0.4f);   
         playerData.lastSwordSite = altarNumber;
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();

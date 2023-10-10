@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,6 @@ public class FairyProjectile : MonoBehaviour
     [System.NonSerialized] public PlayerAbilities playerAbilities;
     [SerializeField] AttackProfiles axeHeavyProfile;
     [SerializeField] ParticleSystem explosion;
-    AudioSource sfx;
     ParticleSystem trail;
     GameManager gm;
     Transform target;
@@ -22,7 +22,6 @@ public class FairyProjectile : MonoBehaviour
     private void Start()
     {
         trail = gameObject.GetComponent<ParticleSystem>();
-        sfx = GetComponent<AudioSource>();
         lanternFairy.ToggleSprites(false);
         initialPos = transform.position;
 
@@ -67,7 +66,7 @@ public class FairyProjectile : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         explosion.Play();
         int damage = playerAbilities.DetermineAttackDamage(axeHeavyProfile);
-        sfx.PlayOneShot(axeHeavyProfile.soundNoHit, axeHeavyProfile.soundNoHitVolume);
+        RuntimeManager.PlayOneShot(axeHeavyProfile.noHitSoundEvent, axeHeavyProfile.soundNoHitVolume, transform.position);
         Vector3 groundPosition = new Vector3(transform.position.x, 0, transform.position.z);
         foreach(EnemyScript enemy in gm.enemies)
         {

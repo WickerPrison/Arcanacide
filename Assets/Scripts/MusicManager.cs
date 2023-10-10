@@ -1,56 +1,58 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    [SerializeField] bool fadeOutMusic = true;
+    [SerializeField] GameObject musicPlayerPrefab;
     [SerializeField] bool immediateStopMusic = false;
-    [SerializeField] int trackNumber = 0;
+    [SerializeField] Music musicOption;
     MusicPlayer musicPlayer;
-    AudioSource musicSource;
 
+    private void Awake()
+    {
+        if (GameObject.FindGameObjectWithTag("MusicPlayer") == null)
+        {
+            Instantiate(musicPlayerPrefab);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         musicPlayer = GameObject.FindGameObjectWithTag("MusicPlayer").GetComponent<MusicPlayer>();
-        musicSource = musicPlayer.gameObject.GetComponent<AudioSource>();
 
-        if (immediateStopMusic)
+        if(musicOption == Music.NONE)
         {
-            musicSource.Stop();
-            return;
-        }
-
-        if (fadeOutMusic)
-        {
-            StartFadeOut(4);
-        }
-        else
-        {
-            musicPlayer.EndFadeOut();
-
-            if (trackNumber != musicPlayer.currentTrack || !musicSource.isPlaying)
+            if (immediateStopMusic)
             {
-                musicPlayer.PlayMusic(trackNumber, 0.5f);
+                StopImmediate();
+            }
+            else
+            {
+                StopFadeOut();
             }
         }
+        else if(musicOption != musicPlayer.currentTrack)
+        {
+            musicPlayer.PlayMusic(musicOption);
+        }
     }
 
-    public void StartFadeOut(int duration)
+    public void StopFadeOut()
     {
-        musicPlayer.StartFadeOut(duration);
+        musicPlayer.StopFadeOut();
     }
 
-    public void ImmediateStop()
+    public void StopImmediate()
     {
-        musicSource.Stop();
+        musicPlayer.StopImmediate();
     }
 
     private void onBossKilled(object sender, System.EventArgs e)
     {
-        StartFadeOut(4);
+        StopFadeOut();
     }
 
     private void OnEnable()

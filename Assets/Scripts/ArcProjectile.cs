@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class ArcProjectile : MonoBehaviour
     Vector3 startPoint;
     [SerializeField] float arcHeight;
     [SerializeField] float thirdPointX;
-    [SerializeField] AudioClip impactSound;
+    [SerializeField] EventReference impactSound;
     [SerializeField] float impactVolume;
     [SerializeField] float staggerDuration;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
@@ -84,7 +85,7 @@ public class ArcProjectile : MonoBehaviour
         List<Collider> objects = touchingCircle.GetTouchingObjects();
         if (objects.Contains(playerCollider))
         {
-            explosion.GetComponent<AudioSource>().PlayOneShot(impactSound, impactVolume);
+            RuntimeManager.PlayOneShot(impactSound, impactVolume);
             player.StartStagger(staggerDuration);
             player.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
             player.LosePoise(poiseDamage);

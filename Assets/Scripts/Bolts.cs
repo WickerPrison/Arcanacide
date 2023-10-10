@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,11 @@ public class Bolts : MonoBehaviour
     [System.NonSerialized] public Vector3 startPosition;
     [System.NonSerialized] public Vector3 endPosition;
     bool soundOn;
-    AudioSource sfx;
+    StudioEventEmitter sfx;
 
     private void Start()
     {
-        sfx = GetComponent<AudioSource>();
+        sfx = GetComponent<StudioEventEmitter>();
         for (int i = 0; i < 1; i++)
         {
             lightningBolts[i].frameCounter = i;

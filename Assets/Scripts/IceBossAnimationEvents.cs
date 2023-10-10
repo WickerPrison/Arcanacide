@@ -159,4 +159,16 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
     {
         bossController.Death();
     }
+
+    public void IceBossFootstep()
+    {
+        if(bossController.currentLimb > 1)
+        {
+            enemySound.OtherSounds(2, .4f);
+        }
+        else
+        {
+            base.Footstep();
+        }
+    }
 }

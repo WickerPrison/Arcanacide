@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class Hadoken : Projectile
 
     void Explode()
     {
-        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(impactSFX, impactSFXvolume, transform.position);
+        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         for (int i = 0; i < projectileNum; i++)
         {
             Projectile projectile = Instantiate(smallerProjectilePrefab).GetComponent<Projectile>();

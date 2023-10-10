@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,6 @@ public class PlayerAttackHitEvents : MonoBehaviour
 
     //other scripts
     GameManager gm;
-    AudioSource SFX;
     StepWithAttack stepWithAttack;
     PlayerSmear smear;
     CameraFollow cameraScript;
@@ -31,7 +31,6 @@ public class PlayerAttackHitEvents : MonoBehaviour
 
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
-        SFX = transform.parent.GetComponentInChildren<AudioSource>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         smear = transform.parent.GetComponentInChildren<PlayerSmear>();
         attackArc = playerMovement.attackPoint.gameObject.GetComponent<PlayerAttackArc>();
@@ -42,9 +41,9 @@ public class PlayerAttackHitEvents : MonoBehaviour
     {
         stepWithAttack.Step(attackProfile.stepWithAttack);
 
-        if (attackProfile.soundNoHit != null)
+        if (!attackProfile.noHitSoundEvent.IsNull)
         {
-            SFX.PlayOneShot(attackProfile.soundNoHit, attackProfile.soundNoHitVolume);
+            RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume);
         }
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackProfile.staminaCost);

@@ -1,65 +1,72 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySound : MonoBehaviour
 {
-    [System.NonSerialized] public AudioSource SFX;
-    [SerializeField] AudioClip footstep;
-    [SerializeField] AudioClip swordSwoosh;
-    [SerializeField] AudioClip pain;
-    [SerializeField] AudioClip swordImpact;
-    [SerializeField] AudioClip enemySpell;
-    [SerializeField] AudioClip blockAttack;
+    [SerializeField] EventReference footstep;
+    [SerializeField] EventReference swordSwoosh;
+    [SerializeField] EventReference swordImpact;
+    [SerializeField] EventReference enemySpell;
+    [SerializeField] EventReference blockAttack;
     [SerializeField] List<AudioClip> otherSounds = new List<AudioClip>();
-
-    private void Start()
-    {
-        SFX = GetComponent<AudioSource>();
-    }
+    [SerializeField] EventReference[] otherSFX;
+    EventInstance fmodInstance;
 
     public void Footstep()
     {
-        SFX.PlayOneShot(footstep, 0.25f);
+        RuntimeManager.PlayOneShot(footstep, 0.25f);
     }
 
     public void SwordSwoosh()
     {
-        SFX.PlayOneShot(swordSwoosh, 1);
+        RuntimeManager.PlayOneShot(swordSwoosh, 1);
     }
 
     public void SwordImpact()
     {
-        SFX.PlayOneShot(swordImpact, 1f);
+        RuntimeManager.PlayOneShot(swordImpact, 1);
     }
 
     public void BlockAttack()
     {
-        SFX.PlayOneShot(blockAttack, 1f);
-    }
-
-    public void Pain()
-    {
-        SFX.PlayOneShot(pain, 0.05f);
+        RuntimeManager.PlayOneShot(blockAttack, 1);
     }
 
     public void EnemySpell()
     {
-        SFX.PlayOneShot(enemySpell, 1);
+        RuntimeManager.PlayOneShot(enemySpell, 1);
     }
 
     public void OtherSounds(int indexNumber, float volume)
     {
-        SFX.PlayOneShot(otherSounds[indexNumber], volume);
+        RuntimeManager.PlayOneShot(otherSFX[indexNumber], volume, transform.position);
     }
 
-    public void Play()
+    public void Play(EventReference fmodEvent, float volume) 
     {
-        SFX.Play();
+        fmodInstance.release();
+        fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
+        fmodInstance.start();
+        fmodInstance.setVolume(volume);
     }
 
-    public void Pause()
+    public void SetPaused(bool isPaused)
     {
-        SFX.Pause();
+        fmodInstance.setPaused(isPaused);
+    }
+
+    public void Stop()
+    {
+        fmodInstance.release();
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+    }
+
+    private void OnDisable()
+    {
+        fmodInstance.release();
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 }

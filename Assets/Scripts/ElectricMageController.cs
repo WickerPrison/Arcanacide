@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,8 @@ public class ElectricMageController : EnemyController
     bool getNewPoint = true;
     int chainsActive;
     bool soundPlaying = false;
+    [SerializeField] EventReference chainSound;
+    [SerializeField] float chainVolume;
 
     public override void Start()
     {
@@ -112,13 +115,13 @@ public class ElectricMageController : EnemyController
             if (!soundPlaying)
             {
                 soundPlaying = true;
-                enemySound.SFX.Play();
+                enemySound.Play(chainSound, chainVolume);
             }
         }
         else
         {
             soundPlaying = false;
-            enemySound.SFX.Stop();
+            enemySound.Stop();
         }
     }
 

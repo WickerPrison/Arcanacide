@@ -56,7 +56,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
             MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
-            musicManager.ImmediateStop();
+            musicManager.StopImmediate();
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
         }
@@ -180,7 +180,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
 
         if (playerScript.gameObject.layer == 3)
         {
-            enemySound.OtherSounds(0, 1);
+            enemySound.OtherSounds(0, 2);
             playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
@@ -198,7 +198,6 @@ public class ElectricBossController : EnemyController, IEndDialogue
         state = EnemyState.ATTACKING;
 
         int randInt = Random.Range(0, 4);
-        randInt = 0;
         switch (randInt)
         {
             case 0:

@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class LightningThrower : EnemyController
     bool isShocking = false;
     float shockDamageBuildup;
     float lightningThrowerDamage = 20;
+    [SerializeField] EventReference lightningSFX;
+    [SerializeField] float lightningVolume;
 
     public override void Start()
     {
@@ -106,7 +109,7 @@ public class LightningThrower : EnemyController
             backElectricityVFX.transform.rotation = Quaternion.LookRotation(direction.normalized);
             backElectricityVFX.Play();
         }
-        enemySound.SFX.Play();
+        enemySound.Play(lightningSFX, lightningVolume);
         isShocking = true;
     }
 
@@ -114,7 +117,7 @@ public class LightningThrower : EnemyController
     {
         frontElectricityVFX.Stop();
         backElectricityVFX.Stop();
-        enemySound.SFX.Stop();
+        enemySound.Stop();
         isShocking = false;
     }
 

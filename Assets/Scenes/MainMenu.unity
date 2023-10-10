@@ -1804,6 +1804,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 479534431586172430, guid: f0da49de1fb1b6741885e48da0ecc43d, type: 3}
+      propertyPath: musicOption
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 479534431586172430, guid: f0da49de1fb1b6741885e48da0ecc43d, type: 3}
       propertyPath: trackNumber
       value: 2
       objectReference: {fileID: 0}
@@ -2542,14 +2546,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5640747524578356890
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5640747524578356891}
-  m_Enabled: 1
 --- !u!1 &5640747524578356891
 GameObject:
   m_ObjectHideFlags: 0
@@ -2560,7 +2556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5640747524578356839}
   - component: {fileID: 5640747524578356888}
-  - component: {fileID: 5640747524578356890}
+  - component: {fileID: 5640747524578356892}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2568,6 +2564,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5640747524578356892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5640747524578356891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!222 &5650999183070964779
 CanvasRenderer:
   m_ObjectHideFlags: 0

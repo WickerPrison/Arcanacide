@@ -78,7 +78,7 @@ public class IceBoss : EnemyController
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
             MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
-            musicManager.ImmediateStop();
+            musicManager.StopImmediate();
             //return;
         }
         else

@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 using Unity.VisualScripting;
 using TMPro;
 using UnityEngine.Audio;
+using FMODUnity;
 
 public enum VolumeChannel
 {
@@ -44,19 +45,19 @@ public class SettingsData : ScriptableObject
 
     public void SetVolume(VolumeChannel channel, float normalizedVolume)
     {
-        float volume = Mathf.Lerp(-80, 0, normalizedVolume);
+        //float volume = Mathf.Lerp(-80, 0, normalizedVolume);
         switch (channel)
         {
             case VolumeChannel.MASTER:
-                audioMixer.SetFloat("masterVol", volume); 
+                RuntimeManager.GetBus("bus:/").setVolume(normalizedVolume);
                 masterVol = normalizedVolume;
                 break;
             case VolumeChannel.SFX:
-                audioMixer.SetFloat("sfxVol", volume);
+                RuntimeManager.GetBus("bus:/SFX").setVolume(normalizedVolume);
                 sfxVol = normalizedVolume;
                 break;
             case VolumeChannel.MUSIC:
-                audioMixer.SetFloat("musicVol", volume);
+                RuntimeManager.GetBus("bus:/Music").setVolume(normalizedVolume);
                 musicVol = normalizedVolume;
                 break;
         }

@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +9,10 @@ public class ElectricPuddleScript : MonoBehaviour
     [SerializeField] List<Collider> colliders;
     [SerializeField] ParticleSystem particles;
     [SerializeField] bool startOn = false;
-    [SerializeField] AudioClip damageSound;
-    AudioSource sfx;
+    [SerializeField] EventReference damageSoundEvent;
+    [SerializeField] EventReference fmodEvent;
+    [SerializeField] float volume;
+    EventInstance fmodInstance;
     PlayerScript playerScript;
     PlayerSound playerSound;
     Rigidbody playerRigidbody;
@@ -22,7 +26,6 @@ public class ElectricPuddleScript : MonoBehaviour
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerSound = playerScript.gameObject.GetComponentInChildren<PlayerSound>();
         playerRigidbody = playerScript.gameObject.GetComponent<Rigidbody>();
-        sfx = GetComponent<AudioSource>();
         if (startOn)
         {
             PowerOn();
@@ -46,7 +49,8 @@ public class ElectricPuddleScript : MonoBehaviour
     {
         powerOn = false;
         particles.Stop();
-        sfx.Stop();
+        fmodInstance.release();
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         foreach (Collider collider in colliders)
         {
             collider.isTrigger = true;
@@ -62,7 +66,10 @@ public class ElectricPuddleScript : MonoBehaviour
 
         powerOn = true;
         particles.Play();
-        sfx.Play();
+        fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
+        fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+        fmodInstance.start();
+        fmodInstance.setVolume(volume);
         foreach (Collider collider in colliders)
         {
             collider.isTrigger = false;
@@ -75,8 +82,14 @@ public class ElectricPuddleScript : MonoBehaviour
         {
             playerScript.LoseHealth(25, EnemyAttackType.NONPARRIABLE, null);
             playerScript.StartStagger(staggerDuration);
-            playerSound.PlaySoundEffect(damageSound, 1);
+            playerSound.PlaySoundEffect(damageSoundEvent, 1);
             staggerTimer = staggerDuration;
         }
+    }
+
+    private void OnDisable()
+    {
+        fmodInstance.release();
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 }

@@ -1,10 +1,13 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FireTrail : MonoBehaviour
 {
-    AudioSource sfx;
+    [SerializeField] EventReference fmodEvent;
+    EventInstance fmodInstance;
     public float duration = 5;
     public float damagePerSecond = 5;
     float damage;
@@ -12,8 +15,11 @@ public class FireTrail : MonoBehaviour
 
     private void Start()
     {
-        sfx = GetComponent<AudioSource>();
-        sfx.time += Random.Range(0, 0.5f);
+        fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
+        //fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        fmodInstance.start();
+        fmodInstance.setTimelinePosition(Random.Range(0, 2000));
+        fmodInstance.setVolume(0.1f);
     }
 
     private void OnTriggerStay(Collider other)
@@ -45,5 +51,11 @@ public class FireTrail : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnDisable()
+    {
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        fmodInstance.release();        
     }
 }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7810724621619239533}
-  - component: {fileID: 7810724621619239522}
   - component: {fileID: 7810724621619239523}
   m_Layer: 0
   m_Name: MusicPlayer
@@ -33,102 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &7810724621619239522
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810724621619239520}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 3537106245714208353, guid: 6e0d7c839c7f064458a0feca33c0eac0, type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &7810724621619239523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,11 +45,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTrack: 0
-  audioSource: {fileID: 7810724621619239522}
   audioClips:
   - {fileID: 8300000, guid: 98c104613cebd134180bb8d3996941ad, type: 3}
   - {fileID: 8300000, guid: 6e4923c0e196fa84c8e2260573a3f164, type: 3}
   - {fileID: 8300000, guid: 77e8d86f09c7ab5418e8a553c78eff53, type: 3}
   - {fileID: 8300000, guid: 52884a231dba8f244a67df1f365a7901, type: 3}
   - {fileID: 8300000, guid: 9e1e55d05e2aa3441bb1d5d0844ffe3f, type: 3}
+  fmodEvents:
+  - Guid:
+      Data1: 1959963237
+      Data2: 1222133961
+      Data3: -59279463
+      Data4: -691129498
+    Path: event:/MainMenu
+  - Guid:
+      Data1: -1875886692
+      Data2: 1164439270
+      Data3: 1715658375
+      Data4: -1982605329
+    Path: event:/Peaceful
+  - Guid:
+      Data1: -1664995287
+      Data2: 1215820313
+      Data3: 1571845553
+      Data4: 849283556
+    Path: event:/FireBossMusic
+  - Guid:
+      Data1: -304530664
+      Data2: 1207258266
+      Data3: 1904993197
+      Data4: 936691403
+    Path: event:/ElectricBossMusic
+  - Guid:
+      Data1: 129422901
+      Data2: 1314728628
+      Data3: -1533284217
+      Data4: -1893923035
+    Path: event:/IceBossMusic
   settingsData: {fileID: 11400000, guid: 86eec6c6b27d8b14ca6b0930c54b0630, type: 2}
