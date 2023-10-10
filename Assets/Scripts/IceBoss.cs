@@ -107,7 +107,7 @@ public class IceBoss : EnemyController
 
         playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 
-        if (playerDistance > tooFarAway && state != EnemyState.DYING && false)
+        if (playerDistance > tooFarAway && state != EnemyState.DYING)
         {
             RainIcicles();
 

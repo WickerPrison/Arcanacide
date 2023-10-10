@@ -189,6 +189,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-5864216012181370552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ContinuousIceDamage
+  m_EditorClassIdentifier: 
+  Path: event:/ContinuousIceDamage
+  Guid:
+    Data1: -2108090795
+    Data2: 1152672225
+    Data3: -1860877889
+    Data4: 1065307449
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-5347391882066551071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,7 +420,7 @@ MonoBehaviour:
   Path: Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638324645825645847
+  lastModified: 638325420208588235
   FileSizes: []
   Exists: 1
 --- !u!114 &-2533865439236919589
@@ -587,12 +614,14 @@ MonoBehaviour:
   - {fileID: 609389561960840382}
   - {fileID: -6910121203227153329}
   - {fileID: -209759678374650962}
+  - {fileID: -5864216012181370552}
+  - {fileID: 2069850493962545980}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6154116738536693301}
   StringsBanks:
   - {fileID: 7272457121581144135}
-  cacheTime: 638324645825645847
+  cacheTime: 638325420208588235
   cacheVersion: 131607
 --- !u!114 &479839459612566957
 MonoBehaviour:
@@ -889,6 +918,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &2069850493962545980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BossIceBreath
+  m_EditorClassIdentifier: 
+  Path: event:/BossIceBreath
+  Guid:
+    Data1: -110620483
+    Data2: 1311729109
+    Data3: 1444532866
+    Data4: 657868924
+  Banks:
+  - {fileID: -2543849127298854081}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1903
 --- !u!114 &2616138498639790660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1196,7 +1252,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638324644210466141
+  lastModified: 638325420201861290
   FileSizes: []
   Exists: 1
 --- !u!114 &6936588679804666003
@@ -1270,10 +1326,10 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638324644210519543
+  lastModified: 638325420201908679
   FileSizes:
   - Name: 
-    Value: 2732
+    Value: 2838
   Exists: 1
 --- !u!114 &8210077182250968125
 MonoBehaviour:

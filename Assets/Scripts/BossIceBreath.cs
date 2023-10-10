@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +7,11 @@ using UnityEngine;
 public class BossIceBreath : MonoBehaviour
 {
     ParticleSystem vfx;
-    AudioSource sfx;
     [SerializeField] Transform attackPoint;
     [SerializeField] AttackArcGenerator attackArc;
-    [SerializeField] AudioClip damageSFX;
+    [SerializeField] EventReference damageSFX;
+    [SerializeField] EventReference fmodEvent;
+    EventInstance fmodInstance;
     WaitForSeconds damageSFXdelay = new WaitForSeconds(.6f);
     bool canPlaySound = true;
     EnemyEvents enemyEvents;
@@ -27,8 +30,8 @@ public class BossIceBreath : MonoBehaviour
     void Start()
     {
         vfx = GetComponent<ParticleSystem>();
-        sfx = GetComponent<AudioSource>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
     }
 
     private void Update()
@@ -45,7 +48,7 @@ public class BossIceBreath : MonoBehaviour
         {
             if (canPlaySound)
             {
-                sfx.PlayOneShot(damageSFX);
+                RuntimeManager.PlayOneShot(damageSFX);
                 StartCoroutine(SFXtimer());
             }
 
@@ -70,14 +73,14 @@ public class BossIceBreath : MonoBehaviour
     {
         iceBreathOn = true;
         vfx.Play();
-        sfx.Play();
+        fmodInstance.start();
     }
 
     public void StopIceBreath()
     {
         iceBreathOn = false;
         vfx.Stop();
-        sfx.Stop();
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     void OnStagger(object sender, System.EventArgs e)
@@ -93,5 +96,7 @@ public class BossIceBreath : MonoBehaviour
     private void OnDisable()
     {
         enemyEvents.OnStagger -= OnStagger;
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        fmodInstance.release();
     }
 }
