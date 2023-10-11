@@ -1,4 +1,4 @@
-Shader "Unlit/AttackIndicator"
+Shader "Unlit/Floor"
 {
 	Properties
 	{
@@ -26,8 +26,8 @@ Shader "Unlit/AttackIndicator"
 			Stencil
 			{
 				Ref 2
-				Comp Equal
-				Pass IncrSat
+				Comp Always
+				Pass Replace
 			}
 
 			Pass
@@ -86,7 +86,6 @@ Shader "Unlit/AttackIndicator"
 				fixed4 frag(v2f i) : SV_Target
 				{
 					fixed4 c = SampleSpriteTexture(i.uv) * i.color;
-					c.a = 0.5;
 					c.rgb *= c.a;
 					return c;
 				}
