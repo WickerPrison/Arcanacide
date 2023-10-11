@@ -5,10 +5,12 @@ using UnityEngine;
 public class AssistantAnimationEvents : MonoBehaviour
 {
     AssistantController controller;
+    CameraFollow cameraScript;
 
     private void Start()
     {
         controller = GetComponentInParent<AssistantController>();
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
     }
 
     public void EndAttack(float attackTime)
@@ -39,5 +41,10 @@ public class AssistantAnimationEvents : MonoBehaviour
     public void ThrowAC()
     {
         controller.ThrowAC();
+    }
+
+    public void ScreenShake()
+    {
+        StartCoroutine(cameraScript.ScreenShake(0.1f, 0.5f));
     }
 }
