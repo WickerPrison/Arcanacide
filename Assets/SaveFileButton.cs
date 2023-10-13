@@ -14,9 +14,11 @@ public class SaveFileButton : MonoBehaviour
     GameManager gm;
     string textString;
     bool haveOldData = false;
+    ButtonVibrate buttonVibrate;
 
     private void Start()
     {
+        buttonVibrate = GetComponent<ButtonVibrate>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         text = GetComponentInChildren<TextMeshProUGUI>();
         textString = "Save File " + fileID.ToString() + ": ";
@@ -46,7 +48,7 @@ public class SaveFileButton : MonoBehaviour
             }
             else
             {
-                textString += playerData.dateTime;
+                textString += data.dateTime;
             }
         }
         text.text = textString;
@@ -63,12 +65,17 @@ public class SaveFileButton : MonoBehaviour
                 gm.SaveGame();
                 File.Delete(Application.persistentDataPath + "/playerData.sav");
             }
+
+            if(File.Exists(Application.persistentDataPath + "/" + "saveFile" + fileID.ToString() + ".sav"))
+            {
+                gm.LoadGame("saveFile" +  fileID.ToString());            
+                string sceneName = gm.GetSceneName(playerData.lastSwordSite);
+                SceneManager.LoadScene(sceneName);
+            }
             else
             {
-                gm.LoadGame("saveFile" +  fileID.ToString());
+                buttonVibrate.StartVibrate();
             }
-            string sceneName = gm.GetSceneName(playerData.lastSwordSite);
-            SceneManager.LoadScene(sceneName);
         }
         else
         {
