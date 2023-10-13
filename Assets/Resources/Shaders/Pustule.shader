@@ -77,15 +77,15 @@ Shader "Unlit/Pustule"
            
                 float time = _Time.y + _PerlinTime;
                 float2 perlinUV1 = float2(i.uv.x + time * 1.1 * _PerlinSpeed, i.uv.y + time * _PerlinSpeed);
-                float4 perlin1 = tex2D(_PerlinTex, perlinUV1 / _PerlinSize);
-
+                float4 perlin1 = 1 - tex2D(_PerlinTex, perlinUV1 / _PerlinSize);
 
                 float2 perlinUV2 = float2(i.uv.y - time * 1.1 * _PerlinSpeed, i.uv.x - time * _PerlinSpeed);
-                float4 perlin2 = tex2D(_PerlinTex, perlinUV2 / _PerlinSize);
+                float4 perlin2 = 1 - tex2D(_PerlinTex, perlinUV2 / _PerlinSize);
+                float colorMod = (perlin1 + perlin2) / 2 * _PerlinIntensity + 0.1;
+                colorMod = colorMod > 0.34;
 
-                float3 colorMod = (perlin1 + perlin2) / 2 * _PerlinIntensity + 0.5f;
-
-                _Color.xyz = lerp(_EdgeColor, _Color.xyz * colorMod * (viewNormal + _FadeawayOffset), edgeMask);
+                //* (viewNormal + _FadeawayOffset)
+                _Color.xyz = lerp(_EdgeColor, _Color.xyz * colorMod, edgeMask);
                 return float4(_Color.xyz, 1);
             }
             ENDCG

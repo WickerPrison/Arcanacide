@@ -46,6 +46,12 @@ Shader "Unlit/ChaosBeam"
             {
                 float4 baseline = _Color * i.uv.x;
 
+                float mask = i.uv.y < 0.1;
+
+                baseline = lerp(_Color , (1, 1, 1, 1), mask);
+
+                baseline *= i.uv.y < 0.7;
+
                 return baseline;
 
                 return _Color;
