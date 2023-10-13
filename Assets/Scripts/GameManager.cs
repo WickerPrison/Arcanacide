@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -91,6 +92,8 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
+        DateTime dateTime = DateTime.Now;
+        playerData.dateTime = dateTime.GetDateTimeFormats('g')[24];
         SaveSystem.SaveGame(playerData.saveFile, playerData, mapData, dialogueData);
         SaveSystem.SaveSettings(settingsData);
     }

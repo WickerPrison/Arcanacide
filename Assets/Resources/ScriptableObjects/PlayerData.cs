@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public string saveFile;
+    public string dateTime;
 
     public int health;
     public bool hasHealthGem;
