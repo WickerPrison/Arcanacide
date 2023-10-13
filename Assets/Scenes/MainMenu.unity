@@ -259,7 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gm: {fileID: 1491785298}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
-  buttonAudioPrefab: {fileID: 8106109093987376933, guid: 44c5fef9c1c9df446a1acd791463c7d4, type: 3}
+  menuData: {fileID: 11400000, guid: 68f99722b816d514881119c7e712f254, type: 2}
   optionsMenuPrefab: {fileID: 5588705412702762548, guid: e0761bee94ad36345b74b17f7f24b55a, type: 3}
   firstButton: {fileID: 8521927875982757194}
 --- !u!4 &707940740
@@ -2427,8 +2427,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 707940739}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: Play
+        m_TargetAssemblyTypeName: MainMenuButtons, Assembly-CSharp
+        m_MethodName: Load
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2605,7 +2605,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Continue
+  m_text: Load Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
   m_sharedMaterial: {fileID: -4503134213540977879, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}

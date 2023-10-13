@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
+    public string saveFile;
     public int maxHealth;
     public float maxStamina;
     public int attackPower;
@@ -61,16 +62,9 @@ public class SaveData
     public int[] patchworkGaryConversations;
     public int[] whistleblowerConversations;
 
-    public string[] bindingDictionaryKeys;
-    public string[] bindingDictionaryValues;
-    public bool showArrow = true;
-    public float masterVol;
-    public float sfxVol;
-    public float musicVol;
-    public bool fullscreenMode = true;
-
-    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, SettingsData settingsData)
+    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData)
     {
+        saveFile = playerData.saveFile;
         hasHealthGem = playerData.hasHealthGem;
         maxHealCharges = playerData.maxHealCharges;
         healCharges = playerData.healCharges;
@@ -128,13 +122,5 @@ public class SaveData
         QuestionMarksPreviousConversations = dialogueData.unknownNumberPreviousConversations.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();
         whistleblowerConversations = dialogueData.whistleBlowerConversations.ToArray();
-
-        bindingDictionaryKeys = settingsData.bindings.Keys.ToArray();
-        bindingDictionaryValues = settingsData.bindings.Values.ToArray();
-        showArrow = settingsData.showArrow;
-        masterVol = settingsData.masterVol;
-        sfxVol = settingsData.sfxVol;
-        musicVol = settingsData.musicVol;
-        fullscreenMode = settingsData.fullscreenMode;
     }
 }

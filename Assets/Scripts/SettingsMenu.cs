@@ -33,7 +33,7 @@ public class SettingsMenu : MonoBehaviour
     {
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         gm = sm.GetComponent<GameManager>();
-        gm.LoadGame();
+        gm.LoadSettings();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);     
         direcitonalArrowText = arrowToggle.GetComponentInChildren<TextMeshProUGUI>();

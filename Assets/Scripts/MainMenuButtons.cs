@@ -7,7 +7,7 @@ public class MainMenuButtons : MonoBehaviour
 {
     [SerializeField] GameManager gm;
     [SerializeField] PlayerData playerData;
-    [SerializeField] GameObject buttonAudioPrefab;
+    [SerializeField] MenuData menuData;
     [SerializeField] GameObject optionsMenuPrefab;
     [SerializeField] GameObject firstButton;
     SoundManager sm;
@@ -16,21 +16,22 @@ public class MainMenuButtons : MonoBehaviour
     {
         Time.timeScale = 1;
         sm = gm.gameObject.GetComponent<SoundManager>();
+        gm.LoadSettings();
+        GlobalEvents.instance.OnChangedSetting();
     }
 
-    public void Play()
+    public void Load()
     {
         ButtonSound();
-        gm.LoadGame();
-        string sceneName = gm.GetSceneName(playerData.lastSwordSite);
-        SceneManager.LoadScene(sceneName);
+        menuData.loadGame = true;
+        SceneManager.LoadScene("LoadScreen");
     }
 
     public void NewGame()
     {
         ButtonSound();
-        gm.NewGame();
-        SceneManager.LoadScene("IntroCutscene");
+        menuData.loadGame = false;
+        SceneManager.LoadScene("LoadScreen");
     }
 
     public void Options()

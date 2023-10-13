@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PlayerData : ScriptableObject
 {
+    public string saveFile;
+
     public int health;
     public bool hasHealthGem;
     public int maxHealCharges;
