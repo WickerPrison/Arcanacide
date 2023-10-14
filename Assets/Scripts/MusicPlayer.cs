@@ -12,7 +12,6 @@ public enum Music
 public class MusicPlayer : MonoBehaviour
 {
     public Music currentTrack = Music.NONE;
-    [SerializeField] List<AudioClip> audioClips;
     [SerializeField] EventReference[] fmodEvents;
     [SerializeField] SettingsData settingsData;
     Dictionary<Music, EventReference> playlistDict;
@@ -38,6 +37,7 @@ public class MusicPlayer : MonoBehaviour
 
     public void PlayMusic(Music musicOption)
     {
+        musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         musicInstance.release();
         musicInstance = RuntimeManager.CreateInstance(playlistDict[musicOption]);
         musicInstance.start();
