@@ -42,6 +42,7 @@ public class EnemyController : MonoBehaviour
     public float hitPoiseDamage;
     [System.NonSerialized] public bool facingFront;
     float staggerTimer = 0;
+    LayerMask sightBlocker; 
 
     [System.NonSerialized] public bool canHitPlayer = false;
 
@@ -57,6 +58,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
+        sightBlocker = LayerMask.GetMask("SightBlocker");
         enemyScript = GetComponent<EnemyScript>();
         enemySound = GetComponentInChildren<EnemySound>();
         smearScript = GetComponentInChildren<Smear>();
@@ -103,8 +105,12 @@ public class EnemyController : MonoBehaviour
 
         if (state == EnemyState.UNAWARE && playerDistance <= detectRange)
         {
-            state = EnemyState.IDLE;
-            gm.awareEnemies += 1;
+            Debug.DrawLine(transform.position, player.transform.position, Color.red, 1000);
+            if(!Physics.Linecast(transform.position, player.transform.position, sightBlocker))
+            {
+                state = EnemyState.IDLE;
+                gm.awareEnemies += 1;
+            }
         }
     }
 
