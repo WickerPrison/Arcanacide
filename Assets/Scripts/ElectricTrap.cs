@@ -36,6 +36,7 @@ public class ElectricTrap : MonoBehaviour
             }
         }
 
+        //Debug.Log(enemiesInRange.Count);
         if(enemiesInRange.Count > 0)
         {
             damage += damagePerSecond * Time.deltaTime;
@@ -80,9 +81,7 @@ public class ElectricTrap : MonoBehaviour
     IEnumerator SFXtimer()
     {
         canMakeDamageSound = false;
-        int lengthMilliseconds;
-        RuntimeManager.GetEventDescription(electricDamage).getLength(out lengthMilliseconds);
-        yield return new WaitForSeconds(lengthMilliseconds * 1000);
+        yield return new WaitForSeconds(0.3f);
         canMakeDamageSound = true;
     }
 
@@ -90,5 +89,30 @@ public class ElectricTrap : MonoBehaviour
     {
         timer = duration;
         sfx.Play();
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onEnemyKilled += onEnmyKilled;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onEnemyKilled -= onEnmyKilled;
+    }
+
+    private void onEnmyKilled(object sender, System.EventArgs e)
+    {
+        StartCoroutine(CheckForColliders());
+    }
+
+    IEnumerator CheckForColliders()
+    {
+        yield return new WaitForEndOfFrame();
+        
+        for (int i = enemiesInRange.Count - 1; i >= 0; i--)
+        {
+            if (enemiesInRange[i] == null) enemiesInRange.RemoveAt(i);
+        }
     }
 }

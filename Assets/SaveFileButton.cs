@@ -10,6 +10,9 @@ public class SaveFileButton : MonoBehaviour
     [SerializeField] int fileID;
     [SerializeField] MenuData menuData;
     [SerializeField] PlayerData playerData;
+    [SerializeField] TextMeshProUGUI fileIDText;
+    [SerializeField] TextMeshProUGUI dateText;
+    [SerializeField] TextMeshProUGUI timeText;
     TextMeshProUGUI text;
     GameManager gm;
     string textString;
@@ -21,7 +24,7 @@ public class SaveFileButton : MonoBehaviour
         buttonVibrate = GetComponent<ButtonVibrate>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         text = GetComponentInChildren<TextMeshProUGUI>();
-        textString = "Save File " + fileID.ToString() + ": ";
+        textString = "Save File " + fileID.ToString() + " - ";
 
         SaveData data = null;
 
@@ -39,16 +42,21 @@ public class SaveFileButton : MonoBehaviour
         if(data == null)
         {
             textString += "Empty";
+            dateText.text = "";
+            timeText.text = "";
         }
         else
         {
             if (haveOldData)
             {
                 textString += "Pre version X savefile";
+                dateText.text = "";
+                timeText.text = "";
             }
             else
             {
-                textString += data.dateTime;
+                dateText.text = data.date;
+                timeText.text = data.time;
             }
         }
         text.text = textString;

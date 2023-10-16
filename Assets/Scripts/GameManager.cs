@@ -93,7 +93,8 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         DateTime dateTime = DateTime.Now;
-        playerData.dateTime = dateTime.GetDateTimeFormats('g')[24];
+        playerData.date = dateTime.GetDateTimeFormats('d')[0];
+        playerData.time = dateTime.GetDateTimeFormats('t')[0];
         SaveSystem.SaveGame(playerData.saveFile, playerData, mapData, dialogueData);
         SaveSystem.SaveSettings(settingsData);
     }
