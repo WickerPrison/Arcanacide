@@ -5,7 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
-public class IceBoss : EnemyController
+public class IceBoss : EnemyController, IEndDialogue
 {
     public MapData mapData;
     [SerializeField] PlayerData playerData;
@@ -51,13 +51,15 @@ public class IceBoss : EnemyController
     [System.NonSerialized] public bool justTransformed = false;
     bool fullyTransformed = false;
 
+    bool icicleDelay = true;
+
     public override void Awake()
     {
         if (mapData.iceBossKilled)
         {
             enemyScript = GetComponent<EnemyScript>();
             enemyScript.enabled = false;
-           // return;
+            return;
         }
 
         base.Awake();
@@ -84,7 +86,7 @@ public class IceBoss : EnemyController
         else
         {
             gm.awareEnemies += 1;
-            state = EnemyState.IDLE;
+            state = EnemyState.UNAWARE;
         }
 
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
@@ -104,10 +106,11 @@ public class IceBoss : EnemyController
     {
         if (mapData.iceBossKilled) return;
 
+        if (state == EnemyState.UNAWARE) return;
 
         playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 
-        if (playerDistance > tooFarAway && state != EnemyState.DYING)
+        if (!icicleDelay && playerDistance > tooFarAway && state != EnemyState.DYING)
         {
             RainIcicles();
 
@@ -413,5 +416,17 @@ public class IceBoss : EnemyController
     {
         base.OnEnable();
         enemyEvents.OnTakeDamage += TakeDamage;
+    }
+
+    void IEndDialogue.EndDialogue()
+    {
+        state = EnemyState.IDLE;
+        StartCoroutine(StartDelay());
+    }
+
+    IEnumerator StartDelay()
+    {
+        yield return new WaitForSeconds(2);
+        icicleDelay = false;
     }
 }
