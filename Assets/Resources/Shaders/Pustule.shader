@@ -43,8 +43,6 @@ Shader "Unlit/Pustule"
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
                 float3 normal : TEXCOORD1;
-                float3 viewDir : TEXCOORD2;
-                float3 worldPos : TEXCOORD3;
             };
 
             float4 _Color;
@@ -65,7 +63,6 @@ Shader "Unlit/Pustule"
                 o.uv = v.uv;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.normal = UnityObjectToWorldNormal(v.normals);
-                o.viewDir = WorldSpaceViewDir(v.vertex);
                 return o;
             }
 

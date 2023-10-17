@@ -45,8 +45,8 @@ public class Bolts : MonoBehaviour
         if(soundOn)
         {
             sfx.Stop();
+            soundOn = false;
         }
-        soundOn = false;
     }
 
     public void ToggleBolts(bool turnOn)

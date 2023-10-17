@@ -49,7 +49,7 @@ public class SaveFileButton : MonoBehaviour
         {
             if (haveOldData)
             {
-                textString += "Pre version X savefile";
+                textString += "Pre version 0.2.11 savefile";
                 dateText.text = "";
                 timeText.text = "";
             }
