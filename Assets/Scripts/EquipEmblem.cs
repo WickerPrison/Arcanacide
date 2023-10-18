@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class EquipEmblem : MonoBehaviour
 {
@@ -127,5 +128,13 @@ public class EquipEmblem : MonoBehaviour
         }
 
         button.navigation = nav;
+    }
+
+    public void SelectOnMouseOver()
+    {
+        if(Gamepad.current == null)
+        {
+            button.Select();
+        }
     }
 }

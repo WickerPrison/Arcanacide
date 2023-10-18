@@ -37,7 +37,7 @@ public class Bonfire : MonoBehaviour
                 playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
                 playerScript.LosePoise(poiseDamage);
                 RuntimeManager.PlayOneShot(impactSound, 0.5f, transform.position);
-                DestroyBonfire();
+                Destroy(gameObject);
             }
             else if(other.gameObject.layer == 8)
             {
@@ -53,12 +53,12 @@ public class Bonfire : MonoBehaviour
         duration -= Time.deltaTime;
         if(duration <= 0)
         {
-            DestroyBonfire();
+            Destroy(gameObject);
         }
 
         if (bossController.hasSurrendered)
         {
-            DestroyBonfire();
+            Destroy(gameObject);
         }
     }
 
@@ -68,10 +68,9 @@ public class Bonfire : MonoBehaviour
         transform.Translate(direction.normalized * Time.fixedDeltaTime * speed);
     }
 
-    void DestroyBonfire()
+    private void OnDisable()
     {
         fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         fmodInstance.release();
-        Destroy(gameObject);
     }
 }
