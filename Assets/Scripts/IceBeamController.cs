@@ -116,6 +116,19 @@ public class IceBeamController : EnemyController
         line.endColor = gradient.Evaluate(aimRatio);
     }
 
+    void HideBeam()
+    {
+        line.SetPosition(0, away);
+        line.SetPosition(1, away);
+    }
+
+    IEnumerator ShotClock()
+    {
+        state = EnemyState.SPECIAL;
+        yield return new WaitForSeconds(1);
+        state = EnemyState.IDLE;
+    }
+
     void Shoot()
     {
         Projectile projectile = Instantiate(projectilePrefab).GetComponent<Projectile>();
@@ -123,6 +136,8 @@ public class IceBeamController : EnemyController
         projectile.direction = playerScript.transform.position - transform.position;
         float angle = Vector3.SignedAngle(Vector3.forward, projectile.direction, Vector3.up);
         projectile.transform.rotation = Quaternion.Euler(25, 0, -angle);
+        HideBeam();
+        StartCoroutine(ShotClock());
     }
 
     void Strafe()
