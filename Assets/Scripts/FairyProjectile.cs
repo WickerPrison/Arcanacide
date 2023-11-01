@@ -60,7 +60,7 @@ public class FairyProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (selfDestructed) return;
+        if (selfDestructed || other.CompareTag("Wall")) return;
         StartCoroutine(SelfDestruct());
     }
 
