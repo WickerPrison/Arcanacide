@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerAttackArc : AttackArcGenerator
 {
-    PlayerMovement playerController;
     GameManager gm;
     LayerMask enemiesLayerMask;
     Vector3 forwardVector;
@@ -14,7 +13,6 @@ public class PlayerAttackArc : AttackArcGenerator
     {
         base.Start();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        playerController = GetComponentInParent<PlayerMovement>();
         //coneRenderer.enabled = true;
         enemiesLayerMask = LayerMask.GetMask("Enemy");
         leftIndex = 6;

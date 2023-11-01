@@ -18,15 +18,16 @@ public class FairyProjectile : MonoBehaviour
     float speed = 30;
     float range = 7;
     bool stop = false;
+    bool selfDestructed = false;
 
     private void Start()
     {
         trail = gameObject.GetComponent<ParticleSystem>();
         lanternFairy.ToggleSprites(false);
-        initialPos = transform.position;
+        initialPos = playerAbilities.transform.position;
 
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        float closestDistance = range;
+        float closestDistance = 100;
         target = null;
         foreach(EnemyScript enemy in gm.enemies)
         {
@@ -41,7 +42,9 @@ public class FairyProjectile : MonoBehaviour
 
     private void Update()
     {
-        if(Vector3.Distance(initialPos, transform.position) > range) Return();
+        if (selfDestructed) return;
+        Vector3 currentPos = new Vector3(transform.position.x, 0, transform.position.z);
+        if(Vector3.Distance(initialPos, currentPos) > range) StartCoroutine(SelfDestruct());
     }
 
     private void FixedUpdate()
@@ -57,11 +60,13 @@ public class FairyProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (selfDestructed) return;
         StartCoroutine(SelfDestruct());
     }
 
     public IEnumerator SelfDestruct()
     {
+        selfDestructed = true;
         stop = true;
         yield return new WaitForSeconds(.5f);
         explosion.Play();

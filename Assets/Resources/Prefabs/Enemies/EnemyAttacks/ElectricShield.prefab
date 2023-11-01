@@ -41,7 +41,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6920134166721594979}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 0.92549026, b: 0.10980393, a: 0.3764706}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3764706}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,6 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719a2fc6227378d4eb320e8738f8f841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  electricImpact:
+    Guid:
+      Data1: -1101567947
+      Data2: 1172878106
+      Data3: 1646198689
+      Data4: -1662717014
+    Path: event:/ElectricImpact
+  transparent: {r: 1, g: 1, b: 1, a: 0.3764706}
+  solid: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &4549090672796509294
 MonoBehaviour:
   m_ObjectHideFlags: 0

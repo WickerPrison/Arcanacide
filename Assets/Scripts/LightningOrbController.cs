@@ -11,7 +11,6 @@ public class LightningOrbController : EnemyController
     [SerializeField] ParticleSystem attack;
     [SerializeField] float selfDestructTime;
     [SerializeField] EventReference impactSFX;
-    ElectricAlly allyScript;
     Vector3 playerDirection;
 
     public override void Update()
@@ -78,12 +77,6 @@ public class LightningOrbController : EnemyController
     public override void StartDying()
     {
         SelfDestruct();
-
-        /*
-        enemyScript.Death();
-        GameObject explosion = Instantiate(lightningExplosion);
-        explosion.transform.position = transform.position + Vector3.up * 1.5f;
-        */
     }
 
     void SelfDestruct()

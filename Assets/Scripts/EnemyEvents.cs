@@ -7,6 +7,7 @@ public class EnemyEvents : MonoBehaviour
 {
     public event EventHandler OnTakeDamage;
     public event EventHandler OnLosePoise;
+    public event EventHandler OnHitWhileInvincible;
     public event EventHandler OnAttackImpact;
     public event EventHandler OnStagger;
     public event EventHandler OnDeath;
@@ -23,6 +24,11 @@ public class EnemyEvents : MonoBehaviour
     public void LosePoise()
     {
         OnLosePoise?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void HitWhileInvincible()
+    {
+        OnHitWhileInvincible?.Invoke(this, EventArgs.Empty);
     }
 
     public void AttackImpact()

@@ -87,7 +87,13 @@ public class EnemyScript : MonoBehaviour
 
     public void LoseHealth(int damage, float poiseDamage)
     {
-        if (invincible || enemyController.state == EnemyState.DYING) return;
+        if (invincible)
+        {
+            if (poiseDamage > 0) enemyEvents.HitWhileInvincible();
+            return;
+        }
+        if (enemyController.state == EnemyState.DYING) return;
+
         enemyEvents.TakeDamage();
         health -= damage;
         if(health < 0)

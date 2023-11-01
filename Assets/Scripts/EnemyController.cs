@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
     public float detectRange = 10f;
     public float attackRange;
     public GameObject projectilePrefab;
-    [System.NonSerialized] public float playerDistance;
+    [System.NonSerialized] public float playerDistance = 100;
     [System.NonSerialized] public bool directionLock = false;
     [System.NonSerialized] public bool parryWindow = false;
     [System.NonSerialized] public bool isParrying = false;
@@ -95,13 +95,13 @@ public class EnemyController : MonoBehaviour
     // actions from moment to moment
     public virtual void EnemyAI()
     {
+        playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
+
         if(startDelay > 0)
         {
             startDelay -= Time.deltaTime;
             return;
         }
-
-        playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 
         if (state == EnemyState.UNAWARE && playerDistance <= detectRange)
         {
