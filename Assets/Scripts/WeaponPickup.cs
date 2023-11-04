@@ -52,12 +52,9 @@ public class WeaponPickup : MonoBehaviour
 
     void TriggerTutorial()
     {
-        if (playerData.tutorials.Contains("New Weapon"))
-        {
             tutorialManager = im.gameObject.GetComponent<TutorialManager>();
             im.controls.Tutorial.Disable();
             tutorialManager.Tutorial("New Weapon");
-        }
     }
 
     private void OnDisable()

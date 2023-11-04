@@ -89,7 +89,7 @@ public class WeaponMenu : MonoBehaviour
         }
 
         initialScale = weaponsIcon.localScale;
-        SelectWeapon(MenuWeaponSelected.NONE);
+        SelectWeapon(MenuWeaponSelected.SWORD);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(backButton);
     }
