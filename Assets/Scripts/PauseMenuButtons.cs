@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class PauseMenuButtons : MonoBehaviour
 {
     public GameObject resumeButton;
-    PlayerMovement playerController;
+    PlayerMovement playerMovement;
     SoundManager sm;
     GameObject textMenu;
     GameObject weaponMenu;
@@ -30,7 +30,7 @@ public class PauseMenuButtons : MonoBehaviour
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(resumeButton);
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -43,7 +43,7 @@ public class PauseMenuButtons : MonoBehaviour
 
     public void ResumeGame()
     {
-        playerController.PauseMenu();
+        playerMovement.PauseMenu();
     }
 
     public void OpenTextMenu()

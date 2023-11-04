@@ -8,6 +8,7 @@ public class Janitor : MonoBehaviour
     [SerializeField] GameObject message;
     [SerializeField] Animator janitorAnimator;
     [SerializeField] GameObject dialoguePrefab;
+    [SerializeField] GameObject respecPrefab;
     [SerializeField] TextAsset csvFile;
     [SerializeField] string ability;
     [SerializeField] int newAbilityConversation;
@@ -97,12 +98,15 @@ public class Janitor : MonoBehaviour
         {
             Destroy(dialogue.gameObject);
             inDialogue = false;
-            im.Gameplay();
             if (!playerData.unlockedAbilities.Contains(ability))
             {
+                im.Gameplay();
                 GetAbility();
             }
-
+            else
+            {
+                Instantiate(respecPrefab);
+            }
         }
         else
         {
