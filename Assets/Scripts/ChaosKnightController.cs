@@ -25,6 +25,7 @@ public class ChaosKnightController : EnemyController
     Vector3 jumpPointDirection;
     StepWithAttack stepWithAttack;
     CameraFollow cameraScript;
+    PlayVFX playVFX;
 
     public override void Start()
     {
@@ -35,6 +36,7 @@ public class ChaosKnightController : EnemyController
         indicatorCircle.enabled = false;
         indicatorCircle.transform.parent = null;
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+        playVFX = GetComponentInChildren<PlayVFX>();
     }
 
     private void FixedUpdate()
@@ -115,7 +117,7 @@ public class ChaosKnightController : EnemyController
         state = EnemyState.SPECIAL;
         indicatorCircle.transform.position = transform.position;
         indicatorCircle.enabled = true;
-        indicatorCircleSpeed = 7;
+        indicatorCircleSpeed = 6;
         navAgent.enabled = false;
         streak.Play();
         jumpPoint.position = transform.position + Vector3.up * 20;
@@ -127,6 +129,7 @@ public class ChaosKnightController : EnemyController
         indicatorCircle.enabled = false;
         streak.Stop();
         streak.Clear();
+        playVFX.PlayParticleSystems();
         StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
         enemySound.OtherSounds(0, 1);
         if(Vector3.Distance(jumpPoint.position, playerScript.transform.position) <= 3.5f)
