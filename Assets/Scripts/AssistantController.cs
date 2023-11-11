@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,6 +29,8 @@ public class AssistantController : MonoBehaviour
     float attackTimer = 0;
     int beamsNum = 5;
     int boltsNum = 3;
+    float skybeamDistance = 9f;
+    LayerMask defaultMask;
     [System.NonSerialized] public List<AssistantBolt> assistantBolts = new List<AssistantBolt>();
 
     public event EventHandler onEndBolts;
@@ -38,6 +41,7 @@ public class AssistantController : MonoBehaviour
     {
         navAgent = GetComponent<NavMeshAgent>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        defaultMask = LayerMask.GetMask("Default");
     }
 
     // Update is called once per frame
@@ -53,7 +57,7 @@ public class AssistantController : MonoBehaviour
                 attackTimer = attackTime;
 
                 int randInt = UnityEngine.Random.Range(0, 2 + bossController.phase);
-                randInt = 1;
+                randInt = 2;
                 state = AssistantState.ATTACKING;
                 switch (randInt)
                 {
@@ -64,10 +68,7 @@ public class AssistantController : MonoBehaviour
                         frontAnimator.Play("Beams");
                         break;
                     case 2:
-                        if (bossController.phase == 1)
-                            frontAnimator.Play("IceRing");
-                        else
-                            frontAnimator.Play("IceRing2");
+                        frontAnimator.Play("IceRings");
                         break;
                     case 3:
                         frontAnimator.Play("Bolts");
@@ -110,6 +111,26 @@ public class AssistantController : MonoBehaviour
         onEndBolts?.Invoke(this, EventArgs.Empty);
     }
 
+    public void IceRings()
+    {
+        float randomAngle = UnityEngine.Random.Range(0, 360);
+        for(int i = 0; i < 3; i++)
+        {
+            Vector3 direction = RotateDirection(Vector3.right, randomAngle + i * 120);
+
+            RaycastHit hit;
+            Physics.Raycast(playerScript.transform.position + Vector3.up, direction, out hit, skybeamDistance, defaultMask);
+
+            if (hit.collider == null || !hit.collider.CompareTag("Wall"))
+            {
+                Transform skybeam = Instantiate(ACPrefab).transform;
+                skybeam.position = playerScript.transform.position + direction * skybeamDistance;
+
+            }
+
+        }
+    }
+
     public void ThrowAC()
     {
         ArcProjectile ac = Instantiate(ACPrefab).GetComponent<ArcProjectile>();
@@ -121,5 +142,13 @@ public class AssistantController : MonoBehaviour
     {
         state = AssistantState.IDLE;
         attackTimer = time;
+    }
+
+    Vector3 RotateDirection(Vector3 oldDirection, float degrees)
+    {
+        Vector3 newDirection = Vector3.zero;
+        newDirection.x = Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.x - Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.z;
+        newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
+        return newDirection;
     }
 }

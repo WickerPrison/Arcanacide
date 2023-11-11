@@ -38,6 +38,11 @@ public class AssistantAnimationEvents : MonoBehaviour
         controller.EndBolts();
     }
 
+    public void IceRings()
+    {
+        controller.IceRings();
+    }
+
     public void ThrowAC()
     {
         controller.ThrowAC();
