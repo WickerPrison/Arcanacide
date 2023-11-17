@@ -16,6 +16,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] Animator backAnimator;
     [SerializeField] ExternalLanternFairy lanternFairy;
     [SerializeField] AttackProfiles lanternComboNoFairy;
+    [SerializeField] ClawVFX clawVFX;
 
     //player scripts
     PlayerScript playerScript;
@@ -41,6 +42,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     private void Awake()
     {
         bigClaws = transform.parent.GetComponentInChildren<BigClaws>();
+        clawVFX = transform.parent.GetComponentInChildren<ClawVFX>();
         playerEvents = GetComponentInParent<PlayerEvents>();
     }
 
@@ -267,7 +269,8 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void BigClaw(AttackProfiles attackProfile)
     {
-        bigClaws.ClawSwipe(attackProfile);
+        //bigClaws.ClawSwipe(attackProfile);
+        clawVFX.StartVFX(attackProfile);
     }
 
     public void ParryWindow()
@@ -305,6 +308,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void Backstep(int num)
     {
+        playerMovement.LockAttackPoint();
         playerMovement.gameObject.layer = 8;
         playerEvents.BackstepStart(num);
         Vector3 direction = playerMovement.transform.position - playerMovement.attackPoint.position;
@@ -315,8 +319,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void EndBackstep()
     {
-        playerMovement.gameObject.layer = 3;
-        playerEvents.DashEnd();
+        playerMovement.UnlockAttackPoint();
     }
 
     public void LoseStamina(AttackProfiles profile)

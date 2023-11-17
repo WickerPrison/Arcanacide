@@ -43,12 +43,14 @@ public class PlayerMovement : MonoBehaviour
     float lockOnDistance = 10;
     [System.NonSerialized] public Vector2 lookDir;
     [System.NonSerialized] public GameObject pauseMenu;
+    Vector3 attackPointPos;
 
     //toggles
     [System.NonSerialized] public bool knockback = false;
     [System.NonSerialized] public bool canWalk = false;
     [System.NonSerialized] public bool preventInput = false;
     [System.NonSerialized] public bool lockPosition = false;
+    bool lockAttackPoint = false;
     bool usingGamepad;
 
 
@@ -147,6 +149,11 @@ public class PlayerMovement : MonoBehaviour
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
     void AttackPointPosition()
     {
+        if (lockAttackPoint)
+        {
+            attackPoint.position = attackPointPos;
+        }
+
         if (!CanInput() && !canWalk) return;
 
         if (Gamepad.current == null)
@@ -174,6 +181,17 @@ public class PlayerMovement : MonoBehaviour
                 attackPoint.transform.rotation = Quaternion.LookRotation(lookDirection.normalized);
             }
         }
+    }
+
+    public void LockAttackPoint()
+    {
+        attackPointPos = attackPoint.transform.position;
+        lockAttackPoint = true;
+    }
+
+    public void UnlockAttackPoint()
+    {
+        lockAttackPoint = false;
     }
 
     void LockOn()
