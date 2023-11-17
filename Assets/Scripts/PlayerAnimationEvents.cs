@@ -34,14 +34,12 @@ public class PlayerAnimationEvents : MonoBehaviour
     IceBreath iceBreath;
     ElectricTrap electricTrap;
     WeaponManager weaponManager;
-    BigClaws bigClaws;
 
     //variables
     bool doLanternCombo;
 
     private void Awake()
     {
-        bigClaws = transform.parent.GetComponentInChildren<BigClaws>();
         clawVFX = transform.parent.GetComponentInChildren<ClawVFX>();
         playerEvents = GetComponentInParent<PlayerEvents>();
     }
@@ -269,7 +267,6 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void BigClaw(AttackProfiles attackProfile)
     {
-        //bigClaws.ClawSwipe(attackProfile);
         clawVFX.StartVFX(attackProfile);
     }
 
