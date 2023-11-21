@@ -49,6 +49,7 @@ public class ElementalistController : EnemyController
                 state = EnemyState.ATTACKING;
                 attackTime = attackMaxTime;
                 int randInt = Random.Range(0, 4);
+                randInt = 0;
                 switch (randInt)
                 {
                     case 0:
