@@ -38,6 +38,6 @@ public class ElementalistAnimationEvents : MeleeEnemyAnimationEvents
 
     public void PlantAttack()
     {
-        controller.PlantAttack();
+        controller.Bubbles();
     }
 }

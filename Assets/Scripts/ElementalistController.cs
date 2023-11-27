@@ -12,7 +12,7 @@ public class ElementalistController : EnemyController
     [SerializeField] GameObject chaosOrbPrefab;
     [SerializeField] Transform chaosHeadFront;
     [SerializeField] Transform chaosHeadBack;
-    [SerializeField] GameObject plantLinePrefab;
+    [SerializeField] GameObject bubblesPrefab;
     StepWithAttack stepWithAttack;
     float meleeRange = 4;
     int chaosOrbNum = 30;
@@ -50,7 +50,7 @@ public class ElementalistController : EnemyController
                 state = EnemyState.ATTACKING;
                 attackTime = attackMaxTime;
                 int randInt = Random.Range(0, 4);
-                randInt = 2;
+                randInt = 3;
                 switch (randInt)
                 {
                     case 0:
@@ -66,8 +66,8 @@ public class ElementalistController : EnemyController
                         backAnimator.Play("ChaosHead");
                         break;
                     case 3:
-                        frontAnimator.Play("PlantAttack");
-                        backAnimator.Play("PlantAttack");
+                        frontAnimator.Play("Bubbles");
+                        backAnimator.Play("Bubbles");
                         break;
                 }
             }
@@ -162,15 +162,11 @@ public class ElementalistController : EnemyController
         backAnimator.Play("ChaosHeadEnd");
     }
 
-    public void PlantAttack()
+    public void Bubbles()
     {
         for(int i = 0; i < plantLineNum; i++)
         {
-            Vector3 startPos = transform.position + new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
-            NavMeshHit hit;
-            NavMesh.SamplePosition(startPos, out hit, 10, NavMesh.AllAreas);
-
-            Instantiate(plantLinePrefab).transform.position = hit.position;
+            AssistantBeam bubbles = Instantiate(bubblesPrefab).GetComponent<AssistantBeam>();
         }
     }
 

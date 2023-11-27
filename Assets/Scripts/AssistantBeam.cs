@@ -14,14 +14,15 @@ public class AssistantBeam : MonoBehaviour
     float poiseDamage = 50;
     float extensionLength = 0.11f;
     [SerializeField] ParticleSystem particleSys;
+    [SerializeField] float randomRange = 12f;
 
     private void Awake()
     {
         mask = LayerMask.GetMask("Default");
         playerMask = LayerMask.GetMask("Player");
 
-        float xPos = Random.Range(-12, 12);
-        float zPos = Random.Range(-12, 12);
+        float xPos = Random.Range(-randomRange, randomRange);
+        float zPos = Random.Range(-randomRange, randomRange);
         transform.position = new Vector3(xPos, 0, zPos);
 
         float xDir = Random.Range(-1f, 1f);
