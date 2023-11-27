@@ -10,7 +10,8 @@ public class ElementalistController : EnemyController
     [SerializeField] Transform backAttackPoint;
     [SerializeField] GameObject iceRipplePrefab;
     [SerializeField] GameObject chaosOrbPrefab;
-    [SerializeField] Transform chaosHead;
+    [SerializeField] Transform chaosHeadFront;
+    [SerializeField] Transform chaosHeadBack;
     [SerializeField] GameObject plantLinePrefab;
     StepWithAttack stepWithAttack;
     float meleeRange = 4;
@@ -49,7 +50,7 @@ public class ElementalistController : EnemyController
                 state = EnemyState.ATTACKING;
                 attackTime = attackMaxTime;
                 int randInt = Random.Range(0, 4);
-                randInt = 0;
+                randInt = 2;
                 switch (randInt)
                 {
                     case 0:
@@ -144,10 +145,16 @@ public class ElementalistController : EnemyController
         for(int i = 0; i < chaosOrbNum; i++)
         {
             Projectile chaosOrb = Instantiate(chaosOrbPrefab).GetComponent<Projectile>();
-            chaosOrb.transform.position = chaosHead.position;
+
+            if (facingFront)
+                chaosOrb.transform.position = chaosHeadFront.position;
+            else
+                chaosOrb.transform.position = chaosHeadBack.position;
+
             chaosOrb.direction = RotateDirection(direction, angle);
             chaosOrb.speed = 6;
             angle += angleDiff;
+            enemySound.EnemySpell();
             yield return chaosOrbDelay;
         }
 
