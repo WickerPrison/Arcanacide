@@ -177,4 +177,11 @@ public class ElementalistController : EnemyController
         newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
         return newDirection;
     }
+
+    public override void StartDying()
+    {
+        chaosHeadFront.GetComponent<ParticleSystem>().Stop();
+        chaosHeadBack.GetComponent<ParticleSystem>().Stop();
+        base.StartDying();
+    }
 }
