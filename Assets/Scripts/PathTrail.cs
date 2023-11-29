@@ -22,7 +22,7 @@ public class PathTrail : MonoBehaviour
         damagePerSecond = 3 + playerData.arcane;
         fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
         fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
-        fmodInstance.start();
+        //fmodInstance.start();
         fmodInstance.setTimelinePosition(Random.Range(0, 2000));
     }
 

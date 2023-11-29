@@ -317,6 +317,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void EndBackstep()
     {
         playerMovement.UnlockAttackPoint();
+        playerMovement.gameObject.layer = 3;
+        playerEvents.DashEnd();
     }
 
     public void LoseStamina(AttackProfiles profile)
