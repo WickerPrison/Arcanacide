@@ -49,7 +49,6 @@ Shader "Unlit/4thFloorTemp"
 				fixed4 color : COLOR;
 				float2 uv  : TEXCOORD0;
 				float3 viewDir : TEXCOORD2;
-				float3 worldPos : TEXCOORD3;
 			};
 
 			fixed4 _Color;
@@ -62,7 +61,6 @@ Shader "Unlit/4thFloorTemp"
 				v2f o;
 				v.vertex.x += sin(_Time.y * _Speed + v.vertex.y) * _Amplitude * _Amount;
 				o.uv = v.uv;
-				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
 				o.color = v.color * _Color;
