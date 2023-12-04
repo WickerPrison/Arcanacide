@@ -145,11 +145,6 @@ Shader "Unlit/4thFloorMap"
 
                 float3 outColor = lerp(col.xyz, _NewColor.xyz, diff);
 
-                //return float4(outColor,1);
-
-                //float2 inputUV = float2(i.uv.x, i.uv.y);
-                //fixed4 c = SampleSpriteTexture(inputUV) * i.color;
-
                 fixed4 sc = fixed4((screenPos.xy), 0.0, 1.0);
                 sc *= 0.001;
                 sc.x = round(sc.x * _ResX) / _ResX;
@@ -158,7 +153,6 @@ Shader "Unlit/4thFloorMap"
                 float noise = rand(sc.xy);
                 float4 stat = lerp(float4(1, 1, 1, 1), float4(0, 0, 0, 0), noise.x);
 
-                //c.rgb *= c.a;
                 return lerp(float4(outColor,1), fixed4(stat.xyz, 1), _Amount);
             }
             ENDCG

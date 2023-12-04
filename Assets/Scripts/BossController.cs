@@ -20,6 +20,7 @@ public class BossController : EnemyController, IEndDialogue
     public int strafeLeftOrRight = 1;
     PlayerMovement playerMovement;
     InputManager im;
+    MusicManager musicManager;
 
     float tooClose = 3f;
     float runAwayTime;
@@ -63,12 +64,14 @@ public class BossController : EnemyController, IEndDialogue
         bossDialogue = GetComponent<BossDialogue>();
         fireRing = GetComponentInChildren<FireRing>();
         state = EnemyState.UNAWARE;
+        musicManager = gm.GetComponentInChildren<MusicManager>();
         if (mapData.fireBossKilled)
         {
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
-            MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
-            musicManager.StopImmediate();
+            //musicManager.StopImmediate();
+            musicManager.ChangeMusic(Music.LEVEL1);
+            musicManager.ChangeMusicState(MusicState.LOOPA);
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
         }
@@ -377,6 +380,7 @@ public class BossController : EnemyController, IEndDialogue
         if(state == EnemyState.UNAWARE)
         {
             state = EnemyState.IDLE;
+            musicManager.ChangeMusicState(MusicState.BOSSLOOPA);
         }
         else
         {
