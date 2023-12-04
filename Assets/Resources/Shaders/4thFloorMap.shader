@@ -1,121 +1,167 @@
 Shader "Unlit/4thFloorMap"
 {
-	Properties
-	{
-		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
-		_Color("Tint", Color) = (1,1,1,1)
-		[MaterialToggle] PixelSnap("Pixel snap", Float) = 0
-		_Speed("Speed", float) = 1
-		_Amplitude("Amplitude", float) = 1
-		_Amount("Amount", range(0.0, 1.0)) = 1
-		_ResX ("X Resolution", float) = 100
-		_ResY ("Y Resolution", float) = 200
-	}
+    Properties
+    {
+        [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
+        _Color("Tint", Color) = (1,1,1,1)
 
-	SubShader
-	{
-		Tags
-		{
-			"Queue" = "Transparent"
-			"IgnoreProjector" = "True"
-			"RenderType" = "Transparent"
-			"PreviewType" = "Plane"
-			"CanUseSpriteAtlas" = "True"
-		}
+        _StencilComp("Stencil Comparison", Float) = 8
+        _Stencil("Stencil ID", Float) = 0
+        _StencilOp("Stencil Operation", Float) = 0
+        _StencilWriteMask("Stencil Write Mask", Float) = 255
+        _StencilReadMask("Stencil Read Mask", Float) = 255
 
-		Cull Off
-		Lighting Off
-		ZWrite Off
-		Blend One OneMinusSrcAlpha
+        _ColorMask("Color Mask", Float) = 15
 
-		Pass
-		{
-		CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma multi_compile _ PIXELSNAP_ON
-			#include "UnityCG.cginc"
+        [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip("Use Alpha Clip", Float) = 0
 
-			struct appdata_t
-			{
-				float4 vertex   : POSITION;
-				float4 color    : COLOR;
-				float2 uv : TEXCOORD0;
-			};
+        // My Properties 
+        _OldColor("existing color", color) = (1,1,1,1)
+        _NewColor("desired color", color) = (1,1,1,1)
+        _Threshold("color threshold", float) = 1
+        _Speed("Speed", float) = 1
+        _Amplitude("Amplitude", float) = 1
+        _Amount("Amount", range(0.0, 1.0)) = 1
+        _ResX("X Resolution", float) = 100
+        _ResY("Y Resolution", float) = 200
+    }
 
-			struct v2f
-			{
-				float4 vertex   : SV_POSITION;
-				fixed4 color : COLOR;
-				float2 uv  : TEXCOORD0;
-				float3 viewDir : TEXCOORD2;
-				float3 worldPos : TEXCOORD3;
-			};
+    SubShader
+    {
+        Tags
+        {
+            "Queue" = "Transparent"
+            "IgnoreProjector" = "True"
+            "RenderType" = "Transparent"
+            "PreviewType" = "Plane"
+            "CanUseSpriteAtlas" = "True"
+        }
 
-			fixed4 _Color;
-			float _Speed;
-			float _Amplitude;
-			float _Amount;
+        Stencil
+        {
+            Ref[_Stencil]
+            Comp[_StencilComp]
+            Pass[_StencilOp]
+            ReadMask[_StencilReadMask]
+            WriteMask[_StencilWriteMask]
+        }
 
-			v2f vert(appdata_t v)
-			{
-				v2f o;
-				v.vertex.x += sin(_Time.y * _Speed + v.vertex.y) * _Amplitude * _Amount;
-				o.uv = v.uv;
-				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.uv = v.uv;
-				o.color = v.color * _Color;
-				o.viewDir = WorldSpaceViewDir(v.vertex);
-				#ifdef PIXELSNAP_ON
-				o.vertex = UnityPixelSnap(o.vertex);
-				#endif
+        Cull Off
+        Lighting Off
+        ZWrite Off
+        ZTest[unity_GUIZTestMode]
+        Blend SrcAlpha OneMinusSrcAlpha
+        ColorMask[_ColorMask]
 
-				return o;
-			}
+        Pass
+        {
+            Name "Default"
+        CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 2.0
 
-			sampler2D _MainTex;
-			sampler2D _AlphaTex;
-			float _AlphaSplitEnabled;
+            #include "UnityCG.cginc"
+            #include "UnityUI.cginc"
 
-			float _ResX;
-			float _ResY;
+            #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+            #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
 
-			fixed4 SampleSpriteTexture(float2 uv)
-			{
-				fixed4 color = tex2D(_MainTex, uv);
+            struct appdata_t
+            {
+                float4 vertex   : POSITION;
+                float4 color    : COLOR;
+                float2 texcoord : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
 
-#if UNITY_TEXTURE_ALPHASPLIT_ALLOWED
-				if (_AlphaSplitEnabled)
-					color.a = tex2D(_AlphaTex, uv).r;
-#endif //UNITY_TEXTURE_ALPHASPLIT_ALLOWED
+            struct v2f
+            {
+                float4 vertex   : SV_POSITION;
+                fixed4 color : COLOR;
+                float2 texcoord  : TEXCOORD0;
+                float4 worldPosition : TEXCOORD1;
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
 
-				return color;
-			}
+            sampler2D _MainTex;
+            fixed4 _Color;
+            fixed4 _TextureSampleAdd;
+            float4 _ClipRect;
+            float4 _MainTex_ST;
 
-			//This produces random values between 0 and 1
-			float rand(float2 co)
-			{
-				return frac((sin(dot(co.xy, float2(12.345 * _Time.w, 67.890 * _Time.w))) * 12345.67890 + _Time.w));
-			}
+            //My Properties
+            float4 _NewColor;
+            float4 _OldColor;
+            float _Threshold;
+            float _Speed;
+            float _Amplitude;
+            float _Amount;
+            float _ResX;
+            float _ResY;
 
-			fixed4 frag(float4 screenPos : SV_POSITION, v2f i) : SV_Target
-			{
-				float2 inputUV = float2(i.uv.x, i.uv.y);
-				fixed4 c = SampleSpriteTexture(inputUV) * i.color;
+            v2f vert(appdata_t v)
+            {
+                v2f OUT;
+                v.vertex.x += sin(_Time.y * _Speed + v.vertex.y) * _Amplitude * _Amount;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+                OUT.worldPosition = v.vertex;
+                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
 
-				fixed4 sc = fixed4((screenPos.xy), 0.0, 1.0);
-				sc *= 0.001;
-				sc.x = round(sc.x * _ResX) / _ResX;
-				sc.y = round(sc.y * _ResY) / _ResY;
+                OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 
-				float noise = rand(sc.xy);
-				float4 stat = lerp(float4(1, 1, 1, 1), float4(0, 0, 0, 0), noise.x);
+                OUT.color = v.color * _Color;
+                return OUT;
+            }
 
-				c.rgb *= c.a;
-				return lerp(c, fixed4(stat.xyz, 1), _Amount);
-			}
-		ENDCG
-		}
-	}
+            //This produces random values between 0 and 1
+            float rand(float2 co)
+            {
+                return frac((sin(dot(co.xy, float2(12.345 * _Time.w, 67.890 * _Time.w))) * 12345.67890 + _Time.w));
+            }
+
+            fixed4 frag(float4 screenPos : SV_POSITION, v2f IN) : SV_Target
+            {
+                half4 col = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
+
+                #ifdef UNITY_UI_CLIP_RECT
+                col.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
+                #endif
+
+                #ifdef UNITY_UI_ALPHACLIP
+                clip(col.a - 0.001);
+                #endif
+
+                //My additions
+
+                clip(col.a - 0.1);
+
+                col *= col > 0.1;
+
+                float3 threshold = float3(_Threshold, _Threshold, _Threshold);
+
+                float3 diff = length(abs((normalize(col.xyz) - normalize(_OldColor.xyz)))) < length(threshold);
+
+                float3 outColor = lerp(col.xyz, _NewColor.xyz, diff);
+
+                //return float4(outColor,1);
+
+                //float2 inputUV = float2(i.uv.x, i.uv.y);
+                //fixed4 c = SampleSpriteTexture(inputUV) * i.color;
+
+                fixed4 sc = fixed4((screenPos.xy), 0.0, 1.0);
+                sc *= 0.001;
+                sc.x = round(sc.x * _ResX) / _ResX;
+                sc.y = round(sc.y * _ResY) / _ResY;
+
+                float noise = rand(sc.xy);
+                float4 stat = lerp(float4(1, 1, 1, 1), float4(0, 0, 0, 0), noise.x);
+
+                //c.rgb *= c.a;
+                return lerp(float4(outColor,1), fixed4(stat.xyz, 1), _Amount);
+            }
+            ENDCG
+        }
+    }
 }

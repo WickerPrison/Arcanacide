@@ -7,11 +7,14 @@ public class FourthFloorMap : MonoBehaviour
 {
     [SerializeField] Material material;
     [SerializeField] GameObject[] maps;
+    [SerializeField] MapData mapData;
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
     // Start is called before the first frame update
     void Start()
     {
+        material.SetColor("_NewColor", mapData.floorColor);
+
         SelectMap();
 
         StartCoroutine(GlitchEffect());
@@ -19,7 +22,7 @@ public class FourthFloorMap : MonoBehaviour
 
     IEnumerator GlitchEffect()
     {
-        float waitTime = Random.Range(0.3f, 2f);
+        float waitTime = Random.Range(0.5f, 5f);
         yield return new WaitForSeconds(waitTime);
 
         float rampUp = 0.4f;
