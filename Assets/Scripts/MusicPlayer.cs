@@ -6,15 +6,23 @@ using UnityEngine;
 
 public enum Music
 {
-    NONE, MAINMENU, PEACEFUL, FIREBOSS, ELECTRICBOSS, ICEBOSS
+    NONE, MAINMENU, PEACEFUL, LEVEL1, ELECTRICBOSS, ICEBOSS
+}
+
+public enum MusicState
+{
+    LOOPA, LOOPB, LOOP, BOSSDIALOGUE, BOSSLOOPA, BOSSLOOPB, BOSSVICTORY, BOSSLOSS, OUTRO
 }
 
 public class MusicPlayer : MonoBehaviour
 {
     public Music currentTrack = Music.NONE;
+    public MusicState state = MusicState.LOOPA;
     [SerializeField] EventReference[] fmodEvents;
     [SerializeField] SettingsData settingsData;
     Dictionary<Music, EventReference> playlistDict;
+    Dictionary<MusicState, string> stateLabelDict;
+    Dictionary<Music, string> parameterNameDict;
     EventInstance musicInstance;
 
     private void Awake()
@@ -23,9 +31,28 @@ public class MusicPlayer : MonoBehaviour
         {
             {Music.MAINMENU, fmodEvents[0]},
             {Music.PEACEFUL, fmodEvents[1]},
-            {Music.FIREBOSS, fmodEvents[2]},
+            {Music.LEVEL1, fmodEvents[2]},
             {Music.ELECTRICBOSS, fmodEvents[3]},
             {Music.ICEBOSS, fmodEvents[4]}
+        };
+
+        parameterNameDict = new Dictionary<Music, string>()
+        {
+            { Music.LEVEL1, "LEVEL 1 MUSICSTATE" },
+            { Music.MAINMENU, "MAIN TITLES MUSICSTATE" }
+        };
+
+        stateLabelDict = new Dictionary<MusicState, string>()
+        {
+            {MusicState.LOOPA, "LOOP A" },
+            {MusicState.LOOPB, "LOOP B" },
+            {MusicState.LOOP, "LOOP" },
+            {MusicState.BOSSDIALOGUE, "BOSS DIALOGUE" },
+            {MusicState.BOSSLOOPA, "BOSS LOOP A" },
+            {MusicState.BOSSLOOPB, "BOSS LOOP B" },
+            {MusicState.BOSSVICTORY, "BOSS VICTORY" },
+            {MusicState.BOSSLOSS, "BOSS LOSS" },
+            {MusicState.OUTRO, "OUTRO" }
         };
     }
 
@@ -35,9 +62,13 @@ public class MusicPlayer : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void ChangeState(MusicState newState)
+    {
+        musicInstance.setParameterByNameWithLabel(parameterNameDict[currentTrack], stateLabelDict[newState]);
+    }
+
     public void PlayMusic(Music musicOption)
     {
-        musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         musicInstance.release();
         musicInstance = RuntimeManager.CreateInstance(playlistDict[musicOption]);
         musicInstance.start();

@@ -8,6 +8,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] GameObject musicPlayerPrefab;
     [SerializeField] bool immediateStopMusic = false;
     [SerializeField] Music musicOption;
+    [SerializeField] MusicState musicState;
     MusicPlayer musicPlayer;
 
     private void Awake()
@@ -37,6 +38,11 @@ public class MusicManager : MonoBehaviour
         else if(musicOption != musicPlayer.currentTrack)
         {
             musicPlayer.PlayMusic(musicOption);
+            musicPlayer.ChangeState(musicState);
+        }
+        else
+        {
+            musicPlayer.ChangeState(musicState);
         }
     }
 
@@ -50,9 +56,19 @@ public class MusicManager : MonoBehaviour
         musicPlayer.StopImmediate();
     }
 
+    public void ChangeMusic(Music music) 
+    {
+        musicPlayer.PlayMusic(music);
+    }
+
+    public void ChangeMusicState(MusicState state)
+    {
+        musicPlayer.ChangeState(state);
+    }
+
     private void onBossKilled(object sender, System.EventArgs e)
     {
-        StopFadeOut();
+        musicPlayer.ChangeState(MusicState.BOSSVICTORY);
     }
 
     private void OnEnable()

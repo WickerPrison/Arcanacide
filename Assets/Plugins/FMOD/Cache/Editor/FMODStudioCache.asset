@@ -324,6 +324,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-4238433964046719495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Level 1
+  m_EditorClassIdentifier: 
+  Path: event:/Level 1
+  Guid:
+    Data1: -1111375411
+    Data2: 1226398759
+    Data3: -1029874298
+    Data4: 1028394288
+  Banks:
+  - {fileID: 9191651919568267865}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 8543669773620266287}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 457047
 --- !u!114 &-4004028205433338781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +502,36 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-1251233934350105306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 2/LEVEL 2 MUSICSTATE
+  m_EditorClassIdentifier: 
+  Name: LEVEL 2 MUSICSTATE
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 3993424300
+    data2: 577859257
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Level Loops
+  - Boss Preamble
+  - Boss Music Start
+  - Boss Music Progress
+  - Boss Victory
+  - Boss Failure
+  Exists: 1
 --- !u!114 &-737111531108496414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,12 +675,15 @@ MonoBehaviour:
   - {fileID: -5864216012181370552}
   - {fileID: 2069850493962545980}
   - {fileID: 1028716727104749564}
+  - {fileID: -4238433964046719495}
+  - {fileID: 1506720878310323026}
+  - {fileID: 2170382159717683045}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6154116738536693301}
   StringsBanks:
   - {fileID: 7272457121581144135}
-  cacheTime: 638374632892400665
+  cacheTime: 638374623204482350
   cacheVersion: 131607
 --- !u!114 &479839459612566957
 MonoBehaviour:
@@ -838,6 +899,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &1506720878310323026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Main Titles
+  m_EditorClassIdentifier: 
+  Path: event:/Main Titles
+  Guid:
+    Data1: 1481209534
+    Data2: 1123146931
+    Data3: -1192834432
+    Data4: -1452259266
+  Banks:
+  - {fileID: 9191651919568267865}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 5358362691763229230}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 515714
 --- !u!114 &1512140869168395754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -973,6 +1062,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1903
+--- !u!114 &2170382159717683045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Level 2
+  m_EditorClassIdentifier: 
+  Path: event:/Level 2
+  Guid:
+    Data1: 810475591
+    Data2: 1337975089
+    Data3: -1269503613
+    Data4: -253484103
+  Banks:
+  - {fileID: 9191651919568267865}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -1251233934350105306}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 480705
 --- !u!114 &2616138498639790660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1210,6 +1327,32 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &5358362691763229230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Main Titles/MAIN TITLES MUSICSTATE
+  m_EditorClassIdentifier: 
+  Name: MAIN TITLES MUSICSTATE
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 855077677
+    data2: 100100918
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - LOOP
+  - OUTRO
+  Exists: 1
 --- !u!114 &5699243045709764530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1354,10 +1497,10 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638374632890561834
+  lastModified: 638374623176021803
   FileSizes:
   - Name: 
-    Value: 2878
+    Value: 3188
   Exists: 1
 --- !u!114 &8210077182250968125
 MonoBehaviour:
@@ -1413,6 +1556,38 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &8543669773620266287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 1/LEVEL 1 MUSICSTATE
+  m_EditorClassIdentifier: 
+  Name: LEVEL 1 MUSICSTATE
+  StudioPath: 
+  Min: 0
+  Max: 7
+  Default: 0
+  ID:
+    data1: 1234887204
+    data2: 1897884936
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - LOOP A
+  - LOOP B
+  - BOSS DIALOGUE
+  - BOSS LOOP A
+  - BOSS LOOP B
+  - BOSS VICTORY
+  - BOSS LOSS
+  - Value A
+  Exists: 1
 --- !u!114 &9191651919568267865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1428,6 +1603,6 @@ MonoBehaviour:
   Path: Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638374632892400665
+  lastModified: 638374623204482350
   FileSizes: []
   Exists: 1
