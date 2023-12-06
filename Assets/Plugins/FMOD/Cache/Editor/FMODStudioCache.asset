@@ -502,6 +502,36 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-1251233934350105306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 2/LEVEL 2 MUSICSTATE
+  m_EditorClassIdentifier: 
+  Name: LEVEL 2 MUSICSTATE
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 3993424300
+    data2: 577859257
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Level Loops
+  - Boss Preamble
+  - Boss Music Start
+  - Boss Music Progress
+  - Boss Victory
+  - Boss Failure
+  Exists: 1
 --- !u!114 &-737111531108496414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,12 +677,13 @@ MonoBehaviour:
   - {fileID: 1028716727104749564}
   - {fileID: -4238433964046719495}
   - {fileID: 1506720878310323026}
+  - {fileID: 2170382159717683045}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6154116738536693301}
   StringsBanks:
   - {fileID: 7272457121581144135}
-  cacheTime: 638372798718641433
+  cacheTime: 638374623204482350
   cacheVersion: 131607
 --- !u!114 &479839459612566957
 MonoBehaviour:
@@ -1031,6 +1062,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1903
+--- !u!114 &2170382159717683045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Level 2
+  m_EditorClassIdentifier: 
+  Path: event:/Level 2
+  Guid:
+    Data1: 810475591
+    Data2: 1337975089
+    Data3: -1269503613
+    Data4: -253484103
+  Banks:
+  - {fileID: 9191651919568267865}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -1251233934350105306}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 480705
 --- !u!114 &2616138498639790660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1364,7 +1423,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638372798697523742
+  lastModified: 638374623176001532
   FileSizes: []
   Exists: 1
 --- !u!114 &6936588679804666003
@@ -1438,10 +1497,10 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638372798697544014
+  lastModified: 638374623176021803
   FileSizes:
   - Name: 
-    Value: 3088
+    Value: 3188
   Exists: 1
 --- !u!114 &8210077182250968125
 MonoBehaviour:
@@ -1544,6 +1603,6 @@ MonoBehaviour:
   Path: Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638372798718641433
+  lastModified: 638374623204482350
   FileSizes: []
   Exists: 1
