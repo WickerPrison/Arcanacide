@@ -9,6 +9,7 @@ public class EmblemLibrary : ScriptableObject
     [System.NonSerialized] public Dictionary<string, string> emblemDictionary;
     public List<string> firstFloorPatches;
     public List<string> secondFloorPatches;
+    public List<string> thirdFloorPatches;
 
     [System.NonSerialized] public string magical_acceleration = "Magical Acceleration";
     [System.NonSerialized] public string magical_acceleration_description = "Mana recharges faster";

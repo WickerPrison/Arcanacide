@@ -370,4 +370,79 @@ public class GameManager : MonoBehaviour
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
     }
+
+    public void StartAtFloor4()
+    {
+        playerData.hasHealthGem = true;
+        playerData.maxHealCharges = 4;
+        playerData.healCharges = 4;
+        playerData.lastSwordSite = 8;
+        playerData.unlockedAbilities.Clear();
+        playerData.unlockedAbilities.Add("Block");
+        playerData.unlockedAbilities.Add("Special Attack");
+        playerData.unlockedAbilities.Add("More Patches 1");
+        playerData.emblems.Clear();
+        foreach (string patch in emblemLibrary.firstFloorPatches)
+        {
+            playerData.emblems.Add(patch);
+        }
+        foreach (string patch in emblemLibrary.secondFloorPatches)
+        {
+            playerData.emblems.Add(patch);
+        }
+        foreach(string patch in emblemLibrary.thirdFloorPatches)
+        {
+            playerData.emblems.Add(patch);
+        }
+        playerData.equippedEmblems.Clear();
+        playerData.maxPatches = 3;
+        playerData.tutorials.Clear();
+        playerData.evidenceFound.Clear();
+        playerData.money = 15000;
+        playerData.lostMoney = 0;
+        playerData.strength = 1;
+        playerData.dexterity = 1;
+        playerData.vitality = 1;
+        playerData.arcane = 1;
+        playerData.health = playerData.MaxHealth();
+        playerData.maxMana = 50;
+        playerData.mana = playerData.maxMana;
+        playerData.deathNum = 0;
+        playerData.killedEnemiesNum = 0;
+        playerData.killedEnemiesAtGetShield = 0;
+        playerData.unlockedWeapons.Clear();
+        playerData.unlockedWeapons.Add(0);
+        playerData.unlockedWeapons.Add(1);
+        playerData.unlockedWeapons.Add(2);
+        playerData.unlockedWeapons.Add(3);
+        playerData.currentWeapon = 0;
+
+        mapData.doorNumber = 0;
+        mapData.unlockedDoors.Clear();
+        mapData.visitedRooms.Clear();
+        mapData.powerSwitchesFlipped.Clear();
+        mapData.deathRoom = deathRoom;
+        mapData.deathPosition = deathPosition;
+        mapData.ticketFiled = ticketFiled;
+        mapData.fireBossKilled = true;
+        mapData.secretaryConvo = secretaryConvo;
+        mapData.electricBossKilled = true;
+        mapData.iceBossKilled = true;
+        mapData.iceBossPosition = Vector3.zero;
+        mapData.iceBossDirection = 0;
+        mapData.ACOn = false;
+
+        dialogueData.conversationsHad.Clear();
+        dialogueData.directorQueue.Clear();
+        dialogueData.directorPreviousConversations.Clear();
+        dialogueData.freiQueue.Clear();
+        dialogueData.freiPreviousConversations.Clear();
+        dialogueData.smackGPTQueue.Clear();
+        dialogueData.smackGPTPreviousConversations.Clear();
+        dialogueData.unknownNumberQueue.Clear();
+        dialogueData.unknownNumberPreviousConversations.Clear();
+        dialogueData.directorQueue.Add(0);
+        dialogueData.patchworkGaryConversations.Clear();
+        dialogueData.whistleBlowerConversations.Clear();
+    }
 }

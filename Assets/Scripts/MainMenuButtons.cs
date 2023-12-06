@@ -55,6 +55,13 @@ public class MainMenuButtons : MonoBehaviour
         SceneManager.LoadScene("IceHub1");
     }
 
+    public void TestFloor4()
+    {
+        ButtonSound();
+        gm.StartAtFloor4();
+        SceneManager.LoadScene("ChaosHub1");
+    }
+
     public void QuitGame()
     {
         ButtonSound();
