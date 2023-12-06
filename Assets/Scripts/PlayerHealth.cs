@@ -124,6 +124,7 @@ public class PlayerHealth : MonoBehaviour
         {
             im.DisableAll();
             playerMovement.preventInput = true;
+            GlobalEvents.instance.OnPlayerDeath();
             YouDied youDied = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<YouDied>();
             youDied.playerScript = playerScript;
             youDied.ShowMessage();

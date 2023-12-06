@@ -86,6 +86,7 @@ public class BossController : EnemyController, IEndDialogue
         base.Update();
         if(enemyScript.health < phaseTrigger)
         {
+            musicManager.ChangeMusicState(MusicState.BOSSLOOPB);
             phaseTrigger = 0;
             StartPhase2();
         }

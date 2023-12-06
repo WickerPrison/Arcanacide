@@ -68,7 +68,7 @@ public class MusicManager : MonoBehaviour
 
     private void onBossKilled(object sender, System.EventArgs e)
     {
-        StopFadeOut();
+        musicPlayer.ChangeState(MusicState.BOSSVICTORY);
     }
 
     private void OnEnable()

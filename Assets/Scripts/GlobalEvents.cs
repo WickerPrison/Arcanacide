@@ -10,6 +10,7 @@ public class GlobalEvents : MonoBehaviour
     InputManager im;
 
     public event EventHandler onChangedSetting;
+    public event EventHandler onPlayerDeath;
     public event EventHandler onEnemyKilled;
     public event EventHandler onBossKilled;
     public event EventHandler onTestButton;
@@ -28,6 +29,11 @@ public class GlobalEvents : MonoBehaviour
     public void OnChangedSetting()
     {
         onChangedSetting?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OnPlayerDeath()
+    {
+        onPlayerDeath?.Invoke(this, EventArgs.Empty);
     }
 
     public void EnemyKilled()

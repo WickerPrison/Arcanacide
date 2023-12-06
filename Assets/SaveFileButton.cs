@@ -76,7 +76,8 @@ public class SaveFileButton : MonoBehaviour
 
             if(File.Exists(Application.persistentDataPath + "/" + "saveFile" + fileID.ToString() + ".sav"))
             {
-                gm.LoadGame("saveFile" +  fileID.ToString());            
+                gm.LoadGame("saveFile" +  fileID.ToString());
+                gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
                 string sceneName = gm.GetSceneName(playerData.lastSwordSite);
                 SceneManager.LoadScene(sceneName);
             }

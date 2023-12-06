@@ -48,7 +48,11 @@ public class MusicPlayer : MonoBehaviour
             {MusicState.LOOPB, "LOOP B" },
             {MusicState.LOOP, "LOOP" },
             {MusicState.BOSSDIALOGUE, "BOSS DIALOGUE" },
-            {MusicState.BOSSLOOPA, "BOSS LOOP A" }
+            {MusicState.BOSSLOOPA, "BOSS LOOP A" },
+            {MusicState.BOSSLOOPB, "BOSS LOOP B" },
+            {MusicState.BOSSVICTORY, "BOSS VICTORY" },
+            {MusicState.BOSSLOSS, "BOSS LOSS" },
+            {MusicState.OUTRO, "OUTRO" }
         };
     }
 
@@ -65,7 +69,6 @@ public class MusicPlayer : MonoBehaviour
 
     public void PlayMusic(Music musicOption)
     {
-        musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         musicInstance.release();
         musicInstance = RuntimeManager.CreateInstance(playlistDict[musicOption]);
         musicInstance.start();
