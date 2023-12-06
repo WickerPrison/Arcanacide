@@ -39,7 +39,8 @@ public class MusicPlayer : MonoBehaviour
         parameterNameDict = new Dictionary<Music, string>()
         {
             { Music.LEVEL1, "LEVEL 1 MUSICSTATE" },
-            { Music.MAINMENU, "MAIN TITLES MUSICSTATE" }
+            { Music.MAINMENU, "MAIN TITLES MUSICSTATE" },
+            {Music.PEACEFUL, "peacful" }
         };
 
         stateLabelDict = new Dictionary<MusicState, string>()
@@ -52,7 +53,7 @@ public class MusicPlayer : MonoBehaviour
             {MusicState.BOSSLOOPB, "BOSS LOOP B" },
             {MusicState.BOSSVICTORY, "BOSS VICTORY" },
             {MusicState.BOSSLOSS, "BOSS LOSS" },
-            {MusicState.OUTRO, "OUTRO" }
+            {MusicState.OUTRO, "OUTRO" },
         };
     }
 
