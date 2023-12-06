@@ -22,7 +22,7 @@ public class FourthFloorMap : MonoBehaviour
 
     IEnumerator GlitchEffect()
     {
-        float waitTime = Random.Range(0.5f, 5f);
+        float waitTime = Random.Range(0.5f, 2f);
         yield return new WaitForSeconds(waitTime);
 
         float rampUp = 0.4f;

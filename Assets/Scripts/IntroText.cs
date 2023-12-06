@@ -9,4 +9,10 @@ public class IntroText : MonoBehaviour
     {
         SceneManager.LoadScene("Lobby");
     }
+
+    public void StartMusicOutro()
+    {
+        MusicManager musicManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<MusicManager>();
+        musicManager.ChangeMusicState(MusicState.OUTRO);
+    }
 }
