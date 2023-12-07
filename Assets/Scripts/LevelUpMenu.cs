@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 
 public class LevelUpMenu : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class LevelUpMenu : MonoBehaviour
     public Transform spawnPoint;
     PlayerControls controls;
     SoundManager sm;
+    Dictionary<string, LevelUpButton> buttonDict;
 
     float transitionTime = 0.1f;
     float descriptionTransitionTime = 0.1f;
@@ -47,6 +49,14 @@ public class LevelUpMenu : MonoBehaviour
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(strengthButton.gameObject);
+
+        buttonDict = new Dictionary<string, LevelUpButton>()
+        {
+            { "Strength", strengthButton },
+            { "Arcane", dedicationButton },
+            { "Vitality", vitalityButton },
+            { "Dexterity", dexterityButton }
+        };
         UpdateText();   
     }
 
@@ -122,60 +132,41 @@ public class LevelUpMenu : MonoBehaviour
         }
     }
 
-    public void IncreaseStrength()
+    public void IncreaseStat(string attribute)
     {
         sm.ButtonSound();
         RequiredMoney();
-        if(playerData.money >= requiredMoney)
+        if (playerData.money >= requiredMoney && IncrementStat(attribute, 0) < 30)
         {
-            strengthButton.LevelUp();
+            buttonDict[attribute].LevelUp();
             playerData.money -= requiredMoney;
-            playerData.strength += 1;
+            IncrementStat(attribute, 1);
             UpdateText();
         }
-        else strengthButton.FailToLevelUp();
+        else buttonDict[attribute].FailToLevelUp();
     }
 
-    public void IncreaseDexterity()
+    //This function increments the attribute by any amount and returns the final value
+    //Incrementing by zero can be used to get the current value
+    int IncrementStat(string attribute, int incrementAmount)
     {
-        sm.ButtonSound();
-        RequiredMoney();
-        if (playerData.money >= requiredMoney)
+        switch (attribute)
         {
-            dexterityButton.LevelUp();
-            playerData.money -= requiredMoney;
-            playerData.dexterity += 1;
-            UpdateText();
+            case "Strength":
+                playerData.strength += incrementAmount;
+                return playerData.strength;
+            case "Arcane":
+                playerData.arcane += incrementAmount;
+                return playerData.arcane;
+            case "Vitality":
+                playerData.vitality += incrementAmount;
+                return playerData.vitality;
+            case "Dexterity":
+                playerData.dexterity += incrementAmount;
+                return playerData.dexterity;
+            default:
+                return playerData.GetLevel();
         }
-        else dexterityButton.FailToLevelUp();
-    }
-
-    public void IncreaseVitality()
-    {
-        sm.ButtonSound();
-        RequiredMoney();
-        if (playerData.money >= requiredMoney)
-        {
-            vitalityButton.LevelUp();
-            playerData.money -= requiredMoney;
-            playerData.vitality += 1;
-            UpdateText();
-        }
-        else vitalityButton.FailToLevelUp();
-    }
-
-    public void IncreaseDedication()
-    {
-        sm.ButtonSound();
-        RequiredMoney();
-        if (playerData.money >= requiredMoney)
-        {
-            dedicationButton.LevelUp();
-            playerData.money -= requiredMoney;
-            playerData.arcane += 1;
-            UpdateText();
-        }
-        else dedicationButton.FailToLevelUp();
     }
 
     public void OpenRestMenu()
