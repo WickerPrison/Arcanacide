@@ -100,7 +100,7 @@ public class ChaosMageController : EnemyController
         projectileScript.poiseDamage = spellAttackPoiseDamage;
         projectileScript.spellDamage = spellAttackDamage;
         projectileScript.enemyOfOrigin = enemyScript;
-        //enemySound.OtherSounds(0, 1);
+        enemySound.OtherSounds(0, 1);
     }
 
     public override void SpecialAbility()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.Timeline;
+using FMODUnity;
 
 public class HomingSoulmass : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class HomingSoulmass : MonoBehaviour
 
     Vector3 center;
     [SerializeField] float angle = 0;
-    [SerializeField] AudioClip playerImpactSFX;
-    [SerializeField] AudioClip impactSFX;
+    [SerializeField] EventReference playerImpactSFX;
+    [SerializeField] EventReference impactSFX;
     [SerializeField] float impactSFXvolume;
     [SerializeField] GameObject playAtPointPrefab;
     float speed = 10;
@@ -119,7 +120,7 @@ public class HomingSoulmass : MonoBehaviour
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
         playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
-        Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(playerImpactSFX, impactSFXvolume, transform.position);
+        RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 
@@ -134,7 +135,7 @@ public class HomingSoulmass : MonoBehaviour
     {
         if(state == HomingSoulmassState.PROJECTILE)
         {
-            Instantiate(playAtPointPrefab).GetComponent<PlayAtPoint>().PlayClip(impactSFX, impactSFXvolume, transform.position);
+            RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
             Destroy(gameObject);
         }
     }

@@ -18,23 +18,35 @@ public class FacePlayerSlow : FacePlayer
 
     public override void AttackPoint()
     {
-        Vector3 direction = player.position - transform.position;
-        direction = new Vector3(direction.x, 0, direction.z);
-        trackingPoint.position = transform.position + direction.normalized;
+        float angle = GetAngle();
 
-        Quaternion neededRotation = Quaternion.LookRotation(trackingPoint.position - attackAnchor.position, Vector3.up);
-        attackAnchor.rotation = Quaternion.RotateTowards(attackAnchor.rotation, neededRotation, rotateSpeed * Time.deltaTime);
-
-        if(attackPoint.position != transform.position)
+        if (Mathf.Abs(angle) > 5)
         {
-            attackPoint.transform.rotation = Quaternion.LookRotation(attackPoint.position - transform.position);
+            attackAnchor.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime * angle / Mathf.Abs(angle), 0));
+        }
+        else
+        {
+            attackAnchor.Rotate(new Vector3(0, angle, 0));
         }
     }
 
     public void FacePlayerFast()
     {
-        attackPoint.position = trackingPoint.position;
-        AttackPoint();
+        attackAnchor.Rotate(new Vector3(0, GetAngle(), 0));  
         FaceAttackPoint();
+    }
+
+    float GetAngle()
+    {
+        Vector3 direction = player.position - transform.position;
+        direction = new Vector3(direction.x, 0, direction.z);
+        trackingPoint.position = transform.position + direction.normalized;
+
+        Vector2 trackingVector = new Vector2(direction.x, direction.z);
+        Vector3 attackVector3 = attackPoint.position - transform.position;
+        Vector2 attackVector = new Vector2(attackVector3.x, attackVector3.z);
+
+        float angle = Vector2.SignedAngle(trackingVector, attackVector);
+        return angle;
     }
 }
