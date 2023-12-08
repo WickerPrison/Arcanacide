@@ -48,6 +48,7 @@ public class IceGolemController : EnemyController
             if (Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
             {
                 int randN = Random.Range(0, 3);
+                randN = 1;
                 if (randN == 0)
                 {
                     Smash();

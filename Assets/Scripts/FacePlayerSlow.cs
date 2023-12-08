@@ -7,13 +7,15 @@ public class FacePlayerSlow : FacePlayer
 {
     [SerializeField] Transform trackingPoint;
     [SerializeField] Transform attackAnchor;
+    [SerializeField] float radius = 1;
     public float rotateSpeed;
 
     public override void Start()
     {
         base.Start();
-        AttackPoint();
+        trackingPoint.position = transform.position + Vector3.forward * radius;
         attackPoint.position = trackingPoint.position;
+        AttackPoint();
     }
 
     public override void AttackPoint()
@@ -40,7 +42,7 @@ public class FacePlayerSlow : FacePlayer
     {
         Vector3 direction = player.position - transform.position;
         direction = new Vector3(direction.x, 0, direction.z);
-        trackingPoint.position = transform.position + direction.normalized;
+        trackingPoint.position = transform.position + direction.normalized * radius;
 
         Vector2 trackingVector = new Vector2(direction.x, direction.z);
         Vector3 attackVector3 = attackPoint.position - transform.position;
