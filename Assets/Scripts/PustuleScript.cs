@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -6,7 +7,9 @@ using UnityEngine;
 public class PustuleScript : ArcProjectile
 {
     [SerializeField] float pulseDamageRate;
+    [SerializeField] EventReference pulseDamageSFX;
     [SerializeField] float pulseHealRate;
+    [SerializeField] EventReference pulseHealSFX;
     [SerializeField] SpriteRenderer pulseEffect;
     [System.NonSerialized] public EnemyScript enemyScript;
     [SerializeField] Vector3 startScale;
@@ -40,6 +43,7 @@ public class PustuleScript : ArcProjectile
                     int pulseDamage = Mathf.RoundToInt(pulseDamageCounter);
                     pulseDamageCounter = 0;
                     nearbyObject.GetComponent<PlayerScript>().LoseHealth(pulseDamage, EnemyAttackType.NONPARRIABLE, null);
+                    RuntimeManager.PlayOneShot(pulseDamageSFX, .5f);
                 }
             }
             else if (nearbyObject.CompareTag("Enemy"))
@@ -50,6 +54,7 @@ public class PustuleScript : ArcProjectile
                     int pulseHeal = Mathf.RoundToInt(pulseHealCounter);
                     pulseHealCounter = 0;
                     nearbyObject.GetComponent<EnemyScript>().GainHealth(pulseHeal);
+                    //RuntimeManager.PlayOneShot(pulseHealSFX, 0.5f);
                 }
             }
         }
@@ -79,6 +84,7 @@ public class PustuleScript : ArcProjectile
             PlayerScript playerScript = other.GetComponent<PlayerScript>();
             playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyScript);
             playerScript.LosePoise(poiseDamage);
+            RuntimeManager.PlayOneShot(impactSound, 1);
             Destroy(gameObject);
         }
     }
@@ -91,7 +97,7 @@ public class PustuleScript : ArcProjectile
         {
             timer -= Time.deltaTime;
             sphere.localScale = Vector3.Lerp(endScale, startScale, timer / growthTime);
-            yield return new WaitForEndOfFrame();
+            yield return endOfFrame;
         }
     }
 
