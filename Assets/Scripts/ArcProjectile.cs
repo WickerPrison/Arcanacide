@@ -13,8 +13,8 @@ public class ArcProjectile : MonoBehaviour
     public Vector3 direction;
     public float timeToHit;
     float speed;
-    [SerializeField] int spellDamage;
-    [SerializeField] int poiseDamage;
+    public int spellDamage;
+    public int poiseDamage;
     PlayerScript player;
     Collider playerCollider;
     public Vector3 endPoint;

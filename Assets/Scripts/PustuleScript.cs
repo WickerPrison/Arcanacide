@@ -3,62 +3,26 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 
-public class PustuleScript : MonoBehaviour
+public class PustuleScript : ArcProjectile
 {
-    [SerializeField] int damage;
-    [SerializeField] float poiseDamage;
     [SerializeField] float pulseDamageRate;
     [SerializeField] float pulseHealRate;
     [SerializeField] SpriteRenderer pulseEffect;
-    Vector3 startPoint;
-    [System.NonSerialized] public Vector3 endPoint;
-    [System.NonSerialized] public Vector3 direction;
     [System.NonSerialized] public EnemyScript enemyScript;
-    [SerializeField] float timeToHit;
-    [SerializeField] float arcHeight;
     [SerializeField] Vector3 startScale;
     [SerializeField] Vector3 endScale;
-    float timer;
-    float speed;
-    float midpoint;
-    float arcWidth;
     Collider sphereCollider;
     bool groundPustule = false;
     float pulseDamageCounter = 0;
     float pulseHealCounter = 0;
     WaitForSeconds lifetime = new WaitForSeconds(15);
+    [SerializeField] Transform sphere;
+    WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
-    private void Start()
+    public override void Start()
     {
         sphereCollider = GetComponent<Collider>();
-
-        startPoint = transform.position;
-        direction = new Vector3(endPoint.x, 0, endPoint.z) - new Vector3(startPoint.x, 0, startPoint.z);
-        float distance = Vector2.Distance(new Vector2(startPoint.x, startPoint.z), new Vector2(endPoint.x, endPoint.z));
-        speed = distance / timeToHit;
-
-        midpoint = distance / 2;
-        arcWidth = arcHeight / Mathf.Pow(midpoint, 2);
-
-        timer = timeToHit;
-    }
-
-    void FixedUpdate()
-    {
-        if (groundPustule) return;
-
-        transform.position = transform.position + direction.normalized * Time.fixedDeltaTime * speed;
-        float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(startPoint.x, startPoint.z));
-        float currentHeight = -arcWidth * Mathf.Pow(distance - midpoint, 2) + arcHeight;
-        transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
-
-        timer -= Time.deltaTime;
-        transform.localScale = Vector3.Lerp(endScale, startScale, timer / timeToHit);
-
-        if (transform.position.y <= 0)
-        {
-            BecomeGroundPustule();
-        }
+        base.Start();
     }
 
     private void Update()
@@ -91,12 +55,20 @@ public class PustuleScript : MonoBehaviour
         }
     }
 
+    public override void FixedUpdate()
+    {
+        if (!groundPustule)
+            base.FixedUpdate();
+    }
+
     void BecomeGroundPustule()
     {
+        if (groundPustule) return;
         transform.position = endPoint;
         sphereCollider.isTrigger = false;
         groundPustule = true;
         pulseEffect.enabled = true;
+        StartCoroutine(PustuleGrowth());
         StartCoroutine(LifetimeCounter());
     }
 
@@ -105,9 +77,21 @@ public class PustuleScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerScript playerScript = other.GetComponent<PlayerScript>();
-            playerScript.LoseHealth(damage, EnemyAttackType.PROJECTILE, enemyScript);
+            playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyScript);
             playerScript.LosePoise(poiseDamage);
             Destroy(gameObject);
+        }
+    }
+
+    IEnumerator PustuleGrowth()
+    {
+        float growthTime = 0.3f;
+        float timer = growthTime;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            sphere.localScale = Vector3.Lerp(endScale, startScale, timer / growthTime);
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -115,5 +99,15 @@ public class PustuleScript : MonoBehaviour
     {
         yield return lifetime;
         Destroy(gameObject);
+    }
+
+    public override void Explosion()
+    {
+        BecomeGroundPustule();
+    }
+
+    public override void SpawnIndicator()
+    {
+        //override this function with nothing
     }
 }

@@ -280,7 +280,7 @@ Transform:
   m_GameObject: {fileID: 6547025491157391285}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8128732868459872983}
@@ -376,7 +376,7 @@ Transform:
   m_GameObject: {fileID: 8902613556166918536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9117819893112220583}
@@ -398,15 +398,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f84160294660a4a86bcafb68a0e4e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  poiseDamage: 15
-  pulseDamageRate: 5
-  pulseHealRate: 5
-  pulseEffect: {fileID: 464623425490404543}
+  explosionPrefab: {fileID: 0}
+  indicatorCirclePrefab: {fileID: 0}
+  explosionRadius: 0
+  direction: {x: 0, y: 0, z: 0}
   timeToHit: 0.5
-  arcHeight: 2.5
+  spellDamage: 20
+  poiseDamage: 15
+  endPoint: {x: 0, y: 0, z: 0}
+  arcHeight: 1
+  thirdPointX: 0.2
+  impactSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  impactVolume: 0
+  staggerDuration: 0
+  pulseDamageRate: 5
+  pulseHealRate: 10
+  pulseEffect: {fileID: 464623425490404543}
   startScale: {x: 0.5, y: 0.5, z: 0.5}
   endScale: {x: 1, y: 1, z: 1}
+  sphere: {fileID: 7949041218384178453}
 --- !u!135 &2825680164734378855
 SphereCollider:
   m_ObjectHideFlags: 0
