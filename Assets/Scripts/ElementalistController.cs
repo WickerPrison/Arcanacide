@@ -19,6 +19,7 @@ public class ElementalistController : EnemyController
     float angleDiff = 15;
     WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
     float plantLineNum = 6;
+    Vector3 chaosOrbVert = new Vector3(0, -0.1f, 0);
 
     public override void Start()
     {
@@ -50,7 +51,6 @@ public class ElementalistController : EnemyController
                 state = EnemyState.ATTACKING;
                 attackTime = attackMaxTime;
                 int randInt = Random.Range(0, 4);
-                randInt = 3;
                 switch (randInt)
                 {
                     case 0:
@@ -133,8 +133,10 @@ public class ElementalistController : EnemyController
     public void IceStomp()
     {
         enemySound.OtherSounds(0, 1);
-        GameObject iceRipple = Instantiate(iceRipplePrefab);
+        IceRipple iceRipple = Instantiate(iceRipplePrefab).GetComponent<IceRipple>();
         iceRipple.transform.position = transform.position + new Vector3(0, 1, 0);
+        iceRipple.damage = 14;
+        iceRipple.poiseDamage = 10;
     }
 
     public IEnumerator ChaosHead()
@@ -151,7 +153,7 @@ public class ElementalistController : EnemyController
             else
                 chaosOrb.transform.position = chaosHeadBack.position;
 
-            chaosOrb.direction = RotateDirection(direction, angle);
+            chaosOrb.direction = RotateDirection(direction, angle) + chaosOrbVert;
             chaosOrb.speed = 6;
             angle += angleDiff;
             enemySound.EnemySpell();

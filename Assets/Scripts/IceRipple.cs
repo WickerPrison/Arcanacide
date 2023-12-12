@@ -10,6 +10,8 @@ public class IceRipple : MonoBehaviour
     [System.NonSerialized] public int numberOfBoxes = 35;
     [System.NonSerialized] public float rippleSpeed = 5;
     [System.NonSerialized] public float lifeTime = 2;
+    public int damage;
+    public float poiseDamage;
     public Color boxColor;
 
     // Start is called before the first frame update
@@ -31,6 +33,8 @@ public class IceRipple : MonoBehaviour
             }
             WaveBox waveBox = iceBox.GetComponent<WaveBox>();
             waveBox.enemyOfOrigin = enemyOfOrigin;
+            waveBox.damage = damage;
+            waveBox.poiseDamage = poiseDamage;
         }
     }
 
