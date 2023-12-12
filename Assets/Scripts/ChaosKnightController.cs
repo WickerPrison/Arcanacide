@@ -18,7 +18,7 @@ public class ChaosKnightController : EnemyController
     Vector3 playerDirection;
     float backAngle;
     float jumpSpeed = 50;
-    int jumpDamage = 50;
+    int jumpDamage = 70;
     float jumpPoiseDamage = 100;
     float indicatorCircleSpeed;
     Vector3 indicatorDirection;
