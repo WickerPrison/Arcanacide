@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -15,6 +16,7 @@ public class ChaosMageController : EnemyController
     [SerializeField] Transform backAttackOrigin;
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Transform attackPoint;
+    [SerializeField] EventReference beamSFX;
     Vector3 attackOrigin;
     Vector3 targetDirection;
     Vector3 endPoint;
@@ -24,6 +26,7 @@ public class ChaosMageController : EnemyController
     WaitForSeconds hitDelay = new WaitForSeconds(0.2f);
     WaitForSeconds beamDuration = new WaitForSeconds(2f);
     [SerializeField] GameObject beam;
+    [SerializeField] int beamDamage;
     float beamLength;
 
 
@@ -114,6 +117,7 @@ public class ChaosMageController : EnemyController
         lineRenderer.enabled = false;
         beam.SetActive(true);
         beamState = BeamState.ON;
+        enemySound.Play(beamSFX, 1);
         StartCoroutine(BeamDuration());
     }
 
@@ -121,6 +125,7 @@ public class ChaosMageController : EnemyController
     {
         yield return beamDuration;
         beamState = BeamState.OFF;
+        enemySound.Stop();
         beam.SetActive(false);
         frontAnimator.Play("EndBeam");
         backAnimator.Play("EndBeam");
@@ -162,8 +167,9 @@ public class ChaosMageController : EnemyController
     void DealDamage()
     {
         StartCoroutine(HitPlayerDelay());
-        playerScript.LoseHealth(3,EnemyAttackType.NONPARRIABLE, enemyScript);
-        playerScript.LosePoise(3);
+        playerScript.LoseHealth(beamDamage,EnemyAttackType.NONPARRIABLE, enemyScript);
+        playerScript.LosePoise(beamDamage);
+        enemySound.OtherSounds(1, 1);
     }
 
     IEnumerator HitPlayerDelay()

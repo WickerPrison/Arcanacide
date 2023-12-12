@@ -1455,10 +1455,18 @@ MonoBehaviour:
   hitDamage: 0
   hitPoiseDamage: 0
   frontAttackOrigin: {fileID: 3244231847034120815}
-  backAttackOrigin: {fileID: 2661324831160482547}
+  backAttackOrigin: {fileID: 7397964678709869768}
   lineRenderer: {fileID: 9094484397257379608}
   attackPoint: {fileID: 4656133897311181624}
+  beamSFX:
+    Guid:
+      Data1: -427598268
+      Data2: 1222271980
+      Data3: -839688012
+      Data4: 1713713269
+    Path: event:/LightningThrower
   beam: {fileID: 7532170976261541680}
+  beamDamage: 7
 --- !u!114 &3152495305549295382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1479,8 +1487,8 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 70
-  maxPoise: 70
+  maxHealth: 160
+  maxPoise: 80
   poiseRegeneration: 5
   invincible: 0
 --- !u!136 &3152495305549295377
@@ -1565,6 +1573,7 @@ MonoBehaviour:
   backAnimator: {fileID: 3137736160411306789}
   trackingPoint: {fileID: 3948541078829205190}
   attackAnchor: {fileID: 3584839500324665630}
+  radius: 1
   rotateSpeed: 180
 --- !u!114 &237163464269745973
 MonoBehaviour:
@@ -8787,7 +8796,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 204ae6f67cc63424bb1e7a7b8d6d7606, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8809,8 +8818,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
+  - {x: 10, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -8819,7 +8828,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.1818161
+        value: 0.25260925
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -9056,7 +9065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
       propertyPath: otherSFX.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
       propertyPath: enemySpell.Guid.Data1
@@ -9079,6 +9088,10 @@ PrefabInstance:
       value: event:/FireCast
       objectReference: {fileID: 0}
     - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[1].Path
+      value: event:/ElectricDamage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
       propertyPath: otherSFX.Array.data[0].Guid.Data1
       value: 1150103729
       objectReference: {fileID: 0}
@@ -9093,6 +9106,22 @@ PrefabInstance:
     - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
       propertyPath: otherSFX.Array.data[0].Guid.Data4
       value: -1910883126
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[1].Guid.Data1
+      value: -1157680842
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[1].Guid.Data2
+      value: 1239152202
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[1].Guid.Data3
+      value: -1971540548
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[1].Guid.Data4
+      value: 1679949131
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}

@@ -10,4 +10,9 @@ public class FacePlayerSlowAnimationEvents : MonoBehaviour
     {
         facePlayerSlow.rotateSpeed = speed;
     }
+
+    public void FacePlayerImmediate()
+    {
+        facePlayerSlow.FacePlayerFast();
+    }
 }

@@ -20,8 +20,8 @@ public class HomingSoulmass : MonoBehaviour
     [SerializeField] GameObject playAtPointPrefab;
     float speed = 10;
     float rotationSpeed = 100;
-    int spellDamage = 10;
-    float poiseDamage = 10;
+    [SerializeField] int spellDamage = 50;
+    [SerializeField] float poiseDamage = 50;
     float range = 4;
     float playerDistance;
     float turnAngle = 25f;

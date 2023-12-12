@@ -9,8 +9,6 @@ public class PustuleScript : MonoBehaviour
     [SerializeField] float poiseDamage;
     [SerializeField] float pulseDamageRate;
     [SerializeField] float pulseHealRate;
-    [SerializeField] SpriteRenderer airPustuleSprite;
-    [SerializeField] SpriteRenderer groundPustuleSprite;
     [SerializeField] SpriteRenderer pulseEffect;
     Vector3 startPoint;
     [System.NonSerialized] public Vector3 endPoint;
@@ -18,6 +16,9 @@ public class PustuleScript : MonoBehaviour
     [System.NonSerialized] public EnemyScript enemyScript;
     [SerializeField] float timeToHit;
     [SerializeField] float arcHeight;
+    [SerializeField] Vector3 startScale;
+    [SerializeField] Vector3 endScale;
+    float timer;
     float speed;
     float midpoint;
     float arcWidth;
@@ -38,6 +39,8 @@ public class PustuleScript : MonoBehaviour
 
         midpoint = distance / 2;
         arcWidth = arcHeight / Mathf.Pow(midpoint, 2);
+
+        timer = timeToHit;
     }
 
     void FixedUpdate()
@@ -48,6 +51,10 @@ public class PustuleScript : MonoBehaviour
         float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(startPoint.x, startPoint.z));
         float currentHeight = -arcWidth * Mathf.Pow(distance - midpoint, 2) + arcHeight;
         transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+
+        timer -= Time.deltaTime;
+        transform.localScale = Vector3.Lerp(endScale, startScale, timer / timeToHit);
+
         if (transform.position.y <= 0)
         {
             BecomeGroundPustule();
@@ -89,8 +96,6 @@ public class PustuleScript : MonoBehaviour
         transform.position = endPoint;
         sphereCollider.isTrigger = false;
         groundPustule = true;
-        airPustuleSprite.enabled = false;
-        groundPustuleSprite.enabled = true;
         pulseEffect.enabled = true;
         StartCoroutine(LifetimeCounter());
     }

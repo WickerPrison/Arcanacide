@@ -22,7 +22,7 @@ public class FacePlayerSlow : FacePlayer
     {
         float angle = GetAngle();
 
-        if (Mathf.Abs(angle) > 5)
+        if (Mathf.Abs(angle) > rotateSpeed * Time.deltaTime)
         {
             attackAnchor.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime * angle / Mathf.Abs(angle), 0));
         }
