@@ -19,7 +19,7 @@ public class ElementalistController : EnemyController
     float angleDiff = 15;
     WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
     float plantLineNum = 6;
-    Vector3 chaosOrbVert = new Vector3(0, -0.1f, 0);
+    Vector3 chaosOrbVert = new Vector3(0, 0, 0);
 
     public override void Start()
     {
@@ -51,6 +51,7 @@ public class ElementalistController : EnemyController
                 state = EnemyState.ATTACKING;
                 attackTime = attackMaxTime;
                 int randInt = Random.Range(0, 4);
+                randInt = 2;
                 switch (randInt)
                 {
                     case 0:
@@ -156,6 +157,10 @@ public class ElementalistController : EnemyController
             chaosOrb.direction = RotateDirection(direction, angle) + chaosOrbVert;
             chaosOrb.speed = 6;
             angle += angleDiff;
+
+            BiasProjectileHeight projectileHeight = chaosOrb.GetComponent<BiasProjectileHeight>();
+            projectileHeight.speed = 1;
+
             enemySound.EnemySpell();
             yield return chaosOrbDelay;
         }
