@@ -27,12 +27,18 @@ public class HomingSoulmass : MonoBehaviour
     float turnAngle = 25f;
     PlayerScript playerScript;
     EnemyScript enemyOfOrigin;
+    EnemyEvents enemyEvents;
     Vector3 attackOffset = Vector3.up;
     HomingSoulmassState state = HomingSoulmassState.ORBIT;
 
-    private void Start()
+    private void Awake()
     {
         enemyOfOrigin = GetComponentInParent<EnemyScript>();
+        enemyEvents = enemyOfOrigin.GetComponent<EnemyEvents>();        
+    }
+
+    private void Start()
+    {
         playerScript = enemyOfOrigin.GetComponent<EnemyController>().playerScript;
     }
 
@@ -138,5 +144,20 @@ public class HomingSoulmass : MonoBehaviour
             RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
             Destroy(gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        enemyEvents.OnStartDying += OnStartDying;
+    }
+
+    private void OnDisable()
+    {
+        enemyEvents.OnStartDying -= OnStartDying;
+    }
+
+    private void OnStartDying(object sender, System.EventArgs e)
+    {
+        Destroy(gameObject);
     }
 }

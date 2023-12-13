@@ -10,6 +10,7 @@ public class EnemyEvents : MonoBehaviour
     public event EventHandler OnHitWhileInvincible;
     public event EventHandler OnAttackImpact;
     public event EventHandler OnStagger;
+    public event EventHandler OnStartDying;
     public event EventHandler OnDeath;
     public event EventHandler OnStartDOT;
     public event EventHandler OnStopDOT;
@@ -39,6 +40,11 @@ public class EnemyEvents : MonoBehaviour
     public void Stagger()
     {
         OnStagger?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void StartDying()
+    {
+        OnStartDying?.Invoke(this, EventArgs.Empty);
     }
 
     public void Death()

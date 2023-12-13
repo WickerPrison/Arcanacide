@@ -200,4 +200,14 @@ public class ChaosMageController : EnemyController
         newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
         return newDirection;
     }
+
+    public override void StartDying()
+    {
+        StopAllCoroutines();
+        beamState = BeamState.OFF;
+        enemySound.Stop();
+        beam.SetActive(false);
+        lineRenderer.enabled = false;
+        base.StartDying();
+    }
 }

@@ -13,7 +13,7 @@ public class ChaosKnightController : EnemyController
     [SerializeField] ParticleSystem streak;
     [SerializeField] Transform attackPoint;
     [SerializeField] Transform jumpPoint;
-    WaitForSeconds jumpTime = new WaitForSeconds(4f);
+    WaitForSeconds jumpTime = new WaitForSeconds(2.5f);
     Vector3 facingDirection;
     Vector3 playerDirection;
     float backAngle;

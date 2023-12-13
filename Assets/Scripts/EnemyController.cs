@@ -189,6 +189,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void StartDying()
     {
+        enemyEvents.StartDying();
         frontAnimator.Play("Death");
         backAnimator.Play("Death");
     }
