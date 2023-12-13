@@ -33,7 +33,7 @@ public class ChaosKnightController : EnemyController
         base.Start();
         stepWithAttack = GetComponent<StepWithAttack>();
         jumpPoint.parent = null;
-        attackTime = attackMaxTime;
+        //attackTime = attackMaxTime;
         indicatorCircle.enabled = false;
         indicatorCircle.transform.parent = null;
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
