@@ -11,10 +11,24 @@ public class RoomSetupScript : MonoBehaviour
     [SerializeField] Transform invisibleWall1;
     [SerializeField] Transform invisibleWall2;
     [SerializeField] RawImage floorImage;
+    [SerializeField] Vector2 floorScale = Vector2.zero;
+    float floorScaleX;
+    float floorScaleZ;
 
     private void Start()
     {
-        floorImage.uvRect = new Rect(floorImage.uvRect.x, floorImage.uvRect.y, floor.localScale.x, floor.localScale.z);
+        if (floorScale == Vector2.zero)
+        {
+            floorScaleX = floor.localScale.x;
+            floorScaleZ = floor.localScale.z;
+        }
+        else
+        {
+            floorScaleX = floorScale.x;
+            floorScaleZ = floorScale.y;
+        }
+
+        floorImage.uvRect = new Rect(floorImage.uvRect.x, floorImage.uvRect.y, floorScaleX, floorScaleZ);
     }
 
     private void OnDrawGizmosSelected()
@@ -28,6 +42,19 @@ public class RoomSetupScript : MonoBehaviour
         invisibleWall2.localPosition = new Vector3(floor.localPosition.x - floor.localScale.x * 5, floor.localPosition.y + 2.5f, floor.localPosition.z);
         invisibleWall2.localScale = new Vector3(floor.localScale.z, 0.5f, 0.5f);
 
-        floorImage.uvRect = new Rect(floorImage.uvRect.x, floorImage.uvRect.y, floor.localScale.x, floor.localScale.z);
+        if(floorScale == Vector2.zero)
+        {
+            floorScaleX = floor.localScale.x;
+            floorScaleZ = floor.localScale.z;
+        }
+        else
+        {
+            floorScaleX = floorScale.x;
+            floorScaleZ = floorScale.y;
+        }
+
+
+
+        floorImage.uvRect = new Rect(floorImage.uvRect.x, floorImage.uvRect.y, floorScaleX, floorScaleZ);
     }
 }
