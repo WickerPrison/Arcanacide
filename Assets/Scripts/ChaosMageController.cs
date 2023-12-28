@@ -52,16 +52,15 @@ public class ChaosMageController : EnemyController
 
             if (playerDistance < attackRange && attackTime <= 0)
             {
+                attackTime = attackMaxTime;
                 int randInt = Random.Range(0, 2);
                 if (randInt == 0)
                 {
-                    attackTime = attackMaxTime;
                     frontAnimator.Play("CastSpell");
                     backAnimator.Play("CastSpell");
                 }
                 else
                 {
-                    attackTime = 1000;
                     frontAnimator.Play("StartBeam");
                     backAnimator.Play("StartBeam");
                 }
@@ -124,12 +123,18 @@ public class ChaosMageController : EnemyController
     IEnumerator BeamDuration()
     {
         yield return beamDuration;
-        beamState = BeamState.OFF;
-        enemySound.Stop();
-        beam.SetActive(false);
+        EndBeam();
         frontAnimator.Play("EndBeam");
         backAnimator.Play("EndBeam");
         attackTime = attackMaxTime;
+    }
+
+    void EndBeam()
+    {
+        beamState = BeamState.OFF;
+        enemySound.Stop();
+        beam.SetActive(false);
+        lineRenderer.enabled = false;
     }
 
     void PerformRaycast()
@@ -201,13 +206,17 @@ public class ChaosMageController : EnemyController
         return newDirection;
     }
 
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        StopAllCoroutines();
+        EndBeam();
+    }
+
     public override void StartDying()
     {
         StopAllCoroutines();
-        beamState = BeamState.OFF;
-        enemySound.Stop();
-        beam.SetActive(false);
-        lineRenderer.enabled = false;
+        EndBeam();
         base.StartDying();
     }
 }
