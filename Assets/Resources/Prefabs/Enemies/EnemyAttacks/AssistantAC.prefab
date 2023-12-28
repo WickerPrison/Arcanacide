@@ -42,7 +42,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7379417907289911927}
-  - component: {fileID: 5422311747954246238}
   - component: {fileID: 6679152925252321135}
   m_Layer: 0
   m_Name: AssistantAC
@@ -69,43 +68,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5422311747954246238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296095650386749880}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74a4b38f5bf5e7a449ad863ccee9967b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 0}
-  indicatorCirclePrefab: {fileID: 0}
-  explosionRadius: 0
-  direction: {x: 0, y: 0, z: 0}
-  timeToHit: 0.6
-  spellDamage: 0
-  poiseDamage: 0
-  endPoint: {x: 0, y: 0, z: 0}
-  arcHeight: 2
-  thirdPointX: 0.3
-  impactSound:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  impactVolume: 0
-  staggerDuration: 0
-  ripplePrefab: {fileID: 4892436450635339237, guid: 9fdf447948c38b246863841def37f6cf, type: 3}
-  sprite: {fileID: 6422554254671302422}
-  initialDelay: 0.5
-  rippleNum: 3
-  rippleDelayTime: 1.7
-  rippleColor: {r: 0.48235294, g: 0.06666667, b: 0.53333336, a: 0.19215687}
 --- !u!114 &6679152925252321135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +87,13 @@ MonoBehaviour:
   rippleNum: 3
   rippleDelayTime: 1.7
   rippleColor: {r: 0.86274517, g: 0.10588236, b: 0.050980397, a: 0.19215687}
+  castSFX:
+    Guid:
+      Data1: 1150103729
+      Data2: 1175020101
+      Data3: 511189126
+      Data4: -1910883126
+    Path: event:/FireCast
 --- !u!1 &4578654200564756244
 GameObject:
   m_ObjectHideFlags: 0

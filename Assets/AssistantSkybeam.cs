@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class AssistantSkybeam : MonoBehaviour
     [SerializeField] int rippleNum;
     [SerializeField] float rippleDelayTime;
     [SerializeField] Color rippleColor;
+    [SerializeField] EventReference castSFX;
     WaitForSeconds rippleDelay;
     WaitForEndOfFrame endOfFrame;
 
@@ -39,6 +41,7 @@ public class AssistantSkybeam : MonoBehaviour
     IEnumerator Ripples()
     {
         rippleDelay = new WaitForSeconds(rippleDelayTime);
+        RuntimeManager.PlayOneShot(castSFX);
         for (int i = 0; i < rippleNum; i++)
         {
             IceRipple ripple = Instantiate(ripplePrefab).GetComponent<IceRipple>();

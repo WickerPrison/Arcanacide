@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class AssistantBolt : MonoBehaviour
     [System.NonSerialized] public int pathfindingMethod;
     [SerializeField] PlayerData playerData;
     float offset = 5;
+    bool hittingPlayer = false;
 
 
     private void Awake()
@@ -48,10 +50,13 @@ public class AssistantBolt : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        hittingPlayer = false;
         foreach(Collider collider in colliders)
         {
             if (collider.gameObject.CompareTag("Player") && collider.gameObject.layer == 3)
             {
+                hittingPlayer = true;
+                bolts.SoundOn();
                 damageCounter += dps * Time.deltaTime;
                 if(damageCounter > 1)
                 {
@@ -61,6 +66,11 @@ public class AssistantBolt : MonoBehaviour
                     damageCounter -= damage;
                 }
             }
+        }
+
+        if (!hittingPlayer)
+        {
+            bolts.SoundOff();
         }
     }
 

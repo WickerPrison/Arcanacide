@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class AssistantBeam : MonoBehaviour
     float extensionLength = 0.11f;
     [SerializeField] ParticleSystem particleSys;
     [SerializeField] float randomRange = 12f;
+    [SerializeField] EventReference sfx;
 
     private void Awake()
     {
@@ -67,6 +69,7 @@ public class AssistantBeam : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         PlayerDetection();
+        RuntimeManager.PlayOneShot(sfx);
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
     }

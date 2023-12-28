@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,9 +33,10 @@ public class AssistantController : MonoBehaviour
     int boltsNum = 3;
     float skybeamDistance = 9f;
     LayerMask defaultMask;
+    StudioEventEmitter sfx;
     [System.NonSerialized] public List<AssistantBolt> assistantBolts = new List<AssistantBolt>();
 
-    public event EventHandler onEndBolts;
+    public event System.EventHandler onEndBolts;
 
 
     // Start is called before the first frame update
@@ -42,6 +45,7 @@ public class AssistantController : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         defaultMask = LayerMask.GetMask("Default");
+        sfx = GetComponent<StudioEventEmitter>();
     }
 
     // Update is called once per frame
@@ -58,6 +62,7 @@ public class AssistantController : MonoBehaviour
 
                 int randInt = UnityEngine.Random.Range(0, 2 + bossController.phase);
                 state = AssistantState.ATTACKING;
+                randInt = 3;
                 switch (randInt)
                 {
                     case 0:
@@ -97,6 +102,7 @@ public class AssistantController : MonoBehaviour
     public void StartBolts()
     {
         assistantBolts.Clear();
+        sfx.Play();
         for (int i = 0; i < boltsNum; i++)
         {
             AssistantBolt bolt = Instantiate(boltsPrefab).GetComponent<AssistantBolt>();
@@ -108,6 +114,7 @@ public class AssistantController : MonoBehaviour
     public void EndBolts()
     {
         onEndBolts?.Invoke(this, EventArgs.Empty);
+        sfx.Stop();
     }
 
     public void IceRings()
