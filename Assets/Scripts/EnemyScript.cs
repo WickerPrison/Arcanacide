@@ -120,6 +120,7 @@ public class EnemyScript : MonoBehaviour
 
     public void GainHealth(int healAmount)
     {
+        if (enemyController.state == EnemyState.DYING) return;
         health += healAmount;
         if (health > maxHealth)
         {
