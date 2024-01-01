@@ -65,6 +65,9 @@ public class EmblemLibrary : ScriptableObject
     [System.NonSerialized] public string reckless_attack = "Reckless Attack";
     [System.NonSerialized] public string reckless_attack_description = "Increase the damage of all attacks when you are low on health";
 
+    [System.NonSerialized] public string way_faerie = "Way Faerie";
+    [System.NonSerialized] public string way_faerie_description = "An ancient Faerie will guide you to your final destination";
+
     public string GetDescription(string name)
     {
         if (emblemDictionary == null) DefineDictionary();
@@ -99,7 +102,8 @@ public class EmblemLibrary : ScriptableObject
             {_spellsword, _spellsword_description },
             {death_aura, death_aura_description },
             {arcane_mastery, arcane_mastery_description },
-            {reckless_attack, reckless_attack_description }
+            {reckless_attack, reckless_attack_description },
+            {way_faerie, way_faerie_description }
         };
     }
 }
