@@ -66,6 +66,11 @@ public class MusicManager : MonoBehaviour
         musicPlayer.ChangeState(state);
     }
 
+    private void onPlayerDeath(object sender, System.EventArgs e)
+    {
+        musicPlayer.ChangeState(MusicState.DEATH);
+    }
+
     private void onBossKilled(object sender, System.EventArgs e)
     {
         musicPlayer.ChangeState(MusicState.BOSSVICTORY);
@@ -74,11 +79,14 @@ public class MusicManager : MonoBehaviour
     private void OnEnable()
     {
         GlobalEvents.instance.onBossKilled += onBossKilled;
+        GlobalEvents.instance.onPlayerDeath += onPlayerDeath;
     }
+
 
     private void OnDisable()
     {
         GlobalEvents.instance.onBossKilled -= onBossKilled;
+        GlobalEvents.instance.onPlayerDeath -= onPlayerDeath;
     }
 
 }

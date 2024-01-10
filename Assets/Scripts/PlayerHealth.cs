@@ -128,10 +128,6 @@ public class PlayerHealth : MonoBehaviour
             YouDied youDied = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<YouDied>();
             youDied.playerScript = playerScript;
             youDied.ShowMessage();
-            SoundManager sm = gm.gameObject.GetComponent<SoundManager>();
-            sm.DeathSoundEffect();
-            MusicManager musicManager = gm.gameObject.GetComponentInChildren<MusicManager>();
-            musicManager.StopFadeOut();
         }
     }
 

@@ -11,13 +11,13 @@ public enum Music
 
 public enum MusicState
 {
-    LOOPA, LOOPB, LOOP, BOSSDIALOGUE, BOSSLOOPA, BOSSLOOPB, BOSSVICTORY, BOSSLOSS, OUTRO
+    MAINLOOP, BOSSDIALOGUE, BOSSLOOPA, BOSSLOOPB, BOSSVICTORY, BOSSLOSS, DEATH, OUTRO
 }
 
 public class MusicPlayer : MonoBehaviour
 {
     public Music currentTrack = Music.NONE;
-    public MusicState state = MusicState.LOOPA;
+    public MusicState state = MusicState.MAINLOOP;
     [SerializeField] EventReference[] fmodEvents;
     [SerializeField] SettingsData settingsData;
     Dictionary<Music, EventReference> playlistDict;
@@ -45,14 +45,13 @@ public class MusicPlayer : MonoBehaviour
 
         stateLabelDict = new Dictionary<MusicState, string>()
         {
-            {MusicState.LOOPA, "LOOP A" },
-            {MusicState.LOOPB, "LOOP B" },
-            {MusicState.LOOP, "LOOP" },
+            {MusicState.MAINLOOP, "MAIN LOOP" },
             {MusicState.BOSSDIALOGUE, "BOSS DIALOGUE" },
             {MusicState.BOSSLOOPA, "BOSS LOOP A" },
             {MusicState.BOSSLOOPB, "BOSS LOOP B" },
             {MusicState.BOSSVICTORY, "BOSS VICTORY" },
             {MusicState.BOSSLOSS, "BOSS LOSS" },
+            {MusicState.DEATH, "DEATH" },
             {MusicState.OUTRO, "OUTRO" },
         };
     }

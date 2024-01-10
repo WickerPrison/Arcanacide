@@ -69,9 +69,7 @@ public class BossController : EnemyController, IEndDialogue
         {
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
-            //musicManager.StopImmediate();
-            musicManager.ChangeMusic(Music.LEVEL1);
-            musicManager.ChangeMusicState(MusicState.LOOPA);
+            musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
         }
@@ -363,6 +361,7 @@ public class BossController : EnemyController, IEndDialogue
     public override void StartDying()
     {
         enemyScript.invincible = true;
+        enemyScript.health = 1;
         bossDialogue.EndLookUpDialogue();
         if (!hasSurrendered)
         {

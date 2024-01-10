@@ -11,7 +11,7 @@ public class SoundManager : MonoBehaviour
 
     private void onBossKilled(object sender, System.EventArgs e)
     {
-        RuntimeManager.PlayOneShot(bossDefeated);
+        //RuntimeManager.PlayOneShot(bossDefeated);
     }
 
     public void DeathSoundEffect()
