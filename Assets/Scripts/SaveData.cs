@@ -51,6 +51,7 @@ public class SaveData
     public float[] iceBossPosition;
     public int iceBossDirection;
     public bool ACOn;
+    public bool whistleblowerArrested;
 
     public List<string> conversationsHad;
     public int[] directorWilkinsQueue;
@@ -112,6 +113,7 @@ public class SaveData
         iceBossPosition[1] = mapData.iceBossPosition.y;
         iceBossPosition[2] = mapData.iceBossPosition.z;
         iceBossDirection = mapData.iceBossDirection;
+        whistleblowerArrested = mapData.whistleblowerArrested;
 
         ACOn = mapData.ACOn;
 

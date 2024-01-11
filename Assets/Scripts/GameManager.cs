@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
             mapData.iceBossKilled = data.iceBossKilled;
             mapData.iceBossPosition = new Vector3(data.iceBossPosition[0], data.iceBossPosition[1], data.iceBossPosition[2]);
             mapData.iceBossDirection = data.iceBossDirection;
+            mapData.whistleblowerArrested = data.whistleblowerArrested;
 
             dialogueData.conversationsHad = data.conversationsHad;
             dialogueData.directorQueue = data.directorWilkinsQueue.ToList();
@@ -224,6 +225,7 @@ public class GameManager : MonoBehaviour
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
+        mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
         dialogueData.directorQueue.Clear();
@@ -287,6 +289,7 @@ public class GameManager : MonoBehaviour
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
         mapData.ACOn = true;
+        mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
         dialogueData.directorQueue.Clear();
@@ -356,6 +359,7 @@ public class GameManager : MonoBehaviour
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
         mapData.ACOn = true;
+        mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
         dialogueData.directorQueue.Clear();
@@ -431,6 +435,7 @@ public class GameManager : MonoBehaviour
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
         mapData.ACOn = false;
+        mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
         dialogueData.directorQueue.Clear();

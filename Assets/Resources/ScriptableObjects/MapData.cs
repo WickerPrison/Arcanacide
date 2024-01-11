@@ -36,6 +36,8 @@ public class MapData : ScriptableObject
 
     public bool ACOn;
 
+    public bool whistleblowerArrested;
+
     private void OnEnable()
     {
         doorNumber = 0;

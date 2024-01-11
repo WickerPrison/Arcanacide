@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Whistleblower : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class Whistleblower : MonoBehaviour
     [SerializeField] TextAsset csvFile;
     [SerializeField] int firstTimeConversation;
     [SerializeField] int repeatableConversation;
+    [SerializeField] MapData mapData;
 
     //Setup
     CSVparser readCSV;
@@ -35,6 +36,7 @@ public class Whistleblower : MonoBehaviour
 
     private void Start()
     {
+        if (mapData.whistleblowerArrested) Destroy(gameObject);
         player = GameObject.FindGameObjectWithTag("Player").transform;
         readCSV = GetComponent<CSVparser>();
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
@@ -85,6 +87,7 @@ public class Whistleblower : MonoBehaviour
             Destroy(dialogue.gameObject);
             inDialogue = false;
             im.Gameplay();
+            if (firstTimeConversation == 4) StartCoroutine(GetArrested());
         }
         else
         {
@@ -119,6 +122,33 @@ public class Whistleblower : MonoBehaviour
         else
         {
             animator.transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
+        }
+    }
+
+    IEnumerator GetArrested()
+    {
+        WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+        Image fadeout = GameObject.FindGameObjectWithTag("Fadeout").GetComponent<Image>();
+        float fadeoutTime = 1f;
+        float timer = fadeoutTime;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            fadeout.color = new Color(0, 0, 0, 1 - (timer / fadeoutTime));
+            yield return endOfFrame;
+        }
+
+        transform.position = new Vector3(100, 100, 100);
+        mapData.whistleblowerArrested = true;
+        yield return new WaitForSeconds(0.5f);
+
+        float fadeInTime = 1f;
+        timer = fadeInTime;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            fadeout.color = new Color(0, 0, 0, timer / fadeInTime);
+            yield return endOfFrame;
         }
     }
 }

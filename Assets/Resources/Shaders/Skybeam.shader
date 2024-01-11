@@ -64,7 +64,7 @@ Shader "Unlit/Skybeam"
                 float mask = perlin < 0.53;
 
 
-                float4 color = lerp(_FloorColor, (1, 1, 1, 0), mask);
+                float4 color = lerp(_FloorColor, float4(1, 1, 1, 0), mask);
 
 
                 return float4(color) * (abs(i.normal.y) < 0.9);
