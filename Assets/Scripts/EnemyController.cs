@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
     public enum EnemyState
     {

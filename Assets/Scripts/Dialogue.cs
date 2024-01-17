@@ -19,11 +19,11 @@ public class Dialogue : MonoBehaviour
     List<List<string>> conversations = new List<List<string>>();
     List<string> thisConversation;
     CSVparser readCSV;
-    int currentLineIndex = 0;
+    [System.NonSerialized] public int currentLineIndex = 0;
     DialogueScript dialogueBox;
     bool inDialogue = false;
 
-    private void Start()
+    public virtual void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         readCSV = GetComponent<CSVparser>();
@@ -64,7 +64,7 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    void NextLine()
+    public virtual void NextLine()
     {
         if (!inDialogue)
         {

@@ -52,4 +52,9 @@ public class AssistantAnimationEvents : MonoBehaviour
     {
         StartCoroutine(cameraScript.ScreenShake(0.1f, 0.5f));
     }
+
+    public void BecomeActive()
+    {
+        controller.BecomeActive();
+    }
 }

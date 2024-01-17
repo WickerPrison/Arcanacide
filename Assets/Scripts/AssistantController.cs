@@ -11,7 +11,7 @@ public class AssistantController : MonoBehaviour
 {
     private enum AssistantState
     {
-        IDLE, ATTACKING
+        DIALOGUE, IDLE, ATTACKING
     }
 
     [SerializeField] Animator frontAnimator;
@@ -24,9 +24,10 @@ public class AssistantController : MonoBehaviour
     [SerializeField] Transform ACorigin;
     [SerializeField] ChaosBossController bossController;
 
+    FinalBossEvents bossEvents;
     NavMeshAgent navAgent;
     PlayerScript playerScript;
-    AssistantState state = AssistantState.IDLE;
+    AssistantState state = AssistantState.DIALOGUE;
     float attackTime = 5;
     float attackTimer = 0;
     int beamsNum = 5;
@@ -38,6 +39,10 @@ public class AssistantController : MonoBehaviour
 
     public event System.EventHandler onEndBolts;
 
+    private void Awake()
+    {
+        bossEvents = bossController.GetComponent<FinalBossEvents>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +56,8 @@ public class AssistantController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (state == AssistantState.DIALOGUE) return;
+
         navAgent.SetDestination(playerScript.transform.position);
 
         if(state == AssistantState.IDLE)
@@ -156,5 +163,32 @@ public class AssistantController : MonoBehaviour
         newDirection.x = Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.x - Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.z;
         newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
         return newDirection;
+    }
+
+    private void OnEnable()
+    {
+        bossEvents.assistantSitUp += assistantSitUp;
+        bossEvents.endDialogue += endDialogue;
+    }
+
+    private void OnDisable()
+    {
+        bossEvents.assistantSitUp -= assistantSitUp;
+        bossEvents.endDialogue -= endDialogue;
+    }
+
+    private void assistantSitUp(object sender, EventArgs e)
+    {
+        frontAnimator.Play("SitUp");
+    }
+
+    private void endDialogue(object sender, EventArgs e)
+    {
+        frontAnimator.Play("BecomeActive");
+    }
+
+    public void BecomeActive()
+    {
+        state = AssistantState.IDLE;
     }
 }

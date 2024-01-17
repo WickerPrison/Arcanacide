@@ -16412,6 +16412,84 @@ Transform:
   m_Father: {fileID: 7158918868079410470}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -87.735}
+--- !u!1 &5475018931569675884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5475018931569675792}
+  - component: {fileID: 5475018931569675887}
+  - component: {fileID: 4841179013304542044}
+  - component: {fileID: 7443627976976588831}
+  m_Layer: 0
+  m_Name: DialogueTriggerRoomEntrance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5475018931569675792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475018931569675884}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8023433343214822138}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5475018931569675887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475018931569675884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f0fcc98fd41e04bb6aa0876e11a40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4841179013304542044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475018931569675884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b188f0a5c3a601e4483006c0ea33fd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7443627976976588831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475018931569675884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e008d8120da41f54d923e53d26264e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endDialogueObject: {fileID: 8023433343214822139}
+  dialoguePrefab: {fileID: 6286585989320248928, guid: 8fb30ecf51e1b064ab6d94ebfcaeaac7, type: 3}
+  CSVfile: {fileID: 4900000, guid: 25560c80dacd59e42b439d46c4ea1e92, type: 3}
+  conversationName: 
+  conversationNum: 0
+  stopEnemy: 1
+  dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  repeatable: 1
 --- !u!1 &5507132672286525256
 GameObject:
   m_ObjectHideFlags: 0
@@ -22710,6 +22788,7 @@ GameObject:
   - component: {fileID: 1760268720106937121}
   - component: {fileID: 2937836840040372077}
   - component: {fileID: 7644375564500485810}
+  - component: {fileID: 6044281432619762629}
   m_Layer: 6
   m_Name: ChaosBoss
   m_TagString: Enemy
@@ -22735,6 +22814,7 @@ Transform:
   - {fileID: 9222275472273597386}
   - {fileID: 1418583255757060579}
   - {fileID: 3676735435345104397}
+  - {fileID: 5475018931569675792}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22875,6 +22955,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e103c4bb860a48746acf2451ac72d4c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6044281432619762629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8023433343214822139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1734e2238a3245841879e79956f2e4a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8023433343485155481

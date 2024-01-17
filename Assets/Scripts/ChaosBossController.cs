@@ -5,9 +5,10 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 [System.Serializable]
-public class ChaosBossController : EnemyController
+public class ChaosBossController : EnemyController, IEndDialogue
 {
     [System.NonSerialized] public FacePlayer facePlayer;
+    FinalBossEvents bossEvents;
     float fleeRadiusMin = 0;
     float fleeRadiusMax = 12;
     Vector3 fleePoint;
@@ -15,17 +16,26 @@ public class ChaosBossController : EnemyController
     float phaseTriggerPercent = 1.1f;
     float phaseTrigger;
 
+    public override void Awake()
+    {
+        base.Awake();
+        bossEvents = GetComponent<FinalBossEvents>();
+    }
+
     public override void Start()
     {
         base.Start();
         ChooseRandomPoint();
         facePlayer = GetComponent<FacePlayer>();
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
+        gm.awareEnemies += 1;
     }
 
     public override void EnemyAI()
     {
-        base.EnemyAI();
+        if (state == EnemyState.UNAWARE) return;
+
+        playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 
         if (phase == 1 && enemyScript.health < phaseTrigger)
         {
@@ -89,5 +99,10 @@ public class ChaosBossController : EnemyController
     {
         base.EndStagger();
         RunAway();
+    }
+
+    public void EndDialogue()
+    {
+        bossEvents.EndDialogue();
     }
 }
