@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public class AssistantController : MonoBehaviour
 {
@@ -184,6 +185,7 @@ public class AssistantController : MonoBehaviour
 
     private void endDialogue(object sender, EventArgs e)
     {
+        GetComponentInChildren<SortingGroup>().sortingOrder = 1;
         frontAnimator.Play("BecomeActive");
     }
 

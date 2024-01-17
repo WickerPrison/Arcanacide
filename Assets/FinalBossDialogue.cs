@@ -17,7 +17,11 @@ public class FinalBossDialogue : Dialogue
     {
         base.NextLine();
 
-        if(currentLineIndex == 3)
+        if(currentLineIndex == 2)
+        {
+            bossEvents.StandUp();
+        }
+        else if(currentLineIndex == 3)
         {
             bossEvents.SitUp();
         }

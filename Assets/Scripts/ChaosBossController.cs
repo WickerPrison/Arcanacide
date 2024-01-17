@@ -27,6 +27,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         base.Start();
         ChooseRandomPoint();
         facePlayer = GetComponent<FacePlayer>();
+        facePlayer.SetDestination(new Vector3(7, 0, -9));
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
         gm.awareEnemies += 1;
     }
@@ -103,6 +104,26 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public void EndDialogue()
     {
+        frontAnimator.Play("Idle");
+        backAnimator.Play("Idle");
+        RunAway();
         bossEvents.EndDialogue();
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        bossEvents.standUp += standUp;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        bossEvents.standUp -= standUp;
+    }
+
+    private void standUp(object sender, System.EventArgs e)
+    {
+        backAnimator.Play("StandUp");
     }
 }
