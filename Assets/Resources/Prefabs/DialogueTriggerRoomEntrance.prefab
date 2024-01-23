@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3288883533411560989}
   - component: {fileID: 3288883533411561059}
-  - component: {fileID: 3288883533411561058}
   - component: {fileID: 2697665220117562193}
   m_Layer: 0
   m_Name: DialogueTriggerRoomEntrance
@@ -46,23 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543030c0d6bbdab4e9996ade5838c38e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endDialogueObject: {fileID: 0}
   dialoguePrefab: {fileID: 6286585989320248928, guid: 8fb30ecf51e1b064ab6d94ebfcaeaac7, type: 3}
   CSVfile: {fileID: 0}
-  conversationNumber: 0
+  conversationName: 
+  conversationNum: 0
   stopEnemy: 0
   dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
---- !u!114 &3288883533411561058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3288883533411561057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1f0fcc98fd41e04bb6aa0876e11a40d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  repeatable: 0
 --- !u!114 &2697665220117562193
 MonoBehaviour:
   m_ObjectHideFlags: 0

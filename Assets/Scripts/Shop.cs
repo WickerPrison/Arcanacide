@@ -13,7 +13,6 @@ public class Shop : MonoBehaviour
     [SerializeField] int repeatableGreeting;
     [SerializeField] int farewell;
     [System.NonSerialized] public bool useAlternate = false;
-    CSVparser readCSV;
     GameObject shopWindow;
     Transform player;
     InputManager im;
@@ -33,8 +32,7 @@ public class Shop : MonoBehaviour
 
     void Start()
     {
-        readCSV = GetComponent<CSVparser>();
-        conversations = readCSV.ParseConversation(csvFile);
+        conversations = CSVparser.ParseConversation(csvFile);
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         sm = im.gameObject.GetComponent<SoundManager>();
         im.controls.Gameplay.Interact.performed += ctx => WhichStartingConversation();

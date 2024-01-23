@@ -169,12 +169,14 @@ public class AssistantController : MonoBehaviour
     {
         bossEvents.assistantSitUp += assistantSitUp;
         bossEvents.endDialogue += endDialogue;
+        bossEvents.freezeAssistant += freezeAssistant;
     }
 
     private void OnDisable()
     {
         bossEvents.assistantSitUp -= assistantSitUp;
         bossEvents.endDialogue -= endDialogue;
+        bossEvents.freezeAssistant -= freezeAssistant;
     }
 
     private void assistantSitUp(object sender, EventArgs e)
@@ -191,5 +193,12 @@ public class AssistantController : MonoBehaviour
     public void BecomeActive()
     {
         state = AssistantState.IDLE;
+    }
+
+    private void freezeAssistant(object sender, EventArgs e)
+    {
+        frontAnimator.Play("Idle");
+        EndBolts();
+        state = AssistantState.DIALOGUE;
     }
 }

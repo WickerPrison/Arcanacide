@@ -18,7 +18,6 @@ public class Dialogue : MonoBehaviour
     InputManager im;
     List<List<string>> conversations = new List<List<string>>();
     List<string> thisConversation;
-    CSVparser readCSV;
     [System.NonSerialized] public int currentLineIndex = 0;
     DialogueScript dialogueBox;
     bool inDialogue = false;
@@ -26,8 +25,7 @@ public class Dialogue : MonoBehaviour
     public virtual void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        readCSV = GetComponent<CSVparser>();
-        conversations = readCSV.ParseConversation(CSVfile);
+        conversations = CSVparser.ParseConversation(CSVfile);
         thisConversation = conversations[conversationNum];
         im.controls.Dialogue.Next.performed += ctx => NextLine();
         if (stopEnemy)
@@ -82,17 +80,22 @@ public class Dialogue : MonoBehaviour
                 navAgent.speed = speed;
             }
 
-            if(endDialogueObject != null)
-            {
-                IEndDialogue endDialogue = endDialogueObject.GetComponent<IEndDialogue>();
-                endDialogue.EndDialogue();
-            }
+            EndDialogue();
         }
         else
         {
             string[] currentLine = thisConversation[currentLineIndex].Split('|');
             dialogueBox.SetImage(currentLine[0]);
             dialogueBox.SetText(currentLine[1]);
+        }
+    }
+
+    public virtual void EndDialogue()
+    {
+        if (endDialogueObject != null)
+        {
+            IEndDialogue endDialogue = endDialogueObject.GetComponent<IEndDialogue>();
+            endDialogue.EndDialogue();
         }
     }
 }

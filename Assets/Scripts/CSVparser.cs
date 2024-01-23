@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CSVparser : MonoBehaviour
+public static class CSVparser
 {
-    public List<List<string>> ParseConversation(TextAsset csvFile)
+    public static List<List<string>> ParseConversation(TextAsset csvFile)
     {
         List<List<string>> conversations = new List<List<string>>();
         string[] conversationsArray = csvFile.text.Split(';');

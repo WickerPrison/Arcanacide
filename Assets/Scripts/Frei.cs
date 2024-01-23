@@ -12,7 +12,6 @@ public class Frei : MonoBehaviour
     [SerializeField] int firstTimeConversation;
 
     //Setup
-    CSVparser readCSV;
     InputManager im;
     Transform player;
 
@@ -32,11 +31,10 @@ public class Frei : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        readCSV = GetComponent<CSVparser>();
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => StartConversation();
         im.controls.Dialogue.Next.performed += ctx => NextLine();
-        conversations = readCSV.ParseConversation(csvFile);
+        conversations = CSVparser.ParseConversation(csvFile);
     }
 
     void StartConversation()

@@ -108,7 +108,7 @@ public class BossController : EnemyController, IEndDialogue
         {
             if (navAgent.enabled)
             {
-                if(playerDistance > tooClose)
+                if(playerDistance > tooClose) 
                 {
                     Strafe();
                 }
@@ -367,11 +367,6 @@ public class BossController : EnemyController, IEndDialogue
         {
             frontAnimator.Play("HandsUp");
             backAnimator.Play("HandsUp");
-        }
-        else
-        {
-            //frontAnimator.Play("Death");
-            //backAnimator.Play("Death");
         }
     }
 

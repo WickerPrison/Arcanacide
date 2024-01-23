@@ -17,9 +17,12 @@ public class AssistantBeam : MonoBehaviour
     [SerializeField] ParticleSystem particleSys;
     [SerializeField] float randomRange = 12f;
     [SerializeField] EventReference sfx;
+    FinalBossEvents bossEvents;
 
     private void Awake()
     {
+        bossEvents = GameObject.FindGameObjectWithTag("Enemy").GetComponent<FinalBossEvents>();
+
         mask = LayerMask.GetMask("Default");
         playerMask = LayerMask.GetMask("Player");
 
@@ -93,5 +96,20 @@ public class AssistantBeam : MonoBehaviour
             playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
             playerScript.LosePoise(poiseDamage);
         }
+    }
+
+    private void OnEnable()
+    {
+        bossEvents.freezeAssistant += freezeAssistant;
+    }
+
+    private void OnDisable()
+    {
+        bossEvents.freezeAssistant -= freezeAssistant;
+    }
+
+    private void freezeAssistant(object sender, System.EventArgs e)
+    {
+        Destroy(gameObject);
     }
 }

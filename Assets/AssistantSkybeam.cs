@@ -15,6 +15,12 @@ public class AssistantSkybeam : MonoBehaviour
     [SerializeField] EventReference castSFX;
     WaitForSeconds rippleDelay;
     WaitForEndOfFrame endOfFrame;
+    FinalBossEvents bossEvents;
+
+    private void Awake()
+    {
+        bossEvents = GameObject.FindGameObjectWithTag("Enemy").GetComponent<FinalBossEvents>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +61,21 @@ public class AssistantSkybeam : MonoBehaviour
             yield return rippleDelay;
         }
         yield return rippleDelay;
+        Destroy(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        bossEvents.freezeAssistant += freezeAssistant;
+    }
+
+    private void OnDisable()
+    {
+        bossEvents.freezeAssistant -= freezeAssistant;
+    }
+
+    private void freezeAssistant(object sender, System.EventArgs e)
+    {
         Destroy(gameObject);
     }
 }

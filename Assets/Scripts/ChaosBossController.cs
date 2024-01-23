@@ -110,6 +110,16 @@ public class ChaosBossController : EnemyController, IEndDialogue
         bossEvents.EndDialogue();
     }
 
+    public override void StartDying()
+    {
+        enemyScript.invincible = true;
+        enemyScript.health = 1;
+        bossEvents.FreezeAssistant();
+        GetComponent<FinalDialogue>().StartConversation();
+        frontAnimator.Play("StartDying");
+        backAnimator.Play("StartDying");   
+    }
+
     public override void OnEnable()
     {
         base.OnEnable();

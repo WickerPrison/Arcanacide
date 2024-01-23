@@ -13,7 +13,6 @@ public class Janitor : MonoBehaviour
     [SerializeField] string ability;
     [SerializeField] int newAbilityConversation;
     [SerializeField] int repeatableConversation;
-    CSVparser readCSV;
     DialogueScript dialogue;
     TutorialManager tutorialManager;
     Transform player;
@@ -30,8 +29,7 @@ public class Janitor : MonoBehaviour
 
     void Start()
     {
-        readCSV = GetComponent<CSVparser>();
-        conversations = readCSV.ParseConversation(csvFile);
+        conversations = CSVparser.ParseConversation(csvFile);
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         sm = im.GetComponent<SoundManager>();
         im.controls.Gameplay.Interact.performed += ctx => StartConversation();

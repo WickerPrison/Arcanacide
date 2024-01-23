@@ -15,7 +15,6 @@ public class Whistleblower : MonoBehaviour
     [SerializeField] MapData mapData;
 
     //Setup
-    CSVparser readCSV;
     InputManager im;
     Transform player;
     Animator animator;
@@ -38,13 +37,12 @@ public class Whistleblower : MonoBehaviour
     {
         if (mapData.whistleblowerArrested) Destroy(gameObject);
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        readCSV = GetComponent<CSVparser>();
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => StartConversation();
         im.controls.Dialogue.Next.performed += ctx => NextLine();
         animator = GetComponentInChildren<Animator>();
         scale = animator.transform.localScale;
-        conversations = readCSV.ParseConversation(csvFile);
+        conversations = CSVparser.ParseConversation(csvFile);
     }
 
     void StartConversation()
