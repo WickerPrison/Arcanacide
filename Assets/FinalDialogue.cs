@@ -15,7 +15,13 @@ public class FinalDialogue : Dialogue
 
     public override void EndDialogue()
     {
-        Debug.Log("test");
         GetComponentInChildren<ChaosBossAnimationEvenets>().StartDissolve();
+        StartCoroutine(DissolveScreen());
+    }
+
+    IEnumerator DissolveScreen()
+    {
+        yield return new WaitForSeconds(2f);
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScreenShader>().StartDissolve();
     }
 }
