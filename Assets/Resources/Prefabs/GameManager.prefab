@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 298750023833986127}
   - component: {fileID: 6051857248405132386}
+  - component: {fileID: 479534431586172430}
   - component: {fileID: -622290233402536838}
   - component: {fileID: 5470271128496654666}
   - component: {fileID: 5075726111561290587}
-  - component: {fileID: 479534431586172430}
   - component: {fileID: 8736452697236013708}
   - component: {fileID: 906774313460583990}
   m_Layer: 0
@@ -70,6 +70,22 @@ MonoBehaviour:
   - ChaosHub2
   enemies: []
   awareEnemies: 0
+--- !u!114 &479534431586172430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298750023833986125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826fa3fe5d88ccc48a391ea1f641b15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicPlayerPrefab: {fileID: 7810724621619239520, guid: 1559891dd7e335948af469e87a742220, type: 3}
+  immediateStopMusic: 0
+  musicOption: 0
+  musicState: 0
 --- !u!114 &-622290233402536838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,22 +180,6 @@ MonoBehaviour:
       Data3: 1741365936
       Data4: 221224492
     Path: event:/Stapler
---- !u!114 &479534431586172430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298750023833986125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 826fa3fe5d88ccc48a391ea1f641b15a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicPlayerPrefab: {fileID: 7810724621619239520, guid: 1559891dd7e335948af469e87a742220, type: 3}
-  immediateStopMusic: 0
-  musicOption: 0
-  musicState: 0
 --- !u!114 &8736452697236013708
 MonoBehaviour:
   m_ObjectHideFlags: 0

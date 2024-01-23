@@ -50,6 +50,8 @@ public class IceBoss : EnemyController, IEndDialogue
     Vector3 away = new Vector3(100, 100, 100);
     [System.NonSerialized] public bool justTransformed = false;
     bool fullyTransformed = false;
+    MusicManager musicManager;
+    int healthPercent;
 
     bool icicleDelay = true;
 
@@ -74,12 +76,13 @@ public class IceBoss : EnemyController, IEndDialogue
 
         base.Start();
 
+        musicManager = gm.GetComponentInChildren<MusicManager>();
+
         if (mapData.iceBossKilled)
         {
             SetupDeathPose();
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
-            MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
             musicManager.StopImmediate();
             //return;
         }
@@ -107,6 +110,9 @@ public class IceBoss : EnemyController, IEndDialogue
         if (mapData.iceBossKilled) return;
 
         if (state == EnemyState.UNAWARE) return;
+
+        healthPercent = Mathf.RoundToInt(enemyScript.health / enemyScript.maxHealth * 100);
+        musicManager.UpdateBossHealth(healthPercent);
 
         playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 

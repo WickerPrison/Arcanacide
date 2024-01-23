@@ -6,12 +6,12 @@ using UnityEngine;
 
 public enum Music
 {
-    NONE, MAINMENU, PEACEFUL, LEVEL1, ELECTRICBOSS, ICEBOSS
+    NONE, MAINMENU, PEACEFUL, LEVEL1, ELECTRICBOSS, ICEBOSS, LEVEL2, LEVEL3
 }
 
 public enum MusicState
 {
-    MAINLOOP, BOSSDIALOGUE, BOSSLOOPA, BOSSLOOPB, BOSSVICTORY, BOSSLOSS, DEATH, OUTRO
+    MAINLOOP, BOSSDIALOGUE, BOSSMUSIC, BOSSVICTORY, DEATH, OUTRO
 }
 
 public class MusicPlayer : MonoBehaviour
@@ -33,7 +33,9 @@ public class MusicPlayer : MonoBehaviour
             {Music.PEACEFUL, fmodEvents[1]},
             {Music.LEVEL1, fmodEvents[2]},
             {Music.ELECTRICBOSS, fmodEvents[3]},
-            {Music.ICEBOSS, fmodEvents[4]}
+            {Music.ICEBOSS, fmodEvents[4]},
+            {Music.LEVEL2, fmodEvents[5]},
+            {Music.LEVEL3, fmodEvents[6] }
         };
 
         parameterNameDict = new Dictionary<Music, string>()
@@ -47,10 +49,8 @@ public class MusicPlayer : MonoBehaviour
         {
             {MusicState.MAINLOOP, "MAIN LOOP" },
             {MusicState.BOSSDIALOGUE, "BOSS DIALOGUE" },
-            {MusicState.BOSSLOOPA, "BOSS LOOP A" },
-            {MusicState.BOSSLOOPB, "BOSS LOOP B" },
+            {MusicState.BOSSMUSIC, "BOSS MUSIC" },
             {MusicState.BOSSVICTORY, "BOSS VICTORY" },
-            {MusicState.BOSSLOSS, "BOSS LOSS" },
             {MusicState.DEATH, "DEATH" },
             {MusicState.OUTRO, "OUTRO" },
         };
@@ -90,5 +90,10 @@ public class MusicPlayer : MonoBehaviour
         currentTrack = Music.NONE;
         musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         musicInstance.release();
+    }
+
+    public void UpdateBossHealth(int healthPercent)
+    {
+        musicInstance.setParameterByName("BOSS HEALTH", healthPercent);
     }
 }

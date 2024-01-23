@@ -39,6 +39,8 @@ public class ElectricBossController : EnemyController, IEndDialogue
     [SerializeField] ParticleSystem bodyLightning;
     float abilityTime;
     float abilityMaxTime = 5;
+    MusicManager musicManager;
+    int healthPercent;
 
     public override void Start()
     {
@@ -51,11 +53,11 @@ public class ElectricBossController : EnemyController, IEndDialogue
         chargeIndicatorWidth = enemyCollider.radius * 2;
         abilityTime = abilityMaxTime;
         ChooseRandomPoint();
+        musicManager = gm.GetComponentInChildren<MusicManager>();
         if (mapData.electricBossKilled)
         {
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
-            MusicManager musicManager = gm.GetComponentInChildren<MusicManager>();
             musicManager.StopImmediate();
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
@@ -76,6 +78,8 @@ public class ElectricBossController : EnemyController, IEndDialogue
 
     public override void EnemyAI()
     {
+        healthPercent = Mathf.RoundToInt(enemyScript.health / enemyScript.maxHealth * 100);
+        musicManager.UpdateBossHealth(healthPercent);
         if(!phase2 && enemyScript.health < phaseTrigger)
         {
             phase2 = true;

@@ -268,6 +268,35 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-6107727985328678425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 2/LEVEL 2 MUSICSTATE
+  m_EditorClassIdentifier: 
+  Name: LEVEL 2 MUSICSTATE
+  StudioPath: 
+  Min: 0
+  Max: 4
+  Default: 0
+  ID:
+    data1: 22278499
+    data2: 1908146941
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - MAIN LOOP
+  - BOSS DIALOGUE
+  - BOSS MUSIC
+  - BOSS VICTORY
+  - DEATH
+  Exists: 1
 --- !u!114 &-5924957658026754500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,36 +541,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-1210939834549034904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Level 2/LEVEL 2 MUSICSTATE
-  m_EditorClassIdentifier: 
-  Name: LEVEL 2 MUSICSTATE
-  StudioPath: 
-  Min: 0
-  Max: 5
-  Default: 0
-  ID:
-    data1: 3993424300
-    data2: 577859257
-  Type: 2
-  IsGlobal: 0
-  Labels:
-  - Level Loops
-  - Boss Preamble
-  - Boss Music Start
-  - Boss Music Progress
-  - Boss Victory
-  - Boss Failure
-  Exists: 1
 --- !u!114 &-704176632039254308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,12 +663,13 @@ MonoBehaviour:
   - {fileID: -8786136235548272873}
   - {fileID: -3039081038123384609}
   - {fileID: 2322225876975170604}
+  - {fileID: 8449403469473530489}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7341476850067345480}
   StringsBanks:
   - {fileID: 303446170087587247}
-  cacheTime: 638412497097944387
+  cacheTime: 638416218118224112
   cacheVersion: 131607
 --- !u!114 &303446170087587247
 MonoBehaviour:
@@ -686,10 +686,10 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638412457781808618
+  lastModified: 638416218069141470
   FileSizes:
   - Name: 
-    Value: 3332
+    Value: 3450
   Exists: 1
 --- !u!114 &403290344975673266
 MonoBehaviour:
@@ -706,7 +706,7 @@ MonoBehaviour:
   Path: Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638412497097944387
+  lastModified: 638416218118224112
   FileSizes: []
   Exists: 1
 --- !u!114 &544739374651348960
@@ -838,7 +838,7 @@ MonoBehaviour:
   Name: LEVEL 1 MUSICSTATE
   StudioPath: 
   Min: 0
-  Max: 6
+  Max: 5
   Default: 0
   ID:
     data1: 1390076782
@@ -848,11 +848,34 @@ MonoBehaviour:
   Labels:
   - MAIN LOOP
   - BOSS DIALOGUE
-  - BOSS LOOP A
-  - BOSS LOOP B
+  - BOSS MUSIC
   - BOSS VICTORY
   - DEATH
   - END
+  Exists: 1
+--- !u!114 &1977824702770159497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 2/BOSS HEALTH
+  m_EditorClassIdentifier: 
+  Name: BOSS HEALTH
+  StudioPath: 
+  Min: 0
+  Max: 100
+  Default: 100
+  ID:
+    data1: 2649702746
+    data2: 83699355
+  Type: 0
+  IsGlobal: 0
+  Labels: []
   Exists: 1
 --- !u!114 &2322225876975170604
 MonoBehaviour:
@@ -882,6 +905,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 457047
+--- !u!114 &2408640425625339044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 3/BOSS HEALTH
+  m_EditorClassIdentifier: 
+  Name: BOSS HEALTH
+  StudioPath: 
+  Min: 0
+  Max: 100
+  Default: 100
+  ID:
+    data1: 2649702746
+    data2: 83699355
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &2505977534609012144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,20 +1078,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/Level 2
   Guid:
-    Data1: 810475591
-    Data2: 1337975089
-    Data3: -1269503613
-    Data4: -253484103
+    Data1: -457311608
+    Data2: 1133597920
+    Data3: 1529029806
+    Data4: 2065057193
   Banks:
   - {fileID: 403290344975673266}
   IsStream: 1
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -1210939834549034904}
+  - {fileID: 1977824702770159497}
+  - {fileID: -6107727985328678425}
   MinDistance: 1
   MaxDistance: 20
-  Length: 480705
+  Length: 441992
 --- !u!114 &3459919232607557928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1501,7 +1549,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638412457781712936
+  lastModified: 638416218069115236
   FileSizes: []
   Exists: 1
 --- !u!114 &7461850975316340935
@@ -1558,6 +1606,35 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &8449403469473530489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Level 3
+  m_EditorClassIdentifier: 
+  Path: event:/Level 3
+  Guid:
+    Data1: -1238316195
+    Data2: 1321655686
+    Data3: -426369655
+    Data4: -1112347448
+  Banks:
+  - {fileID: 403290344975673266}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 2408640425625339044}
+  - {fileID: 8903491743693580729}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 653760
 --- !u!114 &8615858563046314707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1585,6 +1662,35 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &8903491743693580729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 3/LEVEL 3 MUSICSTATE
+  m_EditorClassIdentifier: 
+  Name: LEVEL 3 MUSICSTATE
+  StudioPath: 
+  Min: 0
+  Max: 4
+  Default: 0
+  ID:
+    data1: 4235706915
+    data2: 2810008360
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - MAIN LOOP
+  - BOSS DIALOGUE
+  - BOSS MUSIC
+  - BOSS VICTORY
+  - DEATH
+  Exists: 1
 --- !u!114 &8943290565553467320
 MonoBehaviour:
   m_ObjectHideFlags: 0
