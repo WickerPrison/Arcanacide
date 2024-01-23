@@ -197,6 +197,7 @@ public class AssistantController : MonoBehaviour
 
     private void freezeAssistant(object sender, EventArgs e)
     {
+        navAgent.enabled = false;
         frontAnimator.Play("Idle");
         EndBolts();
         state = AssistantState.DIALOGUE;
