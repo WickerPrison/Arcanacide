@@ -58,7 +58,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         {
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
-            musicManager.StopImmediate();
+            musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
         }

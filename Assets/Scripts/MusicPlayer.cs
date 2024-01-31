@@ -41,6 +41,8 @@ public class MusicPlayer : MonoBehaviour
         parameterNameDict = new Dictionary<Music, string>()
         {
             { Music.LEVEL1, "LEVEL 1 MUSICSTATE" },
+            {Music.LEVEL2, "LEVEL 2 MUSICSTATE" },
+            {Music.LEVEL3, "LEVEL 3 MUSICSTATE" },
             { Music.MAINMENU, "MAIN TITLES MUSICSTATE" },
             {Music.PEACEFUL, "peacful" }
         };
