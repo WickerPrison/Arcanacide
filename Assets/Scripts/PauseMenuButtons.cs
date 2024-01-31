@@ -9,6 +9,7 @@ public class PauseMenuButtons : MonoBehaviour
     public GameObject resumeButton;
     PlayerMovement playerMovement;
     SoundManager sm;
+    MusicManager musicManager;
     GameObject textMenu;
     GameObject weaponMenu;
     GameObject settingsMenu;
@@ -28,6 +29,7 @@ public class PauseMenuButtons : MonoBehaviour
     private void Start()
     {
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
+        musicManager = sm.GetComponent<MusicManager>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(resumeButton);
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
@@ -72,6 +74,7 @@ public class PauseMenuButtons : MonoBehaviour
 
     public void MainMenu()
     {
+        musicManager.StopImmediate();
         sm.ButtonSound();
         SceneManager.LoadScene("MainMenu");
     }
