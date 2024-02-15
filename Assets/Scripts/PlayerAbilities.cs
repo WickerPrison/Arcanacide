@@ -23,7 +23,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] Transform attackPoint;
 
     //player scripts
-    PlayerMovement playerController;
+    PlayerMovement playerMovement;
     PlayerScript playerScript;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
@@ -71,7 +71,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerAnimation = GetComponent<PlayerAnimation>();
-        playerController = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();
         playerScript = GetComponent<PlayerScript>();
         patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
@@ -202,7 +202,7 @@ public class PlayerAbilities : MonoBehaviour
 
     public void Shield()
     {
-        if (!playerData.unlockedAbilities.Contains("Block") || !playerController.CanInput()) return;
+        if (!playerData.unlockedAbilities.Contains("Block") || !playerMovement.CanInput()) return;
         
         if (playerData.mana > 0)
         {
@@ -254,7 +254,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             playerAnimation.ChainAttacks();
         }
-        else if (playerController.CanInput() && playerScript.stamina > 0)
+        else if (playerMovement.CanInput() && playerScript.stamina > 0)
         {
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = true;
@@ -276,7 +276,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             playerAnimation.Combo();
         }
-        else if (playerController.CanInput() && playerScript.stamina > 0)
+        else if (playerMovement.CanInput() && playerScript.stamina > 0)
         {
             if (playerData.currentWeapon == 1 && !lanternFairy.isInLantern) return;
             heavyAttackActive = true;
@@ -317,7 +317,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         if (!playerData.unlockedAbilities.Contains("Special Attack")) return;
 
-        if (playerController.CanInput() && playerScript.stamina > 0 && playerData.mana >= specialAttackProfiles[playerData.currentWeapon].manaCost)
+        if (playerMovement.CanInput() && playerScript.stamina > 0 && playerData.mana >= specialAttackProfiles[playerData.currentWeapon].manaCost)
         {
             if (playerData.currentWeapon == 1)
             {
@@ -359,7 +359,7 @@ public class PlayerAbilities : MonoBehaviour
         projectile.transform.position = startingPosition;
         projectile.transform.LookAt(enemy.transform.position + new Vector3(0, 1.1f, 0));
         projectile.target = enemy.transform;
-        projectile.playerController = playerController;
+        projectile.playerController = playerMovement;
     }
 
     public void AxeSpecialAttack()

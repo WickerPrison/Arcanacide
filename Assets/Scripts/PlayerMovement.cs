@@ -32,8 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     //dash variables
     [System.NonSerialized] public Vector3 dashDirection;
-    [System.NonSerialized] public float maxDashTime = 0.2f;
-    [System.NonSerialized] public float dashTime = 0;
+    [System.NonSerialized] public bool isDashing = false;
     float dashSpeed = 1000;
     float dashStaminaCost = 30f;
     
@@ -116,9 +115,9 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector3(moveDirection.x * Time.fixedDeltaTime * moveSpeed, rb.velocity.y, moveDirection.z * Time.fixedDeltaTime * moveSpeed);
         }
         //dash if the player has pressed the right mouse button
-        else if (dashTime > 0)
+        else if (isDashing)
         {
-            Dash();
+            rb.velocity = (dashDirection * Time.fixedDeltaTime * dashSpeed);
         }
     }
 
@@ -129,7 +128,6 @@ public class PlayerMovement : MonoBehaviour
             //The player dashes in whatever direction they were already moving
             float staminaCost = dashStaminaCost;
             dashDirection = moveDirection.normalized;
-            dashTime = maxDashTime;
             if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))
             {
                 staminaCost /= 2;
@@ -243,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return false;
         }
-        if (dashTime > 0)
+        if (isDashing)
         {
             return false;
         }
@@ -256,15 +254,6 @@ public class PlayerMovement : MonoBehaviour
             return false;
         }
         return true;
-    }
-
-    //this funciton will be repeatedly called while dash time is greater than 0
-    //dashSpeed controls how fast the player moves during a dash
-    //maxDashTime controls how long the dash lasts
-    void Dash()
-    {
-        rb.velocity = (dashDirection * Time.fixedDeltaTime * dashSpeed);
-        dashTime -= Time.fixedDeltaTime;
     }
 
     public IEnumerator KnockBack(float knockbackTime)

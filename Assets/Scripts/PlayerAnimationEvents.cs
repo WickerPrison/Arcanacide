@@ -149,6 +149,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void StartIFrames()
     {
         playerEvents.DashStart();
+        playerMovement.isDashing = true;
         playerMovement.gameObject.layer = 8;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
@@ -168,6 +169,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void EndIFrames()
     {
         playerEvents.DashEnd();
+        playerMovement.isDashing = false;
         playerMovement.gameObject.layer = 3;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
@@ -207,7 +209,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         if (playerMovement.gameObject.layer == 8)
         {
             EndIFrames();
-            playerMovement.dashTime = 0;
+            playerMovement.isDashing = false;
         }
         playerAnimation.attacking = false;
         playerAbilities.shield = true;
@@ -310,7 +312,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerEvents.BackstepStart(num);
         Vector3 direction = playerMovement.transform.position - playerMovement.attackPoint.position;
         playerMovement.dashDirection = direction.normalized;
-        playerMovement.dashTime = playerMovement.maxDashTime;
+        playerMovement.isDashing = true;
         playerSound.PlaySoundEffect(PlayerSFX.DODGE, 0.5f);
     }
 
@@ -318,6 +320,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         playerMovement.UnlockAttackPoint();
         playerMovement.gameObject.layer = 3;
+        playerMovement.isDashing = false;
         playerEvents.DashEnd();
     }
 
