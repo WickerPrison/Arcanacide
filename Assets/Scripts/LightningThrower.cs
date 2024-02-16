@@ -28,6 +28,17 @@ public class LightningThrower : EnemyController
     {
         base.EnemyAI();
 
+        if (isShocking && attackArc.CanHitPlayer())
+        {
+            shockDamageBuildup += Time.deltaTime * lightningThrowerDamage;
+            while (shockDamageBuildup > 1)
+            {
+                shockDamageBuildup -= 1;
+                playerScript.LoseHealth(1, EnemyAttackType.NONPARRIABLE, null);
+            }
+            playerScript.StartStagger(Time.deltaTime * 1.1f);
+        }
+
         if (state == EnemyState.IDLE)
         {
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
@@ -119,21 +130,6 @@ public class LightningThrower : EnemyController
         backElectricityVFX.Stop();
         enemySound.Stop();
         isShocking = false;
-    }
-
-
-    private void FixedUpdate()
-    {
-        if (isShocking && attackArc.CanHitPlayer())
-        {
-            shockDamageBuildup += Time.fixedDeltaTime * lightningThrowerDamage;
-            while (shockDamageBuildup > 1)
-            {
-                shockDamageBuildup -= 1;
-                playerScript.LoseHealth(1, EnemyAttackType.NONPARRIABLE, null);
-            }
-            playerScript.StartStagger(Time.fixedDeltaTime * 1.1f);
-        }
     }
 
     public override void StartDying()
