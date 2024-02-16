@@ -166,8 +166,6 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(staggerTimer);
-
         if (!playerAnimation.attacking)
         {
             if(staminaDelay > 0)

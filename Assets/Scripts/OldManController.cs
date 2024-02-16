@@ -77,7 +77,6 @@ public class OldManController : EnemyController
     public override void SpecialAbility()
     {
         enemySound.OtherSounds(2, 2);
-        float yDirection = Random.Range(-1f, 1f);
         Vector3 direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
         navAgent.Warp(playerScript.transform.position + direction.normalized * 1.5f);
     }
@@ -138,6 +137,12 @@ public class OldManController : EnemyController
         backAnimator.SetBool("Charging", true);
         enemyCollider.isTrigger = true;
         navAgent.enabled = false;
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        enemyCollider.isTrigger = false;
     }
 
     void Charging()
