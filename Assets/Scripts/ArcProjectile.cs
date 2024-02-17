@@ -83,7 +83,7 @@ public class ArcProjectile : MonoBehaviour
         Destroy(gameObject);
 
         List<Collider> objects = touchingCircle.GetTouchingObjects();
-        if (objects.Contains(playerCollider))
+        if (objects.Contains(playerCollider) && player.gameObject.layer == 3)
         {
             RuntimeManager.PlayOneShot(impactSound, impactVolume);
             player.StartStagger(staggerDuration);

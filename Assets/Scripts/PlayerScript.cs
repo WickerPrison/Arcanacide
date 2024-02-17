@@ -113,6 +113,7 @@ public class PlayerScript : MonoBehaviour
         if(staggerDuration > 0 && !playerAbilities.shield)
         {
             staggerTimer += staggerDuration;
+            
             isStaggered = true;
 
             playerEvents.PlayerStagger();

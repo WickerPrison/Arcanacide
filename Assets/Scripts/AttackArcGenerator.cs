@@ -23,7 +23,7 @@ public class AttackArcGenerator : MonoBehaviour
 
     [SerializeField] int testAngle;
 
-    LayerMask layerMask = ~0;
+    LayerMask layerMask;
 
     float firstPointx = 0.3f;
     float firstPointy = -0.5f;
@@ -37,6 +37,7 @@ public class AttackArcGenerator : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
+        layerMask = LayerMask.GetMask("Player");
         enemyController = GetComponentInParent<EnemyController>();
         centerPoint = new Vector3(0, yOffset, -1);
         viewConeMaterial = new Material(whiteMaterial);
