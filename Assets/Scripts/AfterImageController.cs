@@ -10,6 +10,7 @@ public class AfterImageController : MonoBehaviour
     [SerializeField] PlayerData playerData;
     PlayerEvents playerEvents;
     PlayerAnimation playerAnimation;
+    PlayerMovement playerMovement;
     IEnumerator coroutine;
     WaitForSeconds imageRate;
     bool effectPlaying = false;
@@ -21,6 +22,7 @@ public class AfterImageController : MonoBehaviour
     private void Awake()
     {
         playerEvents = GetComponentInParent<PlayerEvents>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
         playerAnimation = GetComponentInParent<PlayerAnimation>();
         imageRate = new WaitForSeconds(afterImageRate);
     }
@@ -61,6 +63,12 @@ public class AfterImageController : MonoBehaviour
 
         while(timer > 0)
         {
+            if (!playerMovement.isDashing)
+            {
+                timer = 0;
+                
+            }
+
             timer -= Time.deltaTime;
 
             AfterImage afterImage = Instantiate(afterimagePrefab).GetComponent<AfterImage>();

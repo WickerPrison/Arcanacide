@@ -148,7 +148,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     //behaves the same as the player layer
     public void StartIFrames()
     {
-        playerEvents.DashStart();
         playerMovement.isDashing = true;
         playerMovement.gameObject.layer = 8;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
@@ -163,12 +162,12 @@ public class PlayerAnimationEvents : MonoBehaviour
             playerAbilities.shield = true;
             playerAbilities.parry = true;
         }
+        playerEvents.DashStart();
     }
 
     //Layer 3 is the player layer, it can collide with terrain, enemies, and enemy projectiles
     public void EndIFrames()
     {
-        playerEvents.DashEnd();
         playerMovement.isDashing = false;
         playerMovement.gameObject.layer = 3;
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
@@ -182,6 +181,7 @@ public class PlayerAnimationEvents : MonoBehaviour
             playerAbilities.parry = false;
             patchEffects.mirrorCloakTimer = patchEffects.mirrorCloakMaxTime;
         }
+        playerEvents.DashEnd();
     }
 
     public void LockPosition()

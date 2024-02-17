@@ -23,6 +23,7 @@ public class PlayerScript : MonoBehaviour
 
     //player scripts
     PlayerAbilities playerAbilities;
+    PlayerMovement playerMovement;
     PatchEffects patchEffects;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
@@ -63,6 +64,7 @@ public class PlayerScript : MonoBehaviour
         stamina = playerData.MaxStamina();
         poise = maxPoise;
         playerAbilities = GetComponent<PlayerAbilities>();
+        playerMovement = GetComponent<PlayerMovement>();
         patchEffects = GetComponent<PatchEffects>();
         playerAnimation = GetComponent<PlayerAnimation>();
         playerHealth = GetComponent<PlayerHealth>();
@@ -112,6 +114,8 @@ public class PlayerScript : MonoBehaviour
     {
         if(staggerDuration > 0 && !playerAbilities.shield)
         {
+            playerMovement.isDashing = false;
+
             staggerTimer += staggerDuration;
             
             isStaggered = true;

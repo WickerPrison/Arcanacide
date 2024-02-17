@@ -28,7 +28,7 @@ public class LightningThrower : EnemyController
     {
         base.EnemyAI();
 
-        if (isShocking && attackArc.CanHitPlayer())
+        if (isShocking && attackArc.CanHitPlayer() && playerAbilities.gameObject.layer == 3)
         {
             shockDamageBuildup += Time.deltaTime * lightningThrowerDamage;
             while (shockDamageBuildup > 1)
