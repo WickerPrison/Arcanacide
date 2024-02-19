@@ -392,6 +392,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
     public void EndDialogue()
     { 
         state = EnemyState.IDLE;
+        musicManager.ChangeMusicState(MusicState.BOSSMUSIC);
     }
 
     public override void Death()

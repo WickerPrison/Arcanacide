@@ -90,6 +90,10 @@ public class ArcProjectile : MonoBehaviour
             player.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
             player.LosePoise(poiseDamage);
         }
+        else if(objects.Contains(playerCollider) && player.gameObject.layer == 8)
+        {
+            player.GetComponent<PlayerScript>().PerfectDodge(EnemyAttackType.PROJECTILE);
+        }
 
     }
 

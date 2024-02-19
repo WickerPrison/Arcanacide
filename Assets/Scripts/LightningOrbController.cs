@@ -58,15 +58,6 @@ public class LightningOrbController : EnemyController
         SelfDestruct();
     }
 
-    void Attack()
-    {
-        if(playerDistance <= attackRange)
-        {
-            playerScript.LoseHealth(spellAttackDamage, EnemyAttackType.NONPARRIABLE, null);
-            playerScript.LosePoise(spellAttackPoiseDamage);
-        }
-    }
-
     void TowardsPlayer()
     {
         playerDirection = playerScript.transform.position - transform.position;
