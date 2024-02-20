@@ -61,7 +61,6 @@ public class IceBoss : EnemyController, IEndDialogue
         {
             enemyScript = GetComponent<EnemyScript>();
             enemyScript.enabled = false;
-            return;
         }
 
         base.Awake();
@@ -83,7 +82,7 @@ public class IceBoss : EnemyController, IEndDialogue
             SetupDeathPose();
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
-            musicManager.StopImmediate();
+            musicManager.ChangeMusicState(MusicState.MAINLOOP);
             //return;
         }
         else

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Doorway : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class Doorway : MonoBehaviour
     SpriteRenderer spriteRenderer;
     [SerializeField] SpriteRenderer fogWallRenderer;
     [SerializeField] EventReference doorSFX;
+    public event System.EventHandler OnOpenDoor;
 
     // Start is called before the first frame update
     void Start()
@@ -123,6 +125,7 @@ public class Doorway : MonoBehaviour
 
         if(playerDistance <= interactDistance && doorOpen)
         {
+            OnOpenDoor?.Invoke(this, EventArgs.Empty);
             RuntimeManager.PlayOneShot(doorSFX);
             mapData.doorNumber = doorNumber;
             PlayerHealth playerHealth = player.gameObject.GetComponent<PlayerHealth>();
