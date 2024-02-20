@@ -426,6 +426,7 @@ public class IceBoss : EnemyController, IEndDialogue
     void IEndDialogue.EndDialogue()
     {
         state = EnemyState.IDLE;
+        musicManager.ChangeMusicState(MusicState.BOSSMUSIC);
         StartCoroutine(StartDelay());
     }
 
