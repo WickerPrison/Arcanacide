@@ -2,21 +2,236 @@
 [LOG] Manager::init                            : maxchannels = 256 studioflags = 00000006 flags 00000000 extradriverdata 0000000000000000.
 [LOG] SystemI::init                            : Initialize version=20217 (136061), maxchannels=256, flags=0x00020000
 [LOG] SystemI::setOutputInternal               : Setting output to 'FMOD WASAPI Output'
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=2, nSamplesPerSec=44100, nAvgBytesPerSec=352800, nBlockAlign=8, wBitsPerSample=32, cbSize=22.
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x00000003, SubFormat=00000003-0000-0010-8000-00AA00389B71.
-[LOG] OutputWASAPI::init                       : Output buffer size: 3760 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
-[LOG] SystemI::init                            : Output requires a sample rate of 44100Hz, resampling will occur.
+[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=8, nSamplesPerSec=48000, nAvgBytesPerSec=1536000, nBlockAlign=32, wBitsPerSample=32, cbSize=22.
+[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x0000063F, SubFormat=00000003-0000-0010-8000-00AA00389B71.
+[LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
+[LOG] DownMix::init                            : dspbuffersize: 1024  rate: 48000. output speaker mode: 7, input speaker mode 3
+[LOG] DownMix::init                            : done.
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 000001FB73393F38 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 00000296D052BA18 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 00000296C7E58808, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000296C7E58808
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296699B2430
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Melody Vibraphone', format=5, channels=2, frequency=48000, lengthbytes=367104, lengthpcm=1728000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.343021.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000296C7E58808
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 00000295308FFAE8, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000295308FFAE8
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296D00AA5A0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Background v2', format=5, channels=2, frequency=48000, lengthbytes=477472, lengthpcm=1728000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.342954.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000295308FFAE8
+[LOG] SoundI::release                          : AA Safe Room Intro v2 (000002969043D948)
+[LOG] SoundI::release                          :     AA Safe Room Intro v2 (00000296C5F9E3C8)
+[LOG] SoundI::release                          :     AA Safe Room Intro v2 (0000029536D2F228)
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 00000296C546A0A8, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000296C546A0A8
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296BFADEB20
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Intro v2', format=5, channels=2, frequency=48000, lengthbytes=137312, lengthpcm=576000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.369349.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000296C546A0A8
+[LOG] SoundI::release                          : AA Safe Room Melody Vibraphone (00000296C7E58808)
+[LOG] SoundI::release                          :     AA Safe Room Melody Vibraphone (00000296BF7283D8)
+[LOG] SoundI::release                          :     AA Safe Room Melody Vibraphone (0000029536D2F3D8)
+[LOG] SoundI::release                          : AA Safe Room Background v2 (00000295308FFAE8)
+[LOG] SoundI::release                          :     AA Safe Room Background v2 (00000296D00B40E8)
+[LOG] SoundI::release                          :     AA Safe Room Background v2 (00000294F0A0ABE8)
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000002952D93BEF8, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000002952D93BEF8
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296C5AC36B0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Melody Piano', format=5, channels=2, frequency=48000, lengthbytes=329344, lengthpcm=1728000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.445412.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000002952D93BEF8
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 0000029535A51808, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000029535A51808
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000029536E315A0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Background v2', format=5, channels=2, frequency=48000, lengthbytes=477472, lengthpcm=1728000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.342954.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000029535A51808
+[LOG] SoundI::release                          : AA Safe Room Intro v2 (00000296C546A0A8)
+[LOG] SoundI::release                          :     AA Safe Room Intro v2 (00000296D00B3F48)
+[LOG] SoundI::release                          :     AA Safe Room Intro v2 (00000294F0A0B458)
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000002952D93C408, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000002952D93C408
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296C5AC37F0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Intro v2', format=5, channels=2, frequency=48000, lengthbytes=137312, lengthpcm=576000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.369349.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000002952D93C408
+[LOG] SoundI::release                          : AA Safe Room Melody Piano (000002952D93BEF8)
+[LOG] SoundI::release                          :     AA Safe Room Melody Piano (00000296D00B4288)
+[LOG] SoundI::release                          :     AA Safe Room Melody Piano (00000294F0A0AF48)
+[LOG] SoundI::release                          : AA Safe Room Background v2 (0000029535A51808)
+[LOG] SoundI::release                          :     AA Safe Room Background v2 (00000296D00B4768)
+[LOG] SoundI::release                          :     AA Safe Room Background v2 (00000294F0A0B0F8)
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000002952D93C0A8, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000002952D93C0A8
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296C5AC3A70
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Melody EP', format=5, channels=2, frequency=48000, lengthbytes=286400, lengthpcm=1728000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.298770.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000002952D93C0A8
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000002952D93C918, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000002952D93C918
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296C5AC3BB0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Background v2', format=5, channels=2, frequency=48000, lengthbytes=477472, lengthpcm=1728000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.342954.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000002952D93C918
+[LOG] SoundI::release                          : AA Safe Room Intro v2 (000002952D93C408)
+[LOG] SoundI::release                          :     AA Safe Room Intro v2 (00000296D00B4908)
+[LOG] SoundI::release                          :     AA Safe Room Intro v2 (00000294F0A0B458)
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 0000029538E6DE18, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000029538E6DE18
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296C0986E20
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Intro v2', format=5, channels=2, frequency=48000, lengthbytes=137312, lengthpcm=576000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.369349.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000029538E6DE18
+[LOG] SoundI::release                          : AA Safe Room Melody EP (000002952D93C0A8)
+[LOG] SoundI::release                          :     AA Safe Room Melody EP (00000296D00B4768)
+[LOG] SoundI::release                          :     AA Safe Room Melody EP (00000294F0A0B968)
+[LOG] SoundI::release                          : AA Safe Room Background v2 (000002952D93C918)
+[LOG] SoundI::release                          :     AA Safe Room Background v2 (00000296D00B4428)
+[LOG] SoundI::release                          :     AA Safe Room Background v2 (00000294F0A0ABE8)
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 0000029538E6D248, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000029538E6D248
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296C0987460
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Melody Electric Guitar', format=5, channels=2, frequency=48000, lengthbytes=370496, lengthpcm=1728000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.499139.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000029538E6D248
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 0000029538E6D5A8, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000029538E6D5A8
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 49120096
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 131392
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000296C0987960
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Safe Room Background v2', format=5, channels=2, frequency=48000, lengthbytes=477472, lengthpcm=1728000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.342954.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000029538E6D5A8
+[LOG] SoundI::release                          : AA Safe Room Intro v2 (0000029538E6DE18)
+[LOG] SoundI::release                          :     AA Safe Room Intro v2 (00000296BF728098)
+[LOG] SoundI::release                          :     AA Safe Room Intro v2 (0000029536D2F3D8)
+[LOG] SystemI::mixerSuspend                    : Suspending output.
+[LOG] SystemI::mixerResume                     : Resuming output.
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 00000295308FFE48, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000295308FFE48
+[LOG] AsyncThread::add                         :     add sound to async queue : soundi = 0000029536D2F588, queue head = 0000029529D3C6B8, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000295308FFE48
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000029536D2F588
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000029536D2F588
+[LOG] SoundI::release                          : AA Safe Room Background v2 (0000029538E6D5A8)
+[LOG] SoundI::release                          :     AA Safe Room Background v2 (000002953438B8B8)
+[LOG] SoundI::release                          :     AA Safe Room Background v2 (00000295308FFE48)
+[LOG] SoundI::release                          : AA Safe Room Melody Electric Guitar (0000029538E6D248)
+[LOG] SoundI::release                          :     AA Safe Room Melody Electric Guitar (00000296BF7288B8)
+[LOG] SoundI::release                          :     AA Safe Room Melody Electric Guitar (0000029536D2F588)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
