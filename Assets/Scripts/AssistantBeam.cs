@@ -100,12 +100,18 @@ public class AssistantBeam : MonoBehaviour
 
     private void OnEnable()
     {
-        bossEvents.freezeAssistant += freezeAssistant;
+        if(bossEvents != null)
+        {
+            bossEvents.freezeAssistant += freezeAssistant;
+        }
     }
 
     private void OnDisable()
     {
-        bossEvents.freezeAssistant -= freezeAssistant;
+        if(bossEvents != null)
+        {
+            bossEvents.freezeAssistant -= freezeAssistant;
+        }
     }
 
     private void freezeAssistant(object sender, System.EventArgs e)

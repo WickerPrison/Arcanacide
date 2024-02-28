@@ -137,6 +137,7 @@ public class ElementalistController : EnemyController
         iceRipple.transform.position = transform.position + new Vector3(0, 1, 0);
         iceRipple.damage = 14;
         iceRipple.poiseDamage = 10;
+        iceRipple.enemyOfOrigin = enemyScript;
     }
 
     public IEnumerator ChaosHead()
@@ -155,6 +156,7 @@ public class ElementalistController : EnemyController
 
             chaosOrb.direction = RotateDirection(direction, angle) + chaosOrbVert;
             chaosOrb.speed = 6;
+            chaosOrb.enemyOfOrigin = enemyScript;
             angle += angleDiff;
 
             BiasProjectileHeight projectileHeight = chaosOrb.GetComponent<BiasProjectileHeight>();
