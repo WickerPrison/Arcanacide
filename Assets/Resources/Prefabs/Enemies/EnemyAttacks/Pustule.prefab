@@ -263,7 +263,6 @@ GameObject:
   - component: {fileID: 7949041218384178453}
   - component: {fileID: 5314551514031112771}
   - component: {fileID: 6177673171453795363}
-  - component: {fileID: 852653196325794931}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -336,19 +335,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &852653196325794931
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6547025491157391285}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8902613556166918536
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +412,13 @@ MonoBehaviour:
       Data4: 1065307449
     Path: event:/ContinuousIceDamage
   pulseHealRate: 10
+  pulseHealSFX:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   pulseEffect: {fileID: 464623425490404543}
   startScale: {x: 0.5, y: 0.5, z: 0.5}
   endScale: {x: 1, y: 1, z: 1}

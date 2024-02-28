@@ -70,7 +70,7 @@ public class PustuleScript : ArcProjectile
     {
         if (groundPustule) return;
         transform.position = endPoint;
-        sphereCollider.isTrigger = false;
+        //sphereCollider.isTrigger = false;
         groundPustule = true;
         pulseEffect.enabled = true;
         StartCoroutine(PustuleGrowth());
@@ -79,7 +79,7 @@ public class PustuleScript : ArcProjectile
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!groundPustule && other.CompareTag("Player"))
         {
             PlayerScript playerScript = other.GetComponent<PlayerScript>();
             playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyScript);
