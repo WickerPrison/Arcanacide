@@ -8,6 +8,7 @@ public class CollectEvidence : MonoBehaviour
     [SerializeField] GameObject message;
     [SerializeField] float interactDistance = 2;
     [SerializeField] PlayerData playerData;
+    [SerializeField] ParticleSystem wayFaerie;
     Dialogue dialogue;
     Transform player;
     InputManager im;
@@ -25,6 +26,11 @@ public class CollectEvidence : MonoBehaviour
         if (playerData.evidenceFound.Contains(evidenceName))
         {
             hasCollectedEvidence = true;
+            if(wayFaerie != null)
+            {
+                wayFaerie.Clear();
+                wayFaerie.Stop();
+            }
         }
     }
 
@@ -38,6 +44,7 @@ public class CollectEvidence : MonoBehaviour
         else if (playerData.evidenceFound.Contains(evidenceName))
         {
             hasCollectedEvidence = true;
+            if (wayFaerie != null) wayFaerie.Stop();
             message.SetActive(false);
             return;
         }
@@ -59,6 +66,7 @@ public class CollectEvidence : MonoBehaviour
         {
             playerData.evidenceFound.Add(evidenceName);
             hasCollectedEvidence = true;
+            if(wayFaerie!= null) wayFaerie.Stop();
             dialogue.StartConversation();
         }
     }

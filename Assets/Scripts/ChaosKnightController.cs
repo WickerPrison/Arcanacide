@@ -118,6 +118,7 @@ public class ChaosKnightController : EnemyController
         indicatorCircle.transform.position = transform.position;
         indicatorCircle.enabled = true;
         indicatorCircleSpeed = 6;
+        enemyScript.invincible = true;
         navAgent.enabled = false;
         streak.Play();
         jumpVFX.PlayParticleSystems();
@@ -128,6 +129,7 @@ public class ChaosKnightController : EnemyController
     public override void SpecialAbilityOff()
     {
         indicatorCircle.enabled = false;
+        enemyScript.invincible = false;
         streak.Stop();
         streak.Clear();
         landVFX.PlayParticleSystems();
@@ -156,13 +158,20 @@ public class ChaosKnightController : EnemyController
         jumpPoint.position = indicatorCircle.transform.position;
     }
 
+    public override void StartStagger(float staggerDuration)
+    {
+        if (state == EnemyState.SPECIAL) return;
+
+        base.StartStagger(staggerDuration);
+    }
+
     public override void AttackHit(int smearSpeed)
     {
         smearScript.particleSmear(smearSpeed);
         stepWithAttack.Step(0.15f);
         base.AttackHit(smearSpeed);
     }
-
+    
     void PlayerBehind()
     {
         playerDirection = transform.position - playerScript.transform.position;

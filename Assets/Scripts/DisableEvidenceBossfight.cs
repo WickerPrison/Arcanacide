@@ -6,6 +6,7 @@ public class DisableEvidenceBossfight : MonoBehaviour
 {
     [SerializeField] MapData mapData;
     [SerializeField] CollectEvidence collectEvidence;
+    [SerializeField] ParticleSystem wayFaerie;
 
     enum Boss
     {
@@ -20,9 +21,11 @@ public class DisableEvidenceBossfight : MonoBehaviour
         switch (boss)
         {
             case Boss.CAROL:
+                wayFaerie.gameObject.SetActive(mapData.electricBossKilled);
                 collectEvidence.enabled = mapData.electricBossKilled;
                 break;
             case Boss.FRANK:
+                wayFaerie.gameObject.SetActive(mapData.iceBossKilled);
                 collectEvidence.enabled = mapData.iceBossKilled; 
                 break;
         }
