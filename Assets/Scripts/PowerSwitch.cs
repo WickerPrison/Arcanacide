@@ -8,6 +8,7 @@ public class PowerSwitch : MonoBehaviour
     [SerializeField] MapData mapData;
     [SerializeField] int switchNumber;
     [SerializeField] Animator animator;
+    [SerializeField] ParticleSystem wayFaerie;
     bool hasBeenUsed = false;
     Transform player;
     InputManager im;
@@ -23,6 +24,8 @@ public class PowerSwitch : MonoBehaviour
         {
             hasBeenUsed = true;
             animator.Play("SwitchDown");
+            wayFaerie.Stop();
+            wayFaerie.Clear();
         }
     }
 
@@ -46,6 +49,7 @@ public class PowerSwitch : MonoBehaviour
         {
             hasBeenUsed = true;
             animator.Play("Handle|Pull_Down");
+            wayFaerie.Stop();
         }
     }
 

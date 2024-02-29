@@ -10,6 +10,7 @@ public class ACSwitch : MonoBehaviour
     [SerializeField] MapData mapData;
     [SerializeField] TextMeshProUGUI readout;
     [SerializeField] EventReference beep;
+    [SerializeField] ParticleSystem wayFaerie;
     bool hasBeenUsed = false;
     Transform player;
     InputManager im;
@@ -26,6 +27,8 @@ public class ACSwitch : MonoBehaviour
         {
             hasBeenUsed = true;
             readout.text = "Off";
+            wayFaerie.Stop();
+            wayFaerie.Clear();
         }
     }
 
@@ -51,6 +54,7 @@ public class ACSwitch : MonoBehaviour
             mapData.ACOn = false;
             readout.text = "Off";
             RuntimeManager.PlayOneShot(beep);
+            wayFaerie.Stop();
         }
     }
 }

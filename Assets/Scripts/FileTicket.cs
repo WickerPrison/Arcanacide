@@ -10,6 +10,7 @@ public class FileTicket : MonoBehaviour
     [SerializeField] DialogueData phoneData;
     [SerializeField] GameObject message;
     [SerializeField] TextMeshProUGUI screenText;
+    [SerializeField] ParticleSystem wayFaerie;
     string screenText1 = "File Support Ticket Here";
     string screenText2 = "Support Ticket Filed";
     Transform player;
@@ -26,6 +27,8 @@ public class FileTicket : MonoBehaviour
         if (mapData.ticketFiled)
         {
             screenText.text = screenText2;
+            wayFaerie.Stop();
+            wayFaerie.Clear();
         }
         else
         {
@@ -54,6 +57,7 @@ public class FileTicket : MonoBehaviour
             RuntimeManager.PlayOneShot(sfx, 2);
             mapData.ticketFiled = true;
             screenText.text = screenText2;
+            wayFaerie.Stop();
         }
     }
 }
