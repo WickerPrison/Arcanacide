@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 302869930174414411}
   - component: {fileID: 4621141410594037514}
+  - component: {fileID: 7912597256513075601}
   m_Layer: 0
   m_Name: Bloodstain
   m_TagString: Untagged
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 933306177
   m_SortingLayer: -1
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.654902, g: 0.09019608, b: 0.054901965, a: 1}
+  m_Sprite: {fileID: 21300000, guid: daf96348b26cc86469fdbe2ac02669b3, type: 3}
+  m_Color: {r: 0.65882355, g: 0.098039225, b: 0.0627451, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -84,3 +85,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7912597256513075601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3140207018934336523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33a7b7150542f84ba6fe6b9652d6891, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startColor: {r: 0.65882355, g: 0.09803922, b: 0.0627451, a: 1}
+  endColor: {r: 0.65882355, g: 0.09803922, b: 0.0627451, a: 0}
+  sprites:
+  - {fileID: 939417083, guid: c5b75bba36c89c44e8f293796f8adb7b, type: 3}
+  - {fileID: -1937839656, guid: c5b75bba36c89c44e8f293796f8adb7b, type: 3}
+  - {fileID: -62903448, guid: c5b75bba36c89c44e8f293796f8adb7b, type: 3}

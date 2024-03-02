@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3589778953358689778}
-  - component: {fileID: 2117762980279017714}
   - component: {fileID: 3815945878590325814}
   - component: {fileID: 9202323480412452172}
   m_Layer: 6
@@ -35,19 +34,6 @@ Transform:
   m_Father: {fileID: 1029953592555977150}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2117762980279017714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 799302394726778487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba13aed67e6e9c4409e67d98c1a9f3ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bloodstainPrefab: {fileID: 3140207018934336523, guid: d026a2f4d2bc21745ad0cec4bbec2bb1, type: 3}
 --- !u!199 &3815945878590325814
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -3927,7 +3913,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.1
     collidesWith:
       serializedVersion: 2
       m_Bits: 2147483648
@@ -3953,7 +3939,7 @@ ParticleSystem:
     subEmitters:
     - serializedVersion: 3
       emitter: {fileID: 6326540037059082878}
-      type: 1
+      type: 2
       properties: 0
       emitProbability: 1
   LightsModule:
