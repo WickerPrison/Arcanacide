@@ -16,6 +16,11 @@ Shader "TextMeshPro/Sprite"
 		_ClipRect ("Clip Rect", vector) = (-32767, -32767, 32767, 32767)
 
 		[Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
+
+		        // My Properties 
+        _OldColor ("existing color", color) = (1,1,1,1)
+        _NewColor ("desired color", color) = (1,1,1,1)
+        _Threshold ("color threshold", float) = 1
 	}
 
 	SubShader
@@ -82,6 +87,11 @@ Shader "TextMeshPro/Sprite"
 			float4 _ClipRect;
             float4 _MainTex_ST;
 
+			//My Properties
+             float4 _NewColor;
+             float4 _OldColor;
+             float _Threshold;
+
             v2f vert(appdata_t v)
 			{
 				v2f OUT;
@@ -107,8 +117,15 @@ Shader "TextMeshPro/Sprite"
 				#ifdef UNITY_UI_ALPHACLIP
 					clip (color.a - 0.001);
 				#endif
+				
+				float3 threshold = float3(_Threshold, _Threshold, _Threshold);
 
-				return color;
+				float3 diff = length(abs((normalize(color.xyz) - normalize(_OldColor.xyz)))) < length(threshold);
+
+                float3 outColor = lerp(color.xyz, _NewColor.xyz, diff);
+
+
+				return float4(outColor,1);
 			}
 		ENDCG
 		}

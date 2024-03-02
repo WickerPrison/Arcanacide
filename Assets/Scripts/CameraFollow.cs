@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -9,6 +9,7 @@ public class CameraFollow : MonoBehaviour
     public Color floorColor;
     [SerializeField] Material menuShaderMaterial;
     [SerializeField] Material gradientShaderMaterial;
+    [SerializeField] TMP_SpriteAsset[] tmpColorChangeMaterial;
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
 
@@ -22,6 +23,10 @@ public class CameraFollow : MonoBehaviour
     {
         menuShaderMaterial.SetColor("_NewColor", floorColor);
         gradientShaderMaterial.SetColor("_NewColor", floorColor);
+        for(int i = 0; i < tmpColorChangeMaterial.Length; i++)
+        {
+            tmpColorChangeMaterial[i].material.SetColor("_NewColor", floorColor);
+        }
         mapData.floorColor = floorColor;
         mapData.floor = floor;
     }

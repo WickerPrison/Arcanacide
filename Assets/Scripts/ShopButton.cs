@@ -15,7 +15,6 @@ public class ShopButton : MonoBehaviour
     public string emblemName;
     public int cost = 100;
     SoundManager sm;
-    [SerializeField] Color selectedColor;
 
     public void ShopButtonPressed()
     {
@@ -43,7 +42,7 @@ public class ShopButton : MonoBehaviour
     {
         if(EventSystem.current.currentSelectedGameObject == gameObject)
         {
-            emblemNameText.color = selectedColor;
+            emblemNameText.color = mapData.floorColor;
             descriptionText.text = emblemLibrary.GetDescription(emblemName);
             if (playerData.emblems.Contains(emblemName))
             {
