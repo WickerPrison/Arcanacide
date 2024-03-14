@@ -132,6 +132,35 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-8529763554846556332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 4/LEVEL 4 MUSICSTATE
+  m_EditorClassIdentifier: 
+  Name: LEVEL 4 MUSICSTATE
+  StudioPath: 
+  Min: 0
+  Max: 4
+  Default: 0
+  ID:
+    data1: 185672943
+    data2: 3092953252
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - MAIN LOOP
+  - BOSS DIALOGUE
+  - BOSS MUSIC
+  - BOSS VICTORY
+  - DEATH
+  Exists: 1
 --- !u!114 &-8124527320677186259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,6 +408,35 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 307212
+--- !u!114 &-4511871538281814774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Level 4
+  m_EditorClassIdentifier: 
+  Path: event:/Level 4
+  Guid:
+    Data1: -2036288269
+    Data2: 1152651410
+    Data3: -407359337
+    Data4: -1039313894
+  Banks:
+  - {fileID: 403290344975673266}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 6568141678512310196}
+  - {fileID: -8529763554846556332}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 360466
 --- !u!114 &-4447610704675230375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,12 +751,13 @@ MonoBehaviour:
   - {fileID: 8449403469473530489}
   - {fileID: -4364330998361134926}
   - {fileID: -4873150418279071678}
+  - {fileID: -4511871538281814774}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7341476850067345480}
   StringsBanks:
   - {fileID: 303446170087587247}
-  cacheTime: 638423120397391187
+  cacheTime: 638460028266431879
   cacheVersion: 131607
 --- !u!114 &303446170087587247
 MonoBehaviour:
@@ -715,10 +774,10 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638423120371708906
+  lastModified: 638460028224894100
   FileSizes:
   - Name: 
-    Value: 3558
+    Value: 3634
   Exists: 1
 --- !u!114 &403290344975673266
 MonoBehaviour:
@@ -735,7 +794,7 @@ MonoBehaviour:
   Path: Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638423120397391187
+  lastModified: 638460028266431879
   FileSizes: []
   Exists: 1
 --- !u!114 &544739374651348960
@@ -1107,10 +1166,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/Level 2
   Guid:
-    Data1: -457311608
-    Data2: 1133597920
-    Data3: 1529029806
-    Data4: 2065057193
+    Data1: 2061964091
+    Data2: 1230802627
+    Data3: 2099884209
+    Data4: -1285968193
   Banks:
   - {fileID: 403290344975673266}
   IsStream: 1
@@ -1377,6 +1436,30 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &6568141678512310196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level 4/BOSS HEALTH
+  m_EditorClassIdentifier: 
+  Name: BOSS HEALTH
+  StudioPath: 
+  Min: 0
+  Max: 100
+  Default: 100
+  ID:
+    data1: 2649702746
+    data2: 83699355
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &6648703198864062715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1578,7 +1661,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638423120371656396
+  lastModified: 638460028224790470
   FileSizes: []
   Exists: 1
 --- !u!114 &7461850975316340935

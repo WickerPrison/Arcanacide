@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum Music
 {
-    NONE, MAINTITLES, MAINMENU, PEACEFUL, LEVEL1, ELECTRICBOSS, ICEBOSS, LEVEL2, LEVEL3
+    NONE, MAINTITLES, MAINMENU, PEACEFUL, LEVEL1, ELECTRICBOSS, ICEBOSS, LEVEL2, LEVEL3, LEVEL4
 }
 
 public enum MusicState
@@ -36,7 +36,8 @@ public class MusicPlayer : MonoBehaviour
             {Music.ICEBOSS, fmodEvents[4]},
             {Music.LEVEL2, fmodEvents[5]},
             {Music.LEVEL3, fmodEvents[6] },
-            {Music.MAINMENU, fmodEvents[7] }
+            {Music.MAINMENU, fmodEvents[7] },
+            {Music.LEVEL4, fmodEvents[8] }
         };
 
         parameterNameDict = new Dictionary<Music, string>()
@@ -44,6 +45,7 @@ public class MusicPlayer : MonoBehaviour
             { Music.LEVEL1, "LEVEL 1 MUSICSTATE" },
             {Music.LEVEL2, "LEVEL 2 MUSICSTATE" },
             {Music.LEVEL3, "LEVEL 3 MUSICSTATE" },
+            {Music.LEVEL4, "LEVEL 4 MUSICSTATE" },
             { Music.MAINTITLES, "MAIN TITLES MUSICSTATE" },
             {Music.PEACEFUL, "peacful" },
             {Music.MAINMENU, "MAIN MENU MUSICSTATE" }

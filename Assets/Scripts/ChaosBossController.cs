@@ -15,6 +15,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
     [System.NonSerialized] public int phase = 1;
     float phaseTriggerPercent = 1.1f;
     float phaseTrigger;
+    MusicManager musicManager;
 
     public override void Awake()
     {
@@ -25,6 +26,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
     public override void Start()
     {
         base.Start();
+        musicManager = gm.GetComponent<MusicManager>();
         ChooseRandomPoint();
         facePlayer = GetComponent<FacePlayer>();
         facePlayer.SetDestination(new Vector3(7, 0, -9));
@@ -108,6 +110,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         backAnimator.Play("Idle");
         RunAway();
         bossEvents.EndDialogue();
+        musicManager.ChangeMusicState(MusicState.BOSSMUSIC);
     }
 
     public override void StartDying()
@@ -115,6 +118,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         enemyScript.invincible = true;
         enemyScript.health = 1;
         bossEvents.FreezeAssistant();
+        GlobalEvents.instance.BossKilled();
         GetComponent<FinalDialogue>().StartConversation();
         frontAnimator.Play("StartDying");
         backAnimator.Play("StartDying");   
