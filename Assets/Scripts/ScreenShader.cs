@@ -45,8 +45,7 @@ public class ScreenShader : MonoBehaviour
             m_renderMaterial.SetFloat("_DissolveProg", dissolveProgression);
             yield return endOfFrame;
         }
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Credits");
     }
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)

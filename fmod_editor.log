@@ -4,186 +4,27 @@
 [LOG] SystemI::setOutputInternal               : Setting output to 'FMOD WASAPI Output'
 [LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=8, nSamplesPerSec=48000, nAvgBytesPerSec=1536000, nBlockAlign=32, wBitsPerSample=32, cbSize=22.
 [LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x0000063F, SubFormat=00000003-0000-0010-8000-00AA00389B71.
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001FE6C2345E8, queue head = 000001FDEB8C91E8, queue count = 0
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001FE6C234798, queue head = 000001FDEB8C91E8, queue count = 1
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FE6C2345E8
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FE6C2345E8
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FE6C234798
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FE6C234798
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] DownMix::init                            : dspbuffersize: 1024  rate: 48000. output speaker mode: 7, input speaker mode 3
 [LOG] DownMix::init                            : done.
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 000001FF92824CF8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000002750CE08858 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 496256
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 42560
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000ACE27FEEB8
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFAE00B3E90
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFAE00B3E50
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFAE00B3F70
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFAE00B4030
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000001FF926A5988
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='SwordSwoosh', format=5, channels=1, frequency=48000, lengthbytes=3136, lengthpcm=16575, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.094696.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 496256
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 42560
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000ACE27FEEB8
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFAE00B3E90
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFAE00B3E50
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFAE00B3F70
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFAE00B4030
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000001FF926A7038
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Footstep1', format=5, channels=1, frequency=48000, lengthbytes=768, lengthpcm=3475, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.179932.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 496256
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 42560
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000ACE27FEEB8
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFAE00B3E90
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFAE00B3E50
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFAE00B3F70
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFAE00B4030
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000001FF926A5B98
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='ElectricZap', format=5, channels=1, frequency=48000, lengthbytes=7008, lengthpcm=35763, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
-[LOG] SoundI::release                          : AA Level 2 Intro+Loop A (000001FFB82FCC48)
-[LOG] SoundI::release                          :     AA Level 2 Intro+Loop A (000001FE6884AB58)
-[LOG] SoundI::release                          :     AA Level 2 Intro+Loop A (000001FE6C2345E8)
-[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001FE690C7C78, queue head = 000001FDEB8C91E8, queue count = 0
-[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001FE6FD97918, queue head = 000001FDEB8C91E8, queue count = 1
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FE690C7C78
-[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 55207808
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 156576
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000001FE750D7D20
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Level 2 Boss Loop A', format=5, channels=2, frequency=48000, lengthbytes=481824, lengthpcm=1982118, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.881049.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FE690C7C78
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FE6FD97918
-[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 55207808
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 156576
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000001FE750D80E0
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Level 2 Boss Loop A only cello', format=5, channels=2, frequency=48000, lengthbytes=487712, lengthpcm=1982118, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.237140.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FE6FD97918
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001FF92879418, queue head = 000001FDEB8C91E8, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FF92879418
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FF92879418
-[LOG] SoundI::release                          : AA Level 2 Post Battle (000001FFB82FC3D8)
-[LOG] SoundI::release                          :     AA Level 2 Post Battle (000001FE6884A338)
-[LOG] SoundI::release                          :     AA Level 2 Post Battle (000001FE6C234798)
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001FF928795C8, queue head = 000001FDEB8C91E8, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FF928795C8
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FF928795C8
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 496256
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 42560
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000ACE27FEEB8
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFAE00B3E90
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFAE00B3E50
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFAE00B3F70
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFAE00B4030
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000001FF926A7038
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='SwordImpact', format=5, channels=1, frequency=48000, lengthbytes=3296, lengthpcm=17619, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.565643.
-[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001FFBB8FFC78, queue head = 000001FDEB8C91E8, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FFBB8FFC78
-[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 55207808
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 156576
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000001FE65C4D350
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Level 2 Boss Victory', format=5, channels=2, frequency=48000, lengthbytes=133664, lengthpcm=550589, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.804771.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FFBB8FFC78
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 000001FE6C234E58, queue head = 000001FDEB8C91E8, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FE6C234E58
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FE6C234E58
-[LOG] SoundI::release                          : AA Level 2 Boss Loop A only cello (000001FE6FD97918)
-[LOG] SoundI::release                          :     AA Level 2 Boss Loop A only cello (000001FE6A31F1A8)
-[LOG] SoundI::release                          :     AA Level 2 Boss Loop A only cello (000001FF928795C8)
-[LOG] SoundI::release                          : AA Level 2 Boss Loop A (000001FE690C7C78)
-[LOG] SoundI::release                          :     AA Level 2 Boss Loop A (000001FE6A31F008)
-[LOG] SoundI::release                          :     AA Level 2 Boss Loop A (000001FF92879418)
-[LOG] SoundI::release                          : AA Level 2 Boss Victory (000001FFBB8FFC78)
-[LOG] SoundI::release                          :     AA Level 2 Boss Victory (000001FE68849158)
-[LOG] SoundI::release                          :     AA Level 2 Boss Victory (000001FE6C234E58)
-[LOG] SoundI::release                          :  (000001FF6719C048)
-[LOG] SoundI::release                          :     Footstep1 (000001FF3FB7AC68)
-[LOG] SoundI::release                          :  (000001FF6719C1B8)
-[LOG] SoundI::release                          :     ElectricZap (000001FFBBC07098)
-[LOG] SoundI::release                          :  (000001FF6719B918)
-[LOG] SoundI::release                          :     SwordSwoosh (000001FF3FB7A928)
-[LOG] SoundI::release                          :  (000001FF6719C498)
-[LOG] SoundI::release                          :     SwordImpact (000001FFBBC07238)
-[LOG] SoundI::release                          :  (000001FF6719B358)
-[LOG] SoundI::release                          :     Death Stinger (000001FC8AC0AE48)
-[LOG] SoundI::release                          :  (000001FF6719D468)
-[LOG] SoundI::release                          :     AA Whisper Scatter 1 (000001FC8AD62A48)
-[LOG] SoundI::release                          :  (000001FF6719BA88)
-[LOG] SoundI::release                          :     AA Whisper Scatter 2 (000001FC8ABF2FE8)
-[LOG] SoundI::release                          :  (000001FF6719EB68)
-[LOG] SoundI::release                          :     AA Whisper Scatter 3 (000001FC8ABF3668)
-[LOG] SoundI::release                          :  (000001FF6719E9F8)
-[LOG] SoundI::release                          :     AA Whisper Scatter 4 (000001FE608C8D38)
-[LOG] SoundI::release                          :  (000001FF67199698)
-[LOG] SoundI::release                          :     AA Level 3 Boss Transition (000001FC8AD62F28)
-[LOG] SoundI::release                          :  (000001FF6719AF08)
-[LOG] SoundI::release                          :     Wooshy Voice (000001FE608C8858)
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
+[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
 [LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] SystemI::close                           : Closed.
