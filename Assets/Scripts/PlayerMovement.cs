@@ -140,6 +140,8 @@ public class PlayerMovement : MonoBehaviour
             }
 
             playerScript.LoseStamina(staminaCost);
+            isDashing = true;
+            gameObject.layer = 8;
             playerAnimation.PlayAnimation("Dash");
             playerSound.PlaySoundEffect(PlayerSFX.DODGE, 0.5f);
         }

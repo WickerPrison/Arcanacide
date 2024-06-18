@@ -148,8 +148,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     //behaves the same as the player layer
     public void StartIFrames()
     {
-        playerMovement.isDashing = true;
-        playerMovement.gameObject.layer = 8;
+        // the isDashing = true and setting layer to 8 has been moved to the Dodge function in PlayerScript due to script execution order problems
         if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
         {
             patchEffects.StartArcaneStep();
