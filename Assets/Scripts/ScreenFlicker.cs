@@ -11,13 +11,13 @@ public class ScreenFlicker : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        float rand = Random.Range(0, 2);
-        if(rand == 0) spriteRenderer.enabled = false;
-        SetFlicker();
-    }
+    //void Start()
+    //{
+    //    spriteRenderer = GetComponent<SpriteRenderer>();
+    //    float rand = Random.Range(0, 2);
+    //    if(rand == 0) spriteRenderer.enabled = false;
+    //    SetFlicker();
+    //}
 
     void SetFlicker()
     {
@@ -34,6 +34,14 @@ public class ScreenFlicker : MonoBehaviour
             yield return flickerTime;
             spriteRenderer.enabled = !spriteRenderer.enabled;
         }
+        SetFlicker();
+    }
+
+    private void OnEnable()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        float rand = Random.Range(0, 2);
+        if (rand == 0) spriteRenderer.enabled = false;
         SetFlicker();
     }
 }

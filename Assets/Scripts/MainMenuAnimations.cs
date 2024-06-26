@@ -7,6 +7,7 @@ public class MainMenuAnimations : MonoBehaviour
 {
     [SerializeField] Transform door;
     [SerializeField] ParticleSystem particles;
+    [SerializeField] GameObject[] backgrounds;
     float closedPos = -2.95f;
     float openPos = 8.76f;
     bool doorClosed = false;
@@ -17,6 +18,7 @@ public class MainMenuAnimations : MonoBehaviour
     private void Start()
     {
         door.localPosition = new Vector3(openPos, 0, 0);
+        ChooseBackground();
         StartCoroutine(DoorWait(3));
     }
 
@@ -26,6 +28,7 @@ public class MainMenuAnimations : MonoBehaviour
         yield return new WaitForSeconds(wait);
         if(doorClosed)
         {
+            ChooseBackground();
             StartCoroutine(OpenCloseDoor(openPos));
         }
         else
@@ -61,5 +64,15 @@ public class MainMenuAnimations : MonoBehaviour
         {
             particles.Stop();
         }
+    }
+
+    void ChooseBackground()
+    {
+        int randInt = Random.Range(0, backgrounds.Length);
+        foreach(GameObject background in backgrounds)
+        {
+            background.SetActive(false);
+        }
+        backgrounds[randInt].SetActive(true);
     }
 }
