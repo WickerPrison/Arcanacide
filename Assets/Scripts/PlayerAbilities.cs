@@ -78,7 +78,7 @@ public class PlayerAbilities : MonoBehaviour
         playerSound = GetComponentInChildren<PlayerSound>();;
         rb = GetComponent<Rigidbody>();
 
-        if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(1);
+        if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(0);
 
         SetupControls();
     }
