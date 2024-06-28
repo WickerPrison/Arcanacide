@@ -51,7 +51,7 @@ public class TotemAnimationEvents : MonoBehaviour
                     enemyScript.LoseHealth(damage, poiseDamage);
                     enemyScript.StartStagger(axeSpecial.staggerDuration);
                 }
-                else if (collider.gameObject.CompareTag("Player"))
+                else if (collider.gameObject.CompareTag("Player") && false)
                 {
                     PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
                     playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);

@@ -6,13 +6,12 @@ using UnityEngine;
 public class WaveBox : MonoBehaviour
 {
     [SerializeField] float maxAudioDistance;
-    [SerializeField] EventReference playerImpactSFX;
-    [SerializeField] float playerImpactVolume = 0.8f;
-    [SerializeField] EventReference impactSFX;
-    [SerializeField] float impactVolume = 0.8f;
+    public EventReference playerImpactSFX;
+    public float playerImpactVolume = 0.8f;
+    public EventReference impactSFX;
+    public float impactVolume = 0.8f;
     public int damage;
     public float poiseDamage;
-    [SerializeField] bool canHurtEnemies = false;
     FireWave fireWave;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
     [SerializeField] bool sound3D = false;
@@ -27,7 +26,7 @@ public class WaveBox : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -47,13 +46,6 @@ public class WaveBox : MonoBehaviour
                 playerScript.PerfectDodge(EnemyAttackType.PROJECTILE, enemyOfOrigin, gameObject);
             }
         }
-        else if(canHurtEnemies && other.gameObject.CompareTag("Enemy"))
-        {
-            EnemyScript enemyScript = other.gameObject.GetComponent<EnemyScript>();
-            enemyScript.LoseHealth(damage, poiseDamage);
-            PlaySound(playerImpactSFX, playerImpactVolume);
-            Destroy(gameObject);
-        }
         else
         {
             if(fireWave!= null)
@@ -65,7 +57,7 @@ public class WaveBox : MonoBehaviour
         }
     }
 
-    void PlaySound(EventReference sound, float volume)
+    public void PlaySound(EventReference sound, float volume)
     {
         if (sound3D)
         {
