@@ -663,6 +663,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""b520bf03-d042-46ec-96a9-7e8b6ddbc8ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""e681984e-e649-4b3a-97f6-3b7263231fd4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -874,6 +892,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""MenuClaws"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c9f849e-2968-4c9b-a5f9-317ec9c64246"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5de8094-ddb1-44ee-9e7d-6ac4212459e7"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc3d7fe2-7c85-4ec7-9b77-d3a37a0445db"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ce0d3ebe-1b7b-4f0c-bd02-96be714bce33"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -978,6 +1040,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Menu_MenuLantern = m_Menu.FindAction("MenuLantern", throwIfNotFound: true);
         m_Menu_MenuKnife = m_Menu.FindAction("MenuKnife", throwIfNotFound: true);
         m_Menu_MenuClaws = m_Menu.FindAction("MenuClaws", throwIfNotFound: true);
+        m_Menu_MenuRight = m_Menu.FindAction("MenuRight", throwIfNotFound: true);
+        m_Menu_MenuLeft = m_Menu.FindAction("MenuLeft", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_Next = m_Dialogue.FindAction("Next", throwIfNotFound: true);
@@ -1234,6 +1298,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menu_MenuLantern;
     private readonly InputAction m_Menu_MenuKnife;
     private readonly InputAction m_Menu_MenuClaws;
+    private readonly InputAction m_Menu_MenuRight;
+    private readonly InputAction m_Menu_MenuLeft;
     public struct MenuActions
     {
         private @PlayerControls m_Wrapper;
@@ -1246,6 +1312,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @MenuLantern => m_Wrapper.m_Menu_MenuLantern;
         public InputAction @MenuKnife => m_Wrapper.m_Menu_MenuKnife;
         public InputAction @MenuClaws => m_Wrapper.m_Menu_MenuClaws;
+        public InputAction @MenuRight => m_Wrapper.m_Menu_MenuRight;
+        public InputAction @MenuLeft => m_Wrapper.m_Menu_MenuLeft;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1279,6 +1347,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @MenuClaws.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuClaws;
                 @MenuClaws.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuClaws;
                 @MenuClaws.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuClaws;
+                @MenuRight.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuRight;
+                @MenuRight.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuRight;
+                @MenuRight.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuRight;
+                @MenuLeft.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuLeft;
+                @MenuLeft.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuLeft;
+                @MenuLeft.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuLeft;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -1307,6 +1381,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @MenuClaws.started += instance.OnMenuClaws;
                 @MenuClaws.performed += instance.OnMenuClaws;
                 @MenuClaws.canceled += instance.OnMenuClaws;
+                @MenuRight.started += instance.OnMenuRight;
+                @MenuRight.performed += instance.OnMenuRight;
+                @MenuRight.canceled += instance.OnMenuRight;
+                @MenuLeft.started += instance.OnMenuLeft;
+                @MenuLeft.performed += instance.OnMenuLeft;
+                @MenuLeft.canceled += instance.OnMenuLeft;
             }
         }
     }
@@ -1395,6 +1475,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMenuLantern(InputAction.CallbackContext context);
         void OnMenuKnife(InputAction.CallbackContext context);
         void OnMenuClaws(InputAction.CallbackContext context);
+        void OnMenuRight(InputAction.CallbackContext context);
+        void OnMenuLeft(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {

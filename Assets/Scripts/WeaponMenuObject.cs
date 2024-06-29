@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
 
 public class WeaponMenuObject : MonoBehaviour
 {
@@ -8,7 +11,6 @@ public class WeaponMenuObject : MonoBehaviour
     [SerializeField] Vector3 awayPosition;
     [SerializeField] Vector3 selectedPosition;
     WeaponMenu weaponMenu;
-    float timer;
     float ratio;
 
     // Start is called before the first frame update
@@ -23,24 +25,25 @@ public class WeaponMenuObject : MonoBehaviour
         StopAllCoroutines();
         if(weaponMenu.weaponSelected == weapon)
         {
-            StartCoroutine(MoveObject(selectedPosition, currentPosition));
+            StartCoroutine(MoveObject(transform, selectedPosition, currentPosition, weaponMenu.transitionTime));
         }
         else
         {
-            StartCoroutine(MoveObject(awayPosition, currentPosition));
+            StartCoroutine(MoveObject(transform, awayPosition, currentPosition, weaponMenu.transitionTime));
         }
     }
 
-    IEnumerator MoveObject(Vector3 destination, Vector3 currentPosition)
+    IEnumerator MoveObject(Transform objectTransform, Vector3 destination, Vector3 currentPosition, float time)
     {
-        timer = weaponMenu.transitionTime;
+        float timer = time;
         while(timer > 0)
         {
             timer -= Time.unscaledDeltaTime;
-            ratio = timer / weaponMenu.transitionTime;
-            transform.localPosition = Vector3.Lerp(destination, currentPosition, ratio);
+            ratio = timer / time;
+            objectTransform.localPosition = Vector3.Lerp(destination, currentPosition, ratio);
             yield return new WaitForEndOfFrame();
         }
+        objectTransform.localPosition = destination;
     }
 
     private void OnEnable()
