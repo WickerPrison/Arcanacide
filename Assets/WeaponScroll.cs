@@ -14,12 +14,14 @@ public class WeaponScroll : MonoBehaviour
     [SerializeField] List<RectTransform> bodies;
     [SerializeField] int titleSpacing = 200;
     [SerializeField] int bodySpacing = 600;
+    [SerializeField] PlayerData playerData;
     WeaponMenu weaponMenu;
     InputManager im;
     int position = 0;
     float ratio;
     float smallerScale = 0.7f;
     float scrollTime = 0.5f;
+    int maxPosition = 3;
 
     void Awake()
     {
@@ -62,6 +64,11 @@ public class WeaponScroll : MonoBehaviour
                 titles[i].localScale = Vector3.one * smallerScale;
             }
         }
+
+        if(!playerData.unlockedAbilities.Contains("Special Attack"))
+        {
+            bodies[bodies.Count - 1].GetComponent<TextMeshProUGUI>().text = "You have not unlocked Special Attacks.";
+        }
     }
 
 
@@ -97,7 +104,7 @@ public class WeaponScroll : MonoBehaviour
 
         bool canScroll;
         if (direction == -1) canScroll = position > 0;
-        else canScroll = position < 3;
+        else canScroll = position < maxPosition;
 
         if (canScroll)
         {
