@@ -17,6 +17,7 @@ public class HUD : MonoBehaviour
     [SerializeField] TextMeshProUGUI healCounter;
     [SerializeField] Material youDiedTextMaterial;
     [SerializeField] GameObject map;
+    [SerializeField] ScreenMessage maxManaMessage;
     public List<Sprite> gemSprites = new List<Sprite>();
     [SerializeField] Sprite unbrokenGem;
     public Image gemImage;
@@ -106,5 +107,10 @@ public class HUD : MonoBehaviour
         }
 
         mapOpen = !mapOpen;
+    }
+
+    public void MaxManaIncreased()
+    {
+        maxManaMessage.ShowMessage();
     }
 }

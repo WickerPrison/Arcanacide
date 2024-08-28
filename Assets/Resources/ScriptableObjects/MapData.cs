@@ -18,7 +18,7 @@ public class MapData : ScriptableObject
 
     public int currentRoom;
 
-    public List<int> usedAltars;
+    public List<int> usedCoolers;
 
     public List<int> powerSwitchesFlipped;
 
@@ -43,7 +43,7 @@ public class MapData : ScriptableObject
         doorNumber = 0;
         deadEnemies.Clear();
         unlockedDoors.Clear();
-        usedAltars.Clear();
+        usedCoolers.Clear();
         fireBossKilled = false;
     }
 }

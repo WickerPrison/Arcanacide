@@ -257,7 +257,6 @@ public class PlayerScript : MonoBehaviour
         }
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();
-        mapData.usedAltars.Clear();
         mapData.deathPosition = transform.position;
         gm.SaveGame();
         string sceneName = gm.GetSceneName(playerData.lastSwordSite);

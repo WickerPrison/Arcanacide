@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AltarScript : MonoBehaviour
+public class WaterCoolerScript : MonoBehaviour
 {
-    [SerializeField] int altarID;
+    [SerializeField] int coolerID;
     [SerializeField] GameObject message;
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
     [SerializeField] Transform water;
+    HUD hud;
     bool hasBeenUsed = false;
     Transform player;
-    PlayerHealth playerHealth;
     InputManager im;
     //TutorialManager tutorialManager;
     float playerDistance = 100;
@@ -24,8 +24,8 @@ public class AltarScript : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => Charge();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerHealth = player.GetComponent<PlayerHealth>();
-        if (mapData.usedAltars.Contains(altarID))
+        hud = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<HUD>();
+        if (mapData.usedCoolers.Contains(coolerID))
         {
             hasBeenUsed = true;
             SetWaterHeight(0);
@@ -58,16 +58,12 @@ public class AltarScript : MonoBehaviour
 
     void Charge()
     {
-        if(playerData.health == playerData.MaxHealth())
-        {
-            return;
-        }
-
         if(playerDistance <= interactDistance && !hasBeenUsed)
         {
-            playerHealth.MaxHeal();
+            playerData.maxMana += 25;
             hasBeenUsed = true;
-            mapData.usedAltars.Add(altarID);
+            mapData.usedCoolers.Add(coolerID);
+            hud.MaxManaIncreased();
         }
     }
 

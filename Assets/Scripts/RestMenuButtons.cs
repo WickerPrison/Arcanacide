@@ -117,7 +117,6 @@ public class RestMenuButtons : MonoBehaviour
         playerData.lastSwordSite = altarNumber;
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();
-        mapData.usedAltars.Clear();
         playerScript.Rest();
     }
 
