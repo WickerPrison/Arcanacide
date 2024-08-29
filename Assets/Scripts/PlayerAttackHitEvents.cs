@@ -118,4 +118,9 @@ public class PlayerAttackHitEvents : MonoBehaviour
     {
         smear.particleSmear(attackProfile);
     }
+
+    public void Step(float duration)
+    {
+        stepWithAttack.Step(duration);
+    }
 }
