@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
@@ -132,9 +133,17 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
-    public int DetermineAttackDamage(AttackProfiles attackProfile)
+    public int DetermineAttackDamage(AttackProfiles attackProfile, float chargeDecimal = 0)
     {
         int physicalDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * attackProfile.damageMultiplier);
+        if (chargeDecimal >= 1)
+        {
+            physicalDamage += Mathf.RoundToInt(playerData.PhysicalDamage() * attackProfile.chargeDamage * (chargeDecimal + attackProfile.fullChargeDamage));
+        }
+        else if(chargeDecimal > 0) 
+        {
+            physicalDamage += Mathf.RoundToInt(playerData.PhysicalDamage() * attackProfile.chargeDamage * chargeDecimal);
+        }
         physicalDamage = patchEffects.PhysicalDamageModifiers(physicalDamage);
 
         int arcaneDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
@@ -282,6 +291,7 @@ public class PlayerAbilities : MonoBehaviour
             heavyAttackActive = true;
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = playerData.currentWeapon != 3;
+            if (playerData.currentWeapon == 0) playerAnimation.SetBool("chargeHeavy", true);
             playerAnimation.PlayAnimation("HeavyAttack");
         }
     }
@@ -291,6 +301,10 @@ public class PlayerAbilities : MonoBehaviour
         if (playerData.currentWeapon == 3 && heavyAttackActive)
         {
             playerAnimation.PlayAnimation("EndHeavyAttack");
+        }
+        else if(playerData.currentWeapon == 0)
+        {
+            playerAnimation.SetBool("chargeHeavy", false);
         }
 
         heavyAttackActive = false;

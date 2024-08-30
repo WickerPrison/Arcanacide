@@ -154,6 +154,12 @@ public class PlayerAnimation : MonoBehaviour
         backAnimator.SetBool("Combo", false);
     }
 
+    public void SetBool(string name, bool value)
+    {
+        frontAnimator.SetBool(name, value);
+        backAnimator.SetBool(name, value);
+    }
+
     public void StartBodyMagic()
     {
         bodyMagicSources += 1;

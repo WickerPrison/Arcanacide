@@ -22,6 +22,10 @@ public class PlayerAttackHitEvents : MonoBehaviour
     CameraFollow cameraScript;
     PlayerAttackArc attackArc;
 
+    bool charging = false;
+    float chargeTimer;
+    float chargeDecimal;
+
     private void Start()
     {
         playerScript = GetComponentInParent<PlayerScript>();
@@ -34,6 +38,14 @@ public class PlayerAttackHitEvents : MonoBehaviour
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         smear = transform.parent.GetComponentInChildren<PlayerSmear>();
         attackArc = playerMovement.attackPoint.gameObject.GetComponent<PlayerAttackArc>();
+    }
+
+    private void Update()
+    {
+        if (charging)
+        {
+            chargeTimer += Time.deltaTime;
+        }
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
@@ -55,7 +67,17 @@ public class PlayerAttackHitEvents : MonoBehaviour
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeNoHit.x, attackProfile.screenShakeNoHit.y));
         }
 
-        int attackDamage = playerAbilities.DetermineAttackDamage(attackProfile);
+        int attackDamage;
+        if(attackProfile.chargeDamage > 0)
+        {
+            attackDamage = playerAbilities.DetermineAttackDamage(attackProfile, chargeDecimal);
+        }
+        else
+        {
+            attackDamage = playerAbilities.DetermineAttackDamage(attackProfile);
+        }
+
+        Debug.Log(attackDamage);
 
         switch (attackProfile.hitboxType)
         {
@@ -122,5 +144,23 @@ public class PlayerAttackHitEvents : MonoBehaviour
     public void Step(float duration)
     {
         stepWithAttack.Step(duration);
+    }
+
+    public void StartCharge()
+    {
+        chargeTimer = 0;
+        charging = true;
+    }
+
+    public void EndCharge(float chargeTime)
+    {
+        if(chargeTimer > chargeTime)
+        {
+            chargeDecimal = 1;
+        }
+        else
+        {
+            chargeDecimal = chargeTimer / chargeTime;
+        }
     }
 }
