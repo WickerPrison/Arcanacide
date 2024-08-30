@@ -77,7 +77,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
             attackDamage = playerAbilities.DetermineAttackDamage(attackProfile);
         }
 
-        Debug.Log(attackDamage);
+        Debug.Log("AttackHit: " + chargeDecimal.ToString());
 
         switch (attackProfile.hitboxType)
         {
@@ -162,5 +162,6 @@ public class PlayerAttackHitEvents : MonoBehaviour
         {
             chargeDecimal = chargeTimer / chargeTime;
         }
+        Debug.Log("EndCharge: " +  chargeDecimal.ToString());
     }
 }
