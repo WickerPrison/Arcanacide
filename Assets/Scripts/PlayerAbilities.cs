@@ -303,7 +303,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             playerAnimation.PlayAnimation("EndHeavyAttack");
         }
-        else if(playerData.currentWeapon == 0)
+        else if(playerData.currentWeapon == 0 && heavyAttackActive)
         {
             bool fullyCharged = playerAnimation.EndSwordHeavy() >= 1;
             if(fullyCharged)
