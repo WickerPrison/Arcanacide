@@ -22,6 +22,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
     [SerializeField] Transform attackPoint;
+    [SerializeField] GameObject swordProjectilePrefab;
 
     //player scripts
     PlayerMovement playerMovement;
@@ -304,6 +305,14 @@ public class PlayerAbilities : MonoBehaviour
         }
         else if(playerData.currentWeapon == 0)
         {
+            bool fullyCharged = playerAnimation.EndSwordHeavy() >= 1;
+            if(fullyCharged)
+            {
+                SlashProjectile swordProectile = Instantiate(swordProjectilePrefab).GetComponent<SlashProjectile>();
+                swordProectile.transform.position = transform.position + new Vector3(0, 1, 0);
+                swordProectile.direction = Vector3.Normalize(attackPoint.position - transform.position);
+                swordProectile.playerAbilities = this;
+            }
             playerAnimation.SetBool("chargeHeavy", false);
         }
 

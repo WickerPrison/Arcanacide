@@ -146,13 +146,22 @@ public class PlayerAttackHitEvents : MonoBehaviour
         stepWithAttack.Step(duration);
     }
 
+    public void SetChargeTimer(float value)
+    {
+        chargeTimer = value;
+    }
+
     public void StartCharge()
     {
-        chargeTimer = 0;
         charging = true;
     }
 
-    public void EndCharge(float chargeTime)
+    public void ChargeFalse()
+    {
+        charging = false;
+    }
+
+    public float EndCharge(float chargeTime)
     {
         if(chargeTimer > chargeTime)
         {
@@ -163,5 +172,6 @@ public class PlayerAttackHitEvents : MonoBehaviour
             chargeDecimal = chargeTimer / chargeTime;
         }
         Debug.Log("EndCharge: " +  chargeDecimal.ToString());
+        return chargeDecimal;
     }
 }

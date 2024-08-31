@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitboxType: Arc
   attackType: 1
-  smearSpeed: 0
+  smearSpeed: 5
   stepWithAttack: 0.15
   halfConeAngle: 65
   attackRange: 2
   damageMultiplier: 1
   chargeDamage: 0.6
-  fullChargeDamage: 0.4
+  fullChargeDamage: 0
   magicDamageMultiplier: 0
   poiseDamageMultiplier: 2
   staminaCost: 40
@@ -46,6 +46,18 @@ MonoBehaviour:
       Data4: -263120505
     Path: event:/SwordSwoosh
   soundNoHitVolume: 1.2
-  smearPositions: []
-  smearRotations: []
-  smearScales: []
+  smearPositions:
+  - {x: -0.2, y: 0, z: 0.3}
+  - {x: 0.2, y: 0, z: 0.3}
+  - {x: -0.5, y: 0, z: 0.3}
+  - {x: 0.5, y: 0, z: 0.3}
+  smearRotations:
+  - {x: 90, y: -75, z: 0}
+  - {x: 90, y: 75, z: 0}
+  - {x: 90, y: 30, z: 0}
+  - {x: 90, y: -30, z: 0}
+  smearScales:
+  - {x: -1.5, y: -1.5, z: 1}
+  - {x: 1.5, y: -1.5, z: 1}
+  - {x: 1.5, y: 1.5, z: 1}
+  - {x: -1.5, y: 1.5, z: 1}
