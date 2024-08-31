@@ -304,6 +304,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         icePoof.Play();   
     }
 
+    public void MaxCharge()
+    {
+        playerEvents.SwordHeavyFullCharge();
+    }
+
     public void Backstep(int num)
     {
         playerMovement.LockAttackPoint();

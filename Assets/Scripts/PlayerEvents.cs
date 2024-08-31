@@ -22,6 +22,7 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onStartMirrorCloak;
     public event EventHandler onEndMirrorCloak;
     public event EventHandler onMeleeParry;
+    public event EventHandler onSwordHeavyFullCharge;
 
     public void DashStart()
     {
@@ -97,5 +98,10 @@ public class PlayerEvents : MonoBehaviour
     public void MeleeParry()
     {
         onMeleeParry?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void SwordHeavyFullCharge()
+    {
+        onSwordHeavyFullCharge?.Invoke(this, EventArgs.Empty);
     }
 }
