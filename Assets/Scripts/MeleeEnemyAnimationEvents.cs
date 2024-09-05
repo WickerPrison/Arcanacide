@@ -135,4 +135,9 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
     {
         enemySound.SetPaused(isPaused == 0);
     }
+
+    public void OtherSound(AnimationEvent input)
+    {
+        enemySound.OtherSounds(input.intParameter, input.floatParameter);
+    }
 }

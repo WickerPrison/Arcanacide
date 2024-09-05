@@ -161,6 +161,33 @@ MonoBehaviour:
   - BOSS VICTORY
   - DEATH
   Exists: 1
+--- !u!114 &-8139969489848039498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/JumpWhoosh
+  m_EditorClassIdentifier: 
+  Path: event:/JumpWhoosh
+  Guid:
+    Data1: -1682839570
+    Data2: 1112943298
+    Data3: 225503400
+    Data4: 1676739474
+  Banks:
+  - {fileID: 3641697779225142075}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-8124527320677186259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,12 +865,13 @@ MonoBehaviour:
   - {fileID: -3407776522243992221}
   - {fileID: 4576603256113410008}
   - {fileID: 775581018950604514}
+  - {fileID: -8139969489848039498}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7341476850067345480}
   StringsBanks:
   - {fileID: 303446170087587247}
-  cacheTime: 638611299457142557
+  cacheTime: 638611487117424414
   cacheVersion: 131607
 --- !u!114 &303446170087587247
 MonoBehaviour:
@@ -860,10 +888,10 @@ MonoBehaviour:
   Path: Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638611299447668963
+  lastModified: 638611487112485601
   FileSizes:
   - Name: 
-    Value: 3856
+    Value: 3898
   Exists: 1
 --- !u!114 &403290344975673266
 MonoBehaviour:
@@ -1363,7 +1391,7 @@ MonoBehaviour:
   Path: Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638611299457142557
+  lastModified: 638611487117424414
   FileSizes: []
   Exists: 1
 --- !u!114 &4071733655584867345
@@ -1801,7 +1829,7 @@ MonoBehaviour:
   Path: Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638611299447558028
+  lastModified: 638611487112421956
   FileSizes: []
   Exists: 1
 --- !u!114 &7461850975316340935

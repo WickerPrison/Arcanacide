@@ -134,7 +134,7 @@ public class ChaosKnightController : EnemyController
         streak.Clear();
         landVFX.PlayParticleSystems();
         StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
-        enemySound.OtherSounds(0, 1);
+        enemySound.OtherSounds(0, 3);
         if(Vector3.Distance(jumpPoint.position, playerScript.transform.position) <= 3.5f)
         {
             if (playerScript.gameObject.layer == 3)
