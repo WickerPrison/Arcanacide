@@ -8,6 +8,7 @@ public class PustuleScript : ArcProjectile
 {
     [SerializeField] float pulseDamageRate;
     [SerializeField] EventReference pulseDamageSFX;
+    [SerializeField] float pulseDamageVolume;
     [SerializeField] float pulseHealRate;
     [SerializeField] EventReference pulseHealSFX;
     [SerializeField] SpriteRenderer pulseEffect;
@@ -43,7 +44,7 @@ public class PustuleScript : ArcProjectile
                     int pulseDamage = Mathf.RoundToInt(pulseDamageCounter);
                     pulseDamageCounter = 0;
                     nearbyObject.GetComponent<PlayerScript>().LoseHealth(pulseDamage, EnemyAttackType.NONPARRIABLE, null);
-                    RuntimeManager.PlayOneShot(pulseDamageSFX, .5f);
+                    RuntimeManager.PlayOneShot(pulseDamageSFX, pulseDamageVolume);
                 }
             }
             else if (nearbyObject.CompareTag("Enemy"))
@@ -84,7 +85,7 @@ public class PustuleScript : ArcProjectile
             PlayerScript playerScript = other.GetComponent<PlayerScript>();
             playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyScript);
             playerScript.LosePoise(poiseDamage);
-            RuntimeManager.PlayOneShot(impactSound, 1);
+            RuntimeManager.PlayOneShot(impactSound, impactVolume);
             Destroy(gameObject);
         }
     }

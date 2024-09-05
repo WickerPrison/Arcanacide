@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,10 +12,16 @@ public class ChaosSporesScript : MonoBehaviour
     float chaosSporesDamageRate = 5;
     float chaosSporesCounter;
 
+    [SerializeField] EventReference sporeSFX;
+    [SerializeField] float sfxVolume;
+    EventInstance fmodInstance;
+
     private void Start()
     {
         playerScript = GetComponentInParent<PlayerScript>();
         vfx = GetComponent<ParticleSystem>();
+        fmodInstance = RuntimeManager.CreateInstance(sporeSFX);
+        fmodInstance.setVolume(sfxVolume);
     }
 
     private void Update()
@@ -24,6 +32,7 @@ public class ChaosSporesScript : MonoBehaviour
             if(chaosSporesDuration <= 0)
             {
                 vfx.Stop();
+                fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             }
 
             chaosSporesCounter += Time.deltaTime * chaosSporesDamageRate;
@@ -43,5 +52,13 @@ public class ChaosSporesScript : MonoBehaviour
         {
             chaosSporesDuration = duration;
         }
+
+        fmodInstance.start();
+    }
+
+    private void OnDisable()
+    {
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        fmodInstance.release();
     }
 }

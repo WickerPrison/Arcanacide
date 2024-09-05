@@ -259,6 +259,8 @@ public class PlayerScript : MonoBehaviour
         mapData.deadEnemies.Clear();
         mapData.deathPosition = transform.position;
         gm.SaveGame();
+        MusicPlayer musicPlayer = GameObject.FindGameObjectWithTag("MusicPlayer").GetComponent<MusicPlayer>();
+        musicPlayer.currentTrack = Music.NONE;
         string sceneName = gm.GetSceneName(playerData.lastSwordSite);
         SceneManager.LoadScene(sceneName);
     }
