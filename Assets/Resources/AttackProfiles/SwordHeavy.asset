@@ -12,43 +12,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: SwordHeavy
   m_EditorClassIdentifier: 
-  hitboxType: Circle
+  hitboxType: Arc
   attackType: 1
-  smearSpeed: 0
-  stepWithAttack: 0
-  halfConeAngle: 0
-  attackRange: 4
-  damageMultiplier: 2
+  smearSpeed: 5
+  stepWithAttack: 0.15
+  halfConeAngle: 65
+  attackRange: 2
+  damageMultiplier: 1
+  chargeDamage: 0.6
+  fullChargeDamage: 0
   magicDamageMultiplier: 0
-  poiseDamageMultiplier: 1.5
+  poiseDamageMultiplier: 2
   staminaCost: 40
   manaCost: 0
   bonusEffectDuration: 0
   durationDOT: 0
-  staggerDuration: 0.5
-  screenShakeOnHit: {x: 0, y: 0}
-  screenShakeNoHit: {x: 0.15, y: 0.3}
-  soundOnHit: {fileID: 0}
+  staggerDuration: 0
+  screenShakeOnHit: {x: 0.15, y: 0.08}
+  screenShakeNoHit: {x: 0, y: 0}
   soundOnHitEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  soundOnHitVolume: 1
-  soundNoHit: {fileID: 8300000, guid: d7902a3cbc4c0d0489d1c7fa1bbaf1e9, type: 3}
+      Data1: 428314037
+      Data2: 1127108808
+      Data3: 1309186218
+      Data4: 1243437851
+    Path: event:/SwordImpact
+  soundOnHitVolume: 1.2
   noHitSoundEvent:
     Guid:
-      Data1: 596054096
-      Data2: 1089662140
-      Data3: 1063899299
-      Data4: -513444934
-    Path: event:/BigSmash
-  soundNoHitVolume: 1
-  smearPositions: []
-  smearRotations: []
-  smearScales: []
-  clawAngle: []
-  clawRotations: []
-  clawScales: []
+      Data1: -1119663120
+      Data2: 1316255712
+      Data3: -94480492
+      Data4: -263120505
+    Path: event:/SwordSwoosh
+  soundNoHitVolume: 1.2
+  smearPositions:
+  - {x: -0.2, y: 0, z: 0.3}
+  - {x: 0.2, y: 0, z: 0.3}
+  - {x: -0.5, y: 0, z: 0.3}
+  - {x: 0.5, y: 0, z: 0.3}
+  smearRotations:
+  - {x: 90, y: -75, z: 0}
+  - {x: 90, y: 75, z: 0}
+  - {x: 90, y: 30, z: 0}
+  - {x: 90, y: -30, z: 0}
+  smearScales:
+  - {x: -1.5, y: -1.5, z: 1}
+  - {x: 1.5, y: -1.5, z: 1}
+  - {x: 1.5, y: 1.5, z: 1}
+  - {x: -1.5, y: 1.5, z: 1}

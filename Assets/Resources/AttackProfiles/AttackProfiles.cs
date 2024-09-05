@@ -19,6 +19,8 @@ public class AttackProfiles : ScriptableObject
     public int halfConeAngle;
     public float attackRange;
     public float damageMultiplier;
+    public float chargeDamage;
+    public float fullChargeDamage;
     public float magicDamageMultiplier;
     public float poiseDamageMultiplier;
     public float staminaCost;

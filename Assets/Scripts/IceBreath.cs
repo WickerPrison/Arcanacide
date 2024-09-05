@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,11 +19,18 @@ public class IceBreath : MonoBehaviour
     bool iceBreathOn = false;
     Vector3 offset = new Vector3(0, 1, 0);
 
+    [SerializeField] EventReference fmodEvent;
+    [SerializeField] float sfxVolume;
+    EventInstance fmodInstance;
+
     private void Start()
     {
+        if (!playerData.unlockedWeapons.Contains(3)) return;
         playerScript = GetComponentInParent<PlayerScript>();
         vfx = GetComponent<ParticleSystem>();
         layerMask = LayerMask.GetMask("Enemy");
+        fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
+        fmodInstance.setVolume(sfxVolume);
     }
 
     private void Update()
@@ -57,11 +66,19 @@ public class IceBreath : MonoBehaviour
     {
         iceBreathOn = true;
         vfx.Play();
+        fmodInstance.start();
     }
 
     public void StopIceBreath()
     {
         iceBreathOn = false;
         vfx.Stop();
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+    }
+
+    private void OnDisable()
+    {
+        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        fmodInstance.release();
     }
 }

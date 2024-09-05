@@ -22,7 +22,7 @@ public class ArcProjectile : MonoBehaviour
     [SerializeField] float arcHeight;
     [SerializeField] float thirdPointX;
     public EventReference impactSound;
-    [SerializeField] float impactVolume;
+    public float impactVolume;
     [SerializeField] float staggerDuration;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
 

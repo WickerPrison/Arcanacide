@@ -21,6 +21,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
     [SerializeField] Transform attackPoint;
+    [SerializeField] GameObject swordProjectilePrefab;
 
     //player scripts
     PlayerMovement playerMovement;
@@ -132,9 +133,17 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
-    public int DetermineAttackDamage(AttackProfiles attackProfile)
+    public int DetermineAttackDamage(AttackProfiles attackProfile, float chargeDecimal = 0)
     {
         int physicalDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * attackProfile.damageMultiplier);
+        if (chargeDecimal >= 1)
+        {
+            physicalDamage += Mathf.RoundToInt(playerData.PhysicalDamage() * attackProfile.chargeDamage * (chargeDecimal + attackProfile.fullChargeDamage));
+        }
+        else if(chargeDecimal > 0) 
+        {
+            physicalDamage += Mathf.RoundToInt(playerData.PhysicalDamage() * attackProfile.chargeDamage * chargeDecimal);
+        }
         physicalDamage = patchEffects.PhysicalDamageModifiers(physicalDamage);
 
         int arcaneDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
@@ -282,6 +291,7 @@ public class PlayerAbilities : MonoBehaviour
             heavyAttackActive = true;
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = playerData.currentWeapon != 3;
+            if (playerData.currentWeapon == 0) playerAnimation.SetBool("chargeHeavy", true);
             playerAnimation.PlayAnimation("HeavyAttack");
         }
     }
@@ -291,6 +301,18 @@ public class PlayerAbilities : MonoBehaviour
         if (playerData.currentWeapon == 3 && heavyAttackActive)
         {
             playerAnimation.PlayAnimation("EndHeavyAttack");
+        }
+        else if(playerData.currentWeapon == 0 && heavyAttackActive)
+        {
+            bool fullyCharged = playerAnimation.EndSwordHeavy() >= 1;
+            if(fullyCharged)
+            {
+                SlashProjectile swordProectile = Instantiate(swordProjectilePrefab).GetComponent<SlashProjectile>();
+                swordProectile.transform.position = transform.position + new Vector3(0, 1, 0);
+                swordProectile.direction = Vector3.Normalize(attackPoint.position - transform.position);
+                swordProectile.playerAbilities = this;
+            }
+            playerAnimation.SetBool("chargeHeavy", false);
         }
 
         heavyAttackActive = false;
