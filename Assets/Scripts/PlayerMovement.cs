@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
         usingGamepad = Gamepad.current != null;
+        rightStickValue = Vector2.zero;
     }
 
     void Update()
@@ -100,6 +101,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(rightStickValue != Vector2.zero)
+        {
+            Debug.Log($"Right Stick Value: {rightStickValue}");
+        }
+
         if (moveDirection.magnitude > 0 && (CanInput() || canWalk))
         {
             playerAnimation.walk = true;

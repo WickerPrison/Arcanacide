@@ -13,11 +13,17 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] List<GameObject> backWeaponSprites;
     [SerializeField] PlayerData playerData;
     PlayerMovement playerController;
+    PlayerEvents playerEvents;
     InputManager im;
     int weaponMagicSources;
     int[] specificWeaponMagicSources = new int[4];
     public event EventHandler OnStartWeaponMagic;
     public event EventHandler OnStopWeaponMagic;
+
+    private void Awake()
+    {
+        playerEvents = GetComponent<PlayerEvents>();
+    }
 
     private void Start()
     {
@@ -107,7 +113,7 @@ public class WeaponManager : MonoBehaviour
         backWeaponSprites[weaponID].SetActive(true);
 
         if (weaponMagicSources + specificWeaponMagicSources[weaponID] > 0)
-        {
+        { 
             OnStartWeaponMagic?.Invoke(this, EventArgs.Empty);
         }
     }

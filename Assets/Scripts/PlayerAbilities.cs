@@ -477,6 +477,11 @@ public class PlayerAbilities : MonoBehaviour
         backstepActive = false;
     }
 
+    private void OnPlayerDeath(object sender, System.EventArgs e)
+    {
+        playerData.swordSpecialTimer = 0;
+    }
+
     void SetupControls()
     {
         im = gm.GetComponent<InputManager>();
@@ -497,6 +502,7 @@ public class PlayerAbilities : MonoBehaviour
         playerEvents.onClawSpecial += onClawSpecial;
         playerEvents.onBackstepStart += onBackstepStart;
         playerEvents.onDashEnd += PlayerEvents_onDashEnd;
+        GlobalEvents.instance.onPlayerDeath += OnPlayerDeath;
     }
 
     private void OnDisable()
@@ -505,5 +511,6 @@ public class PlayerAbilities : MonoBehaviour
         playerEvents.onClawSpecial -= onClawSpecial;
         playerEvents.onBackstepStart -= onBackstepStart;
         playerEvents.onDashEnd -= PlayerEvents_onDashEnd;
+        GlobalEvents.instance.onPlayerDeath -= OnPlayerDeath;
     }
 }
