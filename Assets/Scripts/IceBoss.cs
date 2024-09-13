@@ -83,6 +83,8 @@ public class IceBoss : EnemyController, IEndDialogue
             GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
             bossHealthbar.SetActive(false);
             musicManager.ChangeMusicState(MusicState.MAINLOOP);
+            GameObject dialogueTrigger = GetComponentInChildren<DialogueTriggerRoomEntrance>().gameObject;
+            Destroy(dialogueTrigger);
             //return;
         }
         else
