@@ -112,11 +112,11 @@ public class PlayerScript : MonoBehaviour
 
     public void StartStagger(float staggerDuration)
     {
-        if(staggerDuration > 0 && !playerAbilities.shield)
+        if(staggerDuration > staggerTimer && !playerAbilities.shield)
         {
             playerMovement.isDashing = false;
 
-            staggerTimer += staggerDuration;
+            staggerTimer = staggerDuration;
             
             isStaggered = true;
 
