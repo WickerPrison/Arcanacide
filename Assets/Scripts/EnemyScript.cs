@@ -161,7 +161,7 @@ public class EnemyScript : MonoBehaviour
         enemyController.StartStagger(staggerDuration);
     }
 
-    void UpdateHealthbar()
+    public void UpdateHealthbar()
     {
         if (healthbar == null) return;
         float healthbarRatio = (float)health / (float)maxHealth;

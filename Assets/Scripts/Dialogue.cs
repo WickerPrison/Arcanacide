@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class Dialogue : MonoBehaviour
     [System.NonSerialized] public int currentLineIndex = 0;
     DialogueScript dialogueBox;
     bool inDialogue = false;
+    Action callback;
 
     public virtual void Start()
     {
@@ -33,6 +35,12 @@ public class Dialogue : MonoBehaviour
             navAgent = GetComponentInParent<NavMeshAgent>();
             speed = navAgent.speed;
         }
+    }
+
+    public void StartWithCallback(Action callbackFunction)
+    {
+        callback = callbackFunction;
+        StartConversation();
     }
 
     public void StartConversation()
@@ -92,6 +100,11 @@ public class Dialogue : MonoBehaviour
 
     public virtual void EndDialogue()
     {
+        if(callback != null)
+        {
+            callback();
+        }
+
         if (endDialogueObject != null)
         {
             IEndDialogue endDialogue = endDialogueObject.GetComponent<IEndDialogue>();

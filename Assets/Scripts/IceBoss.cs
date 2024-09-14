@@ -10,16 +10,15 @@ public class IceBoss : EnemyController, IEndDialogue
     public MapData mapData;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] GameObject dialoguePrefab;
+    Dialogue postDialogue;
+    [SerializeField] Material healthbarMaterial;
 
     int smashDamage = 30;
     float smashPoiseDamage = 30;
 
     int ringBlastDamage = 40;
     float ringBlastPoiseDamage = 50;
-
-    float damageCounter;
-    float fullyTransformedDamage = 4;
-
 
     [SerializeField] GameObject iciclePrefab;
     [SerializeField] float[] limbTransitions;
@@ -31,7 +30,7 @@ public class IceBoss : EnemyController, IEndDialogue
     public IceBossAnimationEvents animationEvents;
     CameraFollow cameraScript;
 
-    float tooFarAway = 5;
+    float tooFarAway = 8;
     float meleeRange = 3;
 
     float icicleTimer;
@@ -55,6 +54,8 @@ public class IceBoss : EnemyController, IEndDialogue
 
     bool icicleDelay = true;
 
+    WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+
     public override void Awake()
     {
         if (mapData.iceBossKilled)
@@ -68,7 +69,9 @@ public class IceBoss : EnemyController, IEndDialogue
 
     public override void Start()
     {
+        postDialogue = GetComponent<Dialogue>();
         beamCrystal = GetComponentInChildren<IceBossBeamCrystal>();
+        healthbarMaterial.SetFloat("_IceThreshold", 1);
 
         line.SetPosition(0, away);
         line.SetPosition(1, away);
@@ -85,7 +88,6 @@ public class IceBoss : EnemyController, IEndDialogue
             musicManager.ChangeMusicState(MusicState.MAINLOOP);
             GameObject dialogueTrigger = GetComponentInChildren<DialogueTriggerRoomEntrance>().gameObject;
             Destroy(dialogueTrigger);
-            //return;
         }
         else
         {
@@ -193,11 +195,6 @@ public class IceBoss : EnemyController, IEndDialogue
         {
            attackTime -= Time.deltaTime;
         }
-
-        if (fullyTransformed && state != EnemyState.DYING)
-        {
-            LoseHealth();
-        }
     }
 
     public void Smash()
@@ -241,27 +238,6 @@ public class IceBoss : EnemyController, IEndDialogue
             {
                 playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE);
             }
-        }
-    }
-
-    public IEnumerator InvincibleTimer()
-    {
-        yield return new WaitForSeconds(15);
-        fullyTransformed = true;
-    }
-
-    void LoseHealth()
-    {
-        if (state == EnemyState.DYING) return;
-
-        damageCounter += fullyTransformedDamage * Time.deltaTime;
-
-        if(damageCounter > 1)
-        {
-            enemyScript.invincible = false;
-            enemyScript.LoseHealth(Mathf.RoundToInt(damageCounter), 0);
-            damageCounter = 0;
-            enemyScript.invincible = true;
         }
     }
 
@@ -358,13 +334,57 @@ public class IceBoss : EnemyController, IEndDialogue
 
     public override void StartDying()
     {
+        enemyScript.health = 1;
         HideIndicators();
-        HideCrystal();
-        base.StartDying();
+        frontAnimator.Play("Torso");
+        backAnimator.Play("Torso");
+        postDialogue.StartWithCallback(StartFinalPhase);
+    }
+
+    void StartFinalPhase()
+    {
+        StartCoroutine(FinalPhaseHealthbar());
+        navAgent.speed = 3;
+        navAgent.enabled = true;
+        state = EnemyState.IDLE;
+        directionLock = false;
+    }
+
+    IEnumerator FinalPhaseHealthbar()
+    {
+        float maxTime = 4;
+        float timer = maxTime;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            float ratio = 1 - timer / maxTime;
+            enemyScript.health = Mathf.RoundToInt(enemyScript.maxHealth * ratio);
+            enemyScript.UpdateHealthbar();
+            yield return endOfFrame;
+        }
+        enemyScript.health = enemyScript.maxHealth;
+        enemyScript.UpdateHealthbar();
+
+        yield return new WaitForSeconds(3);
+
+        maxTime = 25f;
+        timer = maxTime;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            float threshold = Mathf.Lerp(0.55f, 1, timer / maxTime);
+            healthbarMaterial.SetFloat("_IceThreshold", threshold);
+            yield return endOfFrame;
+        }
+
+        healthbarMaterial.SetFloat("_IceThreshold", 0);
+        frontAnimator.Play("Death");
+        backAnimator.Play("Death");
     }
 
     public override void Death()
     {
+        HideIndicators();
         mapData.iceBossPosition = transform.position;
         mapData.iceBossDirection = animationEvents.facePlayerSlow.faceDirectionID;
 
@@ -397,6 +417,8 @@ public class IceBoss : EnemyController, IEndDialogue
         attackArc.HideAttackArc();
         iceBreath.StopIceBreath();
         animationEvents.ClearAll();
+        line.SetPosition(0, away);
+        line.SetPosition(1, away);
     }
 
     void HideCrystal()

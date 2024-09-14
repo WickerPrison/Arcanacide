@@ -145,7 +145,6 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
         EnemyScript enemyScript = bossController.GetComponent<EnemyScript>();
         enemyScript.invincible = true;
         bossController.attackMaxTime = 2;
-        StartCoroutine(bossController.InvincibleTimer());
     }
 
     public void ClearAll()
