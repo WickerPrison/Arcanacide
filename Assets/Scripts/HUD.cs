@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour
     [SerializeField] RectTransform staminaBarCover;
     [SerializeField] GameObject manaGemIcon;
     [SerializeField] GameObject manaBarFill;
+    [SerializeField] RectMask2D mask;
     [SerializeField] GameObject manaBarCrack;
     [SerializeField] TextMeshProUGUI healCounter;
     [SerializeField] Material youDiedTextMaterial;
@@ -58,11 +59,13 @@ public class HUD : MonoBehaviour
     void UpdateHealthbar()
     {
         float healthRatio = (float)playerData.health / (float)playerData.MaxHealth();
-        if(playerData.health < 0)
-        {
-            healthRatio = 0;
-        }
-        healbarFill.transform.localScale = new Vector3(healthRatio * healthbarScale, healbarFill.transform.localScale.y, healbarFill.transform.localScale.z);
+
+        mask.padding = new Vector4(0, 0, Mathf.Lerp(765, 0, healthRatio), 0);
+        //if(playerData.health < 0)
+        //{
+        //    healthRatio = 0;
+        //}
+        //healbarFill.transform.localScale = new Vector3(healthRatio * healthbarScale, healbarFill.transform.localScale.y, healbarFill.transform.localScale.z);
     }
 
     void UpdateStaminaBar()

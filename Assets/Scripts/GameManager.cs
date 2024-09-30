@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
             playerData.dexterity = data.dexterity;
             playerData.vitality = data.vitality;
             playerData.arcane = data.dedication;
+            playerData.health = playerData.MaxHealth();
             playerData.maxMana = data.maxMana;
             playerData.mana = data.mana;
             playerData.deathNum = data.deathNum;

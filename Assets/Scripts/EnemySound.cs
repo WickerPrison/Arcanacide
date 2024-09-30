@@ -66,7 +66,11 @@ public class EnemySound : MonoBehaviour
 
     private void OnDisable()
     {
-        fmodInstance.release();
-        fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        Stop();
+    }
+
+    private void OnDestroy()
+    {
+        Stop();
     }
 }
