@@ -8,14 +8,14 @@ public class IceBreath : MonoBehaviour
 {
     [SerializeField] Transform attackPoint;
     [SerializeField] PlayerData playerData;
+    [SerializeField] AttackProfiles attackProfile;
+    PlayerAbilities playerAbilities;
     ParticleSystem vfx;
     PlayerScript playerScript;
-    float iceBreathRange = 3;
     LayerMask layerMask;
     RaycastHit[] hitTargets;
-    float damage = 2;
-    float damageCounter;
-    float staminaCost = 5;
+    float damage;
+    float timer;
     bool iceBreathOn = false;
     Vector3 offset = new Vector3(0, 1, 0);
 
@@ -31,33 +31,36 @@ public class IceBreath : MonoBehaviour
         layerMask = LayerMask.GetMask("Enemy");
         fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
         fmodInstance.setVolume(sfxVolume);
+        playerAbilities = GetComponentInParent<PlayerAbilities>();
     }
 
     private void Update()
     {
         if (!iceBreathOn) return;
 
-        playerScript.LoseStamina(staminaCost * Time.deltaTime);
+        playerScript.LoseStamina(attackProfile.staminaCost * Time.deltaTime);
 
         Vector3 lookDirection = attackPoint.position - playerScript.transform.position;
         lookDirection = new Vector3 (lookDirection.x, 0, lookDirection.z).normalized;
         transform.rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
 
-        hitTargets = Physics.RaycastAll(playerScript.transform.position + offset, lookDirection, iceBreathRange, layerMask, QueryTriggerInteraction.Ignore);
+        hitTargets = Physics.RaycastAll(playerScript.transform.position + offset, lookDirection, attackProfile.attackRange, layerMask, QueryTriggerInteraction.Ignore);
 
         //Debug.DrawRay(playerScript.transform.position, lookDirection * iceBreathRange, Color.red);
 
         if (hitTargets.Length > 0 )
         {
-            damageCounter += damage * Time.deltaTime * playerData.arcane;
-            if (damageCounter > 1)
+            damage += playerAbilities.DetermineAttackDamage(attackProfile) * Time.deltaTime;
+            timer -= Time.deltaTime;
+            if (timer <= 0)
             {
-                damageCounter = 0;
                 foreach (RaycastHit hit in hitTargets )
                 {
                     EnemyScript enemy = hit.collider.gameObject.GetComponent<EnemyScript>();
-                    enemy.LoseHealth(1, 0);
-                }                
+                    playerAbilities.DamageEnemy(enemy, Mathf.RoundToInt(damage), attackProfile);
+                }
+                timer = 0.3f;
+                damage = 0;
             }
         }
     }

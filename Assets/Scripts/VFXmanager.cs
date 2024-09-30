@@ -60,7 +60,10 @@ public class VFXmanager : MonoBehaviour
 
     private void onTakeDamage(object sender, System.EventArgs e)
     {
-        bloodVFX.Play();
+        if (!bloodVFX.isEmitting)
+        {
+            bloodVFX.Play();
+        }
     }
 
     private void EndLanternCombo(object sender, System.EventArgs e)

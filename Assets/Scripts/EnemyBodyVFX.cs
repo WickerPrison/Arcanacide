@@ -59,7 +59,10 @@ public class EnemyBodyVFX : MonoBehaviour
 
     private void OnTakeDamage(object sender, System.EventArgs e)
     {
-        hitVFX.Play();
+        if (!hitVFX.isEmitting)
+        {
+            hitVFX.Play();
+        }
     }
 
     private void OnAttackImpact(object sender, System.EventArgs e)

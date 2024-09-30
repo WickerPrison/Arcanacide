@@ -58,8 +58,8 @@ public class PlayerAbilities : MonoBehaviour
     float boltdamage = 0;
 
     float clawSpecialMaxTime = 15f;
-    float clawSpecialDamageMult = 2;
-    [System.NonSerialized] public float clawSpecialStamCostMult = 2;
+    float clawSpecialDamageMult = 1.5f;
+    [System.NonSerialized] public float clawSpecialStamCostMult = 1.5f;
     [System.NonSerialized] public float clawSpecialTakeDamageMult = 0.5f;
 
     private void Awake()
@@ -168,7 +168,7 @@ public class PlayerAbilities : MonoBehaviour
         }
 
         enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
-        enemy.ImpactVFX();
+        if(attackProfile.impactVFX) enemy.ImpactVFX();
         if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
         {
             enemy.GainDOT(emblemLibrary.rendingBlowsDuration);

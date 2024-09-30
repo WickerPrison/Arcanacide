@@ -230,7 +230,7 @@ public class PatchEffects : MonoBehaviour
     {
         if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
         {
-            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 5);
+            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 8);
             playerHealth.PartialHeal(healAmount);
         }
     }

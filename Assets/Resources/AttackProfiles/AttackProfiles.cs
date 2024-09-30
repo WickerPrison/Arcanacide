@@ -25,6 +25,7 @@ public class AttackProfiles : ScriptableObject
     public float poiseDamageMultiplier;
     public float staminaCost;
     public float manaCost;
+    public bool impactVFX = true;
 
     public float bonusEffectDuration;
     public float durationDOT;
