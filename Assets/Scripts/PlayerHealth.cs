@@ -169,15 +169,18 @@ public class PlayerHealth : MonoBehaviour
             gm.GetComponent<TutorialManager>().Tutorial("Broken Gem");
         }
 
+        if(gemHealTimer <= 0) playerAnimation.StartBodyMagic();
+
         gemHealTimer = gemHealDuration;
         gemHealSpeed = playerData.MaxHealth() / gemHealDuration;
         sfx.PlaySoundEffect(PlayerSFX.HEAL, 0.6f);
-        playerAnimation.StartBodyMagic();
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.explosive_healing))
         {
             patchEffects.ExplosiveHealing();
         }
+
+        GlobalEvents.instance.GemUsed();
     }
 
     private void onBossKilled(object sender, System.EventArgs e)

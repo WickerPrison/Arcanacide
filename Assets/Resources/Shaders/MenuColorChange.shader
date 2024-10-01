@@ -19,6 +19,7 @@ Shader "Unlit/CharacterShader"
         _OldColor ("existing color", color) = (1,1,1,1)
         _NewColor ("desired color", color) = (1,1,1,1)
         _Threshold ("color threshold", float) = 1
+        _BlackToWhite ("Black to White", float) = 0
     }
 
     SubShader
@@ -89,6 +90,7 @@ Shader "Unlit/CharacterShader"
              float4 _NewColor;
              float4 _OldColor;
              float _Threshold;
+             bool _BlackToWhite;
 
             v2f vert(appdata_t v)
             {
@@ -127,6 +129,11 @@ Shader "Unlit/CharacterShader"
                 float3 diff = length(abs((normalize(col.xyz) - normalize(_OldColor.xyz)))) < length(threshold);
 
                 float3 outColor = lerp(col.xyz, _NewColor.xyz, diff);
+
+                if(_BlackToWhite > 0){
+                    float3 mask = length(outColor.xyz) < 0.1;
+                    outColor = lerp(col.xyz, float3(1,1,1), mask);
+                }
 
                 return float4(outColor,1);
             }

@@ -11,11 +11,10 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject healbarFill;
     //[SerializeField] GameObject staminabarFill;
     [SerializeField] RectTransform staminaBarCover;
+    [SerializeField] Image gemBackground;
     [SerializeField] GameObject manaGemIcon;
     [SerializeField] GameObject manaBarFill;
     [SerializeField] RectMask2D mask;
-    [SerializeField] GameObject manaBarCrack;
-    [SerializeField] TextMeshProUGUI healCounter;
     [SerializeField] Material youDiedTextMaterial;
     [SerializeField] GameObject map;
     [SerializeField] ScreenMessage maxManaMessage;
@@ -42,6 +41,8 @@ public class HUD : MonoBehaviour
 
         youDiedTextMaterial.SetColor("_OutlineColor", mapData.floorColor);
 
+        UpdateGemCracks();
+
         if (!playerData.hasHealthGem)
         {
             manaGemIcon.SetActive(false);
@@ -53,19 +54,16 @@ public class HUD : MonoBehaviour
         UpdateHealthbar();
         UpdateStaminaBar();
         UpdateManaBar();
-        UpdateGemCracks();
     }
 
     void UpdateHealthbar()
     {
         float healthRatio = (float)playerData.health / (float)playerData.MaxHealth();
-
+        if (playerData.health < 0)
+        {
+            healthRatio = 0;
+        }
         mask.padding = new Vector4(0, 0, Mathf.Lerp(765, 0, healthRatio), 0);
-        //if(playerData.health < 0)
-        //{
-        //    healthRatio = 0;
-        //}
-        //healbarFill.transform.localScale = new Vector3(healthRatio * healthbarScale, healbarFill.transform.localScale.y, healbarFill.transform.localScale.z);
     }
 
     void UpdateStaminaBar()
@@ -82,6 +80,21 @@ public class HUD : MonoBehaviour
         {
             manaBarFill.transform.localScale = new Vector3(manaBarFill.transform.localScale.x, manaRatio, manaBarFill.transform.localScale.z);
         }
+    }
+
+    private void onGemUsed(object sender, System.EventArgs e)
+    {
+        StartCoroutine(GemFlash());
+    }
+
+    IEnumerator GemFlash()
+    {
+        gemImage.material.SetFloat("_BlackToWhite", 1);
+        gemBackground.color = Color.white;
+        UpdateGemCracks();
+        yield return new WaitForSeconds(0.2f);
+        gemImage.material.SetFloat("_BlackToWhite", 0);
+        gemBackground.color = Color.black;
     }
 
     void UpdateGemCracks()
@@ -115,5 +128,15 @@ public class HUD : MonoBehaviour
     public void MaxManaIncreased()
     {
         maxManaMessage.ShowMessage();
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onGemUsed += onGemUsed;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onGemUsed -= onGemUsed;
     }
 }
