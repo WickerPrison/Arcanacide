@@ -340,6 +340,8 @@ public class PlayerAnimationEvents : MonoBehaviour
         frontAnimator.SetLayerWeight(1, 0);
         backAnimator.SetLayerWeight(1, 0);
         StartInput();
+
+        EndIceBreath();
     }
 
     private void OnEnable()

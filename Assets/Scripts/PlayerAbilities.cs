@@ -298,11 +298,13 @@ public class PlayerAbilities : MonoBehaviour
 
     void EndHeavyAttack()
     {
-        if (playerData.currentWeapon == 3 && heavyAttackActive)
+        if (!heavyAttackActive) return;
+
+        if (playerData.currentWeapon == 3)
         {
             playerAnimation.PlayAnimation("EndHeavyAttack");
         }
-        else if(playerData.currentWeapon == 0 && heavyAttackActive)
+        else if(playerData.currentWeapon == 0)
         {
             bool fullyCharged = playerAnimation.EndSwordHeavy() >= 1;
             if(fullyCharged)
@@ -338,8 +340,9 @@ public class PlayerAbilities : MonoBehaviour
     public void SpecialAttack()
     {
         if (!playerData.unlockedAbilities.Contains("Special Attack")) return;
+        if (playerData.mana >= specialAttackProfiles[playerData.currentWeapon].manaCost && playerData.currentWeapon != 2) return;
 
-        if (playerMovement.CanInput() && playerScript.stamina > 0 && playerData.mana >= specialAttackProfiles[playerData.currentWeapon].manaCost)
+        if (playerMovement.CanInput() && playerScript.stamina > 0)
         {
             if (playerData.currentWeapon == 1)
             {
@@ -356,7 +359,7 @@ public class PlayerAbilities : MonoBehaviour
 
     void EndSpecialAttack()
     {
-        if (playerData.currentWeapon == 2)
+        if (playerData.currentWeapon == 2 && knifeSpecialAttackOn)
         {
             knifeSpecialAttackOn = false;
             bolts.SetPositions(away, away);
@@ -445,8 +448,9 @@ public class PlayerAbilities : MonoBehaviour
         }
         else
         {
-            bolts.SetPositions(away, away);
-            bolts.SoundOff();
+            Vector3 targetPos = boltsOrigin[boltsFrontOrBack].position + new Vector3(playerMovement.lookDir.x, 0, playerMovement.lookDir.y) * 15;
+            bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, boltsOrigin[boltsFrontOrBack].position);
+            bolts.SoundOn();
         }
     }
 
@@ -460,6 +464,7 @@ public class PlayerAbilities : MonoBehaviour
 
     private void onPlayerStagger(object sender, System.EventArgs e)
     {
+        heavyAttackActive = false;
         if (playerData.currentWeapon == 2 && knifeSpecialAttackOn)
         {
             knifeSpecialAttackOn = false;
