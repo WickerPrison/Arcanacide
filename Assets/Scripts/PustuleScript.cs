@@ -7,6 +7,7 @@ using UnityEngine;
 public class PustuleScript : ArcProjectile
 {
     [SerializeField] float pulseDamageRate;
+    [SerializeField] int pulseDamage;
     [SerializeField] EventReference pulseDamageSFX;
     [SerializeField] float pulseDamageVolume;
     [SerializeField] float pulseHealRate;
@@ -38,11 +39,10 @@ public class PustuleScript : ArcProjectile
         {
             if (nearbyObject.CompareTag("Player"))
             {
-                pulseDamageCounter += Time.deltaTime * pulseDamageRate;
-                if(pulseDamageCounter > 1)
+                pulseDamageCounter -= Time.deltaTime;
+                if(pulseDamageCounter <= 0)
                 {
-                    int pulseDamage = Mathf.RoundToInt(pulseDamageCounter);
-                    pulseDamageCounter = 0;
+                    pulseDamageCounter = pulseDamageRate;
                     nearbyObject.GetComponent<PlayerScript>().LoseHealth(pulseDamage, EnemyAttackType.NONPARRIABLE, null);
                     RuntimeManager.PlayOneShot(pulseDamageSFX, pulseDamageVolume);
                 }

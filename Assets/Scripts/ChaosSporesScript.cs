@@ -9,7 +9,7 @@ public class ChaosSporesScript : MonoBehaviour
     ParticleSystem vfx;
     PlayerScript playerScript;
     float chaosSporesDuration;
-    float chaosSporesDamageRate = 5;
+    float chaosSporesDamageRate = 10;
     float chaosSporesCounter;
 
     [SerializeField] EventReference sporeSFX;

@@ -118,7 +118,7 @@ Shader "Unlit/CharacterShader"
                 clip (col.a - 0.001);
                 #endif
 
-               //My additions
+                //My additions
 
                 clip(col.a - 0.1);
 
@@ -132,7 +132,7 @@ Shader "Unlit/CharacterShader"
 
                 if(_BlackToWhite > 0){
                     float3 mask = length(outColor.xyz) < 0.1;
-                    outColor = lerp(col.xyz, float3(1,1,1), mask);
+                    outColor = lerp(outColor.xyz, float3(1,1,1), mask);
                 }
 
                 return float4(outColor,1);

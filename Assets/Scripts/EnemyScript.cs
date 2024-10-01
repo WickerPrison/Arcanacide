@@ -157,6 +157,7 @@ public class EnemyScript : MonoBehaviour
 
     public void StartStagger(float staggerDuration)
     {
+        if (invincible) return;
         enemyEvents.Stagger();
         enemyController.StartStagger(staggerDuration);
     }
