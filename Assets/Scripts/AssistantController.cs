@@ -26,9 +26,9 @@ public class AssistantController : MonoBehaviour
     [SerializeField] ChaosBossController bossController;
 
     FinalBossEvents bossEvents;
-    NavMeshAgent navAgent;
     PlayerScript playerScript;
     AssistantState state = AssistantState.DIALOGUE;
+    float moveSpeed = 10;
     float attackTime = 5;
     float attackTimer = 0;
     int beamsNum = 5;
@@ -48,7 +48,6 @@ public class AssistantController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        navAgent = GetComponent<NavMeshAgent>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         defaultMask = LayerMask.GetMask("Default");
         sfx = GetComponent<StudioEventEmitter>();
@@ -57,10 +56,8 @@ public class AssistantController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        return;
         if (state == AssistantState.DIALOGUE) return;
-
-        navAgent.SetDestination(playerScript.transform.position);
-
         if(state == AssistantState.IDLE)
         {
             attackTimer -= Time.deltaTime;
@@ -70,6 +67,7 @@ public class AssistantController : MonoBehaviour
 
                 int randInt = UnityEngine.Random.Range(0, 2 + bossController.phase);
                 state = AssistantState.ATTACKING;
+                randInt = 1;
                 switch (randInt)
                 {
                     case 0:
@@ -87,6 +85,20 @@ public class AssistantController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Position();
+    }
+
+    void Position()
+    {
+        if (state == AssistantState.DIALOGUE) return;
+        Vector3 direction = (playerScript.transform.position - bossController.transform.position).normalized;
+        Vector3 destination = bossController.transform.position + 3 * direction;
+        destination += Vector3.right * Mathf.Sin(Time.time / 2) * 2 + Vector3.forward * Mathf.Cos(Time.time / 2) * 2;
+        transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.fixedDeltaTime);
     }
 
     public void ThrowBomb(int hand)
@@ -124,6 +136,11 @@ public class AssistantController : MonoBehaviour
         sfx.Stop();
     }
 
+    public void CallIceRings()
+    {
+        frontAnimator.Play("IceRings");
+    }
+
     public void IceRings()
     {
         float randomAngle = UnityEngine.Random.Range(0, 360);
@@ -132,12 +149,12 @@ public class AssistantController : MonoBehaviour
             Vector3 direction = RotateDirection(Vector3.right, randomAngle + i * 120);
 
             RaycastHit hit;
-            Physics.Raycast(playerScript.transform.position + Vector3.up, direction, out hit, skybeamDistance, defaultMask);
+            Physics.Raycast(bossController.transform.position + Vector3.up, direction, out hit, skybeamDistance, defaultMask);
 
             if (hit.collider == null || !hit.collider.CompareTag("Wall"))
             {
                 Transform skybeam = Instantiate(ACPrefab).transform;
-                skybeam.position = playerScript.transform.position + direction * skybeamDistance;
+                skybeam.position = bossController.transform.position + direction * skybeamDistance;
 
             }
 
@@ -197,7 +214,6 @@ public class AssistantController : MonoBehaviour
 
     private void freezeAssistant(object sender, EventArgs e)
     {
-        navAgent.enabled = false;
         frontAnimator.Play("Idle");
         EndBolts();
         state = AssistantState.DIALOGUE;

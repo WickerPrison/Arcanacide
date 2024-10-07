@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class ChaosBossController : EnemyController, IEndDialogue
     float phaseTrigger;
     MusicManager musicManager;
 
+    [SerializeField] GameObject fatMan;
+
     public override void Awake()
     {
         base.Awake();
@@ -27,7 +30,6 @@ public class ChaosBossController : EnemyController, IEndDialogue
     {
         base.Start();
         musicManager = gm.GetComponent<MusicManager>();
-        ChooseRandomPoint();
         facePlayer = GetComponent<FacePlayer>();
         facePlayer.SetDestination(new Vector3(7, 0, -9));
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
@@ -45,6 +47,20 @@ public class ChaosBossController : EnemyController, IEndDialogue
             phase = 2;
         }
 
+        if(state == EnemyState.IDLE)
+        {
+            if(navAgent.enabled == true)
+            {
+                navAgent.SetDestination(playerScript.transform.position);
+            }
+
+            if(attackTime <= 0)
+            {
+                attackTime = attackMaxTime;
+                frontAnimator.Play("Combo");
+            }
+        }
+
         if (state == EnemyState.SPECIAL)
         {
             facePlayer.SetDestination(fleePoint);
@@ -55,62 +71,27 @@ public class ChaosBossController : EnemyController, IEndDialogue
             }
         }
 
-        if (navAgent.enabled)
-        {
-            navAgent.SetDestination(fleePoint);
-        }
-
         if (attackTime > 0)
         {
             attackTime -= Time.deltaTime;
         }
     }
 
-    void RunAway()
+    public void FatManAttack()
     {
-        state = EnemyState.SPECIAL;
-        ChooseRandomPoint();
-
-        if (navAgent.enabled)
-        {
-            navAgent.SetDestination(fleePoint);
-        }
-    }
-
-    void ChooseRandomPoint()
-    {
-        int xDir = Random.Range(1, 3);
-        int yDir = Random.Range(1, 3);
-        float xPos = Random.Range(fleeRadiusMin, fleeRadiusMax);
-        float zPos = Random.Range(fleeRadiusMin, fleeRadiusMax);
-        Vector3 startPos = new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
-        NavMeshHit hit;
-        NavMesh.SamplePosition(startPos, out hit, 10, NavMesh.AllAreas);
-        fleePoint = hit.position;
-        if(Vector3.Distance(fleePoint, transform.position) < 5)
-        {
-            ChooseRandomPoint();
-        }
-    }
-
-    public override void OnTakeDamage(object sender, System.EventArgs e)
-    {
-        base.OnTakeDamage(sender, e);
-    }
-
-    public override void EndStagger()
-    {
-        base.EndStagger();
-        RunAway();
+        IGetSummoned summonScript = fatMan.GetComponent<IGetSummoned>();
+        fatMan.transform.position = transform.position + facePlayer.faceDirection.normalized * 3;
+        summonScript.SetDirection(facePlayer.faceDirection);
+        summonScript.CallAnimation("Attack");
     }
 
     public void EndDialogue()
     {
         frontAnimator.Play("Idle");
         backAnimator.Play("Idle");
-        RunAway();
         bossEvents.EndDialogue();
         musicManager.ChangeMusicState(MusicState.BOSSMUSIC);
+        state = EnemyState.IDLE;
     }
 
     public override void StartDying()
