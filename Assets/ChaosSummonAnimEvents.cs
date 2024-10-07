@@ -4,31 +4,30 @@ using UnityEngine;
 
 public class ChaosSummonAnimEvents : MonoBehaviour
 {
-    [SerializeField] GameObject summonObject;
-    IGetSummoned summonScript;
+    ChaosSummon chaosSummon;
 
     private void Start()
     {
-        summonScript = summonObject.GetComponent<IGetSummoned>();
+        chaosSummon = GetComponentInParent<ChaosSummon>();
     }
 
     public void ShowIndicator()
     {
-        summonScript.ShowIndicator();
+        chaosSummon.ShowIndicator();
     }
 
     public void HideIndicator()
     {
-        summonScript.HideIndicator();
+        chaosSummon.HideIndicator();
     }
 
     public void Attack()
     {
-        summonScript.Attack();
+        chaosSummon.Attack();
     }
 
     public void DestroySummon()
     {
-        summonScript.GoAway();
+        chaosSummon.GoAway();
     }
 }

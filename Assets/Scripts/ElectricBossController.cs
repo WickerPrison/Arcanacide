@@ -174,8 +174,6 @@ public class ElectricBossController : EnemyController, IEndDialogue
 
     public void SwooshShock()
     {
-        parryWindow = false;
-
         if (!canHitPlayer)
         {
             enemySound.OtherSounds(1, 1);

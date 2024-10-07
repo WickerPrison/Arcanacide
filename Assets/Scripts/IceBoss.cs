@@ -200,7 +200,6 @@ public class IceBoss : EnemyController, IEndDialogue
     public void Smash()
     {
         StartCoroutine(cameraScript.ScreenShake(0.1f, 0.2f));
-        parryWindow = false;
         enemySound.OtherSounds(0,2);
 
         if (!canHitPlayer)

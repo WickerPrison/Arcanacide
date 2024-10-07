@@ -33,7 +33,6 @@ public class EnemyController : MonoBehaviour
     public GameObject projectilePrefab;
     [System.NonSerialized] public float playerDistance = 100;
     [System.NonSerialized] public bool directionLock = false;
-    [System.NonSerialized] public bool parryWindow = false;
     [System.NonSerialized] public bool isParrying = false;
     public int spellAttackDamage = 15;
     public int spellAttackPoiseDamage = 15;
@@ -159,7 +158,6 @@ public class EnemyController : MonoBehaviour
 
     public virtual void AttackHit(int smearSpeed)
     {
-        parryWindow = false;
         enemySound.SwordSwoosh();
         enemyEvents.Attack();
 

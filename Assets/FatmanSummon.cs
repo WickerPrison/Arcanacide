@@ -1,52 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class FatmanSummon : MonoBehaviour, IGetSummoned
+public class FatmanSummon : ChaosSummon
 {
-    FacePlayerSummon facePlayer;
-    [SerializeField] Animator frontAnimator;
-    [SerializeField] Animator backAnimator;
-    AttackArcGenerator attackArcGenerator;
-    Vector3 away = new Vector3(100, 100, 100);
+    [SerializeField] int damage;
+    [SerializeField] int poiseDamage;
+    [System.NonSerialized] public AttackArcGenerator attackArcGenerator;
 
-    // Start is called before the first frame update
-    void Awake()
+    public override void Awake()
     {
-        facePlayer = GetComponent<FacePlayerSummon>();
+        base.Awake();
         attackArcGenerator = GetComponentInChildren<AttackArcGenerator>();
-        transform.position = away;
     }
 
-    public void Attack()
+    public override void Attack()
     {
+        base.Attack();
+        sfx.SwordSwoosh();
+        sfx.OtherSounds(0, 2);
         attackArcGenerator.HideAttackArc();
+
+        if (!attackArcGenerator.CanHitPlayer()) return;
+
+        if (playerScript.gameObject.layer == 3)
+        {
+            sfx.SwordImpact();
+            playerScript.LoseHealth(damage, EnemyAttackType.MELEE, enemyScript);
+            playerScript.LosePoise(poiseDamage);
+        }
+        else if (playerScript.gameObject.layer == 8)
+        {
+            playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
+        }
     }
 
-    public void ShowIndicator()
+    public override void ShowIndicator()
     {
+        base.ShowIndicator();
         attackArcGenerator.ShowAttackArc();
-    }
-
-    public void HideIndicator()
-    {
-        attackArcGenerator.HideAttackArc();
-    }
-
-    public void SetDirection(Vector3 direction)
-    {
-        facePlayer.SetDestination(transform.position + direction);
-        facePlayer.ManualFace();
-    }
-
-    public void CallAnimation(string animationName)
-    {
-        frontAnimator.Play(animationName);
-        backAnimator.Play(animationName);
-    }
-
-    public void GoAway()
-    {
-        transform.position = away;
     }
 }

@@ -81,16 +81,6 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         enemyController.SpecialEffect();
     }
 
-    public void ParryWindowOn()
-    {
-        enemyController.parryWindow = true;
-    }
-
-    public void ParryWindowOff()
-    {
-        enemyController.parryWindow = false;
-    }
-
     public virtual void ChangeArc(AnimationEvent angleAndRadius)
     {
         attackArc.ChangeArc(angleAndRadius.intParameter, angleAndRadius.floatParameter);

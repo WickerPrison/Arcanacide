@@ -123,7 +123,6 @@ public class IceGolemController : EnemyController
     {
         StartCoroutine(cameraScript.ScreenShake(.1f, .1f));
         enemySound.OtherSounds(1, 1);
-        parryWindow = false;
 
         if (!canHitPlayer)
         {

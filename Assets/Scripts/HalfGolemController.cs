@@ -105,7 +105,6 @@ public class HalfGolemController : EnemyController
             stepWithAttack.Step(0.15f);
         }
         enemySound.SwordSwoosh();
-        parryWindow = false;
 
         if (!canHitPlayer)
         {
@@ -157,7 +156,6 @@ public class HalfGolemController : EnemyController
     {
         StartCoroutine(cameraScript.ScreenShake(.1f, .1f));
         enemySound.OtherSounds(1, 1);
-        parryWindow = false;
 
         if (!attackArc.CanHitPlayer()) return;
 

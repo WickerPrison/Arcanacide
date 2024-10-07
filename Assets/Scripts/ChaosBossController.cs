@@ -18,7 +18,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
     float phaseTrigger;
     MusicManager musicManager;
 
-    [SerializeField] GameObject fatMan;
+    [SerializeField] ChaosSummon fatMan;
 
     public override void Awake()
     {
@@ -34,6 +34,8 @@ public class ChaosBossController : EnemyController, IEndDialogue
         facePlayer.SetDestination(new Vector3(7, 0, -9));
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
         gm.awareEnemies += 1;
+
+        fatMan.enemyScript = enemyScript;
     }
 
     public override void EnemyAI()
@@ -79,10 +81,9 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public void FatManAttack()
     {
-        IGetSummoned summonScript = fatMan.GetComponent<IGetSummoned>();
         fatMan.transform.position = transform.position + facePlayer.faceDirection.normalized * 3;
-        summonScript.SetDirection(facePlayer.faceDirection);
-        summonScript.CallAnimation("Attack");
+        fatMan.SetDirection(facePlayer.faceDirection);
+        fatMan.CallAnimation("Attack");
     }
 
     public void EndDialogue()

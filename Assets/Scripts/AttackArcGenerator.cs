@@ -32,7 +32,7 @@ public class AttackArcGenerator : MonoBehaviour
     [System.NonSerialized] public float angleRightSide;
     [System.NonSerialized] public int leftIndex = 1;
     [System.NonSerialized] public int rightIndex = 1;
-
+    
     // Start is called before the first frame update
     public virtual void Start()
     {
