@@ -8,6 +8,7 @@ public class FatmanSummon : ChaosSummon
     [SerializeField] int damage;
     [SerializeField] int poiseDamage;
     [System.NonSerialized] public AttackArcGenerator attackArcGenerator;
+    [System.NonSerialized] public ChaosBossController bossController;
 
     public override void Awake()
     {
@@ -40,5 +41,11 @@ public class FatmanSummon : ChaosSummon
     {
         base.ShowIndicator();
         attackArcGenerator.ShowAttackArc();
+    }
+
+    public override void GoAway()
+    {
+        base.GoAway();
+        bossController.fatMen.Enqueue(this);
     }
 }

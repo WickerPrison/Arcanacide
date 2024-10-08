@@ -17,8 +17,10 @@ public class ChaosBossController : EnemyController, IEndDialogue
     float phaseTriggerPercent = 1.1f;
     float phaseTrigger;
     MusicManager musicManager;
+    [SerializeField] AssistantController assistant;
 
-    [SerializeField] ChaosSummon fatMan;
+    [SerializeField] FatmanSummon[] fatMenList;
+    [System.NonSerialized] public Queue<FatmanSummon> fatMen = new Queue<FatmanSummon>();
 
     public override void Awake()
     {
@@ -34,8 +36,12 @@ public class ChaosBossController : EnemyController, IEndDialogue
         facePlayer.SetDestination(new Vector3(7, 0, -9));
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
         gm.awareEnemies += 1;
-
-        fatMan.enemyScript = enemyScript;
+        foreach(FatmanSummon fatMan in fatMenList)
+        {
+            fatMan.enemyScript = enemyScript;
+            fatMan.bossController = this;
+            fatMen.Enqueue(fatMan);
+        }
     }
 
     public override void EnemyAI()
@@ -60,6 +66,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
             {
                 attackTime = attackMaxTime;
                 frontAnimator.Play("Combo");
+                backAnimator.Play("Combo");
             }
         }
 
@@ -79,10 +86,11 @@ public class ChaosBossController : EnemyController, IEndDialogue
         }
     }
 
-    public void FatManAttack()
+    public void FatManAttack(Vector3 position, Vector3 direction)
     {
-        fatMan.transform.position = transform.position + facePlayer.faceDirection.normalized * 3;
-        fatMan.SetDirection(facePlayer.faceDirection);
+        FatmanSummon fatMan = fatMen.Dequeue();
+        fatMan.transform.position = position;
+        fatMan.SetDirection(direction);
         fatMan.CallAnimation("Attack");
     }
 

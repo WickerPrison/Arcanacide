@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class SpriteEffects : MonoBehaviour
 {
@@ -9,11 +10,11 @@ public class SpriteEffects : MonoBehaviour
     [SerializeField] Material spriteMaterial;
     SpriteRenderer[] allRenderers;
     List<SpriteRenderer> renderers = new List<SpriteRenderer>();
+    WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
     WaitForSecondsRealtime flashTime = new WaitForSecondsRealtime(.15f);
     WaitForSecondsRealtime delayTime = new WaitForSecondsRealtime(0.3f);
     bool isFlashing = false;
     bool isDelayed = false;
-    float dissolveTime = 1f;
     float dissolveSpeed;
     float dissolveProg = 0;
 
@@ -61,7 +62,7 @@ public class SpriteEffects : MonoBehaviour
         isDelayed = false;
     }
 
-    public IEnumerator Dissolve()
+    public IEnumerator Dissolve(float dissolveTime = 1f)
     {
         dissolveProg = 0;
         dissolveSpeed = .8f / dissolveTime;
@@ -72,7 +73,30 @@ public class SpriteEffects : MonoBehaviour
             {
                 sprite.material.SetFloat("_DissolveProg", dissolveProg);
             }
-            yield return new WaitForEndOfFrame();
+            yield return endOfFrame;
+        }
+    }
+
+    public IEnumerator UnDissolve(float dissolveTime = 1f)
+    {
+        dissolveProg = .8f;
+        dissolveSpeed = .8f / dissolveTime;
+        while (dissolveProg > 0)
+        {
+            dissolveProg -= dissolveSpeed * Time.deltaTime;
+            foreach (SpriteRenderer sprite in renderers)
+            {
+                sprite.material.SetFloat("_DissolveProg", dissolveProg);
+            }
+            yield return endOfFrame;
+        }
+    }
+
+    public void SetDissolve(float dissolve)
+    {
+        foreach (SpriteRenderer sprite in renderers)
+        {
+            sprite.material.SetFloat("_DissolveProg", dissolve);
         }
     }
 

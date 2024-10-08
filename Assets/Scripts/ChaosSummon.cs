@@ -54,7 +54,7 @@ public class ChaosSummon : MonoBehaviour
         backAnimator.Play("Back" + animationName);
     }
 
-    public void GoAway()
+    public virtual void GoAway()
     {
         transform.position = away;
     }

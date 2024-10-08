@@ -101,6 +101,11 @@ public class AssistantController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.fixedDeltaTime);
     }
 
+    public void CallAnimation(string animationName)
+    {
+        frontAnimator.Play(animationName);
+    }
+
     public void ThrowBomb(int hand)
     {
         AssistantBomb bomb = Instantiate(bombPrefab).GetComponent<AssistantBomb>();
@@ -174,6 +179,11 @@ public class AssistantController : MonoBehaviour
         attackTimer = time;
     }
 
+    private void onCombo(object sender, EventArgs e)
+    {
+        frontAnimator.Play("ThrowBombs");
+    }
+
     Vector3 RotateDirection(Vector3 oldDirection, float degrees)
     {
         Vector3 newDirection = Vector3.zero;
@@ -187,6 +197,7 @@ public class AssistantController : MonoBehaviour
         bossEvents.assistantSitUp += assistantSitUp;
         bossEvents.endDialogue += endDialogue;
         bossEvents.freezeAssistant += freezeAssistant;
+        bossEvents.onCombo += onCombo;
     }
 
     private void OnDisable()
@@ -194,6 +205,7 @@ public class AssistantController : MonoBehaviour
         bossEvents.assistantSitUp -= assistantSitUp;
         bossEvents.endDialogue -= endDialogue;
         bossEvents.freezeAssistant -= freezeAssistant;
+        bossEvents.onCombo -= onCombo;
     }
 
     private void assistantSitUp(object sender, EventArgs e)

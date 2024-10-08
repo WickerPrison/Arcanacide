@@ -5,10 +5,13 @@ using UnityEngine;
 public class ChaosSummonAnimEvents : MonoBehaviour
 {
     ChaosSummon chaosSummon;
+    SpriteEffects effects;
 
     private void Start()
     {
         chaosSummon = GetComponentInParent<ChaosSummon>();
+        effects = GetComponentInParent<SpriteEffects>();
+        effects.SetDissolve(0);
     }
 
     public void ShowIndicator()
@@ -29,5 +32,16 @@ public class ChaosSummonAnimEvents : MonoBehaviour
     public void DestroySummon()
     {
         chaosSummon.GoAway();
+        effects.SetDissolve(0);
+    }
+
+    public void DissolveIn()
+    {
+        StartCoroutine(effects.UnDissolve(0.25f));
+    }
+
+    public void DissolveOut()
+    {
+        StartCoroutine(effects.Dissolve(0.25f));
     }
 }
