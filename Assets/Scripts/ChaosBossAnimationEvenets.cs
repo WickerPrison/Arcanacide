@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum BossSummons
 {
-    FATMAN1, FATMAN2
+    FATMAN1, FATMAN2, KNIGHT
 }
 
 [System.Serializable]
@@ -37,6 +37,9 @@ public class ChaosBossAnimationEvenets : EnemyAnimationEvents
             case BossSummons.FATMAN2:
                 SummonFatMan(-2);
                 break;
+            case BossSummons.KNIGHT:
+                chaosBossController.SummonKnight();
+                break;
         }
 
     }
@@ -52,6 +55,9 @@ public class ChaosBossAnimationEvenets : EnemyAnimationEvents
 
     public void ComboAssistant()
     {
-        events.OnCombo();
+        if(chaosBossController.phase == 2)
+        {
+            events.OnCombo();
+        }
     }
 }

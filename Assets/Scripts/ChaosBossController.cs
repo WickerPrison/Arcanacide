@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 [System.Serializable]
 public class ChaosBossController : EnemyController, IEndDialogue
@@ -13,14 +11,18 @@ public class ChaosBossController : EnemyController, IEndDialogue
     float fleeRadiusMin = 0;
     float fleeRadiusMax = 12;
     Vector3 fleePoint;
+    float meleeRange = 3f;
     [System.NonSerialized] public int phase = 1;
-    float phaseTriggerPercent = 1.1f;
+    float phaseTriggerPercent = 0.1f;
     float phaseTrigger;
     MusicManager musicManager;
     [SerializeField] AssistantController assistant;
 
     [SerializeField] FatmanSummon[] fatMenList;
     [System.NonSerialized] public Queue<FatmanSummon> fatMen = new Queue<FatmanSummon>();
+
+    [SerializeField] KnightSummon[] knightSummons;
+    [System.NonSerialized] public Queue<KnightSummon> knights = new Queue<KnightSummon>();
 
     public override void Awake()
     {
@@ -36,11 +38,18 @@ public class ChaosBossController : EnemyController, IEndDialogue
         facePlayer.SetDestination(new Vector3(7, 0, -9));
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
         gm.awareEnemies += 1;
+        attackTime = attackMaxTime;
         foreach(FatmanSummon fatMan in fatMenList)
         {
             fatMan.enemyScript = enemyScript;
             fatMan.bossController = this;
             fatMen.Enqueue(fatMan);
+        }
+        foreach(KnightSummon knight in knightSummons)
+        {
+            knight.bossController = this;
+            knight.enemyScript = enemyScript;
+            knights.Enqueue(knight);
         }
     }
 
@@ -64,9 +73,11 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
             if(attackTime <= 0)
             {
-                attackTime = attackMaxTime;
-                frontAnimator.Play("Combo");
-                backAnimator.Play("Combo");
+                if(phase == 1)
+                {
+                    Phase1Attacks();
+                }
+
             }
         }
 
@@ -86,12 +97,57 @@ public class ChaosBossController : EnemyController, IEndDialogue
         }
     }
 
+    void Phase1Attacks()
+    {
+        int randInt;
+        if(playerDistance < meleeRange)
+        {
+            randInt = UnityEngine.Random.Range(1, 6);
+        }
+        else
+        {
+            randInt = UnityEngine.Random.Range(0, 5);
+        }
+        randInt = 7;
+        switch (randInt)
+        {
+            case 0:
+                assistant.CallAnimation("Beams");
+                attackTime = 5;
+                break;
+            case 1:
+                assistant.CallAnimation("ThrowBombs");
+                attackTime = 5;
+                break;
+            case 2:
+                assistant.CallAnimation("Bolts");
+                attackTime = 5;
+                break;
+            case 4:
+                frontAnimator.Play("Knights");
+                backAnimator.Play("Knights");
+                attackTime = 5;
+                break;
+            case 5:
+                attackTime = 5;
+                frontAnimator.Play("Combo");
+                backAnimator.Play("Combo");
+                break;
+        }
+    }
+
     public void FatManAttack(Vector3 position, Vector3 direction)
     {
         FatmanSummon fatMan = fatMen.Dequeue();
         fatMan.transform.position = position;
         fatMan.SetDirection(direction);
         fatMan.CallAnimation("Attack");
+    }
+
+    public void SummonKnight()
+    {
+        KnightSummon knight = knights.Dequeue();
+        knight.GetSummoned();
     }
 
     public void EndDialogue()

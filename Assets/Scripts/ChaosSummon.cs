@@ -23,7 +23,7 @@ public class ChaosSummon : MonoBehaviour
         enemyEvents = GetComponent<EnemyEvents>();
     }
 
-    void Start()
+    public virtual void Start()
     {
         StartCoroutine(LateStart());
     }
@@ -48,6 +48,7 @@ public class ChaosSummon : MonoBehaviour
         facePlayer.SetDestination(transform.position + direction);
         facePlayer.ManualFace();
     }
+
     public void CallAnimation(string animationName)
     {
         frontAnimator.Play("Front" + animationName);
