@@ -15,7 +15,7 @@ public class FinalDialogue : Dialogue
 
     public override void EndDialogue()
     {
-        GetComponentInChildren<ChaosBossAnimationEvenets>().StartDissolve();
+        GetComponentInChildren<ChaosBossAnimationEvents>().StartDissolve();
         StartCoroutine(DissolveScreen());
     }
 

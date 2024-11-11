@@ -8,7 +8,7 @@ public enum BossSummons
 }
 
 [System.Serializable]
-public class ChaosBossAnimationEvenets : EnemyAnimationEvents
+public class ChaosBossAnimationEvents : EnemyAnimationEvents
 {
     FacePlayer facePlayer;
     [SerializeField] ChaosBossController chaosBossController;
@@ -23,8 +23,7 @@ public class ChaosBossAnimationEvenets : EnemyAnimationEvents
 
     public void TurnTowardsPlayer()
     {
-        facePlayer.ResetDestination();
-        facePlayer.ManualFace();
+        facePlayer.SetDestination(new Vector3(6, 0, -9));
     }
 
     public void Summon(BossSummons summon)

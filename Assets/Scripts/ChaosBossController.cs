@@ -13,7 +13,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
     Vector3 fleePoint;
     float meleeRange = 3f;
     [System.NonSerialized] public int phase = 1;
-    float phaseTriggerPercent = 0.1f;
+    float phaseTriggerPercent = 0.6f;
     float phaseTrigger;
     MusicManager musicManager;
     [SerializeField] AssistantController assistant;
@@ -35,7 +35,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         base.Start();
         musicManager = gm.GetComponent<MusicManager>();
         facePlayer = GetComponent<FacePlayer>();
-        facePlayer.SetDestination(new Vector3(7, 0, -9));
+        facePlayer.SetDestination(new Vector3(3, 0, -2));
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
         gm.awareEnemies += 1;
         attackTime = attackMaxTime;
@@ -73,11 +73,11 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
             if(attackTime <= 0)
             {
-                if(phase == 1)
+                if (phase == 1)
                 {
                     Phase1Attacks();
                 }
-
+                else Phase2Attacks();
             }
         }
 
@@ -109,7 +109,6 @@ public class ChaosBossController : EnemyController, IEndDialogue
             randInt = UnityEngine.Random.Range(0, 4);
         }
         attackTime = 5;
-        randInt = 2;
         switch (randInt)
         {
             case 0:
@@ -133,6 +132,59 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 backAnimator.Play("Combo");
                 break;
         }
+    }
+
+    void Phase2Attacks()
+    {
+        int randInt;
+        if (playerDistance < meleeRange)
+        {
+            randInt = UnityEngine.Random.Range(1, 5);
+        }
+        else
+        {
+            randInt = UnityEngine.Random.Range(0, 4);
+        }
+        attackTime = 5;
+        switch (randInt)
+        {
+            case 0:
+                assistant.CallAnimation("Beams");
+                StartCoroutine(DelayAttack(0.4f, () =>
+                {
+                    state = EnemyState.ATTACKING;
+                    frontAnimator.Play("Knights");
+                    backAnimator.Play("Knights");
+                }));
+                break;
+            case 1:
+                assistant.CallAnimation("ThrowBombs");
+                break;
+            case 2:
+                assistant.CallAnimation("Bolts");
+                break;
+            case 3:
+                state = EnemyState.ATTACKING;
+                frontAnimator.Play("Knights");
+                backAnimator.Play("Knights");
+
+                break;
+            case 4:
+                state = EnemyState.ATTACKING;
+                StartCoroutine(DelayAttack(0.4f, () =>
+                {
+                    frontAnimator.Play("Combo");
+                    backAnimator.Play("Combo");
+                    assistant.CallAnimation("ThrowBombs");
+                }));
+                break;
+        }
+    }
+
+    IEnumerator DelayAttack(float delay, Action action)
+    {
+        yield return new WaitForSeconds(delay);
+        action();
     }
 
     public void FatManAttack(Vector3 position, Vector3 direction)
@@ -162,6 +214,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
     {
         frontAnimator.Play("Idle");
         backAnimator.Play("Idle");
+        facePlayer.ResetDestination();
         bossEvents.EndDialogue();
         musicManager.ChangeMusicState(MusicState.BOSSMUSIC);
         state = EnemyState.IDLE;

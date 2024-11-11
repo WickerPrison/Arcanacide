@@ -14,8 +14,8 @@ public class KnightSummon : ChaosSummon
     SpriteEffects spriteEffects;
     WaitForSeconds jumpTime = new WaitForSeconds(0.5f);
     float jumpSpeed = 50;
-    int jumpDamage = 35;
-    float jumpPoiseDamage = 35;
+    [SerializeField] int jumpDamage;
+    [SerializeField] float jumpPoiseDamage;
     float indicatorCircleSpeed = 6;
     bool inAir = false;
     Vector3 jumpPointDirection;

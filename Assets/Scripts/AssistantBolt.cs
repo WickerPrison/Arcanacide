@@ -10,7 +10,6 @@ public class AssistantBolt : MonoBehaviour
     Transform origin;
     PlayerScript playerScript;
     PlayerMovement playerMovement;
-    NavMeshAgent navAgent;
     TouchingCollider touchingCollider;
     Rigidbody rb;
     List<Collider> colliders;
@@ -22,6 +21,7 @@ public class AssistantBolt : MonoBehaviour
     [SerializeField] PlayerData playerData;
     float offset = 5;
     bool hittingPlayer = false;
+    float moveSpeed = 6;
 
 
     private void Awake()
@@ -34,7 +34,6 @@ public class AssistantBolt : MonoBehaviour
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerMovement = playerScript.GetComponent<PlayerMovement>();
-        navAgent = GetComponent<NavMeshAgent>();
         touchingCollider = GetComponentInChildren<TouchingCollider>();
         colliders = touchingCollider.GetTouchingObjects();
         bolts = GetComponentInChildren<Bolts>();
@@ -48,7 +47,6 @@ public class AssistantBolt : MonoBehaviour
     {
         bolts.SetPositions(origin.position, transform.position);
 
-        Debug.Log(playerMovement.lastMoveDir);
         Vector3 destination = playerScript.transform.position;
         if(pathfindingMethod == 1)
         {
@@ -61,8 +59,7 @@ public class AssistantBolt : MonoBehaviour
 
         Vector3 direction = destination - transform.position;
         rb.velocity += direction.normalized + Vector3.right * 0.1f;
-        rb.velocity = rb.velocity.normalized * 8;
-        //navAgent.SetDestination(FindDestination());
+        rb.velocity = rb.velocity.normalized * moveSpeed;
     }
 
     // Update is called once per frame
