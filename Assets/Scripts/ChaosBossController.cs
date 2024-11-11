@@ -1,8 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 [System.Serializable]
 public class ChaosBossController : EnemyController, IEndDialogue
@@ -12,10 +11,18 @@ public class ChaosBossController : EnemyController, IEndDialogue
     float fleeRadiusMin = 0;
     float fleeRadiusMax = 12;
     Vector3 fleePoint;
+    float meleeRange = 3f;
     [System.NonSerialized] public int phase = 1;
-    float phaseTriggerPercent = 1.1f;
+    float phaseTriggerPercent = 0.6f;
     float phaseTrigger;
     MusicManager musicManager;
+    [SerializeField] AssistantController assistant;
+
+    [SerializeField] FatmanSummon[] fatMenList;
+    [System.NonSerialized] public Queue<FatmanSummon> fatMen = new Queue<FatmanSummon>();
+
+    [SerializeField] KnightSummon[] knightSummons;
+    [System.NonSerialized] public Queue<KnightSummon> knights = new Queue<KnightSummon>();
 
     public override void Awake()
     {
@@ -27,11 +34,23 @@ public class ChaosBossController : EnemyController, IEndDialogue
     {
         base.Start();
         musicManager = gm.GetComponent<MusicManager>();
-        ChooseRandomPoint();
         facePlayer = GetComponent<FacePlayer>();
-        facePlayer.SetDestination(new Vector3(7, 0, -9));
+        facePlayer.SetDestination(new Vector3(3, 0, -2));
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
         gm.awareEnemies += 1;
+        attackTime = attackMaxTime;
+        foreach(FatmanSummon fatMan in fatMenList)
+        {
+            fatMan.enemyScript = enemyScript;
+            fatMan.bossController = this;
+            fatMen.Enqueue(fatMan);
+        }
+        foreach(KnightSummon knight in knightSummons)
+        {
+            knight.bossController = this;
+            knight.enemyScript = enemyScript;
+            knights.Enqueue(knight);
+        }
     }
 
     public override void EnemyAI()
@@ -45,6 +64,23 @@ public class ChaosBossController : EnemyController, IEndDialogue
             phase = 2;
         }
 
+        if(state == EnemyState.IDLE)
+        {
+            if(navAgent.enabled == true)
+            {
+                navAgent.SetDestination(playerScript.transform.position);
+            }
+
+            if(attackTime <= 0)
+            {
+                if (phase == 1)
+                {
+                    Phase1Attacks();
+                }
+                else Phase2Attacks();
+            }
+        }
+
         if (state == EnemyState.SPECIAL)
         {
             facePlayer.SetDestination(fleePoint);
@@ -55,62 +91,133 @@ public class ChaosBossController : EnemyController, IEndDialogue
             }
         }
 
-        if (navAgent.enabled)
-        {
-            navAgent.SetDestination(fleePoint);
-        }
-
         if (attackTime > 0)
         {
             attackTime -= Time.deltaTime;
         }
     }
 
-    void RunAway()
+    void Phase1Attacks()
     {
-        state = EnemyState.SPECIAL;
-        ChooseRandomPoint();
-
-        if (navAgent.enabled)
+        int randInt;
+        if(playerDistance < meleeRange)
         {
-            navAgent.SetDestination(fleePoint);
+            randInt = UnityEngine.Random.Range(1, 5);
+        }
+        else
+        {
+            randInt = UnityEngine.Random.Range(0, 4);
+        }
+        attackTime = 5;
+        switch (randInt)
+        {
+            case 0:
+                assistant.CallAnimation("Beams");
+                break;
+            case 1:
+                assistant.CallAnimation("ThrowBombs");
+                break;
+            case 2:
+                assistant.CallAnimation("Bolts");
+                break;
+            case 3:
+                state = EnemyState.ATTACKING;
+                frontAnimator.Play("Knights");
+                backAnimator.Play("Knights");
+                
+                break;
+            case 4:
+                state = EnemyState.ATTACKING;
+                frontAnimator.Play("Combo");
+                backAnimator.Play("Combo");
+                break;
         }
     }
 
-    void ChooseRandomPoint()
+    void Phase2Attacks()
     {
-        int xDir = Random.Range(1, 3);
-        int yDir = Random.Range(1, 3);
-        float xPos = Random.Range(fleeRadiusMin, fleeRadiusMax);
-        float zPos = Random.Range(fleeRadiusMin, fleeRadiusMax);
-        Vector3 startPos = new Vector3(xPos * Mathf.Pow(-1, xDir), 0, zPos * Mathf.Pow(-1, yDir));
-        NavMeshHit hit;
-        NavMesh.SamplePosition(startPos, out hit, 10, NavMesh.AllAreas);
-        fleePoint = hit.position;
-        if(Vector3.Distance(fleePoint, transform.position) < 5)
+        int randInt;
+        if (playerDistance < meleeRange)
         {
-            ChooseRandomPoint();
+            randInt = UnityEngine.Random.Range(1, 5);
+        }
+        else
+        {
+            randInt = UnityEngine.Random.Range(0, 4);
+        }
+        attackTime = 5;
+        switch (randInt)
+        {
+            case 0:
+                assistant.CallAnimation("Beams");
+                StartCoroutine(DelayAttack(0.4f, () =>
+                {
+                    state = EnemyState.ATTACKING;
+                    frontAnimator.Play("Knights");
+                    backAnimator.Play("Knights");
+                }));
+                break;
+            case 1:
+                assistant.CallAnimation("ThrowBombs");
+                break;
+            case 2:
+                assistant.CallAnimation("Bolts");
+                break;
+            case 3:
+                state = EnemyState.ATTACKING;
+                frontAnimator.Play("Knights");
+                backAnimator.Play("Knights");
+
+                break;
+            case 4:
+                state = EnemyState.ATTACKING;
+                StartCoroutine(DelayAttack(0.4f, () =>
+                {
+                    frontAnimator.Play("Combo");
+                    backAnimator.Play("Combo");
+                    assistant.CallAnimation("ThrowBombs");
+                }));
+                break;
         }
     }
 
-    public override void OnTakeDamage(object sender, System.EventArgs e)
+    IEnumerator DelayAttack(float delay, Action action)
     {
-        base.OnTakeDamage(sender, e);
+        yield return new WaitForSeconds(delay);
+        action();
     }
 
-    public override void EndStagger()
+    public void FatManAttack(Vector3 position, Vector3 direction)
     {
-        base.EndStagger();
-        RunAway();
+        FatmanSummon fatMan = fatMen.Dequeue();
+        fatMan.transform.position = position;
+        fatMan.SetDirection(direction);
+        fatMan.CallAnimation("Attack");
+    }
+
+    public void SummonKnight()
+    {
+        KnightSummon knight = knights.Dequeue();
+        knight.GetSummoned();
+    }
+
+    public void SetAttackTime(float newTime = -1)
+    {
+        if (newTime >= 0)
+        {
+            attackTime = newTime;
+        }
+        else attackTime = attackMaxTime;
     }
 
     public void EndDialogue()
     {
         frontAnimator.Play("Idle");
         backAnimator.Play("Idle");
-        RunAway();
+        facePlayer.ResetDestination();
         bossEvents.EndDialogue();
         musicManager.ChangeMusicState(MusicState.BOSSMUSIC);
+        state = EnemyState.IDLE;
     }
 
     public override void StartDying()

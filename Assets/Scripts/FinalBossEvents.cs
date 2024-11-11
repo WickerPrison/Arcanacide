@@ -9,6 +9,7 @@ public class FinalBossEvents : MonoBehaviour
     public event EventHandler assistantSitUp;
     public event EventHandler endDialogue;
     public event EventHandler freezeAssistant;
+    public event EventHandler onCombo;
 
     public void StandUp()
     {
@@ -28,5 +29,10 @@ public class FinalBossEvents : MonoBehaviour
     public void FreezeAssistant()
     {
         freezeAssistant?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OnCombo()
+    {
+        onCombo?.Invoke(this, EventArgs.Empty);
     }
 }

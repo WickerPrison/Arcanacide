@@ -33,7 +33,6 @@ public class EnemyController : MonoBehaviour
     public GameObject projectilePrefab;
     [System.NonSerialized] public float playerDistance = 100;
     [System.NonSerialized] public bool directionLock = false;
-    [System.NonSerialized] public bool parryWindow = false;
     [System.NonSerialized] public bool isParrying = false;
     public int spellAttackDamage = 15;
     public int spellAttackPoiseDamage = 15;
@@ -104,7 +103,7 @@ public class EnemyController : MonoBehaviour
 
         if (state == EnemyState.UNAWARE && playerDistance <= detectRange)
         {
-            Debug.DrawLine(transform.position, player.transform.position, Color.red, 1000);
+            //Debug.DrawLine(transform.position, player.transform.position, Color.red, 1000);
             if(!Physics.Linecast(transform.position, player.transform.position, sightBlocker))
             {
                 state = EnemyState.IDLE;
@@ -159,7 +158,6 @@ public class EnemyController : MonoBehaviour
 
     public virtual void AttackHit(int smearSpeed)
     {
-        parryWindow = false;
         enemySound.SwordSwoosh();
         enemyEvents.Attack();
 

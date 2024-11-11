@@ -96,7 +96,6 @@ public class OldManController : EnemyController
 
     public override void AttackHit(int smearSpeed)
     {
-        parryWindow = false;
         staticVFX.Play();
 
         if (!canHitPlayer)

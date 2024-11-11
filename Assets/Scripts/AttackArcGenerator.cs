@@ -11,7 +11,6 @@ public class AttackArcGenerator : MonoBehaviour
     public int halfConeAngle;
     public float radius;
     [SerializeField] float yOffset;
-    EnemyController enemyController;
     Material viewConeMaterial;
     [System.NonSerialized] public Renderer coneRenderer;
 
@@ -33,11 +32,10 @@ public class AttackArcGenerator : MonoBehaviour
     [System.NonSerialized] public float angleRightSide;
     [System.NonSerialized] public int leftIndex = 1;
     [System.NonSerialized] public int rightIndex = 1;
-
+    
     // Start is called before the first frame update
     public virtual void Start()
     {
-        enemyController = GetComponentInParent<EnemyController>();
         centerPoint = new Vector3(0, yOffset, -1);
         viewConeMaterial = new Material(whiteMaterial);
         coneRenderer = viewConeObject.GetComponent<Renderer>();

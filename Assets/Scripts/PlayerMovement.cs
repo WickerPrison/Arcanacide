@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     //walk varibles
     [System.NonSerialized] public Vector3 moveDirection;
+    [System.NonSerialized] public Vector3 lastMoveDir;
     [System.NonSerialized] public float moveSpeed = 300;
 
     //dash variables
@@ -78,6 +79,11 @@ public class PlayerMovement : MonoBehaviour
     {
         moveDirection = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y);
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
+
+        if(moveDirection.magnitude > 0)
+        {
+            lastMoveDir = moveDirection.normalized;
+        }
 
         AttackPointPosition();
 
