@@ -393,8 +393,6 @@ public class BossController : EnemyController, IEndDialogue
         bossDialogue.EndLookUpDialogue();
         mapData.fireBossKilled = true;
         gm.awareEnemies -= 1;
-        GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
-        bossHealthbar.SetActive(false);
         GlobalEvents.instance.BossKilled();
     }
 }

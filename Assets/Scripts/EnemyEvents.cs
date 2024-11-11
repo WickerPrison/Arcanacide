@@ -15,6 +15,7 @@ public class EnemyEvents : MonoBehaviour
     public event EventHandler OnStartDOT;
     public event EventHandler OnStopDOT;
     public event EventHandler OnAttack;
+    public event Action<EnemyEvents, float> OnUpdateHealth;
 
 
     public void TakeDamage()
@@ -65,5 +66,10 @@ public class EnemyEvents : MonoBehaviour
     public void Attack()
     {
         OnAttack?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void UpdateHealth(float healthRatio)
+    {
+        OnUpdateHealth?.Invoke(this, healthRatio);
     }
 }

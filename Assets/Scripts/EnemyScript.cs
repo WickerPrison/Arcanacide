@@ -164,16 +164,8 @@ public class EnemyScript : MonoBehaviour
 
     public void UpdateHealthbar()
     {
-        if (healthbar == null) return;
         float healthbarRatio = (float)health / (float)maxHealth;
-        if(health > 0)
-        {
-            healthbar.transform.localScale = new Vector3(healthbarRatio * healthbarScale, healthbar.transform.localScale.y, healthbar.transform.localScale.z);
-        }
-        else
-        {
-            healthbar.transform.localScale = new Vector3(0, healthbar.transform.localScale.y, healthbar.transform.localScale.z);
-        }
+        enemyEvents.UpdateHealth(healthbarRatio);
     }
 
 

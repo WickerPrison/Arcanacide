@@ -41,6 +41,7 @@ public class HUD : MonoBehaviour
 
         youDiedTextMaterial.SetColor("_OutlineColor", mapData.floorColor);
 
+        gemImage.material = new Material(gemImage.material);
         UpdateGemCracks();
 
         if (!playerData.hasHealthGem)
