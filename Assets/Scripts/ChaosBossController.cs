@@ -102,34 +102,33 @@ public class ChaosBossController : EnemyController, IEndDialogue
         int randInt;
         if(playerDistance < meleeRange)
         {
-            randInt = UnityEngine.Random.Range(1, 6);
+            randInt = UnityEngine.Random.Range(1, 5);
         }
         else
         {
-            randInt = UnityEngine.Random.Range(0, 5);
+            randInt = UnityEngine.Random.Range(0, 4);
         }
-        randInt = 7;
+        attackTime = 5;
+        randInt = 2;
         switch (randInt)
         {
             case 0:
                 assistant.CallAnimation("Beams");
-                attackTime = 5;
                 break;
             case 1:
                 assistant.CallAnimation("ThrowBombs");
-                attackTime = 5;
                 break;
             case 2:
                 assistant.CallAnimation("Bolts");
-                attackTime = 5;
                 break;
-            case 4:
+            case 3:
+                state = EnemyState.ATTACKING;
                 frontAnimator.Play("Knights");
                 backAnimator.Play("Knights");
-                attackTime = 5;
+                
                 break;
-            case 5:
-                attackTime = 5;
+            case 4:
+                state = EnemyState.ATTACKING;
                 frontAnimator.Play("Combo");
                 backAnimator.Play("Combo");
                 break;
@@ -148,6 +147,15 @@ public class ChaosBossController : EnemyController, IEndDialogue
     {
         KnightSummon knight = knights.Dequeue();
         knight.GetSummoned();
+    }
+
+    public void SetAttackTime(float newTime = -1)
+    {
+        if (newTime >= 0)
+        {
+            attackTime = newTime;
+        }
+        else attackTime = attackMaxTime;
     }
 
     public void EndDialogue()

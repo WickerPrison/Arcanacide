@@ -28,7 +28,7 @@ public class AssistantController : MonoBehaviour
     FinalBossEvents bossEvents;
     PlayerScript playerScript;
     AssistantState state = AssistantState.DIALOGUE;
-    float moveSpeed = 10;
+    float moveSpeed = 4;
     float attackTime = 5;
     float attackTimer = 0;
     int beamsNum = 5;
@@ -95,8 +95,8 @@ public class AssistantController : MonoBehaviour
     void Position()
     {
         if (state == AssistantState.DIALOGUE) return;
-        Vector3 direction = (playerScript.transform.position - bossController.transform.position).normalized;
-        Vector3 destination = bossController.transform.position + 3 * direction;
+        Vector3 direction = (bossController.transform.position - playerScript.transform.position).normalized;
+        Vector3 destination = bossController.transform.position + 4 * direction;
         destination += Vector3.right * Mathf.Sin(Time.time / 2) * 2 + Vector3.forward * Mathf.Cos(Time.time / 2) * 2;
         transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.fixedDeltaTime);
     }
@@ -177,6 +177,7 @@ public class AssistantController : MonoBehaviour
     {
         state = AssistantState.IDLE;
         attackTimer = time;
+        bossController.SetAttackTime(time);
     }
 
     private void onCombo(object sender, EventArgs e)

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8306453498736669523}
   - component: {fileID: 6991659819657814600}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BoltImpactSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 9222894026413345217}
   - component: {fileID: 8995000725316604438}
   - component: {fileID: 5555347211912759717}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: crackle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4909,7 +4909,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7469566006580209699}
   - component: {fileID: 1828103886364706691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BoltImpactSprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4993,9 +4993,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5852644601534776357}
   - component: {fileID: 5852644601534776359}
-  - component: {fileID: 5852644601534776358}
-  - component: {fileID: 8961341457317180697}
-  m_Layer: 0
+  - component: {fileID: 5520388805254402688}
+  m_Layer: 7
   m_Name: AssistantBolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5037,36 +5036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
-  electricDamage:
-    Guid:
-      Data1: 1086017793
-      Data2: 1284176931
-      Data3: -836308337
-      Data4: 193312250
-    Path: event:/ElectricDamageLoop
---- !u!195 &5852644601534776358
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5852644601534776352}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 1
-  m_Speed: 12
-  m_Acceleration: 12
-  avoidancePriority: 50
-  m_AngularSpeed: 0
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
---- !u!54 &8961341457317180697
+--- !u!54 &5520388805254402688
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5076,8 +5046,8 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -5136,7 +5106,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e370ef7559e9c014c97f98276d21df54, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5157,7 +5127,7 @@ SpriteRenderer:
   m_SortingLayerID: 933306177
   m_SortingLayer: -1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97f4c1c9cecede546b59d88515570a2d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
@@ -5205,7 +5175,7 @@ GameObject:
   - component: {fileID: 8973387020163900554}
   - component: {fileID: 1443376661877301853}
   - component: {fileID: 7145711951354670611}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10017,7 +9987,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1554126363970683807}
   - component: {fileID: 6452661456948890289}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10102,7 +10072,7 @@ GameObject:
   - component: {fileID: 6414197184231970991}
   - component: {fileID: 6104662467567451754}
   - component: {fileID: 7395762585554643908}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14935,6 +14905,14 @@ PrefabInstance:
       propertyPath: m_Parameters.colorGradient.key1.r
       value: 0.48235294
       objectReference: {fileID: 0}
+    - target: {fileID: 1337311133670335578, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972182696682110380, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2028303330429908175, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: endNoiseAmp
       value: 0
@@ -14942,6 +14920,10 @@ PrefabInstance:
     - target: {fileID: 2028303330429908175, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: frameCounter
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2116282963641147737, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2328928283524738056, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.b
@@ -14966,6 +14948,10 @@ PrefabInstance:
     - target: {fileID: 2328928283524738056, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.r
       value: 0.48235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519476384875177590, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2760574067391826225, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: m_SortingOrder
@@ -15038,6 +15024,14 @@ PrefabInstance:
     - target: {fileID: 2760574067391826225, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].outWeight
       value: 0.42144275
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630856546035931988, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301755784132248226, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4380184460843535297, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: endNoiseAmp
@@ -15087,6 +15081,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5088569920682586729, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5203017820628689660, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: endNoiseAmp
       value: 0
@@ -15095,6 +15093,14 @@ PrefabInstance:
       propertyPath: frameCounter
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5282619152586454890, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714988432765561759, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5959063678095581196, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: m_SortingOrder
       value: 2
@@ -15167,6 +15173,14 @@ PrefabInstance:
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].outWeight
       value: 0.42144275
       objectReference: {fileID: 0}
+    - target: {fileID: 6200231586485636939, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7612160410041501796, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8241210705736769282, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: m_SortingOrder
       value: 2
@@ -15262,10 +15276,18 @@ PrefabInstance:
     - target: {fileID: 8377590217758456379, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.r
       value: 0.48235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568050366516949061, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8759700288671174282, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
       propertyPath: m_Name
       value: Bolts
+      objectReference: {fileID: 0}
+    - target: {fileID: 8759700288671174282, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}

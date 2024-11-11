@@ -60,4 +60,9 @@ public class ChaosBossAnimationEvenets : EnemyAnimationEvents
             events.OnCombo();
         }
     }
+
+    public void EndAttack(float time = -1)
+    {
+        chaosBossController.SetAttackTime(time);
+    }
 }

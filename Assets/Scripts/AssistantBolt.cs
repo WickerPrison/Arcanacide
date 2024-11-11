@@ -9,8 +9,10 @@ public class AssistantBolt : MonoBehaviour
     AssistantController controller;
     Transform origin;
     PlayerScript playerScript;
+    PlayerMovement playerMovement;
     NavMeshAgent navAgent;
     TouchingCollider touchingCollider;
+    Rigidbody rb;
     List<Collider> colliders;
     Bolts bolts;
     int damage;
@@ -31,11 +33,13 @@ public class AssistantBolt : MonoBehaviour
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerMovement = playerScript.GetComponent<PlayerMovement>();
         navAgent = GetComponent<NavMeshAgent>();
         touchingCollider = GetComponentInChildren<TouchingCollider>();
         colliders = touchingCollider.GetTouchingObjects();
         bolts = GetComponentInChildren<Bolts>();
         origin = controller.boltOrigin;
+        rb = GetComponent<Rigidbody>();
 
         FindRandomPosition();
     }
@@ -43,8 +47,22 @@ public class AssistantBolt : MonoBehaviour
     private void Update()
     {
         bolts.SetPositions(origin.position, transform.position);
-        
-        navAgent.SetDestination(FindDestination());
+
+        Debug.Log(playerMovement.lastMoveDir);
+        Vector3 destination = playerScript.transform.position;
+        if(pathfindingMethod == 1)
+        {
+            destination += playerMovement.lastMoveDir * 3;
+        }
+        else if(pathfindingMethod == 2)
+        {
+            destination -= playerMovement.lastMoveDir * 3;
+        }
+
+        Vector3 direction = destination - transform.position;
+        rb.velocity += direction.normalized + Vector3.right * 0.1f;
+        rb.velocity = rb.velocity.normalized * 8;
+        //navAgent.SetDestination(FindDestination());
     }
 
     // Update is called once per frame
