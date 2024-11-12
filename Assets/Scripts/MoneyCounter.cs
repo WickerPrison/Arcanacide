@@ -39,12 +39,31 @@ public class MoneyCounter : MonoBehaviour
                 }
             }
         }
+        else if (displayVal > playerData.money)
+        {
+            updateVal += Time.deltaTime * speed;
+            if (updateVal >= 1)
+            {
+                displayVal -= Mathf.FloorToInt(updateVal);
+                updateVal = 0;
+                if (displayVal < playerData.money)
+                {
+                    displayVal = playerData.money;
+                }
+            }
+        }
 
         text.text = displayVal.ToString();
     }
 
     private void OnPlayerMoneyChange(GlobalEvents sender, int amount)
     {
+        int difference = Mathf.Abs(displayVal - (playerData.money + amount));
+        if (difference > 50)
+        {
+            speed = difference / 2;
+        }
+        else speed = 25;
         StopAllCoroutines();
         StartCoroutine(MoneyChange(amount));
     }

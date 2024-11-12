@@ -22,7 +22,7 @@ public class ShopButton : MonoBehaviour
         if (!playerData.emblems.Contains(emblemName) && playerData.money >= cost)
         {
             playerData.emblems.Add(emblemName);
-            playerData.money -= cost;
+            GlobalEvents.instance.MoneyChange(-cost);
         }
     }
 

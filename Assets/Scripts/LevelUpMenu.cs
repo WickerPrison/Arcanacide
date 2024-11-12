@@ -139,7 +139,7 @@ public class LevelUpMenu : MonoBehaviour
         if (playerData.money >= requiredMoney && IncrementStat(attribute, 0) < 30)
         {
             buttonDict[attribute].LevelUp();
-            playerData.money -= requiredMoney;
+            GlobalEvents.instance.MoneyChange(-requiredMoney);
             IncrementStat(attribute, 1);
             UpdateText();
         }
