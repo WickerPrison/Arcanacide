@@ -10,8 +10,6 @@ public class EnemyScript : MonoBehaviour
     [System.NonSerialized] public int health;
     [System.NonSerialized] public float poise;
     public int reward;
-    public GameObject healthbar;
-    [SerializeField] float healthbarScale;
     public int enemyID;
     public MapData mapData;
     public PlayerData playerData;
@@ -46,6 +44,7 @@ public class EnemyScript : MonoBehaviour
         poise = maxPoise;
         enemyController = GetComponent<EnemyController>();
         enemyEvents = GetComponent<EnemyEvents>();
+        enemyEvents.UpdateHealth(1);
         enemySound = GetComponentInChildren<EnemySound>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gm.enemies.Add(this);
