@@ -23,7 +23,6 @@ public class HUD : MonoBehaviour
     public Image gemImage;
     [SerializeField] Image gemProtection;
     PlayerScript playerScript;
-    float healthbarScale = 1;
     Canvas canvas;
     Camera mainCamera;
     InputManager im;

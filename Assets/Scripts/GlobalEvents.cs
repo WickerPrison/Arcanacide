@@ -15,6 +15,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler onBossKilled;
     public event EventHandler onGemUsed;
     public event EventHandler onTestButton;
+    public event Action<GlobalEvents, int> onPlayerMoneyChange;
 
     private void Awake()
     {
@@ -50,5 +51,10 @@ public class GlobalEvents : MonoBehaviour
     public void GemUsed()
     {
         onGemUsed?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void MoneyChange(int amount)
+    {
+        onPlayerMoneyChange?.Invoke(this, amount);
     }
 }

@@ -177,11 +177,11 @@ public class EnemyScript : MonoBehaviour
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.pay_raise))
         {
-            playerData.money += Mathf.RoundToInt(reward * 1.25f);
+            GlobalEvents.instance.MoneyChange(Mathf.RoundToInt(reward * 1.25f));
         }
         else
         {
-            playerData.money += reward;
+            GlobalEvents.instance.MoneyChange(reward);
         }
         gm.enemies.Remove(this);
         gm.enemiesInRange.Remove(this);
