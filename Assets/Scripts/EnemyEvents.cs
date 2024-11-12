@@ -15,6 +15,7 @@ public class EnemyEvents : MonoBehaviour
     public event EventHandler OnStartDOT;
     public event EventHandler OnStopDOT;
     public event EventHandler OnAttack;
+    public event EventHandler OnHideBossHealthbar;
     public event Action<EnemyEvents, float> OnUpdateHealth;
 
 
@@ -71,5 +72,10 @@ public class EnemyEvents : MonoBehaviour
     public void UpdateHealth(float healthRatio)
     {
         OnUpdateHealth?.Invoke(this, healthRatio);
+    }
+
+    public void HideBossHealthbar()
+    {
+        OnHideBossHealthbar?.Invoke(this, EventArgs.Empty);
     }
 }

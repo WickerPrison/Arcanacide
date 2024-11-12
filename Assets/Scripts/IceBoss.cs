@@ -83,8 +83,7 @@ public class IceBoss : EnemyController, IEndDialogue
         if (mapData.iceBossKilled)
         {
             SetupDeathPose();
-            //GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
-            //bossHealthbar.SetActive(false);
+            enemyEvents.HideBossHealthbar();
             musicManager.ChangeMusicState(MusicState.MAINLOOP);
             GameObject dialogueTrigger = GetComponentInChildren<DialogueTriggerRoomEntrance>().gameObject;
             Destroy(dialogueTrigger);
@@ -406,8 +405,6 @@ public class IceBoss : EnemyController, IEndDialogue
 
         mapData.iceBossKilled = true;
         gm.awareEnemies -= 1;
-        //GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
-        //bossHealthbar.SetActive(false);
         GlobalEvents.instance.BossKilled();
     }
 

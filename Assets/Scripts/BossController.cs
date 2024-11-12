@@ -67,8 +67,7 @@ public class BossController : EnemyController, IEndDialogue
         musicManager = gm.GetComponentInChildren<MusicManager>();
         if (mapData.fireBossKilled)
         {
-            //GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
-            //bossHealthbar.SetActive(false);
+            enemyEvents.HideBossHealthbar();
             musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);

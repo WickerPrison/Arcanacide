@@ -12,17 +12,15 @@ public class EnemyHealthbar : MonoBehaviour
     [SerializeField] bool isBoss = false;
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
     float delay;
-    float speed;
+    [SerializeField] float speed;
     bool buffer = false;
 
-    private void Start()
+    private void Awake()
     {
-        if(enemyEvents == null)
+        if (enemyEvents == null)
         {
             enemyEvents = GetComponentInParent<EnemyEvents>();
         }
-
-        speed = maxSize / 2;
     }
 
     private void OnUpdateHealth(EnemyEvents sender, float healthRatio)
@@ -67,12 +65,14 @@ public class EnemyHealthbar : MonoBehaviour
     private void OnEnable()
     {
         enemyEvents.OnUpdateHealth += OnUpdateHealth;
+        enemyEvents.OnHideBossHealthbar += OnBossKilled;
         GlobalEvents.instance.onBossKilled += OnBossKilled;
     }
 
     private void OnDisable()
     {
         enemyEvents.OnUpdateHealth -= OnUpdateHealth;
+        enemyEvents.OnHideBossHealthbar -= OnBossKilled;
         GlobalEvents.instance.onBossKilled -= OnBossKilled;
     }
 }

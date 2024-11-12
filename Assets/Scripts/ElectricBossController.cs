@@ -56,8 +56,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         musicManager = gm.GetComponentInChildren<MusicManager>();
         if (mapData.electricBossKilled)
         {
-            //GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
-            //bossHealthbar.SetActive(false);
+            enemyEvents.HideBossHealthbar();
             musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
@@ -399,8 +398,6 @@ public class ElectricBossController : EnemyController, IEndDialogue
 
         mapData.electricBossKilled = true;
         gm.awareEnemies -= 1;
-        //GameObject bossHealthbar = enemyScript.healthbar.transform.parent.gameObject;
-        //bossHealthbar.SetActive(false);
         GlobalEvents.instance.BossKilled();
     }
 
