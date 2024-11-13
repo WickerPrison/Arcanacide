@@ -977,6 +977,34 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""BugReport"",
+            ""id"": ""01af5c38-198b-4185-b98b-f80c935748c3"",
+            ""actions"": [
+                {
+                    ""name"": ""BugReport"",
+                    ""type"": ""Button"",
+                    ""id"": ""83c2d500-a3e8-4cb5-86d0-438a0dff18a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""27f258fe-2c36-4bbd-8136-9a19ced435d3"",
+                    ""path"": ""<Keyboard>/f12"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BugReport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1045,6 +1073,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_Next = m_Dialogue.FindAction("Next", throwIfNotFound: true);
+        // BugReport
+        m_BugReport = asset.FindActionMap("BugReport", throwIfNotFound: true);
+        m_BugReport_BugReport = m_BugReport.FindAction("BugReport", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1424,6 +1455,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public DialogueActions @Dialogue => new DialogueActions(this);
+
+    // BugReport
+    private readonly InputActionMap m_BugReport;
+    private IBugReportActions m_BugReportActionsCallbackInterface;
+    private readonly InputAction m_BugReport_BugReport;
+    public struct BugReportActions
+    {
+        private @PlayerControls m_Wrapper;
+        public BugReportActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @BugReport => m_Wrapper.m_BugReport_BugReport;
+        public InputActionMap Get() { return m_Wrapper.m_BugReport; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BugReportActions set) { return set.Get(); }
+        public void SetCallbacks(IBugReportActions instance)
+        {
+            if (m_Wrapper.m_BugReportActionsCallbackInterface != null)
+            {
+                @BugReport.started -= m_Wrapper.m_BugReportActionsCallbackInterface.OnBugReport;
+                @BugReport.performed -= m_Wrapper.m_BugReportActionsCallbackInterface.OnBugReport;
+                @BugReport.canceled -= m_Wrapper.m_BugReportActionsCallbackInterface.OnBugReport;
+            }
+            m_Wrapper.m_BugReportActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @BugReport.started += instance.OnBugReport;
+                @BugReport.performed += instance.OnBugReport;
+                @BugReport.canceled += instance.OnBugReport;
+            }
+        }
+    }
+    public BugReportActions @BugReport => new BugReportActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -1481,5 +1545,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public interface IDialogueActions
     {
         void OnNext(InputAction.CallbackContext context);
+    }
+    public interface IBugReportActions
+    {
+        void OnBugReport(InputAction.CallbackContext context);
     }
 }
