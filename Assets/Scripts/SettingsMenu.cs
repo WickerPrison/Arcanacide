@@ -66,6 +66,7 @@ public class SettingsMenu : MonoBehaviour
             fullscreenToggle.ToggleSwitch(false);
             fullscreenText.text = "Off";
         }
+
         gm.SaveGame();
         GlobalEvents.instance.OnChangedSetting();
     }
