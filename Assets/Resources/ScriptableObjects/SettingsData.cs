@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.XInput;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 using TMPro;
 using UnityEngine.Audio;
 using FMODUnity;

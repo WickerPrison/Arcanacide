@@ -13,9 +13,11 @@ public class PauseMenuButtons : MonoBehaviour
     GameObject textMenu;
     GameObject weaponMenu;
     GameObject settingsMenu;
+    GameObject bugReporter;
     [SerializeField] GameObject textMenuPrefab;
     [SerializeField] GameObject weaponMenuPrefab;
     [SerializeField] GameObject settingsMenuPrefab;
+    [SerializeField] GameObject bugReporterPrefab;
     [SerializeField] GameObject newMessage;
     [SerializeField] DialogueData dialogueData;
     public PlayerControls controls;
@@ -69,6 +71,14 @@ public class PauseMenuButtons : MonoBehaviour
         sm.ButtonSound();
         settingsMenu = Instantiate(settingsMenuPrefab);
         settingsMenu.GetComponent<SettingsMenu>().pauseMenu = this;
+        controls.Disable();
+    }
+
+    public void OpenBugReport()
+    {
+        sm.ButtonSound();
+        bugReporter = Instantiate(bugReporterPrefab);
+        bugReporter.GetComponent<BugReporter>().pauseMenu = this;
         controls.Disable();
     }
 
