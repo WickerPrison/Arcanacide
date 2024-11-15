@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using System.Text.RegularExpressions;
 
 enum ReportMode
 {
@@ -12,15 +13,14 @@ enum ReportMode
 
 public class BugReporter : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI title;
     [SerializeField] TMP_InputField titleInput;
+    [SerializeField] TMP_Dropdown dropdown;
     [SerializeField] GameObject bugModeUI;
     [SerializeField] TMP_InputField whatHappenedInput;
     [SerializeField] TMP_InputField descriptionInput;
     [SerializeField] GameObject feedbackModeUI;
     [SerializeField] TMP_InputField feedbackInput;
     [SerializeField] TMP_InputField emailInput;
-    [SerializeField] TextMeshProUGUI toggleText;
     [SerializeField] TextMeshProUGUI message;
     [SerializeField] Color errorColor;
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
@@ -36,14 +36,12 @@ public class BugReporter : MonoBehaviour
 
     public void ToggleMode()
     {
-        if (reportMode == ReportMode.BUG) FeedbackMode();
-        else BugMode();
+        if (dropdown.value == 0) BugMode();
+        else FeedbackMode();
     }
 
     void BugMode()
     {
-        title.text = "Bug Report";
-        toggleText.text = "Give Feedback";
         bugModeUI.SetActive(true);
         feedbackModeUI.SetActive(false);
         reportMode = ReportMode.BUG;
@@ -51,8 +49,6 @@ public class BugReporter : MonoBehaviour
 
     void FeedbackMode()
     {
-        title.text = "Feedback";
-        toggleText.text = "Bug Report";
         bugModeUI.SetActive(false);
         feedbackModeUI.SetActive(true);
         reportMode = ReportMode.FEEDBACK;
@@ -91,9 +87,18 @@ public class BugReporter : MonoBehaviour
             }
             description = feedbackInput.text;
         }
+        if(emailInput.text != "")
+        {
+            if(!Regex.IsMatch(emailInput.text, "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
+            {
+                message.color = errorColor;
+                message.text = "Invalid email address";
+                return;
+            }
+        }
 
         message.color = Color.white;
-        message.text = "Processing...";
+        message.text = "Processing... This may take a few minutes.";
         StartCoroutine(CreateIssue(titleInput.text, description, emailInput.text));
         
     }
@@ -118,10 +123,6 @@ public class BugReporter : MonoBehaviour
             form.AddField("type", "Feedback");
         }
         if (email != null) form.AddField("email", email);
-        foreach(KeyValuePair<string, string> kvp in form.headers)
-        {
-            Debug.Log(kvp.Key + " " + kvp.Value);
-        }
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
