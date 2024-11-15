@@ -25,7 +25,8 @@ public class BugReporter : MonoBehaviour
     [SerializeField] Color errorColor;
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
     ReportMode reportMode = ReportMode.BUG;
-    string url = "http://localhost:3001/reports";
+    //string url = "http://localhost:3001/reports";
+    string url = "https://bugreporter-production.up.railway.app/reports";
 
     private void Start()
     {
@@ -117,7 +118,12 @@ public class BugReporter : MonoBehaviour
             form.AddField("type", "Feedback");
         }
         if (email != null) form.AddField("email", email);
-        using(UnityWebRequest request = UnityWebRequest.Post(url, form))
+        foreach(KeyValuePair<string, string> kvp in form.headers)
+        {
+            Debug.Log(kvp.Key + " " + kvp.Value);
+        }
+
+        using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
             yield return request.SendWebRequest();
 
