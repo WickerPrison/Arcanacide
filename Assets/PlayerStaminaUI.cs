@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 
 public class PlayerStaminaUI : MonoBehaviour
 {
+    [SerializeField] RectTransform border;
+    [SerializeField] RectTransform background;
     [SerializeField] RectMask2D staminaMask;
     [SerializeField] RectMask2D delayMask;
     [SerializeField] PlayerData playerData;
@@ -18,6 +21,9 @@ public class PlayerStaminaUI : MonoBehaviour
 
     private void Start()
     {
+        float borderScale = Mathf.Ceil(playerData.MaxStamina() / 2.0175f) * spacing + 25.6f;
+        border.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale);
+        background.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale - 10);
         GainStamina(playerData.MaxStamina());
     }
 
