@@ -141,6 +141,7 @@ public class PlayerScript : MonoBehaviour
         {
             stamina = 0;
         }
+        GlobalEvents.instance.StaminaUpdate(stamina);
         playerAnimation.StaminaUpdate();
         staminaDelay = maxStaminaDelay;
     }
@@ -180,6 +181,7 @@ public class PlayerScript : MonoBehaviour
             else if(stamina < playerData.MaxStamina())
             {
                 stamina += Time.deltaTime * staminaRate;
+                GlobalEvents.instance.StaminaUpdate(stamina);
             }
         }
 

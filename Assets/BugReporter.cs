@@ -25,13 +25,25 @@ public class BugReporter : MonoBehaviour
     [SerializeField] Color errorColor;
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
     ReportMode reportMode = ReportMode.BUG;
+    public PlayerControls controls;
     //string url = "http://localhost:3001/reports";
     string url = "https://bugreporter-production.up.railway.app/reports";
+
+    private void Awake()
+    {
+        controls = new PlayerControls();
+        controls.Menu.Back.started += ctx => CloseBugReport();
+    }
 
     private void Start()
     {
         EventSystem.current.SetSelectedGameObject(null);
         message.text = "";
+    }
+
+    private void LateUpdate()
+    {
+        Cursor.visible = true;
     }
 
     public void ToggleMode()
@@ -58,6 +70,7 @@ public class BugReporter : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
         pauseMenu.controls.Enable();
+        Cursor.visible = false;
         Destroy(gameObject);
     }
 
@@ -155,6 +168,16 @@ public class BugReporter : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
     }
 
 
