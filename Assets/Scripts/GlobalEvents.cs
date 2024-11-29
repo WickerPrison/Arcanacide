@@ -16,6 +16,8 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler onGemUsed;
     public event EventHandler onTestButton;
     public event Action<GlobalEvents, int> onPlayerMoneyChange;
+    public event Action<GlobalEvents, float> onLoseStamina;
+    public event Action<GlobalEvents, float> onGainStamina;
 
     private void Awake()
     {
@@ -56,5 +58,15 @@ public class GlobalEvents : MonoBehaviour
     public void MoneyChange(int amount)
     {
         onPlayerMoneyChange?.Invoke(this, amount);
+    }
+
+    public void LoseStamina(float stamina)
+    {
+        onLoseStamina?.Invoke(this, stamina);
+    }
+
+    public void GainStamina(float stamina)
+    {
+        onGainStamina?.Invoke(this, stamina);
     }
 }
