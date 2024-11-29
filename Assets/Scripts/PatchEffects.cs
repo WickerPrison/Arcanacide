@@ -137,7 +137,7 @@ public class PatchEffects : MonoBehaviour
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.adrenaline_rush))
         {
-            playerScript.stamina = playerData.MaxStamina();
+            playerScript.GainStamina(playerData.MaxStamina());
         }
 
         if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && mirrorCloakTimer <= 0 && attackingEnemy != null)

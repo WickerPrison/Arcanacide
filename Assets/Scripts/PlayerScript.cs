@@ -33,12 +33,14 @@ public class PlayerScript : MonoBehaviour
     //other scripts
     GameManager gm;
 
-    //stagger variables
-    [System.NonSerialized] public float stamina;
-    [System.NonSerialized] public bool isStaggered = false;
+    //stamina variables
+    public float stamina { get; private set; }
     float maxStaminaDelay = 1f;
     float staminaDelay;
     float staminaRate = 40;
+
+    //stagger variables
+    [System.NonSerialized] public bool isStaggered = false;
     float staggerTimer = 0;
 
     //poise variables
@@ -141,9 +143,20 @@ public class PlayerScript : MonoBehaviour
         {
             stamina = 0;
         }
-        GlobalEvents.instance.StaminaUpdate(stamina);
+        GlobalEvents.instance.LoseStamina(stamina);
         playerAnimation.StaminaUpdate();
         staminaDelay = maxStaminaDelay;
+    }
+
+    public void GainStamina(float amount)
+    {
+        stamina += amount;
+        if(stamina > playerData.MaxStamina())
+        {
+            stamina = playerData.MaxStamina();
+        }
+
+        GlobalEvents.instance.GainStamina(stamina);
     }
 
     public void LoseMana(float amount)
@@ -180,8 +193,7 @@ public class PlayerScript : MonoBehaviour
             }
             else if(stamina < playerData.MaxStamina())
             {
-                stamina += Time.deltaTime * staminaRate;
-                GlobalEvents.instance.StaminaUpdate(stamina);
+                GainStamina(Time.deltaTime * staminaRate);
             }
         }
 
