@@ -14,6 +14,7 @@ public class LightningThrower : EnemyController
     bool isShocking = false;
     float shockDamageBuildup;
     float lightningThrowerDamage = 20;
+    float shockTimer = 0;
     [SerializeField] EventReference lightningSFX;
     [SerializeField] float lightningVolume;
 
@@ -31,12 +32,15 @@ public class LightningThrower : EnemyController
         if (isShocking && attackArc.CanHitPlayer() && playerAbilities.gameObject.layer == 3)
         {
             shockDamageBuildup += Time.deltaTime * lightningThrowerDamage;
-            while (shockDamageBuildup > 1)
+            shockTimer += Time.deltaTime;
+            if(shockTimer > 0.15f)
             {
-                shockDamageBuildup -= 1;
-                playerScript.LoseHealth(1, EnemyAttackType.NONPARRIABLE, null);
+                playerScript.LoseHealth(Mathf.RoundToInt(shockDamageBuildup), EnemyAttackType.NONPARRIABLE, null);
+                shockDamageBuildup = 0;
+                shockTimer = 0;
+                playerScript.StartStagger(0.2f);
+
             }
-            playerScript.StartStagger(Time.deltaTime * 1.1f);
         }
 
         if (state == EnemyState.IDLE)
