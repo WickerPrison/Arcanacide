@@ -7,6 +7,9 @@ using UnityEngine;
 public class FireTrail : MonoBehaviour
 {
     [SerializeField] EventReference fmodEvent;
+    [SerializeField] ParticleSystem particles;
+    PlayerAbilities playerAbilities;
+    PlayerScript playerScript;
     EventInstance fmodInstance;
     public float duration = 5;
     public float damagePerSecond = 5;
@@ -26,17 +29,14 @@ public class FireTrail : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && other.gameObject.layer == 3)
         {
-            PlayerAbilities playerAbilities;
-            playerAbilities = other.gameObject.GetComponent<PlayerAbilities>();
-            if (playerAbilities.shield)
+            if (GetPlayerAbilities(other).shield)
             {
                 return;
             }
             damage += damagePerSecond * Time.deltaTime;
             if(damage > 1)
             {
-                PlayerScript playerScript = playerAbilities.GetComponent<PlayerScript>();
-                playerScript.LoseHealth(Mathf.FloorToInt(damage), EnemyAttackType.NONPARRIABLE, null);
+                playerScript.LoseHealth(Mathf.RoundToInt(damage), EnemyAttackType.NONPARRIABLE, null);
                 damage = 0;
             }
         }
@@ -49,8 +49,25 @@ public class FireTrail : MonoBehaviour
 
         if(duration <= 0)
         {
-            Destroy(gameObject);
+            particles.Stop();
+            StartCoroutine(DestroyFireTrail());
         }
+    }
+
+    PlayerAbilities GetPlayerAbilities(Collider other)
+    {
+        if(playerAbilities == null)
+        {
+            playerAbilities = other.gameObject.GetComponent<PlayerAbilities>();
+            playerScript = playerAbilities.GetComponent<PlayerScript>();
+        }
+        return playerAbilities;
+    }
+
+    IEnumerator DestroyFireTrail()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 
     private void OnDisable()
