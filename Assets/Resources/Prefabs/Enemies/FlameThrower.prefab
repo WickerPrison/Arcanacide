@@ -521,7 +521,6 @@ GameObject:
   - component: {fileID: 1298265200450920853}
   - component: {fileID: 1298265200450920862}
   - component: {fileID: 4863284487362425189}
-  - component: {fileID: 7434900448184553576}
   - component: {fileID: 1298265200450920857}
   - component: {fileID: 1298265200450920856}
   - component: {fileID: 1298265200450920859}
@@ -595,7 +594,7 @@ MonoBehaviour:
   navAgent: {fileID: 1298265200450920859}
   attackMaxTime: 4
   detectRange: 30
-  attackRange: 4.5
+  attackRange: 4
   projectilePrefab: {fileID: 0}
   spellAttackDamage: 15
   spellAttackPoiseDamage: 15
@@ -603,40 +602,8 @@ MonoBehaviour:
   hitPoiseDamage: 0
   frontFlameVFX: {fileID: 9075779639436541910}
   backFlameVFX: {fileID: 7462284497031509547}
---- !u!114 &7434900448184553576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298265200450920852}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f357271438c6744a69fcadd01fd974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frontAnimator: {fileID: 3639885862501740319}
-  backAnimator: {fileID: 2856946406654314617}
-  navAgent: {fileID: 1298265200450920859}
-  attackMaxTime: 4
-  detectRange: 30
-  attackRange: 4
-  projectilePrefab: {fileID: 0}
-  spellAttackDamage: 15
-  spellAttackPoiseDamage: 15
-  hitDamage: 0
-  hitPoiseDamage: 0
-  frontElectricityVFX: {fileID: 9075779639436541910}
-  backElectricityVFX: {fileID: 7462284497031509547}
-  lightningBallPrefab: {fileID: 2133317422168920642, guid: e855a41be390a3b4faeeb9dbac1b6599, type: 3}
-  lightningSFX:
-    Guid:
-      Data1: -427598268
-      Data2: 1222271980
-      Data3: -839688012
-      Data4: 1713713269
-    Path: event:/LightningThrower
-  lightningVolume: 1
+  fireballPrefab: {fileID: 2133317422168920642, guid: a94330a82b78b2d4eaa07210ca681c0c, type: 3}
+  flamethrowerDamage: 30
 --- !u!136 &1298265200450920857
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -14312,6 +14279,30 @@ PrefabInstance:
     - target: {fileID: 7084675227778100097, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
       propertyPath: m_Name
       value: SFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[0].Path
+      value: event:/GrenadeLauncher
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[0].Guid.Data1
+      value: 517840056
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[0].Guid.Data2
+      value: 1321744072
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[0].Guid.Data3
+      value: 2134991257
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+      propertyPath: otherSFX.Array.data[0].Guid.Data4
+      value: -1547231516
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}

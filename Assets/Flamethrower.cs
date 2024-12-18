@@ -8,10 +8,11 @@ public class Flamethrower : EnemyController
     AttackArcGenerator attackArc;
     [SerializeField] ParticleSystem frontFlameVFX;
     [SerializeField] ParticleSystem backFlameVFX;
+    [SerializeField] GameObject fireballPrefab;
     FacePlayer facePlayer;
     bool isShooting = false;
     float damageBuildup = 0;
-    float flamethrowerDamage = 20f;
+    [SerializeField] float flamethrowerDamage;
     float flameTimer = 0;
 
     public override void Start()
@@ -54,7 +55,7 @@ public class Flamethrower : EnemyController
             }
             else if (attackTime <= 0)
             {
-                //Artillery();
+                Artillery();
             }
         }
 
@@ -71,6 +72,37 @@ public class Flamethrower : EnemyController
 
         frontAnimator.Play("Attack");
         backAnimator.Play("Attack");
+    }
+    void Artillery()
+    {
+        state = EnemyState.ATTACKING;
+        attackTime = attackMaxTime;
+
+        frontAnimator.Play("Artillery");
+        backAnimator.Play("Artillery");
+    }
+
+    public override void SpellAttack()
+    {
+        enemySound.OtherSounds(0, 1);
+        ArcProjectile fireBall = Instantiate(fireballPrefab).GetComponent<ArcProjectile>();
+        if (facingFront)
+        {
+            fireBall.transform.position = frontFlameVFX.transform.position;
+        }
+        else
+        {
+            fireBall.transform.position = backFlameVFX.transform.position;
+        }
+        fireBall.endPoint = new Vector3(playerScript.transform.position.x, 0, playerScript.transform.position.z);
+        fireBall.enemyOfOrigin = enemyScript;
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        attackArc.HideAttackArc();
+        SpecialAbilityOff();
     }
 
     public override void SpecialAbility()

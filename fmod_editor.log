@@ -2,17 +2,147 @@
 [LOG] Manager::init                            : maxchannels = 256 studioflags = 00000006 flags 00000000 extradriverdata 0000000000000000.
 [LOG] SystemI::init                            : Initialize version=20217 (136061), maxchannels=256, flags=0x00020000
 [LOG] SystemI::setOutputInternal               : Setting output to 'FMOD WASAPI Output'
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=8, nSamplesPerSec=48000, nAvgBytesPerSec=1536000, nBlockAlign=32, wBitsPerSample=32, cbSize=22.
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x0000063F, SubFormat=00000003-0000-0010-8000-00AA00389B71.
+[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=2, nSamplesPerSec=48000, nAvgBytesPerSec=384000, nBlockAlign=8, wBitsPerSample=32, cbSize=22.
+[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x00000003, SubFormat=00000003-0000-0010-8000-00AA00389B71.
+[LOG] SystemI::createSound                     : filename = Desktop/Music.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] Thread::initThread                       : Init FMOD nonblocking thread (0). Affinity: 0x4000000000000003, Priority: 0xFFFF7FFC, Stack Size: 114688, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 0000022FAEF00258, queue head = 0000022E2C4B0548, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000022FAEF00258
+[LOG] SystemI::createSoundInternal             :     Create name='Desktop/Music.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 55207808
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 156576
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000022F4CC5FD40
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 5660
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='AA Level 1 Intro+Main Loop', format=5, channels=2, frequency=48000, lengthbytes=1106176, lengthpcm=4075472, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.315874.
+[LOG] Thread::initThread                       :     Init FMOD file thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFC, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000022FAEF00258
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
-[LOG] DownMix::init                            : dspbuffersize: 1024  rate: 48000. output speaker mode: 7, input speaker mode 3
-[LOG] DownMix::init                            : done.
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 000002A725E80438 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0000022E2ECCEC58 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 829632
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 49600
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000003F5997F118
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFDA5993E90
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFDA5993E50
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFDA5993F70
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFDA5994030
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000022E297E7DD8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='GrenadeLauncher', format=5, channels=1, frequency=48000, lengthbytes=2304, lengthpcm=11415, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.543884.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 829632
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 49600
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000003F5997F118
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFDA5993E90
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFDA5993E50
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFDA5993F70
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFDA5994030
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000022FAAAEAC78
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Footstep1', format=5, channels=1, frequency=48000, lengthbytes=768, lengthpcm=3475, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.179932.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 829632
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 49600
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000003F5997F118
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFDA5993E90
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFDA5993E50
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFDA5993F70
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFDA5994030
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000022FAAAEB2A8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='ElectricZap', format=5, channels=1, frequency=48000, lengthbytes=7008, lengthpcm=35763, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 829632
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 49600
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 0000003F5997F118
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFDA5993E90
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFDA5993E50
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFDA5993F70
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFDA5994030
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000022FAAAEB2A8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='ElectricImpact', format=5, channels=1, frequency=48000, lengthbytes=6400, lengthpcm=32827, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] SoundI::release                          :  (0000022FA9BE7DC8)
+[LOG] SoundI::release                          :     Footstep1 (0000022F4BF56438)
+[LOG] SoundI::release                          :  (0000022C666178C8)
+[LOG] SoundI::release                          :     GrenadeLauncher (0000022DE8DFD8C8)
+[LOG] SoundI::release                          :  (0000022FA9BE7C58)
+[LOG] SoundI::release                          :     ElectricImpact (0000022FAE97DF58)
+[LOG] SoundI::release                          :  (0000022C866D67F8)
+[LOG] SoundI::release                          :     BossBreathAttack2 (0000022F4BF560F8)
+[LOG] SoundI::release                          :  (0000022C866D6C48)
+[LOG] SoundI::release                          :     AA Level 1 Loop B with Tail - Trimmed (0000022FAAAD8C68)
+[LOG] SoundI::release                          :  (0000022C866D63A8)
+[LOG] SoundI::release                          :     AA Level 1 Boss Loop B - Trimmed (0000022FAAAD9148)
+[LOG] SoundI::release                          :  (0000022C866D6AD8)
+[LOG] SoundI::release                          :     AA Level 1 Boss Victory (0000022FAAAD92E8)
+[LOG] SoundI::release                          :  (0000022C866D6688)
+[LOG] SoundI::release                          :     AA Level 11 Boss Dialogue - Trimmed (0000022F4BF55C18)
+[LOG] SoundI::release                          :  (0000022F8017F018)
+[LOG] SoundI::release                          :     AA Level 2 Boss Loop A - Trimmed (0000022FAAC8DAA8)
+[LOG] SoundI::release                          :  (0000022C866D6DB8)
+[LOG] SoundI::release                          :     Glass Distortion Pad Transition 1 (0000022DE9B77008)
+[LOG] SoundI::release                          :  (0000022FA67E24D8)
+[LOG] SoundI::release                          :     PB Amped Bottle Reverb Pad (0000022FAAC8E128)
+[LOG] SoundI::release                          :  (0000022C866D7098)
+[LOG] SoundI::release                          :     LABS Lap Steel Resonance Chaos (0000022FAAAD9628)
+[LOG] SoundI::release                          :  (0000022C866D6968)
+[LOG] SoundI::release                          :     EW FP Violin FX 1-01 (0000022DE9B774E8)
+[LOG] SoundI::release                          :  (0000022F8017E778)
+[LOG] SoundI::release                          :     AA Level 1 Loop A with Tail - Trimmed (0000022FAAC8D5C8)
+[LOG] SoundI::release                          :  (0000022C866D6518)
+[LOG] SoundI::release                          :     Death Stinger (0000022FAAAD9488)
+[LOG] SoundI::release                          : AA Level 1 Intro+Main Loop (0000022FAEF00258)
+[LOG] SoundI::release                          :     AA Level 1 Intro+Main Loop (0000022E29B378D8)
+[LOG] SoundI::release                          :     AA Level 1 Intro+Main Loop (0000022FA9796FB8)
+[LOG] SoundI::release                          :  (0000022FA67E2928)
+[LOG] SoundI::release                          :     AA Level 1 Boss Transition (0000022DE9B76E68)
+[LOG] SoundI::release                          :  (0000022C866D6F28)
+[LOG] SoundI::release                          :     Respawn Stinger v2 (0000022DE9B771A8)
+[LOG] SoundI::release                          :  (0000022FA9BE7528)
+[LOG] SoundI::release                          :     ElectricZap (0000022F4BF55A78)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
+[ERR] assert                                   : assertion: 'gSystemInitCount == 0' failed
