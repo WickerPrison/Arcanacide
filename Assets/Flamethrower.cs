@@ -9,6 +9,10 @@ public class Flamethrower : EnemyController
     [SerializeField] ParticleSystem frontFlameVFX;
     [SerializeField] ParticleSystem backFlameVFX;
     [SerializeField] GameObject fireballPrefab;
+    [SerializeField] GameObject explosionPrefab;
+    [SerializeField] float selfDestructRange;
+    [SerializeField] int selfDestructDamage;
+    [SerializeField] float selfDestructPoiseDamage;
     FacePlayer facePlayer;
     bool isShooting = false;
     float damageBuildup = 0;
@@ -134,5 +138,28 @@ public class Flamethrower : EnemyController
     {
         SpecialAbilityOff();
         base.StartDying();
+    }
+
+    private void SelfDestruct(object sender, System.EventArgs e)
+    {
+        GameObject explosion = Instantiate(explosionPrefab);
+        explosion.transform.position = transform.position + new Vector3(0, 1, 0);
+        if(Vector3.Distance(playerScript.transform.position, transform.position) <= selfDestructRange)
+        {
+            playerScript.LoseHealth(selfDestructDamage, EnemyAttackType.NONPARRIABLE, null);
+            playerScript.LosePoise(selfDestructPoiseDamage);
+        }
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        enemyEvents.OnDeath += SelfDestruct;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        enemyEvents.OnDeath -= SelfDestruct;
     }
 }
