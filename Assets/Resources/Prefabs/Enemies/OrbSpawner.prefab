@@ -303,9 +303,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2501949541567006728}
-  - component: {fileID: 3665672022307716220}
   - component: {fileID: 6097107310019676004}
   - component: {fileID: 5748967463378149190}
+  - component: {fileID: 3665672022307716220}
   - component: {fileID: -3748859879629552573}
   - component: {fileID: -4271017560506190089}
   - component: {fileID: 5345907313841012915}
@@ -338,19 +338,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3665672022307716220
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2501949541567006735}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.7567124, y: 3.961466, z: 0.80869067}
-  m_Center: {x: 0.16936865, y: 1.939623, z: 0.24998802}
 --- !u!114 &6097107310019676004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,7 +351,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reward: 30
+  generateID: 0
   enemyID: 0
+  enemyGUID: 
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
@@ -401,6 +390,19 @@ MonoBehaviour:
   orbSprite: {fileID: 9182611085848644575}
   sprite: {fileID: 4049401011168788138}
   brokenSprite: {fileID: 6676439683019189666}
+--- !u!65 &3665672022307716220
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2501949541567006735}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7567124, y: 3.961466, z: 0.80869067}
+  m_Center: {x: 0.16936865, y: 1.939623, z: 0.24998802}
 --- !u!54 &-3748859879629552573
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -660,12 +660,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1055871940786120434}
+  - component: {fileID: 1055871940786120441}
+  - component: {fileID: 1892724828287016805}
   - component: {fileID: 1055871940786120446}
   - component: {fileID: 1055871940786120447}
   - component: {fileID: 1055871940786120444}
-  - component: {fileID: 1055871940786120441}
   - component: {fileID: 8760197133232463657}
-  - component: {fileID: 1892724828287016805}
   - component: {fileID: 7473587151490076394}
   - component: {fileID: 4520265039276935948}
   m_Layer: 6
@@ -698,6 +698,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1055871940786120441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055871940786120435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 60
+  generateID: 0
+  enemyID: 0
+  enemyGUID: 
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  maxHealth: 110
+  maxPoise: 100
+  poiseRegeneration: 5
+  invincible: 0
+--- !u!114 &1892724828287016805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055871940786120435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6adc48372a59dfb4f8eb49e7a354b898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontAnimator: {fileID: 2451874258494620573}
+  backAnimator: {fileID: 6873103840044162747}
+  navAgent: {fileID: 1055871940786120444}
+  attackMaxTime: 3
+  detectRange: 10
+  attackRange: 0
+  projectilePrefab: {fileID: 0}
+  spellAttackDamage: 15
+  spellAttackPoiseDamage: 15
+  hitDamage: 20
+  hitPoiseDamage: 20
+  chargeIndicator: {fileID: 424516785650504158, guid: c020b93d12376a44cac0740bb2527a4c, type: 3}
+  maxChargeDistance: 50
+  attackPointCollider: {fileID: 0}
+  chargeSpeed: 50
+  chargeDamage: 30
+  staticVFX: {fileID: 7601251257747662493}
+  attackVFX:
+  - {fileID: 1855675575025115079}
+  - {fileID: 2700542253193017094}
+  - {fileID: 7673416898542157567}
+  - {fileID: 3231226414282444931}
 --- !u!136 &1055871940786120446
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -750,28 +808,6 @@ NavMeshAgent:
   m_BaseOffset: -0.08
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &1055871940786120441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055871940786120435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reward: 60
-  enemyID: 0
-  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
-  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
-  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
-  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 110
-  maxPoise: 100
-  poiseRegeneration: 5
-  invincible: 0
 --- !u!114 &8760197133232463657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -787,40 +823,6 @@ MonoBehaviour:
   attackPoint: {fileID: 2850575094819328274}
   frontAnimator: {fileID: 2451874258494620573}
   backAnimator: {fileID: 6873103840044162747}
---- !u!114 &1892724828287016805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055871940786120435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6adc48372a59dfb4f8eb49e7a354b898, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frontAnimator: {fileID: 2451874258494620573}
-  backAnimator: {fileID: 6873103840044162747}
-  navAgent: {fileID: 1055871940786120444}
-  attackMaxTime: 3
-  detectRange: 10
-  attackRange: 0
-  projectilePrefab: {fileID: 0}
-  spellAttackDamage: 15
-  spellAttackPoiseDamage: 15
-  hitDamage: 20
-  hitPoiseDamage: 20
-  chargeIndicator: {fileID: 424516785650504158, guid: c020b93d12376a44cac0740bb2527a4c, type: 3}
-  maxChargeDistance: 50
-  attackPointCollider: {fileID: 0}
-  chargeSpeed: 50
-  chargeDamage: 30
-  staticVFX: {fileID: 7601251257747662493}
-  attackVFX:
-  - {fileID: 1855675575025115079}
-  - {fileID: 2700542253193017094}
-  - {fileID: 7673416898542157567}
-  - {fileID: 3231226414282444931}
 --- !u!114 &7473587151490076394
 MonoBehaviour:
   m_ObjectHideFlags: 0
