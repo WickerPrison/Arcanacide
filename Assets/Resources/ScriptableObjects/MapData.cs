@@ -10,7 +10,7 @@ public class MapData : ScriptableObject
 
     public int doorNumber;
 
-    public List<int> deadEnemies;
+    public List<string> deadEnemies;
 
     public List<int> unlockedDoors;
 
