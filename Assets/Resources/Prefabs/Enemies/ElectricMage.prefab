@@ -1226,12 +1226,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3990039371435156067}
+  - component: {fileID: 3990039371435156072}
+  - component: {fileID: 7547651579084886853}
   - component: {fileID: 3990039371435156079}
   - component: {fileID: 3990039371435156078}
   - component: {fileID: 3990039371435156077}
-  - component: {fileID: 3990039371435156072}
   - component: {fileID: 4641586848590437304}
-  - component: {fileID: 7547651579084886853}
   - component: {fileID: 3741050204111667857}
   - component: {fileID: 3090237565565384418}
   m_Layer: 6
@@ -1261,6 +1261,65 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3990039371435156072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3990039371435156066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 55
+  generateID: 0
+  enemyID: 0
+  enemyGUID: 
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  maxHealth: 60
+  maxPoise: 100
+  poiseRegeneration: 5
+  invincible: 0
+--- !u!114 &7547651579084886853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3990039371435156066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f820972e059094e9f1504e318bd362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontAnimator: {fileID: 4582950842633982267}
+  backAnimator: {fileID: 9142918192992037005}
+  navAgent: {fileID: 3990039371435156077}
+  attackMaxTime: 2
+  detectRange: 10
+  attackRange: 0
+  projectilePrefab: {fileID: 0}
+  spellAttackDamage: 15
+  spellAttackPoiseDamage: 15
+  hitDamage: 0
+  hitPoiseDamage: 0
+  boltsPrefab: {fileID: 8759700288671174282, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+  frontLightningOrigin: {fileID: 1402991321445038359}
+  backLightningOrigin: {fileID: 2562945449598548410}
+  meshRadius: 5
+  chainSound:
+    Guid:
+      Data1: -427598268
+      Data2: 1222271980
+      Data3: -839688012
+      Data4: 1713713269
+    Path: event:/LightningThrower
+  chainVolume: 0.6
 --- !u!136 &3990039371435156079
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1313,28 +1372,6 @@ NavMeshAgent:
   m_BaseOffset: -0.08
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &3990039371435156072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3990039371435156066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reward: 55
-  enemyID: 0
-  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
-  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
-  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
-  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 60
-  maxPoise: 100
-  poiseRegeneration: 5
-  invincible: 0
 --- !u!114 &4641586848590437304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1350,41 +1387,6 @@ MonoBehaviour:
   attackPoint: {fileID: 5451695593612671354}
   frontAnimator: {fileID: 4582950842633982267}
   backAnimator: {fileID: 9142918192992037005}
---- !u!114 &7547651579084886853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3990039371435156066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4f820972e059094e9f1504e318bd362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frontAnimator: {fileID: 4582950842633982267}
-  backAnimator: {fileID: 9142918192992037005}
-  navAgent: {fileID: 3990039371435156077}
-  attackMaxTime: 2
-  detectRange: 10
-  attackRange: 0
-  projectilePrefab: {fileID: 0}
-  spellAttackDamage: 15
-  spellAttackPoiseDamage: 15
-  hitDamage: 0
-  hitPoiseDamage: 0
-  boltsPrefab: {fileID: 8759700288671174282, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
-  frontLightningOrigin: {fileID: 1402991321445038359}
-  backLightningOrigin: {fileID: 2562945449598548410}
-  meshRadius: 5
-  chainSound:
-    Guid:
-      Data1: -427598268
-      Data2: 1222271980
-      Data3: -839688012
-      Data4: 1713713269
-    Path: event:/LightningThrower
-  chainVolume: 0.6
 --- !u!114 &3741050204111667857
 MonoBehaviour:
   m_ObjectHideFlags: 0

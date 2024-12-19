@@ -2832,10 +2832,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7704874516132386290}
   - component: {fileID: 7704874516132386293}
+  - component: {fileID: 7704874516132386297}
   - component: {fileID: 7704874516132386302}
   - component: {fileID: 7704874516132386303}
   - component: {fileID: 7704874516132386300}
-  - component: {fileID: 7704874516132386297}
   - component: {fileID: 8654489750292098090}
   - component: {fileID: -1093359161954322484}
   - component: {fileID: -6157992929421159715}
@@ -2896,6 +2896,30 @@ MonoBehaviour:
   fireTrailPrefab: {fileID: 8120567399107066, guid: 14c74eaa539125c42aba4c9dd97d78d6, type: 3}
   fireArcPrefab: {fileID: 2429647943623921199, guid: 42e03ea37ccc0e847b3e6db3cef49b4b, type: 3}
   indicator: {fileID: 51263847720578768}
+--- !u!114 &7704874516132386297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7704874516132386291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 10
+  hasID: 0
+  enemyID: 0
+  enemyGUID: 
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  maxHealth: 120
+  maxPoise: 70
+  poiseRegeneration: 5
+  invincible: 0
 --- !u!136 &7704874516132386302
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2948,28 +2972,6 @@ NavMeshAgent:
   m_BaseOffset: -0.08
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &7704874516132386297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7704874516132386291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reward: 10
-  enemyID: 0
-  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
-  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
-  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
-  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 120
-  maxPoise: 70
-  poiseRegeneration: 5
-  invincible: 0
 --- !u!114 &8654489750292098090
 MonoBehaviour:
   m_ObjectHideFlags: 0

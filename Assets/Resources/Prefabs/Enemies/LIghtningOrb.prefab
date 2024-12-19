@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1222317826742802791}
+  - component: {fileID: 5492858361230421779}
+  - component: {fileID: 5988035559081268552}
   - component: {fileID: 8805143032086466790}
   - component: {fileID: -8077591954203745893}
   - component: {fileID: -6104532893862982024}
-  - component: {fileID: 5492858361230421779}
-  - component: {fileID: 5988035559081268552}
   - component: {fileID: 961816689155818981}
   - component: {fileID: 3445605359261408295}
   m_Layer: 6
@@ -44,6 +44,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5492858361230421779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260420701781460590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 5
+  generateID: 0
+  enemyID: 0
+  enemyGUID: 
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  maxHealth: 10
+  maxPoise: 10
+  poiseRegeneration: 0
+  invincible: 0
+--- !u!114 &5988035559081268552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260420701781460590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ed56fae5a67884ab1c359836359fba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontAnimator: {fileID: 0}
+  backAnimator: {fileID: 0}
+  navAgent: {fileID: -6104532893862982024}
+  attackMaxTime: 0
+  detectRange: 100
+  attackRange: 3
+  projectilePrefab: {fileID: 0}
+  spellAttackDamage: 20
+  spellAttackPoiseDamage: 30
+  hitDamage: 0
+  hitPoiseDamage: 0
+  lightningExplosion: {fileID: 3284791711765906126, guid: 4d5bd7b8dac83504ab22c5a5d3758717, type: 3}
+  lightning: {fileID: 3049108788982477052}
+  attack: {fileID: 5918047746592107296}
+  selfDestructTime: 0.4
+  impactSFX:
+    Guid:
+      Data1: -1101567947
+      Data2: 1172878106
+      Data3: 1646198689
+      Data4: -1662717014
+    Path: event:/ElectricImpact
 --- !u!136 &8805143032086466790
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -96,62 +154,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &5492858361230421779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260420701781460590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reward: 5
-  enemyID: 0
-  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
-  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
-  phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
-  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 10
-  maxPoise: 10
-  poiseRegeneration: 0
-  invincible: 0
---- !u!114 &5988035559081268552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260420701781460590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05ed56fae5a67884ab1c359836359fba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frontAnimator: {fileID: 0}
-  backAnimator: {fileID: 0}
-  navAgent: {fileID: -6104532893862982024}
-  attackMaxTime: 0
-  detectRange: 100
-  attackRange: 3
-  projectilePrefab: {fileID: 0}
-  spellAttackDamage: 20
-  spellAttackPoiseDamage: 30
-  hitDamage: 0
-  hitPoiseDamage: 0
-  lightningExplosion: {fileID: 3284791711765906126, guid: 4d5bd7b8dac83504ab22c5a5d3758717, type: 3}
-  lightning: {fileID: 3049108788982477052}
-  attack: {fileID: 5918047746592107296}
-  selfDestructTime: 0.4
-  impactSFX:
-    Guid:
-      Data1: -1101567947
-      Data2: 1172878106
-      Data3: 1646198689
-      Data4: -1662717014
-    Path: event:/ElectricImpact
 --- !u!114 &961816689155818981
 MonoBehaviour:
   m_ObjectHideFlags: 0
