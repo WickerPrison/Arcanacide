@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
+#if UNITY_EDITOR
 [ExecuteAlways]
 public class MapRoomSetup : MonoBehaviour
 {
-#if UNITY_EDITOR
     [SerializeField] Vector2 size;
+    public List<MapDoorSetup> doors = new List<MapDoorSetup>();
     float scaleFactor = 100;
     bool hasChanged = false;
     RectTransform square;
@@ -24,6 +26,7 @@ public class MapRoomSetup : MonoBehaviour
         {
             square.sizeDelta = size * scaleFactor;
             outline.sizeDelta = size * scaleFactor;
+            foreach (MapDoorSetup door in doors) SetupDoor(door);
             hasChanged = false;
         }
     }
@@ -32,5 +35,33 @@ public class MapRoomSetup : MonoBehaviour
     {
         hasChanged = true;
     }
-#endif
+
+    void SetupDoor(MapDoorSetup door)
+    {
+        float position;
+        switch (door.direction)
+        {
+            case MapDoorDirection.UP:
+                position = size.y * scaleFactor / 2 - 4;
+                door.transform.localPosition = new Vector3(door.offset * scaleFactor, position, 0);
+                door.transform.rotation = Quaternion.identity;
+                break;
+            case MapDoorDirection.DOWN:
+                position = size.y * scaleFactor / 2 - 4;
+                door.transform.localPosition = new Vector3(door.offset * scaleFactor, -position, 0);
+                door.transform.rotation = Quaternion.identity;
+                break;
+            case MapDoorDirection.LEFT:
+                position = size.x * scaleFactor / 2 - 4;
+                door.transform.localPosition = new Vector3(-position, door.offset * scaleFactor, 0);
+                door.transform.rotation = Quaternion.Euler(0, 0, 90);
+                break;
+            case MapDoorDirection.RIGHT:
+                position = size.x * scaleFactor / 2 - 4;
+                door.transform.localPosition = new Vector3(position, door.offset * scaleFactor, 0);
+                door.transform.rotation = Quaternion.Euler(0, 0, 90);
+                break;
+        }
+    }
 }
+#endif
