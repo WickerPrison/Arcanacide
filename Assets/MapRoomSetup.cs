@@ -24,6 +24,7 @@ public class MapRoomSetup : MonoBehaviour
     {
         if (hasChanged)
         {
+            transform.localScale = Vector3.one;
             square.sizeDelta = size * scaleFactor;
             outline.sizeDelta = size * scaleFactor;
             foreach (MapDoorSetup door in doors) SetupDoor(door);
