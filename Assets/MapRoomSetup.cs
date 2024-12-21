@@ -45,22 +45,22 @@ public class MapRoomSetup : MonoBehaviour
             case MapDoorDirection.UP:
                 position = size.y * scaleFactor / 2 - 4;
                 door.transform.localPosition = new Vector3(door.offset * scaleFactor, position, 0);
-                door.transform.rotation = Quaternion.identity;
+                door.transform.localRotation = Quaternion.identity;
                 break;
             case MapDoorDirection.DOWN:
                 position = size.y * scaleFactor / 2 - 4;
                 door.transform.localPosition = new Vector3(door.offset * scaleFactor, -position, 0);
-                door.transform.rotation = Quaternion.identity;
+                door.transform.localRotation = Quaternion.identity;
                 break;
             case MapDoorDirection.LEFT:
                 position = size.x * scaleFactor / 2 - 4;
                 door.transform.localPosition = new Vector3(-position, door.offset * scaleFactor, 0);
-                door.transform.rotation = Quaternion.Euler(0, 0, 90);
+                door.transform.localRotation = Quaternion.Euler(0, 0, 90);
                 break;
             case MapDoorDirection.RIGHT:
                 position = size.x * scaleFactor / 2 - 4;
                 door.transform.localPosition = new Vector3(position, door.offset * scaleFactor, 0);
-                door.transform.rotation = Quaternion.Euler(0, 0, 90);
+                door.transform.localRotation = Quaternion.Euler(0, 0, 90);
                 break;
         }
     }
