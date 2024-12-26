@@ -53,7 +53,13 @@ public class RoomSetupScript : MonoBehaviour
 
     public void UpdateNavmesh()
     {
+        NavMesh.AddData();
         NavMesh.UpdateNavMesh(NavMesh.navMeshData);
+    }
+
+    public void ClearNavmesh()
+    {
+        NavMesh.RemoveData();
     }
 }
 #endif

@@ -10,9 +10,15 @@ public class RoomSetupEditor : Editor
     {
         RoomSetupScript roomSetup = target as RoomSetupScript;
         base.OnInspectorGUI();
-        if (GUILayout.Button("Update NavMesh"))
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Clear NavMesh"))
+        {
+            roomSetup.ClearNavmesh();
+        }
+        if (GUILayout.Button("Bake NavMesh"))
         {
             roomSetup.UpdateNavmesh();
         }
+        GUILayout.EndHorizontal();
     }
 }
