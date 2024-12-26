@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UI;
 
 #if UNITY_EDITOR
 public class RoomSetupScript : MonoBehaviour
@@ -14,6 +12,7 @@ public class RoomSetupScript : MonoBehaviour
     public event EventHandler onSizeChange;
     public Rect floorTilingScale;
     Rect floorTilingCache;
+    public bool usesNavmesh = true;
     public event EventHandler onTileChange;
     private NavMeshSurface navMesh;
     public NavMeshSurface NavMesh
@@ -49,10 +48,16 @@ public class RoomSetupScript : MonoBehaviour
             onTileChange?.Invoke(this, EventArgs.Empty);
             floorTilingCache = floorTilingScale;
         }
+
+        if(!usesNavmesh && NavMesh.navMeshData != null) 
+        {
+            ClearNavmesh();
+        }
     }
 
     public void UpdateNavmesh()
     {
+        if (!usesNavmesh) return;
         NavMesh.AddData();
         NavMesh.UpdateNavMesh(NavMesh.navMeshData);
     }
