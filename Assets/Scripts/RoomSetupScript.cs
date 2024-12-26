@@ -1,60 +1,73 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.UI;
 
+#if UNITY_EDITOR
 public class RoomSetupScript : MonoBehaviour
 {
-    [SerializeField] Transform floor;
-    [SerializeField] Transform wall1;
-    [SerializeField] Transform wall2;
-    [SerializeField] Transform invisibleWall1;
-    [SerializeField] Transform invisibleWall2;
-    [SerializeField] RawImage floorImage;
-    [SerializeField] Vector2 floorScale = Vector2.zero;
-    float floorScaleX;
-    float floorScaleZ;
-
-    private void Start()
+    public Vector2 roomSize = Vector2.one;
+    Vector2 roomSizeCache;
+    public event EventHandler onSizeChange;
+    public Vector2 floorTilingOffset;
+    Vector2 floorTilingOffsetCache;
+    public Vector2 floorTilingRatio;
+    Vector2 floorTilingCache;
+    public bool usesNavmesh = true;
+    public event EventHandler onTileChange;
+    private NavMeshSurface navMesh;
+    public NavMeshSurface NavMesh
     {
-        if (floorScale == Vector2.zero)
+        get
         {
-            floorScaleX = floor.localScale.x;
-            floorScaleZ = floor.localScale.z;
+            if(navMesh == null)
+            {
+                navMesh = GetComponentInChildren<NavMeshSurface>();
+            }
+            return navMesh;
         }
-        else
-        {
-            floorScaleX = floorScale.x;
-            floorScaleZ = floorScale.y;
-        }
-
-        floorImage.uvRect = new Rect(floorImage.uvRect.x, floorImage.uvRect.y, floorScaleX, floorScaleZ);
     }
 
-    private void OnDrawGizmosSelected()
+
+    private void OnEnable()
     {
-        wall1.localPosition = new Vector3(floor.localPosition.x, floor.localPosition.y + 2.5f, floor.localPosition.z + floor.localScale.z * 5);
-        wall1.localScale = new Vector3(floor.localScale.x, 0.5f, 0.5f);
-        wall2.localPosition = new Vector3(floor.localPosition.x + floor.localScale.x * 5, floor.localPosition.y + 2.5f, floor.localPosition.z);
-        wall2.localScale = new Vector3(floor.localScale.z, 0.5f, 0.5f);
-        invisibleWall1.localPosition = new Vector3(floor.localPosition.x, floor.localPosition.y + 2.5f, floor.localPosition.z - floor.localScale.z * 5);
-        invisibleWall1.localScale = new Vector3(floor.localScale.x, 0.5f, 0.5f);
-        invisibleWall2.localPosition = new Vector3(floor.localPosition.x - floor.localScale.x * 5, floor.localPosition.y + 2.5f, floor.localPosition.z);
-        invisibleWall2.localScale = new Vector3(floor.localScale.z, 0.5f, 0.5f);
+        roomSizeCache = roomSize;
+        floorTilingCache = floorTilingRatio;
+    }
 
-        if(floorScale == Vector2.zero)
+    private void OnValidate()
+    {
+        if(roomSize != roomSizeCache)
         {
-            floorScaleX = floor.localScale.x;
-            floorScaleZ = floor.localScale.z;
-        }
-        else
-        {
-            floorScaleX = floorScale.x;
-            floorScaleZ = floorScale.y;
+            onSizeChange?.Invoke(this, EventArgs.Empty);
+            UpdateNavmesh();
+            roomSizeCache = roomSize;
         }
 
+        if(floorTilingCache != floorTilingRatio || floorTilingOffsetCache != floorTilingOffset)
+        {
+            onTileChange?.Invoke(this, EventArgs.Empty);
+            floorTilingCache = floorTilingRatio;
+            floorTilingOffsetCache = floorTilingOffset;
+        }
 
+        if(!usesNavmesh && NavMesh.navMeshData != null) 
+        {
+            ClearNavmesh();
+        }
+    }
 
-        floorImage.uvRect = new Rect(floorImage.uvRect.x, floorImage.uvRect.y, floorScaleX, floorScaleZ);
+    public void UpdateNavmesh()
+    {
+        if (!usesNavmesh || gameObject.scene.name == null) return;
+        NavMesh.BuildNavMesh();
+        NavMesh.UpdateNavMesh(NavMesh.navMeshData);
+    }
+
+    public void ClearNavmesh()
+    {
+        NavMesh.RemoveData();
     }
 }
+#endif
