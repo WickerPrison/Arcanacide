@@ -8,11 +8,31 @@ using UnityEngine.UI;
 public class RoomSetupScript : MonoBehaviour
 {
     public Vector2 roomSize = Vector2.one;
+    Vector2 roomSizeCache;
     public event EventHandler onSizeChange;
+    public Rect floorTilingScale;
+    Rect floorTilingCache;
+    public event EventHandler onTileChange;
+
+    private void OnEnable()
+    {
+        roomSizeCache = roomSize;
+        floorTilingCache = floorTilingScale;
+    }
 
     private void OnValidate()
     {
-        onSizeChange?.Invoke(this, EventArgs.Empty);
+        if(roomSize != roomSizeCache)
+        {
+            onSizeChange?.Invoke(this, EventArgs.Empty);
+            roomSizeCache = roomSize;
+        }
+
+        if(floorTilingCache != floorTilingScale)
+        {
+            onTileChange?.Invoke(this, EventArgs.Empty);
+            floorTilingCache = floorTilingScale;
+        }
     }
 
     /*    [SerializeField] Transform floor;
