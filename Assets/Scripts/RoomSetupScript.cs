@@ -59,6 +59,7 @@ public class RoomSetupScript : MonoBehaviour
     {
         if (!usesNavmesh) return;
         NavMesh.AddData();
+        NavMesh.BuildNavMesh();
         NavMesh.UpdateNavMesh(NavMesh.navMeshData);
     }
 
