@@ -22,14 +22,12 @@ public class FloorSetup : MonoBehaviour
 
     private void OnTileChange(object sender, System.EventArgs e)
     {
-        Debug.Log("Tile change");
         Undo.RecordObject(floorImage, "Change tile size");
         floorImage.uvRect = roomSetup.floorTilingScale;
     }
 
     private void onSizeChange(object sender, System.EventArgs e)
     {
-        Debug.Log("size change");
         Undo.RecordObject(transform, "Resize Room");
         transform.localScale = new Vector3(roomSetup.roomSize.x, 0, roomSetup.roomSize.y);
     }
