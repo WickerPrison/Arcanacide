@@ -7,7 +7,18 @@ using UnityEngine;
 #if UNITY_EDITOR
 public class WallSetup : MonoBehaviour
 {
-    RoomSetupScript roomSetup;
+    RoomSetupScript RoomSetup;
+    RoomSetupScript roomSetup
+    {
+        get
+        {
+            if(RoomSetup == null)
+            {
+                RoomSetup = GetComponentInParent<RoomSetupScript>();
+            }
+            return RoomSetup;
+        }
+    }
     enum WallDirection
     {
         LEFT, RIGHT, UP, DOWN
@@ -17,7 +28,6 @@ public class WallSetup : MonoBehaviour
 
     private void OnEnable()
     {
-        roomSetup = GetComponentInParent<RoomSetupScript>();
         roomSetup.onSizeChange += OnSizeChange;
         startPosition = new Vector3(roomSetup.transform.localPosition.x, roomSetup.transform.localPosition.y + 2.5f, roomSetup.transform.localPosition.z);
     }
