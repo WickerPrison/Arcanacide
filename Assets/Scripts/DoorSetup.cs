@@ -1,40 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+[ExecuteAlways]
+#if UNITY_EDITOR
 public class DoorSetup : MonoBehaviour
 {
     [SerializeField] Transform openDoorMessage;
     [SerializeField] Transform notOpenMessage;
-    [SerializeField] Transform wall;
-    SortingGroup sortingGroup;
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Vector3 offset;
     [SerializeField] SpriteRenderer fogWall;
-    int direction = 1;
+    [SerializeField] Transform spawnPoint;
+    [SerializeField] Vector3 offset;
 
-    private void OnDrawGizmosSelected()
+    RoomSetupScript roomSetup;
+    enum DoorDirection
     {
-        if(wall != null)
-        {
-            transform.localPosition = wall.localPosition + offset;
-            transform.localRotation = Quaternion.Euler(0, wall.localEulerAngles.y, 0);
-            sortingGroup = wall.GetComponent<SortingGroup>();
-            spriteRenderer.sortingLayerName = sortingGroup.sortingLayerName;
-            fogWall.sortingLayerName = sortingGroup.sortingLayerName;
-        }
+        LEFT, RIGHT, UP, DOWN
+    }
+    [SerializeField] DoorDirection direction;
 
-        if(transform.localEulerAngles.y == 90)
-        {
-            direction = -1;
-        }
-        else
-        {
-            direction = 1;
-        }
+    private void OnEnable()
+    {
+        roomSetup = FindObjectOfType<RoomSetupScript>();
+        roomSetup.onSizeChange += OnSizeChange;
+    }
 
-        openDoorMessage.localRotation = Quaternion.Euler(30, 45 * direction, openDoorMessage.rotation.z);
-        notOpenMessage.localRotation = Quaternion.Euler(30, 45 * direction, notOpenMessage.localEulerAngles.z);
+    private void OnSizeChange(object sender, System.EventArgs e)
+    {
+        if(roomSetup == null) return;
+        Object[] objects = { transform, spriteRenderer, fogWall, spawnPoint, openDoorMessage, notOpenMessage };
+        Undo.RecordObjects(objects, "Resize Room");
+        UpdateDoor();
+    }
+
+    private void OnValidate()
+    {
+        if (roomSetup == null) return;
+        Object[] objects = { transform, spriteRenderer, fogWall, spawnPoint, openDoorMessage, notOpenMessage };
+        Undo.RecordObjects(objects, "Update Door");
+        UpdateDoor();
+    }
+
+    private void UpdateDoor()
+    {
+        switch (direction)
+        {
+            case DoorDirection.LEFT:
+                transform.localPosition = roomSetup.transform.localPosition + new Vector3(0, 1.65f, roomSetup.roomSize.y * 5) + offset;
+                transform.localEulerAngles = Vector3.zero;
+                spriteRenderer.sortingLayerName = "Floor";
+                fogWall.sortingLayerName = "Floor";
+                spawnPoint.localPosition = new Vector3(0, 0, -1);
+                openDoorMessage.localRotation = Quaternion.Euler(30, 45, openDoorMessage.rotation.z);
+                notOpenMessage.localRotation = Quaternion.Euler(30, 45, notOpenMessage.localEulerAngles.z);
+                break;
+            case DoorDirection.RIGHT:
+                transform.localPosition = roomSetup.transform.localPosition + new Vector3(0, 1.65f, -roomSetup.roomSize.y * 5) + offset;
+                transform.localEulerAngles = Vector3.zero;
+                spriteRenderer.sortingLayerName = "Foreground";
+                fogWall.sortingLayerName = "Foreground";
+                spawnPoint.localPosition = new Vector3(0, 0, 1);
+                openDoorMessage.localRotation = Quaternion.Euler(30, 45, openDoorMessage.rotation.z);
+                notOpenMessage.localRotation = Quaternion.Euler(30, 45, notOpenMessage.localEulerAngles.z);
+                break;
+            case DoorDirection.UP:
+                transform.localPosition = roomSetup.transform.localPosition + new Vector3(roomSetup.roomSize.x * 5, 1.65f, 0) + offset;
+                transform.localEulerAngles = new Vector3(0, 90, 0);
+                spriteRenderer.sortingLayerName = "Floor";
+                fogWall.sortingLayerName = "Floor";
+                spawnPoint.localPosition = new Vector3(0, 0, -1);
+                openDoorMessage.localRotation = Quaternion.Euler(30, -45, openDoorMessage.rotation.z);
+                notOpenMessage.localRotation = Quaternion.Euler(30, -45, notOpenMessage.localEulerAngles.z);
+                break;
+            case DoorDirection.DOWN:
+                transform.localPosition = roomSetup.transform.localPosition + new Vector3(-roomSetup.roomSize.x * 5, 1.65f, 0) + offset;
+                transform.localEulerAngles = new Vector3(0, 90, 0);
+                spriteRenderer.sortingLayerName = "Foreground";
+                fogWall.sortingLayerName = "Foreground";
+                spawnPoint.localPosition = new Vector3(0, 0, 1);
+                openDoorMessage.localRotation = Quaternion.Euler(30, -45, openDoorMessage.rotation.z);
+                notOpenMessage.localRotation = Quaternion.Euler(30, -45, notOpenMessage.localEulerAngles.z);
+                break;
+        }
+    }
+
+    private void OnDisable()
+    {
+        roomSetup.onSizeChange -= OnSizeChange;
     }
 }
+#endif
