@@ -10,8 +10,10 @@ public class RoomSetupScript : MonoBehaviour
     public Vector2 roomSize = Vector2.one;
     Vector2 roomSizeCache;
     public event EventHandler onSizeChange;
-    public Rect floorTilingScale;
-    Rect floorTilingCache;
+    public Vector2 floorTilingOffset;
+    Vector2 floorTilingOffsetCache;
+    public Vector2 floorTilingRatio;
+    Vector2 floorTilingCache;
     public bool usesNavmesh = true;
     public event EventHandler onTileChange;
     private NavMeshSurface navMesh;
@@ -31,7 +33,7 @@ public class RoomSetupScript : MonoBehaviour
     private void OnEnable()
     {
         roomSizeCache = roomSize;
-        floorTilingCache = floorTilingScale;
+        floorTilingCache = floorTilingRatio;
     }
 
     private void OnValidate()
@@ -43,10 +45,11 @@ public class RoomSetupScript : MonoBehaviour
             roomSizeCache = roomSize;
         }
 
-        if(floorTilingCache != floorTilingScale)
+        if(floorTilingCache != floorTilingRatio || floorTilingOffsetCache != floorTilingOffset)
         {
             onTileChange?.Invoke(this, EventArgs.Empty);
-            floorTilingCache = floorTilingScale;
+            floorTilingCache = floorTilingRatio;
+            floorTilingOffsetCache = floorTilingOffset;
         }
 
         if(!usesNavmesh && NavMesh.navMeshData != null) 
@@ -57,8 +60,7 @@ public class RoomSetupScript : MonoBehaviour
 
     public void UpdateNavmesh()
     {
-        if (!usesNavmesh) return;
-        NavMesh.AddData();
+        if (!usesNavmesh || gameObject.scene.name == null) return;
         NavMesh.BuildNavMesh();
         NavMesh.UpdateNavMesh(NavMesh.navMeshData);
     }

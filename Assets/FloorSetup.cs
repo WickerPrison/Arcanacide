@@ -15,7 +15,8 @@ public class FloorSetup : MonoBehaviour
         floorImage = GetComponentInChildren<RawImage>();
         roomSetup = GetComponentInParent<RoomSetupScript>();
         roomSetup.roomSize = new Vector2(transform.localScale.x, transform.localScale.z);
-        roomSetup.floorTilingScale = floorImage.uvRect;
+        roomSetup.floorTilingOffset = new Vector2(floorImage.uvRect.x, floorImage.uvRect.y);
+        roomSetup.floorTilingRatio = new Vector2(floorImage.uvRect.width / roomSetup.roomSize.x, floorImage.uvRect.height / roomSetup.roomSize.y);
         roomSetup.onSizeChange += onSizeChange;
         roomSetup.onTileChange += OnTileChange;
     }
@@ -23,13 +24,19 @@ public class FloorSetup : MonoBehaviour
     private void OnTileChange(object sender, System.EventArgs e)
     {
         Undo.RecordObject(floorImage, "Change tile size");
-        floorImage.uvRect = roomSetup.floorTilingScale;
+        UpdateTileSize();
     }
 
     private void onSizeChange(object sender, System.EventArgs e)
     {
         Undo.RecordObject(transform, "Resize Room");
         transform.localScale = new Vector3(roomSetup.roomSize.x, 0, roomSetup.roomSize.y);
+        UpdateTileSize();
+    }
+
+    private void UpdateTileSize()
+    {
+        floorImage.uvRect = new Rect(roomSetup.floorTilingOffset.x, roomSetup.floorTilingOffset.y, roomSetup.roomSize.x * roomSetup.floorTilingRatio.x, roomSetup.roomSize.y * roomSetup.floorTilingRatio.y);
     }
 
     private void OnDisable()
