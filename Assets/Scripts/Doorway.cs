@@ -8,13 +8,13 @@ using System;
 public class Doorway : MonoBehaviour
 {
     public bool doorOpen = false;
-    [SerializeField] string nextRoom;
+    public string nextRoom;
     public MapData mapData;
-    [SerializeField] int doorNumber;
+    public int doorNumber;
     [SerializeField] GameObject message;
     [SerializeField] GameObject lockedMessage;
     [SerializeField] GameObject doorAudioPrefab;
-    [SerializeField] int lockedDoorID;
+    public int lockedDoorID;
     [SerializeField] Material fogWallMaterial;
     public Transform player;
     GameManager gm;
@@ -136,31 +136,4 @@ public class Doorway : MonoBehaviour
             SceneManager.LoadScene(nextRoom);
         }
     }
-
-
-
-
-    /*
-public virtual void Update()
-{
-    playerDistance = Vector3.Distance(transform.position, player.position);
-    if (playerDistance <= interactDistance)
-    {
-        if (gm.awareEnemies < 1)
-        {
-            doorOpen = true;
-            message.SetActive(true);
-        }
-        else
-        {
-            doorOpen = false;
-            message.SetActive(false);
-        }
-    }
-    else
-    {
-        message.SetActive(false);
-    }
-}
-*/
 }

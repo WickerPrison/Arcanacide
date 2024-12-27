@@ -16,6 +16,7 @@ public class DoorSetup : MonoBehaviour
     [SerializeField] Vector3 offset;
 
     RoomSetupScript roomSetup;
+
     enum DoorDirection
     {
         LEFT, RIGHT, UP, DOWN
