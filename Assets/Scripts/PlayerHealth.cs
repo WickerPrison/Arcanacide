@@ -103,6 +103,7 @@ public class PlayerHealth : MonoBehaviour
         playerData.health -= damage;
 
         playerEvents.TakeDamage();
+        GlobalEvents.instance.PlayerLoseHealth(playerData.health);
 
         if (attackType != EnemyAttackType.NONPARRIABLE) playerEvents.AttackImpact();
 
@@ -139,6 +140,7 @@ public class PlayerHealth : MonoBehaviour
             weaponManager.AddWeaponMagicSource();
         }
         fullHealth = true;
+        GlobalEvents.instance.PlayerGainHealth(playerData.health);
         sfx.PlaySoundEffect(PlayerSFX.HEAL, 0.6f);
     }
 
@@ -154,6 +156,7 @@ public class PlayerHealth : MonoBehaviour
             }
             fullHealth = true;
         }
+        GlobalEvents.instance.PlayerGainHealth(playerData.health);
     }
 
     public void GemHeal()
