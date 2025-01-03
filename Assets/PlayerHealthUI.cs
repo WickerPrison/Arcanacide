@@ -14,7 +14,7 @@ public class PlayerHealthUI : MonoBehaviour
     [SerializeField] PlayerData playerData;
     float maskDiff = 4;
     float zeroFill = 9;
-    float oneHPWidth = 6f;
+    float oneHPWidth = 5f;
     bool buffer = false;
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
     float delay;
@@ -25,6 +25,7 @@ public class PlayerHealthUI : MonoBehaviour
     private void Start()
     {
         float borderScale = playerData.MaxHealth() * oneHPWidth - maskDiff;
+        Debug.Log(borderScale);
         border.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale);
         background.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale);
         fillMask.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale - 2);
