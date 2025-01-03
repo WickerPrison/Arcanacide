@@ -25,7 +25,6 @@ public class PlayerHealthUI : MonoBehaviour
     private void Start()
     {
         float borderScale = playerData.MaxHealth() * oneHPWidth - maskDiff;
-        Debug.Log(borderScale);
         border.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale);
         background.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale);
         fillMask.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale - 2);
