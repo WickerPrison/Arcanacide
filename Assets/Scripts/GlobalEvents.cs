@@ -18,6 +18,8 @@ public class GlobalEvents : MonoBehaviour
     public event Action<GlobalEvents, int> onPlayerMoneyChange;
     public event Action<GlobalEvents, float> onLoseStamina;
     public event Action<GlobalEvents, float> onGainStamina;
+    public event Action<GlobalEvents, int> onPlayerLoseHealth;
+    public event Action<GlobalEvents, int> onPlayerGainHealth;
 
     private void Awake()
     {
@@ -68,5 +70,15 @@ public class GlobalEvents : MonoBehaviour
     public void GainStamina(float stamina)
     {
         onGainStamina?.Invoke(this, stamina);
+    }
+
+    public void PlayerLoseHealth(int health)
+    {
+        onPlayerLoseHealth?.Invoke(this, health);
+    }
+
+    public void PlayerGainHealth(int health)
+    {
+        onPlayerGainHealth?.Invoke(this, health);
     }
 }

@@ -8,9 +8,6 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
-    [SerializeField] GameObject healbarFill;
-    //[SerializeField] GameObject staminabarFill;
-    [SerializeField] RectTransform staminaBarCover;
     [SerializeField] Image gemBackground;
     [SerializeField] GameObject manaGemIcon;
     [SerializeField] GameObject manaBarFill;
@@ -22,7 +19,6 @@ public class HUD : MonoBehaviour
     [SerializeField] Sprite unbrokenGem;
     public Image gemImage;
     [SerializeField] Image gemProtection;
-    PlayerScript playerScript;
     Canvas canvas;
     Camera mainCamera;
     InputManager im;
@@ -33,7 +29,6 @@ public class HUD : MonoBehaviour
         im = GlobalEvents.instance.GetComponent<InputManager>();
         im.controls.Gameplay.Map.performed += ctx => Map();
 
-        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = mainCamera;
@@ -51,26 +46,7 @@ public class HUD : MonoBehaviour
 
     private void Update()
     {
-        UpdateHealthbar();
-        UpdateStaminaBar();
         UpdateManaBar();
-    }
-
-    void UpdateHealthbar()
-    {
-        float healthRatio = (float)playerData.health / (float)playerData.MaxHealth();
-        if (playerData.health < 0)
-        {
-            healthRatio = 0;
-        }
-        mask.padding = new Vector4(0, 0, Mathf.Lerp(765, 0, healthRatio), 0);
-    }
-
-    void UpdateStaminaBar()
-    {
-        float staminaRatio = playerScript.stamina / playerData.MaxStamina();
-        //staminabarFill.transform.localScale = new Vector3(staminaRatio * healthbarScale, staminabarFill.transform.localScale.y, staminabarFill.transform.localScale.z);
-        staminaBarCover.localScale = new Vector3(1 - staminaRatio, staminaBarCover.localScale.y, staminaBarCover.localScale.z);
     }
 
     void UpdateManaBar()
