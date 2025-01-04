@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoorwayIfDemo : MonoBehaviour
 {
-    [SerializeField] DemoMode demoMode;
+    [SerializeField] BuildMode buildMode;
     Doorway doorway;
     public string nextRoom;
     public int doorNumber;
@@ -12,7 +12,7 @@ public class DoorwayIfDemo : MonoBehaviour
 
     private void Start()
     {
-        if (!demoMode.demoMode) return;
+        if (buildMode.buildMode != BuildModes.DEMO) return;
         doorway = GetComponent<Doorway>();
         doorway.nextRoom = nextRoom;
         doorway.doorNumber = doorNumber;

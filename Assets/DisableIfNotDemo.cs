@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DisableIfNotDemo : MonoBehaviour
 {
-    [SerializeField] DemoMode demoMode;
+    [SerializeField] BuildMode buildMode;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (!demoMode.demoMode) gameObject.SetActive(false);
+        if (buildMode.buildMode != BuildModes.DEMO) gameObject.SetActive(false);
     }
 }
