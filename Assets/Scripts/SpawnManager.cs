@@ -22,7 +22,14 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnPosition()
     {
-        player.position = spawnPoints[mapData.doorNumber].position;
+        if(spawnPoints.Count > mapData.doorNumber)
+        {
+            player.position = spawnPoints[mapData.doorNumber].position;
+        }
+        else
+        {
+            player.position = spawnPoints[0].position;
+        }
         player.position = new Vector3(player.position.x, 0, player.position.z);
     } 
 }
