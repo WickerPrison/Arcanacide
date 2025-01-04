@@ -10,7 +10,7 @@ public class IceBreath : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] AttackProfiles attackProfile;
     PlayerAbilities playerAbilities;
-    ParticleSystem vfx;
+    [SerializeField] ParticleSystem vfx;
     PlayerScript playerScript;
     LayerMask layerMask;
     RaycastHit[] hitTargets;
@@ -27,7 +27,6 @@ public class IceBreath : MonoBehaviour
     {
         if (!playerData.unlockedWeapons.Contains(3)) return;
         playerScript = GetComponentInParent<PlayerScript>();
-        vfx = GetComponent<ParticleSystem>();
         layerMask = LayerMask.GetMask("Enemy");
         fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
         fmodInstance.setVolume(sfxVolume);
