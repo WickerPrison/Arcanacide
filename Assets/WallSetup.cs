@@ -4,9 +4,9 @@ using UnityEditor;
 using UnityEngine;
 
 [ExecuteAlways]
-#if UNITY_EDITOR
 public class WallSetup : MonoBehaviour
 {
+#if UNITY_EDITOR
     RoomSetupScript RoomSetup;
     RoomSetupScript roomSetup
     {
@@ -64,5 +64,5 @@ public class WallSetup : MonoBehaviour
     {
         roomSetup.onSizeChange -= OnSizeChange;
     }
-}
 #endif
+}

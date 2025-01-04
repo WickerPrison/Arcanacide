@@ -4,10 +4,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-#if UNITY_EDITOR
 [ExecuteAlways]
 public class FloorSetup : MonoBehaviour
 {
+#if UNITY_EDITOR
     RoomSetupScript roomSetup;
     RawImage floorImage;
     private void OnEnable()
@@ -44,5 +44,5 @@ public class FloorSetup : MonoBehaviour
         roomSetup.onSizeChange -= onSizeChange;
         roomSetup.onTileChange -= OnTileChange;
     }
-}
 #endif
+}
