@@ -16,6 +16,7 @@ public class DoorSetup : MonoBehaviour
     [SerializeField] Vector3 offset;
 
     RoomSetupScript roomSetup;
+    float spawnPointDistance = 1.5f;
 
     enum DoorDirection
     {
@@ -54,7 +55,7 @@ public class DoorSetup : MonoBehaviour
                 transform.localEulerAngles = Vector3.zero;
                 spriteRenderer.sortingLayerName = "Floor";
                 fogWall.sortingLayerName = "Floor";
-                spawnPoint.localPosition = new Vector3(0, 0, -1);
+                spawnPoint.localPosition = new Vector3(0, 0, -spawnPointDistance);
                 openDoorMessage.localRotation = Quaternion.Euler(30, 45, openDoorMessage.rotation.z);
                 notOpenMessage.localRotation = Quaternion.Euler(30, 45, notOpenMessage.localEulerAngles.z);
                 break;
@@ -63,7 +64,7 @@ public class DoorSetup : MonoBehaviour
                 transform.localEulerAngles = Vector3.zero;
                 spriteRenderer.sortingLayerName = "Foreground";
                 fogWall.sortingLayerName = "Foreground";
-                spawnPoint.localPosition = new Vector3(0, 0, 1);
+                spawnPoint.localPosition = new Vector3(0, 0, spawnPointDistance);
                 openDoorMessage.localRotation = Quaternion.Euler(30, 45, openDoorMessage.rotation.z);
                 notOpenMessage.localRotation = Quaternion.Euler(30, 45, notOpenMessage.localEulerAngles.z);
                 break;
@@ -72,7 +73,7 @@ public class DoorSetup : MonoBehaviour
                 transform.localEulerAngles = new Vector3(0, 90, 0);
                 spriteRenderer.sortingLayerName = "Floor";
                 fogWall.sortingLayerName = "Floor";
-                spawnPoint.localPosition = new Vector3(0, 0, -1);
+                spawnPoint.localPosition = new Vector3(0, 0, -spawnPointDistance);
                 openDoorMessage.localRotation = Quaternion.Euler(30, -45, openDoorMessage.rotation.z);
                 notOpenMessage.localRotation = Quaternion.Euler(30, -45, notOpenMessage.localEulerAngles.z);
                 break;
@@ -81,7 +82,7 @@ public class DoorSetup : MonoBehaviour
                 transform.localEulerAngles = new Vector3(0, 90, 0);
                 spriteRenderer.sortingLayerName = "Foreground";
                 fogWall.sortingLayerName = "Foreground";
-                spawnPoint.localPosition = new Vector3(0, 0, 1);
+                spawnPoint.localPosition = new Vector3(0, 0, spawnPointDistance);
                 openDoorMessage.localRotation = Quaternion.Euler(30, -45, openDoorMessage.rotation.z);
                 notOpenMessage.localRotation = Quaternion.Euler(30, -45, notOpenMessage.localEulerAngles.z);
                 break;

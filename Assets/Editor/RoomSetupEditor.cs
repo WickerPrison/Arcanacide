@@ -10,6 +10,11 @@ public class RoomSetupEditor : Editor
     {
         RoomSetupScript roomSetup = target as RoomSetupScript;
         base.OnInspectorGUI();
+        if(GUILayout.Button("Manual Update"))
+        {
+            roomSetup.ManualUpdate();
+        }
+
         if (roomSetup.usesNavmesh)
         {
             GUILayout.BeginHorizontal();

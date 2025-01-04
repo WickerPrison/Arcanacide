@@ -58,6 +58,15 @@ public class RoomSetupScript : MonoBehaviour
         }
     }
 
+    public void ManualUpdate()
+    {
+        onSizeChange?.Invoke(this, EventArgs.Empty);
+        UpdateNavmesh();
+        roomSizeCache = roomSize;
+        floorTilingCache = floorTilingRatio;
+        floorTilingOffsetCache = floorTilingOffset;
+    }
+
     public void UpdateNavmesh()
     {
         if (!usesNavmesh || gameObject.scene.name == null) return;
