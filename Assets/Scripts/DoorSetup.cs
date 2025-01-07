@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 [ExecuteAlways]
-#if UNITY_EDITOR
 public class DoorSetup : MonoBehaviour
 {
+#if UNITY_EDITOR
     [SerializeField] Transform openDoorMessage;
     [SerializeField] Transform notOpenMessage;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -93,5 +93,5 @@ public class DoorSetup : MonoBehaviour
     {
         roomSetup.onSizeChange -= OnSizeChange;
     }
-}
 #endif
+}
