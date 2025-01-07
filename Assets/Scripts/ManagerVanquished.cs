@@ -7,7 +7,7 @@ public class ManagerVanquished : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] TextMeshProUGUI healthGemMessage;
-    [SerializeField] DemoMode demoMode;
+    [SerializeField] BuildMode buildMode;
 
     float messageTime = 3;
 
@@ -23,7 +23,7 @@ public class ManagerVanquished : MonoBehaviour
         text.gameObject.SetActive(false);
         healthGemMessage.gameObject.SetActive(true);
         yield return new WaitForSeconds(messageTime);
-        if(demoMode.demoMode) EndOfDemoMessage();
+        if(buildMode.buildMode == BuildModes.DEMO) EndOfDemoMessage();
         Destroy(gameObject);
     }
 
