@@ -12,7 +12,7 @@ public class DoorSetup : MonoBehaviour
     [SerializeField] Transform notOpenMessage;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SpriteRenderer fogWall;
-    [SerializeField] Transform spawnPoint;
+    public Transform spawnPoint;
     [SerializeField] Vector3 offset;
 
     RoomSetupScript roomSetup;
