@@ -14,6 +14,7 @@ public class EnemyScriptEditor : Editor
         {
             Undo.RecordObject(enemyScript, "Generate GUID");
             enemyScript.GenerateGUID();
+            PrefabUtility.RecordPrefabInstancePropertyModifications(enemyScript);
         }
     }
 }
