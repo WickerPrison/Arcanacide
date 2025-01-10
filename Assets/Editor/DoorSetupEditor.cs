@@ -25,10 +25,11 @@ public class DoorSetupEditor : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("Assign to SpawnManager"))
         {
-            Undo.RecordObject(spawnManager, "Add door to spawnmanager");
             if(!spawnManager.spawnPoints.Contains(doorSetup.spawnPoint))
             {
+                Undo.RecordObject(spawnManager, "Add door to spawnmanager");
                 spawnManager.spawnPoints.Add(doorSetup.spawnPoint);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(spawnManager);
             }
             doorSetup.gameObject.name = "Doorway " + spawnManager.spawnPoints.IndexOf(doorSetup.spawnPoint).ToString();
         }
