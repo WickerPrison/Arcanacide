@@ -67,6 +67,7 @@ public class FloorSetup : MonoBehaviour
 
     void DictSetup()
     {
+        if (floorMatDict.Keys.Count > 0) return;
         floorMatDict.Add(FloorTextures.DEFAULT, floorTextures[0]);
         floorMatDict.Add(FloorTextures.WAVES, floorTextures[1]);
         floorMatDict.Add(FloorTextures.CARPET, floorTextures[2]);
