@@ -25,6 +25,7 @@ public class FloorSetup : MonoBehaviour
     {
         Undo.RecordObject(floorImage, "Change tile size");
         UpdateTileSize();
+        PrefabUtility.RecordPrefabInstancePropertyModifications(floorImage);
     }
 
     private void onSizeChange(object sender, System.EventArgs e)
@@ -32,6 +33,7 @@ public class FloorSetup : MonoBehaviour
         Undo.RecordObject(transform, "Resize Room");
         transform.localScale = new Vector3(roomSetup.roomSize.x, 0, roomSetup.roomSize.y);
         UpdateTileSize();
+        PrefabUtility.RecordPrefabInstancePropertyModifications(floorImage);
     }
 
     private void UpdateTileSize()

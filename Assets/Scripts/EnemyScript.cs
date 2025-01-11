@@ -10,8 +10,6 @@ public class EnemyScript : MonoBehaviour
     [System.NonSerialized] public int health;
     [System.NonSerialized] public float poise;
     public int reward;
-    [SerializeField] bool generateID;
-    public string enemyGUID = "";
     public MapData mapData;
     public PlayerData playerData;
     [SerializeField] DialogueData phoneData;
@@ -29,15 +27,7 @@ public class EnemyScript : MonoBehaviour
     float damageDOT = 0;
     public bool invincible = false;
     [System.NonSerialized] public bool dying = false;
-
-    private void OnDrawGizmosSelected()
-    {
-        if(generateID)
-        {
-            enemyGUID = System.Guid.NewGuid().ToString();
-            generateID = false;
-        }
-    }
+    public string enemyGUID = "";
 
     private void Awake()
     {
@@ -202,5 +192,10 @@ public class EnemyScript : MonoBehaviour
         enemyEvents.Death();
 
         Destroy(gameObject);
+    }
+
+    public void GenerateGUID()
+    {
+        enemyGUID = System.Guid.NewGuid().ToString();
     }
 }

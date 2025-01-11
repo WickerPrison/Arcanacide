@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1445953062381594738}
   - component: {fileID: 1706694549756176003}
-  - component: {fileID: 1445953062381594739}
   - component: {fileID: 1445953062381594737}
+  - component: {fileID: 1445953062381594739}
   m_Layer: 0
   m_Name: Doorway
   m_TagString: Untagged
@@ -57,6 +57,37 @@ MonoBehaviour:
   spawnPoint: {fileID: 3460911224604374605}
   offset: {x: 0, y: 0, z: 0}
   direction: 0
+--- !u!114 &1445953062381594737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445953062381594741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d4f8f1fbbe870419a662442dbad66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorOpen: 0
+  nextRoom: Bossfight
+  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  doorNumber: 0
+  message: {fileID: 8703679481987774575}
+  lockedMessage: {fileID: 4944793320693809920}
+  doorAudioPrefab: {fileID: 7140987698445707265, guid: 07c3a153c7265354c9f61a01cc4a475b, type: 3}
+  lockedDoorID: 0
+  fogWallMaterial: {fileID: 2100000, guid: cae9c62242e385f488cb11db988b20df, type: 2}
+  player: {fileID: 0}
+  playerDistance: 0
+  fogWallRenderer: {fileID: 8514733834531143017}
+  doorSFX:
+    Guid:
+      Data1: 271981987
+      Data2: 1216019639
+      Data3: -1449504378
+      Data4: 1951388348
+    Path: event:/OpenDoor
 --- !u!212 &1445953062381594739
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -109,37 +140,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1445953062381594737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445953062381594741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d4f8f1fbbe870419a662442dbad66b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doorOpen: 0
-  nextRoom: Bossfight
-  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
-  doorNumber: 0
-  message: {fileID: 8703679481987774575}
-  lockedMessage: {fileID: 4944793320693809920}
-  doorAudioPrefab: {fileID: 7140987698445707265, guid: 07c3a153c7265354c9f61a01cc4a475b, type: 3}
-  lockedDoorID: 0
-  fogWallMaterial: {fileID: 2100000, guid: cae9c62242e385f488cb11db988b20df, type: 2}
-  player: {fileID: 0}
-  playerDistance: 0
-  fogWallRenderer: {fileID: 8514733834531143017}
-  doorSFX:
-    Guid:
-      Data1: 271981987
-      Data2: 1216019639
-      Data3: -1449504378
-      Data4: 1951388348
-    Path: event:/OpenDoor
 --- !u!1 &1684970869419100211
 GameObject:
   m_ObjectHideFlags: 0
