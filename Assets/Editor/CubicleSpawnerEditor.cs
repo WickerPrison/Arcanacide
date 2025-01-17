@@ -36,20 +36,25 @@ public class CubicleSpawnerEditor : EditorWindow
             Transform cubicleHolder = new GameObject().transform;
             cubicleHolder.gameObject.name = "Cubicle Holder";
             cubicleHolder.parent = Selection.activeTransform;
+            float centerShiftX = sideShift.x * ((float)cubicleNum / 2 - 0.5f);
+            float centerShiftZ = 0;
+            if (doubleSided) centerShiftZ = backShift.z / 2;
+            Vector3 centerShift = new Vector3(centerShiftX, 0, centerShiftZ);
             for (int i = 0; i < cubicleNum; i++)
             {
                 GameObject cubicle = PrefabUtility.InstantiatePrefab(cubiclePrefab) as GameObject;
                 cubicle.transform.parent = cubicleHolder;
-                cubicle.transform.localPosition = cubicleHolder.localPosition + sideShift * i;
+                cubicle.transform.localPosition = cubicleHolder.localPosition + sideShift * i - centerShift;
 
                 if (doubleSided)
                 {
                     GameObject backCubicle = PrefabUtility.InstantiatePrefab(cubiclePrefab) as GameObject;
                     backCubicle.transform.parent = cubicleHolder;
                     backCubicle.transform.localPosition = cubicle.transform.localPosition + backShift;
-                    backCubicle.transform.localScale = new Vector3(1, 1, -1);
+                    backCubicle.transform.localRotation = Quaternion.Euler(0, 180, 0);
                 }
             }
+            Selection.activeTransform = cubicleHolder;
         }
     }
 }
