@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(BoxSetup))]
+[CanEditMultipleObjects]
 public class BoxSetupEditor : Editor
 {
     public override void OnInspectorGUI()
