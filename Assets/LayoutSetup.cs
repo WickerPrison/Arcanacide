@@ -8,7 +8,13 @@ public class LayoutSetup : MonoBehaviour
     [MenuItem("Tools/Rotate Layout &L")]
     static void RotateLayout()
     {
-        Transform transform = FindObjectOfType<LayoutSetup>().transform;
+        LayoutSetup layoutSetup = FindObjectOfType<LayoutSetup>();
+        if (layoutSetup == null)
+        {
+            Debug.LogWarning("No LayoutSetup Found");
+            return;
+        }
+        Transform transform = layoutSetup.transform;
         Vector3 newEulerAngles = transform.eulerAngles;
         if(newEulerAngles.y == 0)
         {
