@@ -11,8 +11,16 @@ public class LayoutSetup : MonoBehaviour
         LayoutSetup layoutSetup = FindObjectOfType<LayoutSetup>();
         if (layoutSetup == null)
         {
-            Debug.LogWarning("No LayoutSetup Found");
-            return;
+            GameObject layoutObject = GameObject.Find("Layout");
+            if(layoutObject != null)
+            {
+                layoutSetup = layoutObject.AddComponent<LayoutSetup>(); ;
+            }
+            else
+            {
+                Debug.LogWarning("No LayoutSetup Found");
+                return;
+            }
         }
         Transform transform = layoutSetup.transform;
         Vector3 newEulerAngles = transform.eulerAngles;
