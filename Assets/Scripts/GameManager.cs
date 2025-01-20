@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.visitedRooms = data.visitedRooms.ToList();
+            mapData.fireSuppressionState = (FireSuppressionState)Enum.Parse(typeof(FireSuppressionState), data.fireSuppressionState);
             mapData.powerSwitchesFlipped = data.powerSwitchesFlipped.ToList();
             mapData.deathRoom = data.deathRoom;
             mapData.deathPosition = new Vector3(data.deathPosition[0], data.deathPosition[1], data.deathPosition[2]);
@@ -215,6 +216,7 @@ public class GameManager : MonoBehaviour
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
+        mapData.fireSuppressionState = FireSuppressionState.ON;
         mapData.powerSwitchesFlipped.Clear();
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
@@ -279,6 +281,7 @@ public class GameManager : MonoBehaviour
         mapData.doorNumber = 1;
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
+        mapData.fireSuppressionState = FireSuppressionState.FIXED;
         mapData.powerSwitchesFlipped.Clear();
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
@@ -349,6 +352,7 @@ public class GameManager : MonoBehaviour
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
+        mapData.fireSuppressionState = FireSuppressionState.FIXED;
         mapData.powerSwitchesFlipped.Clear();
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
@@ -425,6 +429,7 @@ public class GameManager : MonoBehaviour
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();
         mapData.visitedRooms.Clear();
+        mapData.fireSuppressionState = FireSuppressionState.FIXED;
         mapData.powerSwitchesFlipped.Clear();
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;

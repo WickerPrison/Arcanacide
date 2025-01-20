@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FireSuppressionState
+{
+    ON, OFF, FIXED
+}
+
 [CreateAssetMenu]
 public class MapData : ScriptableObject
 {
@@ -19,6 +24,8 @@ public class MapData : ScriptableObject
     public int currentRoom;
 
     public List<int> usedCoolers;
+
+    public FireSuppressionState fireSuppressionState;
 
     public List<int> powerSwitchesFlipped;
 

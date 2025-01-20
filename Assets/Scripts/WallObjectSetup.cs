@@ -14,7 +14,8 @@ public class WallObjectSetup : MonoBehaviour
         LEFT, RIGHT, UP, DOWN
     }
     [SerializeField] ObjectDirection direction;
-    [SerializeField] SpriteRenderer[] spriteRenderers = new SpriteRenderer[0];
+    [SerializeField] SpriteRenderer[] spriteRenderers;
+    [SerializeField] Transform[] messages;
 
     private void OnEnable()
     {
@@ -47,6 +48,7 @@ public class WallObjectSetup : MonoBehaviour
                     roomSetup.roomSize.y * 5);
                 transform.localEulerAngles = Vector3.zero;
                 SpriteRendererLayer("Floor");
+                PositionMessages(1);
                 break;
             case ObjectDirection.RIGHT:
                 transform.localPosition = new Vector3(
@@ -55,6 +57,7 @@ public class WallObjectSetup : MonoBehaviour
                     -roomSetup.roomSize.y * 5);
                 transform.localEulerAngles = Vector3.zero;
                 SpriteRendererLayer("Foreground");
+                PositionMessages(1);
                 break;
             case ObjectDirection.UP:
                 transform.localPosition = new Vector3(
@@ -63,6 +66,7 @@ public class WallObjectSetup : MonoBehaviour
                     transform.localPosition.z);
                 transform.localEulerAngles = new Vector3(0, 90, 0);
                 SpriteRendererLayer("Floor");
+                PositionMessages(-1);
                 break;
             case ObjectDirection.DOWN:
                 transform.localPosition = new Vector3(
@@ -71,6 +75,7 @@ public class WallObjectSetup : MonoBehaviour
                     transform.localPosition.z);
                 transform.localEulerAngles = new Vector3(0, 90, 0);
                 SpriteRendererLayer("Foreground");
+                PositionMessages(-1);
                 break;
         }
         if(spriteRenderers.Length > 0)
@@ -78,6 +83,13 @@ public class WallObjectSetup : MonoBehaviour
             foreach(SpriteRenderer renderer in spriteRenderers)
             {
                 PrefabUtility.RecordPrefabInstancePropertyModifications(renderer);
+            }
+        }
+        if(messages.Length > 0)
+        {
+            foreach(Transform message in messages)
+            {
+                PrefabUtility.RecordPrefabInstancePropertyModifications(message);
             }
         }
     }
@@ -88,6 +100,15 @@ public class WallObjectSetup : MonoBehaviour
         foreach (SpriteRenderer renderer in spriteRenderers)
         {
             renderer.sortingLayerName = layerName;
+        }
+    }
+
+    private void PositionMessages(int direction)
+    {
+        if (messages.Length <= 0) return;
+        foreach(Transform message in messages)
+        {
+            message.localRotation = Quaternion.Euler(30, direction * 45, message.localEulerAngles.z);
         }
     }
 
