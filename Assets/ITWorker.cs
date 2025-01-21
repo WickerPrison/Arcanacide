@@ -8,6 +8,7 @@ public class ITWorker : MonoBehaviour
     [SerializeField] Animator backAnimator;
     [SerializeField] MapData mapData;
     [SerializeField] DialogueData dialogueData;
+    [SerializeField] FireSuppressionSwitch fireSuppressionSwitch;
     NPCDialogue dialogue;
     FaceDirection faceDirection;
     float animationTimer = 0.5f;
@@ -18,11 +19,13 @@ public class ITWorker : MonoBehaviour
     {
         dialogue = GetComponent<NPCDialogue>();
         dialogue.getConversationIndex = GetConversationIndex;
+        dialogue.endConversationCallback = EndConversation;
     }
 
     private void OnEnable()
     {
         dialogue.onStartDialogue += onStartDialogue;
+        fireSuppressionSwitch.onFixed += onFixed;
     }
 
 
@@ -82,6 +85,19 @@ public class ITWorker : MonoBehaviour
 
         return 1;
     }
+
+    void EndConversation(int index)
+    {
+        inDialogue = false;
+        if(index < 2)
+        {
+            faceDirection.DirectionalFace(FacingDirections.BACK_LEFT);
+        }
+        else
+        {
+            faceDirection.DirectionalFace(FacingDirections.BACK_RIGHT);
+        }
+    }
     
     private void onStartDialogue(object sender, System.EventArgs e)
     {
@@ -91,8 +107,16 @@ public class ITWorker : MonoBehaviour
         faceDirection.FacePlayer();
     }
 
+    private void onFixed(object sender, System.EventArgs e)
+    {
+        backAnimator.Play("Idle");
+        frontAnimator.Play("Idle");
+        faceDirection.DirectionalFace(FacingDirections.BACK_RIGHT);
+    }
+
     private void OnDisable()
     {
         dialogue.onStartDialogue -= onStartDialogue;
+        fireSuppressionSwitch.onFixed -= onFixed;
     }
 }

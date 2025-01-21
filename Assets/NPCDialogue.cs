@@ -23,10 +23,17 @@ public class NPCDialogue : MonoBehaviour
             if (GetConversationIndex != null) return GetConversationIndex;
             else return () => { return 0; };
         }
-        set
+        set{ GetConversationIndex = value; }
+    }
+    Action<int> EndConversationCallback;
+    public Action<int> endConversationCallback
+    {
+        get
         {
-            GetConversationIndex = value;
+            if (EndConversationCallback != null) return EndConversationCallback;
+            else return x => { };
         }
+        set { EndConversationCallback = value; }
     }
     int conversationIndex;
     int currentLineIndex = 0;
@@ -79,6 +86,7 @@ public class NPCDialogue : MonoBehaviour
         currentLineIndex++;
         if (currentLineIndex >= thisConversation.Count)
         {
+            endConversationCallback(conversationIndex);
             Destroy(dialogue.gameObject);
             inDialogue = false;
             im.Gameplay();
