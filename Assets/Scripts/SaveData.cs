@@ -40,6 +40,7 @@ public class SaveData
 
     public int[] unlockedDoors;
     public int[] visitedRooms;
+    public string fireSuppressionState;
     public int[] powerSwitchesFlipped;
     public string deathRoom;
     public float[] deathPosition;
@@ -97,6 +98,7 @@ public class SaveData
 
         unlockedDoors = mapData.unlockedDoors.ToArray();
         visitedRooms = mapData.visitedRooms.ToArray();
+        fireSuppressionState = mapData.fireSuppressionState.ToString();
         powerSwitchesFlipped = mapData.powerSwitchesFlipped.ToArray();
         deathRoom = mapData.deathRoom;
         deathPosition = new float[3];

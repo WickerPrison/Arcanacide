@@ -5,11 +5,16 @@ using Unity.AI.Navigation;
 using UnityEngine;
 
 #if UNITY_EDITOR
+[ExecuteAlways]
 public class RoomSetupScript : MonoBehaviour
 {
+    public event EventHandler onGetInitialVals;
     public Vector2 roomSize = Vector2.one;
     Vector2 roomSizeCache;
     public event EventHandler onSizeChange;
+    public FloorTextures floorTexture;
+    FloorTextures floorTextureCache;
+    public event EventHandler onTextureChange;
     public Vector2 floorTilingOffset;
     Vector2 floorTilingOffsetCache;
     public Vector2 floorTilingRatio;
@@ -32,8 +37,11 @@ public class RoomSetupScript : MonoBehaviour
 
     private void OnEnable()
     {
+        onGetInitialVals?.Invoke(this, EventArgs.Empty);
         roomSizeCache = roomSize;
+        floorTextureCache = floorTexture;
         floorTilingCache = floorTilingRatio;
+        floorTilingOffsetCache = floorTilingOffset;
     }
 
     private void OnValidate()
@@ -43,6 +51,12 @@ public class RoomSetupScript : MonoBehaviour
             onSizeChange?.Invoke(this, EventArgs.Empty);
             UpdateNavmesh();
             roomSizeCache = roomSize;
+        }
+
+        if(floorTextureCache != floorTexture)
+        {
+            onTextureChange?.Invoke(this, EventArgs.Empty);
+            floorTextureCache = floorTexture;
         }
 
         if(floorTilingCache != floorTilingRatio || floorTilingOffsetCache != floorTilingOffset)

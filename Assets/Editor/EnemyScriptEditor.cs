@@ -17,4 +17,19 @@ public class EnemyScriptEditor : Editor
             PrefabUtility.RecordPrefabInstancePropertyModifications(enemyScript);
         }
     }
+
+    [MenuItem("Tools/Assign Enemy IDs")]
+    public static void AssignEnemyIDs()
+    {
+        EnemyScript[] enemyScripts = FindObjectsOfType<EnemyScript>();
+        foreach(EnemyScript enemy in enemyScripts)
+        {
+            Undo.RecordObjects(enemyScripts, "Generate GUIDs");
+            if(enemy.enemyGUID == "")
+            {
+                enemy.GenerateGUID();
+                PrefabUtility.RecordPrefabInstancePropertyModifications(enemy);
+            }
+        }
+    }
 }

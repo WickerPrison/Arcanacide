@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class SwitchAnimationEvents : MonoBehaviour
 {
-    public void PowerOff()
+    public void FlipOff()
     {
-        PowerSwitch switchScript = GetComponentInParent<PowerSwitch>();
-        switchScript.PowerOff();
+        IFlipOff switchScript = GetComponentInParent<IFlipOff>();
+        if(switchScript != null)
+        {
+            switchScript.FlipOff();
+        }
+    }
+
+    public void FlipOn()
+    {
+        IFlipOn switchScript = GetComponentInParent<IFlipOn>();
+        if(switchScript != null)
+        {
+            switchScript.FlipOn();
+        }
     }
 }

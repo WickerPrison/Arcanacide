@@ -9,6 +9,9 @@ ModelImporter:
   - first:
       74: -6650831954657841749
     second: Handle|Pull_Up
+  - first:
+      74: 7351516124740479434
+    second: Handle|Pull_Up (1)
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -79,7 +82,7 @@ ModelImporter:
       curves: []
       events:
       - time: 1
-        functionName: PowerOff
+        functionName: FlipOff
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -113,7 +116,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 1
+        functionName: FlipOn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

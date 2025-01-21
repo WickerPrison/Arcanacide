@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerSwitch : MonoBehaviour
+public class PowerSwitch : MonoBehaviour, IFlipOff
 {
     [SerializeField] GameObject message;
     [SerializeField] MapData mapData;
@@ -53,7 +53,7 @@ public class PowerSwitch : MonoBehaviour
         }
     }
 
-    public void PowerOff()
+    public void FlipOff()
     {
         mapData.powerSwitchesFlipped.Add(switchNumber);
     }
