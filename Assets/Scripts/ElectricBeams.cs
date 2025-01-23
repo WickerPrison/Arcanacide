@@ -122,7 +122,7 @@ public class ElectricBeams : MonoBehaviour
 
         for(int i = 0; i < indicatorLines.Count;i++)
         {
-            Vector3 direction = RotateDirection(Vector3.right, startAngle + angleDifference * i);
+            Vector3 direction = Utils.RotateDirection(Vector3.right, startAngle + angleDifference * i);
             RaycastHit hit;
             Physics.Raycast(transform.position, direction.normalized, out hit, 50, layerMask, QueryTriggerInteraction.Ignore);
             endPoints.Add(hit.point);
@@ -156,13 +156,5 @@ public class ElectricBeams : MonoBehaviour
         hitPlayerDelay = true;
         yield return hitDelay;
         hitPlayerDelay = false;
-    }
-
-    Vector3 RotateDirection(Vector3 oldDirection, float degrees)
-    {
-        Vector3 newDirection = Vector3.zero;
-        newDirection.x = Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.x - Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.z;
-        newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
-        return newDirection;
     }
 }

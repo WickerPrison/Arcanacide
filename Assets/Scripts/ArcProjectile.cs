@@ -54,16 +54,20 @@ public class ArcProjectile : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
-        transform.position = transform.position + direction.normalized * Time.fixedDeltaTime * speed;
-
-        float xVal = InverseLerpSetY0(startPoint, endPoint, transform.position);
-        float currentHeight = a * Mathf.Pow(xVal, 2) + b * xVal + c;
-        transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+        transform.position = GetNextPosition(transform.position);
 
         if (transform.position.y <= 0.3f)
         {
             Explosion();
         }
+    }
+
+    public Vector3 GetNextPosition(Vector3 currentPosition)
+    {
+        Vector3 nextPosition = currentPosition + direction.normalized * Time.fixedDeltaTime * speed;
+        float xVal = InverseLerpSetY0(startPoint, endPoint, nextPosition);
+        float nextHeight = a * Mathf.Pow(xVal, 2) + b * xVal + c;
+        return new Vector3(nextPosition.x, nextHeight, nextPosition.z);
     }
 
     public virtual void SpawnIndicator()

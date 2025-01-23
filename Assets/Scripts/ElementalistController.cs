@@ -154,7 +154,7 @@ public class ElementalistController : EnemyController
             else
                 chaosOrb.transform.position = chaosHeadBack.position;
 
-            chaosOrb.direction = RotateDirection(direction, angle) + chaosOrbVert;
+            chaosOrb.direction = Utils.RotateDirection(direction, angle) + chaosOrbVert;
             chaosOrb.speed = 6;
             chaosOrb.enemyOfOrigin = enemyScript;
             angle += angleDiff;
@@ -176,14 +176,6 @@ public class ElementalistController : EnemyController
         {
             AssistantBeam bubbles = Instantiate(bubblesPrefab).GetComponent<AssistantBeam>();
         }
-    }
-
-    Vector3 RotateDirection(Vector3 oldDirection, float degrees)
-    {
-        Vector3 newDirection = Vector3.zero;
-        newDirection.x = Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.x - Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.z;
-        newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
-        return newDirection;
     }
 
     public override void StartDying()
