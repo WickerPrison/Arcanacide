@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class MinibossAbilities : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class MinibossAbilities : MonoBehaviour
     float range = 3.5f;
     float spread = 3.5f;
     WaitForSeconds salvoDelay = new WaitForSeconds(0.3f);
+    public ObjectPool<GameObject> pool;
+
 
     private void Start()
     {
@@ -50,6 +53,7 @@ public class MinibossAbilities : MonoBehaviour
             for (int j = -2; j <= 2; j++)
             {
                 Vector3 target = forwardPosition + Vector3.Cross(playerDirection, Vector3.up).normalized * j * spread;
+                target += new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 SingleMissile(target, 0.5f + (float)Mathf.Abs(j) / 4);
             }
             yield return salvoDelay;

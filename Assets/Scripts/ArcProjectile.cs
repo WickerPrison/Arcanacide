@@ -84,7 +84,7 @@ public class ArcProjectile : MonoBehaviour
     {
         GameObject explosion = Instantiate(explosionPrefab);
         explosion.transform.position = new Vector3(endPoint.x, .3f, endPoint.z);
-        Destroy(gameObject);
+        DestroyProjectile();
 
         List<Collider> objects = touchingCircle.GetTouchingObjects();
         if (objects.Contains(playerCollider) && player.gameObject.layer == 3)
@@ -99,6 +99,11 @@ public class ArcProjectile : MonoBehaviour
             player.GetComponent<PlayerScript>().PerfectDodge(EnemyAttackType.PROJECTILE);
         }
 
+    }
+
+    public virtual void DestroyProjectile()
+    {
+        Destroy(gameObject);
     }
 
     float InverseLerpSetY0(Vector3 startPos, Vector3 endPos, Vector3 currentPos)
