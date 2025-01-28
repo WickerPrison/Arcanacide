@@ -16,22 +16,38 @@ public class MinibossV1Controller : EnemyController
     {
         base.EnemyAI();
 
-        if(state == EnemyState.IDLE)
+        if (navAgent.enabled == true)
         {
-            if (navAgent.enabled == true)
-            {
-                navAgent.SetDestination(playerScript.transform.position);
-            }
+            navAgent.SetDestination(playerScript.transform.position);
         }
 
-        if(attackTime <= 0)
+        if(state == EnemyState.IDLE)
         {
-            attackTime = attackMaxTime;
-            abilities.MissileAttack();
+            if(attackTime <= 0)
+            {
+                attackTime = attackMaxTime;
+                //abilities.MissileAttack();
+                //abilities.Dash();
+                //abilities.MeleeBlade();
+                abilities.Circle();
+            }
+            else
+            {
+                attackTime -= Time.deltaTime;
+            }
         }
-        else
+        else if(state == EnemyState.SPECIAL)
         {
-            attackTime -= Time.deltaTime;
+            abilities.FollowCircle();
         }
+
+        frontAnimator.SetFloat("PlayerDistance", playerDistance);
+        backAnimator.SetFloat("PlayerDistance", playerDistance);
+    }
+
+    public override void AttackHit(int smearSpeed)
+    {
+        smearScript.particleSmear(smearSpeed);
+        base.AttackHit(smearSpeed);
     }
 }
