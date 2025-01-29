@@ -20,4 +20,9 @@ public class MinibossAnimationEvents : MonoBehaviour
     {
         abilities.AttackDash(endAnimation);
     }
+
+    public void FirePlasmaShot()
+    {
+        abilities.FirePlasmaShot();
+    }
 }

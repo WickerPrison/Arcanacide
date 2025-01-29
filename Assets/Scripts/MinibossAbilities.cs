@@ -8,8 +8,8 @@ public class MinibossAbilities : MonoBehaviour
 {
     [SerializeField] GameObject missilePrefab;
     [SerializeField] Transform missileSpawnPoint;
-    [SerializeField] FollowPath followPath;
-    FollowPoint followPoint;
+    [SerializeField] Ellipse ellipse;
+    FacePlayer facePlayer;
     NavMeshAgent navMeshAgent;
     EnemyController enemyController;
     EnemyScript enemyScript;
@@ -21,8 +21,16 @@ public class MinibossAbilities : MonoBehaviour
     float dashSpeed = 15f;
     float defaultAccel = 8;
     float dashAccel = 25;
-
-
+    bool onCircle = false;
+    Vector3 circleStart;
+    [SerializeField] float getToCircleSpeed;
+    [SerializeField] float timeToCircle;
+    float startingRads;
+    float ellipseRads;
+    [SerializeField] GameObject plasmaBallPrefab;
+    [SerializeField] Transform shotOrigin;
+    [SerializeField] float plasmaCooldown;
+    float plasmaTimer;
 
     private void Start()
     {
@@ -30,6 +38,22 @@ public class MinibossAbilities : MonoBehaviour
         enemyScript = GetComponent<EnemyScript>();
         playerScript = enemyController.playerScript;
         navMeshAgent = GetComponent<NavMeshAgent>();
+        facePlayer = GetComponent<FacePlayer>();
+    }
+
+    private void FixedUpdate()
+    {
+        if(enemyController.state == EnemyState.SPECIAL)
+        {
+            if (onCircle)
+            {
+                FollowCircle();
+            }
+            else
+            {
+                GetToTheCircle();
+            }
+        }
     }
 
     public void MissileAttack()
@@ -125,19 +149,59 @@ public class MinibossAbilities : MonoBehaviour
     {
         enemyController.frontAnimator.Play("StartDash");
         enemyController.backAnimator.Play("StartDash");
-        navMeshAgent.acceleration = dashAccel;
-        navMeshAgent.speed = dashSpeed;
-        navMeshAgent.autoBraking = false;
+        navMeshAgent.enabled = false;
+        onCircle = false;
+        (circleStart, startingRads) = ellipse.GetStartingPosition(transform.position);
+        ellipseRads = startingRads;
         enemyController.state = EnemyState.SPECIAL;
-        followPoint = followPath.GetClosestPoint(transform.position);
+    }
+
+    void GetToTheCircle()
+    {
+        Vector3 direction = (circleStart - transform.position).normalized;
+        facePlayer.SetDestination(direction);
+        transform.Translate(Time.fixedDeltaTime * getToCircleSpeed * (circleStart - transform.position).normalized);
+        if (Vector3.Distance(transform.position, circleStart) < Time.deltaTime *getToCircleSpeed)
+        {
+            onCircle = true;
+            facePlayer.ResetDestination();
+            plasmaTimer = plasmaCooldown;
+            enemyController.frontAnimator.Play("ShootDash");
+            enemyController.backAnimator.Play("ShootDash");
+        }
     }
 
     public void FollowCircle()
     {
-        if (Vector3.Distance(transform.position, followPoint.transform.position) <= navMeshAgent.stoppingDistance)
+        facePlayer.ManualFace();
+        ellipseRads += Time.fixedDeltaTime / timeToCircle * 2 * Mathf.PI;
+        transform.position = ellipse.GetPosition(ellipseRads);
+
+        if(plasmaTimer > 0)
         {
-            followPoint = followPoint.next;
+            plasmaTimer -= Time.fixedDeltaTime;
+            if(plasmaTimer <= 0)
+            {
+                plasmaTimer = plasmaCooldown;
+                FirePlasmaShot();
+            }
         }
-        navMeshAgent.SetDestination(followPoint.transform.position);
+
+        if(ellipseRads >= startingRads + 2 * MathF.PI)
+        {
+            navMeshAgent.enabled = true;
+            enemyController.state = EnemyState.IDLE;
+            enemyController.frontAnimator.Play("ShootDashEnd");        
+            enemyController.backAnimator.Play("ShootDashEnd");        
+        }
+    }
+
+    public void FirePlasmaShot()
+    {
+        HomingProjectile shot = Instantiate(plasmaBallPrefab).GetComponent<HomingProjectile>();
+        shot.transform.position = shotOrigin.transform.position;
+        shot.target = playerScript.transform;
+        shot.enemyOfOrigin = enemyScript;
+        shot.transform.LookAt(playerScript.transform);
     }
 }

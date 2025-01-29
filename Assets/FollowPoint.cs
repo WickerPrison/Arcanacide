@@ -30,4 +30,12 @@ public class FollowPoint : MonoBehaviour
             followPath.followPoints.Remove(this);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if(next != null)
+        {
+            Gizmos.DrawLine(transform.position, next.transform.position);
+        }
+    }
 }

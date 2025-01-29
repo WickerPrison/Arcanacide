@@ -36,10 +36,6 @@ public class MinibossV1Controller : EnemyController
                 attackTime -= Time.deltaTime;
             }
         }
-        else if(state == EnemyState.SPECIAL)
-        {
-            abilities.FollowCircle();
-        }
 
         frontAnimator.SetFloat("PlayerDistance", playerDistance);
         backAnimator.SetFloat("PlayerDistance", playerDistance);
