@@ -29,7 +29,7 @@ public class MinibossV1Controller : EnemyController
                 //abilities.MissileAttack();
                 //abilities.Dash();
                 //abilities.MeleeBlade();
-                abilities.Circle();
+                //abilities.Circle();
             }
             else
             {

@@ -31,6 +31,7 @@ public class MinibossAbilities : MonoBehaviour
     [SerializeField] Transform shotOrigin;
     [SerializeField] float plasmaCooldown;
     float plasmaTimer;
+    [SerializeField] GameObject beam;
 
     private void Start()
     {
@@ -39,6 +40,12 @@ public class MinibossAbilities : MonoBehaviour
         playerScript = enemyController.playerScript;
         navMeshAgent = GetComponent<NavMeshAgent>();
         facePlayer = GetComponent<FacePlayer>();
+    }
+
+    private void Update()
+    {
+        beam.transform.position = transform.position + Vector3.up + facePlayer.faceDirection.normalized * beam.transform.localScale.y / 2;
+        beam.transform.LookAt(transform.position);
     }
 
     private void FixedUpdate()
@@ -203,5 +210,21 @@ public class MinibossAbilities : MonoBehaviour
         shot.target = playerScript.transform;
         shot.enemyOfOrigin = enemyScript;
         shot.transform.LookAt(playerScript.transform);
+    }
+
+    public void ChestLaser()
+    {
+        enemyController.state = EnemyState.ATTACKING;
+        enemyController.frontAnimator.Play("ChestLaser");
+        enemyController.backAnimator.Play("ChestLaser");
+        Vector3 playerDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
+        Vector3 startDirection = Utils.RotateDirection(playerDirection, 45);
+        facePlayer.SetDestination(startDirection);
+        facePlayer.ManualFace();
+    }
+
+    public void StartLaser()
+    {
+
     }
 }
