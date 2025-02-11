@@ -31,7 +31,12 @@ public class MinibossAbilities : MonoBehaviour
     [SerializeField] Transform shotOrigin;
     [SerializeField] float plasmaCooldown;
     float plasmaTimer;
-    [SerializeField] GameObject beam;
+    [SerializeField] MeshRenderer beam;
+    [SerializeField] Transform beamOrigin;
+    float beamAngle = 45;
+    Vector3 initialBeamDirection;
+    bool beamFiring = false;
+    float beamVertAngle = 87;
 
     private void Start()
     {
@@ -40,12 +45,23 @@ public class MinibossAbilities : MonoBehaviour
         playerScript = enemyController.playerScript;
         navMeshAgent = GetComponent<NavMeshAgent>();
         facePlayer = GetComponent<FacePlayer>();
+        beam.enabled = false;
+        beam.transform.parent = null;
     }
 
     private void Update()
     {
-        beam.transform.position = transform.position + Vector3.up + facePlayer.faceDirection.normalized * beam.transform.localScale.y / 2;
-        beam.transform.LookAt(transform.position);
+        if (!beamFiring) return;
+        beamAngle += Time.deltaTime * 15;
+        Vector3 beamDirection = Utils.RotateDirection(initialBeamDirection, beamAngle);
+        beam.transform.position = beamOrigin.position + beamDirection * beam.transform.localScale.y;
+        beam.transform.LookAt(beamOrigin.position);
+        beam.transform.localEulerAngles = new Vector3(
+                beamVertAngle,
+                beam.transform.localEulerAngles.y,
+                beam.transform.localEulerAngles.z);
+        facePlayer.SetDestination(beam.transform.position);
+        facePlayer.ManualFace();
     }
 
     private void FixedUpdate()
@@ -215,16 +231,20 @@ public class MinibossAbilities : MonoBehaviour
     public void ChestLaser()
     {
         enemyController.state = EnemyState.ATTACKING;
-        enemyController.frontAnimator.Play("ChestLaser");
-        enemyController.backAnimator.Play("ChestLaser");
+        enemyController.frontAnimator.Play("ChestLaserStart");
+        enemyController.backAnimator.Play("ChestLaserStart");
         Vector3 playerDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
         Vector3 startDirection = Utils.RotateDirection(playerDirection, 45);
+        initialBeamDirection = Utils.RotateDirection(facePlayer.faceDirection.normalized, beamAngle);
         facePlayer.SetDestination(startDirection);
         facePlayer.ManualFace();
     }
 
     public void StartLaser()
     {
-
+        beam.enabled = true;
+        beamFiring = true;
+        beamAngle = 0;
+        initialBeamDirection = Utils.RotateDirection(facePlayer.faceDirection.normalized, -45);
     }
 }

@@ -25,4 +25,9 @@ public class MinibossAnimationEvents : MonoBehaviour
     {
         abilities.FirePlasmaShot();
     }
+
+    public void StartChestLaser()
+    {
+        abilities.StartLaser();
+    }
 }
