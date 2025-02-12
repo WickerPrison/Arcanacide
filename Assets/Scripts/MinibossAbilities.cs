@@ -33,10 +33,19 @@ public class MinibossAbilities : MonoBehaviour
     float plasmaTimer;
     [SerializeField] MeshRenderer beam;
     [SerializeField] Transform beamOrigin;
-    float beamAngle = 45;
     Vector3 initialBeamDirection;
-    bool beamFiring = false;
+    Vector3 finalBeamDirection;
     float beamVertAngle = 87;
+
+    enum LaserState 
+    {
+        START, SWEEP, END, OFF        
+    }
+    LaserState laserState = LaserState.OFF;
+    float laserTimer;
+    float pauseTime = 0.5f;
+    float sweepTime = 0.5f;
+    float sweepHalfWidth = 65;
 
     private void Start()
     {
@@ -47,21 +56,6 @@ public class MinibossAbilities : MonoBehaviour
         facePlayer = GetComponent<FacePlayer>();
         beam.enabled = false;
         beam.transform.parent = null;
-    }
-
-    private void Update()
-    {
-        if (!beamFiring) return;
-        beamAngle += Time.deltaTime * 15;
-        Vector3 beamDirection = Utils.RotateDirection(initialBeamDirection, beamAngle);
-        beam.transform.position = beamOrigin.position + beamDirection * beam.transform.localScale.y;
-        beam.transform.LookAt(beamOrigin.position);
-        beam.transform.localEulerAngles = new Vector3(
-                beamVertAngle,
-                beam.transform.localEulerAngles.y,
-                beam.transform.localEulerAngles.z);
-        facePlayer.SetDestination(beam.transform.position);
-        facePlayer.ManualFace();
     }
 
     private void FixedUpdate()
@@ -77,6 +71,8 @@ public class MinibossAbilities : MonoBehaviour
                 GetToTheCircle();
             }
         }
+
+        LaserSweep();
     }
 
     public void MissileAttack()
@@ -233,18 +229,65 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.state = EnemyState.ATTACKING;
         enemyController.frontAnimator.Play("ChestLaserStart");
         enemyController.backAnimator.Play("ChestLaserStart");
-        Vector3 playerDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
-        Vector3 startDirection = Utils.RotateDirection(playerDirection, 45);
-        initialBeamDirection = Utils.RotateDirection(facePlayer.faceDirection.normalized, beamAngle);
-        facePlayer.SetDestination(startDirection);
+        initialBeamDirection = Utils.RotateDirection(facePlayer.faceDirection.normalized, -sweepHalfWidth);
+        finalBeamDirection = Utils.RotateDirection(facePlayer.faceDirection.normalized, sweepHalfWidth);
+        facePlayer.SetDestination(transform.position + initialBeamDirection);
         facePlayer.ManualFace();
     }
 
     public void StartLaser()
     {
         beam.enabled = true;
-        beamFiring = true;
-        beamAngle = 0;
-        initialBeamDirection = Utils.RotateDirection(facePlayer.faceDirection.normalized, -45);
+        SetBeamPosition(initialBeamDirection.normalized);
+        laserState = LaserState.START;
+        laserTimer = pauseTime;
+    }
+
+    void LaserSweep()
+    {
+        switch (laserState)
+        {
+            case LaserState.START:
+                laserTimer -= Time.fixedDeltaTime;
+                if (laserTimer <= 0)
+                {
+                    laserTimer = sweepTime;
+                    laserState = LaserState.SWEEP;
+                }
+                break;
+            case LaserState.SWEEP:
+                laserTimer -= Time.fixedDeltaTime;
+                float t = Mathf.SmoothStep(1, 0, laserTimer / sweepTime);
+                SetBeamPosition(Vector3.Lerp(initialBeamDirection, finalBeamDirection, t).normalized);
+                if (laserTimer <= 0)
+                {
+                    laserTimer = pauseTime;
+                    laserState = LaserState.END;
+                }
+                break;
+            case LaserState.END:
+                laserTimer -= Time.fixedDeltaTime;
+                if (laserTimer <= 0)
+                {
+                    beam.enabled = false;
+                    enemyController.frontAnimator.Play("ChestLaserEnd");
+                    enemyController.backAnimator.Play("ChestLaserEnd");
+                    facePlayer.ResetDestination();
+                    laserState = LaserState.OFF;
+                }
+                break;
+        }
+    }
+
+    void SetBeamPosition(Vector3 direction)
+    {
+        beam.transform.position = beamOrigin.position + direction * beam.transform.localScale.y;
+        beam.transform.LookAt(beamOrigin.position);
+        beam.transform.localEulerAngles = new Vector3(
+            beamVertAngle,
+            beam.transform.localEulerAngles.y,
+            beam.transform.localEulerAngles.z);
+        facePlayer.SetDestination(beam.transform.position);
+        facePlayer.ManualFace();
     }
 }
