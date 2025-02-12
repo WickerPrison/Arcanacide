@@ -31,7 +31,7 @@ public class MinibossAbilities : MonoBehaviour
     [SerializeField] Transform shotOrigin;
     [SerializeField] float plasmaCooldown;
     float plasmaTimer;
-    [SerializeField] MeshRenderer beam;
+    [SerializeField] GameObject beam;
     [SerializeField] Transform beamOrigin;
     Vector3 initialBeamDirection;
     Vector3 finalBeamDirection;
@@ -55,7 +55,7 @@ public class MinibossAbilities : MonoBehaviour
         playerScript = enemyController.playerScript;
         navMeshAgent = GetComponent<NavMeshAgent>();
         facePlayer = GetComponent<FacePlayer>();
-        beam.enabled = false;
+        beam.SetActive(false);
         beam.transform.parent = null;
     }
 
@@ -238,7 +238,7 @@ public class MinibossAbilities : MonoBehaviour
 
     public void StartLaser()
     {
-        beam.enabled = true;
+        beam.SetActive(true);
         SetBeamPosition(initialBeamDirection.normalized);
         laserState = LaserState.START;
         laserTimer = pauseTime;
@@ -284,7 +284,7 @@ public class MinibossAbilities : MonoBehaviour
                 laserTimer -= Time.fixedDeltaTime;
                 if (laserTimer <= 0)
                 {
-                    beam.enabled = false;
+                    beam.SetActive(false);
                     enemyController.frontAnimator.Play("ChestLaserEnd");
                     enemyController.backAnimator.Play("ChestLaserEnd");
                     facePlayer.ResetDestination();
