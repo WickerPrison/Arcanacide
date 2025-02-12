@@ -39,13 +39,14 @@ public class MinibossAbilities : MonoBehaviour
 
     enum LaserState 
     {
-        START, SWEEP, END, OFF        
+        START, SWEEP, PAUSE, END, OFF        
     }
     LaserState laserState = LaserState.OFF;
     float laserTimer;
-    float pauseTime = 0.5f;
-    float sweepTime = 0.5f;
+    [SerializeField] float pauseTime;
+    [SerializeField] float sweepTime;
     float sweepHalfWidth = 65;
+    int sweeps;
 
     private void Start()
     {
@@ -241,6 +242,7 @@ public class MinibossAbilities : MonoBehaviour
         SetBeamPosition(initialBeamDirection.normalized);
         laserState = LaserState.START;
         laserTimer = pauseTime;
+        sweeps = 3;
     }
 
     void LaserSweep()
@@ -262,7 +264,20 @@ public class MinibossAbilities : MonoBehaviour
                 if (laserTimer <= 0)
                 {
                     laserTimer = pauseTime;
-                    laserState = LaserState.END;
+                    sweeps -= 1;
+                    if (sweeps == 0) laserState = LaserState.END;
+                    else laserState = LaserState.PAUSE;
+                }
+                break;
+            case LaserState.PAUSE:
+                laserTimer -= Time.fixedDeltaTime;
+                if(laserTimer <= 0)
+                {
+                    laserTimer = sweepTime;
+                    Vector3 temp = initialBeamDirection;
+                    initialBeamDirection = finalBeamDirection;
+                    finalBeamDirection = temp;
+                    laserState = LaserState.SWEEP;
                 }
                 break;
             case LaserState.END:
