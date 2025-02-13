@@ -5,6 +5,7 @@ using UnityEngine;
 public class MinibossV1Controller : EnemyController
 {
     MinibossAbilities abilities;
+    
 
     public override void Start()
     {
@@ -18,7 +19,7 @@ public class MinibossV1Controller : EnemyController
 
         if (navAgent.enabled == true)
         {
-            navAgent.SetDestination(playerScript.transform.position);
+            navAgent.SetDestination(abilities.navMeshDestination.position);
         }
 
         if(state == EnemyState.IDLE)
@@ -26,11 +27,42 @@ public class MinibossV1Controller : EnemyController
             if(attackTime <= 0)
             {
                 attackTime = attackMaxTime;
-                //abilities.MissileAttack();
-                //abilities.Dash();
-                //abilities.MeleeBlade();
-                //abilities.Circle();
-                abilities.ChestLaser();
+                int randInt;
+                if(playerDistance > 4)
+                {
+                    randInt = Random.Range(0, 3);
+                    switch (randInt)
+                    {
+                        case 0:
+                            abilities.MissileAttack();
+                            break;
+                        case 1:
+                            abilities.ChestLaser();
+                            break;
+                        case 2:
+                            abilities.Circle();
+                            break;
+                    }
+                }
+                else
+                {
+                    randInt = Random.Range(0, 4);
+                    switch (randInt)
+                    {
+                        case 0:
+                            abilities.MeleeBlade();
+                            break;
+                        case 1:
+                            abilities.Circle();
+                            break;
+                        case 2:
+                            abilities.DashAway(abilities.MissileAttack);
+                            break;
+                        case 3:
+                            abilities.DashAway(abilities.ChestLaser);
+                            break;
+                    }
+                }
             }
             else
             {

@@ -33,9 +33,11 @@ public class MinibossAbilities : MonoBehaviour
     float plasmaTimer;
     [SerializeField] GameObject beam;
     [SerializeField] Transform beamOrigin;
+    [SerializeField] Transform dashTarget;
     Vector3 initialBeamDirection;
     Vector3 finalBeamDirection;
     float beamVertAngle = 87;
+    [System.NonSerialized] public Transform navMeshDestination;
 
     enum LaserState 
     {
@@ -57,6 +59,8 @@ public class MinibossAbilities : MonoBehaviour
         facePlayer = GetComponent<FacePlayer>();
         beam.SetActive(false);
         beam.transform.parent = null;
+        dashTarget.transform.parent = null;
+        navMeshDestination = playerScript.transform;
     }
 
     private void FixedUpdate()
@@ -123,19 +127,41 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.backAnimator.Play("Blade1");
     }
 
-    public void Dash()
+    public void DashAway(Action nextAction)
     {
+        Vector3 direction = transform.position - playerScript.transform.position;
+        NavMeshHit hit;
+        bool foundDest = false;
+        int sign = UnityEngine.Random.Range(0, 2) * 2 - 1;
+        while (!foundDest)
+        {
+            foundDest = NavMesh.SamplePosition(playerScript.transform.position + direction.normalized * 12, out hit, 1, NavMesh.AllAreas);
+            if (!foundDest)
+            {
+                direction = Utils.RotateDirection(direction.normalized, sign * 15);
+            }
+            else
+            {
+                dashTarget.position = hit.position;
+            }
+        }
+        navMeshDestination = dashTarget;
+        facePlayer.SetDestination(dashTarget.position);
         enemyController.frontAnimator.Play("StartDash");
         enemyController.backAnimator.Play("StartDash");
         navMeshAgent.acceleration = dashAccel;
         navMeshAgent.speed = dashSpeed;
-        StartCoroutine(Dashing(() =>
+        StartCoroutine(Dashing(dashTarget, () =>
         {
             enemyController.frontAnimator.Play("EndDash");
             enemyController.backAnimator.Play("EndDash");
             navMeshAgent.acceleration = defaultAccel;
             navMeshAgent.speed = defaultSpeed;
             navMeshAgent.velocity = Vector3.zero;
+            navMeshDestination = playerScript.transform;
+            facePlayer.ResetDestination();
+            facePlayer.ManualFace();
+            nextAction();
         }));
     }
 
@@ -145,7 +171,7 @@ public class MinibossAbilities : MonoBehaviour
         navMeshAgent.enabled = true;
         navMeshAgent.acceleration = dashAccel;
         navMeshAgent.speed = dashSpeed;
-        StartCoroutine(Dashing(() =>
+        StartCoroutine(Dashing(playerScript.transform, () =>
         {
             enemyController.frontAnimator.Play(endAnimation);
             enemyController.backAnimator.Play(endAnimation);
@@ -155,9 +181,9 @@ public class MinibossAbilities : MonoBehaviour
         }));
     }
 
-    IEnumerator Dashing(Action callback)
+    IEnumerator Dashing(Transform target, Action callback)
     {
-        while (enemyController.playerDistance > 2)
+        while (Vector3.Distance(target.position, transform.position) > 2)
         {
             yield return null;
         }
