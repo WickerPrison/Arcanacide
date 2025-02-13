@@ -31,6 +31,7 @@ public class MinibossV1Controller : EnemyController
                 if(playerDistance > 4)
                 {
                     randInt = Random.Range(0, 3);
+                    randInt = 2;
                     switch (randInt)
                     {
                         case 0:
@@ -47,6 +48,7 @@ public class MinibossV1Controller : EnemyController
                 else
                 {
                     randInt = Random.Range(0, 4);
+                    randInt = 1;
                     switch (randInt)
                     {
                         case 0:
