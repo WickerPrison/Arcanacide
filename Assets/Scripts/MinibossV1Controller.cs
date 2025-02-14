@@ -31,14 +31,14 @@ public class MinibossV1Controller : EnemyController
                 if(playerDistance > 4)
                 {
                     randInt = Random.Range(0, 3);
-                    randInt = 2;
+                    //randInt = 2;
                     switch (randInt)
                     {
                         case 0:
                             abilities.MissileAttack();
                             break;
                         case 1:
-                            abilities.ChestLaser();
+                            abilities.ChestLaser(2);
                             break;
                         case 2:
                             abilities.Circle();
@@ -48,7 +48,7 @@ public class MinibossV1Controller : EnemyController
                 else
                 {
                     randInt = Random.Range(0, 4);
-                    randInt = 1;
+                    //randInt = 1;
                     switch (randInt)
                     {
                         case 0:
@@ -61,7 +61,7 @@ public class MinibossV1Controller : EnemyController
                             abilities.DashAway(abilities.MissileAttack);
                             break;
                         case 3:
-                            abilities.DashAway(abilities.ChestLaser);
+                            abilities.DashAway(() => abilities.ChestLaser(2));
                             break;
                     }
                 }

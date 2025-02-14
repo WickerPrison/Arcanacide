@@ -251,7 +251,7 @@ public class MinibossAbilities : MonoBehaviour
         shot.transform.LookAt(playerScript.transform);
     }
 
-    public void ChestLaser()
+    public void ChestLaser(int sweepsCount)
     {
         enemyController.state = EnemyState.ATTACKING;
         enemyController.frontAnimator.Play("ChestLaserStart");
@@ -260,6 +260,7 @@ public class MinibossAbilities : MonoBehaviour
         finalBeamDirection = Utils.RotateDirection(facePlayer.faceDirection.normalized, sweepHalfWidth);
         facePlayer.SetDestination(transform.position + initialBeamDirection);
         facePlayer.ManualFace();
+        sweeps = sweepsCount;
     }
 
     public void StartLaser()
@@ -268,7 +269,6 @@ public class MinibossAbilities : MonoBehaviour
         SetBeamPosition(initialBeamDirection.normalized);
         laserState = LaserState.START;
         laserTimer = pauseTime;
-        sweeps = 3;
     }
 
     void LaserSweep()
