@@ -38,6 +38,7 @@ public class MinibossAbilities : MonoBehaviour
     Vector3 finalBeamDirection;
     float beamVertAngle = 87;
     [System.NonSerialized] public Transform navMeshDestination;
+    AttackArcGenerator attackArc;
 
     enum LaserState 
     {
@@ -61,6 +62,7 @@ public class MinibossAbilities : MonoBehaviour
         beam.transform.parent = null;
         dashTarget.transform.parent = null;
         navMeshDestination = playerScript.transform;
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
     }
 
     private void FixedUpdate()
@@ -129,6 +131,7 @@ public class MinibossAbilities : MonoBehaviour
 
     public void DashAway(Action nextAction)
     {
+        enemyController.state = EnemyState.ATTACKING;
         Vector3 direction = transform.position - playerScript.transform.position;
         NavMeshHit hit;
         bool foundDest = false;
@@ -167,6 +170,7 @@ public class MinibossAbilities : MonoBehaviour
 
     public void AttackDash(string endAnimation)
     {
+        enemyController.state = EnemyState.ATTACKING;
         enemyController.directionLock = false;
         navMeshAgent.enabled = true;
         navMeshAgent.acceleration = dashAccel;
@@ -330,5 +334,20 @@ public class MinibossAbilities : MonoBehaviour
             beam.transform.localEulerAngles.z);
         facePlayer.SetDestination(beam.transform.position);
         facePlayer.ManualFace();
+    }
+
+    public void StartStagger()
+    {
+        facePlayer.ResetDestination();
+        beam.SetActive(false);
+        laserState = LaserState.OFF;
+        laserTimer = 0;
+        onCircle = false;
+        navMeshAgent.acceleration = defaultAccel;
+        navMeshAgent.speed = defaultSpeed;
+        navMeshAgent.velocity = Vector3.zero;
+        navMeshDestination = playerScript.transform;
+        attackArc.HideAttackArc();
+        StopAllCoroutines();
     }
 }

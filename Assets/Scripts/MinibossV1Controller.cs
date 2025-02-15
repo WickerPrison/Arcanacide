@@ -11,6 +11,7 @@ public class MinibossV1Controller : EnemyController
     public override void Start()
     {
         base.Start();
+        enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
         abilities = GetComponent<MinibossAbilities>();
         if (mapData.fireBossKilled)
         {
@@ -94,9 +95,35 @@ public class MinibossV1Controller : EnemyController
         base.AttackHit(smearSpeed);
     }
 
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        abilities.StartStagger();
+    }
+
+    public override void EndStagger()
+    {
+        base.EndStagger();
+    }
+
     public override void Death()
     {
         base.Death();
         GlobalEvents.instance.MiniBossKilled();
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onTestButton += Instance_onTestButton;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onTestButton -= Instance_onTestButton;
+    }
+
+    private void Instance_onTestButton(object sender, System.EventArgs e)
+    {
+        enemyScript.LosePoise(10000);
     }
 }
