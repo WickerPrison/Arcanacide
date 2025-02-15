@@ -7,6 +7,7 @@ using FMODUnity;
 public class FileTicket : MonoBehaviour
 {
     [SerializeField] MapData mapData;
+    [SerializeField] BuildMode buildMode;
     [SerializeField] DialogueData phoneData;
     [SerializeField] GameObject message;
     [SerializeField] TextMeshProUGUI screenText;
@@ -19,20 +20,55 @@ public class FileTicket : MonoBehaviour
     float playerDistance;
     float interactDistance = 2;
 
+    enum TicketState
+    {
+        FILED, FILABLE, DISABLED
+    }
+
+    TicketState _ticketState;
+    TicketState ticketState
+    {
+        get { return _ticketState; }
+        set
+        {
+            switch (value)
+            {
+                case TicketState.FILED:
+                    screenText.text = screenText2;
+                    wayFaerie.Stop();
+                    wayFaerie.Clear();
+                    break;
+                case TicketState.FILABLE:
+                    screenText.text = screenText1;
+                    wayFaerie.Play();
+                    break;
+                case TicketState.DISABLED:
+                    screenText.text = screenText1;
+                    wayFaerie.Stop();
+                    wayFaerie.Clear();
+                    break;
+            }
+            _ticketState = value;
+        }
+    }
+
     void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => FileSupportTicket();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
         if (mapData.ticketFiled)
         {
-            screenText.text = screenText2;
-            wayFaerie.Stop();
-            wayFaerie.Clear();
+            ticketState = TicketState.FILED;
+        }
+        else if(buildMode.buildMode == BuildModes.TESTING && !mapData.miniboss1Killed)
+        {
+            ticketState = TicketState.DISABLED;
         }
         else
         {
-            screenText.text = screenText1;
+            ticketState = TicketState.FILABLE;
         }
     }
 
@@ -40,7 +76,7 @@ public class FileTicket : MonoBehaviour
     void Update()
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= interactDistance && !mapData.ticketFiled)
+        if (playerDistance <= interactDistance && ticketState == TicketState.FILABLE)
         {
             message.SetActive(true);
         }
@@ -52,12 +88,30 @@ public class FileTicket : MonoBehaviour
 
     void FileSupportTicket()
     {
-        if(playerDistance <= interactDistance && !mapData.ticketFiled)
+        if(playerDistance <= interactDistance && ticketState == TicketState.FILABLE)
         {
             RuntimeManager.PlayOneShot(sfx, 2);
             mapData.ticketFiled = true;
             screenText.text = screenText2;
             wayFaerie.Stop();
         }
+    }
+    private void onMinibossKilled(object sender, System.EventArgs e)
+    {
+        if(buildMode.buildMode == BuildModes.TESTING && !mapData.ticketFiled)
+        {
+            ticketState = TicketState.FILABLE;
+        }
+    }
+
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onMinibossKilled += onMinibossKilled;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onMinibossKilled -= onMinibossKilled;
     }
 }

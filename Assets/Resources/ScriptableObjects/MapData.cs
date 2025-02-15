@@ -32,6 +32,7 @@ public class MapData : ScriptableObject
     public string deathRoom;
     public Vector3 deathPosition;
     public bool ticketFiled;
+    public bool miniboss1Killed;
     public bool fireBossKilled;
     public bool secretaryConvo;
 

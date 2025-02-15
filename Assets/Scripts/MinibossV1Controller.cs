@@ -5,12 +5,24 @@ using UnityEngine;
 public class MinibossV1Controller : EnemyController
 {
     MinibossAbilities abilities;
+    [SerializeField] MapData mapData;
     
 
     public override void Start()
     {
         base.Start();
         abilities = GetComponent<MinibossAbilities>();
+        if (mapData.fireBossKilled)
+        {
+            enemyEvents.HideBossHealthbar();
+            //musicManager.ChangeMusicState(MusicState.MAINLOOP);
+            gm.enemies.Remove(enemyScript);
+            Destroy(gameObject);
+        }
+        else
+        {
+            gm.awareEnemies += 1;
+        }
     }
 
     public override void EnemyAI()
@@ -80,5 +92,11 @@ public class MinibossV1Controller : EnemyController
     {
         smearScript.particleSmear(smearSpeed);
         base.AttackHit(smearSpeed);
+    }
+
+    public override void Death()
+    {
+        base.Death();
+        GlobalEvents.instance.MiniBossKilled();
     }
 }
