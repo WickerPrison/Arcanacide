@@ -56,6 +56,17 @@ public class EnemyHealthbar : MonoBehaviour
 
     private void OnBossKilled(object sender, System.EventArgs e)
     {
+        DisableBossHealthbar();
+    }
+
+    private void OnMinibossKilled(object sender, System.EventArgs e)
+    {
+        DisableBossHealthbar();
+    }
+
+
+    void DisableBossHealthbar()
+    {
         if (isBoss)
         {
             gameObject.SetActive(false);
@@ -67,6 +78,7 @@ public class EnemyHealthbar : MonoBehaviour
         enemyEvents.OnUpdateHealth += OnUpdateHealth;
         enemyEvents.OnHideBossHealthbar += OnBossKilled;
         GlobalEvents.instance.onBossKilled += OnBossKilled;
+        GlobalEvents.instance.onMinibossKilled += OnMinibossKilled;
     }
 
     private void OnDisable()
@@ -74,5 +86,6 @@ public class EnemyHealthbar : MonoBehaviour
         enemyEvents.OnUpdateHealth -= OnUpdateHealth;
         enemyEvents.OnHideBossHealthbar -= OnBossKilled;
         GlobalEvents.instance.onBossKilled -= OnBossKilled;
+        GlobalEvents.instance.onMinibossKilled -= OnMinibossKilled;
     }
 }

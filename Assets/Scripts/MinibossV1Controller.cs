@@ -13,16 +13,12 @@ public class MinibossV1Controller : EnemyController
         base.Start();
         enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
         abilities = GetComponent<MinibossAbilities>();
-        if (mapData.fireBossKilled)
+        if (mapData.miniboss1Killed)
         {
             enemyEvents.HideBossHealthbar();
             //musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
-        }
-        else
-        {
-            gm.awareEnemies += 1;
         }
     }
 
@@ -106,19 +102,40 @@ public class MinibossV1Controller : EnemyController
         base.EndStagger();
     }
 
+    public override void StartDying()
+    {
+        enemyEvents.StartDying();
+        state = EnemyState.DYING;
+        enemyScript.invincible = true;
+        enemyScript.health = 1;
+        frontAnimator.Play("Idle");
+        backAnimator.Play("Idle");
+        StartCoroutine(PlaceholderDying());
+    }
+
+    IEnumerator PlaceholderDying()
+    {
+        yield return new WaitForSeconds(3);
+        frontAnimator.Play("FlyAway");
+        backAnimator.Play("FlyAway");
+    }
+
     public override void Death()
     {
         base.Death();
+        mapData.miniboss1Killed = true;
         GlobalEvents.instance.MiniBossKilled();
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         GlobalEvents.instance.onTestButton += Instance_onTestButton;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         GlobalEvents.instance.onTestButton -= Instance_onTestButton;
     }
 
