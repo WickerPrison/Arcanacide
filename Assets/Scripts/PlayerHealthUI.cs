@@ -64,13 +64,13 @@ public class PlayerHealthUI : MonoBehaviour
         delayFill.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, fill.rect.width);
         buffer = true;
         delay = 0.5f;
-        while(delay > 0)
+        while (delay > 0)
         {
             delay -= Time.deltaTime;
             yield return endOfFrame;
         }
 
-        while(delayFill.rect.width > fill.rect.width)
+        while (delayFill.rect.width > fill.rect.width)
         {
             delayFill.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, delayFill.rect.width - Time.deltaTime * speed);
             yield return endOfFrame;
@@ -78,15 +78,22 @@ public class PlayerHealthUI : MonoBehaviour
         buffer = false;
     }
 
+    private void OnPlayerDeath(object sender, System.EventArgs e)
+    {
+        StopAllCoroutines();
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onPlayerGainHealth += Instance_onPlayerGainHealth;
         GlobalEvents.instance.onPlayerLoseHealth += OnPlayerLoseHealth;
+        GlobalEvents.instance.onPlayerDeath += OnPlayerDeath;
     }
 
     private void OnDisable()
     {
         GlobalEvents.instance.onPlayerGainHealth -= Instance_onPlayerGainHealth;
         GlobalEvents.instance.onPlayerLoseHealth -= OnPlayerLoseHealth;
+        GlobalEvents.instance.onPlayerDeath -= OnPlayerDeath;
     }
 }
