@@ -18,11 +18,14 @@ MonoBehaviour:
   stepWithAttack: 0.15
   halfConeAngle: 45
   attackRange: 1.5
-  damageMultiplier: 1
+  damageMultiplier: 0.6
+  chargeDamage: 0
+  fullChargeDamage: 0
   magicDamageMultiplier: 0
-  poiseDamageMultiplier: 1
-  staminaCost: 20
+  poiseDamageMultiplier: 0.8
+  staminaCost: 12
   manaCost: 0
+  impactVFX: 1
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0
@@ -59,6 +62,3 @@ MonoBehaviour:
   - {x: -1, y: -1, z: 1}
   - {x: -1, y: -1, z: -1}
   - {x: 1, y: -1, z: -1}
-  clawAngle: []
-  clawRotations: []
-  clawScales: []
