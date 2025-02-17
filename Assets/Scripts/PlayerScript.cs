@@ -77,7 +77,8 @@ public class PlayerScript : MonoBehaviour
 
     private void Instance_onTestButton(object sender, System.EventArgs e)
     {
-        
+        LoseHealth(25, EnemyAttackType.NONPARRIABLE, null);
+        //LoseHealth(25, EnemyAttackType.NONPARRIABLE, null);
     }
 
     public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)
@@ -96,11 +97,13 @@ public class PlayerScript : MonoBehaviour
 
     public void LosePoise(float poiseDamage)
     {
+        Debug.Log("lose poise start");
         if (!playerAbilities.shield)
         {
             poise -= poiseDamage;
             if(poise <= 0)
             {
+                Debug.Log("Poise < 0");
                 StartStagger(poiseBreakStagger);
                 ResetPoise();
             }
