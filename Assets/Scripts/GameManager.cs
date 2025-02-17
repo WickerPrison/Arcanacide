@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
             mapData.deathRoom = data.deathRoom;
             mapData.deathPosition = new Vector3(data.deathPosition[0], data.deathPosition[1], data.deathPosition[2]);
             mapData.ticketFiled = data.ticketFiled;
+            mapData.miniboss1Killed = data.miniboss1killed;
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
             mapData.electricBossKilled = data.electricBossKilled;
@@ -221,6 +222,7 @@ public class GameManager : MonoBehaviour
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
+        mapData.miniboss1Killed = false;
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
@@ -286,6 +288,7 @@ public class GameManager : MonoBehaviour
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
+        mapData.miniboss1Killed = true;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
@@ -357,6 +360,7 @@ public class GameManager : MonoBehaviour
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
+        mapData.miniboss1Killed = true;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;
@@ -434,6 +438,7 @@ public class GameManager : MonoBehaviour
         mapData.deathRoom = deathRoom;
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
+        mapData.miniboss1Killed = true;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;

@@ -28,6 +28,7 @@ public class EnemyScript : MonoBehaviour
     public bool invincible = false;
     [System.NonSerialized] public bool dying = false;
     public string enemyGUID = "";
+    [System.NonSerialized] public List<EnemyState> nonStaggerableStates = new List<EnemyState>();
 
     private void Awake()
     {
@@ -48,6 +49,8 @@ public class EnemyScript : MonoBehaviour
         enemySound = GetComponentInChildren<EnemySound>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gm.enemies.Add(this);
+        nonStaggerableStates.Add(EnemyState.ATTACKING);
+        nonStaggerableStates.Add(EnemyState.DYING);
     }
 
     // Update is called once per frame
@@ -136,7 +139,7 @@ public class EnemyScript : MonoBehaviour
         }
         enemyEvents.LosePoise();
 
-        if (enemyController.state != EnemyState.ATTACKING && enemyController.state != EnemyState.DYING)
+        if (!nonStaggerableStates.Contains(enemyController.state))
         {
             StartStagger(0.2f);
         }

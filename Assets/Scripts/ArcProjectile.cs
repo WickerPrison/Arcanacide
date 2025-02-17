@@ -54,16 +54,20 @@ public class ArcProjectile : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
-        transform.position = transform.position + direction.normalized * Time.fixedDeltaTime * speed;
-
-        float xVal = InverseLerpSetY0(startPoint, endPoint, transform.position);
-        float currentHeight = a * Mathf.Pow(xVal, 2) + b * xVal + c;
-        transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+        transform.position = GetNextPosition(transform.position);
 
         if (transform.position.y <= 0.3f)
         {
             Explosion();
         }
+    }
+
+    public Vector3 GetNextPosition(Vector3 currentPosition)
+    {
+        Vector3 nextPosition = currentPosition + direction.normalized * Time.fixedDeltaTime * speed;
+        float xVal = InverseLerpSetY0(startPoint, endPoint, nextPosition);
+        float nextHeight = a * Mathf.Pow(xVal, 2) + b * xVal + c;
+        return new Vector3(nextPosition.x, nextHeight, nextPosition.z);
     }
 
     public virtual void SpawnIndicator()
@@ -80,7 +84,7 @@ public class ArcProjectile : MonoBehaviour
     {
         GameObject explosion = Instantiate(explosionPrefab);
         explosion.transform.position = new Vector3(endPoint.x, .3f, endPoint.z);
-        Destroy(gameObject);
+        DestroyProjectile();
 
         List<Collider> objects = touchingCircle.GetTouchingObjects();
         if (objects.Contains(playerCollider) && player.gameObject.layer == 3)
@@ -95,6 +99,11 @@ public class ArcProjectile : MonoBehaviour
             player.GetComponent<PlayerScript>().PerfectDodge(EnemyAttackType.PROJECTILE);
         }
 
+    }
+
+    public virtual void DestroyProjectile()
+    {
+        Destroy(gameObject);
     }
 
     float InverseLerpSetY0(Vector3 startPos, Vector3 endPos, Vector3 currentPos)

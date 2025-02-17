@@ -26,7 +26,7 @@ public class PlantLine : MonoBehaviour
     void LayIndicator()
     {
         float randomAngle = Random.Range(0f, 180f);
-        Vector3 randomDirection = RotateDirection(Vector3.right, randomAngle);
+        Vector3 randomDirection = Utils.RotateDirection(Vector3.right, randomAngle);
         RaycastHit forwardHit;
         Physics.Raycast(transform.position, randomDirection, out forwardHit, 100, layerMask, QueryTriggerInteraction.Ignore);
         RaycastHit backHit;
@@ -65,13 +65,5 @@ public class PlantLine : MonoBehaviour
         playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
         //AudioSource.PlayClipAtPoint(playerImpactSFX, transform.position, impactSFXvolume);
-    }
-
-    Vector3 RotateDirection(Vector3 oldDirection, float degrees)
-    {
-        Vector3 newDirection = Vector3.zero;
-        newDirection.x = Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.x - Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.z;
-        newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
-        return newDirection;
     }
 }

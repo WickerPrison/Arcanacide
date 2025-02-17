@@ -132,15 +132,7 @@ public class ExternalLanternFairy : MonoBehaviour
         if (angle > 360) angle -= 360;
 
         Vector3 oldDirection = attackPoint.position - playerAnimation.transform.position;
-        transform.position = center + RotateDirection(oldDirection, angle).normalized * 1.5f;
-    }
-
-    Vector3 RotateDirection(Vector3 oldDirection, float degrees)
-    {
-        Vector3 newDirection = Vector3.zero;
-        newDirection.x = Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.x - Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.z;
-        newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
-        return newDirection;
+        transform.position = center + Utils.RotateDirection(oldDirection, angle).normalized * 1.5f;
     }
 
     public void Return(Vector3 position)

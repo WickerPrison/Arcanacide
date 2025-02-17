@@ -195,6 +195,7 @@ public class EnemyController : MonoBehaviour
     {
 
     }
+
     public virtual void OnTakeDamage(object sender, System.EventArgs e)
     {
 

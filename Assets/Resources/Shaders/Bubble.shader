@@ -76,7 +76,7 @@ Shader "Unlit/Bubble"
                 float edgeMask = viewNormal < _Edge;
 
                 float time = _Time.y + _PerlinTime;
-                float2 perlinUV1 = float2(i.worldPos.x + time * 1.1 * _PerlinSpeed, i.worldPos.y + time * _PerlinSpeed);
+                float2 perlinUV1 = float2(i.worldPos.x + time * 1.1 * _PerlinSpeed, i.worldPos.z + time * _PerlinSpeed);
                 float4 perlin1 = tex2D(_PerlinTex, perlinUV1 / _PerlinSize);
 
 
