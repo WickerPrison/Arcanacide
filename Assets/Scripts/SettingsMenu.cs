@@ -67,7 +67,7 @@ public class SettingsMenu : MonoBehaviour
             fullscreenText.text = "Off";
         }
 
-        gm.SaveGame();
+        SaveSystem.SaveSettings(settingsData);
         GlobalEvents.instance.OnChangedSetting();
     }
 
@@ -99,8 +99,8 @@ public class SettingsMenu : MonoBehaviour
 
     public void LeaveMenu()
     {
-        gm.SaveGame();
-        if(background.enabled == false)
+        SaveSystem.SaveSettings(settingsData);
+        if (background.enabled == false)
         {
             sm.ButtonSound();
             EventSystem.current.SetSelectedGameObject(null);

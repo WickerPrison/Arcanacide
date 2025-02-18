@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
             settingsData.SetVolume(VolumeChannel.MASTER, 1);
             settingsData.SetVolume(VolumeChannel.SFX, 1);
             settingsData.SetVolume(VolumeChannel.MUSIC, 1);
-            SaveGame();
+            SaveSystem.SaveSettings(settingsData);
         }
     }
 
