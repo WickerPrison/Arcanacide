@@ -19,16 +19,18 @@ MonoBehaviour:
   halfConeAngle: 0
   attackRange: 2
   damageMultiplier: 0
+  chargeDamage: 0
+  fullChargeDamage: 0
   magicDamageMultiplier: 1
   poiseDamageMultiplier: 1
-  staminaCost: 50
+  staminaCost: 40
   manaCost: 0
+  impactVFX: 1
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0
   screenShakeOnHit: {x: 0.15, y: 0.3}
   screenShakeNoHit: {x: 0, y: 0}
-  soundOnHit: {fileID: 0}
   soundOnHitEvent:
     Guid:
       Data1: 0
@@ -37,7 +39,6 @@ MonoBehaviour:
       Data4: 0
     Path: 
   soundOnHitVolume: 0
-  soundNoHit: {fileID: 8300000, guid: 826d3110786b48848adaaee2736f8f67, type: 3}
   noHitSoundEvent:
     Guid:
       Data1: 1601765032
@@ -49,6 +50,3 @@ MonoBehaviour:
   smearPositions: []
   smearRotations: []
   smearScales: []
-  clawAngle: []
-  clawRotations: []
-  clawScales: []
