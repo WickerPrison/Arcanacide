@@ -62,14 +62,14 @@ public class PlayerStaminaUI : MonoBehaviour
         delayMask.padding = staminaMask.padding;
         buffer = true;
         delay = 0.5f;
-        while (delay > 0)
+        while (delay > 0 && Time.timeScale > 0)
         {
             delay -= Time.deltaTime;
-            yield return null;
+            yield return endOfFrame;
         }
 
         float chunk = 0;
-        while (delayMask.padding.z < staminaMask.padding.z)
+        while (delayMask.padding.z < staminaMask.padding.z && Time.timeScale > 0)
         {
             chunk += Time.deltaTime * speed;
             if (chunk > 1)
@@ -82,22 +82,15 @@ public class PlayerStaminaUI : MonoBehaviour
         buffer = false;
     }
 
-    private void OnPlayerDeath(object sender, System.EventArgs e)
-    {
-        StopAllCoroutines();
-    }
-
     private void OnEnable()
     {
         GlobalEvents.instance.onLoseStamina += OnLoseStamina;
         GlobalEvents.instance.onGainStamina += OnGainStamina;
-        GlobalEvents.instance.onPlayerDeath += OnPlayerDeath;
     }
 
     private void OnDisable()
     {
         GlobalEvents.instance.onLoseStamina -= OnLoseStamina;
         GlobalEvents.instance.onGainStamina -= OnGainStamina;
-        GlobalEvents.instance.onPlayerDeath -= OnPlayerDeath;
     }
 }
