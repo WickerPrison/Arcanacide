@@ -25,9 +25,9 @@ public class SaveFileButton : MonoBehaviour
         text = GetComponentInChildren<TextMeshProUGUI>();
         textString = "Save File " + fileID.ToString() + " - ";
 
-        SaveData data = null;
+        SaveData data = SaveSystem.LoadGame("saveFile" + fileID.ToString());
 
-        if(data == null)
+        if (data == null)
         {
             textString += "Empty";
             dateText.text = "";
@@ -45,6 +45,7 @@ public class SaveFileButton : MonoBehaviour
     {
         if (menuData.loadGame)
         {
+
             if(File.Exists(Application.persistentDataPath + "/" + "saveFile" + fileID.ToString() + ".sav"))
             {
                 gm.LoadGame("saveFile" +  fileID.ToString());

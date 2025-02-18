@@ -27,11 +27,10 @@ public class BuildModeEditor : Editor
 
     void SetDemoScenes(BuildMode buildMode)
     {
-        string[] paths = buildMode.excludeScenesForDemo.Select(sceneAsset => AssetDatabase.GetAssetPath(sceneAsset)).ToArray();
         EditorBuildSettingsScene[] editorBuildSettingsScenes = EditorBuildSettings.scenes;
         foreach (EditorBuildSettingsScene scene in editorBuildSettingsScenes)
         {
-            if (buildMode.excludePathsForDemo.Any(scene.path.Contains) || paths.Contains(scene.path))
+            if (buildMode.excludePathsForDemo.Any(scene.path.Contains))
             {
                 scene.enabled = false;
             }

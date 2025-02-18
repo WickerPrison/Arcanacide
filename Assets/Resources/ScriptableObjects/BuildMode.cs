@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public enum BuildModes
@@ -13,5 +12,4 @@ public class BuildMode : ScriptableObject
 {
     public BuildModes buildMode;
     public string[] excludePathsForDemo;
-    public SceneAsset[] excludeScenesForDemo;
 }
