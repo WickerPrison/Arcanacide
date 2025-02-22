@@ -340,7 +340,7 @@ public class PlayerAbilities : MonoBehaviour
     public void SpecialAttack()
     {
         if (!playerData.unlockedAbilities.Contains("Special Attack")) return;
-        if (playerData.mana >= specialAttackProfiles[playerData.currentWeapon].manaCost && playerData.currentWeapon != 2) return;
+        if (playerData.mana < specialAttackProfiles[playerData.currentWeapon].manaCost && playerData.currentWeapon != 2) return;
 
         if (playerMovement.CanInput() && playerScript.stamina > 0)
         {
