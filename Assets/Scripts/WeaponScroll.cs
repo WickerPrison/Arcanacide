@@ -65,7 +65,7 @@ public class WeaponScroll : MonoBehaviour
             }
         }
 
-        if(!playerData.unlockedAbilities.Contains("Special Attack"))
+        if(!playerData.unlockedAbilities.Contains(UnlockableAbilities.SPECIAL_ATTACK))
         {
             bodies[bodies.Count - 1].GetComponent<TextMeshProUGUI>().text = "You have not unlocked Special Attacks.";
         }

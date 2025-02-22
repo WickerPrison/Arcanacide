@@ -211,7 +211,7 @@ public class PlayerAbilities : MonoBehaviour
 
     public void Shield()
     {
-        if (!playerData.unlockedAbilities.Contains("Block") || !playerMovement.CanInput()) return;
+        if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.BLOCK) || !playerMovement.CanInput()) return;
         
         if (playerData.mana > 0)
         {
@@ -339,7 +339,7 @@ public class PlayerAbilities : MonoBehaviour
 
     public void SpecialAttack()
     {
-        if (!playerData.unlockedAbilities.Contains("Special Attack")) return;
+        if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.SPECIAL_ATTACK)) return;
         if (playerData.mana < specialAttackProfiles[playerData.currentWeapon].manaCost && playerData.currentWeapon != 2) return;
 
         if (playerMovement.CanInput() && playerScript.stamina > 0)
