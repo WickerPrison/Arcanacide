@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        if(playerData.unlockedAbilities.Contains("Block") && playerData.killedEnemiesNum - playerData.killedEnemiesAtGetShield == 11)
+        if(playerData.unlockedAbilities.Contains(UnlockableAbilities.BLOCK) && playerData.killedEnemiesNum - playerData.killedEnemiesAtGetShield == 11)
         {
             dialogueData.smackGPTQueue.Add(3);
         }
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
             playerData.maxHealCharges = data.maxHealCharges;
             playerData.healCharges = data.healCharges;
             playerData.lastSwordSite = data.lastSwordSite;
-            playerData.unlockedAbilities = data.unlockedAbilities;
+            playerData.SetUnlocksWithStrings(data.unlockedAbilities);
             playerData.emblems = data.emblems;
             playerData.equippedEmblems = data.equippedEmblems;
             playerData.maxPatches = data.maxPatches;
@@ -253,7 +253,7 @@ public class GameManager : MonoBehaviour
         playerData.healCharges = 2;
         playerData.lastSwordSite = 4;
         playerData.unlockedAbilities.Clear();
-        playerData.unlockedAbilities.Add("Block");
+        playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
         playerData.emblems.Clear();
         foreach (string patch in emblemLibrary.firstFloorPatches)
         {
@@ -319,8 +319,8 @@ public class GameManager : MonoBehaviour
         playerData.healCharges = 3;
         playerData.lastSwordSite = 5;
         playerData.unlockedAbilities.Clear();
-        playerData.unlockedAbilities.Add("Block");
-        playerData.unlockedAbilities.Add("Special Attack");
+        playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
+        playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
         playerData.emblems.Clear();
         foreach (string patch in emblemLibrary.firstFloorPatches)
         {
@@ -391,9 +391,9 @@ public class GameManager : MonoBehaviour
         playerData.healCharges = 4;
         playerData.lastSwordSite = 8;
         playerData.unlockedAbilities.Clear();
-        playerData.unlockedAbilities.Add("Block");
-        playerData.unlockedAbilities.Add("Special Attack");
-        playerData.unlockedAbilities.Add("More Patches 1");
+        playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
+        playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
+        playerData.unlockedAbilities.Add(UnlockableAbilities.MORE_PATCHES_1);
         playerData.emblems.Clear();
         foreach (string patch in emblemLibrary.firstFloorPatches)
         {

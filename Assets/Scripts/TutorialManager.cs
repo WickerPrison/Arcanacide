@@ -98,16 +98,16 @@ public class TutorialManager : MonoBehaviour
         OpenMessage();
     }
 
-    public void NewAbilityTutorial(string ability)
+    public void NewAbilityTutorial(UnlockableAbilities ability)
     {
-        playerData.tutorials.Remove(ability);
+        playerData.tutorials.Remove(playerData.unlockToString[ability]);
         switch (ability)
         {
-            case "Block":
+            case UnlockableAbilities.BLOCK:
                 nextMessage = blockTutorial2;
                 currentMessage = Instantiate(blockTutorial1);
                 break;
-            case "Special Attack":
+            case UnlockableAbilities.SPECIAL_ATTACK:
                 nextMessage = null;
                 currentMessage = Instantiate(specialAttackTutorial);
                 break;

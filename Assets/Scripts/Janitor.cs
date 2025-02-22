@@ -10,7 +10,7 @@ public class Janitor : MonoBehaviour
     [SerializeField] GameObject dialoguePrefab;
     [SerializeField] GameObject respecPrefab;
     [SerializeField] TextAsset csvFile;
-    [SerializeField] string ability;
+    [SerializeField] UnlockableAbilities ability;
     [SerializeField] int newAbilityConversation;
     [SerializeField] int repeatableConversation;
     DialogueScript dialogue;
@@ -119,12 +119,12 @@ public class Janitor : MonoBehaviour
         playerData.unlockedAbilities.Add(ability);
         tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
 
-        if(ability == "Block")
+        if(ability == UnlockableAbilities.BLOCK)
         {
             playerData.killedEnemiesAtGetShield = playerData.killedEnemiesNum;
         }
 
-        if(ability.Contains("More Patches"))
+        if(ability == UnlockableAbilities.MORE_PATCHES_1 || ability == UnlockableAbilities.MORE_PATCHES_2)
         {
             playerData.maxPatches++;
             tutorialManager.MorePatchesTutorial();

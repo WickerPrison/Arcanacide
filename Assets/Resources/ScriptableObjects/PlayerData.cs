@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum UnlockableAbilities
+{
+    BLOCK, SPECIAL_ATTACK, MORE_PATCHES_1, MORE_PATCHES_2
+}
+
 [CreateAssetMenu]
 public class PlayerData : ScriptableObject
 {
@@ -15,7 +20,7 @@ public class PlayerData : ScriptableObject
     public int healCharges;
     public bool hasSpawned;
     public int lastSwordSite;
-    public List<string> unlockedAbilities;
+    public List<UnlockableAbilities> unlockedAbilities;
     public List<string> emblems;
     public List<string> equippedEmblems;
     public int maxPatches;
@@ -45,6 +50,40 @@ public class PlayerData : ScriptableObject
     public bool clawSpecialOn;
     public float clawSpecialTimer;
 
+    public Dictionary<UnlockableAbilities, string> unlockToString = new Dictionary<UnlockableAbilities, string>
+    {
+        { UnlockableAbilities.BLOCK, "Block" },
+        {UnlockableAbilities.SPECIAL_ATTACK, "Special Attack" },
+        {UnlockableAbilities.MORE_PATCHES_1, "More Patches 1" },
+        {UnlockableAbilities.MORE_PATCHES_2, "More Patches 2" },
+    };
+
+    public Dictionary<string, UnlockableAbilities> stringToUnlock = new Dictionary<string, UnlockableAbilities>
+    {
+        { "Block", UnlockableAbilities.BLOCK },
+        { "Special Attack", UnlockableAbilities.SPECIAL_ATTACK },
+        { "More Patches 1" , UnlockableAbilities.MORE_PATCHES_1},
+        { "More Patches 2", UnlockableAbilities.MORE_PATCHES_2 },
+    };
+
+    public List<string> GetUnlockedStrings()
+    {
+        List<string> unlockedStrings = new List<string>();
+        foreach(UnlockableAbilities ability in unlockedAbilities)
+        {
+            unlockedStrings.Add(unlockToString[ability]);
+        }
+        return unlockedStrings;
+    }
+
+    public void SetUnlocksWithStrings(List<string> unlockedStrings)
+    {
+        unlockedAbilities.Clear();
+        foreach(string unlockedString in unlockedStrings)
+        {
+            unlockedAbilities.Add(stringToUnlock[unlockedString]);
+        }
+    }
 
     public int MaxHealth()
     {

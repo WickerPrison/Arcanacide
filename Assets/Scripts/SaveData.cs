@@ -76,7 +76,7 @@ public class SaveData
         maxHealCharges = playerData.maxHealCharges;
         healCharges = playerData.healCharges;
         lastSwordSite = playerData.lastSwordSite;
-        unlockedAbilities = playerData.unlockedAbilities;
+        unlockedAbilities = playerData.GetUnlockedStrings();
         emblems = playerData.emblems;
         equippedEmblems = playerData.equippedEmblems;
         maxPatches = playerData.maxPatches;
