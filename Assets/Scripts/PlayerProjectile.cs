@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerProjectile : MonoBehaviour
 {
     public int speed;
-    public PlayerMovement playerController;
+    public PlayerMovement playerMovement;
     [SerializeField] EventReference enemyImpactSFX;
     [SerializeField] EventReference impactSFX;
     [SerializeField] float impactSFXvolume;
@@ -18,7 +18,7 @@ public class PlayerProjectile : MonoBehaviour
     [System.NonSerialized] public AttackProfiles attackProfile;
     public Transform target;
     public float turnAngle;
-    Vector3 offset = new Vector3(0, 1, 0);
+    [System.NonSerialized] public Vector3 offset = new Vector3(0, 1, 0);
     float addedDOT;
 
     private void OnTriggerEnter(Collider collision)
@@ -83,7 +83,7 @@ public class PlayerProjectile : MonoBehaviour
         transform.position += transform.forward * Time.fixedDeltaTime * speed;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         lifetime -= Time.deltaTime;
         if (lifetime <= 0)

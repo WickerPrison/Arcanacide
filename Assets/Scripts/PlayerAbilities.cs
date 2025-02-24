@@ -384,7 +384,7 @@ public class PlayerAbilities : MonoBehaviour
         projectile.transform.position = startingPosition;
         projectile.transform.LookAt(enemy.transform.position + new Vector3(0, 1.1f, 0));
         projectile.target = enemy.transform;
-        projectile.playerController = playerMovement;
+        projectile.playerMovement = playerMovement;
     }
 
     public void AxeSpecialAttack()
