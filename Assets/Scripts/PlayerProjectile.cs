@@ -43,7 +43,7 @@ public class PlayerProjectile : MonoBehaviour
         }
         enemyScript.LoseHealth(damage, 0);
         enemyScript.ImpactVFX();
-        if (playerData.equippedEmblems.Contains(emblemLibrary.burning_reflection) && attackProfile.attackType == AttackType.DEFLECT)
+        if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedEmblems.Contains(emblemLibrary.burning_reflection))
         {
             addedDOT = 10;
         }
