@@ -261,6 +261,18 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
     }
 
+    public void StartFloat()
+    {
+        playerMovement.canWalk = true;
+        playerMovement.moveSpeed = playerMovement.floatSpeed;
+    }
+
+    public void EndFloat()
+    {
+        playerMovement.canWalk = false;
+        playerMovement.moveSpeed = playerMovement.walkSpeed;
+    }
+
     public void Shove()
     {
         shoveVFX.Play();
