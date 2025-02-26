@@ -354,6 +354,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         StartInput();
 
         EndIceBreath();
+        EndFloat();
     }
 
     private void OnEnable()

@@ -50,20 +50,20 @@ public class PlayerProjectile : MonoBehaviour
         else addedDOT = 0;
         enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
         RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
-        Destroy(gameObject);
+        KillProjectile();
     }
 
     public virtual void HitObject(Collider collision)
     {
         RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
-        Destroy(gameObject);
+        KillProjectile();
     }
 
     public virtual void FixedUpdate()
     {
         if(target == null)
         {
-            Destroy(gameObject);
+            KillProjectile();
             return;
         }
 
@@ -88,7 +88,12 @@ public class PlayerProjectile : MonoBehaviour
         lifetime -= Time.deltaTime;
         if (lifetime <= 0)
         {
-            Destroy(gameObject);
+            KillProjectile();
         }
+    }
+
+    public virtual void KillProjectile()
+    {
+        Destroy(gameObject);
     }
 }

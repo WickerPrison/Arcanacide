@@ -51,6 +51,7 @@ public class PlayerFireball : PlayerProjectile
                 break;
         }
     }
+
     public void LaunchFireball()
     {
         state = FireballState.ACTIVE;
@@ -75,9 +76,16 @@ public class PlayerFireball : PlayerProjectile
         return playerMovement.transform.position + direction * 1.5f + vertOffset;
     }
 
-
-    private void OnDestroy()
+    public override void KillProjectile()
     {
         if (dummyTarget != null) Destroy(dummyTarget);
+        vfx.Stop();
+        StartCoroutine(KillCoroutine());
+    }
+
+    IEnumerator KillCoroutine()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 }
