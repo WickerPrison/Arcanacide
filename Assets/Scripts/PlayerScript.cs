@@ -103,7 +103,6 @@ public class PlayerScript : MonoBehaviour
             poise -= poiseDamage;
             if(poise <= 0)
             {
-                Debug.Log("Poise < 0");
                 StartStagger(poiseBreakStagger);
                 ResetPoise();
             }
