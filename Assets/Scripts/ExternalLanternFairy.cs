@@ -16,11 +16,12 @@ public class ExternalLanternFairy : MonoBehaviour
     bool isDoingSpecial = false;
     bool returning = false;
     float speed = 30;
-    bool isOrbiting = false;
     Vector3 offset = new Vector3(0, 1, 0);
-    Vector3 center;
-    float angle;
-    float rotationSpeed = 580;
+    enum ComboState
+    {
+        OFF, START, FIRE_RAIN
+    }
+    ComboState comboState;
 
     private void Awake()
     {
@@ -50,25 +51,32 @@ public class ExternalLanternFairy : MonoBehaviour
             }
         }
 
-        if (isOrbiting)
-        {
-            UpdatePosition();
-            return;
-        }
 
         Vector3 direction = movePoint.localPosition - transform.localPosition;
         transform.localPosition += speed * Time.fixedDeltaTime * direction.normalized;
 
         if (Vector3.Distance(transform.localPosition, movePoint.localPosition) < speed * Time.fixedDeltaTime)
         {
-            spriteRenderer.enabled = false;
-            trail.Stop();
-            trail.Clear();
-            if (returning)
+            switch (comboState)
             {
-                isDoingSpecial = false;
-                returning = false;
-                ToggleSprites(true);
+                case ComboState.START:
+                    transform.localPosition = movePoint.localPosition;
+                    comboState = ComboState.FIRE_RAIN;
+                    playerEvents.StartFireRain(transform.position);
+                    break;
+                case ComboState.FIRE_RAIN:
+                    break;
+                case ComboState.OFF:
+                    spriteRenderer.enabled = false;
+                    trail.Stop();
+                    trail.Clear();
+                    if (returning)
+                    {
+                        isDoingSpecial = false;
+                        returning = false;
+                        ToggleSprites(true);
+                    }
+                    break;
             }
         }
     }
@@ -94,6 +102,7 @@ public class ExternalLanternFairy : MonoBehaviour
 
     private void StartLanternCombo(object sender, System.EventArgs e)
     {
+        comboState = ComboState.START;
         if (playerAnimation.facingFront)
         {
             transform.position = lanternFairies[0].transform.position;
@@ -106,13 +115,12 @@ public class ExternalLanternFairy : MonoBehaviour
         spriteRenderer.enabled = true;
         trail.Play();
         ToggleSprites(false);
-        angle = 0;
-        isOrbiting = true;
+        movePoint.position = transform.position + Vector3.up * 10;
     }
 
-    private void EndLanternCombo(object sender, System.EventArgs e)
+    public void EndLanternCombo()
     {
-        isOrbiting = false;
+        comboState = ComboState.OFF;
         Vector3 destination;
         if (playerAnimation.facingFront)
         {
@@ -123,16 +131,6 @@ public class ExternalLanternFairy : MonoBehaviour
             destination = lanternFairies[1].transform.position;
         }
         Return(destination);
-    }
-
-    void UpdatePosition()
-    {
-        center = playerAnimation.transform.position + offset;
-        angle += rotationSpeed * Time.fixedDeltaTime;
-        if (angle > 360) angle -= 360;
-
-        Vector3 oldDirection = attackPoint.position - playerAnimation.transform.position;
-        transform.position = center + Utils.RotateDirection(oldDirection, angle).normalized * 1.5f;
     }
 
     public void Return(Vector3 position)
@@ -154,8 +152,7 @@ public class ExternalLanternFairy : MonoBehaviour
 
     private void onPlayerStagger(object sender, System.EventArgs e)
     {
-        if (isInLantern || isDoingSpecial) return;
-        isOrbiting = false;
+        if (isInLantern || isDoingSpecial || comboState != ComboState.OFF) return;
 
         Vector3 destination;
         if (playerAnimation.facingFront)
@@ -174,7 +171,6 @@ public class ExternalLanternFairy : MonoBehaviour
         playerEvents.onAxeSpecial += StartAxeSpecial;
         playerEvents.onLanternCombo += StartLanternCombo;
         playerEvents.onPlayerStagger += onPlayerStagger;
-        playerEvents.onEndLanternCombo += EndLanternCombo;
     }
 
     private void OnDisable()
@@ -182,6 +178,5 @@ public class ExternalLanternFairy : MonoBehaviour
         playerEvents.onAxeSpecial -= StartAxeSpecial;
         playerEvents.onLanternCombo -= StartLanternCombo;
         playerEvents.onPlayerStagger -= onPlayerStagger;
-        playerEvents.onEndLanternCombo -= EndLanternCombo;
     }
 }

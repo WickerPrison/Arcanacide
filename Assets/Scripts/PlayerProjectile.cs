@@ -13,7 +13,6 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField] float lifetime;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] GameObject playAtPointPrefab;
     [System.NonSerialized] public AttackProfiles attackProfile;
     public Transform target;
     public float turnAngle;

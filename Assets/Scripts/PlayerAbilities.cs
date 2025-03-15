@@ -10,6 +10,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] AttackProfiles parryProfile;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] AttackProfiles axeHeavyProfile;
+    [SerializeField] AttackProfiles lanternCombo2Profile;
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
@@ -17,6 +18,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] ExternalLanternFairy lanternFairy;
     [SerializeField] Transform[] internalLanternFairies;
     [SerializeField] GameObject fairyProjectilePrefab;
+    [SerializeField] GameObject fireRainPrefab;
     [SerializeField] Transform frontSwordTip;
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
@@ -53,6 +55,10 @@ public class PlayerAbilities : MonoBehaviour
     float backstepTimer;
     float backstepMaxTime = 0.015f;
 
+    int fireRainAmount = 13;
+    float fireRainMaxDelay = 4f;
+    WaitForSeconds fireRainDelayWait;
+
     bool knifeSpecialAttackOn = false;
     Vector3 away = Vector3.one * 100;
     float boltdamage = 0;
@@ -80,6 +86,8 @@ public class PlayerAbilities : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(0);
+
+        fireRainDelayWait = new WaitForSeconds(fireRainMaxDelay);
 
         SetupControls();
     }
@@ -461,6 +469,23 @@ public class PlayerAbilities : MonoBehaviour
         playerData.clawSpecialOn = true;
     }
 
+    private void PlayerEvents_onStartFireRain(object sender, Vector3 origin)
+    {
+        for (int i = 0; i < fireRainAmount; i++)
+        {
+            FireRain fireRain = Instantiate(fireRainPrefab).GetComponent<FireRain>();
+            fireRain.origin = origin;
+            fireRain.maxDelay = fireRainMaxDelay;
+            fireRain.attackProfile = lanternCombo2Profile;
+        }
+        StartCoroutine(EndFireRain());
+    }
+
+    IEnumerator EndFireRain()
+    {
+        yield return fireRainDelayWait;
+        lanternFairy.EndLanternCombo();
+    }
 
     private void onPlayerStagger(object sender, System.EventArgs e)
     {
@@ -507,6 +532,7 @@ public class PlayerAbilities : MonoBehaviour
         playerEvents.onClawSpecial += onClawSpecial;
         playerEvents.onBackstepStart += onBackstepStart;
         playerEvents.onDashEnd += PlayerEvents_onDashEnd;
+        playerEvents.onStartFireRain += PlayerEvents_onStartFireRain;
         GlobalEvents.instance.onPlayerDeath += OnPlayerDeath;
     }
 
@@ -516,6 +542,7 @@ public class PlayerAbilities : MonoBehaviour
         playerEvents.onClawSpecial -= onClawSpecial;
         playerEvents.onBackstepStart -= onBackstepStart;
         playerEvents.onDashEnd -= PlayerEvents_onDashEnd;
+        playerEvents.onStartFireRain -= PlayerEvents_onStartFireRain;
         GlobalEvents.instance.onPlayerDeath -= OnPlayerDeath;
     }
 }

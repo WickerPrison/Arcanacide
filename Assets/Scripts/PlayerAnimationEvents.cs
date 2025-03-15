@@ -321,6 +321,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerEvents.SwordHeavyFullCharge();
     }
 
+    public void CheckIfCanLanternCombo2()
+    {
+        if (!lanternFairy.isInLantern) playerAnimation.PlayAnimation("EndAttack3");
+    }
+
     public void Backstep(int num)
     {
         playerMovement.LockAttackPoint();
