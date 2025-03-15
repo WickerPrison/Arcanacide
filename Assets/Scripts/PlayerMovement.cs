@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     //walk varibles
     [System.NonSerialized] public Vector3 moveDirection;
     [System.NonSerialized] public Vector3 lastMoveDir;
+    [System.NonSerialized] public float walkSpeed = 300;
+    [System.NonSerialized] public float floatSpeed = 150;
     [System.NonSerialized] public float moveSpeed = 300;
 
     //dash variables
@@ -208,7 +210,17 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        Transform lockOnTarget = transform;
+        Transform lockOnTarget = GetLockOnTarget();
+        if (lockOnTarget != null)
+        {
+            Vector3 lockOnDirection = lockOnTarget.position - transform.position;
+            lookDir = new Vector2(lockOnDirection.x, lockOnDirection.z);
+        }
+    }
+
+    public Transform GetLockOnTarget()
+    {
+        Transform lockOnTarget = null;
         float currentDistance = lockOnDistance;
         for (int enemy = 0; enemy < gm.enemies.Count; enemy++)
         {
@@ -218,11 +230,7 @@ public class PlayerMovement : MonoBehaviour
                 currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
             }
         }
-        if (lockOnTarget != transform)
-        {
-            Vector3 lockOnDirection = lockOnTarget.position - transform.position;
-            lookDir = new Vector2(lockOnDirection.x, lockOnDirection.z);
-        }
+        return lockOnTarget;
     }
 
     public void PauseMenu()

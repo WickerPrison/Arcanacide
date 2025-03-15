@@ -12,28 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: AxeCombo
   m_EditorClassIdentifier: 
-  hitboxType: Circle
+  hitboxType: 0
   attackType: 1
   smearSpeed: 0
   stepWithAttack: 0
   halfConeAngle: 0
-  attackRange: 3.5
+  attackRange: 0
   damageMultiplier: 0
-  magicDamageMultiplier: 2
-  poiseDamageMultiplier: 3
-  staminaCost: 40
+  chargeDamage: 0
+  fullChargeDamage: 0
+  magicDamageMultiplier: 1
+  poiseDamageMultiplier: 1
+  staminaCost: 20
   manaCost: 0
+  impactVFX: 1
+  bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0.7
   screenShakeOnHit: {x: 0, y: 0}
   screenShakeNoHit: {x: 0, y: 0}
-  soundOnHit: {fileID: 0}
+  soundOnHitEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundOnHitVolume: 0
-  soundNoHit: {fileID: 0}
+  noHitSoundEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   soundNoHitVolume: 0
   smearPositions: []
   smearRotations: []
   smearScales: []
-  clawAngle: []
-  clawRotations: []
-  clawScales: []

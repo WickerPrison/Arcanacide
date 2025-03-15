@@ -261,6 +261,18 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
     }
 
+    public void StartFloat()
+    {
+        playerMovement.canWalk = true;
+        playerMovement.moveSpeed = playerMovement.floatSpeed;
+    }
+
+    public void EndFloat()
+    {
+        playerMovement.canWalk = false;
+        playerMovement.moveSpeed = playerMovement.walkSpeed;
+    }
+
     public void Shove()
     {
         shoveVFX.Play();
@@ -309,6 +321,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerEvents.SwordHeavyFullCharge();
     }
 
+    public void CheckIfCanLanternCombo2()
+    {
+        if (!lanternFairy.isInLantern) playerAnimation.PlayAnimation("EndAttack3");
+    }
+
     public void Backstep(int num)
     {
         playerMovement.LockAttackPoint();
@@ -342,6 +359,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         StartInput();
 
         EndIceBreath();
+        EndFloat();
     }
 
     private void OnEnable()

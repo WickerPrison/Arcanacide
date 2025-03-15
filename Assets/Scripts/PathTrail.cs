@@ -3,7 +3,6 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PathTrail : MonoBehaviour
 {
@@ -18,7 +17,7 @@ public class PathTrail : MonoBehaviour
 
     private void Start()
     {
-        VFX = GetComponent<ParticleSystem>();
+        VFX = GetComponentInChildren<ParticleSystem>();
         damagePerSecond = 3 + playerData.arcane * 0.6f;
         fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
         fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));

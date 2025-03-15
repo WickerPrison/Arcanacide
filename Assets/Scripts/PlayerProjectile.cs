@@ -2,23 +2,21 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlayerProjectile : MonoBehaviour
 {
     public int speed;
-    public PlayerMovement playerController;
+    public PlayerMovement playerMovement;
     [SerializeField] EventReference enemyImpactSFX;
     [SerializeField] EventReference impactSFX;
     [SerializeField] float impactSFXvolume;
     [SerializeField] float lifetime;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] GameObject playAtPointPrefab;
     [System.NonSerialized] public AttackProfiles attackProfile;
     public Transform target;
     public float turnAngle;
-    Vector3 offset = new Vector3(0, 1, 0);
+    [System.NonSerialized] public Vector3 offset = new Vector3(0, 1, 0);
     float addedDOT;
 
     private void OnTriggerEnter(Collider collision)
@@ -43,27 +41,27 @@ public class PlayerProjectile : MonoBehaviour
         }
         enemyScript.LoseHealth(damage, 0);
         enemyScript.ImpactVFX();
-        if (playerData.equippedEmblems.Contains(emblemLibrary.burning_reflection) && attackProfile.attackType == AttackType.DEFLECT)
+        if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedEmblems.Contains(emblemLibrary.burning_reflection))
         {
             addedDOT = 10;
         }
         else addedDOT = 0;
         enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
         RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
-        Destroy(gameObject);
+        KillProjectile();
     }
 
     public virtual void HitObject(Collider collision)
     {
         RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
-        Destroy(gameObject);
+        KillProjectile();
     }
 
     public virtual void FixedUpdate()
     {
         if(target == null)
         {
-            Destroy(gameObject);
+            KillProjectile();
             return;
         }
 
@@ -83,12 +81,17 @@ public class PlayerProjectile : MonoBehaviour
         transform.position += transform.forward * Time.fixedDeltaTime * speed;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         lifetime -= Time.deltaTime;
         if (lifetime <= 0)
         {
-            Destroy(gameObject);
+            KillProjectile();
         }
+    }
+
+    public virtual void KillProjectile()
+    {
+        Destroy(gameObject);
     }
 }

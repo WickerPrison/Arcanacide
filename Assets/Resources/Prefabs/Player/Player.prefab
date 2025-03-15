@@ -32428,7 +32428,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &480738553246561473
 Transform:
   m_ObjectHideFlags: 0
@@ -37898,12 +37898,12 @@ GameObject:
   - component: {fileID: 3902019532048191905}
   - component: {fileID: 6369719329472853130}
   m_Layer: 0
-  m_Name: Axe
+  m_Name: Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3902019532048191905
 Transform:
   m_ObjectHideFlags: 0
@@ -57804,6 +57804,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b144783a411cd05459a5a031f8dd5c86, type: 2}
   - {fileID: 11400000, guid: 6bec67186be8c2a478bbbceec0053577, type: 2}
   axeHeavyProfile: {fileID: 11400000, guid: a20c30f881b926442996c2863e432579, type: 2}
+  lanternCombo2Profile: {fileID: 11400000, guid: c4106f081f1230248aba04b750203602, type: 2}
   fireTrailPrefab: {fileID: 4283489857923117263, guid: 94d864412ee9c6243932e7c89686c25c, type: 3}
   projectilePrefab: {fileID: 7335286762330827417, guid: db13e2660fafcdc42aa6a166b089e4e1, type: 3}
   bolts: {fileID: 5628502273643509926}
@@ -57815,6 +57816,7 @@ MonoBehaviour:
   - {fileID: 902617591879070707}
   - {fileID: 4733648512573048184}
   fairyProjectilePrefab: {fileID: 1476167401896601793, guid: 87b7402516559694aa4a25953d18e950, type: 3}
+  fireRainPrefab: {fileID: 6995916372442806596, guid: 54cd7c3e5218a6541b47ac9cdf44e62e, type: 3}
   frontSwordTip: {fileID: 3079022714272363465}
   backSwordTip: {fileID: 4373143805650122359}
   totemPrefab: {fileID: 7099582005832935722, guid: 99bdc7866ca1fa2449c00d734853cd56, type: 3}
@@ -58112,7 +58114,7 @@ Animator:
   m_GameObject: {fileID: 4624565988039198084}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f51e0cd36d028dd48ba04eaa582e6add, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b56ba8e0caaecd498f42bf768cf7422, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -108247,12 +108249,12 @@ GameObject:
   - component: {fileID: 4323125713031218725}
   - component: {fileID: 8844750846559621242}
   m_Layer: 0
-  m_Name: Axe
+  m_Name: Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4323125713031218725
 Transform:
   m_ObjectHideFlags: 0
@@ -108261,7 +108263,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7365662074792618149}
   m_LocalRotation: {x: 0.0000000054784537, y: -0.000000003913099, z: 0.71328807, w: -0.700871}
-  m_LocalPosition: {x: 0.2238, y: 0.0071, z: -0.002}
+  m_LocalPosition: {x: 0.124, y: 0.009, z: -0.002}
   m_LocalScale: {x: -0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -108484,6 +108486,7 @@ GameObject:
   - component: {fileID: 2403207429206742158}
   - component: {fileID: 6337882464766197022}
   - component: {fileID: 811765765522517873}
+  - component: {fileID: 5470787847759371250}
   - component: {fileID: 2878037202980228874}
   m_Layer: 3
   m_Name: PlayerFront
@@ -108592,6 +108595,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+--- !u!114 &5470787847759371250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395915469892964241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f36c7ddf8a9738d49ac5bc3c806834cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireballCharge: 0
+  fireballProfile: {fileID: 11400000, guid: efa9bc202ea2a4641aa7e63bf70c3f94, type: 2}
+  fireWaveProfile: {fileID: 11400000, guid: 05d8f9b946af9574391abf2cff6f10af, type: 2}
+  fireballPrefab: {fileID: 8234779006693281187, guid: ad1cd42db013d8f40a5596ae3fdbd342, type: 3}
+  fireWavePrefab: {fileID: 6485067406438384046, guid: 55f042c5015f34140a8b87873b764211, type: 3}
 --- !u!95 &2878037202980228874
 Animator:
   serializedVersion: 4
@@ -108602,7 +108622,7 @@ Animator:
   m_GameObject: {fileID: 7395915469892964241}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bbf5fde34f5efea4191d98e90a48c98a, type: 2}
+  m_Controller: {fileID: 9100000, guid: efb465ede3de0074eb088bb572445570, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -113586,7 +113606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1805410961168794656
 Transform:
   m_ObjectHideFlags: 0
@@ -133637,7 +133657,7 @@ Transform:
   - {fileID: 7015715467399612929}
   m_Father: {fileID: 8394819673099078716}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.106}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60.947}
 --- !u!1 &8686342106335845308
 GameObject:
   m_ObjectHideFlags: 0
@@ -133672,7 +133692,7 @@ Transform:
   - {fileID: 3814397681736751211}
   m_Father: {fileID: 11492860253431210}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9.63}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -34.042}
 --- !u!1 &8791265941139471578
 GameObject:
   m_ObjectHideFlags: 0
@@ -143888,7 +143908,7 @@ GameObject:
   - component: {fileID: 3609768589466471707}
   - component: {fileID: 3481264953993673398}
   m_Layer: 7
-  m_Name: AxeMagic
+  m_Name: LanternMagic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,6 +16,7 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onEndPlayerStagger;
     public event EventHandler onAxeSpecial;
     public event EventHandler onLanternCombo;
+    public event EventHandler<Vector3> onStartFireRain;
     public event EventHandler onEndLanternCombo;
     public event EventHandler onClawSpecial;
     public event EventHandler onEndClawSpecial;
@@ -68,6 +69,11 @@ public class PlayerEvents : MonoBehaviour
     public void LanternCombo()
     {
         onLanternCombo?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void StartFireRain(Vector3 origin)
+    {
+        onStartFireRain?.Invoke(this, origin);
     }
 
     public void EndLanternCombo()
