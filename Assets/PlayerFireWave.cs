@@ -75,7 +75,6 @@ public class PlayerFireWave : MonoBehaviour
         else addedDOT = 0;
         enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
         RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
-        Destroy(gameObject);
     }
 
     void HitObject(Collider collision)
