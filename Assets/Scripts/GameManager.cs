@@ -130,6 +130,9 @@ public class GameManager : MonoBehaviour
             playerData.killedEnemiesAtGetShield = data.killedEnemiesAtGetShield;
             playerData.unlockedWeapons = data.unlockedWeapons;
             playerData.currentWeapon = data.currentWeapon;
+            playerData.swordSpecialTimer = 0;
+            playerData.clawSpecialOn = false;
+            playerData.clawSpecialTimer = 0;
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.visitedRooms = data.visitedRooms.ToList();
@@ -213,6 +216,9 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Clear();
         playerData.unlockedWeapons.Add(0);
         playerData.currentWeapon = 0;
+        playerData.swordSpecialTimer = 0;
+        playerData.clawSpecialOn = false;
+        playerData.clawSpecialTimer = 0;
 
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();
@@ -279,6 +285,9 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Add(0);
         playerData.unlockedWeapons.Add(1);
         playerData.currentWeapon = 0;
+        playerData.swordSpecialTimer = 0;
+        playerData.clawSpecialOn = false;
+        playerData.clawSpecialTimer = 0;
 
         mapData.doorNumber = 1;
         mapData.unlockedDoors.Clear();
@@ -351,6 +360,9 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Add(1);
         playerData.unlockedWeapons.Add(2);
         playerData.currentWeapon = 0;
+        playerData.swordSpecialTimer = 0;
+        playerData.clawSpecialOn = false;
+        playerData.clawSpecialTimer = 0;
 
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();
@@ -429,6 +441,9 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Add(2);
         playerData.unlockedWeapons.Add(3);
         playerData.currentWeapon = 0;
+        playerData.swordSpecialTimer = 0;
+        playerData.clawSpecialOn = false;
+        playerData.clawSpecialTimer = 0;
 
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();
