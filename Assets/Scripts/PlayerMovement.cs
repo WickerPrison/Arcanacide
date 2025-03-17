@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     [System.NonSerialized] public Vector3 moveDirection;
     [System.NonSerialized] public Vector3 lastMoveDir;
     [System.NonSerialized] public float walkSpeed = 300;
-    [System.NonSerialized] public float floatSpeed = 150;
+    [System.NonSerialized] public float floatSpeed = 200;
     [System.NonSerialized] public float moveSpeed = 300;
 
     //dash variables
