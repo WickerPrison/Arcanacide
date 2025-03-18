@@ -4,7 +4,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-#if UNITY_EDITOR
 public enum FloorTextures
 {
     DEFAULT, WAVES, CARPET, SQUARES
@@ -18,6 +17,7 @@ public class FloorSetup : MonoBehaviour
     Dictionary<Texture, FloorTextures> reverseDict = new Dictionary<Texture, FloorTextures>();
     RoomSetupScript roomSetup;
     RawImage floorImage;
+#if UNITY_EDITOR
     private void OnEnable()
     {
         floorImage = GetComponentInChildren<RawImage>();
@@ -87,5 +87,5 @@ public class FloorSetup : MonoBehaviour
         roomSetup.onSizeChange -= onSizeChange;
         roomSetup.onTileChange -= OnTileChange;
     }
-}
 #endif
+}

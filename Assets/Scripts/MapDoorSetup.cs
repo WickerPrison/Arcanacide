@@ -7,7 +7,6 @@ public enum MapDoorDirection
     UP, DOWN, LEFT, RIGHT
 }
 
-#if UNITY_EDITOR
 [ExecuteAlways]
 public class MapDoorSetup : MonoBehaviour
 {
@@ -23,6 +22,7 @@ public class MapDoorSetup : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     private void OnEnable()
     {
         RoomSetup.doors.Add(this);
@@ -32,5 +32,5 @@ public class MapDoorSetup : MonoBehaviour
     {
         RoomSetup.doors.Remove(this);
     }
-}
 #endif
+}

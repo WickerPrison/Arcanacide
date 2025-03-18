@@ -4,12 +4,12 @@ using UnityEditor;
 using UnityEngine;
 
 
-#if UNITY_EDITOR
 [ExecuteAlways]
 public class BoxSetup : MonoBehaviour
 {
     [SerializeField] bool useStackHeight;
     [SerializeField] int stackHeight;
+#if UNITY_EDITOR
 
     private void OnValidate()
     {
@@ -23,5 +23,5 @@ public class BoxSetup : MonoBehaviour
             PrefabUtility.RecordPrefabInstancePropertyModifications(transform);
         }
     }
-}
 #endif
+}

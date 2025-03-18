@@ -6,7 +6,6 @@ using UnityEngine;
 [ExecuteAlways]
 public class WallSetup : MonoBehaviour
 {
-#if UNITY_EDITOR
     RoomSetupScript RoomSetup;
     RoomSetupScript roomSetup
     {
@@ -25,6 +24,7 @@ public class WallSetup : MonoBehaviour
     }
     [SerializeField] WallDirection direction;
     Vector3 startPosition;
+#if UNITY_EDITOR
 
     private void OnEnable()
     {
