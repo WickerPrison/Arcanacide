@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-#if UNITY_EDITOR
 [ExecuteAlways]
 public class MapRoomSetup : MonoBehaviour
 {
@@ -13,6 +12,7 @@ public class MapRoomSetup : MonoBehaviour
     bool hasChanged = false;
     RectTransform square;
     RectTransform outline;
+#if UNITY_EDITOR
 
     private void OnEnable()
     {
@@ -64,5 +64,5 @@ public class MapRoomSetup : MonoBehaviour
                 break;
         }
     }
-}
 #endif
+}

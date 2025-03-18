@@ -7,7 +7,6 @@ using UnityEngine.Rendering;
 [ExecuteAlways]
 public class DoorSetup : MonoBehaviour
 {
-#if UNITY_EDITOR
     [SerializeField] Transform openDoorMessage;
     [SerializeField] Transform notOpenMessage;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -24,6 +23,7 @@ public class DoorSetup : MonoBehaviour
     }
     [SerializeField] DoorDirection direction;
 
+#if UNITY_EDITOR
     private void OnEnable()
     {
         roomSetup = FindObjectOfType<RoomSetupScript>();

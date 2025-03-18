@@ -7,17 +7,16 @@ using UnityEngine.Rendering;
 [ExecuteAlways]
 public class WallObjectSetup : MonoBehaviour
 {
-#if UNITY_EDITOR
-    RoomSetupScript roomSetup;
-
+    [SerializeField] ObjectDirection direction;
+    [SerializeField] SpriteRenderer[] spriteRenderers;
+    [SerializeField] Transform[] messages;
     enum ObjectDirection
     {
         LEFT, RIGHT, UP, DOWN
     }
-    [SerializeField] ObjectDirection direction;
-    [SerializeField] SpriteRenderer[] spriteRenderers;
-    [SerializeField] Transform[] messages;
+    RoomSetupScript roomSetup;
     SortingGroup sortingGroup;
+#if UNITY_EDITOR
 
     private void OnEnable()
     {

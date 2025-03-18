@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
-#if UNITY_EDITOR
 [ExecuteAlways]
 public class RoomSetupScript : MonoBehaviour
 {
@@ -35,6 +34,7 @@ public class RoomSetupScript : MonoBehaviour
     }
 
 
+#if UNITY_EDITOR
     private void OnEnable()
     {
         onGetInitialVals?.Invoke(this, EventArgs.Empty);
@@ -92,5 +92,5 @@ public class RoomSetupScript : MonoBehaviour
     {
         NavMesh.RemoveData();
     }
-}
 #endif
+}
