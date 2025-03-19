@@ -3,6 +3,7 @@ using UnityEditor;
 
 public class LayoutSetup : MonoBehaviour
 {
+#if UNITY_EDITOR
     [MenuItem("Tools/Rotate Layout &L")]
     static void RotateLayout()
     {
@@ -34,4 +35,5 @@ public class LayoutSetup : MonoBehaviour
         transform.eulerAngles = newEulerAngles;
         PrefabUtility.RecordPrefabInstancePropertyModifications(transform);
     }
+#endif
 }
