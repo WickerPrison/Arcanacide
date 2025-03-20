@@ -644,6 +644,7 @@ MonoBehaviour:
   maxMana: {fileID: 291498945156116215}
   refundShards: {fileID: 1577526972860789166}
   empowerButton: {fileID: 8391768204762070736}
+  buttonText: {fileID: 8593283532236252022}
   refundStones:
   - {fileID: 4159179951986797100}
   - {fileID: 88386623265355984}
@@ -1424,6 +1425,18 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 7397005923862393607}
+    - target: {fileID: 1913491074239069494, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 365297228418071876}
+    - target: {fileID: 1913491074239069494, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EmpowerGem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1913491074239069494, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HealingGemMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3390486723045992648, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1462,15 +1475,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3390486723045992648, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.09000001
       objectReference: {fileID: 0}
     - target: {fileID: 3390486723045992648, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.09000001
       objectReference: {fileID: 0}
     - target: {fileID: 3390486723045992648, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.09000001
       objectReference: {fileID: 0}
     - target: {fileID: 3390486723045992648, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1522,7 +1535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3390486723045992648, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4936777532903869019, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
       propertyPath: m_text
@@ -1555,6 +1568,29 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5167318094442928125, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
   m_PrefabInstance: {fileID: 3729979764576528685}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8437389842640864344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8391768204762070736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cefd43e8dfd3b1499a0340e0338b3fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8593283532236252022 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4936777532903869019, guid: 53ede1884026f0a4b93580666a6ffb60, type: 3}
+  m_PrefabInstance: {fileID: 3729979764576528685}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4988259321092256837
 PrefabInstance:
   m_ObjectHideFlags: 0
