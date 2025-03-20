@@ -15,6 +15,8 @@ public class SaveData
     public bool hasHealthGem;
     public int maxHealCharges;
     public int healCharges;
+    public int currentGemShards;
+    public string[] gemShards;
     public int lastSwordSite;
     public List<string> unlockedAbilities;
     public List<string> emblems;
@@ -75,6 +77,8 @@ public class SaveData
         hasHealthGem = playerData.hasHealthGem;
         maxHealCharges = playerData.maxHealCharges;
         healCharges = playerData.healCharges;
+        currentGemShards = playerData.currentGemShards;
+        gemShards = playerData.gemShards.ToArray();
         lastSwordSite = playerData.lastSwordSite;
         unlockedAbilities = playerData.GetUnlockedStrings();
         emblems = playerData.emblems;

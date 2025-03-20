@@ -25,8 +25,6 @@ public class LevelUpMenu : MonoBehaviour
     [SerializeField] LevelUpButton dedicationButton;
     public RestMenuButtons restMenuScript;
     int requiredMoney;
-    public int altarNumber;
-    public Transform spawnPoint;
     PlayerControls controls;
     SoundManager sm;
     Dictionary<string, LevelUpButton> buttonDict;
