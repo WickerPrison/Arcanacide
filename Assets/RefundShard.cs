@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GemShard : MonoBehaviour
+public class RefundShard : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] string shardGUID = "";

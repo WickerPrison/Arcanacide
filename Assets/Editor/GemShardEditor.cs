@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(GemShard))]
+[CustomEditor(typeof(RefundShard))]
 public class GemShardEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        GemShard gemShard = target as GemShard;
+        RefundShard gemShard = target as RefundShard;
         base.OnInspectorGUI();
         if (GUILayout.Button("Generate GUID"))
         {

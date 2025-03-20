@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6376216578813251840}
   - component: {fileID: 8355725384047585382}
   m_Layer: 0
-  m_Name: HealingGemShard
+  m_Name: RefundShard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9994d713a04e07d47a9e0b2b2dec80bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 0}
+  shardGUID: 
 --- !u!114 &8355725384047585382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,9 +164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2808871999369188746, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
       propertyPath: m_text
-      value: 'E: Pick Up
-
-'
+      value: 'E: Get Refund'
       objectReference: {fileID: 0}
     - target: {fileID: 4868142939837558472, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -192,7 +192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5193289624116260237, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
       propertyPath: prompt
-      value: '|: Pick Up'
+      value: '|: Get Refund'
       objectReference: {fileID: 0}
     - target: {fileID: 5214026991396969680, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
       propertyPath: m_Pivot.x
@@ -304,7 +304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7784816200730667288, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 24.94
+      value: 33.510002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0603cd49aea663342a9733bd5c7719b6, type: 3}
