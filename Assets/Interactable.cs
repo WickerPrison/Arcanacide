@@ -38,6 +38,7 @@ public class Interactable : MonoBehaviour
     void Interact()
     {
         if (!active) return;
+        if (playerDistance > interactDistance) return;
         onInteracted?.Invoke(this, EventArgs.Empty);
     }
 }
