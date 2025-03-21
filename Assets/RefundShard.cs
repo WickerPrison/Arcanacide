@@ -7,6 +7,7 @@ public class RefundShard : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] string shardGUID = "";
     Interactable interactable;
+    TutorialManager tutorialManager;
 
     private void Awake()
     {
@@ -17,10 +18,15 @@ public class RefundShard : MonoBehaviour
 
         interactable = GetComponent<Interactable>();
         interactable.active = true;
+        tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
     }
 
     private void Interactable_onInteracted(object sender, System.EventArgs e)
     {
+        if(playerData.tutorials.Contains(tutorialManager.refundShard))
+        {
+            tutorialManager.Tutorial(tutorialManager.refundShard, "");
+        }
         interactable.active = false;
         playerData.gemShards.Add(shardGUID);
         playerData.currentGemShards += 1;
