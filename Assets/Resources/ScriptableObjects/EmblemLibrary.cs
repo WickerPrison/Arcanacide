@@ -16,7 +16,7 @@ public class EmblemLibrary : ScriptableObject
     [System.NonSerialized] public string heavy_blows = "Heavy Blows";
     [System.NonSerialized] public string heavy_blows_description = "Attacks stagger enemies faster";
     [System.NonSerialized] public string vampiric_strikes = "Vampiric Strikes";
-    [System.NonSerialized] public string vampiric_strikes_description = "Recover health whenever you kill an enemy";
+    [System.NonSerialized] public string vampiric_strikes_description = "Refund health whenever you kill an enemy";
     [System.NonSerialized] public string quickstep_ = "Quickstep";
     [System.NonSerialized] public string quickstep_description = "Dodging does not use as much Stamina";
     [System.NonSerialized] public string pay_raise = "Pay Raise";
@@ -36,8 +36,8 @@ public class EmblemLibrary : ScriptableObject
     [System.NonSerialized] public string rending_blows = "Rending Blows";
     [System.NonSerialized] public string rending_blows_description = "Heavy Attacks inflict Arcane damage over time";
     [System.NonSerialized] public float rendingBlowsDuration = 5;
-    [System.NonSerialized] public string durable_gem = "Durable Gem";
-    [System.NonSerialized] public string durable_gem_description = "Your healing gem can be used an extra time without breaking";
+    [System.NonSerialized] public string maximum_refund = "Maximum Refund";
+    [System.NonSerialized] public string maximum_refund_description = "Your Refund Stone can be used an extra time without breaking";
     [System.NonSerialized] public string protective_barrier = "Protective Barrier";
     [System.NonSerialized] public string protective_barrier_description = "Every 10 seconds gain a protective barrier that blocks one instance of damage";
     [System.NonSerialized] public string explosive_healing = "Explosive Healing";
@@ -90,7 +90,7 @@ public class EmblemLibrary : ScriptableObject
             {confident_killer, confident_killer_description },
             {adrenaline_rush, adrenaline_rush_description },
             {rending_blows, rending_blows_description },
-            {durable_gem, durable_gem_description },
+            {maximum_refund, maximum_refund_description },
             {explosive_healing, explosive_healing_description },
             {protective_barrier, protective_barrier_description },
             {charons_obol, charons_obol_description },

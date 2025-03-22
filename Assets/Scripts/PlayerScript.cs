@@ -286,7 +286,7 @@ public class PlayerScript : MonoBehaviour
         playerHealth.MaxHeal();
         playerData.mana = playerData.maxMana;
         playerData.healCharges = playerData.maxHealCharges;
-        if (playerData.equippedEmblems.Contains(emblemLibrary.durable_gem))
+        if (playerData.equippedEmblems.Contains(emblemLibrary.maximum_refund))
         {
             playerData.healCharges += 1;
         }
