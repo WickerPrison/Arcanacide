@@ -33,8 +33,8 @@ public class PatchEffects : MonoBehaviour
     //patch related variables
     [System.NonSerialized] public bool arcaneStepActive = false;
     [System.NonSerialized] public bool arcaneRemainsActive = false;
-    float arcaneStepMaxTime = 0.03f;
-    float arcaneStepTimer;
+    Vector3 previousPosition;
+    float dist;
 
     float closeCallMaxTime = 5;
     [System.NonSerialized] public float closeCallTimer;
@@ -99,21 +99,6 @@ public class PatchEffects : MonoBehaviour
             if (mirrorCloakTimer <= 0) playerEvents.StartMirrorCloak();
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
-        {
-            if (arcaneStepTimer < 0)
-            {
-                GameObject pathTrail;
-                pathTrail = Instantiate(pathTrailPrefab);
-                pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-                arcaneStepTimer = arcaneStepMaxTime;
-            }
-            else
-            {
-                arcaneStepTimer -= Time.deltaTime;
-            }
-        }
-
         if (barrierTimer > 0)
         {
             barrierTimer -= Time.deltaTime;
@@ -121,6 +106,19 @@ public class PatchEffects : MonoBehaviour
         else if (playerData.equippedEmblems.Contains(emblemLibrary.protective_barrier))
         {
             barrier = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
+        {
+            dist += Vector3.Distance(transform.position, previousPosition);
+            if(dist > 0.7f)
+            {
+                SpawnArcaneStep();
+            }
+            previousPosition = transform.position;
         }
     }
 
@@ -217,13 +215,21 @@ public class PatchEffects : MonoBehaviour
     public void StartArcaneStep()
     {
         arcaneStepActive = true;
-        arcaneStepTimer = arcaneStepMaxTime;
+        previousPosition = transform.position;
+        SpawnArcaneStep();
     }
 
     public void EndArcaneStep()
     {
         arcaneStepActive = false;
-        arcaneStepTimer = 0;
+    }
+
+    void SpawnArcaneStep()
+    {
+        dist = 0;
+        GameObject pathTrail;
+        pathTrail = Instantiate(pathTrailPrefab);
+        pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     private void onEnemyKilled(object sender, System.EventArgs e)

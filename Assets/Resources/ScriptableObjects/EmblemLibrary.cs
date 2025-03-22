@@ -41,7 +41,7 @@ public class EmblemLibrary : ScriptableObject
     [System.NonSerialized] public string protective_barrier = "Protective Barrier";
     [System.NonSerialized] public string protective_barrier_description = "Every 10 seconds gain a protective barrier that blocks one instance of damage";
     [System.NonSerialized] public string explosive_healing = "Explosive Healing";
-    [System.NonSerialized] public string explosive_healing_description = "Deal Arcane damage to nearby enemies whenever you use your Healing Gem";
+    [System.NonSerialized] public string explosive_healing_description = "Deal Arcane damage to nearby enemies whenever you use your Refund Stone";
     [System.NonSerialized] public string charons_obol = "Charon's Obol";
     [System.NonSerialized] public string charons_obol_description = "When you die you do not leave behind a Remnant and you retain half of your current money";
     [System.NonSerialized] public string arcane_preservation = "Arcane Preservation";

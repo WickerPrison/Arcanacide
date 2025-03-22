@@ -13,9 +13,8 @@ public class FireSwordsmanController : EnemyController
     LayerMask layerMask;
     Vector3 chargeDestination;
     float chargeRange = 6;
-    float chargeSpeed = 7;
-    float fireTrailMaxTime = 0.01f;
-    float fireTrailTime;
+    float chargeSpeed = 25;
+    float dist;
     float chargeDistance = 1000;
     bool charging = false;
     float previousChargeDistance = 0;
@@ -80,31 +79,31 @@ public class FireSwordsmanController : EnemyController
         }
     }
 
-    public override void Update()
+    private void FixedUpdate()
     {
-        base.Update();
-
         if (charging && navAgent.enabled)
         {
-            FireTrail();
-            Vector3 chargeDirection = chargeDestination - transform.position;
-            navAgent.Move(chargeDirection * Time.deltaTime * chargeSpeed);
+            Vector3 chargeDirection = Vector3.Normalize(chargeDestination - transform.position);
+            navAgent.Move(chargeDirection * Time.fixedDeltaTime * chargeSpeed);
+            dist += Time.fixedDeltaTime * chargeSpeed;
             float chargeDistance = Vector3.Distance(chargeDestination, transform.position);
-            frontAnimator.SetFloat("ChargeDistance", chargeDistance);
-            backAnimator.SetFloat("ChargeDistance", chargeDistance);
             float amountMoved = Mathf.Abs(chargeDistance - previousChargeDistance);
             previousChargeDistance = chargeDistance;
-            if(amountMoved <= 0.1f)
+
+            if(dist > 0.7f)
             {
-                frontAnimator.Play("Attack4");
-                backAnimator.Play("Attack4");
-                chargeDistance = 0;
+                dist = 0;
+                GameObject fireTrail;
+                fireTrail = Instantiate(fireTrailPrefab);
+                fireTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             }
 
-            if (chargeDistance < 1)
+            if (chargeDistance < 1 || amountMoved <= 1 * Time.fixedDeltaTime)
             {
                 navAgent.enabled = false;
                 charging = false;
+                frontAnimator.Play("Attack4");
+                backAnimator.Play("Attack4");
             }
         }
     }
@@ -175,21 +174,6 @@ public class FireSwordsmanController : EnemyController
         chargeDestination = playerScript.transform.position;
         charging = true;
         state = EnemyState.ATTACKING;
-    }
-
-    public void FireTrail()
-    {
-        if (fireTrailTime < 0)
-        {
-            GameObject fireTrail;
-            fireTrail = Instantiate(fireTrailPrefab);
-            fireTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);            
-            fireTrailTime = fireTrailMaxTime;
-        }
-        else
-        {
-            fireTrailTime -= Time.deltaTime;
-        }
     }
 
     public override void AttackHit(int smearSpeed)
