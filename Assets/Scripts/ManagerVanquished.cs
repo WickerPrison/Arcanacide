@@ -6,7 +6,6 @@ using TMPro;
 public class ManagerVanquished : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
-    [SerializeField] TextMeshProUGUI healthGemMessage;
     [SerializeField] BuildMode buildMode;
 
     float messageTime = 3;
@@ -21,8 +20,6 @@ public class ManagerVanquished : MonoBehaviour
     {
         yield return new WaitForSeconds(messageTime);
         text.gameObject.SetActive(false);
-        healthGemMessage.gameObject.SetActive(true);
-        yield return new WaitForSeconds(messageTime);
         if(buildMode.buildMode == BuildModes.DEMO) EndOfDemoMessage();
         Destroy(gameObject);
     }

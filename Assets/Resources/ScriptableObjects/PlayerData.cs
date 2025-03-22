@@ -18,6 +18,8 @@ public class PlayerData : ScriptableObject
     public bool hasHealthGem;
     public int maxHealCharges;
     public int healCharges;
+    public int currentGemShards;
+    public List<string> gemShards;
     public bool hasSpawned;
     public int lastSwordSite;
     public List<UnlockableAbilities> unlockedAbilities;

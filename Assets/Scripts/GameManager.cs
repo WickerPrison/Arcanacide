@@ -109,6 +109,8 @@ public class GameManager : MonoBehaviour
             playerData.hasHealthGem = data.hasHealthGem;
             playerData.maxHealCharges = data.maxHealCharges;
             playerData.healCharges = data.healCharges;
+            playerData.currentGemShards = data.currentGemShards;
+            playerData.gemShards = data.gemShards.ToList();
             playerData.lastSwordSite = data.lastSwordSite;
             playerData.SetUnlocksWithStrings(data.unlockedAbilities);
             playerData.emblems = data.emblems;
@@ -194,6 +196,8 @@ public class GameManager : MonoBehaviour
         playerData.hasHealthGem = false;
         playerData.maxHealCharges = 1;
         playerData.healCharges = 1;
+        playerData.currentGemShards = 0;
+        playerData.gemShards.Clear();
         playerData.lastSwordSite = lastAltar;
         playerData.unlockedAbilities.Clear();
         playerData.emblems.Clear();
@@ -257,6 +261,8 @@ public class GameManager : MonoBehaviour
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 2;
         playerData.healCharges = 2;
+        playerData.currentGemShards = 0;
+        playerData.gemShards.Clear();
         playerData.lastSwordSite = 4;
         playerData.unlockedAbilities.Clear();
         playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
@@ -326,6 +332,8 @@ public class GameManager : MonoBehaviour
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 3;
         playerData.healCharges = 3;
+        playerData.currentGemShards = 0;
+        playerData.gemShards.Clear();
         playerData.lastSwordSite = 5;
         playerData.unlockedAbilities.Clear();
         playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
@@ -401,6 +409,8 @@ public class GameManager : MonoBehaviour
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 4;
         playerData.healCharges = 4;
+        playerData.currentGemShards = 0;
+        playerData.gemShards.Clear();
         playerData.lastSwordSite = 8;
         playerData.unlockedAbilities.Clear();
         playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);

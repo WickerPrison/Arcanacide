@@ -10,6 +10,7 @@ public class RestMenuButtons : MonoBehaviour
     [SerializeField] MapData mapData;
     [SerializeField] GameObject emblemMenuPrefab;
     [SerializeField] GameObject levelUpMenuPrefab;
+    [SerializeField] GameObject gemMenuPrefab;
     [SerializeField] GameObject mapMenuPrefab;
     [SerializeField] GameObject textMenuPrefab;
     [SerializeField] GameObject weaponMenuPrefab;
@@ -19,6 +20,7 @@ public class RestMenuButtons : MonoBehaviour
     public GameObject firstButton;
     GameObject emblemMenu;
     GameObject levelUpMenu;
+    GameObject gemMenu;
     GameObject mapMenu;
     GameObject textMenu;
     GameObject weaponMenu;
@@ -70,10 +72,14 @@ public class RestMenuButtons : MonoBehaviour
     {
         sm.ButtonSound();
         levelUpMenu = Instantiate(levelUpMenuPrefab);
-        LevelUpMenu levelUpMenuScript = levelUpMenu.GetComponent<LevelUpMenu>();
-        levelUpMenuScript.altarNumber = altarNumber;
-        levelUpMenuScript.spawnPoint = spawnPoint;
-        levelUpMenuScript.restMenuScript = this;
+        levelUpMenu.GetComponent<LevelUpMenu>().restMenuScript = this;
+        controls.Disable();
+    }
+
+    public void OpenGemMenu()
+    {
+        sm.ButtonSound();
+        Instantiate(gemMenuPrefab).GetComponent<HealingGemMenu>().restMenuScript = this;
         controls.Disable();
     }
 

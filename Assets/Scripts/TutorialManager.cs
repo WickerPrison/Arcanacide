@@ -42,6 +42,8 @@ public class TutorialManager : MonoBehaviour
     string newWeapon = "New Weapon";
     [SerializeField] GameObject mapTutorial;
     string map = "Map";
+    [SerializeField] GameObject refundShardTutorial;
+    public string refundShard = "Refund Shard";
     public List<string> allTutorials;
     Dictionary<string, GameObject> tutorialDict;
 
@@ -140,6 +142,7 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Add(altar);
         allTutorials.Add(newWeapon);
         allTutorials.Add(map);
+        allTutorials.Add(refundShard);
     }
 
     void SetupTutorialDictionary()
@@ -158,7 +161,8 @@ public class TutorialManager : MonoBehaviour
             {endOfDemo, endOfDemoTutorial },
             {altar, altarTutorial},
             {newWeapon, newWeaponTutorial},
-            {map, mapTutorial}
+            {map, mapTutorial},
+            {refundShard, refundShardTutorial },
         };
     }
 }

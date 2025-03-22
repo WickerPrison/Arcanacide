@@ -7,7 +7,7 @@ public class ButtonVibrate : MonoBehaviour
     Vector3 centerPosition;
     Vector3 leftPosition;
     Vector3 rightPosition;
-    float vibrateAmp = 5;
+    [SerializeField] float vibrateAmp = 5;
     float vibrateDuration = 0.3f;
     float vibrateFreq = 40;
 

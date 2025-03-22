@@ -21,6 +21,7 @@ public class GlobalEvents : MonoBehaviour
     public event Action<GlobalEvents, float> onGainStamina;
     public event Action<GlobalEvents, int> onPlayerLoseHealth;
     public event Action<GlobalEvents, int> onPlayerGainHealth;
+    public event EventHandler<int> onPickupGemShard;
 
     private void Awake()
     {
@@ -86,5 +87,11 @@ public class GlobalEvents : MonoBehaviour
     public void PlayerGainHealth(int health)
     {
         onPlayerGainHealth?.Invoke(this, health);
+    }
+
+    public void PickupGemShard()
+    {
+        onPickupGemShard?.Invoke(this, 1);
+
     }
 }

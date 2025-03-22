@@ -186,20 +186,19 @@ public class PlayerHealth : MonoBehaviour
         GlobalEvents.instance.GemUsed();
     }
 
-    private void onBossKilled(object sender, System.EventArgs e)
+    private void Global_onPickupGemShard(object sender, int id)
     {
-        playerData.maxHealCharges++;
-        playerData.healCharges++;
+        
     }
 
     private void OnEnable()
     {
-        GlobalEvents.instance.onBossKilled += onBossKilled;
+        GlobalEvents.instance.onPickupGemShard += Global_onPickupGemShard;
     }
 
     private void OnDisable()
     {
-        GlobalEvents.instance.onBossKilled -= onBossKilled;
+        GlobalEvents.instance.onPickupGemShard -= Global_onPickupGemShard;
     }
 
 }
