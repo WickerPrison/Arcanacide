@@ -6,20 +6,55 @@ using UnityEngine.TestTools;
 
 public class patchLibraryTests
 {
-    // A Test behaves as an ordinary method
-    [Test]
-    public void patchLibraryTestsSimplePasses()
+    List<Patches> patchesEnums = new List<Patches>()
     {
-        // Use the Assert class to test conditions
+        Patches.ADRENALINE_RUSH,
+        Patches.BURNING_CLOAK,
+        Patches.DEATH_AURA,
+    };
+
+    List<string> patchesStrings = new List<string>()
+    {
+        "ADRENALINE_RUSH",
+        "BURNING_CLOAK",
+        "DEATH_AURA",
+    };
+
+    List<string> oldFormat = new List<string>()
+    {
+        "Adrenaline Rush",
+        "Burning Cloak",
+        "Death Aura",
+    };
+
+    EmblemLibrary emblemLibrary = Resources.Load<EmblemLibrary>("Data/EmblemLibrary");
+
+    [Test]
+    public void GetStringFromEnum()
+    {
+        Assert.AreEqual(patchesStrings, emblemLibrary.GetStringsFromPatches(patchesEnums));
     }
 
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator patchLibraryTestsWithEnumeratorPasses()
+    [Test]
+    public void GetEnumFromStrings()
     {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
+        Assert.AreEqual(patchesEnums, emblemLibrary.GetPatchesFromStrings(patchesStrings));
+    }
+
+    [Test]
+    public void GetEnumFromOldFormatStrings()
+    {
+        Assert.AreEqual(patchesEnums, emblemLibrary.GetPatchesFromStrings(oldFormat));
+    }
+
+    [Test]
+    public void GetEnumFromOldFormatStringsWithOldName()
+    {
+        List<string> oldFormatRename = new List<string>(oldFormat);
+        oldFormatRename.Add("Charon's Obol");
+        List<Patches> enumsRename = new List<Patches>(patchesEnums);
+        enumsRename.Add(Patches.STANDARD_DEDUCTION);
+
+        Assert.AreEqual(enumsRename, emblemLibrary.GetPatchesFromStrings(oldFormatRename));
     }
 }

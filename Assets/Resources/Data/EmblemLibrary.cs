@@ -241,14 +241,21 @@ public class EmblemLibrary : ScriptableObject
         List<Patches> allPatches = patchDictionary.Keys.ToList();
         foreach (string patch in patches)
         {
-            output.Add(allPatches.Find(x => patchDictionary[x].name == patch));
+            try
+            {
+                output.Add((Patches)System.Enum.Parse(typeof(Patches), patch));
+            }
+            catch
+            {
+                output.Add(allPatches.Find(x => patchDictionary[x].name == patch));
+            }
         }
         return output;
     }
 
     public List<string> GetStringsFromPatches(List<Patches> patches)
     {
-        return patches.Select(patch => nameof(patch)).ToList();
+        return patches.Select(patch => patch.ToString()).ToList();
     }
 
     private void DefineDictionary()
