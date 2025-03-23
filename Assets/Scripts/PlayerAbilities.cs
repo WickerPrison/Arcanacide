@@ -179,7 +179,7 @@ public class PlayerAbilities : MonoBehaviour
         if(attackProfile.impactVFX) enemy.ImpactVFX();
         if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
         {
-            enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
+            enemy.GainDOT(emblemLibrary.rendingBlows.value);
         }
 
         enemy.GainDOT(attackProfile.durationDOT);
@@ -200,7 +200,7 @@ public class PlayerAbilities : MonoBehaviour
 
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
-                extraDamage += attackPower * emblemLibrary.arcaneMasteryPercent;
+                extraDamage += attackPower * emblemLibrary.arcaneMastery.value;
             }
         }
 
@@ -210,7 +210,7 @@ public class PlayerAbilities : MonoBehaviour
 
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
-                extraDamage += attackPower * emblemLibrary.arcaneMasteryPercent;
+                extraDamage += attackPower * emblemLibrary.arcaneMastery.value;
             }
         }
 
@@ -445,7 +445,7 @@ public class PlayerAbilities : MonoBehaviour
             boltdamage += playerData.arcane * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
-                boltdamage += boltdamage * emblemLibrary.arcaneMasteryPercent;
+                boltdamage += boltdamage * emblemLibrary.arcaneMastery.value;
             }
 
             if (boltdamage > 1)

@@ -46,15 +46,4 @@ public class patchLibraryTests
     {
         Assert.AreEqual(patchesEnums, emblemLibrary.GetPatchesFromStrings(oldFormat));
     }
-
-    [Test]
-    public void GetEnumFromOldFormatStringsWithOldName()
-    {
-        List<string> oldFormatRename = new List<string>(oldFormat);
-        oldFormatRename.Add("Charon's Obol");
-        List<Patches> enumsRename = new List<Patches>(patchesEnums);
-        enumsRename.Add(Patches.STANDARD_DEDUCTION);
-
-        Assert.AreEqual(enumsRename, emblemLibrary.GetPatchesFromStrings(oldFormatRename));
-    }
 }

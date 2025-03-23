@@ -48,7 +48,7 @@ public class ElectricTrap : MonoBehaviour
 
                     if (playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
                     {
-                        enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
+                        enemy.GainDOT(emblemLibrary.rendingBlows.value);
                     }
                 }
 

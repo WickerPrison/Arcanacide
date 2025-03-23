@@ -153,10 +153,10 @@ public class PatchEffects : MonoBehaviour
             extraDamage += physicalDamage * closeCallDamage;
         }
 
-        if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > emblemLibrary.spellswordManaCost)
+        if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > emblemLibrary.spellsword.value)
         {
             extraDamage += physicalDamage * spellswordDamage;
-            playerScript.LoseMana(emblemLibrary.spellswordManaCost);
+            playerScript.LoseMana(emblemLibrary.spellsword.value);
         }
 
         return physicalDamage + Mathf.RoundToInt(extraDamage);

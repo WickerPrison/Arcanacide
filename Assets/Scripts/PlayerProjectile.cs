@@ -37,7 +37,7 @@ public class PlayerProjectile : MonoBehaviour
         int damage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
         if(attackProfile.attackType == AttackType.SPECIAL && playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
         {
-            damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMasteryPercent);
+            damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMastery.value);
         }
         enemyScript.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
         enemyScript.ImpactVFX();
