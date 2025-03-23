@@ -88,7 +88,7 @@ public class PlayerHealth : MonoBehaviour
             damage = Mathf.CeilToInt(damage * playerAbilities.clawSpecialTakeDamageMult);
         }
 
-        if (damage > playerData.health && playerData.equippedPatches.Contains(Patches.ARCANE_PRESERVATION)) ;
+        if (damage > playerData.health && playerData.equippedPatches.Contains(Patches.ARCANE_PRESERVATION))
         {
             damage -= playerData.health;
             playerData.health = 1;
@@ -107,7 +107,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (attackType != EnemyAttackType.NONPARRIABLE) playerEvents.AttackImpact();
 
-        if (attackingEnemy != null && playerData.equippedPatches.Contains(Patches.BURNING_CLOAK)) ;
+        if (attackingEnemy != null && playerData.equippedPatches.Contains(Patches.BURNING_CLOAK))
         {
             attackingEnemy.GainDOT(5);
         }

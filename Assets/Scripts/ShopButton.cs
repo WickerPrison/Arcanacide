@@ -12,7 +12,6 @@ public class ShopButton : MonoBehaviour
     [SerializeField] TextMeshProUGUI costText;
     [SerializeField] TextMeshProUGUI emblemNameText;
     [SerializeField] TextMeshProUGUI descriptionText;
-    public string emblemName;
     public Patches patchName;
     Patch patch;
     public int cost = 100;

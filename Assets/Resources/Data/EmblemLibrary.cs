@@ -5,6 +5,7 @@ using System.Linq;
 
 public enum Patches
 {
+    NONE,
     MAGICAL_ACCELERATION,
     HEAVY_BLOWS,
     VAMPIRIC_STRIKES,
