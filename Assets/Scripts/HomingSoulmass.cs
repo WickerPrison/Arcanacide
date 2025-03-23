@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-using UnityEngine.Timeline;
 using FMODUnity;
 
 public class HomingSoulmass : MonoBehaviour
