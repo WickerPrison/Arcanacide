@@ -62,13 +62,13 @@ public class PlayerFireWave : MonoBehaviour
     {
         EnemyScript enemyScript = collision.gameObject.GetComponent<EnemyScript>();
         int damage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
-        if (attackProfile.attackType == AttackType.SPECIAL && playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+        if (attackProfile.attackType == AttackType.SPECIAL && playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
         {
             damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMasteryPercent);
         }
         enemyScript.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
         enemyScript.ImpactVFX();
-        if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedEmblems.Contains(emblemLibrary.burning_reflection))
+        if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedPatches.Contains(Patches.BURNING_REFLECTION))
         {
             addedDOT = 10;
         }

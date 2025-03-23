@@ -138,12 +138,12 @@ public class PlayerMovement : MonoBehaviour
             //The player dashes in whatever direction they were already moving
             float staminaCost = dashStaminaCost;
             dashDirection = moveDirection.normalized;
-            if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))
+            if (playerData.equippedPatches.Contains(Patches.QUICKSTEP))
             {
                 staminaCost /= 2;
             }
 
-            if (playerData.equippedEmblems.Contains(emblemLibrary.shell_company))
+            if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
             {
                 staminaCost *= 2;
             }

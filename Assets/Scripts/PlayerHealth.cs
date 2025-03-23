@@ -48,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
         if (playerData.health == playerData.MaxHealth())
         {
             fullHealth = true;
-            if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
+            if (playerData.equippedPatches.Contains(Patches.CONFIDENT_KILLER))
             {
                 weaponManager.AddWeaponMagicSource();
             }
@@ -88,7 +88,7 @@ public class PlayerHealth : MonoBehaviour
             damage = Mathf.CeilToInt(damage * playerAbilities.clawSpecialTakeDamageMult);
         }
 
-        if (damage > playerData.health && playerData.equippedEmblems.Contains(emblemLibrary.arcane_preservation))
+        if (damage > playerData.health && playerData.equippedPatches.Contains(Patches.ARCANE_PRESERVATION)) ;
         {
             damage -= playerData.health;
             playerData.health = 1;
@@ -107,12 +107,12 @@ public class PlayerHealth : MonoBehaviour
 
         if (attackType != EnemyAttackType.NONPARRIABLE) playerEvents.AttackImpact();
 
-        if (attackingEnemy != null && playerData.equippedEmblems.Contains(emblemLibrary.burning_cloak))
+        if (attackingEnemy != null && playerData.equippedPatches.Contains(Patches.BURNING_CLOAK)) ;
         {
             attackingEnemy.GainDOT(5);
         }
 
-        if (fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
+        if (fullHealth && playerData.equippedPatches.Contains(Patches.CONFIDENT_KILLER))
         {
             weaponManager.RemoveWeaponMagicSource();
         }
@@ -135,7 +135,7 @@ public class PlayerHealth : MonoBehaviour
     public void MaxHeal()
     {
         playerData.health = playerData.MaxHealth();
-        if (!fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
+        if (!fullHealth && playerData.equippedPatches.Contains(Patches.CONFIDENT_KILLER))
         {
             weaponManager.AddWeaponMagicSource();
         }
@@ -150,7 +150,7 @@ public class PlayerHealth : MonoBehaviour
         if (playerData.health >= playerData.MaxHealth())
         {
             playerData.health = playerData.MaxHealth();
-            if (!fullHealth && playerData.equippedEmblems.Contains(emblemLibrary.confident_killer))
+            if (!fullHealth && playerData.equippedPatches.Contains(Patches.CONFIDENT_KILLER))
             {
                 weaponManager.AddWeaponMagicSource();
             }
@@ -178,7 +178,7 @@ public class PlayerHealth : MonoBehaviour
         gemHealSpeed = playerData.MaxHealth() / gemHealDuration;
         sfx.PlaySoundEffect(PlayerSFX.HEAL, 0.6f);
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.explosive_healing))
+        if (playerData.equippedPatches.Contains(Patches.EXPLOSIVE_HEALING))
         {
             patchEffects.ExplosiveHealing();
         }

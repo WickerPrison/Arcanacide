@@ -169,7 +169,7 @@ public class PlayerScript : MonoBehaviour
             playerData.mana = 0;
         }
         manaDelay = maxManaDelay;
-        if (playerData.equippedEmblems.Contains("MagicalAcceleration"))
+        if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
         {
             manaDelay = maxManaDelay / 2;
         }
@@ -204,7 +204,7 @@ public class PlayerScript : MonoBehaviour
             if(playerData.mana < playerData.maxMana)
             {
                 playerData.mana += Time.deltaTime * manaRechargeRate;
-                if (playerData.equippedEmblems.Contains("Magical Acceleration"))
+                if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
                 {
                     playerData.mana += Time.deltaTime * manaRechargeRate;
                 }
@@ -259,7 +259,7 @@ public class PlayerScript : MonoBehaviour
         playerData.healCharges = playerData.maxHealCharges;
         playerData.mana = playerData.maxMana;
         playerData.hasSpawned = false;
-        if (playerData.equippedEmblems.Contains(emblemLibrary.charons_obol))
+        if (playerData.equippedPatches.Contains(Patches.STANDARD_DEDUCTION))
         {
             playerData.lostMoney = 0;
             playerData.money = Mathf.RoundToInt(playerData.money / 2);
@@ -286,7 +286,7 @@ public class PlayerScript : MonoBehaviour
         playerHealth.MaxHeal();
         playerData.mana = playerData.maxMana;
         playerData.healCharges = playerData.maxHealCharges;
-        if (playerData.equippedEmblems.Contains(emblemLibrary.maximum_refund))
+        if (playerData.equippedPatches.Contains(Patches.MAXIMUM_REFUND))
         {
             playerData.healCharges += 1;
         }

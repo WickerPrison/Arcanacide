@@ -23,8 +23,8 @@ public class PlayerData : ScriptableObject
     public bool hasSpawned;
     public int lastSwordSite;
     public List<UnlockableAbilities> unlockedAbilities;
-    public List<string> emblems;
-    public List<string> equippedEmblems;
+    public List<Patches> patches;
+    public List<Patches> equippedPatches;
     public int maxPatches;
     public List<string> tutorials;
     public List<string> evidenceFound;

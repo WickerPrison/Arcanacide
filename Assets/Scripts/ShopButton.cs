@@ -13,15 +13,17 @@ public class ShopButton : MonoBehaviour
     [SerializeField] TextMeshProUGUI emblemNameText;
     [SerializeField] TextMeshProUGUI descriptionText;
     public string emblemName;
+    public Patches patchName;
+    Patch patch;
     public int cost = 100;
     SoundManager sm;
 
     public void ShopButtonPressed()
     {
         sm.ButtonSound();
-        if (!playerData.emblems.Contains(emblemName) && playerData.money >= cost)
+        if (!playerData.patches.Contains(patchName) && playerData.money >= cost)
         {
-            playerData.emblems.Add(emblemName);
+            playerData.patches.Add(patchName);
             GlobalEvents.instance.MoneyChange(-cost);
         }
     }
@@ -29,13 +31,14 @@ public class ShopButton : MonoBehaviour
     private void Start()
     {
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
+        patch = emblemLibrary.patchDictionary[patchName];
         StartCoroutine(SetEmblemName());
     }
 
     IEnumerator SetEmblemName()
     {
         yield return new WaitForEndOfFrame();
-        emblemNameText.text = emblemName;   
+        emblemNameText.text = patch.name;   
     }
 
     private void Update()
@@ -43,8 +46,8 @@ public class ShopButton : MonoBehaviour
         if(EventSystem.current.currentSelectedGameObject == gameObject)
         {
             emblemNameText.color = mapData.floorColor;
-            descriptionText.text = emblemLibrary.GetDescription(emblemName);
-            if (playerData.emblems.Contains(emblemName))
+            descriptionText.text = patch.description;
+            if (playerData.patches.Contains(patchName))
             {
                 costText.text = "Sold Out";
             }

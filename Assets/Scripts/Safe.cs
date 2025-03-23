@@ -12,6 +12,7 @@ public class Safe : MonoBehaviour
     [SerializeField] TextMeshProUGUI emblemMessageText;
     [SerializeField] PlayerData playerData;
     [SerializeField] string emblemName;
+    [SerializeField] Patches patch;
     [SerializeField] Image newEmblemColorImage;
     [SerializeField] MapData mapData;
     [SerializeField] EventReference safeSFX;
@@ -36,7 +37,7 @@ public class Safe : MonoBehaviour
     void Update()
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= interactDistance && !playerData.emblems.Contains(emblemName))
+        if (playerDistance <= interactDistance && !playerData.patches.Contains(patch))
         {
             openMessage.SetActive(true);
         }
@@ -48,10 +49,10 @@ public class Safe : MonoBehaviour
 
     void Interaction()
     {
-        if(playerDistance <= interactDistance && !playerData.emblems.Contains(emblemName))
+        if(playerDistance <= interactDistance && !playerData.patches.Contains(patch))
         {
             RuntimeManager.PlayOneShot(safeSFX);
-            playerData.emblems.Add(emblemName);
+            playerData.patches.Add(patch);
             newEmblemMessage.SetActive(true);
             emblemMessageText.text = emblemName;
             im.Dialogue();

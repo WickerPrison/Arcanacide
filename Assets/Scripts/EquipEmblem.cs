@@ -16,6 +16,8 @@ public class EquipEmblem : MonoBehaviour
     public EmblemMenu emblemMenu;
     Button button;
     public string emblemName;
+    public Patches patchName;
+    Patch patch;
     SoundManager sm;
     Vector3 maxCheckSize;
     float transitionTime = 0.1f;
@@ -31,10 +33,11 @@ public class EquipEmblem : MonoBehaviour
     {
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         SetUpMenuControls();
-        nameText.text = emblemName;
-        descriptionText.text = emblemLibrary.GetDescription(emblemName);
+        patch = emblemLibrary.patchDictionary[patchName];
+        nameText.text = patch.name;
+        descriptionText.text = patch.description;
         maxCheckSize = check.transform.localScale;
-        if (!playerData.equippedEmblems.Contains(emblemName))
+        if (!playerData.equippedPatches.Contains(patchName))
         {
             check.transform.localScale = Vector3.zero;
         }
@@ -46,11 +49,11 @@ public class EquipEmblem : MonoBehaviour
     public void ButtonPressed()
     {
         sm.ButtonSound();
-        if (playerData.equippedEmblems.Contains(emblemName))
+        if (playerData.equippedPatches.Contains(patchName))
         {
             EmblemUnequip();
         }
-        else if(playerData.equippedEmblems.Count < playerData.maxPatches)
+        else if(playerData.equippedPatches.Count < playerData.maxPatches)
         { 
             EmblemEquip();
         }
@@ -62,7 +65,7 @@ public class EquipEmblem : MonoBehaviour
 
     void EmblemEquip()
     {
-        playerData.equippedEmblems.Add(emblemName);
+        playerData.equippedPatches.Add(patchName);
         StopAllCoroutines();
         box.transform.localPosition = boxPosition;
         StartCoroutine(ScaleAnimation(check.transform.localScale, maxCheckSize));
@@ -70,7 +73,7 @@ public class EquipEmblem : MonoBehaviour
 
     void EmblemUnequip()
     {
-        playerData.equippedEmblems.Remove(emblemName);
+        playerData.equippedPatches.Remove(patchName);
         StopAllCoroutines();
         box.transform.localPosition = boxPosition;
         StartCoroutine(ScaleAnimation(check.transform.localScale, Vector3.zero));
@@ -107,7 +110,7 @@ public class EquipEmblem : MonoBehaviour
     void SetUpMenuControls()
     {
         button = GetComponent<Button>();
-        int listIndex = playerData.emblems.IndexOf(emblemName);
+        int listIndex = playerData.patches.IndexOf(patchName);
         Navigation nav = button.navigation;
         if (listIndex != 0)
         {

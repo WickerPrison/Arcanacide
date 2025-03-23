@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
         DateTime dateTime = DateTime.Now;
         playerData.date = dateTime.GetDateTimeFormats('d')[0];
         playerData.time = dateTime.GetDateTimeFormats('t')[0];
-        SaveSystem.SaveGame(playerData.saveFile, playerData, mapData, dialogueData);
+        SaveSystem.SaveGame(playerData.saveFile, playerData, mapData, dialogueData, emblemLibrary);
         SaveSystem.SaveSettings(settingsData);
     }
 
@@ -113,8 +113,8 @@ public class GameManager : MonoBehaviour
             playerData.gemShards = data.gemShards.ToList();
             playerData.lastSwordSite = data.lastSwordSite;
             playerData.SetUnlocksWithStrings(data.unlockedAbilities);
-            playerData.emblems = data.emblems;
-            playerData.equippedEmblems = data.equippedEmblems;
+            playerData.patches = emblemLibrary.GetPatchesFromStrings(data.patches);
+            playerData.equippedPatches = emblemLibrary.GetPatchesFromStrings(data.equippedPatches);
             playerData.maxPatches = data.maxPatches;
             playerData.tutorials = data.tutorials;
             playerData.evidenceFound = data.evidenceFound;
@@ -200,8 +200,8 @@ public class GameManager : MonoBehaviour
         playerData.gemShards.Clear();
         playerData.lastSwordSite = lastAltar;
         playerData.unlockedAbilities.Clear();
-        playerData.emblems.Clear();
-        playerData.equippedEmblems.Clear();
+        playerData.patches.Clear();
+        playerData.equippedPatches.Clear();
         playerData.maxPatches = 2;
         playerData.tutorials = tutorialManager.allTutorials;
         playerData.evidenceFound.Clear();
@@ -266,12 +266,12 @@ public class GameManager : MonoBehaviour
         playerData.lastSwordSite = 4;
         playerData.unlockedAbilities.Clear();
         playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
-        playerData.emblems.Clear();
-        foreach (string patch in emblemLibrary.firstFloorPatches)
+        playerData.patches.Clear();
+        foreach (Patches patch in emblemLibrary.firstFloorPatches)
         {
-            playerData.emblems.Add(patch);
+            playerData.patches.Add(patch);
         }
-        playerData.equippedEmblems.Clear();
+        playerData.equippedPatches.Clear();
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
@@ -338,16 +338,16 @@ public class GameManager : MonoBehaviour
         playerData.unlockedAbilities.Clear();
         playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
-        playerData.emblems.Clear();
-        foreach (string patch in emblemLibrary.firstFloorPatches)
+        playerData.patches.Clear();
+        foreach (Patches patch in emblemLibrary.firstFloorPatches)
         {
-            playerData.emblems.Add(patch);
+            playerData.patches.Add(patch);
         }
-        foreach(string patch in emblemLibrary.secondFloorPatches)
+        foreach(Patches patch in emblemLibrary.secondFloorPatches)
         {
-            playerData.emblems.Add(patch);
+            playerData.patches.Add(patch);
         }
-        playerData.equippedEmblems.Clear();
+        playerData.equippedPatches.Clear();
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
@@ -416,20 +416,20 @@ public class GameManager : MonoBehaviour
         playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
         playerData.unlockedAbilities.Add(UnlockableAbilities.MORE_PATCHES_1);
-        playerData.emblems.Clear();
-        foreach (string patch in emblemLibrary.firstFloorPatches)
+        playerData.patches.Clear();
+        foreach (Patches patch in emblemLibrary.firstFloorPatches)
         {
-            playerData.emblems.Add(patch);
+            playerData.patches.Add(patch);
         }
-        foreach (string patch in emblemLibrary.secondFloorPatches)
+        foreach (Patches patch in emblemLibrary.secondFloorPatches)
         {
-            playerData.emblems.Add(patch);
+            playerData.patches.Add(patch);
         }
-        foreach(string patch in emblemLibrary.thirdFloorPatches)
+        foreach(Patches patch in emblemLibrary.thirdFloorPatches)
         {
-            playerData.emblems.Add(patch);
+            playerData.patches.Add(patch);
         }
-        playerData.equippedEmblems.Clear();
+        playerData.equippedPatches.Clear();
         playerData.maxPatches = 3;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();

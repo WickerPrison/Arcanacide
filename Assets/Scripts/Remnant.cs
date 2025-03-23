@@ -52,14 +52,14 @@ public class Remnant : MonoBehaviour
             GlobalEvents.instance.MoneyChange(playerData.lostMoney);
             playerData.lostMoney = 0;
             mapData.deathRoom = "none";
-            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
+            if (playerData.equippedPatches.Contains(Patches.ARCANE_REMAINS))
             {
                 weaponManager.RemoveWeaponMagicSource();
                 patchEffects.arcaneRemainsActive = false;
                 PlayerHealth playerHealth = playerScript.GetComponent<PlayerHealth>();
                 playerHealth.MaxHeal();
             }
-            if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
+            if (playerData.equippedPatches.Contains(Patches.DEATH_AURA))
             {
                 playerData.mana = playerData.maxMana;
                 playerAnimation.EndBodyMagic();
@@ -73,13 +73,13 @@ public class Remnant : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
+            if (playerData.equippedPatches.Contains(Patches.ARCANE_REMAINS))
             {
                 weaponManager.AddWeaponMagicSource();
                 patchEffects.arcaneRemainsActive = true;
             }
 
-            if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
+            if (playerData.equippedPatches.Contains(Patches.DEATH_AURA))
             {
                 playerAnimation.StartBodyMagic();
                 patchEffects.deathAuraActive = true;
@@ -97,13 +97,13 @@ public class Remnant : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains))
+            if (playerData.equippedPatches.Contains(Patches.ARCANE_REMAINS))
             {
                 weaponManager.RemoveWeaponMagicSource();
                 patchEffects.arcaneRemainsActive = false;
             }
 
-            if (playerData.equippedEmblems.Contains(emblemLibrary.death_aura))
+            if (playerData.equippedPatches.Contains(Patches.DEATH_AURA))
             {
                 playerAnimation.EndBodyMagic();
                 patchEffects.deathAuraActive = false;

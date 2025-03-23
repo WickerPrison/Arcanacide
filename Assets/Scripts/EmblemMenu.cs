@@ -38,7 +38,7 @@ public class EmblemMenu : MonoBehaviour
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         SpawnEmblems();
-        if(playerData.emblems.Count > 0)
+        if(playerData.patches.Count > 0)
         {
             EventSystem.current.SetSelectedGameObject(buttons[0]);
             leaveButtonButton = leaveButton.GetComponent<Button>();
@@ -56,7 +56,7 @@ public class EmblemMenu : MonoBehaviour
 
     private void Update()
     {
-        if(playerData.emblems.Count > 0)
+        if(playerData.patches.Count > 0)
         {
             if(Gamepad.current == null)
             {
@@ -80,7 +80,7 @@ public class EmblemMenu : MonoBehaviour
 
     void SpawnEmblems()
     {
-        for(int i = 0; i < playerData.emblems.Count; i++)
+        for(int i = 0; i < playerData.patches.Count; i++)
         {
             GameObject equipEmblem = Instantiate(equipEmblemPrefab);
             buttons.Add(equipEmblem);
@@ -88,7 +88,7 @@ public class EmblemMenu : MonoBehaviour
             PatchButton patchButton = equipEmblem.GetComponent<PatchButton>();
             patchButton.contentRect = content.GetComponent<RectTransform>();
             EquipEmblem equipEmblemScript = equipEmblem.GetComponent<EquipEmblem>();
-            equipEmblemScript.emblemName = playerData.emblems[i];
+            equipEmblemScript.patchName = playerData.patches[i];
             equipEmblemScript.emblemMenu = this;
         }
     }

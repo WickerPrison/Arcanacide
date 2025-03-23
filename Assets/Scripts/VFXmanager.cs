@@ -45,7 +45,7 @@ public class VFXmanager : MonoBehaviour
         parryPulse1.color = tempColor;
         parryPulse2.color = tempColor;
         if (playerData.clawSpecialOn) clawSpecialVFX.Play();
-        mirrorCloak.enabled = playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak);
+        mirrorCloak.enabled = playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK);
     }
 
     private void onDashStart(object sender, System.EventArgs e)

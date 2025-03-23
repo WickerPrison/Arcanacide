@@ -13,7 +13,7 @@ public class WayFairie : MonoBehaviour
 
     private void Start()
     {
-        if (!playerData.equippedEmblems.Contains(emblemLibrary.way_faerie)) return;
+        if (!playerData.equippedPatches.Contains(Patches.WAY_FAERIE)) return;
             
         bool doorUnlocked = mapData.unlockedDoors.Contains(3);
         if (doorUnlocked && showWhenUnlocked)

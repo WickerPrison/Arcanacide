@@ -110,7 +110,7 @@ public class PlayerAbilities : MonoBehaviour
 
         if (shield)
         {
-            if (playerData.equippedEmblems.Contains(emblemLibrary.shell_company))
+            if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
             {
                 playerScript.LoseMana(Time.deltaTime * blockManaCost / 2);
             }
@@ -170,14 +170,14 @@ public class PlayerAbilities : MonoBehaviour
             playerSound.PlaySoundEffect(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume);
         }
 
-        if (enemy.DOT > 0 && playerData.equippedEmblems.Contains(emblemLibrary.opportune_strike))
+        if (enemy.DOT > 0 && playerData.equippedPatches.Contains(Patches.OPPORTUNE_STRIKE))
         {
             damage = Mathf.RoundToInt(damage * 1.2f);
         }
 
         enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
         if(attackProfile.impactVFX) enemy.ImpactVFX();
-        if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedEmblems.Contains(emblemLibrary.rending_blows))
+        if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
         {
             enemy.GainDOT(emblemLibrary.rendingBlowsDuration);
         }
@@ -198,7 +198,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             extraDamage += attackPower * specialAttackProfiles[0].damageMultiplier;
 
-            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
                 extraDamage += attackPower * emblemLibrary.arcaneMasteryPercent;
             }
@@ -208,7 +208,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             extraDamage += attackPower * clawSpecialDamageMult;
 
-            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
                 extraDamage += attackPower * emblemLibrary.arcaneMasteryPercent;
             }
@@ -443,7 +443,7 @@ public class PlayerAbilities : MonoBehaviour
             bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f, 0));
             bolts.SoundOn();
             boltdamage += playerData.arcane * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
-            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
                 boltdamage += boltdamage * emblemLibrary.arcaneMasteryPercent;
             }
