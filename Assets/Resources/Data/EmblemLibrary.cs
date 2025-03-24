@@ -97,13 +97,13 @@ public class EmblemLibrary : ScriptableObject
     public List<Patches> thirdFloorPatches;
 
     [System.NonSerialized] public Patch magicalAcceleration = new Patch("Magical Acceleration",
-        "Mana recharges faster");
+        "Mana recharges faster", 2f);
 
     [System.NonSerialized] public Patch heavyBlows = new Patch("Heavy Blows",
         "Attacks stagger enemies faster");
 
     [System.NonSerialized] public Patch vampiricStrikes = new Patch("Vampiric Strikes",
-        "Refund health whenever you kill an enemy");
+        "Refund health whenever you kill an enemy", 0.125f);
 
     [System.NonSerialized] public Patch quickstep = new Patch("Quickstep",
         "Dodging does not use as much Stamina");

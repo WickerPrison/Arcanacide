@@ -138,4 +138,60 @@ public class FirstFloorPatches
 
         Assert.Less(difference, 2);
     }
+
+    // Close call can be found in the Perfect Dodge tests
+
+    [UnityTest]
+    public IEnumerator VampiricStrikes()
+    {
+        playerData.equippedPatches.Clear();
+        playerData.equippedPatches.Add(Patches.VAMPIRIC_STRIKES);
+
+        EnemyScript enemyScript = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        yield return null;
+
+        int startingHealth = Mathf.FloorToInt(playerData.MaxHealth() * 0.5f);
+        playerData.health = startingHealth;
+        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+
+        yield return new WaitForSeconds(0.2f);
+        int healAmount = Mathf.FloorToInt(playerData.MaxHealth() * emblemLibrary.patchDictionary[Patches.VAMPIRIC_STRIKES].value);
+        int expected = startingHealth + healAmount;
+
+        Assert.AreEqual(expected, playerData.health);
+
+    }
+
+    [UnityTest]
+    public IEnumerator MagicalAccelerationDelay()
+    {
+        playerData.equippedPatches.Clear();
+        playerData.equippedPatches.Add(Patches.MAGICAL_ACCELERATION);
+
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+
+        playerScript.LoseMana(playerData.maxMana);
+        yield return new WaitForSeconds(playerScript.maxManaDelay * 0.75f);
+        Assert.Greater(playerData.mana, 0);
+    }
+
+    [UnityTest]
+    public IEnumerator MagicalAccelerationRate()
+    {
+        playerData.equippedPatches.Clear();
+        playerData.equippedPatches.Add(Patches.MAGICAL_ACCELERATION);
+
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+
+        playerScript.LoseMana(playerData.maxMana);
+
+        float magicallAccelerationValue = emblemLibrary.patchDictionary[Patches.MAGICAL_ACCELERATION].value;
+
+        float delayTime = playerScript.maxManaDelay / magicallAccelerationValue;
+
+        float rechargeTime = playerData.maxMana / (playerScript.manaRechargeRate * magicallAccelerationValue);
+
+        yield return new WaitForSeconds(delayTime + rechargeTime + 0.1f);
+        Assert.GreaterOrEqual(playerData.mana, playerData.maxMana);
+    }
 }

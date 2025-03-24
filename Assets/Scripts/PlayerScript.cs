@@ -51,8 +51,20 @@ public class PlayerScript : MonoBehaviour
 
     //mana variables
     float manaDelay;
-    float maxManaDelay = 2;
-    float manaRechargeRate = 4;
+    [System.NonSerialized] public float maxManaDelay = 2;
+    [System.NonSerialized] public float manaRechargeRate = 4;
+    float _magicalAccelerationValue;
+    float magicalAccelerationValue
+    {
+        get
+        {
+            if(_magicalAccelerationValue == 0)
+            {
+                _magicalAccelerationValue = emblemLibrary.patchDictionary[Patches.MAGICAL_ACCELERATION].value;
+            }
+            return _magicalAccelerationValue;
+        }
+    }
 
     private void Awake()
     {
@@ -171,7 +183,7 @@ public class PlayerScript : MonoBehaviour
         manaDelay = maxManaDelay;
         if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
         {
-            manaDelay = maxManaDelay / 2;
+            manaDelay = maxManaDelay / magicalAccelerationValue;
         }
         if (patchEffects.deathAuraActive)
         {
@@ -203,15 +215,16 @@ public class PlayerScript : MonoBehaviour
         {
             if(playerData.mana < playerData.maxMana)
             {
-                playerData.mana += Time.deltaTime * manaRechargeRate;
+                float rechargeRateMod = 1;
                 if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
                 {
-                    playerData.mana += Time.deltaTime * manaRechargeRate;
+                    rechargeRateMod *= magicalAccelerationValue;
                 }
                 if (patchEffects.deathAuraActive)
                 {
-                    playerData.mana += Time.deltaTime * manaRechargeRate;
+                    rechargeRateMod *= 2;
                 }
+                playerData.mana += Time.deltaTime * manaRechargeRate * rechargeRateMod;
             }
         }
         else
@@ -297,7 +310,6 @@ public class PlayerScript : MonoBehaviour
 
     private void OnPlayerMoneyChange(GlobalEvents sender, int amount)
     {
-        Debug.Log(amount);
         playerData.money += amount;
     }
 
