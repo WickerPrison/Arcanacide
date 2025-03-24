@@ -15,7 +15,7 @@ public class WeaponManager : MonoBehaviour
     PlayerMovement playerController;
     PlayerEvents playerEvents;
     InputManager im;
-    int weaponMagicSources;
+    [System.NonSerialized] public int weaponMagicSources;
     int[] specificWeaponMagicSources = new int[4];
     public event EventHandler OnStartWeaponMagic;
     public event EventHandler OnStopWeaponMagic;

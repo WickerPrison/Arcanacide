@@ -19,6 +19,7 @@ public class FirstFloorPatches
         emblemLibrary = Resources.Load<EmblemLibrary>("Data/EmblemLibrary");
         
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
+        Time.timeScale = 4;
     }
 
     [TearDown]
@@ -139,7 +140,20 @@ public class FirstFloorPatches
         Assert.Less(difference, 2);
     }
 
-    // Close call can be found in the Perfect Dodge tests
+    [UnityTest]
+    public IEnumerator CloseCall()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        WeaponManager weaponManager = playerScript.gameObject.GetComponent<WeaponManager>();
+        playerData.equippedPatches.Clear();
+        playerData.equippedPatches.Add(Patches.CLOSE_CALL);
+
+        playerScript.PerfectDodge(EnemyAttackType.MELEE);
+        Assert.AreEqual(1, weaponManager.weaponMagicSources);
+        yield return new WaitForSeconds(2f);
+        playerScript.PerfectDodge(EnemyAttackType.MELEE);
+        Assert.AreEqual(1, weaponManager.weaponMagicSources);
+    }
 
     [UnityTest]
     public IEnumerator VampiricStrikes()
