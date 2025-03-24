@@ -72,14 +72,7 @@ public class PatchEffects : MonoBehaviour
         gm = GlobalEvents.instance.gameObject.GetComponent<GameManager>();
         barrierTimer = 0;
 
-        if (playerData.equippedPatches.Contains(Patches.ARCANE_STEP))
-        {
-            Physics.IgnoreLayerCollision(8, 6, true);
-        }
-        else
-        {
-            Physics.IgnoreLayerCollision(8, 6, false);
-        }
+        ArcaneStepDodgeThrough();
     }
 
     private void Update()
@@ -230,6 +223,18 @@ public class PatchEffects : MonoBehaviour
         GameObject pathTrail;
         pathTrail = Instantiate(pathTrailPrefab);
         pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+    }
+
+    public void ArcaneStepDodgeThrough()
+    {
+        if (playerData.equippedPatches.Contains(Patches.ARCANE_STEP))
+        {
+            Physics.IgnoreLayerCollision(8, 6, true);
+        }
+        else
+        {
+            Physics.IgnoreLayerCollision(8, 6, false);
+        }
     }
 
     private void onEnemyKilled(object sender, System.EventArgs e)

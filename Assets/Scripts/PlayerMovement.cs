@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     //dash variables
     [System.NonSerialized] public Vector3 dashDirection;
     [System.NonSerialized] public bool isDashing = false;
-    float dashSpeed = 1000;
+    [NonSerialized] public float dashSpeed = 1000;
     float dashStaminaCost = 30f;
     
     //facing direction variables
@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Dodge()
+    public void Dodge()
     {
         if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
         {
