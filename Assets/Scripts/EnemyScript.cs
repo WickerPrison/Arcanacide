@@ -180,7 +180,7 @@ public class EnemyScript : MonoBehaviour
 
         if (playerData.equippedPatches.Contains(Patches.PAY_RAISE))
         {
-            GlobalEvents.instance.MoneyChange(Mathf.RoundToInt(reward * 1.25f));
+            GlobalEvents.instance.MoneyChange(Mathf.RoundToInt(reward * emblemLibrary.patchDictionary[Patches.PAY_RAISE].value));
         }
         else
         {

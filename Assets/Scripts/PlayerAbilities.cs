@@ -44,7 +44,7 @@ public class PlayerAbilities : MonoBehaviour
     [System.NonSerialized] public bool parry;
     [System.NonSerialized] public bool shield;
     float parryCost = 20;
-    int blockManaCost = 15;
+    [System.NonSerialized] public int blockManaCost = 15;
 
     float shoveRadius = 3;
     float shovePoiseDamage = 100;

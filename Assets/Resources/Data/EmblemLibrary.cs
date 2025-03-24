@@ -109,7 +109,7 @@ public class EmblemLibrary : ScriptableObject
         "Dodging does not use as much Stamina");
 
     [System.NonSerialized] public Patch payRaise = new Patch("Pay Raise",
-        "Earn more money each time you kill an enemy");
+        "Earn more money each time you kill an enemy", 1.25f);
 
     [System.NonSerialized] public Patch shellCompany = new Patch("Shell Company",
         "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking");

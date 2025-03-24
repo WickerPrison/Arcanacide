@@ -297,6 +297,7 @@ public class PlayerScript : MonoBehaviour
 
     private void OnPlayerMoneyChange(GlobalEvents sender, int amount)
     {
+        Debug.Log(amount);
         playerData.money += amount;
     }
 
