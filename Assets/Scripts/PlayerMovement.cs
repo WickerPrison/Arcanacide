@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [System.NonSerialized] public Vector3 dashDirection;
     [System.NonSerialized] public bool isDashing = false;
     [NonSerialized] public float dashSpeed = 1000;
-    float dashStaminaCost = 30f;
+    [NonSerialized] public float dashStaminaCost = 30f;
     
     //facing direction variables
     Vector3 mouseDirection;

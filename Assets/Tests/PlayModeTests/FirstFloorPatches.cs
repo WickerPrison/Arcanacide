@@ -8,22 +8,26 @@ using UnityEditor.SceneManagement;
 
 public class FirstFloorPatches
 {
+    GameObject testDummyPrefab;
+    PlayerData playerData;
 
     [SetUp]
     public void Setup()
     {
         SceneManager.LoadScene("Testing");
+        playerData = Resources.Load<PlayerData>("Data/PlayerData");
+        testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
+    }
 
+    [TearDown]
+    public void Teardown()
+    {
+        playerData.equippedPatches.Clear();
     }
 
     [UnityTest]
     public IEnumerator ArcaneStep()
     {
-        //EditorSceneManager.OpenScene("Assets/Scenes/Testing.unity");
-        EmblemLibrary emblemLibrary = Resources.Load<EmblemLibrary>("Data/EmblemLibrary");
-        PlayerData playerData = Resources.Load<PlayerData>("Data/PlayerData");
-        GameObject testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
-
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.ARCANE_STEP);
@@ -40,12 +44,32 @@ public class FirstFloorPatches
         playerMovement.moveDirection = Vector3.right;
         playerMovement.Dodge();
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         
         float dashLength = Time.fixedDeltaTime * playerMovement.dashSpeed * 0.2f;
         Vector3 targetDestination = Vector3.zero + Vector3.right * dashLength;
         float distance = Vector3.Distance(targetDestination, playerMovement.transform.position);
         Assert.LessOrEqual(distance, 0.1f);
         Assert.Less(enemyScript.health, enemyScript.maxHealth);
+    }
+
+    [UnityTest]
+    public IEnumerator Quickstep()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerData.equippedPatches.Clear();
+        playerData.equippedPatches.Add(Patches.QUICKSTEP);
+
+        PlayerMovement playerMovement = playerScript.GetComponent<PlayerMovement>();
+        playerScript.GainStamina(playerData.MaxStamina());
+
+        playerMovement.moveDirection = Vector3.right;
+        playerMovement.Dodge();
+
+        float correctStaminaVal = playerData.MaxStamina() - playerMovement.dashStaminaCost / 2f;
+
+        Assert.AreEqual(playerScript.stamina, correctStaminaVal);
+
+        yield return null;
     }
 }
