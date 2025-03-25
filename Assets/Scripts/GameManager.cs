@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
 
 
     //These are the set of saved values that are used when creating a new game
-    int lastAltar = 1;
     int money = 0;
     int lostMoney = 0;
     string deathRoom = "none";
@@ -193,36 +192,8 @@ public class GameManager : MonoBehaviour
     public void NewGame(string saveFile)
     {
         playerData.saveFile = saveFile;
-        playerData.hasHealthGem = false;
-        playerData.maxHealCharges = 1;
-        playerData.healCharges = 1;
-        playerData.currentGemShards = 0;
-        playerData.gemShards.Clear();
-        playerData.lastSwordSite = lastAltar;
-        playerData.unlockedAbilities.Clear();
-        playerData.patches.Clear();
-        playerData.equippedPatches.Clear();
-        playerData.maxPatches = 2;
         playerData.tutorials = tutorialManager.allTutorials;
-        playerData.evidenceFound.Clear();
-        playerData.money = money;
-        playerData.lostMoney = lostMoney;
-        playerData.strength = 1;
-        playerData.dexterity = 1;
-        playerData.vitality = 1;
-        playerData.arcane = 1;
-        playerData.health = playerData.MaxHealth();
-        playerData.maxMana = 50;
-        playerData.mana = playerData.maxMana;
-        playerData.deathNum = 0;
-        playerData.killedEnemiesNum = 0;
-        playerData.killedEnemiesAtGetShield = 0;
-        playerData.unlockedWeapons.Clear();
-        playerData.unlockedWeapons.Add(0);
-        playerData.currentWeapon = 0;
-        playerData.swordSpecialTimer = 0;
-        playerData.clawSpecialOn = false;
-        playerData.clawSpecialTimer = 0;
+        playerData.ClearData();
 
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();

@@ -16,6 +16,8 @@ public class FirstFloorPatches
     {
         SceneManager.LoadScene("Testing");
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
+        playerData.ClearData();
+        playerData.hasHealthGem = true;
         emblemLibrary = Resources.Load<EmblemLibrary>("Data/EmblemLibrary");
         
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
@@ -31,8 +33,8 @@ public class FirstFloorPatches
     [UnityTest]
     public IEnumerator ArcaneStep()
     {
+        Time.timeScale = 1;
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.ARCANE_STEP);
         PatchEffects patchEffects = playerScript.gameObject.GetComponent<PatchEffects>();
         patchEffects.ArcaneStepDodgeThrough();
@@ -60,7 +62,6 @@ public class FirstFloorPatches
     public IEnumerator Quickstep()
     {
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.QUICKSTEP);
 
         PlayerMovement playerMovement = playerScript.GetComponent<PlayerMovement>();
@@ -79,7 +80,6 @@ public class FirstFloorPatches
     [UnityTest]
     public IEnumerator PayRaise()
     {
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.PAY_RAISE);
 
         int[] costs = { 5, 17, 35, 0 };
@@ -104,7 +104,6 @@ public class FirstFloorPatches
     public IEnumerator ShellCompanyStamina()
     {
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.SHELL_COMPANY);
 
         PlayerMovement playerMovement = playerScript.GetComponent<PlayerMovement>();
@@ -124,8 +123,8 @@ public class FirstFloorPatches
     public IEnumerator ShellCompanyMana()
     {
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.SHELL_COMPANY);
+        playerData.unlockedAbilities.Add(UnlockableAbilities.BLOCK);
 
         playerData.mana = playerData.maxMana;
 
@@ -145,7 +144,6 @@ public class FirstFloorPatches
     {
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         WeaponManager weaponManager = playerScript.gameObject.GetComponent<WeaponManager>();
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.CLOSE_CALL);
 
         playerScript.PerfectDodge(EnemyAttackType.MELEE);
@@ -158,7 +156,6 @@ public class FirstFloorPatches
     [UnityTest]
     public IEnumerator VampiricStrikes()
     {
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.VAMPIRIC_STRIKES);
 
         EnemyScript enemyScript = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
@@ -179,7 +176,6 @@ public class FirstFloorPatches
     [UnityTest]
     public IEnumerator MagicalAccelerationDelay()
     {
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.MAGICAL_ACCELERATION);
 
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -192,7 +188,6 @@ public class FirstFloorPatches
     [UnityTest]
     public IEnumerator MagicalAccelerationRate()
     {
-        playerData.equippedPatches.Clear();
         playerData.equippedPatches.Add(Patches.MAGICAL_ACCELERATION);
 
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
