@@ -11,8 +11,8 @@ public class ShopWindow : MonoBehaviour
     [SerializeField] TextMeshProUGUI yourMoney;
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
-    public List<string> emblemNames = new List<string>();
-    public List<int> emblemCosts = new List<int>();
+    public List<Patches> patchNames = new List<Patches>();
+    public List<int> patchCosts = new List<int>();
     [SerializeField] TextMeshProUGUI backButtonText;
     
     Shop shop;
@@ -34,8 +34,8 @@ public class ShopWindow : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            shopButtons[i].emblemName = emblemNames[i];
-            shopButtons[i].cost = emblemCosts[i];
+            shopButtons[i].patchName = patchNames[i];
+            shopButtons[i].cost = patchCosts[i];
         }
     }
 

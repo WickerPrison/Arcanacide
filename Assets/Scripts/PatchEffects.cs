@@ -72,14 +72,7 @@ public class PatchEffects : MonoBehaviour
         gm = GlobalEvents.instance.gameObject.GetComponent<GameManager>();
         barrierTimer = 0;
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
-        {
-            Physics.IgnoreLayerCollision(8, 6, true);
-        }
-        else
-        {
-            Physics.IgnoreLayerCollision(8, 6, false);
-        }
+        ArcaneStepDodgeThrough();
     }
 
     private void Update()
@@ -103,7 +96,7 @@ public class PatchEffects : MonoBehaviour
         {
             barrierTimer -= Time.deltaTime;
         }
-        else if (playerData.equippedEmblems.Contains(emblemLibrary.protective_barrier))
+        else if (playerData.equippedPatches.Contains(Patches.PROTECTIVE_BARRIER))
         {
             barrier = true;
         }
@@ -111,7 +104,7 @@ public class PatchEffects : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step) && arcaneStepActive)
+        if (playerData.equippedPatches.Contains(Patches.ARCANE_STEP) && arcaneStepActive)
         {
             dist += Vector3.Distance(transform.position, previousPosition);
             if(dist > 0.7f)
@@ -124,7 +117,7 @@ public class PatchEffects : MonoBehaviour
 
     public void PerfectDodge(EnemyAttackType enemyAttackType, GameObject projectile = null, EnemyScript attackingEnemy = null)
     {
-        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call))
+        if (playerData.equippedPatches.Contains(Patches.CLOSE_CALL))
         {
             if (closeCallTimer <= 0)
             {
@@ -133,12 +126,12 @@ public class PatchEffects : MonoBehaviour
             closeCallTimer = closeCallMaxTime;
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.adrenaline_rush))
+        if (playerData.equippedPatches.Contains(Patches.ADRENALINE_RUSH))
         {
             playerScript.GainStamina(playerData.MaxStamina());
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && mirrorCloakTimer <= 0 && attackingEnemy != null)
+        if (playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK) && mirrorCloakTimer <= 0 && attackingEnemy != null)
         {
             playerSound.PlaySoundEffect(PlayerSFX.SHIELD, 1);
             playerAbilities.BlockOrParry(enemyAttackType, attackingEnemy);
@@ -148,15 +141,15 @@ public class PatchEffects : MonoBehaviour
     public int PhysicalDamageModifiers(int physicalDamage)
     {
         float extraDamage = 0;
-        if (playerData.equippedEmblems.Contains(emblemLibrary.close_call) && closeCallTimer > 0)
+        if (playerData.equippedPatches.Contains(Patches.CLOSE_CALL) && closeCallTimer > 0)
         {
             extraDamage += physicalDamage * closeCallDamage;
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > emblemLibrary.spellswordManaCost)
+        if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > emblemLibrary.spellsword.value)
         {
             extraDamage += physicalDamage * spellswordDamage;
-            playerScript.LoseMana(emblemLibrary.spellswordManaCost);
+            playerScript.LoseMana(emblemLibrary.spellsword.value);
         }
 
         return physicalDamage + Mathf.RoundToInt(extraDamage);
@@ -170,17 +163,17 @@ public class PatchEffects : MonoBehaviour
     public int TotalDamageModifiers(int totalDamage)
     {
         float extraDamage = 0;
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_remains) && arcaneRemainsActive)
+        if (playerData.equippedPatches.Contains(Patches.ARCANE_REMAINS) && arcaneRemainsActive)
         {
             extraDamage += totalDamage * arcaneRemainsDamage;
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.confident_killer) && playerData.health == playerData.MaxHealth())
+        if (playerData.equippedPatches.Contains(Patches.CONFIDENT_KILLER) && playerData.health == playerData.MaxHealth())
         {
             extraDamage += totalDamage * confidentKillerDamage;
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.reckless_attack) && playerData.health < playerData.MaxHealth() * recklessAttackHealthMax)
+        if (playerData.equippedPatches.Contains(Patches.RECKLESS_ATTACK) && playerData.health < playerData.MaxHealth() * recklessAttackHealthMax)
         {
             extraDamage += totalDamage * recklessAttackDamage;
         }
@@ -232,11 +225,23 @@ public class PatchEffects : MonoBehaviour
         pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
+    public void ArcaneStepDodgeThrough()
+    {
+        if (playerData.equippedPatches.Contains(Patches.ARCANE_STEP))
+        {
+            Physics.IgnoreLayerCollision(8, 6, true);
+        }
+        else
+        {
+            Physics.IgnoreLayerCollision(8, 6, false);
+        }
+    }
+
     private void onEnemyKilled(object sender, System.EventArgs e)
     {
-        if (playerData.equippedEmblems.Contains(emblemLibrary.vampiric_strikes))
+        if (playerData.equippedPatches.Contains(Patches.VAMPIRIC_STRIKES))
         {
-            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() / 8);
+            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() * emblemLibrary.patchDictionary[Patches.VAMPIRIC_STRIKES].value);
             playerHealth.PartialHeal(healAmount);
         }
     }

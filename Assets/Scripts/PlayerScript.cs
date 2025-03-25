@@ -51,8 +51,20 @@ public class PlayerScript : MonoBehaviour
 
     //mana variables
     float manaDelay;
-    float maxManaDelay = 2;
-    float manaRechargeRate = 4;
+    [System.NonSerialized] public float maxManaDelay = 2;
+    [System.NonSerialized] public float manaRechargeRate = 4;
+    float _magicalAccelerationValue;
+    float magicalAccelerationValue
+    {
+        get
+        {
+            if(_magicalAccelerationValue == 0)
+            {
+                _magicalAccelerationValue = emblemLibrary.patchDictionary[Patches.MAGICAL_ACCELERATION].value;
+            }
+            return _magicalAccelerationValue;
+        }
+    }
 
     private void Awake()
     {
@@ -169,9 +181,9 @@ public class PlayerScript : MonoBehaviour
             playerData.mana = 0;
         }
         manaDelay = maxManaDelay;
-        if (playerData.equippedEmblems.Contains("MagicalAcceleration"))
+        if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
         {
-            manaDelay = maxManaDelay / 2;
+            manaDelay = maxManaDelay / magicalAccelerationValue;
         }
         if (patchEffects.deathAuraActive)
         {
@@ -203,15 +215,16 @@ public class PlayerScript : MonoBehaviour
         {
             if(playerData.mana < playerData.maxMana)
             {
-                playerData.mana += Time.deltaTime * manaRechargeRate;
-                if (playerData.equippedEmblems.Contains("Magical Acceleration"))
+                float rechargeRateMod = 1;
+                if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
                 {
-                    playerData.mana += Time.deltaTime * manaRechargeRate;
+                    rechargeRateMod *= magicalAccelerationValue;
                 }
                 if (patchEffects.deathAuraActive)
                 {
-                    playerData.mana += Time.deltaTime * manaRechargeRate;
+                    rechargeRateMod *= 2;
                 }
+                playerData.mana += Time.deltaTime * manaRechargeRate * rechargeRateMod;
             }
         }
         else
@@ -259,7 +272,7 @@ public class PlayerScript : MonoBehaviour
         playerData.healCharges = playerData.maxHealCharges;
         playerData.mana = playerData.maxMana;
         playerData.hasSpawned = false;
-        if (playerData.equippedEmblems.Contains(emblemLibrary.charons_obol))
+        if (playerData.equippedPatches.Contains(Patches.STANDARD_DEDUCTION))
         {
             playerData.lostMoney = 0;
             playerData.money = Mathf.RoundToInt(playerData.money / 2);
@@ -286,7 +299,7 @@ public class PlayerScript : MonoBehaviour
         playerHealth.MaxHeal();
         playerData.mana = playerData.maxMana;
         playerData.healCharges = playerData.maxHealCharges;
-        if (playerData.equippedEmblems.Contains(emblemLibrary.maximum_refund))
+        if (playerData.equippedPatches.Contains(Patches.MAXIMUM_REFUND))
         {
             playerData.healCharges += 1;
         }

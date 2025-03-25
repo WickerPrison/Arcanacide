@@ -149,12 +149,12 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void StartIFrames()
     {
         // the isDashing = true and setting layer to 8 has been moved to the Dodge function in PlayerScript due to script execution order problems
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
+        if (playerData.equippedPatches.Contains(Patches.ARCANE_STEP))
         {
             patchEffects.StartArcaneStep();
         }
 
-        if(playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && patchEffects.mirrorCloakTimer <= 0)
+        if(playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK) && patchEffects.mirrorCloakTimer <= 0)
         {
             //playerSound.PlaySoundEffectFromList(11, 0.5f);
             playerEvents.EndMirrorCloak();
@@ -169,12 +169,12 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         playerMovement.isDashing = false;
         playerMovement.gameObject.layer = 3;
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_step))
+        if (playerData.equippedPatches.Contains(Patches.ARCANE_STEP))
         {
             patchEffects.EndArcaneStep();
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.mirror_cloak) && patchEffects.mirrorCloakTimer <= 0)
+        if (playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK) && patchEffects.mirrorCloakTimer <= 0)
         {
             playerAbilities.shield = false;
             playerAbilities.parry = false;

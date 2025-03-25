@@ -389,9 +389,9 @@ public class IceBoss : EnemyController, IEndDialogue
 
         playerData.killedEnemiesNum += 1;
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.pay_raise))
+        if (playerData.equippedPatches.Contains(Patches.PAY_RAISE))
         {
-            playerData.money += Mathf.RoundToInt(enemyScript.reward * 1.25f);
+            playerData.money += Mathf.RoundToInt(enemyScript.reward * emblemLibrary.patchDictionary[Patches.PAY_RAISE].value);
         }
         else
         {

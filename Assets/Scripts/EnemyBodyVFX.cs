@@ -67,7 +67,7 @@ public class EnemyBodyVFX : MonoBehaviour
 
     private void OnAttackImpact(object sender, System.EventArgs e)
     {
-        if (playerData.equippedEmblems.Contains(emblemLibrary._spellsword) && playerData.mana > emblemLibrary.spellswordManaCost)
+        if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > emblemLibrary.spellsword.value)
         {
             magicImpact.Play();
         }

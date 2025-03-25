@@ -36,9 +36,9 @@ public class TotemAnimationEvents : MonoBehaviour
         StartCoroutine(cameraScript.ScreenShake(axeSpecial.screenShakeNoHit.x, axeSpecial.screenShakeNoHit.y));
         touchingCollider = colliderScript.GetTouchingObjects();
         int damage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
-        if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+        if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
         {
-            damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMasteryPercent);
+            damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMastery.value);
         }
         int poiseDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
         foreach(Collider collider in touchingCollider)
@@ -76,9 +76,9 @@ public class TotemAnimationEvents : MonoBehaviour
             rippleBox.direction = Vector3.Normalize(rippleBox.transform.position - transform.position);
             WaveBox waveBox = rippleBox.gameObject.GetComponent<WaveBox>();
             waveBox.damage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
-            if (playerData.equippedEmblems.Contains(emblemLibrary.arcane_mastery))
+            if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
-                waveBox.damage += Mathf.RoundToInt(waveBox.damage * emblemLibrary.arcaneMasteryPercent);
+                waveBox.damage += Mathf.RoundToInt(waveBox.damage * emblemLibrary.arcaneMastery.value);
             }
             waveBox.poiseDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
         }

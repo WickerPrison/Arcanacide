@@ -19,8 +19,8 @@ public class SaveData
     public string[] gemShards;
     public int lastSwordSite;
     public List<string> unlockedAbilities;
-    public List<string> emblems;
-    public List<string> equippedEmblems;
+    public List<string> patches;
+    public List<string> equippedPatches;
     public int maxPatches;
     public List<string> tutorials;
     public List<string> evidenceFound;
@@ -69,7 +69,7 @@ public class SaveData
     public int[] patchworkGaryConversations;
     public int[] whistleblowerConversations;
 
-    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData)
+    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, EmblemLibrary emblemLibrary)
     {
         saveFile = playerData.saveFile;
         date = playerData.date;
@@ -81,8 +81,8 @@ public class SaveData
         gemShards = playerData.gemShards.ToArray();
         lastSwordSite = playerData.lastSwordSite;
         unlockedAbilities = playerData.GetUnlockedStrings();
-        emblems = playerData.emblems;
-        equippedEmblems = playerData.equippedEmblems;
+        patches = emblemLibrary.GetStringsFromPatches(playerData.patches);
+        equippedPatches = emblemLibrary.GetStringsFromPatches(playerData.equippedPatches);
         maxPatches = playerData.maxPatches;
         tutorials = playerData.tutorials;
         evidenceFound = playerData.evidenceFound;

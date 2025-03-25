@@ -37,8 +37,8 @@ public class PlayerMovement : MonoBehaviour
     //dash variables
     [System.NonSerialized] public Vector3 dashDirection;
     [System.NonSerialized] public bool isDashing = false;
-    float dashSpeed = 1000;
-    float dashStaminaCost = 30f;
+    [NonSerialized] public float dashSpeed = 1000;
+    [NonSerialized] public float dashStaminaCost = 30f;
     
     //facing direction variables
     Vector3 mouseDirection;
@@ -131,19 +131,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Dodge()
+    public void Dodge()
     {
         if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
         {
             //The player dashes in whatever direction they were already moving
             float staminaCost = dashStaminaCost;
             dashDirection = moveDirection.normalized;
-            if (playerData.equippedEmblems.Contains(emblemLibrary.quickstep_))
+            if (playerData.equippedPatches.Contains(Patches.QUICKSTEP))
             {
                 staminaCost /= 2;
             }
 
-            if (playerData.equippedEmblems.Contains(emblemLibrary.shell_company))
+            if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
             {
                 staminaCost *= 2;
             }

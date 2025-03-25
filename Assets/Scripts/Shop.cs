@@ -22,7 +22,7 @@ public class Shop : MonoBehaviour
 
     [SerializeField] GameObject dialoguePrefab;
     DialogueScript dialogue;
-    [SerializeField] List<string> emblemNames;
+    [SerializeField] List<Patches> patchNames;
     [SerializeField] List<int> emblemCosts;
     List<List<string>> conversations = new List<List<string>>();
     List<string> thisConversation;
@@ -129,8 +129,8 @@ public class Shop : MonoBehaviour
             im.Menu();
             shopWindow = Instantiate(shopWindowPrefab);
             ShopWindow shopWindowScript = shopWindow.GetComponent<ShopWindow>();
-            shopWindowScript.emblemNames = emblemNames;
-            shopWindowScript.emblemCosts = emblemCosts;
+            shopWindowScript.patchNames = patchNames;
+            shopWindowScript.patchCosts = emblemCosts;
         }
     }
 

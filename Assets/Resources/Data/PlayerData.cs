@@ -23,8 +23,8 @@ public class PlayerData : ScriptableObject
     public bool hasSpawned;
     public int lastSwordSite;
     public List<UnlockableAbilities> unlockedAbilities;
-    public List<string> emblems;
-    public List<string> equippedEmblems;
+    public List<Patches> patches;
+    public List<Patches> equippedPatches;
     public int maxPatches;
     public List<string> tutorials;
     public List<string> evidenceFound;
@@ -115,5 +115,38 @@ public class PlayerData : ScriptableObject
     {
         int level = strength + dexterity + vitality + arcane - 3;
         return level;
+    }
+
+    // TODO: refactor tutorial list so it can be reset from here. For now tutorials must be reset outside this SO
+    public void ClearData()
+    {
+        hasHealthGem = false;
+        maxHealCharges = 1;
+        healCharges = 1;
+        currentGemShards = 0;
+        gemShards.Clear();
+        lastSwordSite = 1;
+        unlockedAbilities.Clear();
+        patches.Clear();
+        equippedPatches.Clear();
+        maxPatches = 2;
+        evidenceFound.Clear();
+        money = 0;
+        lostMoney = 0;
+        strength = 1;
+        dexterity = 1;
+        vitality = 1;
+        arcane = 1;
+        health = MaxHealth();
+        maxMana = 50;
+        mana = maxMana;
+        deathNum = 0;
+        killedEnemiesNum = 0;
+        killedEnemiesAtGetShield = 0;
+        unlockedWeapons.Clear();
+        currentWeapon = 0;
+        swordSpecialTimer = 0;
+        clawSpecialOn = false;
+        clawSpecialTimer = 0;
     }
 }

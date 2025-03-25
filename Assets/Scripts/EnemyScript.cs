@@ -144,7 +144,7 @@ public class EnemyScript : MonoBehaviour
             StartStagger(0.2f);
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.heavy_blows))
+        if (playerData.equippedPatches.Contains(Patches.HEAVY_BLOWS))
         {
             poiseDamage *= 1.5f;
         }
@@ -178,9 +178,9 @@ public class EnemyScript : MonoBehaviour
             mapData.deadEnemies.Add(enemyGUID);
         }
 
-        if (playerData.equippedEmblems.Contains(emblemLibrary.pay_raise))
+        if (playerData.equippedPatches.Contains(Patches.PAY_RAISE))
         {
-            GlobalEvents.instance.MoneyChange(Mathf.RoundToInt(reward * 1.25f));
+            GlobalEvents.instance.MoneyChange(Mathf.RoundToInt(reward * emblemLibrary.patchDictionary[Patches.PAY_RAISE].value));
         }
         else
         {

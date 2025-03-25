@@ -92,6 +92,5 @@ public class GlobalEvents : MonoBehaviour
     public void PickupGemShard()
     {
         onPickupGemShard?.Invoke(this, 1);
-
     }
 }
