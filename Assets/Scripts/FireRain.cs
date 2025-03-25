@@ -7,6 +7,7 @@ public class FireRain : PlayerProjectile, IKillChildren
 {
     [System.NonSerialized] public Vector3 origin;
     [System.NonSerialized] public float maxDelay;
+    [System.NonSerialized] public bool hasNavmesh = true;
     [SerializeField] ParticleSystem vfx;
     [SerializeField] KilledByParent indicatorCircle;
     public event EventHandler onKillChildren;
@@ -27,16 +28,13 @@ public class FireRain : PlayerProjectile, IKillChildren
         float randX = UnityEngine.Random.Range(-maxDelay, maxDelay);
         float randZ = UnityEngine.Random.Range(-maxDelay, maxDelay);
         destination = new Vector3(origin.x + randX, 0, origin.z + randZ);
-        NavMeshHit outHit;
-        if(NavMesh.SamplePosition(destination, out outHit, 0.1f, NavMesh.AllAreas))
+        if (hasNavmesh)
         {
-            destination = outHit.position;
-            direction = Vector3.Normalize(destination - transform.position);
-            indicatorCircle.transform.position = destination;
+            FindTargetWithNavmesh();
         }
         else
         {
-            KillProjectile();
+            FindTargetNoNavmesh();
         }
         hitBox = GetComponent<Collider>();
         StartCoroutine(StartDelay());
@@ -59,6 +57,36 @@ public class FireRain : PlayerProjectile, IKillChildren
         if(transform.position.y < 0)
         {
             HitObject(GetComponent<Collider>());
+        }
+    }
+
+    void FindTargetWithNavmesh()
+    {
+        NavMeshHit outHit;
+        if (NavMesh.SamplePosition(destination, out outHit, 0.1f, NavMesh.AllAreas))
+        {
+            destination = outHit.position;
+            direction = Vector3.Normalize(destination - transform.position);
+            indicatorCircle.transform.position = destination;
+        }
+        else
+        {
+            KillProjectile();
+        }
+    }
+
+    void FindTargetNoNavmesh()
+    {
+        Vector3 rayDirection = destination - origin;
+        LayerMask layerMask = LayerMask.NameToLayer("Floor");
+        if(Physics.Raycast(origin, rayDirection, 20f, layerMask))
+        {
+            direction = rayDirection.normalized;
+            indicatorCircle.transform.position = destination;
+        }
+        else
+        {
+            KillProjectile();
         }
     }
 

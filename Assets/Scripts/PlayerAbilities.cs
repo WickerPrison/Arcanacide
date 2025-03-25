@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerAbilities : MonoBehaviour
 {
@@ -58,6 +59,19 @@ public class PlayerAbilities : MonoBehaviour
     int fireRainAmount = 13;
     float fireRainMaxDelay = 4f;
     WaitForSeconds fireRainDelayWait;
+    bool? _sceneHasNavmesh;
+    bool sceneHasNavmesh
+    {
+        get
+        {
+            if(!_sceneHasNavmesh.HasValue)
+            {
+                NavMeshHit hit;
+                _sceneHasNavmesh = NavMesh.SamplePosition(transform.position, out hit, 10, NavMesh.AllAreas);
+            }
+            return _sceneHasNavmesh.Value;
+        }
+    }
 
     bool knifeSpecialAttackOn = false;
     Vector3 away = Vector3.one * 100;
@@ -477,6 +491,7 @@ public class PlayerAbilities : MonoBehaviour
             fireRain.origin = origin;
             fireRain.maxDelay = fireRainMaxDelay;
             fireRain.attackProfile = lanternCombo2Profile;
+            fireRain.hasNavmesh = sceneHasNavmesh;
         }
         StartCoroutine(EndFireRain());
     }
