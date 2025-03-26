@@ -111,9 +111,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7570550884861892387}
   - component: {fileID: 5918945782907996145}
-  - component: {fileID: 8519394673285905489}
-  - component: {fileID: 97871430592097474}
   - component: {fileID: 1842102618898713441}
+  - component: {fileID: 6868962680763631249}
   m_Layer: 31
   m_Name: Floor
   m_TagString: Untagged
@@ -154,28 +153,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: ccf23c052de263c4e80da54e88612c4c, type: 3}
   - {fileID: 2800000, guid: 2b63162b501b1a74296c0658df5e471a, type: 3}
   - {fileID: 2800000, guid: 04533005d28bfb94486987ac10e05aa9, type: 3}
---- !u!33 &8519394673285905489
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3432272596342483852}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &97871430592097474
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3432272596342483852}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &1842102618898713441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +183,19 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!65 &6868962680763631249
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3432272596342483852}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 0.01, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7674374577408837996
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ public class FireRain : PlayerProjectile, IKillChildren
         transform.LookAt(destination);
         transform.position += Time.fixedDeltaTime * speed * direction;
 
-        if(transform.position.y < 0)
+        if (transform.position.y < 0)
         {
             HitObject(GetComponent<Collider>());
         }
@@ -78,8 +78,8 @@ public class FireRain : PlayerProjectile, IKillChildren
     void FindTargetNoNavmesh()
     {
         Vector3 rayDirection = destination - origin;
-        LayerMask layerMask = LayerMask.NameToLayer("Floor");
-        if(Physics.Raycast(origin, rayDirection, 20f, layerMask))
+        LayerMask layerMask = LayerMask.GetMask("Floor");
+        if (Physics.Raycast(origin, rayDirection, 30f, layerMask))
         {
             direction = rayDirection.normalized;
             indicatorCircle.transform.position = destination;
