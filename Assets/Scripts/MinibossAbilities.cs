@@ -114,7 +114,7 @@ public class MinibossAbilities : MonoBehaviour
                 Vector3 target = forwardPosition + Vector3.Cross(playerDirection, Vector3.up).normalized * j * spread;
                 target += new Vector3(
                     UnityEngine.Random.Range(-1f, 1f), 
-                    UnityEngine.Random.Range(-1f, 1f), 
+                    0, 
                     UnityEngine.Random.Range(-1f, 1f));
                 SingleMissile(target, 0.5f + (float)Mathf.Abs(j) / 4);
             }
