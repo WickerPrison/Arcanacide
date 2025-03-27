@@ -122,6 +122,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
 
     public override void StartDying()
     {
+        GetComponent<FacePlayer>().ManualFace();
         abilities.StartStagger();
         enemyEvents.StartDying();
         state = EnemyState.DYING;
