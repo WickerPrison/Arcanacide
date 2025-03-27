@@ -18,7 +18,10 @@ public class BuildModeEditor : Editor
                 case BuildModes.DEMO:
                     SetDemoScenes(buildMode); 
                     break;
-                default:
+                case BuildModes.FULLGAME:
+                    SetNonTestScenes();
+                    break;
+                case BuildModes.TESTING:
                     SetAllScenes();
                     break;
             }
@@ -33,6 +36,20 @@ public class BuildModeEditor : Editor
             if (buildMode.excludePathsForDemo.Any(scene.path.Contains))
             {
                 scene.enabled = false;
+            }
+        }
+        EditorBuildSettings.scenes = editorBuildSettingsScenes;
+    }
+
+    //Sets all scenes active, except those used for integration tests
+    void SetNonTestScenes()
+    {
+        EditorBuildSettingsScene[] editorBuildSettingsScenes = EditorBuildSettings.scenes;
+        foreach (EditorBuildSettingsScene scene in editorBuildSettingsScenes)
+        {
+            if (!scene.path.Contains("Scenes/Testing"))
+            {
+                scene.enabled = true;
             }
         }
         EditorBuildSettings.scenes = editorBuildSettingsScenes;

@@ -144,6 +144,7 @@ public class PlayerData : ScriptableObject
         killedEnemiesNum = 0;
         killedEnemiesAtGetShield = 0;
         unlockedWeapons.Clear();
+        unlockedWeapons.Add(0);
         currentWeapon = 0;
         swordSpecialTimer = 0;
         clawSpecialOn = false;

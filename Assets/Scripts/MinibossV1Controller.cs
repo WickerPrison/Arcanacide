@@ -20,6 +20,10 @@ public class MinibossV1Controller : EnemyController
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
         }
+        else
+        {
+            gm.awareEnemies += 1;
+        }
     }
 
     public override void EnemyAI()
