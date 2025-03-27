@@ -61,4 +61,17 @@ public class MinibossV1Tests
         yield return new WaitForSeconds(0.2f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
+
+    [UnityTest]
+    public IEnumerator ChestLaser()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        playerData.health += 100;
+        yield return null;
+
+        minibossAbilities.ChestLaser(2);
+        yield return new WaitForSeconds(3);
+        Assert.Less(playerData.health, playerData.MaxHealth() + 100);
+    }
 }

@@ -14,6 +14,7 @@ Shader "Unlit/Bubble"
         _PerlinSize("Perlin Size", float) = 0
         _PerlinSpeed("Perlin Speed", float) = 0
         _PerlinTime("Perlin Time", float) = 0
+        _BeamSpeed("Beam Speed", float) = 0
     }
     SubShader
     {
@@ -57,6 +58,7 @@ Shader "Unlit/Bubble"
             float _PerlinSize;
             float _PerlinSpeed;
             float _PerlinTime;
+            float _BeamSpeed;
 
             v2f vert (appdata v)
             {
@@ -76,11 +78,11 @@ Shader "Unlit/Bubble"
                 float edgeMask = viewNormal < _Edge;
 
                 float time = _Time.y + _PerlinTime;
-                float2 perlinUV1 = float2(i.uv.x + time * 1.1 * _PerlinSpeed, i.uv.y * 10 + time * _PerlinSpeed);
+                float2 perlinUV1 = float2(i.uv.x + time * 1.1 * _PerlinSpeed, i.uv.y * 10 + time * _BeamSpeed * _PerlinSpeed);
                 float4 perlin1 = tex2D(_PerlinTex, perlinUV1 / _PerlinSize);
 
 
-                float2 perlinUV2 = float2(i.uv.y * 10 - time * 1.1 * _PerlinSpeed, i.uv.x - time * _PerlinSpeed);
+                float2 perlinUV2 = float2(i.uv.y * 10 + time * _BeamSpeed * _PerlinSpeed, i.uv.x - time * 5 * _PerlinSpeed);
                 float4 perlin2 = tex2D(_PerlinTex, perlinUV2 / _PerlinSize);
 
                 float4 perlin = (perlin1 + perlin2) / 2;
