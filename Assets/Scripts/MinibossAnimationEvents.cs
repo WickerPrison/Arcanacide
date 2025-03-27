@@ -35,6 +35,12 @@ public class MinibossAnimationEvents : MonoBehaviour
         abilities.StartLaser();
     }
 
+    public void DefeatDialogue()
+    {
+        Dialogue dialogue = GetComponent<Dialogue>();
+        dialogue.StartConversation();
+    }
+
     public void FlyAway()
     {
         StartCoroutine(Flying());
@@ -44,7 +50,7 @@ public class MinibossAnimationEvents : MonoBehaviour
     {
         while(abilities.transform.position.y < 20)
         {
-            abilities.transform.position += new Vector3(0, 15 * Time.deltaTime, 0);
+            abilities.transform.position += new Vector3(0, 25 * Time.deltaTime, 0);
             yield return null;
         }
 

@@ -15,6 +15,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     [SerializeField] bool repeatable = false;
     NavMeshAgent navAgent;
+    EnemyController enemyController;
     float speed;
     InputManager im;
     List<List<string>> conversations = new List<List<string>>();
@@ -34,6 +35,7 @@ public class Dialogue : MonoBehaviour
         {
             navAgent = GetComponentInParent<NavMeshAgent>();
             speed = navAgent.speed;
+            enemyController = GetComponentInParent<EnemyController>();
         }
     }
 

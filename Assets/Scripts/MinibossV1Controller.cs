@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinibossV1Controller : EnemyController
+public class MinibossV1Controller : EnemyController, IEndDialogue
 {
     MinibossAbilities abilities;
     [SerializeField] MapData mapData;
@@ -19,6 +19,11 @@ public class MinibossV1Controller : EnemyController
             //musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
+        }
+        else
+        {
+            state = EnemyState.DISABLED;
+            gm.awareEnemies += 1;
         }
     }
 
@@ -102,22 +107,29 @@ public class MinibossV1Controller : EnemyController
         base.EndStagger();
     }
 
+    public void EndDialogue()
+    {
+        if(state == EnemyState.DYING)
+        {
+            frontAnimator.Play("FlyAway");
+            backAnimator.Play("FlyAway");
+        }
+        else
+        {
+            state = EnemyState.IDLE;
+        }
+    }
+
     public override void StartDying()
     {
+        GetComponent<FacePlayer>().ManualFace();
+        abilities.StartStagger();
         enemyEvents.StartDying();
         state = EnemyState.DYING;
         enemyScript.invincible = true;
         enemyScript.health = 1;
-        frontAnimator.Play("Idle");
-        backAnimator.Play("Idle");
-        StartCoroutine(PlaceholderDying());
-    }
-
-    IEnumerator PlaceholderDying()
-    {
-        yield return new WaitForSeconds(3);
-        frontAnimator.Play("FlyAway");
-        backAnimator.Play("FlyAway");
+        frontAnimator.Play("FallToKneel");
+        backAnimator.Play("FallToKneel");
     }
 
     public override void Death()
