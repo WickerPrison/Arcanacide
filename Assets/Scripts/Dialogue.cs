@@ -69,7 +69,6 @@ public class Dialogue : MonoBehaviour
         if (stopEnemy)
         {
             navAgent.speed = 0;
-            enemyController.state = EnemyState.DISABLED;
         }
     }
 
@@ -89,7 +88,6 @@ public class Dialogue : MonoBehaviour
             if (stopEnemy)
             {
                 navAgent.speed = speed;
-                enemyController.state = EnemyState.IDLE;
             }
 
             EndDialogue();

@@ -35,6 +35,12 @@ public class MinibossAnimationEvents : MonoBehaviour
         abilities.StartLaser();
     }
 
+    public void DefeatDialogue()
+    {
+        Dialogue dialogue = GetComponent<Dialogue>();
+        dialogue.StartConversation();
+    }
+
     public void FlyAway()
     {
         StartCoroutine(Flying());
