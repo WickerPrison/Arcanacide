@@ -18,9 +18,9 @@ public class MinibossAbilities : MonoBehaviour
     float spread = 3.5f;
     WaitForSeconds salvoDelay = new WaitForSeconds(0.3f);
     float defaultSpeed = 2.85f;
-    float dashSpeed = 15f;
+    float dashSpeed = 20f;
     float defaultAccel = 8;
-    float dashAccel = 25;
+    float dashAccel = 45;
     bool onCircle = false;
     Vector3 circleStart;
     [SerializeField] float getToCircleSpeed;
