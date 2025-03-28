@@ -45,7 +45,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
                 if(playerDistance > 4)
                 {
                     randInt = Random.Range(0, 3);
-                    //randInt = 0;
+                    randInt = 2;
                     switch (randInt)
                     {
                         case 0:
@@ -62,7 +62,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
                 else
                 {
                     randInt = Random.Range(0, 4);
-                    //randInt = 2;
+                    randInt = 1;
                     switch (randInt)
                     {
                         case 0:

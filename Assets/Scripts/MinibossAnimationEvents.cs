@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MinibossAnimationEvents : MonoBehaviour
 {
     MinibossAbilities abilities;
     EnemyScript enemyScript;
     EnemyController enemyController;
+    public event EventHandler onThrustersOn;
+    public event EventHandler onThrustersOff;
 
     private void Start()
     {
@@ -39,6 +42,16 @@ public class MinibossAnimationEvents : MonoBehaviour
     {
         Dialogue dialogue = GetComponent<Dialogue>();
         dialogue.StartConversation();
+    }
+
+    public void ThrustersOn()
+    {
+        onThrustersOn?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ThrustersOff()
+    {
+        onThrustersOff?.Invoke(this, EventArgs.Empty);
     }
 
     public void FlyAway()

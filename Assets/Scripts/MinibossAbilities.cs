@@ -8,7 +8,7 @@ public class MinibossAbilities : MonoBehaviour
 {
     [SerializeField] GameObject missilePrefab;
     [SerializeField] Transform missileSpawnPoint;
-    [SerializeField] Ellipse ellipse;
+    public Ellipse ellipse;
     FacePlayer facePlayer;
     NavMeshAgent navMeshAgent;
     EnemyController enemyController;

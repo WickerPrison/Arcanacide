@@ -12,6 +12,7 @@ public class MinibossV1Tests
     EmblemLibrary emblemLibrary;
     GameObject minibossPrefab;
     TestingTrigger triggerPrefab;
+    GameObject ellipsePrefab;
 
     [SetUp]
     public void Setup()
@@ -25,6 +26,7 @@ public class MinibossV1Tests
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
+        ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
         Time.timeScale = 1;
     }
 
@@ -73,5 +75,22 @@ public class MinibossV1Tests
         minibossAbilities.ChestLaser(2);
         yield return new WaitForSeconds(3);
         Assert.Less(playerData.health, playerData.MaxHealth() + 100);
+    }
+
+    [UnityTest]
+    public IEnumerator Circle()
+    {
+        Ellipse ellipse = GameObject.Instantiate(ellipsePrefab).GetComponent<Ellipse>();
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.ellipse = ellipse;
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        playerData.health += 300;
+        yield return null;
+
+        minibossAbilities.Circle();
+        MinibossV1Controller minibossController = minibossAbilities.GetComponent<MinibossV1Controller>();
+        minibossController.attackTime = 7;
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth() + 300);
     }
 }
