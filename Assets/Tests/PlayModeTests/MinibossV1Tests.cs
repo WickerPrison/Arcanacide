@@ -7,9 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class MinibossV1Tests
 {
-    GameObject testDummyPrefab;
     PlayerData playerData;
-    EmblemLibrary emblemLibrary;
+    MapData mapData;
     GameObject minibossPrefab;
     TestingTrigger triggerPrefab;
     GameObject ellipsePrefab;
@@ -21,9 +20,8 @@ public class MinibossV1Tests
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
         playerData.hasHealthGem = true;
-        emblemLibrary = Resources.Load<EmblemLibrary>("Data/EmblemLibrary");
-
-        testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
+        mapData = Resources.Load<MapData>("Data/MapData");
+        mapData.miniboss1Killed = false;
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");

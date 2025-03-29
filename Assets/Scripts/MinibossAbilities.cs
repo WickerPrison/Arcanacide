@@ -55,6 +55,7 @@ public class MinibossAbilities : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("start");
         enemyController = GetComponent<EnemyController>();
         enemyScript = GetComponent<EnemyScript>();
         minibossEvents = GetComponent<MinibossEvents>();

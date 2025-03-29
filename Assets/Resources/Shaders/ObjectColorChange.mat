@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerSprite
-  m_Shader: {fileID: 4800000, guid: f1151b9982bec9e4695f774feb68c904, type: 3}
+  m_Name: ObjectColorChange
+  m_Shader: {fileID: 4800000, guid: 5370dfba006d30d40953aa2862ea0edf, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -26,8 +26,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - PixelSnap: 0
-    - _FlashWhite: 1
+    - _BlackToWhite: 0
+    - _Threshold: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _NewColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OldColor: {r: 0.99215686, g: 0.91764706, b: 0.10980392, a: 1}
   m_BuildTextureStacks: []
