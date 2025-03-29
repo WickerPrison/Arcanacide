@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class GetHealingGem : MonoBehaviour
+public class GetHealingGem : MonoBehaviour, IBlockDoors
 {
     [SerializeField] GameObject message;
     [SerializeField] MapData mapData;
@@ -13,6 +14,7 @@ public class GetHealingGem : MonoBehaviour
     InputManager im;
     float playerDistance = 100;
     float interactDistance = 2;
+    public event EventHandler<bool> onBlockDoor;
 
     void Start()
     {
@@ -20,9 +22,13 @@ public class GetHealingGem : MonoBehaviour
         im.controls.Gameplay.Interact.performed += ctx => PickUpHealthGem();
         tutorialManager = im.GetComponent<TutorialManager>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        if (mapData.unlockedDoors.Contains(3))
+        if (playerData.hasHealthGem)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            onBlockDoor?.Invoke(this, true);
         }
     }
 
@@ -44,8 +50,8 @@ public class GetHealingGem : MonoBehaviour
     {
         if (playerDistance <= interactDistance && !playerData.hasHealthGem)
         {
-            tutorialManager.Tutorial("Heal");   
-            mapData.unlockedDoors.Add(3);
+            tutorialManager.Tutorial("Heal");
+            onBlockDoor?.Invoke(this, false);
             playerData.hasHealthGem = true;
             healthGemIcon.SetActive(true);
             Destroy(gameObject);

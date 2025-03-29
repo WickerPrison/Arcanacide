@@ -8,8 +8,13 @@ public class MinibossAnimationEvents : MonoBehaviour
     MinibossAbilities abilities;
     EnemyScript enemyScript;
     EnemyController enemyController;
-    public event EventHandler onThrustersOn;
-    public event EventHandler onThrustersOff;
+    MinibossEvents minibossEvents;
+
+
+    private void Awake()
+    {
+        minibossEvents = GetComponentInParent<MinibossEvents>(); 
+    }
 
     private void Start()
     {
@@ -46,12 +51,12 @@ public class MinibossAnimationEvents : MonoBehaviour
 
     public void ThrustersOn()
     {
-        onThrustersOn?.Invoke(this, EventArgs.Empty);
+        minibossEvents.ThrustersOn();
     }
 
     public void ThrustersOff()
     {
-        onThrustersOff?.Invoke(this, EventArgs.Empty);
+        minibossEvents.ThrustersOff();
     }
 
     public void FlyAway()
@@ -69,5 +74,20 @@ public class MinibossAnimationEvents : MonoBehaviour
 
         enemyScript.Death();
         enemyController.Death();
+    }
+
+    private void OnEnable()
+    {
+        minibossEvents.OnStagger += EnemyEvents_OnStagger;
+    }
+
+    private void OnDisable()
+    {
+        minibossEvents.OnStagger -= EnemyEvents_OnStagger;
+    }
+
+    private void EnemyEvents_OnStagger(object sender, EventArgs e)
+    {
+        minibossEvents.ThrustersOff();
     }
 }

@@ -21,6 +21,7 @@ public class MinibossAbilities : MonoBehaviour
     float dashSpeed = 20f;
     float defaultAccel = 8;
     float dashAccel = 45;
+    float dashDistance = 10;
     bool onCircle = false;
     Vector3 circleStart;
     [SerializeField] float getToCircleSpeed;
@@ -39,6 +40,7 @@ public class MinibossAbilities : MonoBehaviour
     float beamVertAngle = 87;
     [System.NonSerialized] public Transform navMeshDestination;
     AttackArcGenerator attackArc;
+    MinibossEvents minibossEvents;
 
     enum LaserState 
     {
@@ -55,6 +57,7 @@ public class MinibossAbilities : MonoBehaviour
     {
         enemyController = GetComponent<EnemyController>();
         enemyScript = GetComponent<EnemyScript>();
+        minibossEvents = GetComponent<MinibossEvents>();
         playerScript = enemyController.playerScript;
         navMeshAgent = GetComponent<NavMeshAgent>();
         facePlayer = GetComponent<FacePlayer>();
@@ -138,7 +141,13 @@ public class MinibossAbilities : MonoBehaviour
         int sign = UnityEngine.Random.Range(0, 2) * 2 - 1;
         while (!foundDest)
         {
-            foundDest = NavMesh.SamplePosition(playerScript.transform.position + direction.normalized * 12, out hit, 1, NavMesh.AllAreas);
+            foundDest = NavMesh.SamplePosition(
+                playerScript.transform.position + direction.normalized * dashDistance, 
+                out hit, 
+                1, 
+                NavMesh.AllAreas
+            );
+
             if (!foundDest)
             {
                 direction = Utils.RotateDirection(direction.normalized, sign * 15);
@@ -158,6 +167,7 @@ public class MinibossAbilities : MonoBehaviour
         {
             enemyController.frontAnimator.Play("EndDash");
             enemyController.backAnimator.Play("EndDash");
+            minibossEvents.ThrustersOff();
             navMeshAgent.acceleration = defaultAccel;
             navMeshAgent.speed = defaultSpeed;
             navMeshAgent.velocity = Vector3.zero;

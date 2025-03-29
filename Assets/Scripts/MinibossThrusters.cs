@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MinibossThrusters : MonoBehaviour
 {
-    MinibossAnimationEvents animationEvents;
+    MinibossEvents minibossEvents;
     ParticleSystem particles;
 
     private void Awake()
     {
-        animationEvents = GetComponentInParent<MinibossAnimationEvents>();
+        minibossEvents = GetComponentInParent<MinibossEvents>();
         particles = GetComponent<ParticleSystem>();
     }
 
@@ -26,13 +26,13 @@ public class MinibossThrusters : MonoBehaviour
 
     private void OnEnable()
     {
-        animationEvents.onThrustersOn += AnimationEvents_onThrustersOn;
-        animationEvents.onThrustersOff += AnimationEvents_onThrustersOff;
+        minibossEvents.onThrustersOn += AnimationEvents_onThrustersOn;
+        minibossEvents.onThrustersOff += AnimationEvents_onThrustersOff;
     }
 
     private void OnDisable()
     {
-        animationEvents.onThrustersOn -= AnimationEvents_onThrustersOn;
-        animationEvents.onThrustersOff -= AnimationEvents_onThrustersOff;
+        minibossEvents.onThrustersOn -= AnimationEvents_onThrustersOn;
+        minibossEvents.onThrustersOff -= AnimationEvents_onThrustersOff;
     }
 }
