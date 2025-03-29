@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class LaserBeam : MonoBehaviour
 {
     [SerializeField] int beamDamage;
     [SerializeField] float beamPoiseDamage;
     [SerializeField] EnemyScript enemyOfOrigin;
+    [SerializeField] EventReference playerImpactSFX;
+    [SerializeField] float impactSFXvolume;
+    [SerializeField] EventReference beamSFX;
+    [SerializeField] EnemySound enemySound;
     float maxDamageDelay = 0.5f;
     float damageDelay;
 
@@ -36,7 +41,7 @@ public class LaserBeam : MonoBehaviour
         PlayerScript playerScript = other.gameObject.GetComponent<PlayerScript>();
         playerScript.LoseHealth(beamDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(beamPoiseDamage);
-        // add sfx
+        RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
         damageDelay = maxDamageDelay;
     }
 
@@ -44,5 +49,15 @@ public class LaserBeam : MonoBehaviour
     {
         PlayerScript playerScript = other.gameObject.GetComponent<PlayerScript>();
         playerScript.PerfectDodge(EnemyAttackType.PROJECTILE, enemyOfOrigin);
+    }
+
+    private void OnEnable()
+    {
+        enemySound.Play(beamSFX, 0.5f);
+    }
+
+    private void OnDisable()
+    {
+        enemySound.Stop();
     }
 }

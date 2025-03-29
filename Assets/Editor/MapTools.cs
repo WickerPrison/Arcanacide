@@ -13,7 +13,7 @@ public static class MapTools
         {
             if(MapData == null)
             {
-                MapData = Resources.Load<MapData>("ScriptableObjects/MapData");
+                MapData = Resources.Load<MapData>("Data/MapData");
             }
             return MapData;
         }

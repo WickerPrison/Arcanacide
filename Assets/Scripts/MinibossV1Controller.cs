@@ -41,42 +41,43 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
             if(attackTime <= 0)
             {
                 attackTime = attackMaxTime;
-                int randInt;
+                float randFloat;
                 if(playerDistance > 4)
                 {
-                    randInt = Random.Range(0, 3);
-                    //randInt = 2;
-                    switch (randInt)
+                    randFloat = Random.Range(0, 1f);
+
+                    if(randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
-                        case 0:
-                            abilities.MissileAttack();
-                            break;
-                        case 1:
-                            abilities.ChestLaser(2);
-                            break;
-                        case 2:
-                            abilities.Circle();
-                            break;
+                        abilities.Circle();
+                    }
+                    else if(randFloat > 0.4f)
+                    {
+                        abilities.ChestLaser(2);
+                    }
+                    else
+                    {
+                        abilities.MissileAttack();
                     }
                 }
                 else
                 {
-                    randInt = Random.Range(0, 4);
-                    //randInt = 1;
-                    switch (randInt)
+                    randFloat = Random.Range(0f, 1f);
+
+                    if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
-                        case 0:
-                            abilities.MeleeBlade();
-                            break;
-                        case 1:
-                            abilities.Circle();
-                            break;
-                        case 2:
-                            abilities.DashAway(abilities.MissileAttack);
-                            break;
-                        case 3:
-                            abilities.DashAway(() => abilities.ChestLaser(2));
-                            break;
+                        abilities.Circle();
+                    }
+                    else if (randFloat > 0.4f)
+                    {
+                        abilities.MeleeBlade();
+                    }
+                    else if (randFloat > 0.2f)
+                    {
+                        abilities.DashAway(abilities.MissileAttack);
+                    }
+                    else
+                    {
+                        abilities.DashAway(() => abilities.ChestLaser(2));
                     }
                 }
             }

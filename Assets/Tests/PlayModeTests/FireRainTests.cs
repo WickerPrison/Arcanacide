@@ -9,14 +9,14 @@ using UnityEngine.SceneManagement;
 public class FireRainTests
 {
     PlayerData playerData;
-    FireRainTestingTrigger triggerPrefab;
+    TestingTrigger triggerPrefab;
 
     [SetUp]
     public void Setup()
     {
         SceneManager.LoadScene("Testing");
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
-        triggerPrefab = Resources.Load<FireRainTestingTrigger>("Prefabs/Testing/FireRainTestingTrigger");
+        triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         playerData.ClearData();
         playerData.hasHealthGem = true;
 
@@ -27,8 +27,10 @@ public class FireRainTests
     public IEnumerator FireRainWithNavmesh()
     {
         playerData.unlockedWeapons.Add(1);
-        FireRainTestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<FireRainTestingTrigger>();
-        FireRainTestingTrigger outerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<FireRainTestingTrigger>();
+        TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
+        innerTrigger.callback = collider => collider.gameObject.GetComponent<FireRain>();
+        TestingTrigger outerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
+        outerTrigger.callback = collider => collider.gameObject.GetComponent<FireRain>();
         outerTrigger.transform.position = new Vector3(-28.5f, 1, -28.5f);
         PlayerAnimation playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
         WeaponManager weaponManager = playerAnimation.GetComponent<WeaponManager>();
@@ -47,8 +49,10 @@ public class FireRainTests
         playerData.unlockedWeapons.Add(1);
         SceneManager.LoadScene("NoNavmesh");
         yield return null;
-        FireRainTestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<FireRainTestingTrigger>();
-        FireRainTestingTrigger outerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<FireRainTestingTrigger>();
+        TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
+        innerTrigger.callback = collider => collider.gameObject.GetComponent<FireRain>();
+        TestingTrigger outerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
+        outerTrigger.callback = collider => collider.gameObject.GetComponent<FireRain>();
         outerTrigger.transform.position = new Vector3(-28.5f, 1, -28.5f);
         PlayerAnimation playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
         WeaponManager weaponManager = playerAnimation.GetComponent<WeaponManager>();

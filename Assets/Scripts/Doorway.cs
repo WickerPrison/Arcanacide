@@ -27,9 +27,22 @@ public class Doorway : MonoBehaviour
     SpriteRenderer spriteRenderer;
     [SerializeField] SpriteRenderer fogWallRenderer;
     [SerializeField] EventReference doorSFX;
+    [SerializeField] GameObject blockDoorsObject;
+    IBlockDoors blockDoors;
+    bool doorBlocked;
     public event System.EventHandler OnOpenDoor;
 
-    // Start is called before the first frame update
+
+    private void OnValidate()
+    {
+        if (blockDoorsObject == null) return;
+        blockDoors = blockDoorsObject.GetComponent<IBlockDoors>();
+        if(blockDoors == null)
+        {
+            blockDoorsObject = null;
+        }
+    }
+
     void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
@@ -51,7 +64,7 @@ public class Doorway : MonoBehaviour
         }
 
         playerDistance = Vector3.Distance(transform.position, player.position);
-        if (playerDistance <= interactDistance && gm.awareEnemies < 1)
+        if (playerDistance <= interactDistance && gm.awareEnemies < 1 && !doorBlocked)
         {
             if (lockedDoorID == 0 || mapData.unlockedDoors.Contains(lockedDoorID))
             {
@@ -73,12 +86,12 @@ public class Doorway : MonoBehaviour
             lockedMessage.SetActive(false);
         }
 
-        if (fogOn && gm.awareEnemies <= 0)
+        if (fogOn && gm.awareEnemies <= 0 && !doorBlocked)
         {
             fogOn = false;
             StartCoroutine(FogWallOff());
         }
-        else if(!fogOn && gm.awareEnemies > 0)
+        else if(!fogOn && (gm.awareEnemies > 0 || doorBlocked))
         {
             fogOn = true;
             StartCoroutine(FogWallOn());
@@ -134,6 +147,26 @@ public class Doorway : MonoBehaviour
                 playerHealth.MaxHeal();
             }
             SceneManager.LoadScene(nextRoom);
+        }
+    }
+
+    private void BlockDoors_onBlockDoor(object sender, bool isBlocked)
+    {
+        doorBlocked = isBlocked;
+    }
+    private void OnEnable()
+    {
+        if(blockDoors != null)
+        {
+            blockDoors.onBlockDoor += BlockDoors_onBlockDoor;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(blockDoors != null)
+        {
+            blockDoors.onBlockDoor -= BlockDoors_onBlockDoor;
         }
     }
 }

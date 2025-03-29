@@ -8,7 +8,7 @@ public class MinibossAbilities : MonoBehaviour
 {
     [SerializeField] GameObject missilePrefab;
     [SerializeField] Transform missileSpawnPoint;
-    [SerializeField] Ellipse ellipse;
+    public Ellipse ellipse;
     FacePlayer facePlayer;
     NavMeshAgent navMeshAgent;
     EnemyController enemyController;
@@ -18,9 +18,10 @@ public class MinibossAbilities : MonoBehaviour
     float spread = 3.5f;
     WaitForSeconds salvoDelay = new WaitForSeconds(0.3f);
     float defaultSpeed = 2.85f;
-    float dashSpeed = 15f;
+    float dashSpeed = 20f;
     float defaultAccel = 8;
-    float dashAccel = 25;
+    float dashAccel = 45;
+    float dashDistance = 10;
     bool onCircle = false;
     Vector3 circleStart;
     [SerializeField] float getToCircleSpeed;
@@ -39,6 +40,7 @@ public class MinibossAbilities : MonoBehaviour
     float beamVertAngle = 87;
     [System.NonSerialized] public Transform navMeshDestination;
     AttackArcGenerator attackArc;
+    MinibossEvents minibossEvents;
 
     enum LaserState 
     {
@@ -55,6 +57,7 @@ public class MinibossAbilities : MonoBehaviour
     {
         enemyController = GetComponent<EnemyController>();
         enemyScript = GetComponent<EnemyScript>();
+        minibossEvents = GetComponent<MinibossEvents>();
         playerScript = enemyController.playerScript;
         navMeshAgent = GetComponent<NavMeshAgent>();
         facePlayer = GetComponent<FacePlayer>();
@@ -114,7 +117,7 @@ public class MinibossAbilities : MonoBehaviour
                 Vector3 target = forwardPosition + Vector3.Cross(playerDirection, Vector3.up).normalized * j * spread;
                 target += new Vector3(
                     UnityEngine.Random.Range(-1f, 1f), 
-                    UnityEngine.Random.Range(-1f, 1f), 
+                    0, 
                     UnityEngine.Random.Range(-1f, 1f));
                 SingleMissile(target, 0.5f + (float)Mathf.Abs(j) / 4);
             }
@@ -138,7 +141,13 @@ public class MinibossAbilities : MonoBehaviour
         int sign = UnityEngine.Random.Range(0, 2) * 2 - 1;
         while (!foundDest)
         {
-            foundDest = NavMesh.SamplePosition(playerScript.transform.position + direction.normalized * 12, out hit, 1, NavMesh.AllAreas);
+            foundDest = NavMesh.SamplePosition(
+                playerScript.transform.position + direction.normalized * dashDistance, 
+                out hit, 
+                1, 
+                NavMesh.AllAreas
+            );
+
             if (!foundDest)
             {
                 direction = Utils.RotateDirection(direction.normalized, sign * 15);
@@ -158,6 +167,7 @@ public class MinibossAbilities : MonoBehaviour
         {
             enemyController.frontAnimator.Play("EndDash");
             enemyController.backAnimator.Play("EndDash");
+            minibossEvents.ThrustersOff();
             navMeshAgent.acceleration = defaultAccel;
             navMeshAgent.speed = defaultSpeed;
             navMeshAgent.velocity = Vector3.zero;

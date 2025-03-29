@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using FMODUnity;
+using System;
 
-public class FileTicket : MonoBehaviour
+public class FileTicket : MonoBehaviour, IBlockDoors
 {
     [SerializeField] MapData mapData;
     [SerializeField] BuildMode buildMode;
@@ -19,6 +20,7 @@ public class FileTicket : MonoBehaviour
     [SerializeField] EventReference sfx;
     float playerDistance;
     float interactDistance = 2;
+    public event EventHandler<bool> onBlockDoor;
 
     enum TicketState
     {
@@ -37,6 +39,7 @@ public class FileTicket : MonoBehaviour
                     screenText.text = screenText2;
                     wayFaerie.Stop();
                     wayFaerie.Clear();
+                    onBlockDoor?.Invoke(this, false);
                     break;
                 case TicketState.FILABLE:
                     screenText.text = screenText1;
@@ -57,12 +60,13 @@ public class FileTicket : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => FileSupportTicket();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        onBlockDoor?.Invoke(this, true);
 
         if (mapData.ticketFiled)
         {
             ticketState = TicketState.FILED;
         }
-        else if(buildMode.buildMode == BuildModes.TESTING && !mapData.miniboss1Killed)
+        else if(!mapData.miniboss1Killed)
         {
             ticketState = TicketState.DISABLED;
         }
@@ -91,6 +95,7 @@ public class FileTicket : MonoBehaviour
         if(playerDistance <= interactDistance && ticketState == TicketState.FILABLE)
         {
             RuntimeManager.PlayOneShot(sfx, 2);
+            ticketState = TicketState.FILED;
             mapData.ticketFiled = true;
             screenText.text = screenText2;
             wayFaerie.Stop();
@@ -98,7 +103,7 @@ public class FileTicket : MonoBehaviour
     }
     private void onMinibossKilled(object sender, System.EventArgs e)
     {
-        if(buildMode.buildMode == BuildModes.TESTING && !mapData.ticketFiled)
+        if(!mapData.ticketFiled)
         {
             ticketState = TicketState.FILABLE;
         }

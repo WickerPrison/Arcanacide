@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MinibossAnimationEvents : MonoBehaviour
 {
     MinibossAbilities abilities;
     EnemyScript enemyScript;
     EnemyController enemyController;
+    MinibossEvents minibossEvents;
+
+
+    private void Awake()
+    {
+        minibossEvents = GetComponentInParent<MinibossEvents>(); 
+    }
 
     private void Start()
     {
@@ -41,6 +49,16 @@ public class MinibossAnimationEvents : MonoBehaviour
         dialogue.StartConversation();
     }
 
+    public void ThrustersOn()
+    {
+        minibossEvents.ThrustersOn();
+    }
+
+    public void ThrustersOff()
+    {
+        minibossEvents.ThrustersOff();
+    }
+
     public void FlyAway()
     {
         StartCoroutine(Flying());
@@ -56,5 +74,20 @@ public class MinibossAnimationEvents : MonoBehaviour
 
         enemyScript.Death();
         enemyController.Death();
+    }
+
+    private void OnEnable()
+    {
+        minibossEvents.OnStagger += EnemyEvents_OnStagger;
+    }
+
+    private void OnDisable()
+    {
+        minibossEvents.OnStagger -= EnemyEvents_OnStagger;
+    }
+
+    private void EnemyEvents_OnStagger(object sender, EventArgs e)
+    {
+        minibossEvents.ThrustersOff();
     }
 }
