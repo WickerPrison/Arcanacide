@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class ButtonPrompt : MonoBehaviour
 {
-    [SerializeField] string prompt;
+    public string prompt;
     [SerializeField] List<InputActionReference> actions;
     [SerializeField] SettingsData settingsData;
     Dictionary<Sprite, TMP_SpriteAsset> TMPSpriteDict;

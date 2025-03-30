@@ -14,6 +14,7 @@ public class ITWorker : MonoBehaviour
     float animationTimer = 0.5f;
     bool inDialogue = false;
     string firstDialogueName = "IT Worker";
+    string finalDialogueName = "Fixed Firewall";
 
     private void Awake()
     {
@@ -31,6 +32,10 @@ public class ITWorker : MonoBehaviour
 
     private void Start()
     {
+        if (dialogueData.conversationsHad.Contains(finalDialogueName))
+        {
+            Destroy(gameObject);
+        }
         faceDirection = GetComponent<FaceDirection>();
         if(mapData.fireSuppressionState == FireSuppressionState.FIXED)
         {
@@ -96,6 +101,10 @@ public class ITWorker : MonoBehaviour
         else
         {
             faceDirection.DirectionalFace(FacingDirections.BACK_RIGHT);
+            if (!dialogueData.conversationsHad.Contains(finalDialogueName))
+            {
+                dialogueData.conversationsHad.Add(finalDialogueName);
+            }
         }
     }
     
