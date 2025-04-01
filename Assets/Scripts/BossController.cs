@@ -373,6 +373,7 @@ public class BossController : EnemyController, IEndDialogue
         if(state == EnemyState.UNAWARE)
         {
             state = EnemyState.IDLE;
+            bonfireCD = bonfireMaxCD;
             musicManager.ChangeMusicState(MusicState.BOSSMUSIC);
         }
         else
