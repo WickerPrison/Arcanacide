@@ -76,6 +76,36 @@ public class MinibossV1Tests
     }
 
     [UnityTest]
+    public IEnumerator LaserFromOffscreenZ()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(0, 0, 6.1f);
+        TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
+        innerTrigger.callback = collider => collider.gameObject.GetComponent<Missile>();
+        playerData.health += 100;
+        yield return null;
+
+        minibossAbilities.ChestLaser(2);
+        yield return new WaitForSeconds(3);
+        Assert.Greater(innerTrigger.counter, 0);
+    }
+
+    [UnityTest]
+    public IEnumerator LaserFromOffscreenX()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(8.1f, 0, 0);
+        TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
+        innerTrigger.callback = collider => collider.gameObject.GetComponent<Missile>();
+        playerData.health += 100;
+        yield return null;
+
+        minibossAbilities.ChestLaser(2);
+        yield return new WaitForSeconds(3);
+        Assert.Greater(innerTrigger.counter, 0);
+    }
+
+    [UnityTest]
     public IEnumerator Circle()
     {
         Ellipse ellipse = GameObject.Instantiate(ellipsePrefab).GetComponent<Ellipse>();
