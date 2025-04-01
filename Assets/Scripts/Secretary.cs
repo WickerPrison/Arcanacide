@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class Secretary : MonoBehaviour
 {
     [SerializeField] GameObject dialoguePrefab;
     [SerializeField] MapData mapData;
+    [SerializeField] EventReference sfx;
     InputManager im;
     SoundManager sm;
     DialogueScript dialogue;
@@ -58,6 +60,7 @@ public class Secretary : MonoBehaviour
             case 0:
                 tracker += 1;
                 dialogue.SetText(dialogue2);
+                RuntimeManager.PlayOneShot(sfx, 2);
                 break;
             case 1:
                 tracker += 1;
