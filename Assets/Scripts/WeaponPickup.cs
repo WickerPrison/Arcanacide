@@ -45,6 +45,7 @@ public class WeaponPickup : MonoBehaviour
         if (playerDistance <= interactDistance)
         {
             playerData.unlockedWeapons.Add(weaponID);
+            playerData.newWeapon = true;
             TriggerTutorial();
             Destroy(gameObject);
         }
@@ -52,9 +53,9 @@ public class WeaponPickup : MonoBehaviour
 
     void TriggerTutorial()
     {
-            tutorialManager = im.gameObject.GetComponent<TutorialManager>();
-            im.controls.Tutorial.Disable();
-            tutorialManager.Tutorial("New Weapon");
+        tutorialManager = im.gameObject.GetComponent<TutorialManager>();
+        im.controls.Tutorial.Disable();
+        tutorialManager.Tutorial("New Weapon");
     }
 
     private void OnDisable()

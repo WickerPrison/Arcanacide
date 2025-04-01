@@ -11,10 +11,12 @@ public class RestMenuButtons : MonoBehaviour
     [SerializeField] GameObject emblemMenuPrefab;
     [SerializeField] GameObject levelUpMenuPrefab;
     [SerializeField] GameObject gemMenuPrefab;
+    [SerializeField] GameObject refundStoneNew;
     [SerializeField] GameObject mapMenuPrefab;
     [SerializeField] GameObject textMenuPrefab;
+    [SerializeField] GameObject textNewMessage;
     [SerializeField] GameObject weaponMenuPrefab;
-    [SerializeField] GameObject newMessage;
+    [SerializeField] GameObject weaponNew;
     [SerializeField] DialogueData dialogueData;
     public Vector3 mapPlayerFacePosition;
     public GameObject firstButton;
@@ -47,13 +49,20 @@ public class RestMenuButtons : MonoBehaviour
         playerScript = player.gameObject.GetComponent<PlayerScript>();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);
+
+        weaponNew.SetActive(playerData.newWeapon);
     }
 
     private void Update()
     {
         if (dialogueData.GetNewMessages().Count == 0)
         {
-            newMessage.SetActive(false);
+            textNewMessage.SetActive(false);
+        }
+
+        if (playerData.currentGemShards < 3)
+        {
+            refundStoneNew.SetActive(false);
         }
     }
 
@@ -96,6 +105,8 @@ public class RestMenuButtons : MonoBehaviour
         sm.ButtonSound();
         weaponMenu = Instantiate(weaponMenuPrefab);
         weaponMenu.GetComponent<WeaponMenu>().restMenu = this;
+        weaponNew.SetActive(false);
+        playerData.newWeapon = false;
         controls.Disable();
     }
 
