@@ -64,7 +64,6 @@ public class HealingGemMenu : MonoBehaviour
 
     public void OpenRestMenu()
     {
-        Debug.Log("open rest menu");
         sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);

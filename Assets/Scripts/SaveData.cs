@@ -39,6 +39,7 @@ public class SaveData
     public int killedEnemiesAtGetShield;
     public List<int> unlockedWeapons;
     public int currentWeapon;
+    public bool newWeapon;
 
     public int[] unlockedDoors;
     public int[] visitedRooms;
@@ -99,6 +100,7 @@ public class SaveData
         killedEnemiesAtGetShield = playerData.killedEnemiesAtGetShield;
         unlockedWeapons = playerData.unlockedWeapons;
         currentWeapon = playerData.currentWeapon;
+        newWeapon = playerData.newWeapon;
 
 
         unlockedDoors = mapData.unlockedDoors.ToArray();

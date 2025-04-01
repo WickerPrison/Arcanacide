@@ -7,6 +7,7 @@ public class PatchEffects : MonoBehaviour
     //Input in inspector
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
+    [SerializeField] GameObject arcaneStepHolderPrefab;
     [SerializeField] GameObject pathTrailPrefab;
     [SerializeField] AttackProfiles parryProfile;
 
@@ -54,6 +55,8 @@ public class PatchEffects : MonoBehaviour
 
     float recklessAttackHealthMax = 0.3f;
 
+
+    [System.NonSerialized] public List<PathTrail> pathTrails = new List<PathTrail>();
 
     private void Awake()
     {
@@ -223,6 +226,7 @@ public class PatchEffects : MonoBehaviour
         GameObject pathTrail;
         pathTrail = Instantiate(pathTrailPrefab);
         pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        pathTrail.GetComponent<PathTrail>().pathTrails = pathTrails;
     }
 
     public void ArcaneStepDodgeThrough()
@@ -251,7 +255,6 @@ public class PatchEffects : MonoBehaviour
         playerEvents.onPlayerStagger += onPlayerStagger;
         GlobalEvents.instance.onEnemyKilled += onEnemyKilled;
     }
-
 
     private void OnDisable()
     {

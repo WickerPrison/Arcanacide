@@ -23,6 +23,7 @@ public class GlobalEvents : MonoBehaviour
     public event Action<GlobalEvents, int> onPlayerGainHealth;
     public event EventHandler<int> onPickupGemShard;
 
+
     private void Awake()
     {
         instance = this;

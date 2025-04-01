@@ -47,6 +47,7 @@ public class PlayerData : ScriptableObject
 
     public List<int> unlockedWeapons;
     public int currentWeapon;
+    public bool newWeapon;
 
     public float swordSpecialTimer;
     public bool clawSpecialOn;
@@ -145,6 +146,7 @@ public class PlayerData : ScriptableObject
         killedEnemiesAtGetShield = 0;
         unlockedWeapons.Clear();
         unlockedWeapons.Add(0);
+        newWeapon = true;
         currentWeapon = 0;
         swordSpecialTimer = 0;
         clawSpecialOn = false;

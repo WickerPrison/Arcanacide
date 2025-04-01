@@ -31,7 +31,7 @@ public class FirstFloorPatches
     }
 
     [UnityTest]
-    public IEnumerator ArcaneStep()
+    public IEnumerator ArcaneStepDamage()
     {
         Time.timeScale = 1;
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -56,6 +56,33 @@ public class FirstFloorPatches
         float distance = Vector3.Distance(targetDestination, playerMovement.transform.position);
         Assert.LessOrEqual(distance, 0.1f);
         Assert.Less(enemyScript.health, enemyScript.maxHealth);
+    }
+
+    [UnityTest]
+    public IEnumerator ArcaneStepCount()
+    {
+        Time.timeScale = 1;
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerData.equippedPatches.Add(Patches.ARCANE_STEP);
+        PatchEffects patchEffects = playerScript.gameObject.GetComponent<PatchEffects>();
+        patchEffects.ArcaneStepDodgeThrough();
+
+        PlayerMovement playerMovement = playerScript.GetComponent<PlayerMovement>();
+        playerScript.GainStamina(playerData.MaxStamina());
+
+        playerMovement.moveDirection = Vector3.right;
+        playerMovement.Dodge();
+
+        yield return new WaitForSeconds(0.5f);
+
+        Assert.AreEqual(5, patchEffects.pathTrails.Count);
+
+        playerMovement.moveDirection = -Vector3.right;
+        playerMovement.Dodge();
+
+        yield return new WaitForSeconds(0.5f);
+
+        Assert.AreEqual(6, patchEffects.pathTrails.Count);
     }
 
     [UnityTest]

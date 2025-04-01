@@ -131,6 +131,7 @@ public class GameManager : MonoBehaviour
             playerData.killedEnemiesAtGetShield = data.killedEnemiesAtGetShield;
             playerData.unlockedWeapons = data.unlockedWeapons;
             playerData.currentWeapon = data.currentWeapon;
+            playerData.newWeapon = data.newWeapon;
             playerData.swordSpecialTimer = 0;
             playerData.clawSpecialOn = false;
             playerData.clawSpecialTimer = 0;
@@ -262,6 +263,7 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Add(0);
         playerData.unlockedWeapons.Add(1);
         playerData.currentWeapon = 0;
+        playerData.newWeapon = true;
         playerData.swordSpecialTimer = 0;
         playerData.clawSpecialOn = false;
         playerData.clawSpecialTimer = 0;
@@ -339,6 +341,7 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Add(1);
         playerData.unlockedWeapons.Add(2);
         playerData.currentWeapon = 0;
+        playerData.newWeapon = true;
         playerData.swordSpecialTimer = 0;
         playerData.clawSpecialOn = false;
         playerData.clawSpecialTimer = 0;
@@ -422,6 +425,7 @@ public class GameManager : MonoBehaviour
         playerData.unlockedWeapons.Add(2);
         playerData.unlockedWeapons.Add(3);
         playerData.currentWeapon = 0;
+        playerData.newWeapon = true;
         playerData.swordSpecialTimer = 0;
         playerData.clawSpecialOn = false;
         playerData.clawSpecialTimer = 0;

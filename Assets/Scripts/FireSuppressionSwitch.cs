@@ -15,12 +15,15 @@ public class FireSuppressionSwitch : MonoBehaviour, IFlipOn
     float playerDistance = 100;
     float interactDistance = 2;
     public event EventHandler onFixed;
+    ButtonPrompt buttonPrompt;
 
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => FlipSwitch();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        buttonPrompt = GetComponentInChildren<ButtonPrompt>();
+        SetButtonPrompt(mapData.fireSuppressionState);
 
         switch (mapData.fireSuppressionState)
         {
@@ -71,6 +74,7 @@ public class FireSuppressionSwitch : MonoBehaviour, IFlipOn
                 mapData.fireSuppressionState = FireSuppressionState.FIXED;
                 break;
         }
+        SetButtonPrompt(mapData.fireSuppressionState);
     }
 
     public void FlipOn()
@@ -81,5 +85,20 @@ public class FireSuppressionSwitch : MonoBehaviour, IFlipOn
             wayFaerie.Clear();
             onFixed?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    void SetButtonPrompt(FireSuppressionState state)
+    {
+        string promptText = "";
+        switch (state)
+        {
+            case FireSuppressionState.ON:
+                promptText = "Try turning it off";
+                break;
+            case FireSuppressionState.OFF:
+                promptText = "And on again";
+                break;
+        }
+        buttonPrompt.prompt = $"|: {promptText}";
     }
 }

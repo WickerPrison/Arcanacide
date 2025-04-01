@@ -267,6 +267,12 @@ public class MinibossAbilities : MonoBehaviour
 
     public void ChestLaser(int sweepsCount)
     {
+        if(Mathf.Abs(transform.position.z - playerScript.transform.position.z) > 6
+           || Mathf.Abs(transform.position.x - playerScript.transform.position.x) > 8)
+        {
+            MissileAttack();
+            return;
+        }
         enemyController.state = EnemyState.ATTACKING;
         enemyController.frontAnimator.Play("ChestLaserStart");
         enemyController.backAnimator.Play("ChestLaserStart");

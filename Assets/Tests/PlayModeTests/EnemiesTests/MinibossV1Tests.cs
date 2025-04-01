@@ -7,9 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class MinibossV1Tests
 {
-    GameObject testDummyPrefab;
     PlayerData playerData;
-    EmblemLibrary emblemLibrary;
+    MapData mapData;
     GameObject minibossPrefab;
     TestingTrigger triggerPrefab;
     GameObject ellipsePrefab;
@@ -21,9 +20,8 @@ public class MinibossV1Tests
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
         playerData.hasHealthGem = true;
-        emblemLibrary = Resources.Load<EmblemLibrary>("Data/EmblemLibrary");
-
-        testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
+        mapData = Resources.Load<MapData>("Data/MapData");
+        mapData.miniboss1Killed = false;
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
@@ -75,6 +73,36 @@ public class MinibossV1Tests
         minibossAbilities.ChestLaser(2);
         yield return new WaitForSeconds(3);
         Assert.Less(playerData.health, playerData.MaxHealth() + 100);
+    }
+
+    [UnityTest]
+    public IEnumerator LaserFromOffscreenZ()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(0, 0, 6.1f);
+        TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
+        innerTrigger.callback = collider => collider.gameObject.GetComponent<Missile>();
+        playerData.health += 100;
+        yield return null;
+
+        minibossAbilities.ChestLaser(2);
+        yield return new WaitForSeconds(3);
+        Assert.Greater(innerTrigger.counter, 0);
+    }
+
+    [UnityTest]
+    public IEnumerator LaserFromOffscreenX()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(8.1f, 0, 0);
+        TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
+        innerTrigger.callback = collider => collider.gameObject.GetComponent<Missile>();
+        playerData.health += 100;
+        yield return null;
+
+        minibossAbilities.ChestLaser(2);
+        yield return new WaitForSeconds(3);
+        Assert.Greater(innerTrigger.counter, 0);
     }
 
     [UnityTest]
