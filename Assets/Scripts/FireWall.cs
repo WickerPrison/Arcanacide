@@ -8,6 +8,7 @@ using UnityEngine;
 public class FireWall : MonoBehaviour
 {
     [SerializeField] EventReference fmodEvent;
+    [SerializeField] EventReference playerImpactSFX;
     [SerializeField] FireSuppressionSwitch fireSuppressionSwitch;
     [SerializeField] Color redColor;
     [SerializeField] SpriteRenderer grate;
@@ -63,6 +64,7 @@ public class FireWall : MonoBehaviour
             {
                 playerScript = collision.gameObject.GetComponent<PlayerScript>();
             }
+            RuntimeManager.PlayOneShot(playerImpactSFX, 1, transform.position);
             playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
             playerScript.StartStagger(0.5f);
         }
