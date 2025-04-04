@@ -66,7 +66,7 @@ public class FileTicket : MonoBehaviour, IBlockDoors
         {
             ticketState = TicketState.FILED;
         }
-        else if(!mapData.miniboss1Killed)
+        else if(!mapData.miniboss1Killed && buildMode.buildMode != BuildModes.DEMO)
         {
             ticketState = TicketState.DISABLED;
         }
