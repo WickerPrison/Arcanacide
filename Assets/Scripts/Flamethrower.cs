@@ -14,7 +14,7 @@ public class Flamethrower : EnemyController
     [SerializeField] int selfDestructDamage;
     [SerializeField] float selfDestructPoiseDamage;
     FacePlayer facePlayer;
-    bool isShooting = false;
+    [System.NonSerialized] public bool isShooting = false;
     float damageBuildup = 0;
     [SerializeField] float flamethrowerDamage;
     float flameTimer = 0;
@@ -69,7 +69,7 @@ public class Flamethrower : EnemyController
         }
     }
 
-    void Attack()
+    public void Attack()
     {
         state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;
@@ -77,6 +77,7 @@ public class Flamethrower : EnemyController
         frontAnimator.Play("Attack");
         backAnimator.Play("Attack");
     }
+
     void Artillery()
     {
         state = EnemyState.ATTACKING;
