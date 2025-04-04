@@ -43,6 +43,14 @@ public class Doorway : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        if(blockDoorsObject != null)
+        {
+            blockDoors = blockDoorsObject.GetComponent<IBlockDoors>();
+        }
+    }
+
     void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
@@ -154,6 +162,7 @@ public class Doorway : MonoBehaviour
     {
         doorBlocked = isBlocked;
     }
+
     private void OnEnable()
     {
         if(blockDoors != null)
