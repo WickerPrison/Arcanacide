@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LightningBolt : MonoBehaviour
 {
-    [SerializeField] int pointNum = 2;
-    [SerializeField] Transform startPoint;
-    [SerializeField] Transform endPoint;
+    public int pointNum = 2;
+    public Transform startPoint;
+    public Transform endPoint;
     public LineRenderer lineRenderer;
     public float noiseAmp = 1;
     public float endNoiseAmp = 1;
@@ -14,7 +14,7 @@ public class LightningBolt : MonoBehaviour
     int forkPointNum = 5;
     [System.NonSerialized] public int frameDivider = 3;
     public int frameCounter = 0;
-    Vector3[] points;
+    [System.NonSerialized] public Vector3[] points;
     Vector3 direction;
     float length;
 
@@ -30,23 +30,16 @@ public class LightningBolt : MonoBehaviour
         if(frameCounter < frameDivider)
         {
             frameCounter += 1;
-            points[pointNum - 1] = endPoint.position + Noise(endNoiseAmp);
+            if(endPoint != null)
+            {
+                points[pointNum - 1] = endPoint.position + Noise(endNoiseAmp);
+            }
             lineRenderer.SetPositions(points);
             return;
         }
 
-        direction = endPoint.position - startPoint.position;
-        length = Vector3.Distance(startPoint.position, endPoint.position);
-
         frameCounter = 0;
-        points[0] = startPoint.position;
-        for(int i = 1; i < pointNum - 1; i++)
-        {
-            float distance = length * i / (pointNum - 1);
-            Vector3 position = startPoint.position + direction.normalized * distance + Noise(noiseAmp);
-            points[i] = position;
-        }
-        points[pointNum - 1] = endPoint.position + Noise(endNoiseAmp);
+        PlacePoints();
         lineRenderer.positionCount = points.Length;
         lineRenderer.SetPositions(points);
 
@@ -57,7 +50,21 @@ public class LightningBolt : MonoBehaviour
         }
     }
 
-    Vector3 Noise(float noise)
+    public virtual void PlacePoints()
+    {
+        direction = endPoint.position - startPoint.position;
+        length = Vector3.Distance(startPoint.position, endPoint.position);
+        points[0] = startPoint.position;
+        for (int i = 1; i < pointNum - 1; i++)
+        {
+            float distance = length * i / (pointNum - 1);
+            Vector3 position = startPoint.position + direction.normalized * distance + Noise(noiseAmp);
+            points[i] = position;
+        }
+        points[pointNum - 1] = endPoint.position + Noise(endNoiseAmp);
+    }
+
+    public Vector3 Noise(float noise)
     {
         Vector3 noiseVector;
         float x = Random.Range(-1f, 1f);

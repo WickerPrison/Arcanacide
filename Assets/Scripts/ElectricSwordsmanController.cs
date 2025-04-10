@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ElectricSwordsmanController : EnemyController
 {
     StepWithAttack stepWithAttack;
     FacePlayer facePlayer;
+    public event EventHandler onCloseRing;
+    [SerializeField] GameObject electricRingPrefab;
 
     public override void Start()
     {
@@ -40,7 +43,7 @@ public class ElectricSwordsmanController : EnemyController
 
     void Attack()
     {
-        int num = Random.Range(0, 3);
+        int num = UnityEngine.Random.Range(0, 3);
         if (num <= 1)
         {
             frontAnimator.SetBool("TripleAttack", false);
