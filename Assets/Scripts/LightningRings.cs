@@ -19,6 +19,7 @@ public class LightningRings : MonoBehaviour
     float closingTimer;
     bool closing;
     [SerializeField] Material lightningMat;
+    EnemyEvents enemyEvents;
 
     public event EventHandler<float> onSetRadius;
     public event EventHandler<Transform> onSetTarget;
@@ -100,18 +101,38 @@ public class LightningRings : MonoBehaviour
         closingTimer = closeMaxTime;
     }
 
-    private void OnEnable()
+    void InterruptRing()
+    {
+        Destroy(gameObject);
+    }
+
+    public void SetupEvents()
     {
         electricSwordsman.onCloseRing += ElectricSwordsman_onCloseRing;
+        enemyEvents = electricSwordsman.GetComponent<EnemyEvents>();
+        enemyEvents.OnStartDying += EnemyEvents_OnStartDying;
+        enemyEvents.OnStagger += EnemyEvents_OnStagger;
     }
 
     private void OnDisable()
     {
         electricSwordsman.onCloseRing -= ElectricSwordsman_onCloseRing;
+        enemyEvents.OnStartDying -= EnemyEvents_OnStartDying;
+        enemyEvents.OnStagger -= EnemyEvents_OnStagger;
     }
 
     private void ElectricSwordsman_onCloseRing(object sender, EventArgs e)
     {
         StartCoroutine(StartClosing());
+    }
+
+    private void EnemyEvents_OnStagger(object sender, EventArgs e)
+    {
+        InterruptRing();
+    }
+
+    private void EnemyEvents_OnStartDying(object sender, EventArgs e)
+    {
+        InterruptRing();
     }
 }

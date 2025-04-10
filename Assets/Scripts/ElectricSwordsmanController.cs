@@ -9,6 +9,7 @@ public class ElectricSwordsmanController : EnemyController
     FacePlayer facePlayer;
     public event EventHandler onCloseRing;
     [SerializeField] GameObject electricRingPrefab;
+    LightningRings rings;
 
     public override void Start()
     {
@@ -31,7 +32,17 @@ public class ElectricSwordsmanController : EnemyController
 
             if (attackTime <= 0)
             {
-                Attack();
+                float randfloat = UnityEngine.Random.Range(0f, 1f);
+                if (randfloat < 0.8f)
+                {
+                    Attack();
+                }
+                else
+                {
+                    frontAnimator.Play("Rings");
+                    backAnimator.Play("Rings");
+                    state = EnemyState.ATTACKING;
+                }
             }
         }
 
@@ -72,5 +83,20 @@ public class ElectricSwordsmanController : EnemyController
         projectile.spellDamage = spellAttackDamage;
         projectile.poiseDamage = spellAttackPoiseDamage;
         projectile.enemyOfOrigin = enemyScript;
+    }
+
+    public override void SpecialAbility()
+    {
+        rings = Instantiate(electricRingPrefab).GetComponent<LightningRings>();
+        rings.target = playerScript.transform;
+        rings.enemyOfOrigin = enemyScript;
+        rings.electricSwordsman = this;
+        rings.SetupEvents();
+    }
+
+    public override void SpecialAbilityOff()
+    {
+        onCloseRing?.Invoke(this, EventArgs.Empty);
+        attackTime = attackMaxTime;
     }
 }
