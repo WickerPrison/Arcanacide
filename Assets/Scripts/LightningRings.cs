@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //using UnityEditor;
 using System;
+using FMODUnity;
 
 public class LightningRings : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class LightningRings : MonoBehaviour
     bool closing;
     [SerializeField] Material lightningMat;
     EnemyEvents enemyEvents;
+    [SerializeField] EventReference playerImpactSFX;
+    [SerializeField] float impactSFXvolume;
 
     public event EventHandler<float> onSetRadius;
     public event EventHandler<Transform> onSetTarget;
@@ -57,6 +60,7 @@ public class LightningRings : MonoBehaviour
                 {
                     playerScript.LoseHealth(15, EnemyAttackType.PROJECTILE, enemyOfOrigin);
                     playerScript.LosePoise(100);
+                    RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
                     StartCoroutine(HitDelay());
                 }
                 else if (playerScript.gameObject.layer == 8)

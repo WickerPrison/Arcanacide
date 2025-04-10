@@ -39,9 +39,8 @@ public class ElectricSwordsmanController : EnemyController
                 }
                 else
                 {
-                    frontAnimator.Play("Rings");
-                    backAnimator.Play("Rings");
-                    state = EnemyState.ATTACKING;
+
+                    StartRings();
                 }
             }
         }
@@ -52,7 +51,7 @@ public class ElectricSwordsmanController : EnemyController
         }
     }
 
-    void Attack()
+    public void Attack()
     {
         int num = UnityEngine.Random.Range(0, 3);
         if (num <= 1)
@@ -83,6 +82,13 @@ public class ElectricSwordsmanController : EnemyController
         projectile.spellDamage = spellAttackDamage;
         projectile.poiseDamage = spellAttackPoiseDamage;
         projectile.enemyOfOrigin = enemyScript;
+    }
+
+    public void StartRings()
+    {
+        frontAnimator.Play("Rings");
+        backAnimator.Play("Rings");
+        state = EnemyState.ATTACKING;
     }
 
     public override void SpecialAbility()
