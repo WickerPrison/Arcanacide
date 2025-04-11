@@ -24,6 +24,8 @@ public class LightningRings : MonoBehaviour
     float closingTimer;
     [SerializeField] Material lightningMat;
     EnemyEvents enemyEvents;
+    EnemySound enemySound;
+    [SerializeField] EventReference lightningSound;
     [SerializeField] EventReference playerImpactSFX;
     [SerializeField] float impactSFXvolume;
     [System.NonSerialized] public LightningRingsState state;
@@ -41,6 +43,7 @@ public class LightningRings : MonoBehaviour
 
     private void Start()
     {
+        enemySound = enemyOfOrigin.GetComponentInChildren<EnemySound>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         target = playerScript.transform;
         onSetTarget?.Invoke(this, target);
@@ -76,8 +79,8 @@ public class LightningRings : MonoBehaviour
             {
                 if(playerScript.gameObject.layer == 3)
                 {
-                    playerScript.LoseHealth(15, EnemyAttackType.PROJECTILE, enemyOfOrigin);
-                    playerScript.LosePoise(100);
+                    playerScript.LoseHealth(electricSwordsman.spellAttackDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
+                    playerScript.LosePoise(electricSwordsman.spellAttackPoiseDamage);
                     RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
                     StartCoroutine(HitDelay());
                 }
@@ -92,6 +95,7 @@ public class LightningRings : MonoBehaviour
     public void StartRings()
     {
         state = LightningRingsState.FOLLOW;
+        enemySound.Play(lightningSound, 0.6f);
         radius = maxRadius;
         onSetRadius?.Invoke(this, radius);
         onShowRings?.Invoke(this, true);
@@ -122,6 +126,7 @@ public class LightningRings : MonoBehaviour
     {
         state = LightningRingsState.DISABLED;
         onShowRings?.Invoke(this, false);
+        enemySound.Stop();
     }
 
     private void OnEnable()

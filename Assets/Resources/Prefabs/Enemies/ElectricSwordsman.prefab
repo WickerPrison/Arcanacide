@@ -158,6 +158,13 @@ MonoBehaviour:
   halfWidth: 0.5
   target: {fileID: 0}
   lightningMat: {fileID: 2100000, guid: 9f6000633472bbe4ea25e1f7378859f3, type: 2}
+  lightningSound:
+    Guid:
+      Data1: -427598268
+      Data2: 1222271980
+      Data3: -839688012
+      Data4: 1713713269
+    Path: event:/LightningThrower
   playerImpactSFX:
     Guid:
       Data1: -1101567947
@@ -1076,10 +1083,10 @@ MonoBehaviour:
   detectRange: 10
   attackRange: 0
   projectilePrefab: {fileID: 5136710171136204464, guid: fb78a61d803884a45b3b8e2485b07a73, type: 3}
-  spellAttackDamage: 0
-  spellAttackPoiseDamage: 15
-  hitDamage: 0
-  hitPoiseDamage: 0
+  spellAttackDamage: 40
+  spellAttackPoiseDamage: 100
+  hitDamage: 20
+  hitPoiseDamage: 20
   rings: {fileID: 2076900721683661243}
 --- !u!114 &2546945707517678028
 MonoBehaviour:
@@ -1093,7 +1100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reward: 10
+  reward: 70
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
@@ -3576,6 +3583,10 @@ PrefabInstance:
     - target: {fileID: 4259516015393706199, guid: 80890f0515b60f747a1ff5ba7f8abc23, type: 3}
       propertyPath: yOffset
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259516015393706199, guid: 80890f0515b60f747a1ff5ba7f8abc23, type: 3}
+      propertyPath: halfConeAngle
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 5152996951802296328, guid: 80890f0515b60f747a1ff5ba7f8abc23, type: 3}
       propertyPath: m_Name

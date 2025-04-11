@@ -76,7 +76,8 @@ public class ElectricSwordsmanController : EnemyController
         base.AttackHit(smearSpeed);
 
         EnemySlashProjectile projectile = Instantiate(projectilePrefab).GetComponent<EnemySlashProjectile>();
-        projectile.transform.position = facePlayer.attackPoint.position + Vector3.up * 1.3f;
+        Vector3 attackPointDir = Vector3.Normalize(facePlayer.attackPoint.position - transform.position);
+        projectile.transform.position = facePlayer.attackPoint.position + Vector3.up * 1.3f + attackPointDir * 1.5f;
         projectile.direction = Vector3.Normalize(facePlayer.attackPoint.position - transform.position);
         projectile.enemyOfOrigin = enemyScript;
     }
