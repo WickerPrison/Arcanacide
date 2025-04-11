@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     public int spellDamage;
     public int poiseDamage;
     public int speed;
-    [SerializeField] EventReference playerImpactSFX;
+    public EventReference playerImpactSFX;
     public EventReference impactSFX;
 
     public float impactSFXvolume;
