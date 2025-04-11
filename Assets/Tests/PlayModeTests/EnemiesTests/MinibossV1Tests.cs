@@ -25,7 +25,7 @@ public class MinibossV1Tests
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
-        Time.timeScale = 1;
+        Time.timeScale = 4;
     }
 
     [UnityTest]
@@ -66,6 +66,8 @@ public class MinibossV1Tests
     public IEnumerator ChestLaser()
     {
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
         playerData.health += 100;
         yield return null;
@@ -79,6 +81,8 @@ public class MinibossV1Tests
     public IEnumerator LaserFromOffscreenZ()
     {
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
         minibossAbilities.transform.position = new Vector3(0, 0, 6.1f);
         TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
         innerTrigger.callback = collider => collider.gameObject.GetComponent<Missile>();
@@ -94,6 +98,8 @@ public class MinibossV1Tests
     public IEnumerator LaserFromOffscreenX()
     {
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
         minibossAbilities.transform.position = new Vector3(8.1f, 0, 0);
         TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
         innerTrigger.callback = collider => collider.gameObject.GetComponent<Missile>();

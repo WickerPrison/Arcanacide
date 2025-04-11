@@ -20,7 +20,7 @@ public class ElectricSwordsmanTest
         playerData.hasHealthGem = true;
         mapData = Resources.Load<MapData>("Data/MapData");
         swordsmanPrefab = Resources.Load<GameObject>("Prefabs/Enemies/ElectricSwordsman");
-        Time.timeScale = 1;
+        Time.timeScale = 4;
     }
 
     [UnityTest]
@@ -31,7 +31,7 @@ public class ElectricSwordsmanTest
         yield return null;
 
         swordsman.Attack();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
 
@@ -48,6 +48,22 @@ public class ElectricSwordsmanTest
     }
 
     [UnityTest]
+    public IEnumerator MulitpleRings()
+    {
+        ElectricSwordsmanController swordsman = GameObject.Instantiate(swordsmanPrefab).GetComponent<ElectricSwordsmanController>();
+        swordsman.transform.position = new Vector3(5f, 0, 5f);
+        yield return null;
+
+        swordsman.StartRings();
+        yield return new WaitForSeconds(6);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+        float health = playerData.health;
+        swordsman.StartRings();
+        yield return new WaitForSeconds(6);
+        Assert.Less(playerData.health, health);
+    }
+
+    [UnityTest]
     public IEnumerator RingInterruptedByStagger()
     {
         ElectricSwordsmanController swordsman = GameObject.Instantiate(swordsmanPrefab).GetComponent<ElectricSwordsmanController>();
@@ -58,7 +74,22 @@ public class ElectricSwordsmanTest
         yield return new WaitForSeconds(3);
         EnemyScript enemyScript = swordsman.GetComponent<EnemyScript>();
         enemyScript.StartStagger(5f);
+        yield return new WaitForSeconds(1);
+        Assert.AreEqual(LightningRingsState.DISABLED, swordsman.rings.state);    
+    }
+
+    [UnityTest]
+    public IEnumerator RingInterruptedByDeath()
+    {
+        ElectricSwordsmanController swordsman = GameObject.Instantiate(swordsmanPrefab).GetComponent<ElectricSwordsmanController>();
+        swordsman.transform.position = new Vector3(5f, 0, 5f);
+        yield return null;
+
+        swordsman.StartRings();
         yield return new WaitForSeconds(3);
-        Assert.AreEqual(playerData.health, playerData.MaxHealth());
+        EnemyScript enemyScript = swordsman.GetComponent<EnemyScript>();
+        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        yield return new WaitForSeconds(1);
+        Assert.AreEqual(LightningRingsState.DISABLED, swordsman.rings.state);
     }
 }

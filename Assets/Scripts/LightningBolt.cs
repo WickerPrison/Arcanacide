@@ -10,7 +10,7 @@ public class LightningBolt : MonoBehaviour
     public LineRenderer lineRenderer;
     public float noiseAmp = 1;
     public float endNoiseAmp = 1;
-    [SerializeField] List<LineRenderer> forks = new List<LineRenderer>();
+    public List<LineRenderer> forks = new List<LineRenderer>();
     int forkPointNum = 5;
     [System.NonSerialized] public int frameDivider = 3;
     public int frameCounter = 0;
@@ -25,7 +25,7 @@ public class LightningBolt : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if(frameCounter < frameDivider)
         {

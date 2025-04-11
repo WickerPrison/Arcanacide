@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEditor;
 using System;
 using FMODUnity;
+
+public enum LightningRingsState
+{
+    DISABLED, FOLLOW, PAUSE, CLOSING
+}
 
 public class LightningRings : MonoBehaviour
 {
@@ -18,42 +22,56 @@ public class LightningRings : MonoBehaviour
     WaitForSeconds hitDelay = new WaitForSeconds(0.4f);
     float closeMaxTime = 0.5f;
     float closingTimer;
-    bool closing;
     [SerializeField] Material lightningMat;
     EnemyEvents enemyEvents;
     [SerializeField] EventReference playerImpactSFX;
     [SerializeField] float impactSFXvolume;
+    [System.NonSerialized] public LightningRingsState state;
 
     public event EventHandler<float> onSetRadius;
     public event EventHandler<Transform> onSetTarget;
+    public event EventHandler<bool> onShowRings;
 
-    private void OnValidate()
+    private void Awake()
     {
-        onSetRadius?.Invoke(this, radius);
-        onSetTarget?.Invoke(this, target);
+        enemyOfOrigin = GetComponentInParent<EnemyScript>();
+        electricSwordsman = enemyOfOrigin.GetComponent<ElectricSwordsmanController>();
+        enemyEvents = enemyOfOrigin.GetComponent<EnemyEvents>();
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Handles.DrawWireDisc(target.position, Vector3.up, radius + halfWidth);
-    //    Handles.DrawWireDisc(target.position, Vector3.up, radius - halfWidth);
-    //}
 
     private void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        radius = maxRadius;
-        onSetRadius?.Invoke(this, radius);
+        target = playerScript.transform;
         onSetTarget?.Invoke(this, target);
+        transform.SetParent(null);
+
+        DisableRings();
     }
 
     private void FixedUpdate()
     {
-        transform.position = target.position;
+        switch (state)
+        {
+            case LightningRingsState.DISABLED:
+                return;
+            case LightningRingsState.FOLLOW:
+                transform.position = target.position;
+                break;
+            case LightningRingsState.CLOSING:
+                closingTimer -= Time.fixedDeltaTime;
+                radius = Mathf.Lerp(0, maxRadius, closingTimer / closeMaxTime);
+                onSetRadius?.Invoke(this, radius);
+                if (closingTimer <= 0)
+                {
+                    DisableRings();
+                }
+                break;
+        }
 
         if (canHitPlayer)
         {
-            float dist = Vector3.Distance(target.position, playerScript.transform.position);
+            float dist = Vector3.Distance(transform.position, playerScript.transform.position);
             if(dist > radius - halfWidth && dist < radius + halfWidth)
             {
                 if(playerScript.gameObject.layer == 3)
@@ -69,17 +87,14 @@ public class LightningRings : MonoBehaviour
                 }
             }
         }
+    }
 
-        if (closing)
-        {
-            closingTimer -= Time.fixedDeltaTime;
-            radius = Mathf.Lerp(0, maxRadius, closingTimer / closeMaxTime);
-            onSetRadius?.Invoke(this, radius);
-            if(closingTimer <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
+    public void StartRings()
+    {
+        state = LightningRingsState.FOLLOW;
+        radius = maxRadius;
+        onSetRadius?.Invoke(this, radius);
+        onShowRings?.Invoke(this, true);
     }
 
     IEnumerator HitDelay()
@@ -89,54 +104,45 @@ public class LightningRings : MonoBehaviour
         canHitPlayer = true;
     }
 
+    public void CloseRings()
+    {
+        StartCoroutine(StartClosing());
+    }
+
     IEnumerator StartClosing()
     {
-        //Color originalColor = lightningMat.color;
-        //lightningMat.color = Color.white;
-        //lightningMat.SetColor("_EmissionColor", Color.white);
-
-        target = transform;
-        onSetTarget?.Invoke(this, target);
+        state = LightningRingsState.PAUSE;
 
         yield return new WaitForSeconds(0.3f);
-        //lightningMat.color = originalColor;
-        //lightningMat.SetColor("_EmissionColor", originalColor);
-        closing = true;
+        state = LightningRingsState.CLOSING;
         closingTimer = closeMaxTime;
     }
 
-    void InterruptRing()
+    public void DisableRings()
     {
-        Destroy(gameObject);
+        state = LightningRingsState.DISABLED;
+        onShowRings?.Invoke(this, false);
     }
 
-    public void SetupEvents()
+    private void OnEnable()
     {
-        electricSwordsman.onCloseRing += ElectricSwordsman_onCloseRing;
-        enemyEvents = electricSwordsman.GetComponent<EnemyEvents>();
         enemyEvents.OnStartDying += EnemyEvents_OnStartDying;
         enemyEvents.OnStagger += EnemyEvents_OnStagger;
     }
 
     private void OnDisable()
     {
-        electricSwordsman.onCloseRing -= ElectricSwordsman_onCloseRing;
         enemyEvents.OnStartDying -= EnemyEvents_OnStartDying;
         enemyEvents.OnStagger -= EnemyEvents_OnStagger;
     }
 
-    private void ElectricSwordsman_onCloseRing(object sender, EventArgs e)
-    {
-        StartCoroutine(StartClosing());
-    }
-
     private void EnemyEvents_OnStagger(object sender, EventArgs e)
     {
-        InterruptRing();
+        DisableRings();
     }
 
     private void EnemyEvents_OnStartDying(object sender, EventArgs e)
     {
-        InterruptRing();
+        DisableRings();
     }
 }

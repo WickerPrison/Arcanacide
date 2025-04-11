@@ -8,8 +8,7 @@ public class ElectricSwordsmanController : EnemyController
     StepWithAttack stepWithAttack;
     FacePlayer facePlayer;
     public event EventHandler onCloseRing;
-    [SerializeField] GameObject electricRingPrefab;
-    LightningRings rings;
+    public LightningRings rings;
 
     public override void Start()
     {
@@ -79,8 +78,6 @@ public class ElectricSwordsmanController : EnemyController
         EnemySlashProjectile projectile = Instantiate(projectilePrefab).GetComponent<EnemySlashProjectile>();
         projectile.transform.position = facePlayer.attackPoint.position + Vector3.up * 1.3f;
         projectile.direction = Vector3.Normalize(facePlayer.attackPoint.position - transform.position);
-        projectile.spellDamage = spellAttackDamage;
-        projectile.poiseDamage = spellAttackPoiseDamage;
         projectile.enemyOfOrigin = enemyScript;
     }
 
@@ -93,16 +90,12 @@ public class ElectricSwordsmanController : EnemyController
 
     public override void SpecialAbility()
     {
-        rings = Instantiate(electricRingPrefab).GetComponent<LightningRings>();
-        rings.target = playerScript.transform;
-        rings.enemyOfOrigin = enemyScript;
-        rings.electricSwordsman = this;
-        rings.SetupEvents();
+        rings.StartRings();
     }
 
     public override void SpecialAbilityOff()
     {
-        onCloseRing?.Invoke(this, EventArgs.Empty);
+        rings.CloseRings();
         attackTime = attackMaxTime;
     }
 }
