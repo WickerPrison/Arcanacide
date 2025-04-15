@@ -19,7 +19,7 @@ public class LightningBolt : MonoBehaviour
     float length;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         points = new Vector3[pointNum];
     }

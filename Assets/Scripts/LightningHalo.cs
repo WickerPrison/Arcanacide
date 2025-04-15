@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightningRing : LightningBolt
+public class LightningHalo : LightningBolt
 {
-    float radius = 1;
-    Vector3 targetPos;
-    LightningRings rings;
+    float radius = 0.3f;
     LineRenderer line;
-    bool disabled = true;
+    bool disabled = false;
+    [SerializeField] Transform frontHalo;
+    [SerializeField] Transform backHalo;
+    JeffController jeffController;
 
     private void Awake()
     {
-        rings = GetComponentInParent<LightningRings>();
         line = GetComponent<LineRenderer>();
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        jeffController = GetComponentInParent<JeffController>();
     }
 
     public override void Update()
@@ -24,7 +30,7 @@ public class LightningRing : LightningBolt
 
     public override void PlacePoints()
     {
-        targetPos = transform.parent.position + Vector3.up * 1.3f;
+        Vector3 targetPos = GetTarget();
         float angle = 360 / pointNum;
         startPoint.position = targetPos + Vector3.right * radius;
 
@@ -37,28 +43,35 @@ public class LightningRing : LightningBolt
         }
     }
 
+    Vector3 GetTarget()
+    {
+        if (jeffController.facingFront)
+        {
+            return frontHalo.position;
+        }
+        else
+        {
+            return backHalo.position;
+        }
+    }
+
     private void OnEnable()
     {
-        rings.onSetRadius += Rings_onSetRadius;
-        rings.onShowRings += Rings_onShowRings;
+
     }
 
     private void OnDisable()
     {
-        rings.onSetRadius -= Rings_onSetRadius;
-        rings.onShowRings -= Rings_onShowRings;
+
     }
 
-    private void Rings_onSetRadius(object sender, float newRadius)
-    {
-        radius = newRadius;
-    }
+
 
     private void Rings_onShowRings(object sender, bool showRing)
     {
         disabled = !showRing;
         line.enabled = showRing;
-        foreach(LineRenderer fork in forks)
+        foreach (LineRenderer fork in forks)
         {
             fork.enabled = showRing;
         }
