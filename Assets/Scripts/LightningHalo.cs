@@ -9,7 +9,7 @@ public class LightningHalo : LightningBolt
     bool disabled = false;
     [SerializeField] Transform frontHalo;
     [SerializeField] Transform backHalo;
-    JeffController jeffController;
+    EnemyController enemyController;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class LightningHalo : LightningBolt
     public override void Start()
     {
         base.Start();
-        jeffController = GetComponentInParent<JeffController>();
+        enemyController = GetComponentInParent<EnemyController>();
     }
 
     public override void Update()
@@ -45,7 +45,7 @@ public class LightningHalo : LightningBolt
 
     Vector3 GetTarget()
     {
-        if (jeffController.facingFront)
+        if (enemyController.facingFront)
         {
             return frontHalo.position;
         }
