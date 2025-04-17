@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
             mapData.electricBossKilled = data.electricBossKilled;
+            mapData.carolsDeadFriends = data.carolsDeadFriends.ToList();
             mapData.ACOn = data.ACOn;
             mapData.iceBossKilled = data.iceBossKilled;
             mapData.iceBossPosition = new Vector3(data.iceBossPosition[0], data.iceBossPosition[1], data.iceBossPosition[2]);
@@ -208,6 +209,7 @@ public class GameManager : MonoBehaviour
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
+        mapData.carolsDeadFriends.Clear();
         mapData.ACOn = true;
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
@@ -280,6 +282,7 @@ public class GameManager : MonoBehaviour
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
+        mapData.carolsDeadFriends.Clear();
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
@@ -358,6 +361,7 @@ public class GameManager : MonoBehaviour
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;
+        mapData.carolsDeadFriends.Clear();
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
@@ -442,6 +446,7 @@ public class GameManager : MonoBehaviour
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;
+        mapData.carolsDeadFriends.Clear();
         mapData.iceBossKilled = true;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;

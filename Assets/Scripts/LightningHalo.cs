@@ -55,19 +55,7 @@ public class LightningHalo : LightningBolt
         }
     }
 
-    private void OnEnable()
-    {
-
-    }
-
-    private void OnDisable()
-    {
-
-    }
-
-
-
-    private void Rings_onShowRings(object sender, bool showRing)
+    public void ShowRings(bool showRing)
     {
         disabled = !showRing;
         line.enabled = showRing;

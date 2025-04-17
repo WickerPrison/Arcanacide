@@ -52,6 +52,7 @@ public class SaveData
     public bool fireBossKilled;
     public bool secretaryConvo;
     public bool electricBossKilled;
+    public string[] carolsDeadFriends;
     public bool iceBossKilled;
     public float[] iceBossPosition;
     public int iceBossDirection;
@@ -117,6 +118,7 @@ public class SaveData
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
         electricBossKilled = mapData.electricBossKilled;
+        carolsDeadFriends = mapData.carolsDeadFriends.ToArray();
         iceBossKilled = mapData.iceBossKilled;
         iceBossPosition = new float[3];
         iceBossPosition[0] = mapData.iceBossPosition.x;

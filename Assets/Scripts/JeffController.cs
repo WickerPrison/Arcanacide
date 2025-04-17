@@ -5,9 +5,16 @@ using UnityEngine;
 public class JeffController : LightningThrower
 {
     Dialogue dialogue;
+    [SerializeField] MapData mapData;
 
     public override void Start()
     {
+        if (mapData.carolsDeadFriends.Contains("Jeff"))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         base.Start();
         dialogue = GetComponent<Dialogue>();
         dialogue.SetConversation(0);
@@ -30,6 +37,7 @@ public class JeffController : LightningThrower
     {
         frontAnimator.Play("JeffDeath");
         backAnimator.Play("JeffDeath");
+        mapData.carolsDeadFriends.Add("Jeff");
         GlobalEvents.instance.EnableEnemies(true);
     }
 }
