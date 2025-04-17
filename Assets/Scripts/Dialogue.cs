@@ -10,7 +10,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] GameObject dialoguePrefab;
     [SerializeField] TextAsset CSVfile;
     [SerializeField] string conversationName;
-    [SerializeField] int conversationNum;
+    public int conversationNum;
     [SerializeField] bool stopEnemy;
     [SerializeField] DialogueData dialogueData;
     [SerializeField] bool repeatable = false;
@@ -29,7 +29,7 @@ public class Dialogue : MonoBehaviour
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         conversations = CSVparser.ParseConversation(CSVfile);
-        thisConversation = conversations[conversationNum];
+        SetConversation(conversationNum);
         im.controls.Dialogue.Next.performed += ctx => NextLine();
         if (stopEnemy)
         {
@@ -37,6 +37,12 @@ public class Dialogue : MonoBehaviour
             speed = navAgent.speed;
             enemyController = GetComponentInParent<EnemyController>();
         }
+    }
+
+    public void SetConversation(int num)
+    {
+        thisConversation = conversations[num];
+        currentLineIndex = 0;
     }
 
     public void StartWithCallback(Action callbackFunction)

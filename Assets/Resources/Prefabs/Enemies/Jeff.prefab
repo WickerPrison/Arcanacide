@@ -14062,6 +14062,7 @@ GameObject:
   - component: {fileID: 988199240032593647}
   - component: {fileID: 3602646329045754416}
   - component: {fileID: 743491662109923317}
+  - component: {fileID: 3685967478022929349}
   m_Layer: 6
   m_Name: Jeff
   m_TagString: Enemy
@@ -14129,8 +14130,8 @@ MonoBehaviour:
   frontAnimator: {fileID: 6486486719353426366}
   backAnimator: {fileID: 5702173109856892632}
   navAgent: {fileID: 8828045893570174778}
-  attackMaxTime: 4
-  detectRange: 30
+  attackMaxTime: 3
+  detectRange: 0
   attackRange: 4
   projectilePrefab: {fileID: 0}
   spellAttackDamage: 15
@@ -14241,6 +14242,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e103c4bb860a48746acf2451ac72d4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3685967478022929349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8828045893570174773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543030c0d6bbdab4e9996ade5838c38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endDialogueObject: {fileID: 0}
+  dialoguePrefab: {fileID: 6286585989320248928, guid: 8fb30ecf51e1b064ab6d94ebfcaeaac7, type: 3}
+  CSVfile: {fileID: 4900000, guid: 3dba215af56f3eb4b91f2bdf2ed69bac, type: 3}
+  conversationName: JeffDeath
+  conversationNum: 0
+  stopEnemy: 0
+  dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  repeatable: 0
 --- !u!1 &8864754888026268255
 GameObject:
   m_ObjectHideFlags: 0
