@@ -16,6 +16,12 @@ public class JeffController : LightningThrower
         }
 
         base.Start();
+        StartCoroutine(LateStart());
+    }
+
+    IEnumerator LateStart()
+    {
+        yield return null;
         dialogue = GetComponent<Dialogue>();
         dialogue.SetConversation(0);
         GlobalEvents.instance.EnableEnemies(false);

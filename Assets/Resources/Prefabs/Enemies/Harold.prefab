@@ -10906,6 +10906,7 @@ GameObject:
   - component: {fileID: 8758393458865278076}
   - component: {fileID: 253076549945864614}
   - component: {fileID: 1376157719179638502}
+  - component: {fileID: 4292519919348469814}
   m_Layer: 6
   m_Name: Front
   m_TagString: Untagged
@@ -10921,7 +10922,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3297351678114744101}
   m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
-  m_LocalPosition: {x: -0.142, y: 1.16, z: 0.019}
+  m_LocalPosition: {x: -0.138, y: 1.16, z: 0.019}
   m_LocalScale: {x: -3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10973,6 +10974,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackArc: {fileID: 5117367242238244743}
+--- !u!114 &4292519919348469814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3297351678114744101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77fca41097f84e64abce2a5f561890ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightningHalo: {fileID: 4834846285135283368}
 --- !u!1 &3396523919302579400
 GameObject:
   m_ObjectHideFlags: 0
@@ -27610,6 +27624,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2886480787536798505, guid: 525681d6503391243834149ceb9fc64f, type: 3}
   m_PrefabInstance: {fileID: 3542804795822741968}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4834846285135283368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8228711094089915768, guid: 525681d6503391243834149ceb9fc64f, type: 3}
+  m_PrefabInstance: {fileID: 3542804795822741968}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68ba81b0c4e9aa4caad3f9b32071ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7652531647539205316
 PrefabInstance:
   m_ObjectHideFlags: 0

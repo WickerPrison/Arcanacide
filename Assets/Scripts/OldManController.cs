@@ -16,7 +16,7 @@ public class OldManController : EnemyController
     CapsuleCollider enemyCollider;
     [SerializeField] int chargeDamage;
     bool isColliding;
-    [SerializeField] ParticleSystem staticVFX;
+    public ParticleSystem staticVFX;
     [SerializeField] List<ParticleSystem> attackVFX;
     FacePlayer facePlayer;
 

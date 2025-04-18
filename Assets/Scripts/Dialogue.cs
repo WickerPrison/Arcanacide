@@ -27,8 +27,8 @@ public class Dialogue : MonoBehaviour
 
     public virtual void Start()
     {
-        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         conversations = CSVparser.ParseConversation(CSVfile);
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         SetConversation(conversationNum);
         im.controls.Dialogue.Next.performed += ctx => NextLine();
         if (stopEnemy)
