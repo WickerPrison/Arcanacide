@@ -11,7 +11,7 @@ public class DialogueScript : MonoBehaviour
     [SerializeField] Image speakerImage;
     [SerializeField] Sprite playerImage;
     [SerializeField] Sprite janitorImage;
-    [SerializeField] Sprite mageImage;
+    [SerializeField] Sprite swordsmanImage;
     [SerializeField] Sprite patchworkGaryImage;
     [SerializeField] Sprite headOfITImage;
     [SerializeField] Sprite QuestionMarksImage;
@@ -54,8 +54,8 @@ public class DialogueScript : MonoBehaviour
             {"Catherine Pope", whistleblowerImage },
             {"Ernie", janitorImage },
             {"Patchwork Gary", patchworkGaryImage},
-            {"Mage", mageImage },
-            {"Secretary", mageImage },
+            {"Mage", swordsmanImage },
+            {"Secretary", swordsmanImage },
             {"Head of IT", headOfITImage },
             {"Carol", headOfHRImage },
             {"Agent Frei", freiImage },
@@ -65,6 +65,7 @@ public class DialogueScript : MonoBehaviour
             {"Mysterious Woman", minibossImage },
             {"Jeff", jeffImage },
             {"Harold", haroldImage },
+            {"Arnold", swordsmanImage }
         };
     }
 }
