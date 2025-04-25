@@ -7,14 +7,18 @@ public class HaroldController : OldManController
     Dialogue dialogue;
     [SerializeField] MapData mapData;
 
-    public override void Start()
+    public override void Awake()
     {
+        base.Awake();
         if (mapData.carolsDeadFriends.Contains("Harold"))
         {
             Destroy(gameObject);
             return;
         }
+    }
 
+    public override void Start()
+    {
         base.Start();
         StartCoroutine(LateStart());
     }

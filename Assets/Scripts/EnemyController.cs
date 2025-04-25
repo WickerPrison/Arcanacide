@@ -217,6 +217,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void DisableController()
     {
+        Debug.Log("disable");
         if (state == EnemyState.DYING) return;
         if (state == EnemyState.UNAWARE)
         {

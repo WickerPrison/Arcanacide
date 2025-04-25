@@ -7,14 +7,19 @@ public class ArnoldController : ElectricSwordsmanController
     Dialogue dialogue;
     [SerializeField] MapData mapData;
 
-    public override void Start()
+
+    public override void Awake()
     {
+        base.Awake();
         if (mapData.carolsDeadFriends.Contains("Arnold"))
         {
             Destroy(gameObject);
             return;
         }
+    }
 
+    public override void Start()
+    {
         dialogue = GetComponent<Dialogue>();
         base.Start();
     }
