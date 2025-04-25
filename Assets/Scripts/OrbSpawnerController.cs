@@ -27,7 +27,7 @@ public class OrbSpawnerController : EnemyController
 
     public override void Update()
     {
-        if (state == EnemyState.DYING)
+        if (state == EnemyState.DYING || state == EnemyState.DISABLED)
         {
             return;
         }
@@ -56,7 +56,10 @@ public class OrbSpawnerController : EnemyController
     void SpawnOrb()
     {
         LightningOrbController orb = Instantiate(lightningOrbPrefab).GetComponent<LightningOrbController>();
+        // disabling and reenabling the navagent is a workaround for a bug in the navmesh that causes strange teleportations if you spawn an agent and then immediately set its position.
+        orb.navAgent.enabled = false;
         orb.transform.position = spawnPoint.position;
+        orb.navAgent.enabled = true;
     }
 
     public override void StartDying()
@@ -79,5 +82,20 @@ public class OrbSpawnerController : EnemyController
     public override void StartStagger(float staggerDuration)
     {
         
+    }
+
+    public override void EnableController()
+    {
+        state = EnemyState.IDLE;
+    }
+
+    public override void DisableController()
+    {
+        if (state == EnemyState.DYING) return;
+        if (state == EnemyState.UNAWARE)
+        {
+            gm.awareEnemies += 1;
+        }
+        state = EnemyState.DISABLED;
     }
 }

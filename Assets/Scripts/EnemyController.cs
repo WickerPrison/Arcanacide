@@ -223,6 +223,8 @@ public class EnemyController : MonoBehaviour
             gm.awareEnemies += 1;
         }
         state = EnemyState.DISABLED;
+        navAgent.enabled = false;
+        directionLock = true;
         frontAnimator.Play("Idle");
         backAnimator.Play("Idle");
     }
