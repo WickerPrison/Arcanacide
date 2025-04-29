@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LightningHalo : LightningBolt
 {
-    float radius = 0.3f;
+    [SerializeField] float radius = 0.3f;
     LineRenderer line;
     bool disabled = false;
     [SerializeField] Transform frontHalo;

@@ -41,6 +41,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
     float abilityMaxTime = 5;
     MusicManager musicManager;
     int healthPercent;
+    int livingFriends;
 
     public override void Start()
     {
@@ -60,11 +61,13 @@ public class ElectricBossController : EnemyController, IEndDialogue
             musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            gm.awareEnemies += 1;
-        }
+
+        gm.awareEnemies += 1;
+        livingFriends = 3 - mapData.carolsDeadFriends.Count;
+        enemyScript.maxHealth *= Mathf.RoundToInt(1 + livingFriends / 3f);
+        enemyScript.health = enemyScript.maxHealth;
     }
 
     private void FixedUpdate()
