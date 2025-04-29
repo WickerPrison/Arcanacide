@@ -42,6 +42,16 @@ public class ElectricBossController : EnemyController, IEndDialogue
     MusicManager musicManager;
     int healthPercent;
     int livingFriends;
+    [System.NonSerialized] public float friendshipPower;
+
+    public override void Awake()
+    {
+        base.Awake();
+        livingFriends = 3 - mapData.carolsDeadFriends.Count;
+        friendshipPower = 1 + livingFriends / 3f;
+        enemyScript.maxHealth = Mathf.RoundToInt(enemyScript.maxHealth * friendshipPower);
+        enemyScript.health = enemyScript.maxHealth;
+    }
 
     public override void Start()
     {
@@ -65,9 +75,6 @@ public class ElectricBossController : EnemyController, IEndDialogue
         }
 
         gm.awareEnemies += 1;
-        livingFriends = 3 - mapData.carolsDeadFriends.Count;
-        enemyScript.maxHealth *= Mathf.RoundToInt(1 + livingFriends / 3f);
-        enemyScript.health = enemyScript.maxHealth;
     }
 
     private void FixedUpdate()
@@ -185,7 +192,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         if (playerScript.gameObject.layer == 3)
         {
             enemySound.OtherSounds(0, 2);
-            playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
+            playerScript.LoseHealth(Mathf.RoundToInt(hitDamage * friendshipPower), EnemyAttackType.MELEE, enemyScript);
             playerScript.LosePoise(hitPoiseDamage);
             AdditionalAttackEffects();
         }
@@ -236,6 +243,8 @@ public class ElectricBossController : EnemyController, IEndDialogue
                 hadoken.transform.position = firePoints[frontOrBack].position;
                 hadoken.direction = playerScript.transform.position + new Vector3(0, 1, 0) - firePoints[frontOrBack].position;
                 hadoken.direction = hadoken.RotateByAngle(hadoken.direction, angle);
+                hadoken.spellDamage = Mathf.RoundToInt(hadoken.spellDamage * friendshipPower);
+                hadoken.friendshipPower = friendshipPower;
             }
         }
     }
@@ -309,7 +318,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         if (hitPlayer)
         {
             enemySound.OtherSounds(0, 1);
-            playerScript.LoseHealth(chargeBurstDamage, EnemyAttackType.NONPARRIABLE, null);
+            playerScript.LoseHealth(Mathf.RoundToInt(friendshipPower * chargeBurstDamage), EnemyAttackType.NONPARRIABLE, null);
             playerScript.StartStagger(chargeBurstStagger);
             playerScript.LosePoise(chargeBurstPoiseDamage);
         }
@@ -372,7 +381,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         if (other.gameObject.layer == 3 && charging && !isColliding)
         {
             isColliding = true;
-            playerScript.LoseHealth(chargeDamage, EnemyAttackType.NONPARRIABLE, null);
+            playerScript.LoseHealth(Mathf.RoundToInt(friendshipPower * chargeDamage), EnemyAttackType.NONPARRIABLE, null);
             enemySound.SwordImpact();
         }
         else if (other.gameObject.layer == 8 && charging && !isColliding)
