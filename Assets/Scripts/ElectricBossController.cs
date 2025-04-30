@@ -47,6 +47,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
     public override void Awake()
     {
         base.Awake();
+        enemyScript = GetComponent<EnemyScript>();
         livingFriends = 3 - mapData.carolsDeadFriends.Count;
         friendshipPower = 1 + livingFriends / 3f;
         enemyScript.maxHealth = Mathf.RoundToInt(enemyScript.maxHealth * friendshipPower);
