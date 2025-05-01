@@ -14,6 +14,7 @@ public class BossHalo : MonoBehaviour
         {
             if(i < mapData.carolsDeadFriends.Count)
             {
+                halos[i].ShowRings(false);
                 halos[i].enabled = false;
             }
         }   

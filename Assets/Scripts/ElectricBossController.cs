@@ -136,7 +136,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         }
     }
 
-    void Attack()
+    public void Attack()
     {
         attackTime = attackMaxTime;
         state = EnemyState.ATTACKING;

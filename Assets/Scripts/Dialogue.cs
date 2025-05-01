@@ -88,15 +88,7 @@ public class Dialogue : MonoBehaviour
         currentLineIndex++;
         if(currentLineIndex >= thisConversation.Count)
         {
-            Destroy(dialogueBox.gameObject);
-            inDialogue = false;
-            im.Gameplay();
-            if (stopEnemy)
-            {
-                navAgent.speed = speed;
-            }
-
-            EndDialogue();
+            CloseDialogue();
         }
         else
         {
@@ -104,6 +96,19 @@ public class Dialogue : MonoBehaviour
             dialogueBox.SetImage(currentLine[0]);
             dialogueBox.SetText(currentLine[1]);
         }
+    }
+
+    public void CloseDialogue()
+    {
+        Destroy(dialogueBox.gameObject);
+        inDialogue = false;
+        im.Gameplay();
+        if (stopEnemy)
+        {
+            navAgent.speed = speed;
+        }
+
+        EndDialogue();
     }
 
     public virtual void EndDialogue()
