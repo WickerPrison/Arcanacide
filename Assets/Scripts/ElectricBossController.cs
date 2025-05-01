@@ -28,8 +28,8 @@ public class ElectricBossController : EnemyController, IEndDialogue
     [SerializeField] float chargeSpeed;
     float chargeDelay = 0.7f;
     CapsuleCollider enemyCollider;
-    [SerializeField] int chargeDamage;
-    [SerializeField] int chargeBurstDamage;
+    public int chargeDamage;
+    public int chargeBurstDamage;
     [SerializeField] float chargeBurstPoiseDamage;
     [SerializeField] float chargeBurstStagger;
     bool isColliding;
@@ -37,7 +37,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
     public bool phase2 = false;
     int phaseTrigger = 200;
     [SerializeField] ParticleSystem bodyLightning;
-    float abilityTime;
+    public float abilityTime;
     float abilityMaxTime = 5;
     MusicManager musicManager;
     int healthPercent;
@@ -213,21 +213,36 @@ public class ElectricBossController : EnemyController, IEndDialogue
         switch (randInt)
         {
             case 0:
-                frontAnimator.Play("Beams");
-                backAnimator.Play("Beams");
+                StartBeams();
                 break;
             case 1:
-                frontAnimator.Play("Summon");
-                backAnimator.Play("Summon");
+                StartSummon();
                 break;
             case 2:
                 Charge();
                 break;
-            case 3: 
-                frontAnimator.Play("Hadoken");
-                backAnimator.Play("Hadoken");
+            case 3:
+                StartHadoken();
                 break;
         }
+    }
+
+    public void StartBeams()
+    {
+        frontAnimator.Play("Beams");
+        backAnimator.Play("Beams");
+    }
+
+    public void StartSummon()
+    {
+        frontAnimator.Play("Summon");
+        backAnimator.Play("Summon");
+    }
+
+    public void StartHadoken()
+    {
+        frontAnimator.Play("Hadoken");
+        backAnimator.Play("Hadoken");
     }
 
     public void Hadoken()
@@ -236,6 +251,8 @@ public class ElectricBossController : EnemyController, IEndDialogue
         int frontOrBack = facingFront ? 0 : 1;
         hadoken.transform.position = firePoints[frontOrBack].position;
         hadoken.direction = playerScript.transform.position + new Vector3(0, 1, 0) - firePoints[frontOrBack].position;
+        hadoken.spellDamage = Mathf.RoundToInt(hadoken.spellDamage * friendshipPower);
+        hadoken.friendshipPower = friendshipPower;
         if (phase2)
         {
             foreach(float angle in hadokenAngles)
@@ -250,7 +267,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         }
     }
 
-    void Charge()
+    public void Charge()
     {
         Vector3 playerDirection = playerScript.transform.position - transform.position;
         playerDirection.y = 0;
