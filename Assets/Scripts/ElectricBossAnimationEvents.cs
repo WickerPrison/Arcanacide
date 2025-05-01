@@ -19,6 +19,7 @@ public class ElectricBossAnimationEvents : MeleeEnemyAnimationEvents
     {
         base.Start();
         bossController = GetComponentInParent<ElectricBossController>();
+        beams.friendshipPower = bossController.friendshipPower;
     }
 
     public void SwingSword(int smearSpeed)

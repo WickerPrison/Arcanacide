@@ -9,6 +9,7 @@ public class Hadoken : Projectile
     [SerializeField] GameObject smallerProjectilePrefab;
     [SerializeField] int projectileNum;
     [SerializeField] float spawnRadius;
+    public float friendshipPower;
 
     public override void HitObject(Collider collision)
     {
@@ -26,6 +27,7 @@ public class Hadoken : Projectile
             direction = RotateByAngle(Vector3.forward, angle);
             projectile.transform.position = transform.position + direction * spawnRadius;
             projectile.direction = direction;
+            projectile.spellDamage = Mathf.RoundToInt(friendshipPower * projectile.spellDamage);
         }
     }
 

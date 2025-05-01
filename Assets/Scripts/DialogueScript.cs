@@ -11,7 +11,7 @@ public class DialogueScript : MonoBehaviour
     [SerializeField] Image speakerImage;
     [SerializeField] Sprite playerImage;
     [SerializeField] Sprite janitorImage;
-    [SerializeField] Sprite mageImage;
+    [SerializeField] Sprite swordsmanImage;
     [SerializeField] Sprite patchworkGaryImage;
     [SerializeField] Sprite headOfITImage;
     [SerializeField] Sprite QuestionMarksImage;
@@ -23,6 +23,8 @@ public class DialogueScript : MonoBehaviour
     [SerializeField] Sprite CEOImage;
     [SerializeField] Sprite AssistantImage;
     [SerializeField] Sprite minibossImage;
+    [SerializeField] Sprite jeffImage;
+    [SerializeField] Sprite haroldImage;
     Dictionary<string, Sprite> imageDict;
 
     private void Awake()
@@ -52,8 +54,8 @@ public class DialogueScript : MonoBehaviour
             {"Catherine Pope", whistleblowerImage },
             {"Ernie", janitorImage },
             {"Patchwork Gary", patchworkGaryImage},
-            {"Mage", mageImage },
-            {"Secretary", mageImage },
+            {"Mage", swordsmanImage },
+            {"Secretary", swordsmanImage },
             {"Head of IT", headOfITImage },
             {"Carol", headOfHRImage },
             {"Agent Frei", freiImage },
@@ -61,6 +63,9 @@ public class DialogueScript : MonoBehaviour
             {"CEO", CEOImage },
             {"Assistant", AssistantImage },
             {"Mysterious Woman", minibossImage },
+            {"Jeff", jeffImage },
+            {"Harold", haroldImage },
+            {"Arnold", swordsmanImage }
         };
     }
 }

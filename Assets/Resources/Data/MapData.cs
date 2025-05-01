@@ -37,6 +37,7 @@ public class MapData : ScriptableObject
     public bool secretaryConvo;
 
     public bool electricBossKilled;
+    public List<string> carolsDeadFriends;
 
     public bool iceBossKilled;
     public Vector3 iceBossPosition;

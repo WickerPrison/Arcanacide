@@ -20,12 +20,14 @@ public class MinibossV1Tests
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
         playerData.hasHealthGem = true;
+        playerData.vitality = 30;
+        playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.miniboss1Killed = false;
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
-        Time.timeScale = 4;
+        Time.timeScale = 4f;
     }
 
     [UnityTest]
@@ -69,12 +71,11 @@ public class MinibossV1Tests
         EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
         enemyController.attackTime = 1000;
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
-        playerData.health += 100;
         yield return null;
 
         minibossAbilities.ChestLaser(2);
         yield return new WaitForSeconds(3);
-        Assert.Less(playerData.health, playerData.MaxHealth() + 100);
+        Assert.Less(playerData.health, playerData.MaxHealth());
     }
 
     [UnityTest]
@@ -86,7 +87,6 @@ public class MinibossV1Tests
         minibossAbilities.transform.position = new Vector3(0, 0, 6.1f);
         TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
         innerTrigger.callback = collider => collider.gameObject.GetComponent<Missile>();
-        playerData.health += 100;
         yield return null;
 
         minibossAbilities.ChestLaser(2);
@@ -103,7 +103,6 @@ public class MinibossV1Tests
         minibossAbilities.transform.position = new Vector3(8.1f, 0, 0);
         TestingTrigger innerTrigger = GameObject.Instantiate(triggerPrefab).GetComponent<TestingTrigger>();
         innerTrigger.callback = collider => collider.gameObject.GetComponent<Missile>();
-        playerData.health += 100;
         yield return null;
 
         minibossAbilities.ChestLaser(2);
@@ -118,13 +117,12 @@ public class MinibossV1Tests
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
         minibossAbilities.ellipse = ellipse;
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
-        playerData.health += 300;
         yield return null;
 
         minibossAbilities.Circle();
         MinibossV1Controller minibossController = minibossAbilities.GetComponent<MinibossV1Controller>();
         minibossController.attackTime = 7;
         yield return new WaitForSeconds(5);
-        Assert.Less(playerData.health, playerData.MaxHealth() + 300);
+        Assert.Less(playerData.health, playerData.MaxHealth());
     }
 }

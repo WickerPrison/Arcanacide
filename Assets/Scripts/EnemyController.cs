@@ -51,6 +51,7 @@ public class EnemyController : MonoBehaviour
         enemyEvents = GetComponent<EnemyEvents>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<PlayerScript>();
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     // Start is called before the first frame update
@@ -64,7 +65,6 @@ public class EnemyController : MonoBehaviour
         playerAbilities = player.GetComponent<PlayerAbilities>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         navAgent = GetComponent<NavMeshAgent>();
-        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         startDelay = Random.Range(0.4f, 1);
     }
 
@@ -206,16 +206,53 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    public virtual void EnableController()
+    {
+        state = EnemyState.IDLE;
+        navAgent.enabled = true;
+        directionLock = false;
+        frontAnimator.Play("Idle");
+        backAnimator.Play("Idle");
+    }
+
+    public virtual void DisableController()
+    {
+        Debug.Log("disable");
+        if (state == EnemyState.DYING) return;
+        if (state == EnemyState.UNAWARE)
+        {
+            gm.awareEnemies += 1;
+        }
+        state = EnemyState.DISABLED;
+        navAgent.enabled = false;
+        directionLock = true;
+        frontAnimator.Play("Idle");
+        backAnimator.Play("Idle");
+    }
+
+    private void Global_onEnemiesEnable(object sender, bool setActive)
+    {
+        if (!setActive)
+        {
+            DisableController();
+        }
+        else if (state == EnemyState.DISABLED)
+        {
+            EnableController();
+        }
+    }
+
     public virtual void OnEnable()
     {
         enemyEvents.OnTakeDamage += OnTakeDamage;
         enemyEvents.OnLosePoise += OnLosePoise;
+        GlobalEvents.instance.onEnemiesEnable += Global_onEnemiesEnable;
     }
-
 
     public virtual void OnDisable()
     {
         enemyEvents.OnTakeDamage -= OnTakeDamage;
         enemyEvents.OnLosePoise -= OnLosePoise;
+        GlobalEvents.instance.onEnemiesEnable -= Global_onEnemiesEnable;
     }
 }

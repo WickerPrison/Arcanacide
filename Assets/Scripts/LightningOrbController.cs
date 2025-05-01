@@ -15,7 +15,7 @@ public class LightningOrbController : EnemyController
 
     public override void Update()
     {
-        if (state == EnemyState.DYING)
+        if (state == EnemyState.DYING || state == EnemyState.DISABLED)
         {
             return;
         }
@@ -35,19 +35,10 @@ public class LightningOrbController : EnemyController
                 navAgent.SetDestination(playerScript.transform.position);
             }
 
-            if(attackTime <= 0 && playerDistance <= attackRange)
+            if(playerDistance <= attackRange)
             {
-                attackTime = attackMaxTime;
                 StartCoroutine(SelfDestructCoroutine());
-                //StartCoroutine(AttackCoroutine());
             }
-
-            TowardsPlayer();
-        }
-
-        if (attackTime > 0)
-        {
-            attackTime -= Time.deltaTime;
         }
     }
 
@@ -56,13 +47,6 @@ public class LightningOrbController : EnemyController
         lightning.Stop();
         yield return new WaitForSeconds(selfDestructTime);
         SelfDestruct();
-    }
-
-    void TowardsPlayer()
-    {
-        playerDirection = playerScript.transform.position - transform.position;
-        playerDirection = new Vector3(playerDirection.x, 0, playerDirection.z);
-        attack.transform.rotation = Quaternion.LookRotation(playerDirection.normalized);
     }
 
     public override void StartDying()
@@ -95,5 +79,22 @@ public class LightningOrbController : EnemyController
     public override void StartStagger(float staggerDuration)
     {
         
+    }
+
+    public override void EnableController()
+    {
+        state = EnemyState.IDLE;
+        navAgent.enabled = true;
+    }
+
+    public override void DisableController()
+    {
+        if (state == EnemyState.DYING) return;
+        if (state == EnemyState.UNAWARE)
+        {
+            gm.awareEnemies += 1;
+        }
+        navAgent.enabled = false;
+        state = EnemyState.DISABLED;
     }
 }

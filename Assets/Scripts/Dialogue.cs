@@ -10,7 +10,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] GameObject dialoguePrefab;
     [SerializeField] TextAsset CSVfile;
     [SerializeField] string conversationName;
-    [SerializeField] int conversationNum;
+    public int conversationNum;
     [SerializeField] bool stopEnemy;
     [SerializeField] DialogueData dialogueData;
     [SerializeField] bool repeatable = false;
@@ -27,9 +27,9 @@ public class Dialogue : MonoBehaviour
 
     public virtual void Start()
     {
-        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         conversations = CSVparser.ParseConversation(CSVfile);
-        thisConversation = conversations[conversationNum];
+        im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        SetConversation(conversationNum);
         im.controls.Dialogue.Next.performed += ctx => NextLine();
         if (stopEnemy)
         {
@@ -37,6 +37,12 @@ public class Dialogue : MonoBehaviour
             speed = navAgent.speed;
             enemyController = GetComponentInParent<EnemyController>();
         }
+    }
+
+    public void SetConversation(int num)
+    {
+        thisConversation = conversations[num];
+        currentLineIndex = 0;
     }
 
     public void StartWithCallback(Action callbackFunction)
@@ -82,15 +88,7 @@ public class Dialogue : MonoBehaviour
         currentLineIndex++;
         if(currentLineIndex >= thisConversation.Count)
         {
-            Destroy(dialogueBox.gameObject);
-            inDialogue = false;
-            im.Gameplay();
-            if (stopEnemy)
-            {
-                navAgent.speed = speed;
-            }
-
-            EndDialogue();
+            CloseDialogue();
         }
         else
         {
@@ -98,6 +96,19 @@ public class Dialogue : MonoBehaviour
             dialogueBox.SetImage(currentLine[0]);
             dialogueBox.SetText(currentLine[1]);
         }
+    }
+
+    public void CloseDialogue()
+    {
+        Destroy(dialogueBox.gameObject);
+        inDialogue = false;
+        im.Gameplay();
+        if (stopEnemy)
+        {
+            navAgent.speed = speed;
+        }
+
+        EndDialogue();
     }
 
     public virtual void EndDialogue()

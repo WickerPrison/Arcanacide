@@ -13,6 +13,7 @@ public class Whistleblower : MonoBehaviour
     [SerializeField] int firstTimeConversation;
     [SerializeField] int repeatableConversation;
     [SerializeField] MapData mapData;
+    [SerializeField] float distanceTrigger;
 
     //Setup
     InputManager im;
@@ -45,9 +46,9 @@ public class Whistleblower : MonoBehaviour
         conversations = CSVparser.ParseConversation(csvFile);
     }
 
-    void StartConversation()
+    void StartConversation(bool ignoreInteractDist = false)
     {
-        if (playerDistance > interactDistance)
+        if (!ignoreInteractDist && playerDistance > interactDistance)
         {
             return;
         }
@@ -100,6 +101,12 @@ public class Whistleblower : MonoBehaviour
         FacePlayer();
 
         playerDistance = Vector3.Distance(transform.position, player.position);
+
+        if(playerDistance < distanceTrigger && !dialogueData.whistleBlowerConversations.Contains(firstTimeConversation))
+        {
+            StartConversation(true);
+            return;
+        }
 
         if (playerDistance <= interactDistance)
         {

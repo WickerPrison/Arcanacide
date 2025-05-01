@@ -13,7 +13,7 @@ public class LightningThrower : EnemyController
     FacePlayer facePlayer;
     bool isShocking = false;
     float shockDamageBuildup;
-    float lightningThrowerDamage = 20;
+    [SerializeField] float lightningThrowerDamage;
     float shockTimer = 0;
     [SerializeField] EventReference lightningSFX;
     [SerializeField] float lightningVolume;

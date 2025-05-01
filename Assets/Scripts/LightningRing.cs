@@ -40,20 +40,13 @@ public class LightningRing : LightningBolt
     private void OnEnable()
     {
         rings.onSetRadius += Rings_onSetRadius;
-        rings.onSetTarget += Rings_onSetTarget;
         rings.onShowRings += Rings_onShowRings;
     }
 
     private void OnDisable()
     {
         rings.onSetRadius -= Rings_onSetRadius;
-        rings.onSetTarget -= Rings_onSetTarget;
         rings.onShowRings -= Rings_onShowRings;
-    }
-
-    private void Rings_onSetTarget(object sender, Transform newTarget)
-    {
-        //target = newTarget;
     }
 
     private void Rings_onSetRadius(object sender, float newRadius)
