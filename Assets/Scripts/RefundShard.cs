@@ -11,12 +11,12 @@ public class RefundShard : MonoBehaviour
 
     private void Awake()
     {
+        interactable = GetComponent<Interactable>();
         if (playerData.gemShards.Contains(shardGUID))
         {
             Destroy(this.gameObject);
         }
 
-        interactable = GetComponent<Interactable>();
         interactable.active = true;
         tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
     }
