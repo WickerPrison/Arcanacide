@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinibossV1Controller : EnemyController, IEndDialogue
+public class MinibossV2Controller : EnemyController
 {
     MinibossAbilities abilities;
     [SerializeField] MapData mapData;
-    
 
     public override void Start()
     {
@@ -36,21 +35,21 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
             navAgent.SetDestination(abilities.navMeshDestination.position);
         }
 
-        if(state == EnemyState.IDLE)
+        if (state == EnemyState.IDLE)
         {
-            if(attackTime <= 0)
+            if (attackTime <= 0)
             {
                 attackTime = attackMaxTime;
                 float randFloat;
-                if(playerDistance > 4)
+                if (playerDistance > 4)
                 {
                     randFloat = Random.Range(0, 1f);
 
-                    if(randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
+                    if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
                         abilities.Circle();
                     }
-                    else if(randFloat > 0.4f)
+                    else if (randFloat > 0.4f)
                     {
                         abilities.ChestLaser(2);
                     }
@@ -110,7 +109,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
 
     public void EndDialogue()
     {
-        if(state == EnemyState.DYING)
+        if (state == EnemyState.DYING)
         {
             frontAnimator.Play("FlyAway");
             backAnimator.Play("FlyAway");
