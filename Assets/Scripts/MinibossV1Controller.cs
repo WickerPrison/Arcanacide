@@ -56,7 +56,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
                     }
                     else
                     {
-                        abilities.MissileAttack();
+                        abilities.MissileAttack(MissilePattern.FRONT);
                     }
                 }
                 else
@@ -73,7 +73,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
                     }
                     else if (randFloat > 0.2f)
                     {
-                        abilities.DashAway(abilities.MissileAttack);
+                        abilities.DashAway(() => abilities.MissileAttack(MissilePattern.FRONT));
                     }
                     else
                     {

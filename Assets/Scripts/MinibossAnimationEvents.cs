@@ -25,7 +25,7 @@ public class MinibossAnimationEvents : MonoBehaviour
 
     public void FireMissile()
     {
-        abilities.FireMissiles();
+        abilities.FireMissiles(abilities.missilePattern);
     }
 
     public void StartAttackDash(string endAnimation)

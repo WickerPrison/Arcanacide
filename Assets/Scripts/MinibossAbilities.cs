@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
+public enum MissilePattern
+{
+    FRONT, RADIAL
+}
+
 public class MinibossAbilities : MonoBehaviour
 {
     [SerializeField] GameObject missilePrefab;
@@ -41,6 +46,7 @@ public class MinibossAbilities : MonoBehaviour
     [System.NonSerialized] public Transform navMeshDestination;
     AttackArcGenerator attackArc;
     MinibossEvents minibossEvents;
+    [System.NonSerialized] public MissilePattern missilePattern;
 
     enum LaserState 
     {
@@ -85,8 +91,9 @@ public class MinibossAbilities : MonoBehaviour
         LaserSweep();
     }
 
-    public void MissileAttack()
+    public void MissileAttack(MissilePattern pattern)
     {
+        missilePattern = pattern;
         enemyController.state = EnemyState.ATTACKING;
         enemyController.frontAnimator.Play("Missiles");
         enemyController.backAnimator.Play("Missiles");
@@ -101,12 +108,20 @@ public class MinibossAbilities : MonoBehaviour
         missile.timeToHit = timeToHit;
     }
 
-    public void FireMissiles()
+    public void FireMissiles(MissilePattern pattern)
     {
-        StartCoroutine(MissileCoroutine());
+        switch (pattern)
+        {
+            case MissilePattern.FRONT:
+                StartCoroutine(FrontMissileCoroutine());
+                break;
+            case MissilePattern.RADIAL:
+                StartCoroutine(RadialMissileCoroutine());
+                break;
+        }
     }
 
-    IEnumerator MissileCoroutine()
+    IEnumerator FrontMissileCoroutine()
     {
         Vector3 playerDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
         for (int i = 1; i < 4; i++)
@@ -120,6 +135,27 @@ public class MinibossAbilities : MonoBehaviour
                     0, 
                     UnityEngine.Random.Range(-1f, 1f));
                 SingleMissile(target, 0.5f + (float)Mathf.Abs(j) / 4);
+            }
+            yield return salvoDelay;
+        }
+    }
+
+    IEnumerator RadialMissileCoroutine()
+    {
+        int[] layerCount = { 5, 8, 12 };
+        Vector3 playerDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
+        for (int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < layerCount[i]; j++)
+            {
+                float angle = (float)j / layerCount[i] * 360;
+                Vector3 direction = Utils.RotateDirection(playerDirection, angle);
+                Vector3 target = transform.position + direction.normalized * range * (i + 1);
+                target += new Vector3(
+                    UnityEngine.Random.Range(-1f, 1f),
+                    0,
+                    UnityEngine.Random.Range(-1f, 1f));
+                SingleMissile(target, 0.75f + UnityEngine.Random.Range(0, 0.5f));
             }
             yield return salvoDelay;
         }
@@ -270,7 +306,7 @@ public class MinibossAbilities : MonoBehaviour
         if(Mathf.Abs(transform.position.z - playerScript.transform.position.z) > 6
            || Mathf.Abs(transform.position.x - playerScript.transform.position.x) > 8)
         {
-            MissileAttack();
+            MissileAttack(MissilePattern.FRONT);
             return;
         }
         enemyController.state = EnemyState.ATTACKING;

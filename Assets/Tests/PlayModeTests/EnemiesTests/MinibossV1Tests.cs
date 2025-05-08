@@ -45,7 +45,7 @@ public class MinibossV1Tests
         minibossAbilities.transform.position = new Vector3(-11.5f, 0, -7.5f);
         yield return null;
 
-        minibossAbilities.MissileAttack();
+        minibossAbilities.MissileAttack(MissilePattern.FRONT);
         yield return new WaitForSeconds(2);
         Assert.Greater(innerTrigger.counter, 0);
         Assert.AreEqual(0, outerTrigger.counter);
