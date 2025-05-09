@@ -9,6 +9,11 @@ public enum MissilePattern
     FRONT, RADIAL
 }
 
+public enum CircleType
+{
+    SHOOT, LASER
+}
+
 public class MinibossAbilities : MonoBehaviour
 {
     [SerializeField] GameObject missilePrefab;
@@ -47,6 +52,7 @@ public class MinibossAbilities : MonoBehaviour
     AttackArcGenerator attackArc;
     MinibossEvents minibossEvents;
     [System.NonSerialized] public MissilePattern missilePattern;
+    CircleType circleType;
 
     enum LaserState 
     {
@@ -80,7 +86,15 @@ public class MinibossAbilities : MonoBehaviour
         {
             if (onCircle)
             {
-                FollowCircle();
+                switch (circleType)
+                {
+                    case CircleType.SHOOT:
+                        FollowCircleShoot();
+                        break;
+                    case CircleType.LASER:
+                        FollowCircleLaser();
+                        break;
+                }
             }
             else
             {
@@ -241,8 +255,9 @@ public class MinibossAbilities : MonoBehaviour
         callback();
     }
 
-    public void Circle()
+    public void Circle(CircleType type)
     {
+        circleType = type;
         enemyController.frontAnimator.Play("StartDash");
         enemyController.backAnimator.Play("StartDash");
         navMeshAgent.enabled = false;
@@ -261,13 +276,25 @@ public class MinibossAbilities : MonoBehaviour
         {
             onCircle = true;
             facePlayer.ResetDestination();
-            plasmaTimer = plasmaCooldown;
-            enemyController.frontAnimator.Play("ShootDash");
-            enemyController.backAnimator.Play("ShootDash");
+            switch (circleType)
+            {
+                case CircleType.SHOOT:
+                    plasmaTimer = plasmaCooldown;
+                    enemyController.frontAnimator.Play("ShootDash");
+                    enemyController.backAnimator.Play("ShootDash");
+                    break;
+                case CircleType.LASER:
+                    enemyController.frontAnimator.Play("ChestLaser");
+                    enemyController.backAnimator.Play("ChestLaser");
+                    beam.SetActive(true);
+                    SetBeamPosition(-transform.position);
+                    break;
+
+            }
         }
     }
 
-    public void FollowCircle()
+    public void FollowCircleShoot()
     {
         facePlayer.ManualFace();
         ellipseRads += Time.fixedDeltaTime / timeToCircle * 2 * Mathf.PI;
@@ -289,6 +316,25 @@ public class MinibossAbilities : MonoBehaviour
             enemyController.state = EnemyState.IDLE;
             enemyController.frontAnimator.Play("ShootDashEnd");        
             enemyController.backAnimator.Play("ShootDashEnd");        
+        }
+    }
+
+    public void FollowCircleLaser()
+    {
+        facePlayer.ManualFace();
+        ellipseRads += Time.fixedDeltaTime / timeToCircle * 2 * Mathf.PI;
+        transform.position = ellipse.GetPosition(ellipseRads);
+
+        SetBeamPosition(-transform.position);
+
+        if (ellipseRads >= startingRads + 2 * MathF.PI)
+        {
+            navMeshAgent.enabled = true;
+            enemyController.state = EnemyState.IDLE;
+            enemyController.frontAnimator.Play("ChestLaserEnd");
+            enemyController.backAnimator.Play("ChestLaserEnd");
+            minibossEvents.ThrustersOff();
+            beam.SetActive(false);
         }
     }
 
@@ -378,7 +424,7 @@ public class MinibossAbilities : MonoBehaviour
 
     void SetBeamPosition(Vector3 direction)
     {
-        beam.transform.position = beamOrigin.position + direction * beam.transform.localScale.y;
+        beam.transform.position = beamOrigin.position + direction.normalized * beam.transform.localScale.y;
         beam.transform.LookAt(beamOrigin.position);
         beam.transform.localEulerAngles = new Vector3(
             beamVertAngle,

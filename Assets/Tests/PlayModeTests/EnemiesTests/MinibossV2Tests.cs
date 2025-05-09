@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 
-public class MInibossV2
+public class MinibossV2Tests
 {
     PlayerData playerData;
     MapData mapData;
@@ -49,5 +49,23 @@ public class MInibossV2
         yield return new WaitForSeconds(2);
         Assert.Greater(frontTrigger.counter, 0);
         Assert.Greater(outerTrigger.counter, 0);
+    }
+
+    [UnityTest]
+    public IEnumerator CircleLaser()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(2, 0, 2);
+        Ellipse ellipse = GameObject.Instantiate(ellipsePrefab).GetComponent<Ellipse>();
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.ellipse = ellipse;
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+
+        minibossAbilities.Circle(CircleType.LASER);
+        MinibossV2Controller minibossController = minibossAbilities.GetComponent<MinibossV2Controller>();
+        minibossController.attackTime = 7;
+        yield return new WaitForSeconds(3);
+        Assert.Less(playerData.health, playerData.MaxHealth());
     }
 }

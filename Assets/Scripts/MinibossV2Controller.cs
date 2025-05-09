@@ -47,7 +47,7 @@ public class MinibossV2Controller : EnemyController
 
                     if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
-                        abilities.Circle();
+                        abilities.Circle(CircleType.SHOOT);
                     }
                     else if (randFloat > 0.4f)
                     {
@@ -64,7 +64,7 @@ public class MinibossV2Controller : EnemyController
 
                     if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
-                        abilities.Circle();
+                        abilities.Circle(CircleType.SHOOT);
                     }
                     else if (randFloat > 0.4f)
                     {
