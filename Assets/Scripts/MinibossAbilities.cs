@@ -53,6 +53,9 @@ public class MinibossAbilities : MonoBehaviour
     MinibossEvents minibossEvents;
     [System.NonSerialized] public MissilePattern missilePattern;
     CircleType circleType;
+    [SerializeField] float teslaTime;
+    [SerializeField] float teslaDelay;
+    [SerializeField] GameObject teslaHarpoonPrefab;
 
     enum LaserState 
     {
@@ -338,13 +341,14 @@ public class MinibossAbilities : MonoBehaviour
         }
     }
 
-    public void FirePlasmaShot()
+    public HomingProjectile FirePlasmaShot()
     {
         HomingProjectile shot = Instantiate(plasmaBallPrefab).GetComponent<HomingProjectile>();
         shot.transform.position = shotOrigin.transform.position;
         shot.target = playerScript.transform;
         shot.enemyOfOrigin = enemyScript;
         shot.transform.LookAt(playerScript.transform);
+        return shot;
     }
 
     public void ChestLaser(int sweepsCount)
@@ -420,6 +424,50 @@ public class MinibossAbilities : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void StartTeslaHarpoon()
+    {
+        enemyController.frontAnimator.Play("Takeoff");
+        enemyController.backAnimator.Play("Takeoff");
+    }
+
+    public void FlyUp()
+    {
+        StartCoroutine(TeslaHarpoons());
+    }
+
+    IEnumerator TeslaHarpoons()
+    {
+        while (transform.position.y < 15)
+        {
+            transform.position += new Vector3(0, 25 * Time.deltaTime, 0);
+            yield return null;
+        }
+
+        float rainTimer = teslaTime;
+        float delayTimer = teslaDelay;
+        while(rainTimer > 0)
+        {
+            rainTimer -= Time.deltaTime;
+            delayTimer -= Time.deltaTime;
+
+            if(delayTimer <= 0)
+            {
+                SpawnTeslaHarpoon();
+                delayTimer = teslaDelay;
+            }
+
+            yield return null;
+        }
+
+    }
+
+    void SpawnTeslaHarpoon()
+    {
+        TeslaHarpoonProjectile teslaHarpoon = Instantiate(teslaHarpoonPrefab).GetComponentInChildren<TeslaHarpoonProjectile>();
+        teslaHarpoon.transform.parent.position = new Vector3(UnityEngine.Random.Range(-10f, 10f), 0, UnityEngine.Random.Range(-10f, 10f));
+        teslaHarpoon.enemyOfOrigin = enemyScript;
     }
 
     void SetBeamPosition(Vector3 direction)

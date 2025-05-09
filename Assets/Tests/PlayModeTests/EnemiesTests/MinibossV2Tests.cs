@@ -68,4 +68,20 @@ public class MinibossV2Tests
         yield return new WaitForSeconds(3);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
+
+    [UnityTest]
+    public IEnumerator TeslaHarpoons()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(2, 0, 2);
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+
+        minibossAbilities.StartTeslaHarpoon();
+        MinibossV2Controller minibossController = minibossAbilities.GetComponent<MinibossV2Controller>();
+        minibossController.attackTime = 7;
+        yield return new WaitForSeconds(20);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 }

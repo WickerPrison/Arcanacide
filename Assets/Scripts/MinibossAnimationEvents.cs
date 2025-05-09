@@ -59,6 +59,11 @@ public class MinibossAnimationEvents : MonoBehaviour
         minibossEvents.ThrustersOff();
     }
 
+    public void FlyUp()
+    {
+        abilities.FlyUp();
+    }
+
     public void FlyAway()
     {
         StartCoroutine(Flying());
