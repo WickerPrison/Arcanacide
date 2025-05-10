@@ -94,6 +94,8 @@ public class MinibossV2Tests
     {
         HarpoonManager harpoonManager = new GameObject("harpoonManager").AddComponent<HarpoonManager>();
         harpoonManager.boltsPrefab = boltsPrefab;
+        harpoonManager.boltDamage = 5;
+        harpoonManager.boltCD = 0.2f;
         TeslaHarpoon teslaHarpoon1 = GameObject.Instantiate(harpoonPrefab).GetComponent<TeslaHarpoon>();
         teslaHarpoon1.transform.position = new Vector3(-3f, 0, 3f);
         teslaHarpoon1.harpoonManager = harpoonManager;

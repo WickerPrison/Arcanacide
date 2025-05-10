@@ -5,10 +5,54 @@ using UnityEngine;
 public class HarpoonManager : MonoBehaviour
 {
     public GameObject boltsPrefab;
+    public int boltDamage;
+    [SerializeField] float boltPoiseDamage;
+    public float boltCD;
+    float boltTimer;
     List<TeslaHarpoon> harpoons = new List<TeslaHarpoon>();
     List<Bolts> bolts = new List<Bolts>();
     List<(Vector3, Vector3)> pairs = new List<(Vector3, Vector3)>();
     Vector3 away = new Vector3(1000, 1000, 1000);
+    LayerMask layerMask;
+    PlayerScript playerScript;
+
+    private void Start()
+    {
+        layerMask = LayerMask.GetMask("Player");
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+    }
+
+    private void Update()
+    {
+        if (pairs.Count == 0) return;
+        if(boltTimer > 0)
+        {
+            boltTimer -= Time.deltaTime;
+            return;
+        }
+
+        bool hitPlayer = false;
+        foreach((Vector3, Vector3) pair in pairs)
+        {
+            if(Physics.Linecast(pair.Item1, pair.Item2, layerMask))
+            {
+                hitPlayer = true;
+                break;
+            }
+        }
+
+        if (hitPlayer)
+        {
+            boltTimer = boltCD;
+            bolts[0].SoundOn();
+            playerScript.LoseHealth(boltDamage, EnemyAttackType.NONPARRIABLE, null);
+            playerScript.LosePoise(boltPoiseDamage);
+        }
+        else
+        {
+            bolts[0].SoundOff();
+        }
+    }
 
     public void AddHarpoon(TeslaHarpoon harpoon)
     {
