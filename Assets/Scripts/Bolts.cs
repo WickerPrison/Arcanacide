@@ -31,6 +31,11 @@ public class Bolts : MonoBehaviour
         }
     }
 
+    public void SetPositions((Vector3, Vector3) tuple)
+    {
+        SetPositions(tuple.Item1, tuple.Item2);
+    }
+
     public void SoundOn()
     {
         if (!soundOn)

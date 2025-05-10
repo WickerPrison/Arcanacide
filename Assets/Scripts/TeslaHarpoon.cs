@@ -6,12 +6,15 @@ public class TeslaHarpoon : EnemyController
 {
     [SerializeField] GameObject sprite;
     [SerializeField] GameObject brokenSprite;
+    public Transform lightningOrigin;
     SpriteEffects spriteEffects;
+    [System.NonSerialized] public HarpoonManager harpoonManager;
 
     public override void Start()
     {
         base.Start();
         spriteEffects = GetComponent<SpriteEffects>();
+        harpoonManager.AddHarpoon(this);
     }
 
     public override void Update()
@@ -22,6 +25,7 @@ public class TeslaHarpoon : EnemyController
     public override void StartDying()
     {
         state = EnemyState.DYING;
+        harpoonManager.RemoveHarpoon(this);
         sprite.SetActive(false);
         brokenSprite.SetActive(true);
         StartCoroutine(DeathTimer());

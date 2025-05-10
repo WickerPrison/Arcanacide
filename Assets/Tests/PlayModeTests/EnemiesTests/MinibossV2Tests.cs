@@ -12,6 +12,8 @@ public class MinibossV2Tests
     GameObject minibossPrefab;
     TestingTrigger triggerPrefab;
     GameObject ellipsePrefab;
+    GameObject harpoonPrefab;
+    GameObject boltsPrefab;
 
     [SetUp]
     public void Setup()
@@ -27,6 +29,8 @@ public class MinibossV2Tests
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV2");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
+        harpoonPrefab = Resources.Load<GameObject>("Prefabs/Enemies/TeslaHarpoon");
+        boltsPrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/Bolts");
         Time.timeScale = 1f;
     }
 
@@ -83,5 +87,31 @@ public class MinibossV2Tests
         minibossController.attackTime = 7;
         yield return new WaitForSeconds(20);
         Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator HarpoonsCount()
+    {
+        HarpoonManager harpoonManager = new GameObject("harpoonManager").AddComponent<HarpoonManager>();
+        harpoonManager.boltsPrefab = boltsPrefab;
+        TeslaHarpoon teslaHarpoon1 = GameObject.Instantiate(harpoonPrefab).GetComponent<TeslaHarpoon>();
+        teslaHarpoon1.transform.position = new Vector3(-3f, 0, 3f);
+        teslaHarpoon1.harpoonManager = harpoonManager;
+        TeslaHarpoon teslaHarpoon2 = GameObject.Instantiate(harpoonPrefab).GetComponent<TeslaHarpoon>();
+        teslaHarpoon2.transform.position = new Vector3(3f, 0, 3f);
+        teslaHarpoon2.harpoonManager = harpoonManager;
+        TeslaHarpoon teslaHarpoon3 = GameObject.Instantiate(harpoonPrefab).GetComponent<TeslaHarpoon>();
+        teslaHarpoon3.transform.position = new Vector3(-3f, 0, -3f);
+        teslaHarpoon3.harpoonManager = harpoonManager;
+        TeslaHarpoon teslaHarpoon4 = GameObject.Instantiate(harpoonPrefab).GetComponent<TeslaHarpoon>();
+        teslaHarpoon4.transform.position = new Vector3(3f, 0, -3f);
+        teslaHarpoon4.harpoonManager = harpoonManager;
+
+        yield return new WaitForSeconds(5);
+        Assert.AreEqual(harpoonManager.GetCount(), 6);
+
+        teslaHarpoon4.StartDying();
+        yield return new WaitForSeconds(3);
+        Assert.AreEqual(harpoonManager.GetCount(), 3);
     }
 }

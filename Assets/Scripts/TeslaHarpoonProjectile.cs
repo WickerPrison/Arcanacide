@@ -29,8 +29,9 @@ public class TeslaHarpoonProjectile : MonoBehaviour
         {
             RuntimeManager.PlayOneShot(impactSFX, impactSFXVolume, transform.position);
             Collision();
-            Transform harpoon = Instantiate(teslaHarpoonPrefab).transform;
-            harpoon.position = transform.position;
+            TeslaHarpoon harpoon = Instantiate(teslaHarpoonPrefab).GetComponent<TeslaHarpoon>();
+            harpoon.transform.position = transform.position;
+            harpoon.harpoonManager = enemyOfOrigin.GetComponent<HarpoonManager>();
             Destroy(parentObject);
         }
     }
