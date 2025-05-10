@@ -14,6 +14,7 @@ public class TeslaHarpoonProjectile : MonoBehaviour
     [SerializeField] TouchingCollider touchingCollider;
     [SerializeField] int damage;
     [SerializeField] float poiseDamage;
+    [SerializeField] GameObject teslaHarpoonPrefab;
 
     private void FixedUpdate()
     {
@@ -28,6 +29,8 @@ public class TeslaHarpoonProjectile : MonoBehaviour
         {
             RuntimeManager.PlayOneShot(impactSFX, impactSFXVolume, transform.position);
             Collision();
+            Transform harpoon = Instantiate(teslaHarpoonPrefab).transform;
+            harpoon.position = transform.position;
             Destroy(parentObject);
         }
     }
