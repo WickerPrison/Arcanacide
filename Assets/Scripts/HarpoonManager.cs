@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class HarpoonManager : MonoBehaviour
 {
-    public GameObject boltsPrefab;
-    public int boltDamage;
+    [SerializeField] GameObject boltsPrefab;
+    int boltDamage;
     [SerializeField] float boltPoiseDamage;
-    public float boltCD;
+    float boltCD;
     float boltTimer;
     List<TeslaHarpoon> harpoons = new List<TeslaHarpoon>();
     List<Bolts> bolts = new List<Bolts>();
@@ -98,6 +98,13 @@ public class HarpoonManager : MonoBehaviour
     public int GetCount()
     {
         return pairs.Count;
+    }
+
+    public void SetupTest(GameObject prefab, int damage, float cd)
+    {
+        boltsPrefab = prefab;
+        boltDamage = damage;
+        boltCD = cd;
     }
 }
 
