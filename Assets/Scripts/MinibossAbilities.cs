@@ -56,6 +56,10 @@ public class MinibossAbilities : MonoBehaviour
     [SerializeField] float teslaTime;
     [SerializeField] float teslaDelay;
     [SerializeField] GameObject teslaHarpoonPrefab;
+    [SerializeField] AnimationCurve descendCurve;
+    [SerializeField] float descendTime;
+    float descendTimer;
+    HarpoonManager harpoonManager;
 
     enum LaserState 
     {
@@ -81,6 +85,7 @@ public class MinibossAbilities : MonoBehaviour
         dashTarget.transform.parent = null;
         navMeshDestination = playerScript.transform;
         attackArc = GetComponentInChildren<AttackArcGenerator>();
+        harpoonManager = GetComponent<HarpoonManager>();
     }
 
     private void FixedUpdate()
@@ -461,13 +466,26 @@ public class MinibossAbilities : MonoBehaviour
             yield return null;
         }
 
+        enemyController.frontAnimator.Play("Descend");
+        enemyController.backAnimator.Play("Descend"); 
+        descendTimer = 0;
+        NavMeshHit hit;
+        Vector3 randVect = new Vector3(UnityEngine.Random.Range(-5f, 5f), 0, UnityEngine.Random.Range(-5f, 5f));
+        NavMesh.SamplePosition(playerScript.transform.position + randVect, out hit, 5f, NavMesh.AllAreas);
+        transform.position = new Vector3(hit.position.x, 15, hit.position.z);
+        while(descendTimer <= descendTime)
+        {
+            descendTimer += Time.deltaTime;
+            float yPos = descendCurve.Evaluate(descendTimer / descendTime) * 15;
+            transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
+            yield return null;
+        }
     }
 
     void SpawnTeslaHarpoon()
     {
         TeslaHarpoonProjectile teslaHarpoon = Instantiate(teslaHarpoonPrefab).GetComponentInChildren<TeslaHarpoonProjectile>();
-        teslaHarpoon.transform.parent.position = new Vector3(UnityEngine.Random.Range(-10f, 10f), 0, UnityEngine.Random.Range(-10f, 10f));
-        teslaHarpoon.enemyOfOrigin = enemyScript;
+        teslaHarpoon.SetupHarpoon(enemyScript);
     }
 
     void SetBeamPosition(Vector3 direction)

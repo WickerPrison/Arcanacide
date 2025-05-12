@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class HarpoonManager : MonoBehaviour
 {
     [SerializeField] GameObject boltsPrefab;
-    int boltDamage;
+    [SerializeField] int boltDamage;
     [SerializeField] float boltPoiseDamage;
-    float boltCD;
+    [SerializeField] float boltCD;
     float boltTimer;
     List<TeslaHarpoon> harpoons = new List<TeslaHarpoon>();
+    [System.NonSerialized] public List<TeslaHarpoonProjectile> harpoonProjectiles = new List<TeslaHarpoonProjectile>();
     List<Bolts> bolts = new List<Bolts>();
     List<(Vector3, Vector3)> pairs = new List<(Vector3, Vector3)>();
     Vector3 away = new Vector3(1000, 1000, 1000);
     LayerMask layerMask;
     PlayerScript playerScript;
+    [System.NonSerialized] public float spacing = 5;
+    Vector3 vertPositioning = new Vector3(0, 15, 0);
 
     private void Start()
     {
@@ -95,15 +99,54 @@ public class HarpoonManager : MonoBehaviour
         }
     }
 
+    public Vector3 GetHarpoonPosition()
+    {
+        Vector3 attempt = Vector3.zero;
+        for(int i = 0; i < 10; i++)
+        {
+            attempt = new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
+            bool enoughSpace = true;
+            foreach(TeslaHarpoon harpoon in harpoons)
+            {
+                if(Vector3.Distance(attempt, harpoon.transform.position) < spacing)
+                {
+                    enoughSpace = false;
+                    break;
+                }
+            }
+            if (enoughSpace)
+            {
+                foreach (TeslaHarpoonProjectile projectile in harpoonProjectiles)
+                {
+                    Vector3 projectilePos = new Vector3(projectile.transform.position.x, 0, projectile.transform.position.z);
+                    if (Vector3.Distance(attempt, projectilePos) < spacing)
+                    {
+                        enoughSpace = false;
+                        break;
+                    }
+                }
+            }
+            if (enoughSpace) return attempt;
+        }
+        Debug.Log("too many attempts");
+        return attempt;
+    }
+
     public int GetCount()
     {
         return pairs.Count;
     }
 
-    public void SetupTest(GameObject prefab, int damage, float cd)
+    public List<float> GetDistances()
+    {
+        return pairs.Select(pair =>  Vector3.Distance(pair.Item1, pair.Item2)).ToList();
+    }
+
+    public void SetupTest(GameObject prefab, int damage, float poiseDamage, float cd)
     {
         boltsPrefab = prefab;
         boltDamage = damage;
+        boltPoiseDamage = poiseDamage;
         boltCD = cd;
     }
 }

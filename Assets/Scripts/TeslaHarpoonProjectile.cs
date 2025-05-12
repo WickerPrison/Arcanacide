@@ -15,6 +15,7 @@ public class TeslaHarpoonProjectile : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] float poiseDamage;
     [SerializeField] GameObject teslaHarpoonPrefab;
+    HarpoonManager harpoonManager;
 
     private void FixedUpdate()
     {
@@ -30,8 +31,9 @@ public class TeslaHarpoonProjectile : MonoBehaviour
             RuntimeManager.PlayOneShot(impactSFX, impactSFXVolume, transform.position);
             Collision();
             TeslaHarpoon harpoon = Instantiate(teslaHarpoonPrefab).GetComponent<TeslaHarpoon>();
-            harpoon.transform.position = transform.position;
-            harpoon.harpoonManager = enemyOfOrigin.GetComponent<HarpoonManager>();
+            harpoon.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            harpoon.harpoonManager = harpoonManager;
+            harpoonManager.harpoonProjectiles.Remove(this);
             Destroy(parentObject);
         }
     }
@@ -48,5 +50,13 @@ public class TeslaHarpoonProjectile : MonoBehaviour
                 playerScript.LosePoise(poiseDamage);
             }
         }
+    }
+
+    public void SetupHarpoon(EnemyScript enemyScript)
+    {
+        enemyOfOrigin = enemyScript;
+        harpoonManager = enemyOfOrigin.GetComponent<HarpoonManager>();
+        transform.parent.position = harpoonManager.GetHarpoonPosition();
+        harpoonManager.harpoonProjectiles.Add(this);
     }
 }

@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class MinibossV2Tests
 {
@@ -31,7 +32,7 @@ public class MinibossV2Tests
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
         harpoonPrefab = Resources.Load<GameObject>("Prefabs/Enemies/TeslaHarpoon");
         boltsPrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/Bolts");
-        Time.timeScale = 1f;
+        Time.timeScale = 4f;
     }
 
     [UnityTest]
@@ -77,7 +78,7 @@ public class MinibossV2Tests
     public IEnumerator TeslaHarpoons()
     {
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        playerScript.transform.position = new Vector3(2, 0, 2);
+        playerScript.transform.position = new Vector3(0, 0, 3);
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
@@ -85,15 +86,17 @@ public class MinibossV2Tests
         minibossAbilities.StartTeslaHarpoon();
         MinibossV2Controller minibossController = minibossAbilities.GetComponent<MinibossV2Controller>();
         minibossController.attackTime = 7;
-        yield return new WaitForSeconds(20);
-        Assert.Less(playerData.health, playerData.MaxHealth());
+        yield return new WaitForSeconds(10);
+        HarpoonManager harpoonManager = minibossAbilities.GetComponent<HarpoonManager>();
+        List<float> distances = harpoonManager.GetDistances();
+        Assert.GreaterOrEqual(distances.Min(), harpoonManager.spacing);
     }
 
     [UnityTest]
     public IEnumerator HarpoonsCount()
     {
         HarpoonManager harpoonManager = new GameObject("harpoonManager").AddComponent<HarpoonManager>();
-        harpoonManager.SetupTest(boltsPrefab, 5, 0.2f);
+        harpoonManager.SetupTest(boltsPrefab, 5, 5, 0.2f);
 
         Vector3[] positions =
         {
