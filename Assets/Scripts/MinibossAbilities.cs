@@ -346,6 +346,29 @@ public class MinibossAbilities : MonoBehaviour
         }
     }
 
+    public void PlasmaShots()
+    {
+        enemyController.state = EnemyState.ATTACKING;
+        enemyController.frontAnimator.Play("PlasmaShots");
+        enemyController.backAnimator.Play("PlasmaShots");
+    }
+
+    public void FireMultiplePlasmaShots(int count, float delay)
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(delay);
+        StartCoroutine(MultipleShots(count, waitForSeconds));
+    }
+
+    IEnumerator MultipleShots(int count, WaitForSeconds delay)
+    {
+        while(count > 0)
+        {
+            FirePlasmaShot();
+            count -= 1;
+            yield return delay;
+        }
+    }
+
     public HomingProjectile FirePlasmaShot()
     {
         HomingProjectile shot = Instantiate(plasmaBallPrefab).GetComponent<HomingProjectile>();

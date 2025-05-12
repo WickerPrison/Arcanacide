@@ -78,17 +78,22 @@ public class MinibossV2Tests
     public IEnumerator TeslaHarpoons()
     {
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        playerScript.transform.position = new Vector3(0, 0, 3);
+        playerScript.transform.position = new Vector3(0, 0, 12);
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
 
         minibossAbilities.StartTeslaHarpoon();
         MinibossV2Controller minibossController = minibossAbilities.GetComponent<MinibossV2Controller>();
-        minibossController.attackTime = 7;
+        minibossController.attackTime = 70;
         yield return new WaitForSeconds(10);
         HarpoonManager harpoonManager = minibossAbilities.GetComponent<HarpoonManager>();
         List<float> distances = harpoonManager.GetDistances();
+        Assert.GreaterOrEqual(distances.Min(), harpoonManager.spacing);
+
+        minibossAbilities.StartTeslaHarpoon();
+        yield return new WaitForSeconds(10);
+        distances = harpoonManager.GetDistances();
         Assert.GreaterOrEqual(distances.Min(), harpoonManager.spacing);
     }
 
@@ -133,5 +138,19 @@ public class MinibossV2Tests
         teslaHarpoon.transform.position = position;
         teslaHarpoon.harpoonManager = harpoonManager;
         return teslaHarpoon;
+    }
+
+    [UnityTest]
+    public IEnumerator PlasmaShots()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+
+        minibossAbilities.PlasmaShots();
+        MinibossV2Controller minibossController = minibossAbilities.GetComponent<MinibossV2Controller>();
+        minibossController.attackTime = 7;
+        yield return new WaitForSeconds(3);
+        Assert.Less(playerData.health, playerData.MaxHealth());
     }
 }

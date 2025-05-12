@@ -17,7 +17,7 @@ public class HarpoonManager : MonoBehaviour
     Vector3 away = new Vector3(1000, 1000, 1000);
     LayerMask layerMask;
     PlayerScript playerScript;
-    [System.NonSerialized] public float spacing = 5;
+    public float spacing;
     Vector3 vertPositioning = new Vector3(0, 15, 0);
 
     private void Start()

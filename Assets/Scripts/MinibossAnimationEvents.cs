@@ -43,6 +43,11 @@ public class MinibossAnimationEvents : MonoBehaviour
         abilities.StartLaser();
     }
 
+    public void PlasmaShots(int count)
+    {
+        abilities.FireMultiplePlasmaShots(count, 0.15f);
+    }
+
     public void DefeatDialogue()
     {
         Dialogue dialogue = GetComponent<Dialogue>();
