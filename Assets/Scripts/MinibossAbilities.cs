@@ -458,6 +458,7 @@ public class MinibossAbilities : MonoBehaviour
     {
         enemyController.frontAnimator.Play("Takeoff");
         enemyController.backAnimator.Play("Takeoff");
+        enemyController.attackTime = teslaTime + 5;
     }
 
     public void FlyUp()
@@ -503,6 +504,7 @@ public class MinibossAbilities : MonoBehaviour
             transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
             yield return null;
         }
+        enemyController.attackTime = enemyController.attackMaxTime;
     }
 
     void SpawnTeslaHarpoon()

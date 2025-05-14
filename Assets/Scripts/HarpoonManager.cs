@@ -9,6 +9,7 @@ public class HarpoonManager : MonoBehaviour
     [SerializeField] int boltDamage;
     [SerializeField] float boltPoiseDamage;
     [SerializeField] float boltCD;
+    [SerializeField] Vector2 harpoonBoundaries;
     float boltTimer;
     List<TeslaHarpoon> harpoons = new List<TeslaHarpoon>();
     [System.NonSerialized] public List<TeslaHarpoonProjectile> harpoonProjectiles = new List<TeslaHarpoonProjectile>();
@@ -104,7 +105,12 @@ public class HarpoonManager : MonoBehaviour
         Vector3 attempt = Vector3.zero;
         for(int i = 0; i < 10; i++)
         {
-            attempt = new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
+            attempt = new Vector3(
+                Random.Range(-harpoonBoundaries.x, harpoonBoundaries.x), 
+                0, 
+                Random.Range(-harpoonBoundaries.y, harpoonBoundaries.y
+            ));
+            attempt = Utils.RotateDirection(attempt, -45);
             bool enoughSpace = true;
             foreach(TeslaHarpoon harpoon in harpoons)
             {
