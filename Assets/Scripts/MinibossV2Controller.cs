@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinibossV2Controller : EnemyController
+public class MinibossV2Controller : EnemyController, IEndDialogue
 {
     MinibossAbilities abilities;
     [SerializeField] MapData mapData;
@@ -121,15 +121,7 @@ public class MinibossV2Controller : EnemyController
 
     public void EndDialogue()
     {
-        if (state == EnemyState.DYING)
-        {
-            frontAnimator.Play("FlyAway");
-            backAnimator.Play("FlyAway");
-        }
-        else
-        {
-            state = EnemyState.IDLE;
-        }
+        state = EnemyState.IDLE;
     }
 
     public override void StartDying()
