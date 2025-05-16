@@ -6,13 +6,14 @@ public class LightningRing : LightningBolt
 {
     float radius = 1;
     Vector3 targetPos;
-    LightningRings rings;
+    IHaveLightningRings ringsController;
     LineRenderer line;
     bool disabled = true;
 
     private void Awake()
     {
-        rings = GetComponentInParent<LightningRings>();
+        ringsController = (IHaveLightningRings)GetComponentInParent(typeof(IHaveLightningRings));
+        Debug.Log(ringsController);
         line = GetComponent<LineRenderer>();
     }
 
@@ -39,14 +40,14 @@ public class LightningRing : LightningBolt
 
     private void OnEnable()
     {
-        rings.onSetRadius += Rings_onSetRadius;
-        rings.onShowRings += Rings_onShowRings;
+        ringsController.onSetRadius += Rings_onSetRadius;
+        ringsController.onShowRings += Rings_onShowRings;
     }
 
     private void OnDisable()
     {
-        rings.onSetRadius -= Rings_onSetRadius;
-        rings.onShowRings -= Rings_onShowRings;
+        ringsController.onSetRadius -= Rings_onSetRadius;
+        ringsController.onShowRings -= Rings_onShowRings;
     }
 
     private void Rings_onSetRadius(object sender, float newRadius)

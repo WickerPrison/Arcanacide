@@ -9,7 +9,7 @@ public enum LightningRingsState
     DISABLED, FOLLOW, PAUSE, CLOSING
 }
 
-public class LightningRings : MonoBehaviour
+public class LightningRings : MonoBehaviour, IHaveLightningRings
 {
     public float maxRadius;
     float radius;

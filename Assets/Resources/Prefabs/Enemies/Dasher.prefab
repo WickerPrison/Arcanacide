@@ -711,9 +711,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reward: 60
-  generateID: 0
-  enemyID: 0
-  enemyGUID: 
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
@@ -722,6 +719,7 @@ MonoBehaviour:
   maxPoise: 100
   poiseRegeneration: 5
   invincible: 0
+  enemyGUID: 
 --- !u!114 &1892724828287016805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29081,21 +29079,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1055871940786120434}
     m_Modifications:
+    - target: {fileID: 1449011709646636834, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
+      propertyPath: radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.092
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.415
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.071
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -29133,7 +29135,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ElectricShield
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7201376153099761857, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
 --- !u!4 &2249563692592529322 stripped
 Transform:
