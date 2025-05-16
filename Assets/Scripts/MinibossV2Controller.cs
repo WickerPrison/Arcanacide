@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinibossV1Controller : EnemyController, IEndDialogue
+public class MinibossV2Controller : EnemyController, IEndDialogue
 {
     MinibossAbilities abilities;
     [SerializeField] MapData mapData;
-    
 
     public override void Start()
     {
         base.Start();
         enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
         abilities = GetComponent<MinibossAbilities>();
-        if (mapData.miniboss1Killed)
+        if (mapData.miniboss2Killed)
         {
             enemyEvents.HideBossHealthbar();
             //musicManager.ChangeMusicState(MusicState.MAINLOOP);
@@ -36,27 +35,31 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
             navAgent.SetDestination(abilities.navMeshDestination.position);
         }
 
-        if(state == EnemyState.IDLE)
+        if (state == EnemyState.IDLE)
         {
-            if(attackTime <= 0)
+            if (attackTime <= 0)
             {
                 attackTime = attackMaxTime;
                 float randFloat;
-                if(playerDistance > 4)
+                if (playerDistance > 4)
                 {
                     randFloat = Random.Range(0, 1f);
 
-                    if(randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
+                    if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
-                        abilities.Circle(CircleType.SHOOT);
+                        abilities.Circle(CircleType.LASER);
                     }
-                    else if(randFloat > 0.4f)
+                    else if (randFloat > 0.5f)
                     {
                         abilities.ChestLaser(2);
                     }
+                    else if(randFloat > 0.2f)
+                    {
+                        abilities.PlasmaShots();
+                    }
                     else
                     {
-                        abilities.MissileAttack(MissilePattern.FRONT);
+                        abilities.StartTeslaHarpoon();
                     }
                 }
                 else
@@ -65,15 +68,23 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
 
                     if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
-                        abilities.Circle(CircleType.SHOOT);
+                        abilities.Circle(CircleType.LASER);
                     }
-                    else if (randFloat > 0.4f)
+                    else if (randFloat > 0.7f)
                     {
                         abilities.MeleeBlade();
                     }
-                    else if (randFloat > 0.2f)
+                    else if (randFloat > 0.6f)
                     {
-                        abilities.DashAway(() => abilities.MissileAttack(MissilePattern.FRONT));
+                        abilities.MissileAttack(MissilePattern.RADIAL);
+                    }
+                    else if(randFloat > 0.5f)
+                    {
+                        abilities.StartTeslaHarpoon();
+                    }
+                    else if(randFloat > 0.2f)
+                    {
+                        abilities.DashAway(() => abilities.PlasmaShots());
                     }
                     else
                     {
@@ -110,7 +121,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
 
     public void EndDialogue()
     {
-        if(state == EnemyState.DYING)
+        if (state == EnemyState.DYING)
         {
             frontAnimator.Play("FlyAway");
             backAnimator.Play("FlyAway");
@@ -136,7 +147,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
     public override void Death()
     {
         base.Death();
-        mapData.miniboss1Killed = true;
+        mapData.miniboss2Killed = true;
         GlobalEvents.instance.MiniBossKilled();
     }
 }

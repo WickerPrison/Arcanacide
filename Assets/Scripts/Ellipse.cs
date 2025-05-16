@@ -7,6 +7,7 @@ public class Ellipse : MonoBehaviour
     [SerializeField] Transform a;
     [SerializeField] Transform b;
     [SerializeField] Transform point;
+    [SerializeField] int gizmoPoints = 10;
     Dictionary<Vector3, float> startingValueDict = new Dictionary<Vector3, float>();
 
     private void Start()
@@ -21,7 +22,6 @@ public class Ellipse : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        int gizmoPoints = 10;
         float percent = 2 * Mathf.PI / gizmoPoints;
         for (int i = 0; i < gizmoPoints; i++)
         {

@@ -4,6 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
+public enum MissilePattern
+{
+    FRONT, RADIAL
+}
+
+public enum CircleType
+{
+    SHOOT, LASER
+}
+
 public class MinibossAbilities : MonoBehaviour
 {
     [SerializeField] GameObject missilePrefab;
@@ -41,6 +51,15 @@ public class MinibossAbilities : MonoBehaviour
     [System.NonSerialized] public Transform navMeshDestination;
     AttackArcGenerator attackArc;
     MinibossEvents minibossEvents;
+    [System.NonSerialized] public MissilePattern missilePattern;
+    CircleType circleType;
+    [SerializeField] float teslaTime;
+    [SerializeField] float teslaDelay;
+    [SerializeField] GameObject teslaHarpoonPrefab;
+    [SerializeField] AnimationCurve descendCurve;
+    [SerializeField] float descendTime;
+    float descendTimer;
+    HarpoonManager harpoonManager;
 
     enum LaserState 
     {
@@ -66,6 +85,7 @@ public class MinibossAbilities : MonoBehaviour
         dashTarget.transform.parent = null;
         navMeshDestination = playerScript.transform;
         attackArc = GetComponentInChildren<AttackArcGenerator>();
+        harpoonManager = GetComponent<HarpoonManager>();
     }
 
     private void FixedUpdate()
@@ -74,7 +94,15 @@ public class MinibossAbilities : MonoBehaviour
         {
             if (onCircle)
             {
-                FollowCircle();
+                switch (circleType)
+                {
+                    case CircleType.SHOOT:
+                        FollowCircleShoot();
+                        break;
+                    case CircleType.LASER:
+                        FollowCircleLaser();
+                        break;
+                }
             }
             else
             {
@@ -85,8 +113,9 @@ public class MinibossAbilities : MonoBehaviour
         LaserSweep();
     }
 
-    public void MissileAttack()
+    public void MissileAttack(MissilePattern pattern)
     {
+        missilePattern = pattern;
         enemyController.state = EnemyState.ATTACKING;
         enemyController.frontAnimator.Play("Missiles");
         enemyController.backAnimator.Play("Missiles");
@@ -101,12 +130,20 @@ public class MinibossAbilities : MonoBehaviour
         missile.timeToHit = timeToHit;
     }
 
-    public void FireMissiles()
+    public void FireMissiles(MissilePattern pattern)
     {
-        StartCoroutine(MissileCoroutine());
+        switch (pattern)
+        {
+            case MissilePattern.FRONT:
+                StartCoroutine(FrontMissileCoroutine());
+                break;
+            case MissilePattern.RADIAL:
+                StartCoroutine(RadialMissileCoroutine());
+                break;
+        }
     }
 
-    IEnumerator MissileCoroutine()
+    IEnumerator FrontMissileCoroutine()
     {
         Vector3 playerDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
         for (int i = 1; i < 4; i++)
@@ -120,6 +157,27 @@ public class MinibossAbilities : MonoBehaviour
                     0, 
                     UnityEngine.Random.Range(-1f, 1f));
                 SingleMissile(target, 0.5f + (float)Mathf.Abs(j) / 4);
+            }
+            yield return salvoDelay;
+        }
+    }
+
+    IEnumerator RadialMissileCoroutine()
+    {
+        int[] layerCount = { 5, 8, 12 };
+        Vector3 playerDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
+        for (int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < layerCount[i]; j++)
+            {
+                float angle = (float)j / layerCount[i] * 360;
+                Vector3 direction = Utils.RotateDirection(playerDirection, angle);
+                Vector3 target = transform.position + direction.normalized * range * (i + 1);
+                target += new Vector3(
+                    UnityEngine.Random.Range(-1f, 1f),
+                    0,
+                    UnityEngine.Random.Range(-1f, 1f));
+                SingleMissile(target, 0.75f + UnityEngine.Random.Range(0, 0.5f));
             }
             yield return salvoDelay;
         }
@@ -205,8 +263,9 @@ public class MinibossAbilities : MonoBehaviour
         callback();
     }
 
-    public void Circle()
+    public void Circle(CircleType type)
     {
+        circleType = type;
         enemyController.frontAnimator.Play("StartDash");
         enemyController.backAnimator.Play("StartDash");
         navMeshAgent.enabled = false;
@@ -225,13 +284,25 @@ public class MinibossAbilities : MonoBehaviour
         {
             onCircle = true;
             facePlayer.ResetDestination();
-            plasmaTimer = plasmaCooldown;
-            enemyController.frontAnimator.Play("ShootDash");
-            enemyController.backAnimator.Play("ShootDash");
+            switch (circleType)
+            {
+                case CircleType.SHOOT:
+                    plasmaTimer = plasmaCooldown;
+                    enemyController.frontAnimator.Play("ShootDash");
+                    enemyController.backAnimator.Play("ShootDash");
+                    break;
+                case CircleType.LASER:
+                    enemyController.frontAnimator.Play("ChestLaser");
+                    enemyController.backAnimator.Play("ChestLaser");
+                    beam.SetActive(true);
+                    SetBeamPosition(-transform.position);
+                    break;
+
+            }
         }
     }
 
-    public void FollowCircle()
+    public void FollowCircleShoot()
     {
         facePlayer.ManualFace();
         ellipseRads += Time.fixedDeltaTime / timeToCircle * 2 * Mathf.PI;
@@ -256,13 +327,56 @@ public class MinibossAbilities : MonoBehaviour
         }
     }
 
-    public void FirePlasmaShot()
+    public void FollowCircleLaser()
+    {
+        facePlayer.ManualFace();
+        ellipseRads += Time.fixedDeltaTime / timeToCircle * 2 * Mathf.PI;
+        transform.position = ellipse.GetPosition(ellipseRads);
+
+        SetBeamPosition(-transform.position);
+
+        if (ellipseRads >= startingRads + 2 * MathF.PI)
+        {
+            navMeshAgent.enabled = true;
+            enemyController.state = EnemyState.IDLE;
+            enemyController.frontAnimator.Play("ChestLaserEnd");
+            enemyController.backAnimator.Play("ChestLaserEnd");
+            minibossEvents.ThrustersOff();
+            beam.SetActive(false);
+        }
+    }
+
+    public void PlasmaShots()
+    {
+        enemyController.state = EnemyState.ATTACKING;
+        enemyController.frontAnimator.Play("PlasmaShots");
+        enemyController.backAnimator.Play("PlasmaShots");
+    }
+
+    public void FireMultiplePlasmaShots(int count, float delay)
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(delay);
+        StartCoroutine(MultipleShots(count, waitForSeconds));
+    }
+
+    IEnumerator MultipleShots(int count, WaitForSeconds delay)
+    {
+        while(count > 0)
+        {
+            FirePlasmaShot();
+            count -= 1;
+            yield return delay;
+        }
+    }
+
+    public HomingProjectile FirePlasmaShot()
     {
         HomingProjectile shot = Instantiate(plasmaBallPrefab).GetComponent<HomingProjectile>();
         shot.transform.position = shotOrigin.transform.position;
         shot.target = playerScript.transform;
         shot.enemyOfOrigin = enemyScript;
         shot.transform.LookAt(playerScript.transform);
+        return shot;
     }
 
     public void ChestLaser(int sweepsCount)
@@ -270,7 +384,7 @@ public class MinibossAbilities : MonoBehaviour
         if(Mathf.Abs(transform.position.z - playerScript.transform.position.z) > 6
            || Mathf.Abs(transform.position.x - playerScript.transform.position.x) > 8)
         {
-            MissileAttack();
+            MissileAttack(MissilePattern.FRONT);
             return;
         }
         enemyController.state = EnemyState.ATTACKING;
@@ -340,9 +454,68 @@ public class MinibossAbilities : MonoBehaviour
         }
     }
 
+    public void StartTeslaHarpoon()
+    {
+        enemyController.frontAnimator.Play("Takeoff");
+        enemyController.backAnimator.Play("Takeoff");
+        enemyController.attackTime = teslaTime + 5;
+    }
+
+    public void FlyUp()
+    {
+        StartCoroutine(TeslaHarpoons());
+    }
+
+    IEnumerator TeslaHarpoons()
+    {
+        while (transform.position.y < 15)
+        {
+            transform.position += new Vector3(0, 25 * Time.deltaTime, 0);
+            yield return null;
+        }
+
+        float rainTimer = teslaTime;
+        float delayTimer = teslaDelay;
+        while(rainTimer > 0)
+        {
+            rainTimer -= Time.deltaTime;
+            delayTimer -= Time.deltaTime;
+
+            if(delayTimer <= 0)
+            {
+                SpawnTeslaHarpoon();
+                delayTimer = teslaDelay;
+            }
+
+            yield return null;
+        }
+
+        enemyController.frontAnimator.Play("Descend");
+        enemyController.backAnimator.Play("Descend"); 
+        descendTimer = 0;
+        NavMeshHit hit;
+        Vector3 randVect = new Vector3(UnityEngine.Random.Range(-5f, 5f), 0, UnityEngine.Random.Range(-5f, 5f));
+        NavMesh.SamplePosition(playerScript.transform.position + randVect, out hit, 5f, NavMesh.AllAreas);
+        transform.position = new Vector3(hit.position.x, 15, hit.position.z);
+        while(descendTimer <= descendTime)
+        {
+            descendTimer += Time.deltaTime;
+            float yPos = descendCurve.Evaluate(descendTimer / descendTime) * 15;
+            transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
+            yield return null;
+        }
+        enemyController.attackTime = enemyController.attackMaxTime;
+    }
+
+    void SpawnTeslaHarpoon()
+    {
+        TeslaHarpoonProjectile teslaHarpoon = Instantiate(teslaHarpoonPrefab).GetComponentInChildren<TeslaHarpoonProjectile>();
+        teslaHarpoon.SetupHarpoon(enemyScript);
+    }
+
     void SetBeamPosition(Vector3 direction)
     {
-        beam.transform.position = beamOrigin.position + direction * beam.transform.localScale.y;
+        beam.transform.position = beamOrigin.position + direction.normalized * beam.transform.localScale.y;
         beam.transform.LookAt(beamOrigin.position);
         beam.transform.localEulerAngles = new Vector3(
             beamVertAngle,
