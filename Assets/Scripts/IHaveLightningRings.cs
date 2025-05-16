@@ -8,4 +8,5 @@ public interface IHaveLightningRings
     public event EventHandler<float> onSetRadius;
     public event EventHandler<Transform> onSetTarget;
     public event EventHandler<bool> onShowRings;
+    public event EventHandler<Color> onSetColor;
 }

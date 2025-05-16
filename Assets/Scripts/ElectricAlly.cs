@@ -16,11 +16,14 @@ public class ElectricAlly : MonoBehaviour, IHaveLightningRings
     PlayerScript playerScript;
     EnemyEvents enemyEvents;
     EnemyScript enemyScript;
+    [SerializeField] Color auditRed;
+    Material lightningMat;
 
 
     public event EventHandler<float> onSetRadius;
     public event EventHandler<Transform> onSetTarget;
     public event EventHandler<bool> onShowRings;
+    public event EventHandler<Color> onSetColor;
 
     private void Awake()
     {
@@ -51,17 +54,19 @@ public class ElectricAlly : MonoBehaviour, IHaveLightningRings
         RuntimeManager.PlayOneShot(electricImpact);
         playerScript.LosePoise(poiseDamage);
         playerScript.StartStagger(1);
-        //StartCoroutine(Block());
+        StartCoroutine(Block());
     }
 
-    //IEnumerator Block()
-    //{
-    //    shield.color = solid;
-    //    shield.material.SetFloat("_EdgeDecay", 0);
-    //    yield return new WaitForSeconds(0.3f);
-    //    shield.color = transparent;
-    //    shield.material.SetFloat("_EdgeDecay", 0.6f);
-    //}
+    IEnumerator Block()
+    {
+        //shield.color = solid;
+        onSetColor?.Invoke(this, Color.white);
+        shield.material.SetFloat("_EdgeDecay", 0);
+        yield return new WaitForSeconds(0.3f);
+        //shield.color = transparent;
+        onSetColor?.Invoke(this, auditRed);
+        shield.material.SetFloat("_EdgeDecay", 0.6f);
+    }
 
     private void OnEnable()
     {

@@ -41,12 +41,14 @@ public class LightningRing : LightningBolt
     {
         ringsController.onSetRadius += Rings_onSetRadius;
         ringsController.onShowRings += Rings_onShowRings;
+        ringsController.onSetColor += RingsController_onSetColor;
     }
 
     private void OnDisable()
     {
         ringsController.onSetRadius -= Rings_onSetRadius;
         ringsController.onShowRings -= Rings_onShowRings;
+        ringsController.onSetColor -= RingsController_onSetColor;
     }
 
     private void Rings_onSetRadius(object sender, float newRadius)
@@ -62,5 +64,10 @@ public class LightningRing : LightningBolt
         {
             fork.enabled = showRing;
         }
+    }
+
+    private void RingsController_onSetColor(object sender, Color color)
+    {
+        lineRenderer.material.color = color;
     }
 }
