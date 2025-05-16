@@ -45,6 +45,7 @@ public class LightningOrbController : EnemyController
     IEnumerator SelfDestructCoroutine()
     {
         lightning.Stop();
+        state = EnemyState.DYING;
         yield return new WaitForSeconds(selfDestructTime);
         SelfDestruct();
     }

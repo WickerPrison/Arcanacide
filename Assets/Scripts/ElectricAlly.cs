@@ -33,6 +33,7 @@ public class ElectricAlly : MonoBehaviour, IHaveLightningRings
         shield = GetComponent<SpriteRenderer>();
         enemyScript = GetComponentInParent<EnemyScript>();
         onSetRadius?.Invoke(this, radius);
+        onShowRings?.Invoke(this, false);
     }
 
     public void ShieldOnOff(bool onOrOff)

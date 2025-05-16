@@ -13,7 +13,6 @@ public class LightningRing : LightningBolt
     private void Awake()
     {
         ringsController = (IHaveLightningRings)GetComponentInParent(typeof(IHaveLightningRings));
-        Debug.Log(ringsController);
         line = GetComponent<LineRenderer>();
     }
 

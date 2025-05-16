@@ -251,7 +251,7 @@ public class GameManager : MonoBehaviour
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
-        playerData.money = 280;
+        playerData.money = 500;
         playerData.lostMoney = 0;
         playerData.strength = 1;
         playerData.dexterity = 1;
