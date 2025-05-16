@@ -110,7 +110,7 @@ public class HarpoonManager : MonoBehaviour
                 0, 
                 Random.Range(-harpoonBoundaries.y, harpoonBoundaries.y
             ));
-            attempt = Utils.RotateDirection(attempt, -45);
+            attempt = Utils.RotateDirection(attempt, 45);
             bool enoughSpace = true;
             foreach(TeslaHarpoon harpoon in harpoons)
             {
@@ -154,6 +154,23 @@ public class HarpoonManager : MonoBehaviour
         boltDamage = damage;
         boltPoiseDamage = poiseDamage;
         boltCD = cd;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector3[] corners =
+        {
+            Utils.RotateDirection(new Vector3(harpoonBoundaries.x, 0, harpoonBoundaries.y), 45),
+            Utils.RotateDirection(new Vector3(harpoonBoundaries.x, 0, -harpoonBoundaries.y), 45),
+            Utils.RotateDirection(new Vector3(-harpoonBoundaries.x, 0, -harpoonBoundaries.y), 45),
+            Utils.RotateDirection(new Vector3(-harpoonBoundaries.x, 0, harpoonBoundaries.y), 45),
+        };
+
+        Gizmos.DrawLine(corners[0], corners[1]);
+        Gizmos.DrawLine(corners[1], corners[2]);
+        Gizmos.DrawLine(corners[2], corners[3]);
+        Gizmos.DrawLine(corners[3], corners[0]);
+
     }
 }
 

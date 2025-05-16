@@ -12,7 +12,7 @@ public class MinibossV2Controller : EnemyController, IEndDialogue
         base.Start();
         enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
         abilities = GetComponent<MinibossAbilities>();
-        if (mapData.miniboss1Killed)
+        if (mapData.miniboss2Killed)
         {
             enemyEvents.HideBossHealthbar();
             //musicManager.ChangeMusicState(MusicState.MAINLOOP);
@@ -121,7 +121,15 @@ public class MinibossV2Controller : EnemyController, IEndDialogue
 
     public void EndDialogue()
     {
-        state = EnemyState.IDLE;
+        if (state == EnemyState.DYING)
+        {
+            frontAnimator.Play("FlyAway");
+            backAnimator.Play("FlyAway");
+        }
+        else
+        {
+            state = EnemyState.IDLE;
+        }
     }
 
     public override void StartDying()
@@ -139,7 +147,7 @@ public class MinibossV2Controller : EnemyController, IEndDialogue
     public override void Death()
     {
         base.Death();
-        mapData.miniboss1Killed = true;
+        mapData.miniboss2Killed = true;
         GlobalEvents.instance.MiniBossKilled();
     }
 }

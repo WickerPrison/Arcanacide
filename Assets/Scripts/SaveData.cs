@@ -48,7 +48,8 @@ public class SaveData
     public string deathRoom;
     public float[] deathPosition;
     public bool ticketFiled;
-    public bool miniboss1killed;
+    public bool miniboss1Killed;
+    public bool miniboss2Killed;
     public bool fireBossKilled;
     public bool secretaryConvo;
     public bool electricBossKilled;
@@ -114,7 +115,8 @@ public class SaveData
         deathPosition[1] = mapData.deathPosition.y;
         deathPosition[2] = mapData.deathPosition.z;
         ticketFiled = mapData.ticketFiled;
-        miniboss1killed = mapData.miniboss1Killed;
+        miniboss1Killed = mapData.miniboss1Killed;
+        miniboss2Killed = mapData.miniboss2Killed;
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
         electricBossKilled = mapData.electricBossKilled;
