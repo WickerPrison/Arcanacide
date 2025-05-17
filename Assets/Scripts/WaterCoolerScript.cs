@@ -28,6 +28,7 @@ public class WaterCoolerScript : MonoBehaviour
         if (mapData.usedCoolers.Contains(coolerID))
         {
             hasBeenUsed = true;
+            currentFill = 0;
             SetWaterHeight(0);
         }
         else

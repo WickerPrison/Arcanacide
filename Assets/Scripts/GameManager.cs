@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
     [System.NonSerialized] public List<EnemyScript> enemiesInRange = new List<EnemyScript>();
-    public int awareEnemies;
+    [System.NonSerialized] public int awareEnemies;
 
 
     //These are the set of saved values that are used when creating a new game
@@ -258,7 +258,7 @@ public class GameManager : MonoBehaviour
         playerData.vitality = 1;
         playerData.arcane = 1;
         playerData.health = playerData.MaxHealth();
-        playerData.maxMana = 50;
+        playerData.maxMana = 75;
         playerData.mana = playerData.maxMana;
         playerData.deathNum = 0;
         playerData.killedEnemiesNum = 0;
