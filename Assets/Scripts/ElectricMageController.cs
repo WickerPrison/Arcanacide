@@ -19,7 +19,7 @@ public class ElectricMageController : EnemyController
     [System.NonSerialized] public LayerMask layerMask;
     float boltCD = 0;
     [System.NonSerialized] public float boltMaxCD = 0.1f;
-    [System.NonSerialized] public int boltDamage = 2;
+    [System.NonSerialized] public int boltDamage = 3;
     [System.NonSerialized] public float boltPoiseDamage = 4;
     ChainLightningLink closestLink;
     bool moving = false;
