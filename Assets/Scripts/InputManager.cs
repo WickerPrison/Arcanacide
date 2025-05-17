@@ -186,12 +186,6 @@ public class InputManager : MonoBehaviour
         controls.Dialogue.Disable();
     }
 
-
-    private void OnEnable()
-    {
-        controls.Enable();
-    }
-
     private void OnDisable()
     {
         controls.Disable();
