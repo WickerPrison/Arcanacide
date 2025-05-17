@@ -9,12 +9,14 @@ public class ElectricSwordsmanController : EnemyController
     FacePlayer facePlayer;
     public event EventHandler onCloseRing;
     public LightningRings rings;
+    AttackArcGenerator attackArc;
 
     public override void Start()
     {
         base.Start();
         stepWithAttack = GetComponent<StepWithAttack>();
         facePlayer = GetComponent<FacePlayer>();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
     }
 
     public override void EnemyAI()
@@ -98,5 +100,11 @@ public class ElectricSwordsmanController : EnemyController
     {
         rings.CloseRings();
         attackTime = attackMaxTime;
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        base.StartStagger(staggerDuration);
+        attackArc.HideAttackArc();
     }
 }

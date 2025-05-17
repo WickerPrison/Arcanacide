@@ -15,6 +15,7 @@ public class Safe : MonoBehaviour
     [SerializeField] Patches patch;
     [SerializeField] Image newEmblemColorImage;
     [SerializeField] MapData mapData;
+    [SerializeField] EmblemLibrary patchLibrary;
     [SerializeField] EventReference safeSFX;
     Transform player;
     TutorialManager tutorialManager;
@@ -54,7 +55,7 @@ public class Safe : MonoBehaviour
             RuntimeManager.PlayOneShot(safeSFX);
             playerData.patches.Add(patch);
             newEmblemMessage.SetActive(true);
-            emblemMessageText.text = emblemName;
+            emblemMessageText.text = patchLibrary.patchDictionary[patch].name;
             im.Dialogue();
             Time.timeScale = 0;
         }
