@@ -197,6 +197,7 @@ public class ElectricMageController : EnemyController
         navAgent.enabled = false;
         state = EnemyState.DYING;
         boltCD = 10000;
+        enemySound.Stop();
         notElectrifiedLinks.Clear();
         notElectrifiedLinks = new List<ChainLightningLink>(chainLightningLinks);
         for(int i = 0; i < 3; i++)

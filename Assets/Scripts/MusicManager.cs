@@ -13,17 +13,17 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
-        if (GameObject.FindGameObjectWithTag("MusicPlayer") == null)
+        GameObject musicPlayerObject = GameObject.FindGameObjectWithTag("MusicPlayer");
+        if (musicPlayerObject == null)
         {
-            Instantiate(musicPlayerPrefab);
+            musicPlayerObject = Instantiate(musicPlayerPrefab);
         }
+        musicPlayer = musicPlayerObject.GetComponent<MusicPlayer>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        musicPlayer = GameObject.FindGameObjectWithTag("MusicPlayer").GetComponent<MusicPlayer>();
-
         if(musicOption == Music.NONE)
         {
             if (immediateStopMusic)
@@ -37,6 +37,7 @@ public class MusicManager : MonoBehaviour
         }
         else if(musicOption != musicPlayer.currentTrack)
         {
+            musicPlayer.StopImmediate();
             musicPlayer.PlayMusic(musicOption);
             musicPlayer.ChangeState(musicState);
         }

@@ -35,7 +35,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
     bool isColliding;
     [SerializeField] float[] hadokenAngles;
     public bool phase2 = false;
-    int phaseTrigger = 200;
+    int phaseTrigger;
     [SerializeField] ParticleSystem bodyLightning;
     public float abilityTime;
     float abilityMaxTime = 5;
@@ -52,6 +52,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         friendshipPower = 1 + livingFriends / 3f;
         enemyScript.maxHealth = Mathf.RoundToInt(enemyScript.maxHealth * friendshipPower);
         enemyScript.health = enemyScript.maxHealth;
+        phaseTrigger = Mathf.RoundToInt(enemyScript.maxHealth / 2);
     }
 
     public override void Start()
