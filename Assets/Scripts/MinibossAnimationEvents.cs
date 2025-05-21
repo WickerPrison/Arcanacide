@@ -25,7 +25,7 @@ public class MinibossAnimationEvents : MonoBehaviour
 
     public void FireMissile()
     {
-        abilities.FireMissiles();
+        abilities.FireMissiles(abilities.missilePattern);
     }
 
     public void StartAttackDash(string endAnimation)
@@ -43,6 +43,11 @@ public class MinibossAnimationEvents : MonoBehaviour
         abilities.StartLaser();
     }
 
+    public void PlasmaShots(int count)
+    {
+        abilities.FireMultiplePlasmaShots(count, 0.15f);
+    }
+
     public void DefeatDialogue()
     {
         Dialogue dialogue = GetComponent<Dialogue>();
@@ -57,6 +62,11 @@ public class MinibossAnimationEvents : MonoBehaviour
     public void ThrustersOff()
     {
         minibossEvents.ThrustersOff();
+    }
+
+    public void FlyUp()
+    {
+        abilities.FlyUp();
     }
 
     public void FlyAway()

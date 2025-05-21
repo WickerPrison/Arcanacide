@@ -14,14 +14,8 @@ public class BoxSetupEditor : Editor
         if (GUILayout.Button("Randomize Rotation"))
         {
             Undo.RecordObject(boxSetup.transform, "Randomize Box Rotation");
-            boxSetup.transform.localRotation = Quaternion.Euler(RandomAngle(), RandomAngle(), RandomAngle());
+            boxSetup.RandomRotateBox();
             PrefabUtility.RecordPrefabInstancePropertyModifications(boxSetup.transform);
         }
-    }
-
-    float RandomAngle()
-    {
-        int randInt = Random.Range(0, 4);
-        return randInt * 90f;
     }
 }

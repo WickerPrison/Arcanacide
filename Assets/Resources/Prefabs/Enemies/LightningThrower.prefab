@@ -7733,17 +7733,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reward: 50
-  generateID: 0
-  enemyID: 0
-  enemyGUID: 
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 120
+  maxHealth: 140
   maxPoise: 100
   poiseRegeneration: 5
   invincible: 0
+  enemyGUID: 
 --- !u!114 &2588783427533791422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7759,7 +7757,7 @@ MonoBehaviour:
   frontAnimator: {fileID: 8520914636627697609}
   backAnimator: {fileID: 7162640688738908335}
   navAgent: {fileID: 6253101904161657165}
-  attackMaxTime: 4
+  attackMaxTime: 3
   detectRange: 30
   attackRange: 4
   projectilePrefab: {fileID: 0}
@@ -7770,6 +7768,7 @@ MonoBehaviour:
   frontElectricityVFX: {fileID: 4120937834396339968}
   backElectricityVFX: {fileID: 2543542485218002685}
   lightningBallPrefab: {fileID: 2133317422168920642, guid: e855a41be390a3b4faeeb9dbac1b6599, type: 3}
+  lightningThrowerDamage: 25
   lightningSFX:
     Guid:
       Data1: -427598268
@@ -14293,21 +14292,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6253101904161657155}
     m_Modifications:
+    - target: {fileID: 1449011709646636834, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
+      propertyPath: radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.014999999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.335
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.153
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalRotation.w

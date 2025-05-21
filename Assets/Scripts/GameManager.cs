@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
     [System.NonSerialized] public List<EnemyScript> enemiesInRange = new List<EnemyScript>();
-    public int awareEnemies;
+    [System.NonSerialized] public int awareEnemies;
 
 
     //These are the set of saved values that are used when creating a new game
@@ -143,10 +143,12 @@ public class GameManager : MonoBehaviour
             mapData.deathRoom = data.deathRoom;
             mapData.deathPosition = new Vector3(data.deathPosition[0], data.deathPosition[1], data.deathPosition[2]);
             mapData.ticketFiled = data.ticketFiled;
-            mapData.miniboss1Killed = data.miniboss1killed;
+            mapData.miniboss1Killed = data.miniboss1Killed;
+            mapData.miniboss2Killed = data.miniboss2Killed;
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
             mapData.electricBossKilled = data.electricBossKilled;
+            mapData.carolsDeadFriends = data.carolsDeadFriends.ToList();
             mapData.ACOn = data.ACOn;
             mapData.iceBossKilled = data.iceBossKilled;
             mapData.iceBossPosition = new Vector3(data.iceBossPosition[0], data.iceBossPosition[1], data.iceBossPosition[2]);
@@ -205,9 +207,11 @@ public class GameManager : MonoBehaviour
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
         mapData.miniboss1Killed = false;
+        mapData.miniboss2Killed = false;
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
+        mapData.carolsDeadFriends.Clear();
         mapData.ACOn = true;
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
@@ -247,14 +251,14 @@ public class GameManager : MonoBehaviour
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
-        playerData.money = 280;
+        playerData.money = 500;
         playerData.lostMoney = 0;
         playerData.strength = 1;
         playerData.dexterity = 1;
         playerData.vitality = 1;
         playerData.arcane = 1;
         playerData.health = playerData.MaxHealth();
-        playerData.maxMana = 50;
+        playerData.maxMana = 75;
         playerData.mana = playerData.maxMana;
         playerData.deathNum = 0;
         playerData.killedEnemiesNum = 0;
@@ -277,9 +281,11 @@ public class GameManager : MonoBehaviour
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
         mapData.miniboss1Killed = true;
+        mapData.miniboss2Killed = false;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
+        mapData.carolsDeadFriends.Clear();
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
@@ -355,9 +361,11 @@ public class GameManager : MonoBehaviour
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
         mapData.miniboss1Killed = true;
+        mapData.miniboss2Killed = true;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;
+        mapData.carolsDeadFriends.Clear();
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
@@ -439,9 +447,11 @@ public class GameManager : MonoBehaviour
         mapData.deathPosition = deathPosition;
         mapData.ticketFiled = ticketFiled;
         mapData.miniboss1Killed = true;
+        mapData.miniboss2Killed = true;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;
+        mapData.carolsDeadFriends.Clear();
         mapData.iceBossKilled = true;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;

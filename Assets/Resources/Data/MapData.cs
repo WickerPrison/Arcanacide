@@ -31,17 +31,18 @@ public class MapData : ScriptableObject
 
     public string deathRoom;
     public Vector3 deathPosition;
-    public bool ticketFiled;
+
     public bool miniboss1Killed;
+    public bool miniboss2Killed;
     public bool fireBossKilled;
-    public bool secretaryConvo;
-
     public bool electricBossKilled;
-
     public bool iceBossKilled;
     public Vector3 iceBossPosition;
     public int iceBossDirection;
 
+    public bool ticketFiled;
+    public bool secretaryConvo;
+    public List<string> carolsDeadFriends;
     public bool ACOn;
 
     public bool whistleblowerArrested;

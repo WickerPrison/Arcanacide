@@ -3,6 +3,7 @@ Shader "Unlit/ClawVFX"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Color ("Tint", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -37,6 +38,7 @@ Shader "Unlit/ClawVFX"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            fixed4 _Color;
 
             v2f vert (appdata v)
             {
@@ -50,8 +52,8 @@ Shader "Unlit/ClawVFX"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-            col.rgb *= col.a;
-                return col * i.color;
+                col.rgb *= col.a;
+                return col * i.color * _Color;
             }
             ENDCG
         }

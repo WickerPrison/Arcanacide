@@ -16,15 +16,20 @@ public class OldManController : EnemyController
     CapsuleCollider enemyCollider;
     [SerializeField] int chargeDamage;
     bool isColliding;
-    [SerializeField] ParticleSystem staticVFX;
+    public ParticleSystem staticVFX;
     [SerializeField] List<ParticleSystem> attackVFX;
     FacePlayer facePlayer;
+
+    public override void Awake()
+    {
+        base.Awake();
+        enemyCollider = GetComponent<CapsuleCollider>();
+    }
 
     public override void Start()
     {
         base.Start();
         layerMask = LayerMask.GetMask("Default");
-        enemyCollider = GetComponent<CapsuleCollider>();
         chargeIndicatorWidth = enemyCollider.radius * 2;
         facePlayer = GetComponent<FacePlayer>();
     }
@@ -141,6 +146,12 @@ public class OldManController : EnemyController
     public override void StartStagger(float staggerDuration)
     {
         base.StartStagger(staggerDuration);
+        enemyCollider.isTrigger = false;
+    }
+
+    public override void DisableController()
+    {
+        base.DisableController();
         enemyCollider.isTrigger = false;
     }
 

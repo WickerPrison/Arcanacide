@@ -25,15 +25,17 @@ public class InputManager : MonoBehaviour
         {
             LoadBinding(inputAction.action.name);
         }
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            Gameplay();
+        }
+
     }
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null)
-        {
-            Gameplay();
-        }
+
     }
 
     private void Update()
@@ -182,12 +184,6 @@ public class InputManager : MonoBehaviour
         controls.Gameplay.Disable();
         controls.Menu.Disable();
         controls.Dialogue.Disable();
-    }
-
-
-    private void OnEnable()
-    {
-        controls.Enable();
     }
 
     private void OnDisable()

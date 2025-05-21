@@ -48,7 +48,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
 
                     if(randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
-                        abilities.Circle();
+                        abilities.Circle(CircleType.SHOOT);
                     }
                     else if(randFloat > 0.4f)
                     {
@@ -56,7 +56,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
                     }
                     else
                     {
-                        abilities.MissileAttack();
+                        abilities.MissileAttack(MissilePattern.FRONT);
                     }
                 }
                 else
@@ -65,7 +65,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
 
                     if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
                     {
-                        abilities.Circle();
+                        abilities.Circle(CircleType.SHOOT);
                     }
                     else if (randFloat > 0.4f)
                     {
@@ -73,7 +73,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
                     }
                     else if (randFloat > 0.2f)
                     {
-                        abilities.DashAway(abilities.MissileAttack);
+                        abilities.DashAway(() => abilities.MissileAttack(MissilePattern.FRONT));
                     }
                     else
                     {
@@ -138,22 +138,5 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
         base.Death();
         mapData.miniboss1Killed = true;
         GlobalEvents.instance.MiniBossKilled();
-    }
-
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        GlobalEvents.instance.onTestButton += Instance_onTestButton;
-    }
-
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        GlobalEvents.instance.onTestButton -= Instance_onTestButton;
-    }
-
-    private void Instance_onTestButton(object sender, System.EventArgs e)
-    {
-        enemyScript.LosePoise(10000);
     }
 }

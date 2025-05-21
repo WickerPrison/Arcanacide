@@ -57,9 +57,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reward: 5
-  generateID: 0
-  enemyID: 0
-  enemyGUID: 
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
@@ -68,6 +65,7 @@ MonoBehaviour:
   maxPoise: 10
   poiseRegeneration: 0
   invincible: 0
+  enemyGUID: 
 --- !u!114 &5988035559081268552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,8 +85,8 @@ MonoBehaviour:
   detectRange: 100
   attackRange: 3
   projectilePrefab: {fileID: 0}
-  spellAttackDamage: 20
-  spellAttackPoiseDamage: 30
+  spellAttackDamage: 30
+  spellAttackPoiseDamage: 45
   hitDamage: 0
   hitPoiseDamage: 0
   lightningExplosion: {fileID: 3284791711765906126, guid: 4d5bd7b8dac83504ab22c5a5d3758717, type: 3}
@@ -173,8 +171,8 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
-  transparent: {r: 0, g: 0, b: 0, a: 0}
-  solid: {r: 0, g: 0, b: 0, a: 0}
+  radius: 0
+  auditRed: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &3445605359261408295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10068,21 +10066,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1222317826742802791}
     m_Modifications:
+    - target: {fileID: 1449011709646636834, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
+      propertyPath: radius
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.014999999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.527
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.022
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4291448197692981742, guid: 84add907fc64ac34eac9d544daa7b62b, type: 3}
       propertyPath: m_LocalRotation.w

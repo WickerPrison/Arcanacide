@@ -198,6 +198,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ElectricPuddle
       objectReference: {fileID: 0}
+    - target: {fileID: 8979945774285855026, guid: ce552436897b6b54188a5ad6667ad752, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce552436897b6b54188a5ad6667ad752, type: 3}
 --- !u!4 &93938832 stripped
@@ -731,11 +735,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594737, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: nextRoom
-      value: EPath2.2
+      value: ElectricHub
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594737, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: doorNumber
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594738, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: m_RootOrder
@@ -791,7 +795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594741, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: m_Name
-      value: Doorway2
+      value: Doorway 0
       objectReference: {fileID: 0}
     - target: {fileID: 1706694549756176003, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: wall
@@ -991,11 +995,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594737, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: nextRoom
-      value: ElectricHub
+      value: EPath2.2
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594737, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: doorNumber
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594738, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: m_RootOrder
@@ -1051,7 +1055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594741, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: m_Name
-      value: Doorway0
+      value: Doorway 2
       objectReference: {fileID: 0}
     - target: {fileID: 1706694549756176003, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: wall
@@ -1152,11 +1156,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1445953062381594738, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
   m_PrefabInstance: {fileID: 924586551}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &924586553 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3460911224604374605, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
-  m_PrefabInstance: {fileID: 924586551}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &975693686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1238,7 +1237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1445953062381594741, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: m_Name
-      value: Doorway1
+      value: Doorway 1
       objectReference: {fileID: 0}
     - target: {fileID: 1706694549756176003, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
       propertyPath: wall
@@ -1523,7 +1522,7 @@ PrefabInstance:
     - target: {fileID: 1841772109284386721, guid: cad5e7db694d60342b67276c0debd25f, type: 3}
       propertyPath: spawnPoints.Array.data[0]
       value: 
-      objectReference: {fileID: 924586553}
+      objectReference: {fileID: 543015117}
     - target: {fileID: 1841772109284386721, guid: cad5e7db694d60342b67276c0debd25f, type: 3}
       propertyPath: spawnPoints.Array.data[1]
       value: 
@@ -1531,13 +1530,18 @@ PrefabInstance:
     - target: {fileID: 1841772109284386721, guid: cad5e7db694d60342b67276c0debd25f, type: 3}
       propertyPath: spawnPoints.Array.data[2]
       value: 
-      objectReference: {fileID: 543015117}
+      objectReference: {fileID: 1452734612}
     - target: {fileID: 8742325796071437863, guid: cad5e7db694d60342b67276c0debd25f, type: 3}
       propertyPath: m_Name
       value: SpawnManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cad5e7db694d60342b67276c0debd25f, type: 3}
+--- !u!4 &1452734612 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3460911224604374605, guid: 299d7d127243bcc449852a1a014bed85, type: 3}
+  m_PrefabInstance: {fileID: 924586551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1688733264
 PrefabInstance:
   m_ObjectHideFlags: 0

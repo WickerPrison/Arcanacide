@@ -28,6 +28,9 @@ public class ElectricBeams : MonoBehaviour
     PlayerScript playerScript;
     EnemyScript enemyScript;
     [SerializeField] EventReference electricDamage;
+    [System.NonSerialized] public float friendshipPower;
+    public int beamDamage = 30;
+    public float beamPoiseDamage = 30;
 
 
     private void Start()
@@ -146,8 +149,8 @@ public class ElectricBeams : MonoBehaviour
     {
         StartCoroutine(HitPlayerDelay());
         RuntimeManager.PlayOneShot(electricDamage);
-        playerScript.LoseHealth(30, EnemyAttackType.NONPARRIABLE, enemyScript);
-        playerScript.LosePoise(30);
+        playerScript.LoseHealth(Mathf.RoundToInt(friendshipPower * beamDamage), EnemyAttackType.NONPARRIABLE, enemyScript);
+        playerScript.LosePoise(beamPoiseDamage);
         playerScript.StartStagger(0.5f);
     }
 

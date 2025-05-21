@@ -12,9 +12,13 @@ public class Bolts : MonoBehaviour
     bool soundOn;
     StudioEventEmitter sfx;
 
-    private void Start()
+    private void Awake()
     {
         sfx = GetComponent<StudioEventEmitter>();
+    }
+
+    private void Start()
+    {
         for (int i = 0; i < 1; i++)
         {
             lightningBolts[i].frameCounter = i;
@@ -29,6 +33,11 @@ public class Bolts : MonoBehaviour
         {
             bolt.SetPositions(startPosition, endPosition);
         }
+    }
+
+    public void SetPositions((Vector3, Vector3) tuple)
+    {
+        SetPositions(tuple.Item1, tuple.Item2);
     }
 
     public void SoundOn()

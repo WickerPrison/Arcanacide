@@ -22,6 +22,7 @@ public class GlobalEvents : MonoBehaviour
     public event Action<GlobalEvents, int> onPlayerLoseHealth;
     public event Action<GlobalEvents, int> onPlayerGainHealth;
     public event EventHandler<int> onPickupGemShard;
+    public event EventHandler<bool> onEnemiesEnable;
 
 
     private void Awake()
@@ -93,5 +94,10 @@ public class GlobalEvents : MonoBehaviour
     public void PickupGemShard()
     {
         onPickupGemShard?.Invoke(this, 1);
+    }
+
+    public void EnableEnemies(bool setActive)
+    {
+        onEnemiesEnable?.Invoke(this, setActive);
     }
 }
