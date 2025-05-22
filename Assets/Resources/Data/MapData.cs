@@ -44,6 +44,7 @@ public class MapData : ScriptableObject
     public bool secretaryConvo;
     public List<string> carolsDeadFriends;
     public bool ACOn;
+    public bool hasRemoteAC;
 
     public bool whistleblowerArrested;
 

@@ -11,7 +11,24 @@ public class DespawnWhenAC : MonoBehaviour
     {
         if (mapData.ACOn == despawnWhenOn)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onSwitchAC += Global_onSwitchAC;
+    }
+
+    private void Global_onSwitchAC(object sender, bool acOn)
+    {
+        if(acOn == despawnWhenOn)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
         }
     }
 }

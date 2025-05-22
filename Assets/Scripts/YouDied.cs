@@ -7,40 +7,22 @@ using UnityEngine.UI;
 public class YouDied : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI youDiedText;
-    [SerializeField] Image fadeToBlack;
+    HUD hud;
     public PlayerScript playerScript;
     float messageDuration = 2;
-    bool hasDied = false;
-    float endMesageTime;
 
     public void ShowMessage()
     {
+        hud = GetComponentInParent<HUD>(); 
         Time.timeScale = 0;
         youDiedText.gameObject.SetActive(true);
-        fadeToBlack.gameObject.SetActive(true);
-        hasDied = true;
-        endMesageTime = Time.realtimeSinceStartup + messageDuration;
+        StartCoroutine(FadeToBlack());
     }
 
-    private void Update()
+    IEnumerator FadeToBlack()
     {
-        if (hasDied)
-        {
-            if(Time.realtimeSinceStartup >= endMesageTime)
-            {
-                Time.timeScale = 1;
-                playerScript.Death();
-            }
-
-            FadeToBlack();
-        }
-    }
-
-    void FadeToBlack()
-    {
-        float fadePercent = (messageDuration - (endMesageTime - Time.realtimeSinceStartup)) / messageDuration;
-        Color color = fadeToBlack.color;
-        color.a = fadePercent;
-        fadeToBlack.color = color;
+        yield return hud.FadeToBlack(messageDuration);
+        Time.timeScale = 1;
+        playerScript.Death();
     }
 }

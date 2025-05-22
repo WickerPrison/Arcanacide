@@ -12,15 +12,36 @@ public class IceStalagmite : MonoBehaviour
 
     private void Start()
     {
-        icicle.SetActive(mapData.ACOn);
+        Setup(mapData.ACOn);
+    }
+
+    void Setup(bool acOn)
+    {
+        icicle.SetActive(acOn);
         if (showPuddle)
         {
-            puddle.SetActive(!mapData.ACOn);
+            puddle.SetActive(!acOn);
         }
         else
         {
             puddle.SetActive(false);
         }
-        collide.enabled = mapData.ACOn;
+        collide.enabled = acOn;
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onSwitchAC += Global_onSwitchAC;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onSwitchAC -= Global_onSwitchAC;
+
+    }
+
+    private void Global_onSwitchAC(object sender, bool acOn)
+    {
+        Setup(acOn);
     }
 }
