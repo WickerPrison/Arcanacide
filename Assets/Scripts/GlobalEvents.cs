@@ -24,6 +24,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler<int> onPickupGemShard;
     public event EventHandler<bool> onEnemiesEnable;
     public event EventHandler<bool> onSwitchAC;
+    public event EventHandler onACWallSwitch;
 
 
     private void Awake()
@@ -105,5 +106,10 @@ public class GlobalEvents : MonoBehaviour
     public void SwitchAC(bool acOn)
     {
         onSwitchAC?.Invoke(this, acOn);
+    }
+
+    public void ACWallSwitch()
+    {
+        onACWallSwitch?.Invoke(this, EventArgs.Empty);
     }
 }

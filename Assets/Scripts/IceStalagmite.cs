@@ -9,6 +9,7 @@ public class IceStalagmite : MonoBehaviour
     [SerializeField] Collider collide;
     [SerializeField] MapData mapData;
     [SerializeField] bool showPuddle = true;
+    [SerializeField] GameObject[] icicles;
 
     private void Start()
     {
@@ -27,6 +28,19 @@ public class IceStalagmite : MonoBehaviour
             puddle.SetActive(false);
         }
         collide.enabled = acOn;
+    }
+
+    public void RandomizeStalagmite()
+    {
+        int randInt = Random.Range(0, icicles.Length);
+        for(int i = 0; i < icicles.Length; i++)
+        {
+            icicles[i].SetActive(i == randInt);
+            if(randInt == i)
+            {
+                icicle = icicles[i];
+            }
+        }
     }
 
     private void OnEnable()

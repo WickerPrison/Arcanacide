@@ -115,11 +115,11 @@ public class HUD : MonoBehaviour
     IEnumerator SwitchACRoutine()
     {
         Time.timeScale = 0;
-        yield return FadeToBlack(2);
+        yield return FadeToBlack(1);
         mapData.ACOn = !mapData.ACOn;
         GlobalEvents.instance.SwitchAC(mapData.ACOn);
-        yield return new WaitForSecondsRealtime(1);
-        yield return FadeToBlack(2, true);
+        yield return new WaitForSecondsRealtime(0.7f);
+        yield return FadeToBlack(1, true);
         Time.timeScale = 1;
     }
 
@@ -143,13 +143,20 @@ public class HUD : MonoBehaviour
         maxManaMessage.ShowMessage();
     }
 
+    private void Global_onACWallSwitch(object sender, System.EventArgs args)
+    {
+        StartCoroutine(SwitchACRoutine());
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onGemUsed += onGemUsed;
+        GlobalEvents.instance.onACWallSwitch += Global_onACWallSwitch;
     }
 
     private void OnDisable()
     {
         GlobalEvents.instance.onGemUsed -= onGemUsed;
+        GlobalEvents.instance.onACWallSwitch -= Global_onACWallSwitch;
     }
 }

@@ -43,6 +43,7 @@ public class MapData : ScriptableObject
     public bool ticketFiled;
     public bool secretaryConvo;
     public List<string> carolsDeadFriends;
+    public bool ACUsed;
     public bool ACOn;
     public bool hasRemoteAC;
 

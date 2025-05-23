@@ -7,7 +7,7 @@ public class DespawnWhenAC : MonoBehaviour
     [SerializeField] MapData mapData;
     [SerializeField] bool despawnWhenOn;
 
-    private void Awake()
+    private void Start()
     {
         if (mapData.ACOn == despawnWhenOn)
         {
