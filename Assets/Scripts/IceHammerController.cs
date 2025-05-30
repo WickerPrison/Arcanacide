@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class FireMinionController : EnemyController
+public class IceHammerController : EnemyController
 {
     AttackArcGenerator attackArc;
+    FacePlayer facePlayer;
+    [SerializeField] float radius;
+    Collider enemyCollider;
+    Vector3 jumpDestination;
 
     public override void Start()
     {
         base.Start();
         attackArc = GetComponentInChildren<AttackArcGenerator>();
+        facePlayer = GetComponent<FacePlayer>();
+        enemyCollider = GetComponent<Collider>();
     }
 
     public override void EnemyAI()
@@ -29,7 +34,7 @@ public class FireMinionController : EnemyController
             {
                 if (attackTime <= 0)
                 {
-                    Attack();
+                    HammerSmash();
                 }
             }
         }
@@ -40,28 +45,41 @@ public class FireMinionController : EnemyController
         }
     }
 
+    public void HammerSmash()
+    {
+        frontAnimator.Play("DoubleAttack");
+        backAnimator.Play("DoubleAttack");
+        state = EnemyState.ATTACKING;
+        attackTime = attackMaxTime;
+    }
+    public void AreaSmash()
+    {
+        bool playerInRange = Vector3.Distance(playerScript.transform.position, facePlayer.attackPoint.position) <= radius;
+        if (playerInRange)
+        {
+            playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
+            playerScript.LosePoise(hitPoiseDamage);
+        }
+    }
+
+
+    public void JumpSmash()
+    {
+        frontAnimator.Play("JumpSmash");
+        state = EnemyState.ATTACKING;
+        attackTime = attackMaxTime;
+    }
+
+    public void StartJump()
+    {
+        enemyCollider.enabled = false;
+        jumpDestination = playerScript.transform.position;
+    }
+
     public override void AttackHit(int smearSpeed)
     {
         enemySound.OtherSounds(0, 2);
         base.AttackHit(smearSpeed);
-    }
-
-    void Attack()
-    {
-        int num = Random.Range(0, 3);
-        num = 2;
-        if(num <= 1)
-        {
-            frontAnimator.Play("Attack");
-            backAnimator.Play("Attack");
-        }
-        else
-        {
-            frontAnimator.Play("DoubleAttack");
-            backAnimator.Play("DoubleAttack");
-        }
-        state = EnemyState.ATTACKING;
-        attackTime = attackMaxTime;
     }
 
     public override void StartStagger(float staggerDuration)
