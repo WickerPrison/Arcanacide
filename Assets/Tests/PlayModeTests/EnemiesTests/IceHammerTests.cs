@@ -10,6 +10,7 @@ public class IceHammerTests
     PlayerData playerData;
     MapData mapData;
     GameObject iceHammerPrefab;
+    GameObject iciclePrefab;
 
     [SetUp]
     public void Setup()
@@ -20,6 +21,7 @@ public class IceHammerTests
         playerData.hasHealthGem = true;
         mapData = Resources.Load<MapData>("Data/MapData");
         iceHammerPrefab = Resources.Load<GameObject>("Prefabs/Enemies/IceHammer");
+        iciclePrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/StalagmiteAttack");
         Time.timeScale = 1;
     }
 
@@ -33,5 +35,14 @@ public class IceHammerTests
         iceHammer.JumpSmash();
 
         yield return new WaitForSeconds(5f);
+    }
+
+    [UnityTest]
+    public IEnumerator Icicle()
+    {
+        StalagmiteAttack stalagmiteAttack = GameObject.Instantiate(iciclePrefab).GetComponent<StalagmiteAttack>();
+        stalagmiteAttack.transform.position = new Vector3(3f, 0, 3f);
+
+        yield return new WaitForSeconds(3f);
     }
 }

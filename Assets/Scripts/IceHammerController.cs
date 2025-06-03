@@ -101,7 +101,7 @@ public class IceHammerController : EnemyController
 
     IEnumerator Jump(Vector3 startPos, Vector3 jumpDestination)
     {
-        float jumpTime = Vector3.Distance(startPos, jumpDestination) / jumpSpeed;
+        float jumpTime = Mathf.Max(Vector3.Distance(startPos, jumpDestination) / jumpSpeed, 0.4f);
         float jumpTimer = 0;
         float progress = jumpTimer / jumpTime;
         while (progress < 0.75f)

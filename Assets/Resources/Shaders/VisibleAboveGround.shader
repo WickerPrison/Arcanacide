@@ -1,4 +1,4 @@
-Shader "Unlit/DefaultSprite"
+Shader "Unlit/VisibleAboveGround"
 {
 	Properties
 	{
@@ -24,12 +24,6 @@ Shader "Unlit/DefaultSprite"
 		ZWrite Off
 		Blend One OneMinusSrcAlpha
 
-		Stencil
-		{
-			Ref [_StencilLayer]
-			Comp Equal
-		}
-
 		Pass
 		{
 		CGPROGRAM
@@ -50,6 +44,7 @@ Shader "Unlit/DefaultSprite"
 				float4 vertex   : SV_POSITION;
 				fixed4 color    : COLOR;
 				float2 uv  : TEXCOORD0;
+				float3 worldPos: TEXCOORD1;
 			};
 			
 			fixed4 _Color;
@@ -60,6 +55,7 @@ Shader "Unlit/DefaultSprite"
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
 				o.color = v.color * _Color;
+				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
 				#ifdef PIXELSNAP_ON
 				o.vertex = UnityPixelSnap (o.vertex);
 				#endif
@@ -86,6 +82,7 @@ Shader "Unlit/DefaultSprite"
 			fixed4 frag(v2f i) : SV_Target
 			{
 				fixed4 c = SampleSpriteTexture (i.uv) * i.color;
+				c.a *= i.worldPos.y > 0;
 				c.rgb *= c.a;
 				return c;
 			}
