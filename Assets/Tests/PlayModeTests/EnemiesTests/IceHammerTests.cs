@@ -19,6 +19,8 @@ public class IceHammerTests
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
         playerData.hasHealthGem = true;
+        playerData.vitality = 30;
+        playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
         iceHammerPrefab = Resources.Load<GameObject>("Prefabs/Enemies/IceHammer");
         iciclePrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/StalagmiteAttack");
@@ -44,5 +46,22 @@ public class IceHammerTests
         stalagmiteAttack.transform.position = new Vector3(3f, 0, 3f);
 
         yield return new WaitForSeconds(3f);
+    }
+
+    [UnityTest]
+    public IEnumerator Stomp()
+    {
+        IceHammerController iceHammer = GameObject.Instantiate(iceHammerPrefab).GetComponent<IceHammerController>();
+        iceHammer.transform.position = new Vector3(-3f, 0, 3f);
+        yield return null;
+        iceHammer.StartStomp();
+
+        yield return new WaitForSeconds(7f);
+
+        iceHammer.transform.position = new Vector3(-3f, 0, -3f);
+        yield return null;
+        iceHammer.StartStomp();
+
+        yield return new WaitForSeconds(7f);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class StalagmiteAttack : MonoBehaviour
 {
@@ -11,6 +12,18 @@ public class StalagmiteAttack : MonoBehaviour
     [SerializeField] Vector3 bigIcicleStart;
     [SerializeField] Vector3 bigIcicleFinal;
     [SerializeField] float emergeTime;
+    [SerializeField] float peakTime;
+    WaitForSeconds peakWait;
+    [SerializeField] float retractTime;
+    [SerializeField] int damage;
+    [SerializeField] float poiseDamage;
+    Collider hitbox;
+    SpriteRenderer icicle;
+    Vector3 start;
+    Vector3 end;
+    PlayerScript playerScript;
+    [System.NonSerialized] public EnemyScript enemyOfOrigin;
+    [SerializeField] EventReference iceImpact;
 
     // Start is called before the first frame update
     void Start()
@@ -18,28 +31,75 @@ public class StalagmiteAttack : MonoBehaviour
         int randInt = Random.Range(0, 2);
         tallIcicle.transform.localPosition = tallIcicleStart;
         bigIcicle.transform.localPosition = bigIcicleStart;
+        tallIcicle.enabled = false;
+        bigIcicle.enabled = false;
         if(randInt == 0)
         {
-            tallIcicle.enabled = true;
-            bigIcicle.enabled = false;
-            StartCoroutine(Emerge(tallIcicle, tallIcicleStart, tallIcicleFinal));
+            icicle = tallIcicle;
+            start = tallIcicleStart;
+            end = tallIcicleFinal;
         }
         else
         {
-            tallIcicle.enabled = false;
-            bigIcicle.enabled = true;
-            StartCoroutine(Emerge(bigIcicle, bigIcicleStart, bigIcicleFinal));
+            icicle = bigIcicle;
+            start = bigIcicleStart;
+            end = bigIcicleFinal;
         }
+        peakWait = new WaitForSeconds(peakTime);
+        hitbox = GetComponent<Collider>();
+        hitbox.enabled = false;
+    }
+
+    public void Trigger()
+    {
+        StartCoroutine(Emerge(icicle, start, end));
     }
 
     IEnumerator Emerge(SpriteRenderer icicle, Vector3 start, Vector3 end)
     {
+        icicle.transform.rotation = Quaternion.Euler(25, 0, 180);
+        icicle.enabled = true;
         float emergeTimer = 0;
         while(emergeTimer < emergeTime)
         {
             icicle.transform.localPosition = Vector3.Lerp(start, end, emergeTimer / emergeTime);
             emergeTimer += Time.deltaTime;
             yield return null;
+        }
+
+        hitbox.enabled = true;
+        yield return peakWait;
+        hitbox.enabled = false;
+
+        emergeTimer = 0;
+        while (emergeTimer < retractTime)
+        {
+            icicle.transform.localPosition = Vector3.Lerp(end, start, emergeTimer / retractTime);
+            emergeTimer += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if(playerScript == null)
+            {
+                playerScript = other.GetComponent<PlayerScript>();
+            }
+
+            playerScript.HitPlayer(() =>
+            {
+                playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
+                playerScript.LosePoise(poiseDamage);
+                playerScript.StartStagger(0.2f);
+                RuntimeManager.PlayOneShot(iceImpact, 1f);
+                hitbox.enabled = false;
+            }, () =>
+            {
+                playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
+            });
         }
     }
 }

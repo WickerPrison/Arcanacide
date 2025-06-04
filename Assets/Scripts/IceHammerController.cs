@@ -16,6 +16,8 @@ public class IceHammerController : EnemyController
     [SerializeField] EventReference smashSound;
     [SerializeField] EventReference iceImpact;
     public int jumps;
+    [SerializeField] StalagmiteHolder lineStalagmites;
+    [SerializeField] StalagmiteHolder circleStalagmites;
 
     public override void Start()
     {
@@ -24,6 +26,8 @@ public class IceHammerController : EnemyController
         attackArc = GetComponentInChildren<AttackArcGenerator>();
         facePlayer = GetComponent<FacePlayer>();
         enemyCollider = GetComponent<Collider>();
+        lineStalagmites.gameObject.SetActive(true);
+        circleStalagmites.gameObject.SetActive(true);
     }
 
     public override void EnemyAI()
@@ -125,6 +129,28 @@ public class IceHammerController : EnemyController
     Vector3 GetJumpPosition(Vector3 startPos, Vector3 jumpDestination, float progress)
     {
         return Vector3.Lerp(startPos, jumpDestination, progress) + Vector3.up * heightCurve.Evaluate(progress) * jumpHeight;
+    }
+
+    public void StartStomp()
+    {
+        frontAnimator.Play("Stomp");
+        backAnimator.Play("Stomp");
+        state = EnemyState.ATTACKING;
+        attackTime = attackMaxTime;
+    }
+
+    public void Stomp()
+    {
+        lineStalagmites.TriggerWave();
+        GlobalEvents.instance.ScreenShake(0.2f, 0.1f);
+        RuntimeManager.PlayOneShot(smashSound, 0.5f);
+    }
+
+    public void ButtSlam()
+    {
+        circleStalagmites.TriggerWave();
+        GlobalEvents.instance.ScreenShake(0.2f, 0.3f);
+        RuntimeManager.PlayOneShot(smashSound, 1);
     }
 
     public override void AttackHit(int smearSpeed)

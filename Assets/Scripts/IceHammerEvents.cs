@@ -44,4 +44,14 @@ public class IceHammerEvents : MonoBehaviour
             hammerController.backAnimator.Play("JumpEnd");
         }
     }
+
+    public void Stomp()
+    {
+        hammerController.Stomp();
+    }
+
+    public void ButtSlam()
+    {
+        hammerController.ButtSlam();
+    }
 }
