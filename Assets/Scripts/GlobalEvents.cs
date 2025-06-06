@@ -25,6 +25,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler<bool> onEnemiesEnable;
     public event EventHandler<bool> onSwitchAC;
     public event EventHandler onACWallSwitch;
+    public event EventHandler<(float, float)> onScreenShake;
 
 
     private void Awake()
@@ -111,5 +112,10 @@ public class GlobalEvents : MonoBehaviour
     public void ACWallSwitch()
     {
         onACWallSwitch?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ScreenShake(float duration, float magnitude)
+    {
+        onScreenShake?.Invoke(this, (duration, magnitude));
     }
 }

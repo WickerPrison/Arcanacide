@@ -33,7 +33,7 @@ public class MinibossV2Tests
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
         harpoonPrefab = Resources.Load<GameObject>("Prefabs/Enemies/TeslaHarpoon");
         boltsPrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/Bolts");
-        Time.timeScale = 1f;
+        Time.timeScale = 4f;
     }
 
     [UnityTest]

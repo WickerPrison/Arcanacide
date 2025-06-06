@@ -5,6 +5,7 @@ Shader "Unlit/DefaultSprite"
 		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		_Color ("Tint", Color) = (1,1,1,1)
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
+		_StencilLayer ("Stencil Layer", int) = 0
 	}
 
 	SubShader
@@ -22,6 +23,12 @@ Shader "Unlit/DefaultSprite"
 		Lighting Off
 		ZWrite Off
 		Blend One OneMinusSrcAlpha
+
+		Stencil
+		{
+			Ref [_StencilLayer]
+			Comp Equal
+		}
 
 		Pass
 		{
