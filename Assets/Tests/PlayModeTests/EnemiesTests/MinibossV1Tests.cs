@@ -27,7 +27,7 @@ public class MinibossV1Tests
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
-        Time.timeScale = 1f;
+        Time.timeScale = 4f;
     }
 
     [UnityTest]

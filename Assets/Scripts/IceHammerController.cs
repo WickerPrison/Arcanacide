@@ -8,7 +8,7 @@ public class IceHammerController : EnemyController
     AttackArcGenerator attackArc;
     FacePlayer facePlayer;
     [SerializeField] float radius;
-    Collider enemyCollider;
+    [System.NonSerialized] public Collider enemyCollider;
     [SerializeField] float jumpSpeed;
     [SerializeField] AnimationCurve heightCurve;
     [SerializeField] float jumpHeight;
@@ -42,18 +42,33 @@ public class IceHammerController : EnemyController
                 navAgent.SetDestination(playerScript.transform.position);
             }
 
-            if (Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
+
+            if(attackTime <= 0)
             {
-                if (attackTime <= 0)
+                attackTime = attackMaxTime;
+                float randFloat = Random.Range(0f, 1f);
+                if (Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
                 {
                     HammerSmash();
                 }
+                else
+                {
+                    if(randFloat > 0.5f)
+                    {
+                        JumpSmash();
+                    }
+                    else
+                    {
+                        StartStomp();
+                    }
+                }
             }
-        }
 
-        if (attackTime > 0)
-        {
-            attackTime -= Time.deltaTime;
+
+            if (attackTime > 0)
+            {
+                attackTime -= Time.deltaTime;
+            }
         }
     }
 
@@ -62,9 +77,9 @@ public class IceHammerController : EnemyController
         frontAnimator.Play("DoubleAttack");
         backAnimator.Play("DoubleAttack");
         state = EnemyState.ATTACKING;
-        attackTime = attackMaxTime;
     }
-    public void AreaSmash()
+
+    public void HammerSmashImpact()
     {
         bool playerInRange = Vector3.Distance(playerScript.transform.position, facePlayer.attackPoint.position) <= radius;
         if (playerInRange)
@@ -81,18 +96,36 @@ public class IceHammerController : EnemyController
         }
         GlobalEvents.instance.ScreenShake(0.15f, 0.3f);
         RuntimeManager.PlayOneShot(smashSound, 1f);
+        enemyEvents.TriggerVfx("HammerSmash");
     }
 
+    public void JumpSmashImpact()
+    {
+        bool playerInRange = Vector3.Distance(playerScript.transform.position, facePlayer.attackPoint.position) <= radius;
+        if (playerInRange)
+        {
+            playerScript.HitPlayer(() =>
+            {
+                playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
+                playerScript.LosePoise(hitPoiseDamage);
+                RuntimeManager.PlayOneShot(iceImpact, 1f);
+            }, () =>
+            {
+                playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
+            });
+        }
+        GlobalEvents.instance.ScreenShake(0.15f, 0.3f);
+        RuntimeManager.PlayOneShot(smashSound, 1f);
+        enemyEvents.TriggerVfx("JumpSmash");
+    }
 
     public void JumpSmash()
     {
         frontAnimator.Play("JumpSmash");
         backAnimator.Play("JumpSmash");
         state = EnemyState.ATTACKING;
-        attackTime = attackMaxTime;
-        jumps = 4;
+        jumps = 3;
     }
-
 
     public void StartJump()
     {
@@ -136,7 +169,6 @@ public class IceHammerController : EnemyController
         frontAnimator.Play("Stomp");
         backAnimator.Play("Stomp");
         state = EnemyState.ATTACKING;
-        attackTime = attackMaxTime;
     }
 
     public void Stomp()
@@ -163,5 +195,19 @@ public class IceHammerController : EnemyController
     {
         base.StartStagger(staggerDuration);
         attackArc.HideAttackArc();
+        CancelJump();
+    }
+
+    public override void StartDying()
+    {
+        base.StartDying();
+        attackArc.HideAttackArc();
+        CancelJump();
+    }
+
+    void CancelJump()
+    {
+        StopAllCoroutines();
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 }

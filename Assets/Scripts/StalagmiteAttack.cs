@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using UnityEngine.AI;
 
 public class StalagmiteAttack : MonoBehaviour
 {
@@ -24,15 +25,14 @@ public class StalagmiteAttack : MonoBehaviour
     PlayerScript playerScript;
     [System.NonSerialized] public EnemyScript enemyOfOrigin;
     [SerializeField] EventReference iceImpact;
+    Vector3 localPos;
+    Transform holder;
 
     // Start is called before the first frame update
     void Start()
     {
         int randInt = Random.Range(0, 2);
-        tallIcicle.transform.localPosition = tallIcicleStart;
-        bigIcicle.transform.localPosition = bigIcicleStart;
-        tallIcicle.enabled = false;
-        bigIcicle.enabled = false;
+        ResetIcicles();
         if(randInt == 0)
         {
             icicle = tallIcicle;
@@ -48,11 +48,25 @@ public class StalagmiteAttack : MonoBehaviour
         peakWait = new WaitForSeconds(peakTime);
         hitbox = GetComponent<Collider>();
         hitbox.enabled = false;
+        localPos = transform.localPosition;
+        holder = transform.parent;
+    }
+
+    void ResetIcicles()
+    {
+        tallIcicle.transform.localPosition = tallIcicleStart;
+        bigIcicle.transform.localPosition = bigIcicleStart;
+        tallIcicle.enabled = false;
+        bigIcicle.enabled = false;
     }
 
     public void Trigger()
     {
-        StartCoroutine(Emerge(icicle, start, end));
+        NavMeshHit navMeshHit;
+        if(NavMesh.SamplePosition(transform.position, out navMeshHit, 0.1f, NavMesh.AllAreas))
+        {
+            StartCoroutine(Emerge(icicle, start, end));
+        }
     }
 
     IEnumerator Emerge(SpriteRenderer icicle, Vector3 start, Vector3 end)
@@ -60,6 +74,7 @@ public class StalagmiteAttack : MonoBehaviour
         icicle.transform.rotation = Quaternion.Euler(25, 0, 180);
         icicle.enabled = true;
         float emergeTimer = 0;
+        transform.SetParent(null);
         while(emergeTimer < emergeTime)
         {
             icicle.transform.localPosition = Vector3.Lerp(start, end, emergeTimer / emergeTime);
@@ -78,6 +93,9 @@ public class StalagmiteAttack : MonoBehaviour
             emergeTimer += Time.deltaTime;
             yield return null;
         }
+        icicle.enabled = false;
+        transform.SetParent(holder);
+        transform.localPosition = localPos;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,5 +119,11 @@ public class StalagmiteAttack : MonoBehaviour
                 playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
             });
         }
+    }
+
+    public void CancelStalagmite()
+    {
+        StopAllCoroutines();
+        ResetIcicles();
     }
 }

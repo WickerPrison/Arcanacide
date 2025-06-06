@@ -8,6 +8,12 @@ public class StalagmiteHolder : MonoBehaviour
     StalagmiteAttack[] stalagmites;
     SortedDictionary<float, StalagmiteAttack> stalagmiteDict = new SortedDictionary<float, StalagmiteAttack>();
     [SerializeField] float waveSpeed;
+    EnemyEvents enemyEvents;
+
+    private void Awake()
+    {
+        enemyEvents = GetComponentInParent<EnemyEvents>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -48,5 +54,36 @@ public class StalagmiteHolder : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    void CancelWave()
+    {
+        StopAllCoroutines();
+        foreach(StalagmiteAttack stalagmite in stalagmites)
+        {
+            stalagmite.CancelStalagmite();
+        }
+    }
+
+    private void OnEnable()
+    {
+        enemyEvents.OnStagger += EnemyEvents_OnStagger;
+        enemyEvents.OnStartDying += EnemyEvents_OnStartDying;
+    }
+
+    private void OnDisable()
+    {
+        enemyEvents.OnStagger -= EnemyEvents_OnStagger;
+        enemyEvents.OnStartDying -= EnemyEvents_OnStartDying;
+    }
+
+    private void EnemyEvents_OnStagger(object sender, System.EventArgs e)
+    {
+        CancelWave();
+    }
+
+    private void EnemyEvents_OnStartDying(object sender, System.EventArgs e)
+    {
+        CancelWave();
     }
 }

@@ -7,6 +7,12 @@ public class IceHammerEvents : MonoBehaviour
     IceHammerController hammerController;
     [SerializeField] SpriteRenderer indicatorCircle;
     [SerializeField] SpriteRenderer jumpIndicator;
+    EnemyEvents enemyEvents;
+
+    private void Awake()
+    {
+        enemyEvents = GetComponentInParent<EnemyEvents>();
+    }
 
     private void Start()
     {
@@ -18,11 +24,18 @@ public class IceHammerEvents : MonoBehaviour
         indicatorCircle.enabled = show == 1;
     }
 
-    public void AreaSmash()
+    public void HammerSmash()
     {
         indicatorCircle.enabled = false;
         jumpIndicator.enabled = false;
-        hammerController.AreaSmash();
+        hammerController.HammerSmashImpact();
+    }
+
+    public void JumpSmash()
+    {
+        indicatorCircle.enabled = false;
+        jumpIndicator.enabled = false;
+        hammerController.JumpSmashImpact();
     }
 
     public void StartJump()
@@ -42,6 +55,7 @@ public class IceHammerEvents : MonoBehaviour
         {
             hammerController.frontAnimator.Play("JumpEnd");
             hammerController.backAnimator.Play("JumpEnd");
+            hammerController.enemyCollider.enabled = true;
         }
     }
 
@@ -53,5 +67,29 @@ public class IceHammerEvents : MonoBehaviour
     public void ButtSlam()
     {
         hammerController.ButtSlam();
+    }
+
+    private void OnEnable()
+    {
+        enemyEvents.OnStagger += EnemyEvents_OnStagger;
+        enemyEvents.OnStartDying += EnemyEvents_OnStartDying;
+    }
+
+    private void OnDisable()
+    {
+        enemyEvents.OnStagger -= EnemyEvents_OnStagger; 
+        enemyEvents.OnStartDying += EnemyEvents_OnStartDying;
+    }
+
+    private void EnemyEvents_OnStartDying(object sender, System.EventArgs e)
+    {
+        jumpIndicator.enabled = false;
+        indicatorCircle.enabled = false;
+    }
+
+    private void EnemyEvents_OnStagger(object sender, System.EventArgs e)
+    {
+        jumpIndicator.enabled = false;
+        indicatorCircle.enabled = false;
     }
 }
