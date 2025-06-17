@@ -10,6 +10,7 @@ public class IceStalagmite : MonoBehaviour
     [SerializeField] MapData mapData;
     [SerializeField] bool showPuddle = true;
     [SerializeField] GameObject[] icicles;
+    [SerializeField] int[] icicleOptions;
 
     private void Start()
     {
@@ -32,7 +33,7 @@ public class IceStalagmite : MonoBehaviour
 
     public void RandomizeStalagmite()
     {
-        int randInt = Random.Range(0, icicles.Length);
+        int randInt = icicleOptions[Random.Range(0, icicleOptions.Length)];
         for(int i = 0; i < icicles.Length; i++)
         {
             icicles[i].SetActive(i == randInt);

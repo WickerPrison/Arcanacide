@@ -4,17 +4,22 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(IceStalagmite))]
+[CanEditMultipleObjects]
 public class IceStalagmiteEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        IceStalagmite stalagmite = target as IceStalagmite;
         if (GUILayout.Button("Randomize Icicle"))
         {
-            Undo.RecordObject(stalagmite, "Randomize stalagmite visual");
-            stalagmite.RandomizeStalagmite();
-            PrefabUtility.RecordPrefabInstancePropertyModifications(stalagmite);
+            var stalagmites = targets;
+            foreach(var thing in stalagmites)
+            {
+                IceStalagmite stalagmite = (IceStalagmite)thing;
+                Undo.RecordObject(stalagmite, "Randomize stalagmite visual");
+                stalagmite.RandomizeStalagmite();
+                PrefabUtility.RecordPrefabInstancePropertyModifications(stalagmite);
+            }
         }
     }
 }
