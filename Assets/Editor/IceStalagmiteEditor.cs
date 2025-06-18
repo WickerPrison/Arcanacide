@@ -12,10 +12,10 @@ public class IceStalagmiteEditor : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("Randomize Icicle"))
         {
-            var stalagmites = targets;
-            foreach(var thing in stalagmites)
+            Object[] stalagmites = targets;
+            foreach(Object targetObject in stalagmites)
             {
-                IceStalagmite stalagmite = (IceStalagmite)thing;
+                IceStalagmite stalagmite = (IceStalagmite)targetObject;
                 Undo.RecordObject(stalagmite, "Randomize stalagmite visual");
                 stalagmite.RandomizeStalagmite();
                 PrefabUtility.RecordPrefabInstancePropertyModifications(stalagmite);
