@@ -10,12 +10,16 @@ public class BoxSetupEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        BoxSetup boxSetup = target as BoxSetup;
         if (GUILayout.Button("Randomize Rotation"))
         {
-            Undo.RecordObject(boxSetup.transform, "Randomize Box Rotation");
-            boxSetup.RandomRotateBox();
-            PrefabUtility.RecordPrefabInstancePropertyModifications(boxSetup.transform);
+            Object[] boxes = targets;
+            foreach(Object targetObject in boxes)
+            {
+                BoxSetup boxSetup = (BoxSetup)targetObject;
+                Undo.RecordObject(boxSetup.transform, "Randomize Box Rotation");
+                boxSetup.RandomRotateBox();
+                PrefabUtility.RecordPrefabInstancePropertyModifications(boxSetup.transform);
+            }
         }
     }
 }

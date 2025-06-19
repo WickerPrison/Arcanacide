@@ -11,7 +11,6 @@ public class ACSwitch : MonoBehaviour
     [SerializeField] TextMeshProUGUI readout;
     [SerializeField] EventReference beep;
     [SerializeField] ParticleSystem wayFaerie;
-    bool hasBeenUsed = false;
     Transform player;
     InputManager im;
     float playerDistance = 100;
@@ -22,13 +21,20 @@ public class ACSwitch : MonoBehaviour
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         im.controls.Gameplay.Interact.performed += ctx => FlipSwitch();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        readout.text = "Max";
-        if (!mapData.ACOn)
+
+        if (mapData.ACUsed)
         {
-            hasBeenUsed = true;
-            readout.text = "Off";
             wayFaerie.Stop();
             wayFaerie.Clear();
+        }
+
+        if (!mapData.ACOn)
+        {
+            readout.text = "Off";
+        }
+        else
+        {
+            readout.text = "MAX";
         }
     }
 
@@ -36,7 +42,7 @@ public class ACSwitch : MonoBehaviour
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
 
-        if (playerDistance <= interactDistance && !hasBeenUsed)
+        if (playerDistance <= interactDistance)
         {
             message.SetActive(true);
         }
@@ -48,13 +54,41 @@ public class ACSwitch : MonoBehaviour
 
     void FlipSwitch()
     {
-        if (playerDistance <= interactDistance && !hasBeenUsed)
+        if (playerDistance <= interactDistance)
         {
-            hasBeenUsed = true;
-            mapData.ACOn = false;
-            readout.text = "Off";
+            GlobalEvents.instance.ACWallSwitch();
             RuntimeManager.PlayOneShot(beep);
+            mapData.ACUsed = true;
             wayFaerie.Stop();
         }
+    }
+
+    void SwitchAC(bool acOn)
+    {
+        mapData.ACOn = acOn;
+        if (acOn)
+        {
+            readout.text = "MAX";
+        }
+        else
+        {
+            readout.text = "Off";
+        }
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onSwitchAC += Global_onSwitchAC;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onSwitchAC -= Global_onSwitchAC;
+
+    }
+
+    private void Global_onSwitchAC(object sender, bool acOn)
+    {
+        SwitchAC(acOn);
     }
 }

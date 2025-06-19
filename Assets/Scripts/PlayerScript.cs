@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public enum EnemyAttackType
 {
@@ -92,6 +93,18 @@ public class PlayerScript : MonoBehaviour
         if (Time.timeScale == 1) Time.timeScale = 0;
         else Time.timeScale = 1;
         //LoseHealth(25, EnemyAttackType.NONPARRIABLE, null);
+    }
+
+    public void HitPlayer(Action onHit, Action onDodge)
+    {
+        if(gameObject.layer == 3)
+        {
+            onHit();
+        }
+        else
+        {
+            onDodge();
+        }
     }
 
     public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)

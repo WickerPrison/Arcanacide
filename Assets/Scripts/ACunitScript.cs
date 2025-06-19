@@ -24,23 +24,28 @@ public class ACunitScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!mapData.ACOn)
-        {
-            flashingLight.material.SetFloat("_slider", 15);
-            stableLight.material.SetFloat("_slider", 15);
-            return;
-        }
-        else
-        {
-            stableLight.material.SetFloat("_slider", 1.5f);
-        }
-
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         particles = GetComponentInChildren<ParticleSystem>();
         ParticleSystem.MainModule main = particles.main;
         main.startLifetime = range;
-        particles.Simulate(range + 5);
-        particles.Play();
+        Setup(mapData.ACOn);
+    }
+
+    void Setup(bool acOn)
+    {
+        if (!acOn)
+        {
+            flashingLight.material.SetFloat("_slider", 15);
+            stableLight.material.SetFloat("_slider", 15);
+            particles.Clear();
+            particles.Stop();
+        }
+        else
+        {
+            stableLight.material.SetFloat("_slider", 1.5f);
+            particles.Simulate(range + 5);
+            particles.Play();
+        }
     }
 
     // Update is called once per frame
@@ -80,5 +85,20 @@ public class ACunitScript : MonoBehaviour
                 playerScript.LoseStamina(amount);
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onSwitchAC += Global_onSwitchAC;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onSwitchAC -= Global_onSwitchAC;
+    }
+
+    private void Global_onSwitchAC(object sender, bool acOn)
+    {
+        Setup(acOn);
     }
 }

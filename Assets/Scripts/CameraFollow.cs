@@ -69,4 +69,19 @@ public class CameraFollow : MonoBehaviour
             yield return null;
         }
     }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onScreenShake += Global_onScreenShake;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onScreenShake -= Global_onScreenShake;
+    }
+
+    private void Global_onScreenShake(object sender, (float, float) durationMagnitude)
+    {
+        StartCoroutine(ScreenShake(durationMagnitude.Item1, durationMagnitude.Item2));
+    }
 }

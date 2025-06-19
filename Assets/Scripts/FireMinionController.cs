@@ -11,8 +11,6 @@ public class FireMinionController : EnemyController
     {
         base.Start();
         attackArc = GetComponentInChildren<AttackArcGenerator>();
-        hitDamage = 30;
-        hitPoiseDamage = 15;
     }
 
     public override void EnemyAI()

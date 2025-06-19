@@ -15,6 +15,7 @@ public class HUD : MonoBehaviour
     [SerializeField] Material youDiedTextMaterial;
     [SerializeField] GameObject map;
     [SerializeField] ScreenMessage maxManaMessage;
+    [SerializeField] Image fadeToBlack;
     public List<Sprite> gemSprites = new List<Sprite>();
     [SerializeField] Sprite unbrokenGem;
     public Image gemImage;
@@ -23,11 +24,13 @@ public class HUD : MonoBehaviour
     Camera mainCamera;
     InputManager im;
     bool mapOpen = false;
+    float fadeTimer;
 
     private void Start()
     {
         im = GlobalEvents.instance.GetComponent<InputManager>();
         im.controls.Gameplay.Map.performed += ctx => Map();
+        im.controls.Gameplay.AC.performed += ctx => SwitchAC();
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         canvas = GetComponent<Canvas>();
@@ -101,18 +104,59 @@ public class HUD : MonoBehaviour
         mapOpen = !mapOpen;
     }
 
+    void SwitchAC()
+    {
+        if(mapOpen && mapData.floor == 3 && mapData.hasRemoteAC)
+        {
+            StartCoroutine(SwitchACRoutine());
+        }
+    }
+
+    IEnumerator SwitchACRoutine()
+    {
+        Time.timeScale = 0;
+        yield return FadeToBlack(1);
+        mapData.ACOn = !mapData.ACOn;
+        GlobalEvents.instance.SwitchAC(mapData.ACOn);
+        yield return new WaitForSecondsRealtime(0.7f);
+        yield return FadeToBlack(1, true);
+        Time.timeScale = 1;
+    }
+
+    public IEnumerator FadeToBlack(float fadeTime, bool reverse = false)
+    {
+        fadeTimer = fadeTime;
+        while(fadeTimer >= 0)
+        {
+            fadeTimer -= Time.unscaledDeltaTime;
+            float fadePercent = fadeTimer / fadeTime;
+            if (!reverse) fadePercent = 1 - fadePercent;
+            Color color = fadeToBlack.color;
+            color.a = fadePercent;
+            fadeToBlack.color = color;
+            yield return null;
+        }
+    }
+
     public void MaxManaIncreased()
     {
         maxManaMessage.ShowMessage();
     }
 
+    private void Global_onACWallSwitch(object sender, System.EventArgs args)
+    {
+        StartCoroutine(SwitchACRoutine());
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onGemUsed += onGemUsed;
+        GlobalEvents.instance.onACWallSwitch += Global_onACWallSwitch;
     }
 
     private void OnDisable()
     {
         GlobalEvents.instance.onGemUsed -= onGemUsed;
+        GlobalEvents.instance.onACWallSwitch -= Global_onACWallSwitch;
     }
 }
