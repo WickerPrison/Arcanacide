@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+# if ENABLE_UNITYEVENTS
 using UnityEditor;
+#endif
 
 public class CubicleSpawner : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class CubicleSpawner : MonoBehaviour
 
     void SpawnCubicles()
     {
+#if UNITY_EDITOR
         for (int i = 0; i < cubicleNum; i++)
         {
             GameObject cubicle = PrefabUtility.InstantiatePrefab(cubiclePrefab) as GameObject;
@@ -37,5 +40,6 @@ public class CubicleSpawner : MonoBehaviour
                 backCubicle.transform.localScale = new Vector3(1, 1, -1);
             }
         }
+#endif
     }
 }
