@@ -7,11 +7,14 @@ public class PointTowardsVelocity : MonoBehaviour
     ArcProjectile arcProjectile;
     SpriteRenderer spriteRenderer;
     bool firstFrame = true;
+    float initialZRot;
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         arcProjectile = GetComponentInParent<ArcProjectile>();
+        initialZRot = transform.eulerAngles.z;
+        Debug.Log(initialZRot);
     }
 
     private void FixedUpdate()
@@ -25,7 +28,7 @@ public class PointTowardsVelocity : MonoBehaviour
 
         Vector3 direction = Vector3.Normalize(arcProjectile.GetNextPosition(transform.position) - transform.position);
         float angle = Utils.GetAngle(new Vector2(direction.x, direction.y));
-        transform.rotation = Quaternion.Euler(25, 0, Mathf.Sign(-direction.x) * angle + 90);
+        transform.rotation = Quaternion.Euler(25, 0, Mathf.Sign(-direction.x) * angle + 90 + initialZRot);
     }
 
     IEnumerator WaitUntilStabilized()

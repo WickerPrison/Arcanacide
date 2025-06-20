@@ -129,7 +129,10 @@ public class WallObjectSetup : MonoBehaviour
 
     private void OnDisable()
     {
-        roomSetup.onSizeChange -= OnSizeChange;
+        if(roomSetup != null)
+        {
+            roomSetup.onSizeChange -= OnSizeChange;
+        }
     }
 #endif
 }
