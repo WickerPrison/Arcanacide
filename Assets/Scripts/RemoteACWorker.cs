@@ -10,6 +10,7 @@ public class RemoteACWorker : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     NPCDialogue dialogue;
     FaceDirection faceDirection;
+    TutorialManager tutorialManager;
     float animationTimer = 0.5f;
     bool inDialogue = false;
     string firstDialogueName = "IT Worker";
@@ -30,6 +31,7 @@ public class RemoteACWorker : MonoBehaviour
 
     private void Start()
     {
+        tutorialManager = GlobalEvents.instance.gameObject.GetComponent<TutorialManager>();
         if (dialogueData.conversationsHad.Contains(finalDialogueName))
         {
             Destroy(gameObject);
@@ -80,6 +82,7 @@ public class RemoteACWorker : MonoBehaviour
         if (index < 4)
         {
             mapData.hasRemoteAC = true;
+            tutorialManager.Tutorial(tutorialManager.remoteAC);
         }
     }
 

@@ -86,10 +86,10 @@ public class NPCDialogue : MonoBehaviour
         currentLineIndex++;
         if (currentLineIndex >= thisConversation.Count)
         {
-            endConversationCallback(conversationIndex);
-            Destroy(dialogue.gameObject);
             inDialogue = false;
             im.Gameplay();
+            endConversationCallback(conversationIndex);
+            Destroy(dialogue.gameObject);
         }
         else
         {

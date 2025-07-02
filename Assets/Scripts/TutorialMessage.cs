@@ -71,6 +71,8 @@ public class TutorialMessage : MonoBehaviour
             }
         }
 
+        bindingName = bindingName.Replace("Hold or Tap ", "");
+
         if (displayStringDict.ContainsKey(bindingName))
         {
             if (displayStringDict[bindingName] == "")
