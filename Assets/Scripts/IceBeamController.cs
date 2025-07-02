@@ -30,8 +30,7 @@ public class IceBeamController : EnemyController
     public override void Start()
     {
         base.Start();
-        line.SetPosition(0, away);
-        line.SetPosition(1, away);
+        HideBeam();
 
         layerMask = LayerMask.GetMask("Default", "Player", "IFrames");
 
@@ -55,25 +54,29 @@ public class IceBeamController : EnemyController
     {
         base.EnemyAI();
 
-        if (state == EnemyState.UNAWARE)
+        switch (state)
         {
-            RaycastHit hit;
-            Physics.Linecast(transform.position, playerScript.transform.position, out hit, layerMask, QueryTriggerInteraction.Ignore);
-            if (hit.collider.CompareTag("Player"))
-            {
-                state = EnemyState.IDLE;
-                gm.awareEnemies += 1;
-            }
-        }
-        else if(state == EnemyState.IDLE)
-        {
-            //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
-            if (navAgent.enabled == true)
-            {
-                navAgent.SetDestination(playerScript.transform.position);
-            }
+            case EnemyState.UNAWARE:
+                RaycastHit hit;
+                Physics.Linecast(transform.position, playerScript.transform.position, out hit, layerMask, QueryTriggerInteraction.Ignore);
+                if (hit.collider.CompareTag("Player"))
+                {
+                    state = EnemyState.IDLE;
+                    gm.awareEnemies += 1;
+                }
+                break;
+            case EnemyState.IDLE:
+                //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
+                if (navAgent.enabled == true)
+                {
+                    navAgent.SetDestination(playerScript.transform.position);
+                }
 
-            ShowBeam();
+                ShowBeam();
+                break;
+            case EnemyState.DISABLED:
+                HideBeam();
+                break;
         }
     }
 
