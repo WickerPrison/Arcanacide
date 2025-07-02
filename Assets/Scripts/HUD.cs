@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.InputSystem.Interactions;
 
 public class HUD : MonoBehaviour
 {
@@ -30,8 +29,8 @@ public class HUD : MonoBehaviour
     private void Start()
     {
         im = GlobalEvents.instance.GetComponent<InputManager>();
-        im.controls.Gameplay.Map.performed += ctx => { if (ctx.interaction is TapInteraction) Map(); };
-        im.controls.Gameplay.Map.performed += ctx => { if (ctx.interaction is HoldInteraction) SwitchAC(); };
+        im.controls.Gameplay.Map.performed += ctx => Map();
+        im.controls.Gameplay.AC.performed += ctx => SwitchAC();
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         canvas = GetComponent<Canvas>();

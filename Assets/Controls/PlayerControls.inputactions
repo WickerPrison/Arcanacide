@@ -146,7 +146,16 @@
                     "id": "3c6428b4-ef45-4911-ac21-99a3bf447962",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold,Tap",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AC",
+                    "type": "Button",
+                    "id": "a2c866a4-5434-4c3e-965e-c2be9723f518",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
                     "initialStateCheck": false
                 }
             ],
@@ -522,6 +531,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6da6d1cf-d372-457b-a40a-62f1bc90500d",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AC",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c104de1f-bd5b-4b32-8be2-9fdbebb49b50",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "AC",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

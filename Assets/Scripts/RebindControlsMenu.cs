@@ -54,7 +54,7 @@ public class RebindControlsMenu : MonoBehaviour
         } 
     }
 
-    public void DoRebind(string actionName, int bindingIndex, TextMeshProUGUI statusText, string[] jointRebind = null)
+    public void DoRebind(string actionName, int bindingIndex, TextMeshProUGUI statusText)
     {
         InputAction actionToRebind = im.controls.asset.FindAction(actionName);
         if (actionToRebind == null || actionToRebind.bindings.Count <= bindingIndex) return;
