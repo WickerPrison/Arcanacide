@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class RebindButton : MonoBehaviour
 {
     [SerializeField] bool isGamepad;
-    [SerializeField] InputActionReference[] inputActionReference;
+    [SerializeField] InputActionReference inputActionReference;
     string actionName;
     [Range(0,10)] [SerializeField] int selectedBinding;
     [SerializeField] InputBinding.DisplayStringOptions displayStringOptions;
@@ -62,19 +62,15 @@ public class RebindButton : MonoBehaviour
 
     void GetBindingInfo()
     {
-        for(int i = 0; i < inputActionReference.Length; i++)
+        if(inputActionReference.action != null)
         {
-            Debug.Log(inputActionReference);
-            if(inputActionReference[i].action != null)
-            {
-                actionName = inputActionReference[i].action.name;
-            }
+            actionName = inputActionReference.action.name;
+        }
 
-            if(inputActionReference[i].action.bindings.Count > selectedBinding)
-            {
-                inputBinding = inputActionReference[i].action.bindings[selectedBinding];
-                bindingIndex = selectedBinding;
-            }
+        if(inputActionReference.action.bindings.Count > selectedBinding)
+        {
+            inputBinding = inputActionReference.action.bindings[selectedBinding];
+            bindingIndex = selectedBinding;
         }
     }
 
@@ -88,6 +84,7 @@ public class RebindButton : MonoBehaviour
                 spriteDict = settingsData.GetSpriteDictionary();
 
                 string initialString = im.GetBindingName(actionName, bindingIndex);
+                initialString = RemoveInteractions(initialString);
                 if (isGamepad && spriteDict.ContainsKey(initialString))
                 {
                     rebindText.text = displayStringDict[initialString];
@@ -103,16 +100,23 @@ public class RebindButton : MonoBehaviour
                 }
                 else
                 {
-                    rebindText.text = im.GetBindingName(actionName, bindingIndex);
+                    rebindText.text = initialString;
                     rebindSprite.sprite = null;
                     rebindSprite.color = transparent;
                 }
             }
             else
             {
-                rebindText.text = inputActionReference[0].action.GetBindingDisplayString(bindingIndex);
+                string initialString = inputActionReference.action.GetBindingDisplayString(bindingIndex);
+                rebindText.text = RemoveInteractions(initialString);
             }
         }
+    }
+
+    string RemoveInteractions(string initialString)
+    {
+        initialString = initialString.Replace("Hold or Tap ", "");
+        return initialString;
     }
 
     private void OnEnable()
