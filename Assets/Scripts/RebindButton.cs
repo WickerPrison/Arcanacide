@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class RebindButton : MonoBehaviour
 {
     [SerializeField] bool isGamepad;
-    [SerializeField] InputActionReference[] inputActionReference;
+    [SerializeField] InputActionReference inputActionReference;
     string actionName;
     [Range(0,10)] [SerializeField] int selectedBinding;
     [SerializeField] InputBinding.DisplayStringOptions displayStringOptions;
@@ -62,19 +62,15 @@ public class RebindButton : MonoBehaviour
 
     void GetBindingInfo()
     {
-        for(int i = 0; i < inputActionReference.Length; i++)
+        if(inputActionReference.action != null)
         {
-            Debug.Log(inputActionReference);
-            if(inputActionReference[i].action != null)
-            {
-                actionName = inputActionReference[i].action.name;
-            }
+            actionName = inputActionReference.action.name;
+        }
 
-            if(inputActionReference[i].action.bindings.Count > selectedBinding)
-            {
-                inputBinding = inputActionReference[i].action.bindings[selectedBinding];
-                bindingIndex = selectedBinding;
-            }
+        if(inputActionReference.action.bindings.Count > selectedBinding)
+        {
+            inputBinding = inputActionReference.action.bindings[selectedBinding];
+            bindingIndex = selectedBinding;
         }
     }
 
@@ -110,7 +106,7 @@ public class RebindButton : MonoBehaviour
             }
             else
             {
-                rebindText.text = inputActionReference[0].action.GetBindingDisplayString(bindingIndex);
+                rebindText.text = inputActionReference.action.GetBindingDisplayString(bindingIndex);
             }
         }
     }

@@ -174,7 +174,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""AC"",
                     ""type"": ""Button"",
-                    ""id"": ""a2c866a4-5434-4c3e-965e-c2be9723f518"",
+                    ""id"": ""62b0bd89-e4d8-49fb-87c1-d34a0fe55cba"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
@@ -558,22 +558,22 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6da6d1cf-d372-457b-a40a-62f1bc90500d"",
+                    ""id"": ""564ca031-e443-477b-ba56-a132af4c0120"",
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": """",
                     ""action"": ""AC"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c104de1f-bd5b-4b32-8be2-9fdbebb49b50"",
+                    ""id"": ""e556b9aa-c98d-4c6a-8757-1ef92057c81c"",
                     ""path"": ""<Keyboard>/m"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard"",
+                    ""groups"": """",
                     ""action"": ""AC"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
