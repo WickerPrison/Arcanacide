@@ -44,6 +44,8 @@ public class TutorialManager : MonoBehaviour
     string map = "Map";
     [SerializeField] GameObject refundShardTutorial;
     public string refundShard = "Refund Shard";
+    [SerializeField] GameObject remoteACTutorial;
+    [System.NonSerialized] public string remoteAC = "Remote AC";
     public List<string> allTutorials;
     Dictionary<string, GameObject> tutorialDict;
 
@@ -163,6 +165,7 @@ public class TutorialManager : MonoBehaviour
             {newWeapon, newWeaponTutorial},
             {map, mapTutorial},
             {refundShard, refundShardTutorial },
+            {remoteAC, remoteACTutorial },
         };
     }
 }

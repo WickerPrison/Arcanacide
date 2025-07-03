@@ -83,12 +83,13 @@ public class RebindButton : MonoBehaviour
                 displayStringDict = settingsData.GetStringDictionary();
                 spriteDict = settingsData.GetSpriteDictionary();
 
-                string initialString = im.GetBindingName(actionName, bindingIndex);
-                if (isGamepad && spriteDict.ContainsKey(initialString))
+                string displayString = im.GetBindingName(actionName, bindingIndex);
+                displayString = RemoveInteractions(displayString);
+                if (isGamepad && spriteDict.ContainsKey(displayString))
                 {
-                    rebindText.text = displayStringDict[initialString];
-                    rebindSprite.sprite = spriteDict[initialString];
-                    if (spriteDict[initialString] == null)
+                    rebindText.text = displayStringDict[displayString];
+                    rebindSprite.sprite = spriteDict[displayString];
+                    if (spriteDict[displayString] == null)
                     {
                         rebindSprite.color = transparent;
                     }
@@ -99,16 +100,23 @@ public class RebindButton : MonoBehaviour
                 }
                 else
                 {
-                    rebindText.text = im.GetBindingName(actionName, bindingIndex);
+                    rebindText.text = displayString;
                     rebindSprite.sprite = null;
                     rebindSprite.color = transparent;
                 }
             }
             else
             {
-                rebindText.text = inputActionReference.action.GetBindingDisplayString(bindingIndex);
+                string initialString = inputActionReference.action.GetBindingDisplayString(bindingIndex);
+                rebindText.text = RemoveInteractions(initialString);
             }
         }
+    }
+
+    string RemoveInteractions(string initialString)
+    {
+        initialString = initialString.Replace("Hold or Tap ", "");
+        return initialString;
     }
 
     private void OnEnable()

@@ -168,16 +168,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""3c6428b4-ef45-4911-ac21-99a3bf447962"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""AC"",
-                    ""type"": ""Button"",
-                    ""id"": ""62b0bd89-e4d8-49fb-87c1-d34a0fe55cba"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": ""Hold,Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -553,28 +544,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Map"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""564ca031-e443-477b-ba56-a132af4c0120"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""AC"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e556b9aa-c98d-4c6a-8757-1ef92057c81c"",
-                    ""path"": ""<Keyboard>/m"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""AC"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1058,7 +1027,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Knife = m_Gameplay.FindAction("Knife", throwIfNotFound: true);
         m_Gameplay_TestButton = m_Gameplay.FindAction("TestButton", throwIfNotFound: true);
         m_Gameplay_Map = m_Gameplay.FindAction("Map", throwIfNotFound: true);
-        m_Gameplay_AC = m_Gameplay.FindAction("AC", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_TutorialSelect = m_Tutorial.FindAction("TutorialSelect", throwIfNotFound: true);
@@ -1152,7 +1120,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Knife;
     private readonly InputAction m_Gameplay_TestButton;
     private readonly InputAction m_Gameplay_Map;
-    private readonly InputAction m_Gameplay_AC;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -1173,7 +1140,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Knife => m_Wrapper.m_Gameplay_Knife;
         public InputAction @TestButton => m_Wrapper.m_Gameplay_TestButton;
         public InputAction @Map => m_Wrapper.m_Gameplay_Map;
-        public InputAction @AC => m_Wrapper.m_Gameplay_AC;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1231,9 +1197,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Map.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMap;
                 @Map.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMap;
                 @Map.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMap;
-                @AC.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAC;
-                @AC.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAC;
-                @AC.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAC;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -1286,9 +1249,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Map.started += instance.OnMap;
                 @Map.performed += instance.OnMap;
                 @Map.canceled += instance.OnMap;
-                @AC.started += instance.OnAC;
-                @AC.performed += instance.OnAC;
-                @AC.canceled += instance.OnAC;
             }
         }
     }
@@ -1500,7 +1460,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnKnife(InputAction.CallbackContext context);
         void OnTestButton(InputAction.CallbackContext context);
         void OnMap(InputAction.CallbackContext context);
-        void OnAC(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {
