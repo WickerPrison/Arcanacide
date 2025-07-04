@@ -7,6 +7,7 @@ public class MinibossEvents : EnemyEvents
 {
     public event EventHandler onThrustersOn;
     public event EventHandler onThrustersOff;
+    public event EventHandler onStartPlasmaShots;
 
     public void ThrustersOn()
     {
@@ -16,5 +17,10 @@ public class MinibossEvents : EnemyEvents
     public void ThrustersOff()
     {
         onThrustersOff?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void StartPlasmaShots()
+    {
+        onStartPlasmaShots?.Invoke(this, EventArgs.Empty);
     }
 }

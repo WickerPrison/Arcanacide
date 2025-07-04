@@ -39,58 +39,7 @@ public class MinibossV3Controller : EnemyController
         {
             if (attackTime <= 0)
             {
-                attackTime = attackMaxTime;
-                float randFloat;
-                if (playerDistance > 4)
-                {
-                    randFloat = Random.Range(0, 1f);
-
-                    if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
-                    {
-                        abilities.Circle(CircleType.LASER);
-                    }
-                    else if (randFloat > 0.5f)
-                    {
-                        abilities.ChestLaser(2);
-                    }
-                    else if (randFloat > 0.2f)
-                    {
-                        abilities.PlasmaShots();
-                    }
-                    else
-                    {
-                        abilities.StartTeslaHarpoon();
-                    }
-                }
-                else
-                {
-                    randFloat = Random.Range(0f, 1f);
-
-                    if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
-                    {
-                        abilities.Circle(CircleType.LASER);
-                    }
-                    else if (randFloat > 0.7f)
-                    {
-                        abilities.MeleeBlade();
-                    }
-                    else if (randFloat > 0.6f)
-                    {
-                        abilities.MissileAttack(MissilePattern.RADIAL);
-                    }
-                    else if (randFloat > 0.5f)
-                    {
-                        abilities.StartTeslaHarpoon();
-                    }
-                    else if (randFloat > 0.2f)
-                    {
-                        abilities.DashAway(() => abilities.PlasmaShots());
-                    }
-                    else
-                    {
-                        abilities.DashAway(() => abilities.ChestLaser(2));
-                    }
-                }
+              
             }
             else
             {

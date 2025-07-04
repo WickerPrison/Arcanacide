@@ -351,6 +351,7 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.state = EnemyState.ATTACKING;
         enemyController.frontAnimator.Play("PlasmaShots");
         enemyController.backAnimator.Play("PlasmaShots");
+        minibossEvents.StartPlasmaShots();
     }
 
     public void FireMultiplePlasmaShots(int count, float delay)
