@@ -7,7 +7,7 @@ public class BlockedDoor : MonoBehaviour
 {
     public enum BlockageType
     {
-        LOCK, SUPPORTTICKET, ELECTRICPUDDLE, ICEBLOCK
+        LOCK, SUPPORTTICKET, ELECTRICPUDDLE, ACON, ACOFF
     }
 
     public BlockageType blockageType;
@@ -16,6 +16,17 @@ public class BlockedDoor : MonoBehaviour
     public List<Image> x = new List<Image>();
     public MapData mapData;
     private void OnEnable()
+    {
+        SetIcon();
+        GlobalEvents.instance.onSwitchAC += Global_onSwitchAC;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onSwitchAC -= Global_onSwitchAC;
+    }
+
+    private void Global_onSwitchAC(object sender, bool acOn)
     {
         SetIcon();
     }
@@ -49,8 +60,11 @@ public class BlockedDoor : MonoBehaviour
             case BlockageType.ELECTRICPUDDLE:
                 isOpen = mapData.powerSwitchesFlipped.Contains(blockageID);
                 break;
-            case BlockageType.ICEBLOCK:
+            case BlockageType.ACON:
                 isOpen = !mapData.ACOn;
+                break;
+            case BlockageType.ACOFF:
+                isOpen = mapData.ACOn;
                 break;
         }
         return isOpen;
