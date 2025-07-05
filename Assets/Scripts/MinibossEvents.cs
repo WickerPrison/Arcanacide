@@ -23,4 +23,5 @@ public class MinibossEvents : EnemyEvents
     {
         onStartPlasmaShots?.Invoke(this, EventArgs.Empty);
     }
+
 }
