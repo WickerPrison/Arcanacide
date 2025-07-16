@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum TakeoffType
+{
+    HARPOON, DRONELASER
+}
+
 public class MinibossAnimationEvents : MonoBehaviour
 {
     MinibossAbilities abilities;
     EnemyScript enemyScript;
     EnemyController enemyController;
     MinibossEvents minibossEvents;
+    [SerializeField] TakeoffType takeoffType;
 
 
     private void Awake()
@@ -64,9 +70,17 @@ public class MinibossAnimationEvents : MonoBehaviour
         minibossEvents.ThrustersOff();
     }
 
-    public void FlyUp()
+    public void Takeoff()
     {
-        abilities.FlyUp();
+        switch (takeoffType)
+        {
+            case TakeoffType.HARPOON:
+                abilities.HarpoonTakeoff();
+                break;
+            case TakeoffType.DRONELASER:
+                abilities.DroneTakeoff();
+                break;
+        }
     }
 
     public void FlyAway()
@@ -84,6 +98,16 @@ public class MinibossAnimationEvents : MonoBehaviour
 
         enemyScript.Death();
         enemyController.Death();
+    }
+
+    public void Land()
+    {
+        abilities.LandImpact();
+    }
+
+    public void RecallDrones()
+    {
+        minibossEvents.RecallDrones();
     }
 
     private void OnEnable()

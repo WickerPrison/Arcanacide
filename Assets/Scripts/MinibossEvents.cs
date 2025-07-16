@@ -8,6 +8,8 @@ public class MinibossEvents : EnemyEvents
     public event EventHandler onThrustersOn;
     public event EventHandler onThrustersOff;
     public event EventHandler onStartPlasmaShots;
+    public event EventHandler onStartDroneLaser;
+    public event EventHandler onRecallDrones;
 
     public void ThrustersOn()
     {
@@ -24,4 +26,13 @@ public class MinibossEvents : EnemyEvents
         onStartPlasmaShots?.Invoke(this, EventArgs.Empty);
     }
 
+    public void StartDroneLaser()
+    {
+        onStartDroneLaser?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void RecallDrones()
+    {
+        onRecallDrones?.Invoke(this, EventArgs.Empty);
+    }
 }

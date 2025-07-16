@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum DroneState
 {
-    IDLE, FLYING
+    IDLE, FLYING, LASER
 }
 
 public class MinibossDroneController : MonoBehaviour
@@ -22,11 +23,24 @@ public class MinibossDroneController : MonoBehaviour
     PlayerScript playerScript;
     FaceDirection faceDirection;
     float plasmaShotsToPosTime = 0.5f;
+    float recallDroneTime = 0.5f;
     WaitForSeconds plasmaShotFireDelay = new WaitForSeconds(0.15f);
     int sign;
     Vector3 toPlayer;
     Vector3 perp;
+    Vector3 targetPos;
     float randOffset;
+    [SerializeField] float speed;
+    [SerializeField] GameObject beam;
+    Vector3 initialBeamDirection;
+    Vector3 finalBeamDirection;
+    float beamVertAngle = 90;
+    LaserState laserState = LaserState.OFF;
+    float laserTimer;
+    [SerializeField] float[] pauseTime;
+    [SerializeField] float sweepTime;
+    float sweepHalfWidth = 65;
+    int sweeps;
 
     private void Awake()
     {
@@ -38,7 +52,8 @@ public class MinibossDroneController : MonoBehaviour
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         faceDirection = GetComponent<FaceDirection>();
         sign = droneId == 0 ? 1 : -1;
-        randOffset = Random.Range(0f, 1f);
+        randOffset = UnityEngine.Random.Range(0f, 1f);
+        beam.SetActive(false);
         if(minibossEvents != null)
         {
             enemyScript = minibossEvents.GetComponent<EnemyScript>();
@@ -55,16 +70,75 @@ public class MinibossDroneController : MonoBehaviour
             case DroneState.IDLE:
                 focusPoint = playerScript.transform.position;
                 faceDirection.FaceTowards(focusPoint);
-                HoverPosition();
+                targetPos = HoverPosition();
                 break;
         }
     }
 
-    void HoverPosition()
+    private void FixedUpdate()
     {
-        Vector3 hoverPos = enemyScript.transform.position + toPlayer * -0.5f + perp * 1.5f * sign;
+        switch (droneState)
+        {
+            case DroneState.IDLE:
+                if(Vector3.Distance(targetPos, transform.position) > speed * Time.fixedDeltaTime)
+                {
+                    Vector3 direction = Vector3.Normalize(targetPos - transform.position);
+                    transform.position += speed * Time.fixedDeltaTime * direction;
+                }
+                else
+                {
+                    transform.position = targetPos;
+                }
+                break;
+            case DroneState.LASER:
+                LaserSweep();
+                break;
+        }
+    }
+
+    public Vector3 HoverPosition()
+    {
+        Vector3 hoverPos = RelativePosition(-0.5f, 1.5f, 0);
         hoverPos += Vector3.up * (hoverPattern[droneId].Evaluate(Time.time * 0.3f + randOffset) * 0.2f + 1.5f);
-        transform.position = hoverPos;
+        return hoverPos;
+    }
+
+    Vector3 RelativePosition(float toPlayerMag, float perpMag, float vert = 1.7f)
+    {
+        return enemyScript.transform.position + toPlayer * toPlayerMag + perp * perpMag * sign + Vector3.up * vert;
+    }
+
+    Vector3 FirePoint()
+    {
+        if (faceDirection.facingFront)
+        {
+            return frontFirePoint.transform.position;
+        }
+        else
+        {
+            return backFirePoint.transform.position;
+        }
+    }
+
+    IEnumerator ToPosition(Vector3 startPos, Vector3 destination, float maxTime, Action callback, bool facePlayer = false)
+    {
+        float timer = maxTime;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            float progress = toDestinationCurve.Evaluate(timer / maxTime);
+            transform.position = Vector3.Lerp(destination, startPos, progress);
+            if (facePlayer)
+            {
+                faceDirection.FaceTowards(playerScript.transform.position);
+            }
+            else
+            {
+                faceDirection.FaceTowards(destination);
+            }
+            yield return null;
+        }
+        callback();
     }
 
     private void MinibossEvents_onStartPlasmaShots(object sender, System.EventArgs e)
@@ -80,16 +154,9 @@ public class MinibossDroneController : MonoBehaviour
     IEnumerator PlasmaShots()
     {
         droneState = DroneState.FLYING;
-        float timer = plasmaShotsToPosTime;
         Vector3 startPos = transform.position;
-        Vector3 destination = enemyScript.transform.position + toPlayer * 2 + perp * 2 * sign + Vector3.up * 1.7f;
-        while(timer > 0)
-        {
-            timer -= Time.deltaTime;
-            float progress = toDestinationCurve.Evaluate(timer / plasmaShotsToPosTime);
-            transform.position = Vector3.Lerp(destination, startPos, progress);
-            yield return null;
-        }
+        Vector3 destination = RelativePosition(2, 2);
+        yield return StartCoroutine(ToPosition(startPos, destination, plasmaShotsToPosTime, () => { }, true));
 
         int count = 7;
         while(count > 0)
@@ -99,42 +166,113 @@ public class MinibossDroneController : MonoBehaviour
             yield return plasmaShotFireDelay;
         }
 
-        timer = plasmaShotsToPosTime;
-        while (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            float progress = toDestinationCurve.Evaluate(timer / plasmaShotsToPosTime);
-            transform.position = Vector3.Lerp(startPos, destination, progress);
-            yield return null;
-        }
+        yield return StartCoroutine(ToPosition(destination, startPos, plasmaShotsToPosTime, () => { }));
         droneState = DroneState.IDLE;
     }
 
     public void FirePlasmaShot()
     {
         HomingProjectile shot = Instantiate(plasmaBallPrefab).GetComponent<HomingProjectile>();
-        if (faceDirection.facingFront)
-        {
-            shot.transform.position = frontFirePoint.transform.position;
-        }
-        else
-        {
-            shot.transform.position = backFirePoint.transform.position;
-        }
+        shot.transform.position = FirePoint();
         shot.target = playerScript.transform;
         shot.enemyOfOrigin = enemyScript;
         shot.transform.LookAt(playerScript.transform);
     }
 
+    private void MinibossEvents_onStartDroneLaser(object sender, System.EventArgs e)
+    {
+        droneState = DroneState.FLYING;
+        Vector3 startPos = transform.position;
+        Vector3 destination = RelativePosition(1, 5);
+        StartCoroutine(ToPosition(startPos, destination, plasmaShotsToPosTime, StartLaser));
+    }
+
+    void SetBeamPosition(Vector3 direction)
+    {
+        Vector3 beamOrigin = FirePoint();
+        beam.transform.position = beamOrigin + direction.normalized * beam.transform.localScale.y;
+        beam.transform.LookAt(beamOrigin);
+        beam.transform.localEulerAngles = new Vector3(
+            beamVertAngle,
+            beam.transform.localEulerAngles.y,
+            beam.transform.localEulerAngles.z);
+        faceDirection.FaceTowards(beam.transform.position);
+    }
+
+    public void StartLaser()
+    {
+        initialBeamDirection = Utils.RotateDirection(toPlayer, -sweepHalfWidth * sign);
+        finalBeamDirection = Utils.RotateDirection(toPlayer, sweepHalfWidth * sign);
+        beam.SetActive(true);
+        SetBeamPosition(initialBeamDirection.normalized);
+        droneState = DroneState.LASER;
+        laserState = LaserState.START;
+        laserTimer = pauseTime[droneId];
+        sweeps = 3;
+    }
+
+    void LaserSweep()
+    {
+        switch (laserState)
+        {
+            case LaserState.START:
+                laserTimer -= Time.fixedDeltaTime;
+                if (laserTimer <= 0)
+                {
+                    laserTimer = sweepTime;
+                    laserState = LaserState.SWEEP;
+                }
+                break;
+            case LaserState.SWEEP:
+                laserTimer -= Time.fixedDeltaTime;
+                float t = Mathf.SmoothStep(1, 0, laserTimer / sweepTime);
+                SetBeamPosition(Vector3.Lerp(initialBeamDirection, finalBeamDirection, t).normalized);
+                if (laserTimer <= 0)
+                {
+                    laserTimer = pauseTime[droneId];
+                    sweeps -= 1;
+                    if (sweeps == 0) laserState = LaserState.END;
+                    else laserState = LaserState.PAUSE;
+                }
+                break;
+            case LaserState.PAUSE:
+                laserTimer -= Time.fixedDeltaTime;
+                if (laserTimer <= 0)
+                {
+                    laserTimer = sweepTime;
+                    Vector3 temp = initialBeamDirection;
+                    initialBeamDirection = finalBeamDirection;
+                    finalBeamDirection = temp;
+                    laserState = LaserState.SWEEP;
+                }
+                break;
+            case LaserState.END:
+                laserTimer -= Time.fixedDeltaTime;
+                if (laserTimer <= 0)
+                {
+                    beam.SetActive(false);
+                    laserState = LaserState.OFF;
+                }
+                break;
+        }
+    }
+
+    private void MinibossEvents_onRecallDrones(object sender, EventArgs e)
+    {
+        StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
+    }
+
     private void OnEnable()
     {
-        if (minibossEvents == null) return;
         minibossEvents.onStartPlasmaShots += MinibossEvents_onStartPlasmaShots;
+        minibossEvents.onStartDroneLaser += MinibossEvents_onStartDroneLaser;
+        minibossEvents.onRecallDrones += MinibossEvents_onRecallDrones;
     }
 
     private void OnDisable()
     {
-        if (minibossEvents == null) return;
-        minibossEvents.onStartPlasmaShots -= MinibossEvents_onStartPlasmaShots; 
+        minibossEvents.onStartPlasmaShots -= MinibossEvents_onStartPlasmaShots;
+        minibossEvents.onStartDroneLaser -= MinibossEvents_onStartDroneLaser;
+        minibossEvents.onRecallDrones -= MinibossEvents_onRecallDrones;
     }
 }

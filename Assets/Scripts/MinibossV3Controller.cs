@@ -51,6 +51,11 @@ public class MinibossV3Controller : EnemyController
         backAnimator.SetFloat("PlayerDistance", playerDistance);
     }
 
+    public void StartLasers()
+    {
+        abilities.DashAway(abilities.DroneLasers, abilities.FleePointDestination());
+    }
+
     public override void AttackHit(int smearSpeed)
     {
         smearScript.particleSmear(smearSpeed);

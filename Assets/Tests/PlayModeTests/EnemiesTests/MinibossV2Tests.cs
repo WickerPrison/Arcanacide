@@ -27,11 +27,11 @@ public class MinibossV2Tests
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.miniboss2Killed = false;
-        minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV2");
+        minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV2");
 
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
-        harpoonPrefab = Resources.Load<GameObject>("Prefabs/Enemies/TeslaHarpoon");
+        harpoonPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/TeslaHarpoon");
         boltsPrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/Bolts");
         Time.timeScale = 4f;
     }

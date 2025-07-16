@@ -45,14 +45,14 @@ public class ChaosKnightController : EnemyController
 
         indicatorDirection = playerScript.transform.position - indicatorCircle.transform.position;
 
-        if(Vector3.Distance(playerScript.transform.position, indicatorCircle.transform.position) > indicatorCircleSpeed * Time.deltaTime)
+        if(Vector3.Distance(playerScript.transform.position, indicatorCircle.transform.position) > indicatorCircleSpeed * Time.fixedDeltaTime)
         {
             indicatorCircle.transform.position += indicatorDirection.normalized * indicatorCircleSpeed * Time.fixedDeltaTime;
         }
 
         jumpPointDirection = jumpPoint.position - transform.position;
         transform.position += jumpPointDirection.normalized * jumpSpeed * Time.fixedDeltaTime;
-        if(indicatorCircleSpeed == 0 && Vector3.Distance(transform.position, jumpPoint.position) < jumpSpeed * Time.deltaTime)
+        if(indicatorCircleSpeed == 0 && Vector3.Distance(transform.position, jumpPoint.position) < jumpSpeed * Time.fixedDeltaTime)
         {
             transform.position = jumpPoint.position;
             frontAnimator.Play("Land");

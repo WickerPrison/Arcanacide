@@ -14,6 +14,16 @@ public enum CircleType
     SHOOT, LASER
 }
 
+public enum LaserState
+{
+    START, SWEEP, PAUSE, END, OFF
+}
+
+public enum MinibossSpecialState
+{
+    NONE, CIRCLE, LASER, JUMP
+}
+
 public class MinibossAbilities : MonoBehaviour
 {
     [SerializeField] GameObject missilePrefab;
@@ -23,7 +33,9 @@ public class MinibossAbilities : MonoBehaviour
     NavMeshAgent navMeshAgent;
     EnemyController enemyController;
     EnemyScript enemyScript;
+    EnemySound enemySound;
     PlayerScript playerScript;
+    CameraFollow cameraScript;
     float range = 3.5f;
     float spread = 3.5f;
     WaitForSeconds salvoDelay = new WaitForSeconds(0.3f);
@@ -60,24 +72,32 @@ public class MinibossAbilities : MonoBehaviour
     [SerializeField] float descendTime;
     float descendTimer;
     HarpoonManager harpoonManager;
+    [System.NonSerialized] public List<Transform> fleePoints = new List<Transform>();
 
-    enum LaserState 
-    {
-        START, SWEEP, PAUSE, END, OFF        
-    }
     LaserState laserState = LaserState.OFF;
     float laserTimer;
     [SerializeField] float pauseTime;
     [SerializeField] float sweepTime;
     float sweepHalfWidth = 65;
     int sweeps;
+    Vector3 away = new Vector3(100, 100, 100);
+
+    [SerializeField] SpriteRenderer landingIndicator;
+    float jumpSpeed = 5f;
+    int jumpDamage = 30;
+    float jumpPoiseDamage = 60f;
+    [SerializeField] float landTime;
+    MinibossSpecialState specialState = MinibossSpecialState.NONE;
+    WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();
 
     private void Start()
     {
         enemyController = GetComponent<EnemyController>();
         enemyScript = GetComponent<EnemyScript>();
+        enemySound = GetComponentInChildren<EnemySound>();
         minibossEvents = GetComponent<MinibossEvents>();
         playerScript = enemyController.playerScript;
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         facePlayer = GetComponent<FacePlayer>();
         beam.SetActive(false);
@@ -86,31 +106,65 @@ public class MinibossAbilities : MonoBehaviour
         navMeshDestination = playerScript.transform;
         attackArc = GetComponentInChildren<AttackArcGenerator>();
         harpoonManager = GetComponent<HarpoonManager>();
+        if (landingIndicator != null)
+        {
+            landingIndicator.transform.SetParent(null);
+            landingIndicator.transform.position = transform.position;
+            landingIndicator.enabled = false;
+        }
     }
 
     private void FixedUpdate()
     {
         if(enemyController.state == EnemyState.SPECIAL)
         {
-            if (onCircle)
+            switch (specialState)
             {
-                switch (circleType)
-                {
-                    case CircleType.SHOOT:
-                        FollowCircleShoot();
-                        break;
-                    case CircleType.LASER:
-                        FollowCircleLaser();
-                        break;
-                }
-            }
-            else
-            {
-                GetToTheCircle();
+                case MinibossSpecialState.CIRCLE:
+                    CircleFixedUpdate();
+                    break;
+                case MinibossSpecialState.LASER:
+                    LaserSweep();
+                    break;
+                case MinibossSpecialState.JUMP:
+                    JumpFixedUpdate();
+                    break;
             }
         }
+    }
 
-        LaserSweep();
+    void CircleFixedUpdate()
+    {
+        if (onCircle)
+        {
+            switch (circleType)
+            {
+                case CircleType.SHOOT:
+                    FollowCircleShoot();
+                    break;
+                case CircleType.LASER:
+                    FollowCircleLaser();
+                    break;
+            }
+        }
+        else
+        {
+            GetToTheCircle();
+        }
+    }
+
+    void JumpFixedUpdate()
+    {
+        Vector3 direction = Vector3.Normalize(playerScript.transform.position - landingIndicator.transform.position);
+
+        if (Vector3.Distance(playerScript.transform.position, landingIndicator.transform.position) > jumpSpeed * Time.fixedDeltaTime)
+        {
+            landingIndicator.transform.position += direction.normalized * jumpSpeed * Time.fixedDeltaTime;
+        }
+        else
+        {
+            landingIndicator.transform.position = playerScript.transform.position;
+        }
     }
 
     public void MissileAttack(MissilePattern pattern)
@@ -190,13 +244,18 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.backAnimator.Play("Blade1");
     }
 
-    public void DashAway(Action nextAction)
+    public void DashAway(Action nextAction, Vector3 destination = new Vector3())
     {
         enemyController.state = EnemyState.ATTACKING;
         Vector3 direction = transform.position - playerScript.transform.position;
         NavMeshHit hit;
         bool foundDest = false;
         int sign = UnityEngine.Random.Range(0, 2) * 2 - 1;
+        if(destination != Vector3.zero)
+        {
+            dashTarget.position = destination;
+            foundDest = true;
+        }
         while (!foundDest)
         {
             foundDest = NavMesh.SamplePosition(
@@ -273,6 +332,7 @@ public class MinibossAbilities : MonoBehaviour
         (circleStart, startingRads) = ellipse.GetStartingPosition(transform.position);
         ellipseRads = startingRads;
         enemyController.state = EnemyState.SPECIAL;
+        specialState = MinibossSpecialState.CIRCLE;
     }
 
     void GetToTheCircle()
@@ -322,6 +382,7 @@ public class MinibossAbilities : MonoBehaviour
         {
             navMeshAgent.enabled = true;
             enemyController.state = EnemyState.IDLE;
+            specialState = MinibossSpecialState.NONE;
             enemyController.frontAnimator.Play("ShootDashEnd");        
             enemyController.backAnimator.Play("ShootDashEnd");        
         }
@@ -339,6 +400,7 @@ public class MinibossAbilities : MonoBehaviour
         {
             navMeshAgent.enabled = true;
             enemyController.state = EnemyState.IDLE;
+            specialState = MinibossSpecialState.NONE;
             enemyController.frontAnimator.Play("ChestLaserEnd");
             enemyController.backAnimator.Play("ChestLaserEnd");
             minibossEvents.ThrustersOff();
@@ -388,7 +450,8 @@ public class MinibossAbilities : MonoBehaviour
             MissileAttack(MissilePattern.FRONT);
             return;
         }
-        enemyController.state = EnemyState.ATTACKING;
+        enemyController.state = EnemyState.SPECIAL;
+        specialState = MinibossSpecialState.LASER;
         enemyController.frontAnimator.Play("ChestLaserStart");
         enemyController.backAnimator.Play("ChestLaserStart");
         initialBeamDirection = Utils.RotateDirection(facePlayer.faceDirection.normalized, -sweepHalfWidth);
@@ -448,6 +511,7 @@ public class MinibossAbilities : MonoBehaviour
                     beam.SetActive(false);
                     enemyController.frontAnimator.Play("ChestLaserEnd");
                     enemyController.backAnimator.Play("ChestLaserEnd");
+                    specialState = MinibossSpecialState.NONE;
                     facePlayer.ResetDestination();
                     laserState = LaserState.OFF;
                 }
@@ -462,18 +526,14 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.attackTime = teslaTime + 5;
     }
 
-    public void FlyUp()
+    public void HarpoonTakeoff()
     {
         StartCoroutine(TeslaHarpoons());
     }
 
     IEnumerator TeslaHarpoons()
     {
-        while (transform.position.y < 15)
-        {
-            transform.position += new Vector3(0, 25 * Time.deltaTime, 0);
-            yield return null;
-        }
+        yield return StartCoroutine(FlyUp());
 
         float rainTimer = teslaTime;
         float delayTimer = teslaDelay;
@@ -508,10 +568,90 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.attackTime = enemyController.attackMaxTime;
     }
 
+    IEnumerator FlyUp()
+    {
+        while (transform.position.y < 15)
+        {
+            transform.position += new Vector3(0, 25 * Time.deltaTime, 0);
+            yield return null;
+        }
+    }
+
     void SpawnTeslaHarpoon()
     {
         TeslaHarpoonProjectile teslaHarpoon = Instantiate(teslaHarpoonPrefab).GetComponentInChildren<TeslaHarpoonProjectile>();
         teslaHarpoon.SetupHarpoon(enemyScript);
+    }
+
+    public void DroneLasers()
+    {
+        enemyController.state = EnemyState.ATTACKING;
+        enemyController.frontAnimator.Play("Takeoff");
+        enemyController.backAnimator.Play("Takeoff");
+        minibossEvents.StartDroneLaser();
+    }
+
+    public void DroneTakeoff()
+    {
+        StartCoroutine(DroneLaserFlying());
+    }
+
+    IEnumerator DroneLaserFlying()
+    {
+        landingIndicator.transform.position = transform.position;
+        yield return StartCoroutine(FlyUp());
+        enemyController.state = EnemyState.SPECIAL;
+        specialState = MinibossSpecialState.JUMP;
+        landingIndicator.enabled = true;
+        yield return new WaitForSeconds(9f);
+        specialState = MinibossSpecialState.NONE;
+        enemyController.frontAnimator.Play("Falling");
+        enemyController.backAnimator.Play("Falling");
+
+        transform.position = landingIndicator.transform.position + Vector3.up * 15;
+        float landTimer = landTime;
+        Vector3 startPos = transform.position;
+        while(landTimer > 0)
+        {
+            landTimer -= Time.fixedDeltaTime;
+            transform.position = Vector3.Lerp(landingIndicator.transform.position, startPos, landTimer / landTime);
+            yield return fixedUpdate;
+        }
+        enemyController.frontAnimator.Play("Land");
+        enemyController.backAnimator.Play("Land");
+    }
+
+    public void LandImpact()
+    {
+        landingIndicator.enabled = false;
+        enemySound.OtherSounds(0, 1f);
+        StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
+        minibossEvents.TriggerVfx("land");
+        playerScript.HitPlayer(() =>
+        {
+            enemySound.SwordImpact();
+            playerScript.LoseHealth(jumpDamage, EnemyAttackType.MELEE, enemyScript);
+            playerScript.LosePoise(jumpPoiseDamage);
+        }, () =>
+        {
+            playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
+        });
+    }
+
+    public Vector3 FleePointDestination()
+    {
+        Vector3 destination = fleePoints[0].position;
+        float distance = Vector3.Distance(transform.position, fleePoints[0].position);
+        for (int i = 1; i < fleePoints.Count; i++)
+        {
+            float newDist = Vector3.Distance(transform.position, fleePoints[i].position);
+            if (newDist > distance)
+            {
+                distance = newDist;
+                destination = fleePoints[i].position;
+            }
+        }
+        return destination;
     }
 
     void SetBeamPosition(Vector3 direction)

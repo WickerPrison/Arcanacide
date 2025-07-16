@@ -24,10 +24,10 @@ public class MinibossV1Tests
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.miniboss1Killed = false;
-        minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV1");
+        minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
-        Time.timeScale = 0.5f;
+        Time.timeScale = 4f;
     }
 
     [UnityTest]

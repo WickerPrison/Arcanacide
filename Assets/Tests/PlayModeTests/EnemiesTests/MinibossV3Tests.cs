@@ -15,6 +15,7 @@ public class MinibossV3Tests
     GameObject ellipsePrefab;
     GameObject harpoonPrefab;
     GameObject boltsPrefab;
+    GameObject fleePointPrefab;
 
     [SetUp]
     public void Setup()
@@ -27,26 +28,15 @@ public class MinibossV3Tests
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.miniboss2Killed = false;
-        minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossV3");
-        dronePrefab = Resources.Load<GameObject>("Prefabs/Enemies/MinibossDrone");
+        minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV3");
+        dronePrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossDrone");
 
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
-        harpoonPrefab = Resources.Load<GameObject>("Prefabs/Enemies/TeslaHarpoon");
+        harpoonPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/TeslaHarpoon");
         boltsPrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/Bolts");
+        fleePointPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/FleePoint");
         Time.timeScale = 1f;
-    }
-
-    [UnityTest]
-    public IEnumerator DronePlasmaShots()
-    {
-        MinibossDroneController droneController = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
-        droneController.transform.position = new Vector3(3f, 1.5f, 3f);
-        yield return null;
-
-        droneController.FirePlasmaShots();
-        yield return new WaitForSeconds(10);
-        Assert.Less(playerData.health, playerData.MaxHealth());
     }
 
     [UnityTest]
@@ -55,13 +45,52 @@ public class MinibossV3Tests
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
         MinibossDroneController droneController = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
-        droneController.transform.position = new Vector3(-3f, 1.5f, 3f);
         yield return null;
+        droneController.transform.position = droneController.HoverPosition();
 
         minibossAbilities.PlasmaShots();
         MinibossV3Controller minibossController = minibossAbilities.GetComponent<MinibossV3Controller>();
         minibossController.attackTime = 7;
         yield return new WaitForSeconds(3);
         Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator DroneLaser()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        MinibossDroneController droneController = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        droneController.transform.position = droneController.HoverPosition();
+
+        droneController.StartLaser();
+        MinibossV3Controller minibossController = minibossAbilities.GetComponent<MinibossV3Controller>();
+        minibossController.attackTime = 70;
+        yield return new WaitForSeconds(15);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator DroneLasers()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController0.droneId = 0;
+        MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController1.droneId = 1;
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        Transform fleePoint = GameObject.Instantiate(fleePointPrefab).transform;
+        fleePoint.position = new Vector3(-8f, 0, 0);
+        yield return null;
+        droneController0.transform.position = droneController0.HoverPosition();
+        droneController1.transform.position = droneController1.HoverPosition();
+
+        MinibossV3Controller minibossController = minibossAbilities.GetComponent<MinibossV3Controller>();
+        minibossController.StartLasers();
+        minibossController.attackTime = 70;
+        playerData.health = 1000;
+        yield return new WaitForSeconds(15);
+        Assert.Less(playerData.health, 1000);
     }
 }
