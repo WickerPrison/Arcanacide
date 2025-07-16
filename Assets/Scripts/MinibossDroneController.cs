@@ -5,7 +5,7 @@ using System;
 
 public enum DroneState
 {
-    IDLE, FLYING, LASER
+    IDLE, FLYING, LASER, CIRCLE
 }
 
 public class MinibossDroneController : MonoBehaviour
@@ -16,7 +16,9 @@ public class MinibossDroneController : MonoBehaviour
     [SerializeField] Transform backFirePoint;
     [SerializeField] AnimationCurve toDestinationCurve;
     [SerializeField] AnimationCurve[] hoverPattern;
+    Ellipse ellipse;
     EnemyScript enemyScript;
+    MinibossAbilities abilities;
     MinibossEvents minibossEvents;
     DroneState droneState = DroneState.IDLE;
     Vector3 focusPoint;
@@ -41,6 +43,9 @@ public class MinibossDroneController : MonoBehaviour
     [SerializeField] float sweepTime;
     float sweepHalfWidth = 65;
     int sweeps;
+    float ellipseRads;
+    [SerializeField] float plasmaCooldown;
+    float plasmaTimer;
 
     private void Awake()
     {
@@ -57,6 +62,8 @@ public class MinibossDroneController : MonoBehaviour
         if(minibossEvents != null)
         {
             enemyScript = minibossEvents.GetComponent<EnemyScript>();
+            abilities = minibossEvents.GetComponent<MinibossAbilities>();
+            ellipse = abilities.ellipse;
         }
     }
 
@@ -92,6 +99,20 @@ public class MinibossDroneController : MonoBehaviour
                 break;
             case DroneState.LASER:
                 LaserSweep();
+                break;
+            case DroneState.CIRCLE:
+                ellipseRads += Time.fixedDeltaTime / abilities.timeToCircle * 2 * Mathf.PI;
+                transform.position = ellipse.GetPosition(ellipseRads);
+                faceDirection.FaceTowards(playerScript.transform.position);
+                if (plasmaTimer > 0)
+                {
+                    plasmaTimer -= Time.fixedDeltaTime;
+                    if (plasmaTimer <= 0)
+                    {
+                        plasmaTimer = plasmaCooldown;
+                        FirePlasmaShot();
+                    }
+                }
                 break;
         }
     }
@@ -262,11 +283,25 @@ public class MinibossDroneController : MonoBehaviour
         StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
     }
 
+    private void MinibossEvents_onStartCircle(object sender, (float, float) vals)
+    {
+        float minibossStartRads = vals.Item1;
+        float getToCircleTime = vals.Item2;
+        ellipseRads = minibossStartRads + 0.66666f * Mathf.PI * (droneId + 1);
+        Vector3 circlePos = ellipse.GetPosition(ellipseRads);
+        StartCoroutine(ToPosition(transform.position, circlePos, getToCircleTime, () => 
+        {
+            droneState = DroneState.CIRCLE;
+            plasmaTimer = plasmaCooldown;
+        }));
+    }
+
     private void OnEnable()
     {
         minibossEvents.onStartPlasmaShots += MinibossEvents_onStartPlasmaShots;
         minibossEvents.onStartDroneLaser += MinibossEvents_onStartDroneLaser;
         minibossEvents.onRecallDrones += MinibossEvents_onRecallDrones;
+        minibossEvents.onStartCircle += MinibossEvents_onStartCircle;
     }
 
     private void OnDisable()
@@ -274,5 +309,6 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartPlasmaShots -= MinibossEvents_onStartPlasmaShots;
         minibossEvents.onStartDroneLaser -= MinibossEvents_onStartDroneLaser;
         minibossEvents.onRecallDrones -= MinibossEvents_onRecallDrones;
+        minibossEvents.onStartCircle -= MinibossEvents_onStartCircle;
     }
 }

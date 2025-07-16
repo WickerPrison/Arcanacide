@@ -10,6 +10,7 @@ public class MinibossEvents : EnemyEvents
     public event EventHandler onStartPlasmaShots;
     public event EventHandler onStartDroneLaser;
     public event EventHandler onRecallDrones;
+    public event EventHandler<(float, float)> onStartCircle;
 
     public void ThrustersOn()
     {
@@ -34,5 +35,10 @@ public class MinibossEvents : EnemyEvents
     public void RecallDrones()
     {
         onRecallDrones?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void StartCircle(float startRads, float timeToCircle)
+    {
+        onStartCircle?.Invoke(this, (startRads, timeToCircle));
     }
 }

@@ -47,7 +47,7 @@ public class MinibossAbilities : MonoBehaviour
     bool onCircle = false;
     Vector3 circleStart;
     [SerializeField] float getToCircleSpeed;
-    [SerializeField] float timeToCircle;
+    public float timeToCircle;
     float startingRads;
     float ellipseRads;
     [SerializeField] GameObject plasmaBallPrefab;
@@ -330,6 +330,8 @@ public class MinibossAbilities : MonoBehaviour
         navMeshAgent.enabled = false;
         onCircle = false;
         (circleStart, startingRads) = ellipse.GetStartingPosition(transform.position);
+        float distance = Vector3.Distance(transform.position, circleStart);
+        minibossEvents.StartCircle(startingRads, distance / getToCircleSpeed); 
         ellipseRads = startingRads;
         enemyController.state = EnemyState.SPECIAL;
         specialState = MinibossSpecialState.CIRCLE;
@@ -340,7 +342,7 @@ public class MinibossAbilities : MonoBehaviour
         Vector3 direction = (circleStart - transform.position).normalized;
         facePlayer.SetDestination(direction);
         transform.Translate(Time.fixedDeltaTime * getToCircleSpeed * (circleStart - transform.position).normalized);
-        if (Vector3.Distance(transform.position, circleStart) < Time.deltaTime *getToCircleSpeed)
+        if (Vector3.Distance(transform.position, circleStart) < Time.deltaTime * getToCircleSpeed)
         {
             onCircle = true;
             facePlayer.ResetDestination();
@@ -384,7 +386,8 @@ public class MinibossAbilities : MonoBehaviour
             enemyController.state = EnemyState.IDLE;
             specialState = MinibossSpecialState.NONE;
             enemyController.frontAnimator.Play("ShootDashEnd");        
-            enemyController.backAnimator.Play("ShootDashEnd");        
+            enemyController.backAnimator.Play("ShootDashEnd");
+            minibossEvents.RecallDrones();
         }
     }
 

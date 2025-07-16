@@ -93,4 +93,26 @@ public class MinibossV3Tests
         yield return new WaitForSeconds(15);
         Assert.Less(playerData.health, 1000);
     }
+
+    [UnityTest]
+    public IEnumerator Circle()
+    {
+        Ellipse ellipse = GameObject.Instantiate(ellipsePrefab).GetComponent<Ellipse>();
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.ellipse = ellipse;
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController0.droneId = 0;
+        MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController1.droneId = 1;
+        yield return null;
+        droneController0.transform.position = droneController0.HoverPosition();
+        droneController1.transform.position = droneController1.HoverPosition();
+
+        minibossAbilities.Circle(CircleType.SHOOT);
+        MinibossV3Controller minibossController = minibossAbilities.GetComponent<MinibossV3Controller>();
+        minibossController.attackTime = 7;
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 }
