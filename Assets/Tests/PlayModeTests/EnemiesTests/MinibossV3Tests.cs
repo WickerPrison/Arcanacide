@@ -112,7 +112,8 @@ public class MinibossV3Tests
         minibossAbilities.Circle(CircleType.SHOOT);
         MinibossV3Controller minibossController = minibossAbilities.GetComponent<MinibossV3Controller>();
         minibossController.attackTime = 7;
+        playerData.health = 2000;
         yield return new WaitForSeconds(5);
-        Assert.Less(playerData.health, playerData.MaxHealth());
+        Assert.Less(playerData.health, 2000);
     }
 }

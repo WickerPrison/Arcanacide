@@ -102,7 +102,7 @@ public class MinibossDroneController : MonoBehaviour
                 break;
             case DroneState.CIRCLE:
                 ellipseRads += Time.fixedDeltaTime / abilities.timeToCircle * 2 * Mathf.PI;
-                transform.position = ellipse.GetPosition(ellipseRads);
+                transform.position = ellipse.GetPosition(ellipseRads) + Vector3.up * 1.75f;
                 faceDirection.FaceTowards(playerScript.transform.position);
                 if (plasmaTimer > 0)
                 {
@@ -288,7 +288,7 @@ public class MinibossDroneController : MonoBehaviour
         float minibossStartRads = vals.Item1;
         float getToCircleTime = vals.Item2;
         ellipseRads = minibossStartRads + 0.66666f * Mathf.PI * (droneId + 1);
-        Vector3 circlePos = ellipse.GetPosition(ellipseRads);
+        Vector3 circlePos = ellipse.GetPosition(ellipseRads) + Vector3.up * 1.75f;
         StartCoroutine(ToPosition(transform.position, circlePos, getToCircleTime, () => 
         {
             droneState = DroneState.CIRCLE;
