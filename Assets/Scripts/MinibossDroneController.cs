@@ -5,7 +5,7 @@ using System;
 
 public enum DroneState
 {
-    IDLE, FLYING, LASER, CIRCLE
+    IDLE, FLYING, LASER, CIRCLE, CHARGE
 }
 
 public class MinibossDroneController : MonoBehaviour
@@ -46,6 +46,10 @@ public class MinibossDroneController : MonoBehaviour
     float ellipseRads;
     [SerializeField] float plasmaCooldown;
     float plasmaTimer;
+    [SerializeField] float chargeTime;
+    float chargeTimer;
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+    [SerializeField] AnimationCurve chargeCurve;
 
     private void Awake()
     {
@@ -278,6 +282,25 @@ public class MinibossDroneController : MonoBehaviour
         }
     }
 
+    public void StartCharge()
+    {
+        StartCoroutine(Charge());
+    }
+
+    IEnumerator Charge()
+    {
+        chargeTimer = chargeTime;
+        droneState = DroneState.CHARGE;
+        Vector3 startPos = transform.position;
+        Vector3 destination = transform.position + Vector3.Normalize(playerScript.transform.position + Vector3.up * 1.75f - transform.position) * 15f;
+        while(chargeTimer > 0)
+        {
+            chargeTimer -= Time.fixedDeltaTime;
+            transform.position = Vector3.Lerp(destination, startPos, chargeCurve.Evaluate(chargeTimer / chargeTime));
+            yield return waitForFixedUpdate;
+        }
+    }
+
     private void MinibossEvents_onRecallDrones(object sender, EventArgs e)
     {
         StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
@@ -288,7 +311,7 @@ public class MinibossDroneController : MonoBehaviour
         float minibossStartRads = vals.Item1;
         float getToCircleTime = vals.Item2;
         ellipseRads = minibossStartRads + 0.66666f * Mathf.PI * (droneId + 1);
-        Vector3 circlePos = ellipse.GetPosition(ellipseRads) + Vector3.up * 1.75f;
+        Vector3 circlePos = ellipse.GetPosition(ellipseRads) + Vector3.up * 1.75f; 
         StartCoroutine(ToPosition(transform.position, circlePos, getToCircleTime, () => 
         {
             droneState = DroneState.CIRCLE;
