@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinibossV3Controller : EnemyController
+public class MinibossV3Controller : EnemyController, IEndDialogue
 {
     MinibossAbilities abilities;
     [SerializeField] MapData mapData;
@@ -47,6 +47,10 @@ public class MinibossV3Controller : EnemyController
                     {
                         abilities.Circle(CircleType.SHOOT);
                     }
+                    else if(randFloat > 0.6f)
+                    {
+                        abilities.MissileAttack(MissilePattern.FRONT);
+                    }
                     else if(randFloat > 0.4f)
                     {
                         abilities.DroneCharge();
@@ -66,7 +70,11 @@ public class MinibossV3Controller : EnemyController
                     {
                         abilities.Circle(CircleType.SHOOT);
                     }
-                    else if(randFloat > 0.4)
+                    else if(randFloat > 0.6f)
+                    {
+                        abilities.DashAway(() => abilities.DroneCharge());
+                    }
+                    else if(randFloat > 0.4f)
                     {
                         abilities.MeleeBlade();
                     }

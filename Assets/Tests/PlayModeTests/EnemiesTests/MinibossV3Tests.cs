@@ -95,7 +95,7 @@ public class MinibossV3Tests
         minibossController.StartLasers();
         minibossController.attackTime = 70;
         playerData.health = 1000;
-        yield return new WaitForSeconds(18);
+        yield return new WaitForSeconds(12);
         Assert.Less(playerData.health, 1000);
     }
 

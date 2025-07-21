@@ -246,7 +246,7 @@ public class MinibossDroneController : MonoBehaviour
         droneState = DroneState.LASER;
         laserState = LaserState.START;
         laserTimer = pauseTime[droneId];
-        sweeps = 3;
+        sweeps = 2;
     }
 
     void LaserSweep()

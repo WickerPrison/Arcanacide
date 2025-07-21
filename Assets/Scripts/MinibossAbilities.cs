@@ -613,7 +613,7 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.state = EnemyState.SPECIAL;
         specialState = MinibossSpecialState.JUMP;
         landingIndicator.enabled = true;
-        yield return new WaitForSeconds(13f);
+        yield return new WaitForSeconds(8f);
         specialState = MinibossSpecialState.NONE;
         enemyController.frontAnimator.Play("Falling");
         enemyController.backAnimator.Play("Falling");
