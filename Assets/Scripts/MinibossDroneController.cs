@@ -289,7 +289,7 @@ public class MinibossDroneController : MonoBehaviour
                 {
                     beam.SetActive(false);
                     laserState = LaserState.OFF;
-                    sign = droneId == 0 ? 1 : -1;
+                    sign = droneId == 0 ? 1 : -1; 
                 }
                 break;
         }
