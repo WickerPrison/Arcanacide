@@ -18,6 +18,7 @@ public class MinibossDroneController : MonoBehaviour
     [SerializeField] AnimationCurve[] hoverPattern;
     Ellipse ellipse;
     EnemyScript enemyScript;
+    EnemySound enemySound;
     MinibossAbilities abilities;
     MinibossEvents minibossEvents;
     DroneState droneState = DroneState.IDLE;
@@ -46,10 +47,19 @@ public class MinibossDroneController : MonoBehaviour
     float ellipseRads;
     [SerializeField] float plasmaCooldown;
     float plasmaTimer;
+    [SerializeField] float chargeWindupTime;
     [SerializeField] float chargeTime;
+    [SerializeField] int chargeDamage;
+    [SerializeField] float chargePoiseDmage;
     float chargeTimer;
+    bool chargeHitPlayer = false;
     WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     [SerializeField] AnimationCurve chargeCurve;
+    Collider chargeHitbox;
+    WaitForSeconds chargePause = new WaitForSeconds(0.2f);
+    Vector3 offset;
+    public event EventHandler<(Vector3, Vector3)> onStartCharge;
+    public event EventHandler onEndCharge;
 
     private void Awake()
     {
@@ -60,12 +70,16 @@ public class MinibossDroneController : MonoBehaviour
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         faceDirection = GetComponent<FaceDirection>();
+        chargeHitbox = GetComponent<Collider>();
+        chargeHitbox.enabled = false;
+        offset = Vector3.up * 1.75f;
         sign = droneId == 0 ? 1 : -1;
         randOffset = UnityEngine.Random.Range(0f, 1f);
         beam.SetActive(false);
         if(minibossEvents != null)
         {
             enemyScript = minibossEvents.GetComponent<EnemyScript>();
+            enemySound = enemyScript.GetComponentInChildren<EnemySound>();
             abilities = minibossEvents.GetComponent<MinibossAbilities>();
             ellipse = abilities.ellipse;
         }
@@ -284,20 +298,74 @@ public class MinibossDroneController : MonoBehaviour
 
     public void StartCharge()
     {
-        StartCoroutine(Charge());
+        StartCoroutine(ChargePositioning());
+    }
+
+    IEnumerator ChargePositioning()
+    {
+        if(droneId == 1)
+        {
+            yield return new WaitForSeconds(2);
+        }
+
+        Vector3 destination = playerScript.transform.position - toPlayer * 3 + perp * 2 * sign + offset;
+
+        yield return StartCoroutine(ToPosition(transform.position, destination, 0.5f, () =>
+         {
+             StartCoroutine(Charge());
+         }));
     }
 
     IEnumerator Charge()
     {
-        chargeTimer = chargeTime;
+        chargeHitPlayer = false;
         droneState = DroneState.CHARGE;
         Vector3 startPos = transform.position;
-        Vector3 destination = transform.position + Vector3.Normalize(playerScript.transform.position + Vector3.up * 1.75f - transform.position) * 15f;
-        while(chargeTimer > 0)
+        Vector3 direction = Vector3.Normalize(playerScript.transform.position + offset - transform.position);
+        Vector3 destination = transform.position - direction * 1.5f;
+        chargeTimer = chargeWindupTime;
+        float progress;
+        while (chargeTimer > 0)
         {
             chargeTimer -= Time.fixedDeltaTime;
-            transform.position = Vector3.Lerp(destination, startPos, chargeCurve.Evaluate(chargeTimer / chargeTime));
+            progress = 1 - chargeTimer / chargeWindupTime;
+            transform.position = Vector3.LerpUnclamped(startPos, destination, chargeCurve.Evaluate(progress));
             yield return waitForFixedUpdate;
+        }
+
+        yield return chargePause;
+
+        chargeTimer = chargeTime;
+        chargeHitbox.enabled = true;
+        startPos = transform.position;
+        destination = transform.position + Vector3.Normalize(playerScript.transform.position + offset - transform.position) * 15f;
+        onStartCharge?.Invoke(this, (startPos, destination));
+        while (chargeTimer > 0)
+        {
+            chargeTimer -= Time.fixedDeltaTime;
+            progress = 1 - chargeTimer / chargeTime;
+            transform.position = Vector3.LerpUnclamped(startPos, destination, chargeCurve.Evaluate(progress));
+            yield return waitForFixedUpdate;
+        }
+        onEndCharge?.Invoke(this, EventArgs.Empty);
+        chargeHitbox.enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (chargeHitPlayer) return;
+        if (other.CompareTag("Player"))
+        {
+            chargeHitPlayer = true;
+            playerScript.HitPlayer(() =>
+            {
+                enemySound.SwordImpact();
+                playerScript.LoseHealth(chargeDamage, EnemyAttackType.NONPARRIABLE, enemyScript);
+                playerScript.LosePoise(chargePoiseDmage);
+            }, () =>
+            {
+                playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE, enemyScript);
+            });
         }
     }
 

@@ -16,6 +16,7 @@ public class MinibossV3Tests
     GameObject harpoonPrefab;
     GameObject boltsPrefab;
     GameObject fleePointPrefab;
+    GameObject minibossStalagmitesPrefab;
 
     [SetUp]
     public void Setup()
@@ -36,6 +37,7 @@ public class MinibossV3Tests
         harpoonPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/TeslaHarpoon");
         boltsPrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/Bolts");
         fleePointPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/FleePoint");
+        minibossStalagmitesPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossStalagmites");
         Time.timeScale = 1f;
     }
 
@@ -121,15 +123,22 @@ public class MinibossV3Tests
     public IEnumerator DroneCharge()
     {
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
-        MinibossDroneController droneController = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController0.droneId = 0;
+        MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController1.droneId = 1;
+        GameObject minibossStalagmites = GameObject.Instantiate(minibossStalagmitesPrefab);
+        Transform layout = GameObject.Find("Layout").transform;
+        minibossStalagmites.transform.SetParent(layout);
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
-        droneController.transform.position = droneController.HoverPosition();
+        droneController0.transform.position = droneController0.HoverPosition();
 
-        droneController.StartCharge();
+        droneController0.StartCharge();
+        droneController1.StartCharge();
         MinibossV3Controller minibossController = minibossAbilities.GetComponent<MinibossV3Controller>();
         minibossController.attackTime = 70;
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(5);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
 }

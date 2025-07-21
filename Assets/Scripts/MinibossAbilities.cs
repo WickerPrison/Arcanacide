@@ -641,6 +641,11 @@ public class MinibossAbilities : MonoBehaviour
         });
     }
 
+    public void DroneCharge()
+    {
+
+    }
+
     public Vector3 FleePointDestination()
     {
         Vector3 destination = fleePoints[0].position;
