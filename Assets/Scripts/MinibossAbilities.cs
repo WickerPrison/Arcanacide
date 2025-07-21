@@ -49,6 +49,7 @@ public class MinibossAbilities : MonoBehaviour
     bool onCircle = false;
     Vector3 circleStart;
     [SerializeField] float getToCircleSpeed;
+    [SerializeField] float radsToComplete = 2;
     public float timeToCircle;
     float startingRads;
     float ellipseRads;
@@ -386,7 +387,7 @@ public class MinibossAbilities : MonoBehaviour
             }
         }
 
-        if(ellipseRads >= startingRads + 2 * MathF.PI)
+        if(ellipseRads >= startingRads + radsToComplete * MathF.PI)
         {
             navMeshAgent.enabled = true;
             enemyController.state = EnemyState.IDLE;

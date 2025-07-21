@@ -36,7 +36,6 @@ public class MinibossDroneController : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] GameObject beam;
     Vector3 beamDirection;
-    //Vector3 finalBeamDirection;
     float beamVertAngle = 90;
     LaserState laserState = LaserState.OFF;
     float laserTimer;
@@ -222,7 +221,8 @@ public class MinibossDroneController : MonoBehaviour
     {
         droneState = DroneState.FLYING;
         Vector3 startPos = transform.position;
-        Vector3 destination = RelativePosition(-1, 5);
+        Vector3 direction = Vector3.Cross(-enemyScript.transform.position, Vector3.up).normalized;
+        Vector3 destination = enemyScript.transform.position + direction * 4 * sign + enemyScript.transform.position.normalized * 2 + offset;
         StartCoroutine(ToPosition(startPos, destination, plasmaShotsToPosTime, StartLaser));
     }
 
@@ -240,11 +240,8 @@ public class MinibossDroneController : MonoBehaviour
 
     public void StartLaser()
     {
-        //initialBeamDirection = Utils.RotateDirection(toPlayer, -sweepHalfWidth * sign);
-        //finalBeamDirection = Utils.RotateDirection(toPlayer, sweepHalfWidth * sign);
         beam.SetActive(true);
-        //SetBeamPosition(initialBeamDirection.normalized);
-        beamDirection = toPlayer;
+        beamDirection = new Vector3(transform.position.x, 0, transform.position.z) * -1f;
         SetBeamPosition(Utils.RotateDirection(beamDirection, -sweepHalfWidth * sign));
         droneState = DroneState.LASER;
         laserState = LaserState.START;
@@ -282,9 +279,6 @@ public class MinibossDroneController : MonoBehaviour
                 if (laserTimer <= 0)
                 {
                     laserTimer = sweepTime;
-                    //Vector3 temp = initialBeamDirection;
-                    //initialBeamDirection = finalBeamDirection;
-                    //finalBeamDirection = temp;
                     sign *= -1;
                     laserState = LaserState.SWEEP;
                 }
@@ -295,6 +289,7 @@ public class MinibossDroneController : MonoBehaviour
                 {
                     beam.SetActive(false);
                     laserState = LaserState.OFF;
+                    sign = droneId == 0 ? 1 : -1;
                 }
                 break;
         }

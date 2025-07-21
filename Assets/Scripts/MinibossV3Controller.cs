@@ -41,7 +41,6 @@ public class MinibossV3Controller : EnemyController
             {
                 attackTime = attackMaxTime;
                 float randFloat = Random.Range(0, 1f);
-                Debug.Log(randFloat);
                 if(playerDistance > 4)
                 {
                     if(randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
