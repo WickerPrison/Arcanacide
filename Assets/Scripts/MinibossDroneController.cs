@@ -35,7 +35,7 @@ public class MinibossDroneController : MonoBehaviour
     float randOffset;
     [SerializeField] float speed;
     [SerializeField] GameObject beam;
-    //Vector3 initialBeamDirection;
+    Vector3 beamDirection;
     //Vector3 finalBeamDirection;
     float beamVertAngle = 90;
     LaserState laserState = LaserState.OFF;
@@ -222,7 +222,7 @@ public class MinibossDroneController : MonoBehaviour
     {
         droneState = DroneState.FLYING;
         Vector3 startPos = transform.position;
-        Vector3 destination = RelativePosition(1, 5);
+        Vector3 destination = RelativePosition(-1, 5);
         StartCoroutine(ToPosition(startPos, destination, plasmaShotsToPosTime, StartLaser));
     }
 
@@ -244,7 +244,8 @@ public class MinibossDroneController : MonoBehaviour
         //finalBeamDirection = Utils.RotateDirection(toPlayer, sweepHalfWidth * sign);
         beam.SetActive(true);
         //SetBeamPosition(initialBeamDirection.normalized);
-        SetBeamPosition(Utils.RotateDirection(toPlayer, -sweepHalfWidth * sign));
+        beamDirection = toPlayer;
+        SetBeamPosition(Utils.RotateDirection(beamDirection, -sweepHalfWidth * sign));
         droneState = DroneState.LASER;
         laserState = LaserState.START;
         laserTimer = pauseTime[droneId];
@@ -267,7 +268,7 @@ public class MinibossDroneController : MonoBehaviour
                 laserTimer -= Time.fixedDeltaTime;
                 float t = Mathf.SmoothStep(1, 0, laserTimer / sweepTime);
                 float angle = Mathf.Lerp(-sweepHalfWidth, sweepHalfWidth, t);
-                SetBeamPosition(Utils.RotateDirection(toPlayer, angle * sign));
+                SetBeamPosition(Utils.RotateDirection(beamDirection, angle * sign));
                 if (laserTimer <= 0)
                 {
                     laserTimer = pauseTime[droneId];
@@ -357,6 +358,7 @@ public class MinibossDroneController : MonoBehaviour
         }
         onEndCharge?.Invoke(this, EventArgs.Empty);
         chargeHitbox.enabled = false;
+        droneState = DroneState.IDLE;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -277,7 +277,7 @@ public class MinibossAbilities : MonoBehaviour
             }
         }
         navMeshDestination = dashTarget;
-        navMeshAgent.stoppingDistance = dashingStopDistance;
+        navMeshAgent.stoppingDistance = 0;
         facePlayer.SetDestination(dashTarget.position);
         enemyController.frontAnimator.Play("StartDash");
         enemyController.backAnimator.Play("StartDash");
@@ -636,20 +636,24 @@ public class MinibossAbilities : MonoBehaviour
         enemySound.OtherSounds(0, 1f);
         StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
         minibossEvents.TriggerVfx("land");
-        playerScript.HitPlayer(() =>
+        if(enemyController.playerDistance < 3.5f)
         {
-            enemySound.SwordImpact();
-            playerScript.LoseHealth(jumpDamage, EnemyAttackType.MELEE, enemyScript);
-            playerScript.LosePoise(jumpPoiseDamage);
-        }, () =>
-        {
-            playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
-        });
+            playerScript.HitPlayer(() =>
+            {
+                enemySound.SwordImpact();
+                playerScript.LoseHealth(jumpDamage, EnemyAttackType.MELEE, enemyScript);
+                playerScript.LosePoise(jumpPoiseDamage);
+            }, () =>
+            {
+                playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
+            });
+        }
     }
 
     public void DroneCharge()
     {
         minibossEvents.StartDroneCharge();
+        enemyController.attackTime += 5f;
     }
 
     public Vector3 FleePointDestination()
