@@ -26,6 +26,8 @@ public enum MinibossSpecialState
 
 public class MinibossAbilities : MonoBehaviour
 {
+    [SerializeField] float normalStopDistance;
+    float dashingStopDistance = 1.5f;
     [SerializeField] GameObject missilePrefab;
     [SerializeField] Transform missileSpawnPoint;
     public Ellipse ellipse;
@@ -275,6 +277,7 @@ public class MinibossAbilities : MonoBehaviour
             }
         }
         navMeshDestination = dashTarget;
+        navMeshAgent.stoppingDistance = dashingStopDistance;
         facePlayer.SetDestination(dashTarget.position);
         enemyController.frontAnimator.Play("StartDash");
         enemyController.backAnimator.Play("StartDash");
@@ -288,6 +291,7 @@ public class MinibossAbilities : MonoBehaviour
             navMeshAgent.acceleration = defaultAccel;
             navMeshAgent.speed = defaultSpeed;
             navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.stoppingDistance = normalStopDistance;
             navMeshDestination = playerScript.transform;
             facePlayer.ResetDestination();
             facePlayer.ManualFace();
@@ -302,6 +306,7 @@ public class MinibossAbilities : MonoBehaviour
         navMeshAgent.enabled = true;
         navMeshAgent.acceleration = dashAccel;
         navMeshAgent.speed = dashSpeed;
+        navMeshAgent.stoppingDistance = dashingStopDistance;
         StartCoroutine(Dashing(playerScript.transform, () =>
         {
             enemyController.frontAnimator.Play(endAnimation);
@@ -309,6 +314,7 @@ public class MinibossAbilities : MonoBehaviour
             navMeshAgent.acceleration = defaultAccel;
             navMeshAgent.speed = defaultSpeed;
             navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.stoppingDistance = normalStopDistance;
         }));
     }
 

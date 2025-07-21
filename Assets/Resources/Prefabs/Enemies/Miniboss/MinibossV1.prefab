@@ -1374,6 +1374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19dc0b274e8ac8e4ab23bb11ca33323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  takeoffType: 0
 --- !u!114 &3629353598514321972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2240,6 +2241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c25c36cd86d2bd42a0b97eb71ed1138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalStopDistance: 2
   missilePrefab: {fileID: 148525142446021015, guid: 1959335f960ba32409a6e1ea18c08a84, type: 3}
   missileSpawnPoint: {fileID: 53722749701153271}
   ellipse: {fileID: 0}
@@ -2263,6 +2265,8 @@ MonoBehaviour:
   descendTime: 0
   pauseTime: 0.15
   sweepTime: 1
+  landingIndicator: {fileID: 0}
+  landTime: 0
 --- !u!195 &1690416632429736512
 NavMeshAgent:
   m_ObjectHideFlags: 0
