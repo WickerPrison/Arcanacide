@@ -606,7 +606,7 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.state = EnemyState.SPECIAL;
         specialState = MinibossSpecialState.JUMP;
         landingIndicator.enabled = true;
-        yield return new WaitForSeconds(9f);
+        yield return new WaitForSeconds(13f);
         specialState = MinibossSpecialState.NONE;
         enemyController.frontAnimator.Play("Falling");
         enemyController.backAnimator.Play("Falling");
@@ -643,7 +643,7 @@ public class MinibossAbilities : MonoBehaviour
 
     public void DroneCharge()
     {
-
+        minibossEvents.StartDroneCharge();
     }
 
     public Vector3 FleePointDestination()

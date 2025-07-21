@@ -47,6 +47,9 @@ public class MinibossV3Tests
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
         MinibossDroneController droneController = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        GameObject minibossStalagmites = GameObject.Instantiate(minibossStalagmitesPrefab);
+        Transform layout = GameObject.Find("Layout").transform;
+        minibossStalagmites.transform.SetParent(layout);
         yield return null;
         droneController.transform.position = droneController.HoverPosition();
 
@@ -92,7 +95,7 @@ public class MinibossV3Tests
         minibossController.StartLasers();
         minibossController.attackTime = 70;
         playerData.health = 1000;
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(18);
         Assert.Less(playerData.health, 1000);
     }
 

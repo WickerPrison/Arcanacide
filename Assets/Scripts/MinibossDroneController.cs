@@ -35,14 +35,14 @@ public class MinibossDroneController : MonoBehaviour
     float randOffset;
     [SerializeField] float speed;
     [SerializeField] GameObject beam;
-    Vector3 initialBeamDirection;
-    Vector3 finalBeamDirection;
+    //Vector3 initialBeamDirection;
+    //Vector3 finalBeamDirection;
     float beamVertAngle = 90;
     LaserState laserState = LaserState.OFF;
     float laserTimer;
     [SerializeField] float[] pauseTime;
     [SerializeField] float sweepTime;
-    float sweepHalfWidth = 65;
+    float sweepHalfWidth = 100;
     int sweeps;
     float ellipseRads;
     [SerializeField] float plasmaCooldown;
@@ -228,7 +228,7 @@ public class MinibossDroneController : MonoBehaviour
 
     void SetBeamPosition(Vector3 direction)
     {
-        Vector3 beamOrigin = FirePoint();
+        Vector3 beamOrigin = transform.position + direction.normalized * 0.3f;
         beam.transform.position = beamOrigin + direction.normalized * beam.transform.localScale.y;
         beam.transform.LookAt(beamOrigin);
         beam.transform.localEulerAngles = new Vector3(
@@ -240,10 +240,11 @@ public class MinibossDroneController : MonoBehaviour
 
     public void StartLaser()
     {
-        initialBeamDirection = Utils.RotateDirection(toPlayer, -sweepHalfWidth * sign);
-        finalBeamDirection = Utils.RotateDirection(toPlayer, sweepHalfWidth * sign);
+        //initialBeamDirection = Utils.RotateDirection(toPlayer, -sweepHalfWidth * sign);
+        //finalBeamDirection = Utils.RotateDirection(toPlayer, sweepHalfWidth * sign);
         beam.SetActive(true);
-        SetBeamPosition(initialBeamDirection.normalized);
+        //SetBeamPosition(initialBeamDirection.normalized);
+        SetBeamPosition(Utils.RotateDirection(toPlayer, -sweepHalfWidth * sign));
         droneState = DroneState.LASER;
         laserState = LaserState.START;
         laserTimer = pauseTime[droneId];
@@ -265,7 +266,8 @@ public class MinibossDroneController : MonoBehaviour
             case LaserState.SWEEP:
                 laserTimer -= Time.fixedDeltaTime;
                 float t = Mathf.SmoothStep(1, 0, laserTimer / sweepTime);
-                SetBeamPosition(Vector3.Lerp(initialBeamDirection, finalBeamDirection, t).normalized);
+                float angle = Mathf.Lerp(-sweepHalfWidth, sweepHalfWidth, t);
+                SetBeamPosition(Utils.RotateDirection(toPlayer, angle * sign));
                 if (laserTimer <= 0)
                 {
                     laserTimer = pauseTime[droneId];
@@ -279,9 +281,10 @@ public class MinibossDroneController : MonoBehaviour
                 if (laserTimer <= 0)
                 {
                     laserTimer = sweepTime;
-                    Vector3 temp = initialBeamDirection;
-                    initialBeamDirection = finalBeamDirection;
-                    finalBeamDirection = temp;
+                    //Vector3 temp = initialBeamDirection;
+                    //initialBeamDirection = finalBeamDirection;
+                    //finalBeamDirection = temp;
+                    sign *= -1;
                     laserState = LaserState.SWEEP;
                 }
                 break;
@@ -294,6 +297,11 @@ public class MinibossDroneController : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    private void MinibossEvents_onStartDroneCharge(object sender, EventArgs e)
+    {
+        StartCoroutine(ChargePositioning());
     }
 
     public void StartCharge()
@@ -393,6 +401,7 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartDroneLaser += MinibossEvents_onStartDroneLaser;
         minibossEvents.onRecallDrones += MinibossEvents_onRecallDrones;
         minibossEvents.onStartCircle += MinibossEvents_onStartCircle;
+        minibossEvents.onStartDroneCharge += MinibossEvents_onStartDroneCharge;
     }
 
     private void OnDisable()
@@ -401,5 +410,6 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartDroneLaser -= MinibossEvents_onStartDroneLaser;
         minibossEvents.onRecallDrones -= MinibossEvents_onRecallDrones;
         minibossEvents.onStartCircle -= MinibossEvents_onStartCircle;
+        minibossEvents.onStartDroneCharge -= MinibossEvents_onStartDroneCharge;
     }
 }

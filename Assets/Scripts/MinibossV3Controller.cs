@@ -39,7 +39,46 @@ public class MinibossV3Controller : EnemyController
         {
             if (attackTime <= 0)
             {
-              
+                attackTime = attackMaxTime;
+                float randFloat = Random.Range(0, 1f);
+                if(playerDistance > 4)
+                {
+                    if(randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
+                    {
+                        abilities.Circle(CircleType.SHOOT);
+                    }
+                    else if(randFloat > 0.4f)
+                    {
+                        abilities.DroneCharge();
+                    }
+                    else if(randFloat > 0.2f)
+                    {
+                        StartLasers();
+                    }
+                    else
+                    {
+                        abilities.PlasmaShots();
+                    }
+                }
+                else
+                {
+                    if(randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
+                    {
+                        abilities.Circle(CircleType.SHOOT);
+                    }
+                    else if(randFloat > 0.4)
+                    {
+                        abilities.MeleeBlade();
+                    }
+                    else if (randFloat > 0.2f)
+                    {
+                        StartLasers();
+                    }
+                    else
+                    {
+                        abilities.DashAway(() => abilities.PlasmaShots());
+                    }
+                }
             }
             else
             {
