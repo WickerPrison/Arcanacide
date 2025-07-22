@@ -17,6 +17,7 @@ public class FaceDirection : MonoBehaviour
     float frontScaleX;
     float backScaleX;
     Transform player;
+    [System.NonSerialized] public bool facingFront;
 
     private void Awake()
     {
@@ -58,6 +59,7 @@ public class FaceDirection : MonoBehaviour
         switch (direction)
         {
             case FacingDirections.FRONT_LEFT:
+                facingFront = true;
                 backAnimator.transform.localPosition = away;
                 frontAnimator.transform.localPosition = frontAnimatorPosition;
                 frontAnimator.transform.localScale = new Vector3(
@@ -66,6 +68,7 @@ public class FaceDirection : MonoBehaviour
                     frontAnimator.transform.localScale.z);
                 break;
             case FacingDirections.FRONT_RIGHT:
+                facingFront = true;
                 backAnimator.transform.localPosition = away;
                 frontAnimator.transform.localPosition = frontAnimatorPosition;
                 frontAnimator.transform.localScale = new Vector3(
@@ -75,6 +78,7 @@ public class FaceDirection : MonoBehaviour
                 break;
             case FacingDirections.BACK_LEFT:
                 if (backAnimator == null) goto case FacingDirections.FRONT_LEFT;
+                facingFront = false;
                 backAnimator.transform.localPosition = backAnimatorPosition;
                 frontAnimator.transform.localPosition = away;
                 backAnimator.transform.localScale = new Vector3(
@@ -84,6 +88,7 @@ public class FaceDirection : MonoBehaviour
                 break;
             case FacingDirections.BACK_RIGHT:
                 if (backAnimator == null) goto case FacingDirections.FRONT_RIGHT;
+                facingFront = false;
                 backAnimator.transform.localPosition = backAnimatorPosition;
                 frontAnimator.transform.localPosition = away;
                 backAnimator.transform.localScale = new Vector3(

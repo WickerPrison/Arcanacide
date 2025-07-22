@@ -27,6 +27,8 @@ public class StalagmiteAttack : MonoBehaviour
     [SerializeField] EventReference iceImpact;
     Vector3 localPos;
     Transform holder;
+    [SerializeField] bool showInEditor;
+    [System.NonSerialized] public bool isTriggered = false;
 
     // Start is called before the first frame update
     void Start()
@@ -69,10 +71,16 @@ public class StalagmiteAttack : MonoBehaviour
         }
     }
 
-    IEnumerator Emerge(SpriteRenderer icicle, Vector3 start, Vector3 end)
+    public void TriggerNoNavmesh()
+    {
+        StartCoroutine(Emerge(icicle, start, end));
+    }
+
+    public IEnumerator Emerge(SpriteRenderer icicle, Vector3 start, Vector3 end)
     {
         icicle.transform.rotation = Quaternion.Euler(25, 0, 180);
         icicle.enabled = true;
+        isTriggered = true;
         float emergeTimer = 0;
         transform.SetParent(null);
         while(emergeTimer < emergeTime)
@@ -96,6 +104,7 @@ public class StalagmiteAttack : MonoBehaviour
         icicle.enabled = false;
         transform.SetParent(holder);
         transform.localPosition = localPos;
+        isTriggered = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -125,5 +134,14 @@ public class StalagmiteAttack : MonoBehaviour
     {
         StopAllCoroutines();
         ResetIcicles();
+    }
+
+    private void OnValidate()
+    {
+        if(tallIcicle.enabled != showInEditor)
+        {
+            tallIcicle.enabled = showInEditor;
+            bigIcicle.enabled = showInEditor;
+        }
     }
 }
