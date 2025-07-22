@@ -177,7 +177,7 @@ public class MinibossAbilities : MonoBehaviour
         enemyController.frontAnimator.Play("Missiles");
         enemyController.backAnimator.Play("Missiles");
     }
-
+    
     public void SingleMissile(Vector3 target, float timeToHit)
     {
         ArcProjectile missile = Instantiate(missilePrefab).GetComponent<ArcProjectile>();

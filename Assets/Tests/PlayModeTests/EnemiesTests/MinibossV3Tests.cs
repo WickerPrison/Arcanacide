@@ -28,7 +28,7 @@ public class MinibossV3Tests
         playerData.vitality = 30;
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
-        mapData.miniboss2Killed = false;
+        mapData.miniboss3Killed = false;
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV3");
         dronePrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossDrone");
 
@@ -143,5 +143,28 @@ public class MinibossV3Tests
         minibossController.attackTime = 70;
         yield return new WaitForSeconds(5);
         Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator Death()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController0.droneId = 0;
+        MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController1.droneId = 1;
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        droneController0.transform.position = droneController0.HoverPosition();
+
+        EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
+        enemyScript.LoseHealth(enemyScript.health, 1);
+        yield return new WaitForSeconds(1);
+        Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
+        dialogue.NextLine();
+        yield return new WaitForSeconds(5);
+        Assert.IsTrue(droneController1 == null);
+        Assert.IsTrue(droneController0 == null);
+        Assert.IsTrue(minibossAbilities == null);
     }
 }

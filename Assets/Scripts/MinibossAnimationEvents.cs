@@ -85,6 +85,7 @@ public class MinibossAnimationEvents : MonoBehaviour
 
     public void FlyAway()
     {
+        minibossEvents.FlyAway();
         StartCoroutine(Flying());
     }
 

@@ -5,7 +5,7 @@ using System;
 
 public enum DroneState
 {
-    IDLE, FLYING, LASER, CIRCLE, CHARGE
+    IDLE, FLYING, LASER, CIRCLE, CHARGE, DYING
 }
 
 public class MinibossDroneController : MonoBehaviour
@@ -86,6 +86,7 @@ public class MinibossDroneController : MonoBehaviour
 
     void Update()
     {
+        if (droneState == DroneState.DYING) return;
         toPlayer = Vector3.Normalize(playerScript.transform.position - enemyScript.transform.position);
         perp = Vector3.Cross(Vector3.up, toPlayer).normalized;
 
@@ -193,7 +194,7 @@ public class MinibossDroneController : MonoBehaviour
     {
         droneState = DroneState.FLYING;
         Vector3 startPos = transform.position;
-        Vector3 destination = RelativePosition(2, 2);
+        Vector3 destination = RelativePosition(Vector3.Distance(enemyScript.transform.position, playerScript.transform.position), 4);
         yield return StartCoroutine(ToPosition(startPos, destination, plasmaShotsToPosTime, () => { }, true));
 
         int count = 7;
@@ -392,6 +393,12 @@ public class MinibossDroneController : MonoBehaviour
         }));
     }
 
+    private void MinibossEvents_onFlyAway(object sender, EventArgs e)
+    {
+        droneState = DroneState.DYING;
+        StartCoroutine(ToPosition(transform.position, transform.position + Vector3.up * 20, 2, () => Destroy(gameObject)));
+    }
+
     private void OnEnable()
     {
         minibossEvents.onStartPlasmaShots += MinibossEvents_onStartPlasmaShots;
@@ -399,6 +406,7 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onRecallDrones += MinibossEvents_onRecallDrones;
         minibossEvents.onStartCircle += MinibossEvents_onStartCircle;
         minibossEvents.onStartDroneCharge += MinibossEvents_onStartDroneCharge;
+        minibossEvents.onFlyAway += MinibossEvents_onFlyAway;
     }
 
     private void OnDisable()
@@ -408,5 +416,6 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onRecallDrones -= MinibossEvents_onRecallDrones;
         minibossEvents.onStartCircle -= MinibossEvents_onStartCircle;
         minibossEvents.onStartDroneCharge -= MinibossEvents_onStartDroneCharge;
+        minibossEvents.onFlyAway -= MinibossEvents_onFlyAway;
     }
 }
