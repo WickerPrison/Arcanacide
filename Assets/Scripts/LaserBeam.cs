@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using UnityEngine.Rendering;
 
 public class LaserBeam : MonoBehaviour
 {
@@ -12,8 +13,14 @@ public class LaserBeam : MonoBehaviour
     [SerializeField] float impactSFXvolume;
     [SerializeField] EventReference beamSFX;
     [SerializeField] EnemySound enemySound;
+    SortingGroup sortingGroup;
     float maxDamageDelay = 0.5f;
     float damageDelay;
+
+    private void Awake()
+    {
+        sortingGroup = GetComponent<SortingGroup>();
+    }
 
     private void Update()
     {
@@ -49,6 +56,11 @@ public class LaserBeam : MonoBehaviour
     {
         PlayerScript playerScript = other.gameObject.GetComponent<PlayerScript>();
         playerScript.PerfectDodge(EnemyAttackType.PROJECTILE, enemyOfOrigin);
+    }
+
+    public void SetSortingOrder(int order)
+    {
+        sortingGroup.sortingOrder = order;
     }
 
     private void OnEnable()
