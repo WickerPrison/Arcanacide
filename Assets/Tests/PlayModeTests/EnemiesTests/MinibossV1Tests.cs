@@ -65,12 +65,80 @@ public class MinibossV1Tests
     }
 
     [UnityTest]
+    public IEnumerator BladeAttacksFrontRight()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0,0,0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(2, 0, 2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator BladeAttacksFrontLeft()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-2, 0, 2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator BladeAttacksBackLeft()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-2, 0, -2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator BladeAttacksBackRight()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(2, 0, -2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
     public IEnumerator ChestLaser()
     {
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
         EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
         enemyController.attackTime = 1000;
-        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        minibossAbilities.transform.position = new Vector3(0, 0, -3f);
         yield return null;
 
         minibossAbilities.ChestLaser(2);

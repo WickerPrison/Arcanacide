@@ -7,6 +7,7 @@ public class Smear : MonoBehaviour
     [SerializeField] List<Vector3> smearPositions = new List<Vector3>();
     [SerializeField] List<Vector3> smearRotations = new List<Vector3>();
     [SerializeField] List<Vector3> smearScales = new List<Vector3>();
+    [SerializeField] bool expandedScaleList = false;
     ParticleSystem smear;
     ParticleSystem.ShapeModule smearShape;
     // front right = 0, front left = 1, back left = 2, back right = 3
@@ -35,7 +36,7 @@ public class Smear : MonoBehaviour
         {
             smearDirection += 4;
         }
-        smear.transform.localScale  = smearScales[facingDirection];
+        smear.transform.localScale  = expandedScaleList ? smearScales[smearDirection] : smearScales[facingDirection];
         smear.transform.localPosition = smearPositions[smearDirection];
         smear.transform.localRotation = Quaternion.Euler(smearRotations[smearDirection].x, smearRotations[smearDirection].y, smearRotations[smearDirection].z);
     }
