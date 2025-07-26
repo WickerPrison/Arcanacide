@@ -54,7 +54,8 @@ public class MinibossAbilities : MonoBehaviour
     float startingRads;
     float ellipseRads;
     [SerializeField] GameObject plasmaBallPrefab;
-    [SerializeField] Transform shotOrigin;
+    [SerializeField] Transform frontShotOrigin;
+    [SerializeField] Transform backShotOrigin;
     [SerializeField] float plasmaCooldown;
     float plasmaTimer;
     [SerializeField] LaserBeam beam;
@@ -445,7 +446,7 @@ public class MinibossAbilities : MonoBehaviour
     public HomingProjectile FirePlasmaShot()
     {
         HomingProjectile shot = Instantiate(plasmaBallPrefab).GetComponent<HomingProjectile>();
-        shot.transform.position = shotOrigin.transform.position;
+        shot.transform.position = enemyController.facingFront ? frontShotOrigin.position : backShotOrigin.position;
         shot.target = playerScript.transform;
         shot.enemyOfOrigin = enemyScript;
         shot.transform.LookAt(playerScript.transform);
