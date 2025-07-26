@@ -29,7 +29,8 @@ public class MinibossAbilities : MonoBehaviour
     [SerializeField] float normalStopDistance;
     float dashingStopDistance = 1.5f;
     [SerializeField] GameObject missilePrefab;
-    [SerializeField] Transform missileSpawnPoint;
+    [SerializeField] Transform frontMissileSpawnPoint;
+    [SerializeField] Transform backMissileSpawnPoint;
     public Ellipse ellipse;
     FacePlayer facePlayer;
     NavMeshAgent navMeshAgent;
@@ -182,7 +183,7 @@ public class MinibossAbilities : MonoBehaviour
     public void SingleMissile(Vector3 target, float timeToHit)
     {
         ArcProjectile missile = Instantiate(missilePrefab).GetComponent<ArcProjectile>();
-        missile.transform.position = missileSpawnPoint.position;
+        missile.transform.position = enemyController.facingFront ? frontMissileSpawnPoint.position : backMissileSpawnPoint.position;
         missile.endPoint = target;
         missile.enemyOfOrigin = enemyScript;
         missile.timeToHit = timeToHit;

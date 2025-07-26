@@ -42,7 +42,7 @@ public class MinibossV1Tests
         outerTrigger.transform.position = new Vector3(-28.5f, 1, -28.5f);
 
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
-        minibossAbilities.transform.position = new Vector3(-11.5f, 0, -7.5f);
+        minibossAbilities.transform.position = new Vector3(-9.5f, 0, -10.5f);
         yield return null;
 
         minibossAbilities.MissileAttack(MissilePattern.FRONT);

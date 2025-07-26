@@ -2752,7 +2752,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalStopDistance: 2
   missilePrefab: {fileID: 148525142446021015, guid: 1959335f960ba32409a6e1ea18c08a84, type: 3}
-  missileSpawnPoint: {fileID: 53722749701153271}
+  frontMissileSpawnPoint: {fileID: 53722749701153271}
+  backMissileSpawnPoint: {fileID: 507536419595069571}
   ellipse: {fileID: 0}
   getToCircleSpeed: 15
   radsToComplete: 2
@@ -3913,6 +3914,7 @@ Transform:
   - {fileID: 4568759184889879965}
   - {fileID: 2479947927891287496}
   - {fileID: 8667498750330237855}
+  - {fileID: 507536419595069571}
   m_Father: {fileID: 7101601610457912769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.161}
@@ -4120,6 +4122,37 @@ MonoBehaviour:
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
+--- !u!1 &6526638868159227705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 507536419595069571}
+  m_Layer: 0
+  m_Name: BackMissileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &507536419595069571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6526638868159227705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.305, y: 0.009, z: -0.275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6339480493648039240}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6634239678267063732
 GameObject:
   m_ObjectHideFlags: 0
@@ -5020,7 +5053,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7864299274201526873}
   m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
-  m_LocalPosition: {x: 0.011, y: 0.299, z: -0.051}
+  m_LocalPosition: {x: 0.005, y: 0.299, z: -0.051}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
