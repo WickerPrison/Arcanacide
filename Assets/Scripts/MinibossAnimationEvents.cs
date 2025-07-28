@@ -15,6 +15,7 @@ public class MinibossAnimationEvents : MonoBehaviour
     EnemyController enemyController;
     MinibossEvents minibossEvents;
     [SerializeField] TakeoffType takeoffType;
+    public AttackArcGenerator attackArc;
 
 
     private void Awake()
@@ -27,6 +28,10 @@ public class MinibossAnimationEvents : MonoBehaviour
         abilities = GetComponentInParent<MinibossAbilities>();
         enemyScript = abilities.GetComponent<EnemyScript>();
         enemyController = enemyScript.GetComponent<EnemyController>();
+        if (attackArc == null)
+        {
+            attackArc = transform.parent.GetComponentInChildren<AttackArcGenerator>();
+        }
     }
 
     public void FireMissile()
@@ -37,6 +42,12 @@ public class MinibossAnimationEvents : MonoBehaviour
     public void StartAttackDash(string endAnimation)
     {
         abilities.AttackDash(endAnimation);
+    }
+
+    public void DashAttackHit(int smearSpeed)
+    {
+        enemyController.canHitPlayer = attackArc.CanHitPlayer();
+        abilities.DashAttackHit(smearSpeed);
     }
 
     public void FirePlasmaShot()

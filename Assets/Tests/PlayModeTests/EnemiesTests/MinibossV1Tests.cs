@@ -133,6 +133,23 @@ public class MinibossV1Tests
     }
 
     [UnityTest]
+    public IEnumerator BladeDash()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-6, 0, -6);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
     public IEnumerator ChestLaser()
     {
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();

@@ -321,6 +321,12 @@ public class MinibossAbilities : MonoBehaviour
         }));
     }
 
+    public void DashAttackHit(int smearSpeed)
+    {
+        enemyController.AttackHit(0);
+        enemyController.smearScript.AlternateSmears(smearSpeed, 0);
+    }
+
     IEnumerator Dashing(Transform target, Action callback)
     {
         while (Vector3.Distance(target.position, transform.position) > 2)

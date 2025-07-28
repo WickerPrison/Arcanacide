@@ -8,10 +8,14 @@ public class Smear : MonoBehaviour
     [SerializeField] List<Vector3> smearRotations = new List<Vector3>();
     [SerializeField] List<Vector3> smearScales = new List<Vector3>();
     [SerializeField] bool expandedScaleList = false;
+
+    [SerializeField] List<Vector3> alternateSmearPositions = new List<Vector3>();
+    [SerializeField] List<Vector3> alternateSmearRotations = new List<Vector3>();
+    [SerializeField] List<Vector3> alternateSmearScales = new List<Vector3>();
     ParticleSystem smear;
     ParticleSystem.ShapeModule smearShape;
     // front right = 0, front left = 1, back left = 2, back right = 3
-    public int facingDirection;
+    [System.NonSerialized] public int facingDirection;
 
     private void Start()
     {
@@ -39,6 +43,24 @@ public class Smear : MonoBehaviour
         smear.transform.localScale  = expandedScaleList ? smearScales[smearDirection] : smearScales[facingDirection];
         smear.transform.localPosition = smearPositions[smearDirection];
         smear.transform.localRotation = Quaternion.Euler(smearRotations[smearDirection].x, smearRotations[smearDirection].y, smearRotations[smearDirection].z);
+    }
+
+    public void AlternateSmears(int smearSpeed, int alternateIndex)
+    {
+        smear.Clear();
+        AlternateDirection(alternateIndex);
+        ParticleSystem.ShapeModule smearShapeFront = smear.shape;
+        smearShapeFront.arcSpeed = smearSpeed;
+        smear.Simulate(0, false);
+    }
+
+    void AlternateDirection(int alternateIndex)
+    {
+        int smearDirection = facingDirection;
+        smearDirection += 4 * alternateIndex;
+        smear.transform.localScale = alternateSmearScales[smearDirection];
+        smear.transform.localPosition = alternateSmearPositions[smearDirection];
+        smear.transform.localRotation = Quaternion.Euler(alternateSmearRotations[smearDirection].x, alternateSmearRotations[smearDirection].y, alternateSmearRotations[smearDirection].z);
     }
 
     public void SpeedMultiplier(float multiplier)
