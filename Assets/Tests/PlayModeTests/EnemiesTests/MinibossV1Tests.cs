@@ -210,4 +210,24 @@ public class MinibossV1Tests
         yield return new WaitForSeconds(5);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
+
+    [UnityTest]
+    public IEnumerator Death()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-3f, 0, -3f);
+        yield return null;
+
+        EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
+        enemyScript.LoseHealth(enemyScript.health, 1);
+        yield return new WaitForSeconds(5);
+        Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
+        for(int i = 0; i < 3; i++)
+        {
+            dialogue.NextLine();
+            yield return new WaitForSeconds(1);
+        }
+        yield return new WaitForSeconds(3);
+        Assert.IsTrue(minibossAbilities == null);
+    }
 }
