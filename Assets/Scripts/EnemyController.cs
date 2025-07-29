@@ -160,7 +160,7 @@ public class EnemyController : MonoBehaviour
     {
         enemySound.SwordSwoosh();
         enemyEvents.Attack();
-
+        Debug.Log(canHitPlayer);
         if (!canHitPlayer)
         {
             return;

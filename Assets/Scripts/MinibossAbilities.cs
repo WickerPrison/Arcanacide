@@ -29,7 +29,8 @@ public class MinibossAbilities : MonoBehaviour
     [SerializeField] float normalStopDistance;
     float dashingStopDistance = 1.5f;
     [SerializeField] GameObject missilePrefab;
-    [SerializeField] Transform missileSpawnPoint;
+    [SerializeField] Transform frontMissileSpawnPoint;
+    [SerializeField] Transform backMissileSpawnPoint;
     public Ellipse ellipse;
     FacePlayer facePlayer;
     NavMeshAgent navMeshAgent;
@@ -54,15 +55,16 @@ public class MinibossAbilities : MonoBehaviour
     float startingRads;
     float ellipseRads;
     [SerializeField] GameObject plasmaBallPrefab;
-    [SerializeField] Transform shotOrigin;
+    [SerializeField] Transform frontShotOrigin;
+    [SerializeField] Transform backShotOrigin;
     [SerializeField] float plasmaCooldown;
     float plasmaTimer;
-    [SerializeField] GameObject beam;
+    [SerializeField] LaserBeam beam;
     [SerializeField] Transform beamOrigin;
     [SerializeField] Transform dashTarget;
     Vector3 initialBeamDirection;
     Vector3 finalBeamDirection;
-    float beamVertAngle = 87;
+    float beamVertAngle = 90;
     [System.NonSerialized] public Transform navMeshDestination;
     AttackArcGenerator attackArc;
     MinibossEvents minibossEvents;
@@ -103,7 +105,7 @@ public class MinibossAbilities : MonoBehaviour
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         facePlayer = GetComponent<FacePlayer>();
-        beam.SetActive(false);
+        beam.gameObject.SetActive(false);
         beam.transform.parent = null;
         dashTarget.transform.parent = null;
         navMeshDestination = playerScript.transform;
@@ -181,7 +183,7 @@ public class MinibossAbilities : MonoBehaviour
     public void SingleMissile(Vector3 target, float timeToHit)
     {
         ArcProjectile missile = Instantiate(missilePrefab).GetComponent<ArcProjectile>();
-        missile.transform.position = missileSpawnPoint.position;
+        missile.transform.position = enemyController.facingFront ? frontMissileSpawnPoint.position : backMissileSpawnPoint.position;
         missile.endPoint = target;
         missile.enemyOfOrigin = enemyScript;
         missile.timeToHit = timeToHit;
@@ -319,6 +321,12 @@ public class MinibossAbilities : MonoBehaviour
         }));
     }
 
+    public void DashAttackHit(int smearSpeed)
+    {
+        enemyController.AttackHit(0);
+        enemyController.smearScript.AlternateSmears(smearSpeed, 0);
+    }
+
     IEnumerator Dashing(Transform target, Action callback)
     {
         while (Vector3.Distance(target.position, transform.position) > 2)
@@ -363,7 +371,7 @@ public class MinibossAbilities : MonoBehaviour
                 case CircleType.LASER:
                     enemyController.frontAnimator.Play("ChestLaser");
                     enemyController.backAnimator.Play("ChestLaser");
-                    beam.SetActive(true);
+                    beam.gameObject.SetActive(true);
                     SetBeamPosition(-transform.position);
                     break;
 
@@ -414,7 +422,7 @@ public class MinibossAbilities : MonoBehaviour
             enemyController.frontAnimator.Play("ChestLaserEnd");
             enemyController.backAnimator.Play("ChestLaserEnd");
             minibossEvents.ThrustersOff();
-            beam.SetActive(false);
+            beam.gameObject.SetActive(false);
         }
     }
 
@@ -445,7 +453,7 @@ public class MinibossAbilities : MonoBehaviour
     public HomingProjectile FirePlasmaShot()
     {
         HomingProjectile shot = Instantiate(plasmaBallPrefab).GetComponent<HomingProjectile>();
-        shot.transform.position = shotOrigin.transform.position;
+        shot.transform.position = enemyController.facingFront ? frontShotOrigin.position : backShotOrigin.position;
         shot.target = playerScript.transform;
         shot.enemyOfOrigin = enemyScript;
         shot.transform.LookAt(playerScript.transform);
@@ -473,7 +481,7 @@ public class MinibossAbilities : MonoBehaviour
 
     public void StartLaser()
     {
-        beam.SetActive(true);
+        beam.gameObject.SetActive(true);
         SetBeamPosition(initialBeamDirection.normalized);
         laserState = LaserState.START;
         laserTimer = pauseTime;
@@ -518,7 +526,7 @@ public class MinibossAbilities : MonoBehaviour
                 laserTimer -= Time.fixedDeltaTime;
                 if (laserTimer <= 0)
                 {
-                    beam.SetActive(false);
+                    beam.gameObject.SetActive(false);
                     enemyController.frontAnimator.Play("ChestLaserEnd");
                     enemyController.backAnimator.Play("ChestLaserEnd");
                     specialState = MinibossSpecialState.NONE;
@@ -675,7 +683,15 @@ public class MinibossAbilities : MonoBehaviour
 
     void SetBeamPosition(Vector3 direction)
     {
-        beam.transform.position = beamOrigin.position + direction.normalized * beam.transform.localScale.y;
+        beam.transform.position = beamOrigin.position + direction.normalized * (beam.transform.localScale.y + 0.2f);
+        if(beam.transform.position.z > beamOrigin.position.z)
+        {
+            beam.SetSortingOrder(-1);
+        }
+        else
+        {
+            beam.SetSortingOrder(0);
+        }
         beam.transform.LookAt(beamOrigin.position);
         beam.transform.localEulerAngles = new Vector3(
             beamVertAngle,
@@ -688,7 +704,7 @@ public class MinibossAbilities : MonoBehaviour
     public void StartStagger()
     {
         facePlayer.ResetDestination();
-        beam.SetActive(false);
+        beam.gameObject.SetActive(false);
         laserState = LaserState.OFF;
         laserTimer = 0;
         onCircle = false;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class StepWithAttack : MonoBehaviour
 {
     [SerializeField] Transform attackPoint;
+    [SerializeField] LayerMask ignoreLayers;
     Rigidbody rb;
     Vector3 stepDirection;
     float raycastDistance;
@@ -22,7 +23,7 @@ public class StepWithAttack : MonoBehaviour
     public void Step(float stepWithAttackTimer)
     {
         stepDirection = Vector3.Normalize(attackPoint.position - transform.position);
-        if(!Physics.Raycast(transform.position, stepDirection, raycastDistance))
+        if(!Physics.Raycast(transform.position, stepDirection, raycastDistance, ~ignoreLayers))
         {
             maxStepTimer = stepWithAttackTimer;
             StartCoroutine(StepCoroutine());

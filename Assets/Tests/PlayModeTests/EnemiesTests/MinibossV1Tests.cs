@@ -27,7 +27,7 @@ public class MinibossV1Tests
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
-        Time.timeScale = 4f;
+        Time.timeScale = 1f;
     }
 
     [UnityTest]
@@ -42,7 +42,7 @@ public class MinibossV1Tests
         outerTrigger.transform.position = new Vector3(-28.5f, 1, -28.5f);
 
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
-        minibossAbilities.transform.position = new Vector3(-11.5f, 0, -7.5f);
+        minibossAbilities.transform.position = new Vector3(-9.5f, 0, -10.5f);
         yield return null;
 
         minibossAbilities.MissileAttack(MissilePattern.FRONT);
@@ -65,12 +65,97 @@ public class MinibossV1Tests
     }
 
     [UnityTest]
+    public IEnumerator BladeAttacksFrontRight()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0,0,0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(2, 0, 2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator BladeAttacksFrontLeft()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-2, 0, 2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator BladeAttacksBackLeft()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-2, 0, -2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator BladeAttacksBackRight()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(2, 0, -2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator BladeDash()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-6, 0, -6);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
     public IEnumerator ChestLaser()
     {
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
         EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
         enemyController.attackTime = 1000;
-        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        minibossAbilities.transform.position = new Vector3(0, 0, -3f);
         yield return null;
 
         minibossAbilities.ChestLaser(2);
@@ -124,5 +209,25 @@ public class MinibossV1Tests
         minibossController.attackTime = 7;
         yield return new WaitForSeconds(5);
         Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator Death()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-3f, 0, -3f);
+        yield return null;
+
+        EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
+        enemyScript.LoseHealth(enemyScript.health, 1);
+        yield return new WaitForSeconds(5);
+        Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
+        for(int i = 0; i < 3; i++)
+        {
+            dialogue.NextLine();
+            yield return new WaitForSeconds(1);
+        }
+        yield return new WaitForSeconds(3);
+        Assert.IsTrue(minibossAbilities == null);
     }
 }

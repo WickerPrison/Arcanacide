@@ -59,6 +59,7 @@ public class MinibossDroneController : MonoBehaviour
     Vector3 offset;
     public event EventHandler<(Vector3, Vector3)> onStartCharge;
     public event EventHandler onEndCharge;
+    [SerializeField] MapData mapData;
 
     private void Awake()
     {
@@ -67,6 +68,7 @@ public class MinibossDroneController : MonoBehaviour
 
     private void Start()
     {
+        if (mapData.miniboss3Killed) Destroy(gameObject);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         faceDirection = GetComponent<FaceDirection>();
         chargeHitbox = GetComponent<Collider>();
