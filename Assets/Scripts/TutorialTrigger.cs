@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TutorialTrigger : MonoBehaviour
 {
-    [SerializeField] string tutorialName;
+    public string tutorialName;
     [SerializeField] string nextMessageName;
-    [SerializeField] PlayerData playerData;
+    public PlayerData playerData;
     TutorialManager tutorialManager;
 
     private void Start()
