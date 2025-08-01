@@ -10,9 +10,9 @@ public class RemoteACUI : MonoBehaviour
     [SerializeField] GameObject thermostat;
     [SerializeField] TextMeshProUGUI prompt;
 
-    private void Start()
+    public void ShowThermostat(bool show)
     {
-        if (mapData.hasRemoteAC)
+        if (show)
         {
             thermostat.SetActive(true);
             SwitchAC(mapData.ACOn);
@@ -30,6 +30,7 @@ public class RemoteACUI : MonoBehaviour
 
     private void OnEnable()
     {
+        ShowThermostat(mapData.hasRemoteAC);
         GlobalEvents.instance.onSwitchAC += Global_onSwitchAC;
         GlobalEvents.instance.onAwareEnemiesChange += Global_onAwareEnemiesChange;
     }
