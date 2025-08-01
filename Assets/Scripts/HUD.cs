@@ -24,6 +24,7 @@ public class HUD : MonoBehaviour
     Canvas canvas;
     Camera mainCamera;
     InputManager im;
+    GameManager gm;
     bool mapOpen = false;
     float fadeTimer;
 
@@ -32,6 +33,8 @@ public class HUD : MonoBehaviour
         im = GlobalEvents.instance.GetComponent<InputManager>();
         im.controls.Gameplay.Map.performed += ctx => { if(ctx.interaction is TapInteraction) Map(); };
         im.controls.Gameplay.Map.performed += ctx => { if(ctx.interaction is HoldInteraction) SwitchAC(); };
+
+        gm = im.GetComponent<GameManager>();
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         canvas = GetComponent<Canvas>();
@@ -107,7 +110,7 @@ public class HUD : MonoBehaviour
 
     void SwitchAC()
     {
-        if(mapOpen && mapData.floor == 3 && mapData.hasRemoteAC)
+        if(mapOpen && mapData.floor == 3 && mapData.hasRemoteAC && gm.awareEnemies <= 0)
         {
             StartCoroutine(SwitchACRoutine());
         }

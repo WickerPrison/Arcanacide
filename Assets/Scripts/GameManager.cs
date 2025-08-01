@@ -17,7 +17,16 @@ public class GameManager : MonoBehaviour
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
     [System.NonSerialized] public List<EnemyScript> enemiesInRange = new List<EnemyScript>();
-    [System.NonSerialized] public int awareEnemies;
+    int _awareEnemies;
+    public int awareEnemies
+    {
+        get { return _awareEnemies; }
+        set
+        {
+            _awareEnemies = value;
+            GlobalEvents.instance.AwareEnemiesChange(value);
+        }
+    }
 
 
     //These are the set of saved values that are used when creating a new game
