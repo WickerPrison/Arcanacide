@@ -142,7 +142,9 @@ public class IceHammerController : EnemyController
         float jumpTime = Mathf.Max(Vector3.Distance(startPos, jumpDestination) / jumpSpeed, 0.4f);
         float jumpTimer = 0;
         float progress = jumpTimer / jumpTime;
-        while (progress < 0.75f)
+        float landTrigger = 1 - 0.1f / jumpTime;
+        landTrigger = Mathf.Max(landTrigger, 0.75f);
+        while (progress < landTrigger)
         {
             jumpTimer += Time.deltaTime;
             progress = jumpTimer / jumpTime;

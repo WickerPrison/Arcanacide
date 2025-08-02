@@ -12,6 +12,7 @@ public class IceHammerTests
     GameObject iceHammerPrefab;
     GameObject iciclePrefab;
     PlayerScript playerScript;
+    bool playerMoveOnJump = false;
 
     [SetUp]
     public void Setup()
@@ -25,7 +26,7 @@ public class IceHammerTests
         mapData = Resources.Load<MapData>("Data/MapData");
         iceHammerPrefab = Resources.Load<GameObject>("Prefabs/Enemies/IceHammer");
         iciclePrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/StalagmiteAttack");
-        Time.timeScale = 4f;
+        Time.timeScale = 1f;
     }
 
     [UnityTest]
@@ -55,10 +56,27 @@ public class IceHammerTests
         Assert.AreEqual(playerData.health, playerData.MaxHealth());
     }
 
+    [UnityTest]
+    public IEnumerator LongJumpSmash()
+    {
+        playerMoveOnJump = false;
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        IceHammerController iceHammer = GameObject.Instantiate(iceHammerPrefab).GetComponent<IceHammerController>();
+        iceHammer.transform.position = new Vector3(15f, 0, 15f);
+        yield return null;
+        iceHammer.JumpSmash();
+        EnemyEvents enemyEvents = iceHammer.GetComponent<EnemyEvents>();
+        enemyEvents.OnTriggerVfx += EnemyEvents_OnTriggerVfx;
+
+        yield return new WaitForSeconds(5f);
+        enemyEvents.OnTriggerVfx -= EnemyEvents_OnTriggerVfx;
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 
     [UnityTest]
     public IEnumerator JumpSmash()
     {
+        playerMoveOnJump = true;
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         IceHammerController iceHammer = GameObject.Instantiate(iceHammerPrefab).GetComponent<IceHammerController>();
         iceHammer.transform.position = new Vector3(3f, 0, 3f);
@@ -74,7 +92,7 @@ public class IceHammerTests
 
     private void EnemyEvents_OnTriggerVfx(object sender, string name)
     {
-        if(name == "JumpSmash")
+        if(playerMoveOnJump && name == "JumpSmash")
         {
             RandomPlayerPosition();
         }

@@ -59,7 +59,7 @@ public class IceBeamController : EnemyController
             case EnemyState.UNAWARE:
                 RaycastHit hit;
                 Physics.Linecast(transform.position, playerScript.transform.position, out hit, layerMask, QueryTriggerInteraction.Ignore);
-                if (hit.collider.CompareTag("Player"))
+                if (hit.collider != null && hit.collider.CompareTag("Player"))
                 {
                     state = EnemyState.IDLE;
                     gm.awareEnemies += 1;
