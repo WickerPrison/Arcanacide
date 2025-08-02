@@ -120,11 +120,11 @@ public class HUD : MonoBehaviour
     {
         Time.timeScale = 0;
         im.DisableAll();
-        yield return FadeToBlack(1);
+        yield return FadeToBlack(0.5f);
         mapData.ACOn = !mapData.ACOn;
         GlobalEvents.instance.SwitchAC(mapData.ACOn);
-        yield return new WaitForSecondsRealtime(0.7f);
-        yield return FadeToBlack(1, true);
+        yield return new WaitForSecondsRealtime(0.4f);
+        yield return FadeToBlack(0.5f, true);
         Time.timeScale = 1;
         im.Gameplay();
     }
