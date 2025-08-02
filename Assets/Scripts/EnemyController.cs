@@ -103,7 +103,7 @@ public class EnemyController : MonoBehaviour
 
         if (state == EnemyState.UNAWARE && playerDistance <= detectRange)
         {
-            //Debug.DrawLine(transform.position, player.transform.position, Color.red, 1000);
+            Debug.DrawLine(transform.position, player.transform.position, Color.red, 1000);
             if(!Physics.Linecast(transform.position, player.transform.position, sightBlocker))
             {
                 state = EnemyState.IDLE;
