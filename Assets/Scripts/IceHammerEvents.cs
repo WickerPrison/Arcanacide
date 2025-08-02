@@ -69,6 +69,11 @@ public class IceHammerEvents : MonoBehaviour
         hammerController.ButtSlam();
     }
 
+    public void HammerIcicles()
+    {
+        hammerController.HammerIcicles();
+    }
+
     private void OnEnable()
     {
         enemyEvents.OnStagger += EnemyEvents_OnStagger;

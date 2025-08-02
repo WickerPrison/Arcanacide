@@ -355,15 +355,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reward: 600
-  enemyID: 0
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 250
+  maxHealth: 300
   maxPoise: 200
   poiseRegeneration: 10
   invincible: 0
+  enemyGUID: 
 --- !u!114 &3218563363935649509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,7 +385,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   spellAttackDamage: 15
   spellAttackPoiseDamage: 15
-  hitDamage: 40
+  hitDamage: 45
   hitPoiseDamage: 30
   poof: {fileID: 9198229027802482916}
   draggingEvent:
@@ -461,6 +461,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 1084041727125196896}
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &2159717101362825260
 MonoBehaviour:
   m_ObjectHideFlags: 0

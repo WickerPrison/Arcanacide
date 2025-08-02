@@ -16,7 +16,7 @@ public class HalfGolemController : EnemyController
     Renderer poofRenderer;
     AttackArcGenerator attackArc;
     StepWithAttack stepWithAttack;
-    float unfrozenAttackMaxTime = 3;
+    float unfrozenAttackMaxTime = 1.5f;
     [SerializeField] EventReference draggingEvent;
     [SerializeField] float draggingVolume;
 

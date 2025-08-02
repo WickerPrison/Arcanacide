@@ -18,6 +18,7 @@ public class IceHammerController : EnemyController
     public int jumps;
     [SerializeField] StalagmiteHolder lineStalagmites;
     [SerializeField] StalagmiteHolder circleStalagmites;
+    [SerializeField] Transform[] hammerTargets;
 
     public override void Start()
     {
@@ -180,6 +181,16 @@ public class IceHammerController : EnemyController
 
     public void ButtSlam()
     {
+        circleStalagmites.transform.localPosition = Vector3.zero;
+        circleStalagmites.TriggerWave();
+        GlobalEvents.instance.ScreenShake(0.2f, 0.3f);
+        RuntimeManager.PlayOneShot(smashSound, 1);
+    }
+
+    public void HammerIcicles()
+    {
+        Vector3 targetPos = facingFront ? hammerTargets[0].position : hammerTargets[1].position;
+        circleStalagmites.transform.position = new Vector3(targetPos.x, 0, targetPos.z);
         circleStalagmites.TriggerWave();
         GlobalEvents.instance.ScreenShake(0.2f, 0.3f);
         RuntimeManager.PlayOneShot(smashSound, 1);

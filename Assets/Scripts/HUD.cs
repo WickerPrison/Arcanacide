@@ -119,12 +119,14 @@ public class HUD : MonoBehaviour
     IEnumerator SwitchACRoutine()
     {
         Time.timeScale = 0;
+        im.DisableAll();
         yield return FadeToBlack(1);
         mapData.ACOn = !mapData.ACOn;
         GlobalEvents.instance.SwitchAC(mapData.ACOn);
         yield return new WaitForSecondsRealtime(0.7f);
         yield return FadeToBlack(1, true);
         Time.timeScale = 1;
+        im.Gameplay();
     }
 
     public IEnumerator FadeToBlack(float fadeTime, bool reverse = false)
