@@ -13,6 +13,7 @@ public enum PhoneContacts
 public class DialogueData : ScriptableObject
 {
     public List<string> conversationsHad;
+    [System.NonSerialized] public string outsideFranksRoom = "Outside Frank's Bossroom";
 
     string directorWilkins = "Director Wilkins";
     public List<int> directorQueue;

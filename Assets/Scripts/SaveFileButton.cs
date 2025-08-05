@@ -66,7 +66,7 @@ public class SaveFileButton : MonoBehaviour
 
     void StartNewGame()
     {
-        gm.NewGame("saveFile" + fileID.ToString());
+        gm.NewGame(fileID);
         SceneManager.LoadScene("IntroCutscene");
     }
 }

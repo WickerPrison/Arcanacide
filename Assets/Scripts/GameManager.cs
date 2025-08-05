@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public List<EnemyScript> enemies = new List<EnemyScript>();
     [System.NonSerialized] public List<EnemyScript> enemiesInRange = new List<EnemyScript>();
     int _awareEnemies;
+    string saveFileString = "saveFile";
     public int awareEnemies
     {
         get { return _awareEnemies; }
@@ -203,9 +204,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void NewGame(string saveFile)
+    public void NewGame(int saveFileId)
     {
-        playerData.saveFile = saveFile;
+        playerData.saveFile = saveFileString + saveFileId.ToString();
         playerData.tutorials = tutorialManager.allTutorials;
         playerData.ClearData();
 
@@ -247,6 +248,7 @@ public class GameManager : MonoBehaviour
 
     public void StartAtFloor2()
     {
+        playerData.saveFile = saveFileString + "4";
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 2;
         playerData.healCharges = 2;
@@ -323,6 +325,7 @@ public class GameManager : MonoBehaviour
 
     public void StartAtFloor3()
     {
+        playerData.saveFile = saveFileString + "4";
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 3;
         playerData.healCharges = 3;
@@ -405,6 +408,7 @@ public class GameManager : MonoBehaviour
 
     public void StartAtFloor4()
     {
+        playerData.saveFile = saveFileString + "4";
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 4;
         playerData.healCharges = 4;

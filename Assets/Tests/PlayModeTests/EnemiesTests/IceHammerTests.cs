@@ -26,7 +26,7 @@ public class IceHammerTests
         mapData = Resources.Load<MapData>("Data/MapData");
         iceHammerPrefab = Resources.Load<GameObject>("Prefabs/Enemies/IceHammer");
         iciclePrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/StalagmiteAttack");
-        Time.timeScale = 1f;
+        Time.timeScale = 4f;
     }
 
     [UnityTest]
