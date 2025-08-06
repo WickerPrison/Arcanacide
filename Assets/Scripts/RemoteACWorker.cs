@@ -29,6 +29,11 @@ public class RemoteACWorker : MonoBehaviour
 
     private void Start()
     {
+        if (mapData.outsideFrankBossfight)
+        {
+            Destroy(gameObject);
+            return;
+        }
         tutorialManager = GlobalEvents.instance.gameObject.GetComponent<TutorialManager>();
         faceDirection = GetComponent<FaceDirection>();
         faceDirection.DirectionalFace(FacingDirections.BACK_RIGHT);

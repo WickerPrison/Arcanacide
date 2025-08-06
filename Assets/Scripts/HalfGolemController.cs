@@ -90,11 +90,16 @@ public class HalfGolemController : EnemyController
 
         if (attackTime <= 0 && Vector3.Distance(playerScript.transform.position, transform.position) < smashRange)
         {
-            attackTime = unfrozenAttackMaxTime;
-            state = EnemyState.ATTACKING;
-            frontAnimator.Play("DoubleAttack");
-            backAnimator.Play("DoubleAttack");
+            DoubleAttack();
         }
+    }
+
+    public void DoubleAttack()
+    {
+        attackTime = unfrozenAttackMaxTime;
+        state = EnemyState.ATTACKING;
+        frontAnimator.Play("DoubleAttack");
+        backAnimator.Play("DoubleAttack");
     }
 
     public override void AttackHit(int smearSpeed)

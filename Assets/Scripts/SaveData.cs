@@ -60,6 +60,7 @@ public class SaveData
     public int iceBossDirection;
     public bool ACOn;
     public bool hasRemoteAC;
+    public bool outsideFrankBossfight;
     public bool whistleblowerArrested;
 
     public List<string> conversationsHad;
@@ -134,6 +135,7 @@ public class SaveData
 
         ACOn = mapData.ACOn;
         hasRemoteAC = mapData.hasRemoteAC;
+        outsideFrankBossfight = mapData.outsideFrankBossfight;
 
         conversationsHad = dialogueData.conversationsHad;
         directorWilkinsQueue = dialogueData.directorQueue.ToArray();

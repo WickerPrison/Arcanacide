@@ -24,6 +24,7 @@ public class ITWorkerFranksRoom : MonoBehaviour
         backAnimator.Play("Idle");
         frontAnimator.Play("Idle");
         faceDirection.DirectionalFace(FacingDirections.FRONT_LEFT);
+        mapData.outsideFrankBossfight = true;
     }
 
 

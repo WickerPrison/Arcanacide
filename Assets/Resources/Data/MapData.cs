@@ -47,6 +47,7 @@ public class MapData : ScriptableObject
     public bool ACUsed;
     public bool ACOn;
     public bool hasRemoteAC;
+    public bool outsideFrankBossfight;
 
     public bool whistleblowerArrested;
 
