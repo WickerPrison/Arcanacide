@@ -10,12 +10,13 @@ public class HalfGolemToggles : MonoBehaviour
     {
         get
         {
-            if(_iceChunks.Length == 0)
+            if(_iceChunks == null)
             {
-                _iceChunks = GetComponentsInChildren<IceChunk>();
+                _iceChunks = GetComponentsInChildren<IceChunk>(true);
             }
             return _iceChunks;
         }
+        set { _iceChunks = value; }
     }
 
     HalfGolemVFX[] _halfGolemVFX;
@@ -23,12 +24,13 @@ public class HalfGolemToggles : MonoBehaviour
     {
         get
         {
-            if(_halfGolemVFX.Length == 0)
+            if(_halfGolemVFX == null)
             {
                 _halfGolemVFX = GetComponentsInChildren<HalfGolemVFX>();
             }
             return _halfGolemVFX;
         }
+        set { _halfGolemVFX = value; }
     }
 
     HalfGolemIK[] _halfGolemIKs;
@@ -36,12 +38,13 @@ public class HalfGolemToggles : MonoBehaviour
     {
         get
         {
-            if(_halfGolemIKs.Length == 0)
+            if(_halfGolemIKs == null)
             {
                 _halfGolemIKs = GetComponentsInChildren<HalfGolemIK>();
             }
             return _halfGolemIKs;
         }
+        set { _halfGolemIKs = value; }
     }
 
     public void ShowIceChunks(bool showChunks)
@@ -62,5 +65,12 @@ public class HalfGolemToggles : MonoBehaviour
         {
             ik.GetComponent<LimbSolver2D>().weight = enableIK ? 1 : 0;
         }
+    }
+
+    public void ResetValues()
+    {
+        iceChunks = null;
+        halfGolemVFX = null;
+        halfGolemIKs = null;
     }
 }

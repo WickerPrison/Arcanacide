@@ -34,5 +34,11 @@ public class HalfGolemToggleEditor : Editor
             halfGolemToggles.EnableIK(false);
             PrefabUtility.RecordPrefabInstancePropertyModifications(halfGolemToggles);
         }
+        if (GUILayout.Button("Reset Lazy Values"))
+        {
+            Undo.RecordObject(halfGolemToggles, "Reset Half Golem Toggles");
+            halfGolemToggles.ResetValues();
+            PrefabUtility.RecordPrefabInstancePropertyModifications(halfGolemToggles);
+        }
     }
 }
