@@ -19,6 +19,7 @@ public class HalfGolemController : EnemyController
     float unfrozenAttackMaxTime = 1.5f;
     [SerializeField] EventReference draggingEvent;
     [SerializeField] float draggingVolume;
+    [SerializeField] StalagmiteHolder stalagmiteHolder;
 
     public override void Start()
     {
@@ -31,6 +32,7 @@ public class HalfGolemController : EnemyController
         poofRenderer = poof.GetComponent<Renderer>();
         enemySound.Play(draggingEvent, draggingVolume);
         enemySound.SetPaused(true);
+        stalagmiteHolder.gameObject.SetActive(true);
     }
 
     public override void EnemyAI()
@@ -175,6 +177,14 @@ public class HalfGolemController : EnemyController
             playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
         }
     }
+
+    public void Stomp()
+    {
+        StartCoroutine(cameraScript.ScreenShake(.2f, .2f));
+        enemySound.OtherSounds(1, 1);
+        stalagmiteHolder.TriggerWave();
+    }
+
     public override void OnTakeDamage(object sender, EventArgs e)
     {
         base.OnTakeDamage(sender, e);

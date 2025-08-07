@@ -26,7 +26,7 @@ public class HalfGolemToggles : MonoBehaviour
         {
             if(_halfGolemVFX == null)
             {
-                _halfGolemVFX = GetComponentsInChildren<HalfGolemVFX>();
+                _halfGolemVFX = GetComponentsInChildren<HalfGolemVFX>(true);
             }
             return _halfGolemVFX;
         }
