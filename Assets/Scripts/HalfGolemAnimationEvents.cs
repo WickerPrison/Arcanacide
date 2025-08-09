@@ -16,4 +16,14 @@ public class HalfGolemAnimationEvents : MonoBehaviour
     {
         halfGolemController.Stomp();
     }
+
+    public void Jump()
+    {
+        halfGolemController.StartJump();
+    }
+
+    public void JumpHit()
+    {
+        halfGolemController.JumpHit();
+    }
 }

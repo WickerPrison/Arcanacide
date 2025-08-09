@@ -44,4 +44,25 @@ public class HalfGolemTests
         yield return new WaitForSeconds(4f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
+
+    [UnityTest]
+    public IEnumerator Jump()
+    {
+        HalfGolemController halfGolem = GameObject.Instantiate(halfGolemPrefab).GetComponent<HalfGolemController>();
+        halfGolem.transform.position = new Vector3(-6f, 0,-6f);
+        EnemyScript enemyScript = halfGolem.GetComponent<EnemyScript>();
+        halfGolem.state = EnemyState.IDLE;
+        halfGolem.attackTime = 1000;
+        yield return null;
+        for (int i = 0; i < 3; i++)
+        {
+            enemyScript.LoseHealth(1, 1);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        halfGolem.JumpAttack();
+
+        yield return new WaitForSeconds(4f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 }
