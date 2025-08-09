@@ -335,15 +335,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reward: 400
-  enemyID: 0
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 60
+  maxHealth: 100
   maxPoise: 60
   poiseRegeneration: 5
   invincible: 0
+  enemyGUID: 
 --- !u!114 &3603301266689244227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   backAnimator: {fileID: 4900078769655075035}
   navAgent: {fileID: 4861411563786601191}
   attackMaxTime: 2
-  detectRange: 5
+  detectRange: 100
   attackRange: 0
   projectilePrefab: {fileID: 5673668488862911417, guid: f35424969b7c0ff4a8057f658f4767bc, type: 3}
   spellAttackDamage: 15

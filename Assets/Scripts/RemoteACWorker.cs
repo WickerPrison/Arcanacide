@@ -13,8 +13,6 @@ public class RemoteACWorker : MonoBehaviour
     TutorialManager tutorialManager;
     float animationTimer = 0.5f;
     bool inDialogue = false;
-    string firstDialogueName = "IT Worker";
-    string finalDialogueName = "Fixed Firewall";
 
     private void Awake()
     {
@@ -31,20 +29,14 @@ public class RemoteACWorker : MonoBehaviour
 
     private void Start()
     {
-        tutorialManager = GlobalEvents.instance.gameObject.GetComponent<TutorialManager>();
-        if (dialogueData.conversationsHad.Contains(finalDialogueName))
+        if (mapData.outsideFrankBossfight)
         {
             Destroy(gameObject);
+            return;
         }
+        tutorialManager = GlobalEvents.instance.gameObject.GetComponent<TutorialManager>();
         faceDirection = GetComponent<FaceDirection>();
-        if (mapData.fireSuppressionState == FireSuppressionState.FIXED)
-        {
-            faceDirection.DirectionalFace(FacingDirections.BACK_RIGHT);
-        }
-        else
-        {
-            faceDirection.DirectionalFace(FacingDirections.BACK_LEFT);
-        }
+        faceDirection.DirectionalFace(FacingDirections.BACK_RIGHT);
     }
 
     private void Update()

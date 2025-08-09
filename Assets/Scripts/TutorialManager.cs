@@ -58,7 +58,7 @@ public class TutorialManager : MonoBehaviour
         TutorialList();
     }
 
-    void NextMessage()
+    public void NextMessage()
     {
         if (!messageOpen)
         {

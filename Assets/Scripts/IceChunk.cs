@@ -18,6 +18,7 @@ public class IceChunk : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         particleRenderer.sortingOrder = spriteRenderer.sortingOrder;
     }
+
     private void onIceBreak(object sender, System.EventArgs e)
     {
         if(controller.remainingIce == limb)

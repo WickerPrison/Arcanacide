@@ -17,7 +17,17 @@ public class GameManager : MonoBehaviour
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
     [System.NonSerialized] public List<EnemyScript> enemiesInRange = new List<EnemyScript>();
-    [System.NonSerialized] public int awareEnemies;
+    int _awareEnemies;
+    string saveFileString = "saveFile";
+    public int awareEnemies
+    {
+        get { return _awareEnemies; }
+        set
+        {
+            _awareEnemies = value;
+            GlobalEvents.instance.AwareEnemiesChange(value);
+        }
+    }
 
 
     //These are the set of saved values that are used when creating a new game
@@ -151,6 +161,8 @@ public class GameManager : MonoBehaviour
             mapData.electricBossKilled = data.electricBossKilled;
             mapData.carolsDeadFriends = data.carolsDeadFriends.ToList();
             mapData.ACOn = data.ACOn;
+            mapData.hasRemoteAC = data.hasRemoteAC;
+            mapData.outsideFrankBossfight = data.outsideFrankBossfight;
             mapData.iceBossKilled = data.iceBossKilled;
             mapData.iceBossPosition = new Vector3(data.iceBossPosition[0], data.iceBossPosition[1], data.iceBossPosition[2]);
             mapData.iceBossDirection = data.iceBossDirection;
@@ -193,9 +205,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void NewGame(string saveFile)
+    public void NewGame(int saveFileId)
     {
-        playerData.saveFile = saveFile;
+        playerData.saveFile = saveFileString + saveFileId.ToString();
         playerData.tutorials = tutorialManager.allTutorials;
         playerData.ClearData();
 
@@ -215,6 +227,8 @@ public class GameManager : MonoBehaviour
         mapData.electricBossKilled = false;
         mapData.carolsDeadFriends.Clear();
         mapData.ACOn = true;
+        mapData.hasRemoteAC = false;
+        mapData.outsideFrankBossfight = false;
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
@@ -236,6 +250,7 @@ public class GameManager : MonoBehaviour
 
     public void StartAtFloor2()
     {
+        playerData.saveFile = saveFileString + "4";
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 2;
         playerData.healCharges = 2;
@@ -293,6 +308,8 @@ public class GameManager : MonoBehaviour
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
         mapData.ACOn = true;
+        mapData.hasRemoteAC = false;
+        mapData.outsideFrankBossfight = false;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
@@ -311,6 +328,7 @@ public class GameManager : MonoBehaviour
 
     public void StartAtFloor3()
     {
+        playerData.saveFile = saveFileString + "4";
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 3;
         playerData.healCharges = 3;
@@ -333,7 +351,7 @@ public class GameManager : MonoBehaviour
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
-        playerData.money = 2000;
+        playerData.money = 4000;
         playerData.lostMoney = 0;
         playerData.strength = 1;
         playerData.dexterity = 1;
@@ -374,6 +392,8 @@ public class GameManager : MonoBehaviour
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
         mapData.ACOn = true;
+        mapData.hasRemoteAC = false;
+        mapData.outsideFrankBossfight = false;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
@@ -392,6 +412,7 @@ public class GameManager : MonoBehaviour
 
     public void StartAtFloor4()
     {
+        playerData.saveFile = saveFileString + "4";
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 4;
         playerData.healCharges = 4;
@@ -461,6 +482,8 @@ public class GameManager : MonoBehaviour
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
         mapData.ACOn = false;
+        mapData.hasRemoteAC = true;
+        mapData.outsideFrankBossfight = true;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();

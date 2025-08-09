@@ -14,10 +14,13 @@ public class WeaponPickup : MonoBehaviour
     TutorialManager tutorialManager;
     float playerDistance = 100;
 
-    void Start()
+    private void Awake()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        im.controls.Gameplay.Interact.performed += PickUpWeapon;
+    }
+
+    void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         if (playerData.unlockedWeapons.Contains(weaponID))
         {
@@ -56,6 +59,11 @@ public class WeaponPickup : MonoBehaviour
         tutorialManager = im.gameObject.GetComponent<TutorialManager>();
         im.controls.Tutorial.Disable();
         tutorialManager.Tutorial("New Weapon");
+    }
+
+    private void OnEnable()
+    {
+        im.controls.Gameplay.Interact.performed += PickUpWeapon;
     }
 
     private void OnDisable()

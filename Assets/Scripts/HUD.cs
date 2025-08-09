@@ -24,6 +24,7 @@ public class HUD : MonoBehaviour
     Canvas canvas;
     Camera mainCamera;
     InputManager im;
+    GameManager gm;
     bool mapOpen = false;
     float fadeTimer;
 
@@ -32,6 +33,8 @@ public class HUD : MonoBehaviour
         im = GlobalEvents.instance.GetComponent<InputManager>();
         im.controls.Gameplay.Map.performed += ctx => { if(ctx.interaction is TapInteraction) Map(); };
         im.controls.Gameplay.Map.performed += ctx => { if(ctx.interaction is HoldInteraction) SwitchAC(); };
+
+        gm = im.GetComponent<GameManager>();
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         canvas = GetComponent<Canvas>();
@@ -107,7 +110,7 @@ public class HUD : MonoBehaviour
 
     void SwitchAC()
     {
-        if(mapOpen && mapData.floor == 3 && mapData.hasRemoteAC)
+        if(mapOpen && mapData.floor == 3 && mapData.hasRemoteAC && gm.awareEnemies <= 0)
         {
             StartCoroutine(SwitchACRoutine());
         }
@@ -116,12 +119,14 @@ public class HUD : MonoBehaviour
     IEnumerator SwitchACRoutine()
     {
         Time.timeScale = 0;
-        yield return FadeToBlack(1);
+        im.DisableAll();
+        yield return FadeToBlack(0.5f);
         mapData.ACOn = !mapData.ACOn;
         GlobalEvents.instance.SwitchAC(mapData.ACOn);
-        yield return new WaitForSecondsRealtime(0.7f);
-        yield return FadeToBlack(1, true);
+        yield return new WaitForSecondsRealtime(0.4f);
+        yield return FadeToBlack(0.5f, true);
         Time.timeScale = 1;
+        im.Gameplay();
     }
 
     public IEnumerator FadeToBlack(float fadeTime, bool reverse = false)

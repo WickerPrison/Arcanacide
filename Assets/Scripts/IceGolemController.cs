@@ -29,7 +29,7 @@ public class IceGolemController : EnemyController
     {
         base.EnemyAI();
 
-        if (navAgent.enabled == true)
+        if (navAgent.enabled == true && state != EnemyState.UNAWARE)
         {
             AngleMeasurement();
             navAgent.SetDestination(playerScript.transform.position);

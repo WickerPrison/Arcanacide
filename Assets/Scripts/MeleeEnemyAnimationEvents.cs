@@ -6,10 +6,21 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
 {
     EnemyController enemyController;
     EnemyScript enemyScript;
-    [System.NonSerialized] public EnemySound enemySound;
     public AttackArcGenerator attackArc;
     SpriteEffects spriteEffects;
     FacePlayer facePlayer;
+    EnemySound _enemySound;
+    public EnemySound enemySound
+    {
+        get
+        {
+            if(_enemySound == null)
+            {
+                _enemySound = transform.parent.GetComponentInChildren<EnemySound>();
+            }
+            return _enemySound;
+        }
+    }
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -17,7 +28,6 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         enemyController = GetComponentInParent<EnemyController>();
         enemyScript = GetComponentInParent<EnemyScript>();
         spriteEffects = GetComponentInParent<SpriteEffects>();
-        enemySound = transform.parent.GetComponentInChildren<EnemySound>();
         facePlayer = GetComponentInParent<FacePlayer>();
         if(attackArc == null)
         {

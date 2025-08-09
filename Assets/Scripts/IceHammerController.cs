@@ -18,6 +18,8 @@ public class IceHammerController : EnemyController
     public int jumps;
     [SerializeField] StalagmiteHolder lineStalagmites;
     [SerializeField] StalagmiteHolder circleStalagmites;
+    [SerializeField] Transform[] hammerTargets;
+    float longAttackRange = 15f;
 
     public override void Start()
     {
@@ -47,13 +49,13 @@ public class IceHammerController : EnemyController
             {
                 attackTime = attackMaxTime;
                 float randFloat = Random.Range(0f, 1f);
-                if (Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
+                if (playerDistance <= attackRange)
                 {
                     HammerSmash();
                 }
                 else
                 {
-                    if(randFloat > 0.5f)
+                    if(randFloat > 0.5f || playerDistance > longAttackRange)
                     {
                         JumpSmash();
                     }
@@ -141,7 +143,9 @@ public class IceHammerController : EnemyController
         float jumpTime = Mathf.Max(Vector3.Distance(startPos, jumpDestination) / jumpSpeed, 0.4f);
         float jumpTimer = 0;
         float progress = jumpTimer / jumpTime;
-        while (progress < 0.75f)
+        float landTrigger = 1 - 0.1f / jumpTime;
+        landTrigger = Mathf.Max(landTrigger, 0.75f);
+        while (progress < landTrigger)
         {
             jumpTimer += Time.deltaTime;
             progress = jumpTimer / jumpTime;
@@ -180,6 +184,16 @@ public class IceHammerController : EnemyController
 
     public void ButtSlam()
     {
+        circleStalagmites.transform.localPosition = Vector3.zero;
+        circleStalagmites.TriggerWave();
+        GlobalEvents.instance.ScreenShake(0.2f, 0.3f);
+        RuntimeManager.PlayOneShot(smashSound, 1);
+    }
+
+    public void HammerIcicles()
+    {
+        Vector3 targetPos = facingFront ? hammerTargets[0].position : hammerTargets[1].position;
+        circleStalagmites.transform.position = new Vector3(targetPos.x, 0, targetPos.z);
         circleStalagmites.TriggerWave();
         GlobalEvents.instance.ScreenShake(0.2f, 0.3f);
         RuntimeManager.PlayOneShot(smashSound, 1);
@@ -209,5 +223,6 @@ public class IceHammerController : EnemyController
     {
         StopAllCoroutines();
         transform.position = new Vector3(transform.position.x, 0, transform.position.z );
+        enemyCollider.enabled = true;
     }
 }
