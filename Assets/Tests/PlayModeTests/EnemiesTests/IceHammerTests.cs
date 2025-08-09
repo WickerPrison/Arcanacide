@@ -26,7 +26,7 @@ public class IceHammerTests
         mapData = Resources.Load<MapData>("Data/MapData");
         iceHammerPrefab = Resources.Load<GameObject>("Prefabs/Enemies/IceHammer");
         iciclePrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/StalagmiteAttack");
-        Time.timeScale = 4f;
+        Time.timeScale = 1f;
     }
 
     [UnityTest]
@@ -104,6 +104,22 @@ public class IceHammerTests
             Random.Range(-7f, 7f),
             0,
             Random.Range(-7f, 7f));
+    }
+
+    [UnityTest]
+    public IEnumerator JumpStagger()
+    {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        IceHammerController iceHammer = GameObject.Instantiate(iceHammerPrefab).GetComponent<IceHammerController>();
+        iceHammer.transform.position = new Vector3(3f, 0, 3f);
+        iceHammer.attackTime = 1000;
+        yield return null;
+        iceHammer.JumpSmash();
+        yield return new WaitForSeconds(0.83f);
+        EnemyScript enemyScript = iceHammer.GetComponent<EnemyScript>();
+        enemyScript.LoseHealth(1, 1000);
+        yield return new WaitForSeconds(3);
+        Assert.AreEqual(playerData.health, playerData.MaxHealth());
     }
 
     [UnityTest]

@@ -19,6 +19,7 @@ public class IceHammerController : EnemyController
     [SerializeField] StalagmiteHolder lineStalagmites;
     [SerializeField] StalagmiteHolder circleStalagmites;
     [SerializeField] Transform[] hammerTargets;
+    float longAttackRange = 15f;
 
     public override void Start()
     {
@@ -48,13 +49,13 @@ public class IceHammerController : EnemyController
             {
                 attackTime = attackMaxTime;
                 float randFloat = Random.Range(0f, 1f);
-                if (Vector3.Distance(transform.position, playerScript.transform.position) <= attackRange)
+                if (playerDistance <= attackRange)
                 {
                     HammerSmash();
                 }
                 else
                 {
-                    if(randFloat > 0.5f)
+                    if(randFloat > 0.5f || playerDistance > longAttackRange)
                     {
                         JumpSmash();
                     }
@@ -222,5 +223,6 @@ public class IceHammerController : EnemyController
     {
         StopAllCoroutines();
         transform.position = new Vector3(transform.position.x, 0, transform.position.z );
+        enemyCollider.enabled = true;
     }
 }

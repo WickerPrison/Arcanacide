@@ -83,6 +83,9 @@ public class MinibossDroneController : MonoBehaviour
             enemySound = enemyScript.GetComponentInChildren<EnemySound>();
             abilities = minibossEvents.GetComponent<MinibossAbilities>();
             ellipse = abilities.ellipse;
+            toPlayer = Vector3.Normalize(playerScript.transform.position - enemyScript.transform.position);
+            perp = Vector3.Cross(Vector3.up, toPlayer).normalized;
+            transform.position = HoverPosition();
         }
     }
 
