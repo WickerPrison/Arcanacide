@@ -10,7 +10,7 @@ public class Flamethrower : EnemyController
     [SerializeField] ParticleSystem backFlameVFX;
     [SerializeField] GameObject fireballPrefab;
     [SerializeField] GameObject explosionPrefab;
-    [SerializeField] float selfDestructRange;
+    public float selfDestructRange;
     [SerializeField] int selfDestructDamage;
     [SerializeField] float selfDestructPoiseDamage;
     FacePlayer facePlayer;
@@ -138,6 +138,7 @@ public class Flamethrower : EnemyController
     public override void StartDying()
     {
         SpecialAbilityOff();
+        enemyEvents.TriggerVfx("PropaneTank");
         base.StartDying();
     }
 

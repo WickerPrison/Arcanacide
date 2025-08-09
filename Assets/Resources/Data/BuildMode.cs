@@ -12,4 +12,5 @@ public class BuildMode : ScriptableObject
 {
     public BuildModes buildMode;
     public string[] excludePathsForDemo;
+    public float testTimeScale;
 }

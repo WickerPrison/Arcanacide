@@ -20,9 +20,21 @@ public class FlameThrowerTests
         playerData.hasHealthGem = true;
         mapData = Resources.Load<MapData>("Data/MapData");
         flamethrowerPrefab = Resources.Load<GameObject>("Prefabs/Enemies/FlameThrower");
-        Time.timeScale = 4;
+        Time.timeScale = Resources.Load<BuildMode>("Data/BuildMode").testTimeScale;
     }
 
+    [UnityTest]
+    public IEnumerator DeathExplosion()
+    {
+        Flamethrower flamethrower = GameObject.Instantiate(flamethrowerPrefab).GetComponent<Flamethrower>();
+        flamethrower.transform.position = new Vector3(-1f, 0, -1f).normalized * flamethrower.selfDestructRange * 0.95f;
+        yield return null;
+
+        EnemyScript enemyScript = flamethrower.GetComponent<EnemyScript>();
+        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        yield return new WaitForSeconds(4);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 
     [UnityTest]
     public IEnumerator DieWhileFlamethrowing()
