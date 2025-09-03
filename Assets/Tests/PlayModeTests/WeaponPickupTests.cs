@@ -27,10 +27,11 @@ public class WeaponPickupTests
     public IEnumerator GetLantern()
     {
         SceneManager.LoadScene("BlockRoom");
-        yield return null;
 
+        yield return null;
         PlayerScript player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         player.transform.position = new Vector3(-1, 0, -1);
+        yield return null;
 
         WeaponPickup weaponPickup = GameObject.FindObjectOfType<WeaponPickup>();
         weaponPickup.PerformPickup();

@@ -68,7 +68,6 @@ public class WeaponPickup : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(im.controls);
         im.controls.Gameplay.Interact.performed += PickUpWeapon;
     }
 
