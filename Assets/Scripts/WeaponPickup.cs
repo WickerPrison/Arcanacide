@@ -45,6 +45,11 @@ public class WeaponPickup : MonoBehaviour
 
     void PickUpWeapon(InputAction.CallbackContext context)
     {
+        PerformPickup();
+    }
+
+    public void PerformPickup()
+    {
         if (playerDistance <= interactDistance)
         {
             playerData.unlockedWeapons.Add(weaponID);
