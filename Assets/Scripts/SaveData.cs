@@ -61,6 +61,7 @@ public class SaveData
     public bool ACOn;
     public bool hasRemoteAC;
     public bool outsideFrankBossfight;
+    public int resetPasswords;
     public bool whistleblowerArrested;
 
     public List<string> conversationsHad;
@@ -131,6 +132,7 @@ public class SaveData
         iceBossPosition[1] = mapData.iceBossPosition.y;
         iceBossPosition[2] = mapData.iceBossPosition.z;
         iceBossDirection = mapData.iceBossDirection;
+        resetPasswords = mapData.resetPasswords;
         whistleblowerArrested = mapData.whistleblowerArrested;
 
         ACOn = mapData.ACOn;
