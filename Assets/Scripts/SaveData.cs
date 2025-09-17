@@ -24,6 +24,7 @@ public class SaveData
     public int maxPatches;
     public List<string> tutorials;
     public List<string> evidenceFound;
+    public bool hasWayfaerie;
     public int money;
     public int lostMoney;
     public string path;
@@ -61,7 +62,7 @@ public class SaveData
     public bool ACOn;
     public bool hasRemoteAC;
     public bool outsideFrankBossfight;
-    public int resetPasswords;
+    public int[] resetPasswords;
     public bool whistleblowerArrested;
 
     public List<string> conversationsHad;
@@ -93,6 +94,7 @@ public class SaveData
         maxPatches = playerData.maxPatches;
         tutorials = playerData.tutorials;
         evidenceFound = playerData.evidenceFound;
+        hasWayfaerie = playerData.hasWayfaerie;
         money = playerData.money;
         lostMoney = playerData.lostMoney;
         strength = playerData.strength;
@@ -132,7 +134,7 @@ public class SaveData
         iceBossPosition[1] = mapData.iceBossPosition.y;
         iceBossPosition[2] = mapData.iceBossPosition.z;
         iceBossDirection = mapData.iceBossDirection;
-        resetPasswords = mapData.resetPasswords;
+        resetPasswords = mapData.resetPasswords.ToArray();
         whistleblowerArrested = mapData.whistleblowerArrested;
 
         ACOn = mapData.ACOn;

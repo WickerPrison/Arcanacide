@@ -16,7 +16,7 @@ public class FourthFloorITWorker : MonoBehaviour
     private void Awake()
     {
         dialogue = GetComponent<NPCDialogue>();
-        dialogue.getConversationIndex = () => { return mapData.resetPasswords == -1 ? 7 : 8; };
+        dialogue.getConversationIndex = () => { return mapData.resetPasswords == null ? 7 : 8; };
         dialogue.endConversationCallback = EndConversation;
     }
 
@@ -33,7 +33,7 @@ public class FourthFloorITWorker : MonoBehaviour
 
     private void Update()
     {
-        //AnimationTimer();
+        AnimationTimer();
     }
 
     void AnimationTimer()
@@ -45,17 +45,14 @@ public class FourthFloorITWorker : MonoBehaviour
             float randFloat = Random.Range(0f, 1f);
             switch (randFloat)
             {
-                case float n when n < 0.3f:
+                case float n when n < 0.2f:
                     backAnimator.Play("Hmmm");
                     break;
-                case float n when n < 0.6:
-                    backAnimator.Play("Smack");
-                    break;
                 default:
-                    backAnimator.Play("ButtonPress");
+                    backAnimator.Play("Keyboard");
                     break;
             }
-            animationTimer += Random.Range(2.3f, 4.5f);
+            animationTimer += Random.Range(5f, 10f);
         }
     }
 
@@ -63,7 +60,7 @@ public class FourthFloorITWorker : MonoBehaviour
     {
         inDialogue = false;
         faceDirection.DirectionalFace(FacingDirections.BACK_RIGHT);
-        if (mapData.resetPasswords == -1) mapData.resetPasswords = 0;
+        if (mapData.resetPasswords == null) mapData.resetPasswords = new List<int>();
     }
 
     private void onStartDialogue(object sender, System.EventArgs e)
