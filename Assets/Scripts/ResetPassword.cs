@@ -19,15 +19,22 @@ public class ResetPassword : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         dialogue = GetComponent<Dialogue>();
-        dialogue.conversationNum = mapData.resetPasswords.Count;
+        if(mapData.resetPasswords == null)
+        {
+            dialogue.conversationNum = 4;
+        }
+        else
+        {
+            dialogue.conversationNum = mapData.resetPasswords.Count;
+        }
 
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        im.controls.Gameplay.Interact.performed += ctx => Investigate();        
     }
 
     void Start()
     {
-        if (mapData.resetPasswords == null || mapData.resetPasswords.Contains(resetIndex))
+        im.controls.Gameplay.Interact.performed += ctx => Investigate();
+        if (mapData.resetPasswords.Contains(resetIndex))
         {
             if (wayFaerie != null)
             {
@@ -39,7 +46,7 @@ public class ResetPassword : MonoBehaviour
 
     void Update()
     {
-        if (mapData.resetPasswords == null || mapData.resetPasswords.Contains(resetIndex))
+        if (mapData.resetPasswords.Contains(resetIndex))
         {
             if (wayFaerie != null) wayFaerie.Stop();
             message.SetActive(false);
@@ -59,7 +66,11 @@ public class ResetPassword : MonoBehaviour
 
     void Investigate()
     {
-        if (mapData.resetPasswords != null && !mapData.resetPasswords.Contains(resetIndex) && playerDistance <= interactDistance)
+        if(mapData.resetPasswords == null)
+        {
+
+        }
+        else if (!mapData.resetPasswords.Contains(resetIndex) && playerDistance <= interactDistance)
         {
             mapData.resetPasswords.Add(resetIndex);
             if (wayFaerie != null) wayFaerie.Stop();
