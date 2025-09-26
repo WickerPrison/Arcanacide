@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
             mapData.hasRemoteAC = data.hasRemoteAC;
             mapData.outsideFrankBossfight = data.outsideFrankBossfight;
             mapData.resetPasswords = data.resetPasswords.ToList();
+            mapData.itWorkerQuestComplete = data.itWorkerQuestComplete;
             mapData.iceBossKilled = data.iceBossKilled;
             mapData.iceBossPosition = new Vector3(data.iceBossPosition[0], data.iceBossPosition[1], data.iceBossPosition[2]);
             mapData.iceBossDirection = data.iceBossDirection;
@@ -232,6 +233,7 @@ public class GameManager : MonoBehaviour
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
         mapData.resetPasswords = null;
+        mapData.itWorkerQuestComplete = false;
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
@@ -315,6 +317,7 @@ public class GameManager : MonoBehaviour
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
         mapData.resetPasswords = null;
+        mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
@@ -401,6 +404,7 @@ public class GameManager : MonoBehaviour
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
         mapData.resetPasswords = null;
+        mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
@@ -493,6 +497,7 @@ public class GameManager : MonoBehaviour
         mapData.hasRemoteAC = true;
         mapData.outsideFrankBossfight = true;
         mapData.resetPasswords = null;
+        mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
