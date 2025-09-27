@@ -135,7 +135,14 @@ public class SaveData
         iceBossPosition[1] = mapData.iceBossPosition.y;
         iceBossPosition[2] = mapData.iceBossPosition.z;
         iceBossDirection = mapData.iceBossDirection;
-        resetPasswords = mapData.resetPasswords.ToArray();
+        if(mapData.resetPasswords != null)
+        {
+            resetPasswords = mapData.resetPasswords.ToArray();
+        }
+        else
+        {
+            resetPasswords = null;
+        }
         itWorkerQuestComplete = mapData.itWorkerQuestComplete;
         whistleblowerArrested = mapData.whistleblowerArrested;
 

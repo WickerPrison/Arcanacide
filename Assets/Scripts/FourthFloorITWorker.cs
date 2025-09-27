@@ -18,7 +18,7 @@ public class FourthFloorITWorker : MonoBehaviour
         dialogue = GetComponent<NPCDialogue>();
         dialogue.getConversationIndex = () => { return mapData.resetPasswords == null ? 7 : 8; };
         dialogue.endConversationCallback = EndConversation;
-        if(mapData.resetPasswords.Count == 4)
+        if (mapData.resetPasswords != null && mapData.resetPasswords.Count == 4)
         {
             gameObject.SetActive(false);
             return;

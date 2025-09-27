@@ -107,7 +107,7 @@ public class Dialogue : MonoBehaviour
         {
             navAgent.speed = speed;
         }
-
+        currentLineIndex = 0;
         EndDialogue();
     }
 

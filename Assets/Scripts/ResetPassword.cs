@@ -10,6 +10,7 @@ public class ResetPassword : MonoBehaviour
     [SerializeField] ParticleSystem wayFaerie;
     [SerializeField] MapData mapData;
     [SerializeField] PlayerData playerData;
+    [SerializeField] WayFaerieManager wayFaerieManager;
     Dialogue dialogue;
     Transform player;
     InputManager im;
@@ -34,7 +35,7 @@ public class ResetPassword : MonoBehaviour
     void Start()
     {
         im.controls.Gameplay.Interact.performed += ctx => Investigate();
-        if (mapData.resetPasswords.Contains(resetIndex))
+        if (mapData.resetPasswords != null && mapData.resetPasswords.Contains(resetIndex))
         {
             if (wayFaerie != null)
             {
@@ -46,14 +47,14 @@ public class ResetPassword : MonoBehaviour
 
     void Update()
     {
-        if (mapData.resetPasswords.Contains(resetIndex))
+        playerDistance = Vector3.Distance(transform.position, player.position);
+        if (mapData.resetPasswords != null && mapData.resetPasswords.Contains(resetIndex))
         {
             if (wayFaerie != null) wayFaerie.Stop();
             message.SetActive(false);
             return;
         }
 
-        playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance <= interactDistance)
         {
             message.SetActive(true);
@@ -66,19 +67,23 @@ public class ResetPassword : MonoBehaviour
 
     void Investigate()
     {
+        if (playerDistance > interactDistance) return;
+
         if(mapData.resetPasswords == null)
         {
-
+            if (wayFaerie != null) wayFaerie.Stop();
+            dialogue.StartConversation();
         }
-        else if (!mapData.resetPasswords.Contains(resetIndex) && playerDistance <= interactDistance)
+        else if (!mapData.resetPasswords.Contains(resetIndex))
         {
             mapData.resetPasswords.Add(resetIndex);
             if (wayFaerie != null) wayFaerie.Stop();
-            if(mapData.resetPasswords.Count == 1)
+            if(mapData.resetPasswords.Count == 2)
             {
                 dialogue.StartWithCallback(() =>
                 {
                     playerData.hasWayfaerie = true;
+                    wayFaerieManager.SendWayfaerie();
                 });
             }
             else
