@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
             mapData.miniboss1Killed = data.miniboss1Killed;
             mapData.miniboss2Killed = data.miniboss2Killed;
             mapData.miniboss3Killed = data.miniboss3Killed;
+            mapData.miniboss4Killed = data.miniboss4Killed;
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
             mapData.electricBossKilled = data.electricBossKilled;
@@ -225,6 +226,7 @@ public class GameManager : MonoBehaviour
         mapData.miniboss1Killed = false;
         mapData.miniboss2Killed = false;
         mapData.miniboss3Killed = false;
+        mapData.miniboss4Killed = false;
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
@@ -306,6 +308,7 @@ public class GameManager : MonoBehaviour
         mapData.miniboss1Killed = true;
         mapData.miniboss2Killed = false;
         mapData.miniboss3Killed = false;
+        mapData.miniboss4Killed = false;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
@@ -393,6 +396,7 @@ public class GameManager : MonoBehaviour
         mapData.miniboss1Killed = true;
         mapData.miniboss2Killed = true;
         mapData.miniboss3Killed = false;
+        mapData.miniboss4Killed = false;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;
@@ -486,6 +490,7 @@ public class GameManager : MonoBehaviour
         mapData.miniboss1Killed = true;
         mapData.miniboss2Killed = true;
         mapData.miniboss3Killed = true;
+        mapData.miniboss4Killed = false;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;

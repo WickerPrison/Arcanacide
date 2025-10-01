@@ -52,6 +52,7 @@ public class SaveData
     public bool miniboss1Killed;
     public bool miniboss2Killed;
     public bool miniboss3Killed;
+    public bool miniboss4Killed;
     public bool fireBossKilled;
     public bool secretaryConvo;
     public bool electricBossKilled;
@@ -125,6 +126,7 @@ public class SaveData
         miniboss1Killed = mapData.miniboss1Killed;
         miniboss2Killed = mapData.miniboss2Killed;
         miniboss3Killed = mapData.miniboss3Killed;
+        miniboss4Killed = mapData.miniboss4Killed;
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
         electricBossKilled = mapData.electricBossKilled;
