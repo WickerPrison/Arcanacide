@@ -13,7 +13,7 @@ public class MinibossEvents : EnemyEvents
     public event EventHandler<(float, float)> onStartCircle;
     public event EventHandler onStartDroneCharge;
     public event EventHandler onFlyAway;
-    public event EventHandler onStartSpin;
+    public event EventHandler onTeslaHarpoons;
 
     public void ThrustersOn()
     {
@@ -55,8 +55,8 @@ public class MinibossEvents : EnemyEvents
         onFlyAway?.Invoke(this, EventArgs.Empty);
     }
 
-    public void StartSpin()
+    public void TeslaHarpoons()
     {
-        onStartSpin?.Invoke(this, EventArgs.Empty);
+        onTeslaHarpoons?.Invoke(this, EventArgs.Empty);
     }
 }

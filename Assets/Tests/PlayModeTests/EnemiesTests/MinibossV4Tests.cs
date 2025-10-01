@@ -44,7 +44,7 @@ public class MinibossV4Tests
     }
 
     [UnityTest]
-    public IEnumerator Spin()
+    public IEnumerator Harpoons()
     {
         SpinPoints spinPoints = GameObject.Instantiate(spinPointsPrefab).GetComponent<SpinPoints>();
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
@@ -60,8 +60,6 @@ public class MinibossV4Tests
         yield return null;
         minibossAbilities.StartTeslaHarpoon();
 
-        MinibossV4Controller minibossController = minibossAbilities.GetComponent<MinibossV4Controller>();
-        minibossController.attackTime = 7;
         yield return new WaitForSeconds(8);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }

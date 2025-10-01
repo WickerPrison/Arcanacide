@@ -460,7 +460,7 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartCircle += MinibossEvents_onStartCircle;
         minibossEvents.onStartDroneCharge += MinibossEvents_onStartDroneCharge;
         minibossEvents.onFlyAway += MinibossEvents_onFlyAway;
-        minibossEvents.onStartSpin += MinibossEvents_onStartSpin;
+        minibossEvents.onTeslaHarpoons += MinibossEvents_onStartSpin;
     }
 
     private void OnDisable()
@@ -471,6 +471,6 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartCircle -= MinibossEvents_onStartCircle;
         minibossEvents.onStartDroneCharge -= MinibossEvents_onStartDroneCharge;
         minibossEvents.onFlyAway -= MinibossEvents_onFlyAway;
-        minibossEvents.onStartSpin -= MinibossEvents_onStartSpin;
+        minibossEvents.onTeslaHarpoons -= MinibossEvents_onStartSpin;
     }
 }

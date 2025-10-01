@@ -4997,6 +4997,7 @@ GameObject:
   - component: {fileID: 1963595384527304938}
   - component: {fileID: 3858987663161793444}
   - component: {fileID: 7216843461517062326}
+  - component: {fileID: 5035383853673767690}
   m_Layer: 6
   m_Name: MinibossV4
   m_TagString: Enemy
@@ -5104,16 +5105,43 @@ MonoBehaviour:
   beam: {fileID: 8673559366397657880}
   beamOrigin: {fileID: 921644544189910847}
   dashTarget: {fileID: 5153013687285608381}
-  teslaTime: 0
-  teslaDelay: 0
-  teslaHarpoonPrefab: {fileID: 0}
+  teslaTime: 5
+  teslaDelay: 1
+  teslaHarpoonPrefab: {fileID: 4456776137760001250, guid: e5d7de502e4125746b56fcc6d8669165, type: 3}
   descendCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -1.1919022
+      outSlope: -1.1919022
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.804689
+      value: 0.0408895
+      inSlope: 0.20644554
+      outSlope: 0.20644554
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.10630892
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.20935585
+      outSlope: -0.20935585
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  descendTime: 0
+  descendTime: 2
   pauseTime: 0.15
   sweepTime: 1
   landingIndicator: {fileID: 6703603983209613334}
@@ -5222,6 +5250,24 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5035383853673767690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428799433658993456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ed397fdbaf5654f89f65e2167c18fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boltsPrefab: {fileID: 8759700288671174282, guid: ed3ad62d335221a4eb06fa088419bc92, type: 3}
+  boltDamage: 5
+  boltPoiseDamage: 5
+  boltCD: 0.2
+  harpoonBoundaries: {x: 7, y: 9}
+  spacing: 4
 --- !u!1 &447606989536174369
 GameObject:
   m_ObjectHideFlags: 0
