@@ -12,7 +12,7 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
         base.Start();
         enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
         abilities = GetComponent<MinibossAbilities>();
-        if (mapData.miniboss3Killed)
+        if (mapData.miniboss4Killed)
         {
             enemyEvents.HideBossHealthbar();
             //musicManager.ChangeMusicState(MusicState.MAINLOOP);
@@ -43,11 +43,53 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
                 float randFloat = Random.Range(0, 1f);
                 if (playerDistance > 4)
                 {
-
+                    if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
+                    {
+                        abilities.Circle(CircleType.SHOOT);
+                    }
+                    else if (randFloat > 0.6f)
+                    {
+                        abilities.MissileAttack(MissilePattern.RADIAL);
+                    }
+                    else if (randFloat > 0.4f)
+                    {
+                        abilities.DroneCharge();
+                    }
+                    else if (randFloat > 0.2f)
+                    {
+                        StartLasers();
+                    }
+                    else
+                    {
+                        abilities.StartTeslaHarpoon();
+                    }
                 }
                 else
                 {
-
+                    if (randFloat > 0.8f && playerScript.transform.position.magnitude < 9f)
+                    {
+                        abilities.Circle(CircleType.SHOOT);
+                    }
+                    else if(randFloat > 0.7)
+                    {
+                        abilities.DashAway(() => abilities.MissileAttack(MissilePattern.FRONT));
+                    }
+                    else if (randFloat > 0.5f)
+                    {
+                        abilities.DashAway(() => abilities.DroneCharge());
+                    }
+                    else if (randFloat > 0.4f)
+                    {
+                        abilities.MeleeBlade();
+                    }
+                    else if (randFloat > 0.2f)
+                    {
+                        StartLasers();
+                    }
+                    else
+                    {
+                        abilities.StartTeslaHarpoon();
+                    }
                 }
             }
             else
@@ -110,7 +152,7 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
     public override void Death()
     {
         base.Death();
-        mapData.miniboss3Killed = true;
+        mapData.miniboss4Killed = true;
         GlobalEvents.instance.MiniBossKilled();
     }
 }
