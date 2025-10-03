@@ -60,6 +60,8 @@ public class MinibossDroneController : MonoBehaviour
     public event EventHandler<(Vector3, Vector3)> onStartCharge;
     public event EventHandler onEndCharge;
     [SerializeField] MapData mapData;
+    [Range(1, 4)]
+    [SerializeField] int minibossNum = 3;
     SpinPoints spinPoints;
     [SerializeField] GameObject chaosOrbPrefab;
     WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
@@ -71,7 +73,8 @@ public class MinibossDroneController : MonoBehaviour
 
     private void Start()
     {
-        if (mapData.miniboss3Killed) Destroy(gameObject);
+        if (minibossNum == 3 && mapData.miniboss3Killed) Destroy(gameObject);
+        if (minibossNum == 4 && mapData.miniboss4Killed) Destroy(gameObject);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         faceDirection = GetComponent<FaceDirection>();
         chargeHitbox = GetComponent<Collider>();
