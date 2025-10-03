@@ -128,13 +128,20 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
     {
         if (state == EnemyState.DYING)
         {
-            frontAnimator.Play("FlyAway");
-            backAnimator.Play("FlyAway");
+            SpriteEffects spriteEffects = GetComponent<SpriteEffects>();
+            StartCoroutine(spriteEffects.Dissolve());
+            StartCoroutine(DeathTimer());
         }
         else
         {
             state = EnemyState.IDLE;
         }
+    }
+
+    IEnumerator DeathTimer()
+    {
+        yield return new WaitForSeconds(1);
+        enemyScript.Death();
     }
 
     public override void StartDying()

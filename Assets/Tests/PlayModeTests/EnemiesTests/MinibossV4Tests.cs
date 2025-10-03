@@ -29,7 +29,7 @@ public class MinibossV4Tests
         playerData.vitality = 30;
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
-        mapData.miniboss3Killed = false;
+        mapData.miniboss4Killed = false;
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV4");
         dronePrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossDrone");
 
@@ -62,5 +62,24 @@ public class MinibossV4Tests
 
         yield return new WaitForSeconds(8);
         Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator Death()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
+        //MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        //droneController0.droneId = 0;
+        //MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        //droneController1.droneId = 1;
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        enemyScript.LoseHealth(enemyScript.maxHealth, 1);
+        yield return new WaitForSeconds(1);
+        Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
+        dialogue.NextLine();
+        yield return new WaitForSeconds(4);
+        Assert.AreEqual(enemyScript.reward, playerData.money);
     }
 }
