@@ -459,13 +459,26 @@ public class MinibossDroneController : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
+        onEndCharge?.Invoke(this, EventArgs.Empty);
+        chargeHitbox.enabled = false;
     }
 
     private void MinibossEvents_onDissolve(object sender, EventArgs e)
     {
-        Debug.Log("dissolve");
+        ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
+        foreach(ParticleSystem particle in particles)
+        {
+            particle.Stop();
+        }
+        StartCoroutine(DestroyAfterDissolve());
+        droneState = DroneState.DYING;
+    }
+
+    IEnumerator DestroyAfterDissolve()
+    {
         SpriteEffects spriteEffects = GetComponent<SpriteEffects>();
-        spriteEffects.Dissolve();
+        yield return StartCoroutine(spriteEffects.Dissolve());
+        Destroy(gameObject);
     }
 
     private void OnEnable()

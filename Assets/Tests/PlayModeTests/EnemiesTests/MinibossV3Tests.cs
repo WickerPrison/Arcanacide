@@ -169,21 +169,23 @@ public class MinibossV3Tests
     }
 
     [UnityTest]
-    public IEnumerator DeathDuringDroneAttack()
+    public IEnumerator DeathDuringDroneCharge()
     {
-        Ellipse ellipse = GameObject.Instantiate(ellipsePrefab).GetComponent<Ellipse>();
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
-        minibossAbilities.ellipse = ellipse;
         MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
         droneController0.droneId = 0;
         MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
         droneController1.droneId = 1;
+        GameObject minibossStalagmites = GameObject.Instantiate(minibossStalagmitesPrefab);
+        Transform layout = GameObject.Find("Layout").transform;
+        minibossStalagmites.transform.SetParent(layout);
         minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
         droneController0.transform.position = droneController0.HoverPosition();
 
-        minibossAbilities.Circle(CircleType.SHOOT);
-        yield return new WaitForSeconds(1);
+        droneController0.StartCharge();
+        droneController1.StartCharge();
+        yield return new WaitForSeconds(1.5f);
 
         EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
         enemyScript.LoseHealth(enemyScript.health, 1);

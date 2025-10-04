@@ -82,6 +82,8 @@ public class MinibossV4Tests
         Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
         dialogue.NextLine();
         yield return new WaitForSeconds(3);
-        Assert.AreEqual(enemyScript.reward, playerData.money);
+        Assert.IsTrue(droneController1 == null);
+        Assert.IsTrue(droneController0 == null);
+        Assert.IsTrue(minibossAbilities == null);
     }
 }
