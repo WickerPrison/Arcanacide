@@ -22,7 +22,6 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnPosition()
     {
-        Debug.Log(spawnPoints[mapData.doorNumber].position);
         if(spawnPoints.Count > mapData.doorNumber)
         {
             player.position = spawnPoints[mapData.doorNumber].position;

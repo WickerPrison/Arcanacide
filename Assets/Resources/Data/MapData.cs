@@ -35,6 +35,7 @@ public class MapData : ScriptableObject
     public bool miniboss1Killed;
     public bool miniboss2Killed;
     public bool miniboss3Killed;
+    public bool miniboss4Killed;
     public bool fireBossKilled;
     public bool electricBossKilled;
     public bool iceBossKilled;

@@ -282,7 +282,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -369,7 +369,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -415,6 +415,7 @@ GameObject:
   - component: {fileID: 3510662988276692225}
   - component: {fileID: 6135839771178006424}
   - component: {fileID: 6341065412201086387}
+  - component: {fileID: 5062178453279510646}
   m_Layer: 6
   m_Name: MinibossDrone
   m_TagString: Untagged
@@ -583,6 +584,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  minibossNum: 3
+  chaosOrbPrefab: {fileID: 1312316500515673367, guid: 1facbe327a2177c45b090a73ae7d3606, type: 3}
 --- !u!114 &7812480973227335783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,6 +640,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5062178453279510646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324763089931099265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb60614332c4ba439ff04fa8eaa9e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
 --- !u!1 &5119374260631961527
 GameObject:
   m_ObjectHideFlags: 0

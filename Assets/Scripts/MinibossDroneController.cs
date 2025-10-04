@@ -5,7 +5,7 @@ using System;
 
 public enum DroneState
 {
-    IDLE, FLYING, LASER, CIRCLE, CHARGE, DYING
+    IDLE, FLYING, LASER, CIRCLE, CHARGE, DYING, SPIN
 }
 
 public class MinibossDroneController : MonoBehaviour
@@ -60,6 +60,11 @@ public class MinibossDroneController : MonoBehaviour
     public event EventHandler<(Vector3, Vector3)> onStartCharge;
     public event EventHandler onEndCharge;
     [SerializeField] MapData mapData;
+    [Range(1, 4)]
+    public int minibossNum = 3;
+    SpinPoints spinPoints;
+    [SerializeField] GameObject chaosOrbPrefab;
+    WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
 
     private void Awake()
     {
@@ -68,7 +73,8 @@ public class MinibossDroneController : MonoBehaviour
 
     private void Start()
     {
-        if (mapData.miniboss3Killed) Destroy(gameObject);
+        if (minibossNum == 3 && mapData.miniboss3Killed) Destroy(gameObject);
+        if (minibossNum == 4 && mapData.miniboss4Killed) Destroy(gameObject);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         faceDirection = GetComponent<FaceDirection>();
         chargeHitbox = GetComponent<Collider>();
@@ -86,6 +92,7 @@ public class MinibossDroneController : MonoBehaviour
             toPlayer = Vector3.Normalize(playerScript.transform.position - enemyScript.transform.position);
             perp = Vector3.Cross(Vector3.up, toPlayer).normalized;
             transform.position = HoverPosition();
+            spinPoints = abilities.spinPoints;
         }
     }
 
@@ -380,6 +387,36 @@ public class MinibossDroneController : MonoBehaviour
         }
     }
 
+    IEnumerator Spin()
+    {
+        droneState = DroneState.SPIN;
+        Vector3 direction = new Vector3(1, 0, 1) * sign;
+        int maxShots = 50;
+        int shots = 0;
+        while(shots < maxShots)
+        {
+            FireSpin(direction);
+            shots++;
+            faceDirection.FaceTowards(transform.position + direction);
+            direction = Utils.RotateDirection(direction, 15 * sign);
+            yield return chaosOrbDelay;
+        }
+        droneState = DroneState.IDLE;
+    }
+
+    void FireSpin(Vector3 direction)
+    {
+        Projectile chaosOrb = Instantiate(chaosOrbPrefab).GetComponent<Projectile>();
+        chaosOrb.transform.position = transform.position + direction;
+        chaosOrb.direction = direction;
+        chaosOrb.speed = 6;
+        chaosOrb.enemyOfOrigin = enemyScript;
+        if(droneId == 0)
+        {
+            enemySound.EnemySpell();
+        }
+    }
+
     private void MinibossEvents_onRecallDrones(object sender, EventArgs e)
     {
         StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
@@ -404,6 +441,46 @@ public class MinibossDroneController : MonoBehaviour
         StartCoroutine(ToPosition(transform.position, transform.position + Vector3.up * 20, 2, () => Destroy(gameObject)));
     }
 
+    private void MinibossEvents_onStartSpin(object sender, EventArgs e)
+    {
+        StartCoroutine
+        (
+            ToPosition
+            (
+                transform.position,
+                spinPoints.GetPosition(droneId), 
+                1f, 
+                () => StartCoroutine(Spin())
+            )
+        );
+    }
+
+    private void MinibossEvents_OnStartDying(object sender, EventArgs e)
+    {
+        StopAllCoroutines();
+        StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
+        onEndCharge?.Invoke(this, EventArgs.Empty);
+        chargeHitbox.enabled = false;
+    }
+
+    private void MinibossEvents_onDissolve(object sender, EventArgs e)
+    {
+        ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
+        foreach(ParticleSystem particle in particles)
+        {
+            particle.Stop();
+        }
+        StartCoroutine(DestroyAfterDissolve());
+        droneState = DroneState.DYING;
+    }
+
+    IEnumerator DestroyAfterDissolve()
+    {
+        SpriteEffects spriteEffects = GetComponent<SpriteEffects>();
+        yield return StartCoroutine(spriteEffects.Dissolve());
+        Destroy(gameObject);
+    }
+
     private void OnEnable()
     {
         minibossEvents.onStartPlasmaShots += MinibossEvents_onStartPlasmaShots;
@@ -412,6 +489,9 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartCircle += MinibossEvents_onStartCircle;
         minibossEvents.onStartDroneCharge += MinibossEvents_onStartDroneCharge;
         minibossEvents.onFlyAway += MinibossEvents_onFlyAway;
+        minibossEvents.onTeslaHarpoons += MinibossEvents_onStartSpin;
+        minibossEvents.onDissolve += MinibossEvents_onDissolve;
+        minibossEvents.OnStartDying += MinibossEvents_OnStartDying;
     }
 
     private void OnDisable()
@@ -422,5 +502,8 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartCircle -= MinibossEvents_onStartCircle;
         minibossEvents.onStartDroneCharge -= MinibossEvents_onStartDroneCharge;
         minibossEvents.onFlyAway -= MinibossEvents_onFlyAway;
+        minibossEvents.onTeslaHarpoons -= MinibossEvents_onStartSpin;
+        minibossEvents.onDissolve -= MinibossEvents_onDissolve;
+        minibossEvents.OnStartDying -= MinibossEvents_OnStartDying;
     }
 }

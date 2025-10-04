@@ -95,6 +95,8 @@ public class MinibossAbilities : MonoBehaviour
     MinibossSpecialState specialState = MinibossSpecialState.NONE;
     WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();
 
+    public SpinPoints spinPoints;
+
     private void Start()
     {
         enemyController = GetComponent<EnemyController>();
@@ -539,7 +541,8 @@ public class MinibossAbilities : MonoBehaviour
 
     public void StartTeslaHarpoon()
     {
-        enemyController.frontAnimator.Play("Takeoff");
+        minibossEvents.TeslaHarpoons();
+        enemyController.frontAnimator.Play("HarpoonTakeoff");
         enemyController.backAnimator.Play("Takeoff");
         enemyController.attackTime = teslaTime + 5;
     }
@@ -604,7 +607,7 @@ public class MinibossAbilities : MonoBehaviour
     public void DroneLasers()
     {
         enemyController.state = EnemyState.ATTACKING;
-        enemyController.frontAnimator.Play("Takeoff");
+        enemyController.frontAnimator.Play("DroneTakeoff");
         enemyController.backAnimator.Play("Takeoff");
         minibossEvents.StartDroneLaser();
     }
@@ -699,6 +702,11 @@ public class MinibossAbilities : MonoBehaviour
             beam.transform.localEulerAngles.z);
         facePlayer.SetDestination(beam.transform.position);
         facePlayer.ManualFace();
+    }
+
+    public void StartSpin()
+    {
+        minibossEvents.TeslaHarpoons();
     }
 
     public void StartStagger()

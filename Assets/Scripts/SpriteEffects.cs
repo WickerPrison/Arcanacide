@@ -102,11 +102,17 @@ public class SpriteEffects : MonoBehaviour
 
     private void OnEnable()
     {
-        enemyEvents.OnTakeDamage += StartFlash;
+        if(enemyEvents != null)
+        {
+            enemyEvents.OnTakeDamage += StartFlash;
+        }
     }
 
     private void OnDisable()
     {
-        enemyEvents.OnTakeDamage -= StartFlash;
+        if(enemyEvents != null)
+        {
+            enemyEvents.OnTakeDamage -= StartFlash;
+        }
     }
 }
