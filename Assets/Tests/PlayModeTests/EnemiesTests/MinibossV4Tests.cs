@@ -81,7 +81,39 @@ public class MinibossV4Tests
         yield return new WaitForSeconds(1);
         Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
         dialogue.NextLine();
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
+        Assert.IsTrue(droneController1 == null);
+        Assert.IsTrue(droneController0 == null);
+        Assert.IsTrue(minibossAbilities == null);
+    }
+
+    [UnityTest]
+    public IEnumerator DeathDuringDroneCharge()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController0.droneId = 0;
+        droneController0.minibossNum = 4;
+        MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController1.droneId = 1;
+        droneController1.minibossNum = 4;
+        GameObject minibossStalagmites = GameObject.Instantiate(minibossStalagmitesPrefab);
+        Transform layout = GameObject.Find("Layout").transform;
+        minibossStalagmites.transform.SetParent(layout);
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        droneController0.transform.position = droneController0.HoverPosition();
+
+        droneController0.StartCharge();
+        droneController1.StartCharge();
+        yield return new WaitForSeconds(1.5f);
+
+        EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
+        enemyScript.LoseHealth(enemyScript.health, 1);
+        yield return new WaitForSeconds(1);
+        Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
+        dialogue.NextLine();
+        yield return new WaitForSeconds(5);
         Assert.IsTrue(droneController1 == null);
         Assert.IsTrue(droneController0 == null);
         Assert.IsTrue(minibossAbilities == null);

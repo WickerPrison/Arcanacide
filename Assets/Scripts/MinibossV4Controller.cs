@@ -144,6 +144,7 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
     {
         yield return new WaitForSeconds(1);
         enemyScript.Death();
+        Death();
     }
 
     public override void StartDying()
