@@ -14,7 +14,6 @@ public class PointTowardsVelocity : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         arcProjectile = GetComponentInParent<ArcProjectile>();
         initialZRot = transform.eulerAngles.z;
-        Debug.Log(initialZRot);
     }
 
     private void FixedUpdate()

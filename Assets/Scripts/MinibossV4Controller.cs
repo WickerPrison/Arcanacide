@@ -130,6 +130,8 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
         {
             SpriteEffects spriteEffects = GetComponent<SpriteEffects>();
             StartCoroutine(spriteEffects.Dissolve());
+            MinibossEvents minibossEvents = GetComponent<MinibossEvents>();
+            minibossEvents.Dissolve();
             StartCoroutine(DeathTimer());
         }
         else

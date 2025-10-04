@@ -61,7 +61,7 @@ public class MinibossDroneController : MonoBehaviour
     public event EventHandler onEndCharge;
     [SerializeField] MapData mapData;
     [Range(1, 4)]
-    [SerializeField] int minibossNum = 3;
+    public int minibossNum = 3;
     SpinPoints spinPoints;
     [SerializeField] GameObject chaosOrbPrefab;
     WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
@@ -455,6 +455,19 @@ public class MinibossDroneController : MonoBehaviour
         );
     }
 
+    private void MinibossEvents_OnStartDying(object sender, EventArgs e)
+    {
+        StopAllCoroutines();
+        StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
+    }
+
+    private void MinibossEvents_onDissolve(object sender, EventArgs e)
+    {
+        Debug.Log("dissolve");
+        SpriteEffects spriteEffects = GetComponent<SpriteEffects>();
+        spriteEffects.Dissolve();
+    }
+
     private void OnEnable()
     {
         minibossEvents.onStartPlasmaShots += MinibossEvents_onStartPlasmaShots;
@@ -464,6 +477,8 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartDroneCharge += MinibossEvents_onStartDroneCharge;
         minibossEvents.onFlyAway += MinibossEvents_onFlyAway;
         minibossEvents.onTeslaHarpoons += MinibossEvents_onStartSpin;
+        minibossEvents.onDissolve += MinibossEvents_onDissolve;
+        minibossEvents.OnStartDying += MinibossEvents_OnStartDying;
     }
 
     private void OnDisable()
@@ -475,5 +490,7 @@ public class MinibossDroneController : MonoBehaviour
         minibossEvents.onStartDroneCharge -= MinibossEvents_onStartDroneCharge;
         minibossEvents.onFlyAway -= MinibossEvents_onFlyAway;
         minibossEvents.onTeslaHarpoons -= MinibossEvents_onStartSpin;
+        minibossEvents.onDissolve -= MinibossEvents_onDissolve;
+        minibossEvents.OnStartDying -= MinibossEvents_OnStartDying;
     }
 }

@@ -69,17 +69,19 @@ public class MinibossV4Tests
     {
         MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
         EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
-        //MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
-        //droneController0.droneId = 0;
-        //MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
-        //droneController1.droneId = 1;
-        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        MinibossDroneController droneController0 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController0.droneId = 0;
+        droneController0.minibossNum = 4;
+        MinibossDroneController droneController1 = GameObject.Instantiate(dronePrefab).GetComponent<MinibossDroneController>();
+        droneController1.droneId = 1;
+        droneController1.minibossNum = 4;
+        minibossAbilities.transform.position = new Vector3(3f, 0, -3f);
         yield return null;
         enemyScript.LoseHealth(enemyScript.maxHealth, 1);
         yield return new WaitForSeconds(1);
         Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
         dialogue.NextLine();
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
         Assert.AreEqual(enemyScript.reward, playerData.money);
     }
 }
