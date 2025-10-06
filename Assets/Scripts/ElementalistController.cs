@@ -20,11 +20,13 @@ public class ElementalistController : EnemyController
     WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
     float plantLineNum = 6;
     Vector3 chaosOrbVert = new Vector3(0, 0, 0);
+    AttackArcGenerator attackArc;
 
     public override void Start()
     {
         base.Start();
         stepWithAttack = GetComponent<StepWithAttack>();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
     }
 
     public override void EnemyAI()
@@ -178,10 +180,17 @@ public class ElementalistController : EnemyController
         }
     }
 
+    public override void StartStagger(float staggerDuration)
+    {
+        attackArc.HideAttackArc();
+        base.StartStagger(staggerDuration);
+    }
+
     public override void StartDying()
     {
         chaosHeadFront.GetComponent<ParticleSystem>().Stop();
         chaosHeadBack.GetComponent<ParticleSystem>().Stop();
+        attackArc.HideAttackArc();
         base.StartDying();
     }
 }

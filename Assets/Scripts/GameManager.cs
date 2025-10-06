@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
             mapData.ACOn = data.ACOn;
             mapData.hasRemoteAC = data.hasRemoteAC;
             mapData.outsideFrankBossfight = data.outsideFrankBossfight;
-            mapData.resetPasswords = data.resetPasswords.ToList();
+            mapData.resetPasswords = data.resetPasswords != null ? data.resetPasswords.ToList() : null;
             mapData.itWorkerQuestComplete = data.itWorkerQuestComplete;
             mapData.iceBossKilled = data.iceBossKilled;
             mapData.iceBossPosition = new Vector3(data.iceBossPosition[0], data.iceBossPosition[1], data.iceBossPosition[2]);
