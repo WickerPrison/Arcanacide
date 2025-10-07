@@ -19,7 +19,7 @@ public class PustuleScript : ArcProjectile
     Collider sphereCollider;
     bool groundPustule = false;
     float pulseTimer;
-    WaitForSeconds lifetime = new WaitForSeconds(15);
+    WaitForSeconds lifetime = new WaitForSeconds(10);
     [SerializeField] Transform sphere;
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
