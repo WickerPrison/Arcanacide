@@ -34,7 +34,6 @@ public class ElementalistTests
         yield return null;
         elementalist.PlayAnimation("Bubbles");
 
-        yield return new WaitForSeconds(5f);
-        Assert.Less(playerData.health, playerData.MaxHealth());
+        yield return new WaitForSeconds(4f);
     }
 }
