@@ -17,6 +17,9 @@ public class SpriteEffects : MonoBehaviour
     bool isDelayed = false;
     float dissolveSpeed;
     float dissolveProg = 0;
+    [SerializeField] bool colorChange = false;
+    [SerializeField] Color originalColor;
+    [SerializeField] MapData mapData;
 
     private void Awake()
     {
@@ -27,6 +30,16 @@ public class SpriteEffects : MonoBehaviour
             if(renderer.sharedMaterial == spriteMaterial)
             {
                 renderers.Add(renderer);
+            }
+        }
+
+        if (colorChange)
+        {
+            foreach(SpriteRenderer sprite in renderers)
+            {
+                sprite.material.SetFloat("_ColorChange", 1);
+                sprite.material.SetColor("_OriginalColor", originalColor);
+                sprite.material.SetColor("_FloorColor", mapData.floorColor);
             }
         }
     }

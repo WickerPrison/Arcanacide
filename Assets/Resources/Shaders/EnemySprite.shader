@@ -12,6 +12,9 @@ Shader "Unlit/EnemySprite"
 		_DissolveProg ("Dissolve Progression", range(0,1)) = 0
 		_Density("Dissolve Density", float) = 0.5
 		_EdgeWidth("Edge Width", float) = 0.05
+		_ColorChange("Color Change", float) = 0
+		_OriginalColor("Original Color", Color) = (1,1,1,1)
+		_FloorColor("Floor Color", Color) = (1,1,1,1)
 	}
 
 	SubShader
@@ -60,6 +63,9 @@ Shader "Unlit/EnemySprite"
 			float _DissolveProg;
 			float _Density;
 			float _EdgeWidth;
+			bool _ColorChange;
+			fixed4 _OriginalColor;
+			fixed4 _FloorColor;
 
 			v2f vert(appdata_t IN)
 			{
@@ -100,6 +106,12 @@ Shader "Unlit/EnemySprite"
 				clip(c.a - 0.5);
                 float2 projection = IN.worldPos.xy * _Density;
                 fixed4 dissolveTex = tex2D(_DissolveTex, projection);
+
+				if(_ColorChange){
+					float3 threshold = float3(0.1, 0.1, 0.1);
+					float3 diff = length(abs((normalize(c.xyz) - normalize(_OriginalColor.xyz)))) < length(threshold);
+					c.xyz = lerp(c.xyz, _FloorColor.xyz, diff);
+				}
 
                 float mask = dissolveTex - _DissolveProg;
                 clip(mask);
