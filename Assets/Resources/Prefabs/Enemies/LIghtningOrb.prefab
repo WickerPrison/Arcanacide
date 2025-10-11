@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: -6104532893862982024}
   - component: {fileID: 961816689155818981}
   - component: {fileID: 3445605359261408295}
+  - component: {fileID: 661503409453592565}
+  - component: {fileID: 7344271766143815100}
   m_Layer: 6
   m_Name: LIghtningOrb
   m_TagString: Enemy
@@ -185,6 +187,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e103c4bb860a48746acf2451ac72d4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &661503409453592565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260420701781460590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7a80407da7c0d34eab9c7c56db85524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorChange: 0
+  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
+  oldColor: {r: 0.95294124, g: 0.87843144, b: 0.10196079, a: 1}
+  newLevelColor: 0
+  renderers:
+  - {fileID: 4210459733585473591}
+--- !u!114 &7344271766143815100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260420701781460590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003d375ec41f471468eded5b9d11df7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorChange: 0
+  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
+  newLevelColor: 0
+  alpha: 255
+  particles:
+  - {fileID: 3049108788982477052}
 --- !u!1 &3697206424649734486
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +446,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.98039216, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4176,7 +4214,7 @@ ParticleSystem:
     dieWithParticles: 1
     sizeAffectsWidth: 0
     sizeAffectsLifetime: 0
-    inheritParticleColor: 0
+    inheritParticleColor: 1
     generateLightingData: 0
     splitSubEmitterRibbons: 0
     attachRibbonsToTransform: 0

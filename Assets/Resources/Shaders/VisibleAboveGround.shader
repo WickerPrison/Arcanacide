@@ -6,6 +6,10 @@ Shader "Unlit/VisibleAboveGround"
 		_Color ("Tint", Color) = (1,1,1,1)
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 		_StencilLayer ("Stencil Layer", int) = 0
+
+		_ColorChange("Color Change", float) = 0
+		_OriginalColor("Original Color", Color) = (1,1,1,1)
+		_NewColor("New Color", Color) = (1,1,1,1)
 	}
 
 	SubShader
@@ -31,6 +35,7 @@ Shader "Unlit/VisibleAboveGround"
 			#pragma fragment frag
 			#pragma multi_compile _ PIXELSNAP_ON
 			#include "UnityCG.cginc"
+			#include "./Modules/ColorChange.hlsl"
 			
 			struct appdata_t
 			{
@@ -67,6 +72,10 @@ Shader "Unlit/VisibleAboveGround"
 			sampler2D _AlphaTex;
 			float _AlphaSplitEnabled;
 
+			bool _ColorChange;
+			fixed4 _OriginalColor;
+			fixed4 _NewColor;
+
 			fixed4 SampleSpriteTexture (float2 uv)
 			{
 				fixed4 color = tex2D (_MainTex, uv);
@@ -82,6 +91,9 @@ Shader "Unlit/VisibleAboveGround"
 			fixed4 frag(v2f i) : SV_Target
 			{
 				fixed4 c = SampleSpriteTexture (i.uv) * i.color;
+				if(_ColorChange){
+					c.xyz = ColorChange(c, _OriginalColor, _NewColor, 0.1);
+				}
 				c.a *= i.worldPos.y > 0;
 				c.rgb *= c.a;
 				return c;

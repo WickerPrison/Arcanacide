@@ -17,9 +17,11 @@ public class SpriteEffects : MonoBehaviour
     bool isDelayed = false;
     float dissolveSpeed;
     float dissolveProg = 0;
-    [SerializeField] bool colorChange = false;
+    public bool colorChange = false;
     [SerializeField] Color originalColor;
-    [SerializeField] MapData mapData;
+    [SerializeField] LevelColor newFloorColor;
+    Color newColor;
+    [SerializeField] ColorData colorData;
 
     private void Awake()
     {
@@ -35,11 +37,12 @@ public class SpriteEffects : MonoBehaviour
 
         if (colorChange)
         {
+            newColor = colorData.GetColor(newFloorColor);
             foreach(SpriteRenderer sprite in renderers)
             {
                 sprite.material.SetFloat("_ColorChange", 1);
                 sprite.material.SetColor("_OriginalColor", originalColor);
-                sprite.material.SetColor("_FloorColor", mapData.floorColor);
+                sprite.material.SetColor("_NewColor", newColor);
             }
         }
     }

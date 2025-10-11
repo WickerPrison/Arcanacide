@@ -12,6 +12,20 @@ public class LightningOrbController : EnemyController
     [SerializeField] float selfDestructTime;
     [SerializeField] EventReference impactSFX;
     Vector3 playerDirection;
+    public bool colorChange = false;
+
+    public override void Awake()
+    {
+        base.Awake();
+        Debug.Log(colorChange);
+        if (colorChange)
+        {
+            SpriteColorChange spriteColorChange = GetComponentInChildren<SpriteColorChange>();
+            spriteColorChange.colorChange = true;
+            ParticleColorChange particleColorChange = GetComponentInChildren<ParticleColorChange>();
+            particleColorChange.colorChange = true;
+        }
+    }
 
     public override void Update()
     {
@@ -58,6 +72,13 @@ public class LightningOrbController : EnemyController
     void SelfDestruct()
     {
         GameObject explosion = Instantiate(lightningExplosion);
+
+        if (colorChange)
+        {
+            ParticleColorChange particleColorChange = explosion.GetComponent<ParticleColorChange>();
+            particleColorChange.colorChange = true;
+        }
+
         explosion.transform.position = transform.position + Vector3.up * 1.5f;
         if (playerDistance <= attackRange)
         {
