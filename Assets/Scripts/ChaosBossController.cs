@@ -35,7 +35,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         base.Start();
         musicManager = gm.GetComponent<MusicManager>();
         facePlayer = GetComponent<FacePlayer>();
-        facePlayer.SetDestination(new Vector3(3, 0, -2));
+        //facePlayer.SetDestination(new Vector3(3, 0, -2));
         phaseTrigger = enemyScript.maxHealth * phaseTriggerPercent;
         gm.awareEnemies += 1;
         attackTime = attackMaxTime;
@@ -108,7 +108,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         {
             randInt = UnityEngine.Random.Range(0, 4);
         }
-        attackTime = 5;
+        attackTime = 3;
         switch (randInt)
         {
             case 0:
@@ -119,6 +119,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 break;
             case 2:
                 assistant.CallAnimation("Bolts");
+                attackTime = 5;
                 break;
             case 3:
                 state = EnemyState.ATTACKING;
@@ -145,7 +146,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         {
             randInt = UnityEngine.Random.Range(0, 4);
         }
-        attackTime = 5;
+        attackTime = 3;
         switch (randInt)
         {
             case 0:
@@ -162,6 +163,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 break;
             case 2:
                 assistant.CallAnimation("Bolts");
+                attackTime = 5;
                 break;
             case 3:
                 state = EnemyState.ATTACKING;

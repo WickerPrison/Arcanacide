@@ -54,38 +54,37 @@ public class AssistantController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        return;
-        if (state == AssistantState.DIALOGUE) return;
-        if(state == AssistantState.IDLE)
-        {
-            attackTimer -= Time.deltaTime;
-            if(attackTimer < 0)
-            {
-                attackTimer = attackTime;
+    //void Update()
+    //{
+    //    if (state == AssistantState.DIALOGUE) return;
+    //    if (state == AssistantState.IDLE)
+    //    {
+    //        attackTimer -= Time.deltaTime;
+    //        if (attackTimer < 0)
+    //        {
+    //            attackTimer = attackTime;
 
-                int randInt = UnityEngine.Random.Range(0, 2 + bossController.phase);
-                state = AssistantState.ATTACKING;
-                randInt = 1;
-                switch (randInt)
-                {
-                    case 0:
-                        frontAnimator.Play("ThrowBombs");
-                        break;
-                    case 1:
-                        frontAnimator.Play("Beams");
-                        break;
-                    case 2:
-                        frontAnimator.Play("IceRings");
-                        break;
-                    case 3:
-                        frontAnimator.Play("Bolts");
-                        break;
-                }
-            }
-        }
-    }
+    //            int randInt = UnityEngine.Random.Range(0, 2 + bossController.phase);
+    //            state = AssistantState.ATTACKING;
+    //            randInt = 1;
+    //            switch (randInt)
+    //            {
+    //                case 0:
+    //                    frontAnimator.Play("ThrowBombs");
+    //                    break;
+    //                case 1:
+    //                    frontAnimator.Play("Beams");
+    //                    break;
+    //                case 2:
+    //                    frontAnimator.Play("IceRings");
+    //                    break;
+    //                case 3:
+    //                    frontAnimator.Play("Bolts");
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
 
     private void FixedUpdate()
     {
