@@ -45,4 +45,10 @@ public static class MapTools
     {
         mapData.unlockedDoors.Clear();
     }
+
+    [MenuItem("Tools/Respawn All Enemies")]
+    public static void RespawnAllEnemies()
+    {
+        mapData.deadEnemies.Clear();
+    }
 }

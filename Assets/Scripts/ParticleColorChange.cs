@@ -21,6 +21,11 @@ public class ParticleColorChange : MonoBehaviour
         {
             ParticleSystem.MainModule main = particle.main;
             main.startColor = new Color(newColor.r, newColor.g, newColor.b, alpha);
+            if (main.playOnAwake)
+            {
+                particle.Clear();
+                particle.Play();
+            }
         }
     }
 }

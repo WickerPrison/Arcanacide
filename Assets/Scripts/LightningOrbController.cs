@@ -14,10 +14,9 @@ public class LightningOrbController : EnemyController
     Vector3 playerDirection;
     public bool colorChange = false;
 
-    public override void Awake()
+    public override void Start()
     {
-        base.Awake();
-        Debug.Log(colorChange);
+        base.Start();
         if (colorChange)
         {
             SpriteColorChange spriteColorChange = GetComponentInChildren<SpriteColorChange>();
@@ -72,11 +71,12 @@ public class LightningOrbController : EnemyController
     void SelfDestruct()
     {
         GameObject explosion = Instantiate(lightningExplosion);
-
+        Debug.Log(colorChange);
         if (colorChange)
         {
             ParticleColorChange particleColorChange = explosion.GetComponent<ParticleColorChange>();
             particleColorChange.colorChange = true;
+            Debug.Log("Color change");
         }
 
         explosion.transform.position = transform.position + Vector3.up * 1.5f;
