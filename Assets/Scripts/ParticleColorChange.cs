@@ -23,6 +23,7 @@ public class ParticleColorChange : MonoBehaviour
             main.startColor = new Color(newColor.r, newColor.g, newColor.b, alpha);
             if (main.playOnAwake)
             {
+                Debug.Log("test");
                 particle.Clear();
                 particle.Play();
             }

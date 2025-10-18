@@ -10,6 +10,7 @@ public class ElectricSwordsmanController : EnemyController
     public event EventHandler onCloseRing;
     public LightningRings rings;
     AttackArcGenerator attackArc;
+    [SerializeField] bool colorChange = false;
 
     public override void Start()
     {
@@ -82,6 +83,12 @@ public class ElectricSwordsmanController : EnemyController
         projectile.transform.position = facePlayer.attackPoint.position + Vector3.up * 1.3f + attackPointDir * 1.5f;
         projectile.direction = Vector3.Normalize(facePlayer.attackPoint.position - transform.position);
         projectile.enemyOfOrigin = enemyScript;
+        if (colorChange)
+        {
+            ParticleColorChange particleColorChange = projectile.GetComponent<ParticleColorChange>();
+            Debug.Log(particleColorChange);
+            particleColorChange.colorChange = colorChange;
+        }
     }
 
     public void StartRings()

@@ -18,6 +18,7 @@ public class SpriteEffects : MonoBehaviour
     float dissolveSpeed;
     float dissolveProg = 0;
     public bool colorChange = false;
+    [SerializeField] float colorChangeThreshold = 0.1f;
     [SerializeField] Color originalColor;
     [SerializeField] LevelColor newFloorColor;
     Color newColor;
@@ -43,6 +44,7 @@ public class SpriteEffects : MonoBehaviour
                 sprite.material.SetFloat("_ColorChange", 1);
                 sprite.material.SetColor("_OriginalColor", originalColor);
                 sprite.material.SetColor("_NewColor", newColor);
+                sprite.material.SetFloat("_ColorChangeThreshold", colorChangeThreshold);
             }
         }
     }

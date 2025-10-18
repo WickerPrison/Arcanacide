@@ -16,6 +16,7 @@ Shader "Unlit/EnemySprite"
 		_ColorChange("Color Change", float) = 0
 		_OriginalColor("Original Color", Color) = (1,1,1,1)
 		_NewColor("New Color", Color) = (1,1,1,1)
+		_ColorChangeThreshold("Color Change Threshold", float) = 0.1
 	}
 
 	SubShader
@@ -68,6 +69,7 @@ Shader "Unlit/EnemySprite"
 			bool _ColorChange;
 			fixed4 _OriginalColor;
 			fixed4 _NewColor;
+			float _ColorChangeThreshold;
 
 			v2f vert(appdata_t IN)
 			{
@@ -110,7 +112,7 @@ Shader "Unlit/EnemySprite"
                 fixed4 dissolveTex = tex2D(_DissolveTex, projection);
 
 				if(_ColorChange){
-					c.xyz = ColorChange(c, _OriginalColor, _NewColor, 0.1);
+					c.xyz = ColorChange(c, _OriginalColor, _NewColor, _ColorChangeThreshold);
 				}
 
                 float mask = dissolveTex - _DissolveProg;
