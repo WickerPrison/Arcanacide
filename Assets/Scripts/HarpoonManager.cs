@@ -11,7 +11,7 @@ public class HarpoonManager : MonoBehaviour
     [SerializeField] float boltCD;
     [SerializeField] Vector2 harpoonBoundaries;
     float boltTimer;
-    List<TeslaHarpoon> harpoons = new List<TeslaHarpoon>();
+    [System.NonSerialized] public List<TeslaHarpoon> harpoons = new List<TeslaHarpoon>();
     [System.NonSerialized] public List<TeslaHarpoonProjectile> harpoonProjectiles = new List<TeslaHarpoonProjectile>();
     List<Bolts> bolts = new List<Bolts>();
     List<(Vector3, Vector3)> pairs = new List<(Vector3, Vector3)>();

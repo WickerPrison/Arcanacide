@@ -541,6 +541,7 @@ public class MinibossAbilities : MonoBehaviour
 
     public void StartTeslaHarpoon()
     {
+        enemyController.state = EnemyState.ATTACKING;
         minibossEvents.TeslaHarpoons();
         enemyController.frontAnimator.Play("HarpoonTakeoff");
         enemyController.backAnimator.Play("Takeoff");
@@ -549,6 +550,7 @@ public class MinibossAbilities : MonoBehaviour
 
     public void HarpoonTakeoff()
     {
+        enemyScript.invincible = true;
         StartCoroutine(TeslaHarpoons());
     }
 
@@ -572,6 +574,7 @@ public class MinibossAbilities : MonoBehaviour
             yield return null;
         }
 
+        enemyScript.invincible = false;
         enemyController.frontAnimator.Play("Descend");
         enemyController.backAnimator.Play("Descend"); 
         descendTimer = 0;
@@ -648,6 +651,7 @@ public class MinibossAbilities : MonoBehaviour
         enemySound.OtherSounds(0, 1f);
         StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
         minibossEvents.TriggerVfx("land");
+        minibossEvents.ThrustersOff();
         if(enemyController.playerDistance < 3.5f)
         {
             playerScript.HitPlayer(() =>
