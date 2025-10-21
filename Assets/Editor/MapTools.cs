@@ -50,5 +50,13 @@ public static class MapTools
     public static void RespawnAllEnemies()
     {
         mapData.deadEnemies.Clear();
+        mapData.miniboss1Killed = false;
+        mapData.miniboss2Killed = false;
+        mapData.miniboss3Killed = false;
+        mapData.miniboss4Killed = false;
+        mapData.fireBossKilled = false;
+        mapData.electricBossKilled = false;
+        mapData.iceBossKilled = false;
+        mapData.carolsDeadFriends.Clear();
     }
 }
