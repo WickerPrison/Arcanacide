@@ -78,7 +78,7 @@ public class ResetPassword : MonoBehaviour
         {
             mapData.resetPasswords.Add(resetIndex);
             if (wayFaerie != null) wayFaerie.Stop();
-            if(mapData.resetPasswords.Count == 2)
+            if(mapData.resetPasswords.Count == 3)
             {
                 dialogue.StartWithCallback(() =>
                 {
