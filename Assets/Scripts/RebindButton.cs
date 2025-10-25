@@ -57,6 +57,7 @@ public class RebindButton : MonoBehaviour
 
     public void DoRebind()
     {
+        rebindSprite.color = transparent;
         menu.DoRebind(actionName, bindingIndex, rebindText);
     }
 
@@ -80,8 +81,8 @@ public class RebindButton : MonoBehaviour
         {
             if (Application.isPlaying)
             {
-                displayStringDict = settingsData.GetStringDictionary();
-                spriteDict = settingsData.GetSpriteDictionary();
+                displayStringDict = GetStringDictionary();
+                spriteDict = GetSpriteDictionary();
 
                 string displayString = im.GetBindingName(actionName, bindingIndex);
                 displayString = RemoveInteractions(displayString);
@@ -110,6 +111,30 @@ public class RebindButton : MonoBehaviour
                 string initialString = inputActionReference.action.GetBindingDisplayString(bindingIndex);
                 rebindText.text = RemoveInteractions(initialString);
             }
+        }
+    }
+
+    Dictionary<string, string> GetStringDictionary()
+    {
+        if(isGamepad && Gamepad.current == null)
+        {
+            return settingsData.defaultGamepadDisplayStringDict;
+        }
+        else
+        {
+            return settingsData.GetStringDictionary();
+        }
+    }
+
+    Dictionary<string, Sprite> GetSpriteDictionary()
+    {
+        if(isGamepad && Gamepad.current == null)
+        {
+            return settingsData.defaultGamepadSpriteDict;
+        }
+        else
+        {
+            return settingsData.GetSpriteDictionary();
         }
     }
 

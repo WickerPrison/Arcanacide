@@ -33,12 +33,57 @@ public class SettingsData : ScriptableObject
 
     public bool fullscreenMode;
 
-
     private enum ControllerType
     {
         KBM, XBOX, PLAYSTATION, OTHER, NONE
     };
     ControllerType controllerType = ControllerType.NONE;
+
+    private Dictionary<string, Sprite> default_gamepad_spriteDict;
+    public Dictionary<string, Sprite> defaultGamepadSpriteDict
+    {
+        get
+        {
+            if(default_gamepad_spriteDict == null)
+            {
+                default_gamepad_spriteDict = new Dictionary<string, Sprite>
+                {
+                    { "Y", buttonIconSprites[0] },
+                    { "B", buttonIconSprites[1] },
+                    { "A", buttonIconSprites[2] },
+                    { "X", buttonIconSprites[3] },
+                    { "LS", null },
+                    { "RS", null },
+                    { "Left Stick Press", null },
+                    { "Right Stick Press", null }
+                };
+            }
+            return default_gamepad_spriteDict;
+        }
+    }
+    private Dictionary<string, string> default_gamepad_display_stringDict;
+    public Dictionary<string, string> defaultGamepadDisplayStringDict
+    {
+        get
+        {
+            if(default_gamepad_display_stringDict == null)
+            {
+                default_gamepad_display_stringDict = new Dictionary<string, string>
+                {
+                    {"Y", "" },
+                    {"B", "" },
+                    {"A", "" },
+                    {"X", "" },
+                    {"LS", "Left Stick" },
+                    {"RS", "Right Stick" },
+                    {"Left Stick Press", "L3" },
+                    {"Right Stick Press", "R3" }
+                };
+            }
+            return default_gamepad_display_stringDict;
+        }
+    }
+
 
     public void SetVolume(VolumeChannel channel, float normalizedVolume)
     {

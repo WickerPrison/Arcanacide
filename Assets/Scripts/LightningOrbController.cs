@@ -71,7 +71,6 @@ public class LightningOrbController : EnemyController
     void SelfDestruct()
     {
         GameObject explosion = Instantiate(lightningExplosion);
-        Debug.Log(colorChange);
         if (colorChange)
         {
             ParticleColorChange particleColorChange = explosion.GetComponent<ParticleColorChange>();
