@@ -164,5 +164,6 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
         base.Death();
         mapData.miniboss4Killed = true;
         GlobalEvents.instance.MiniBossKilled();
+        GlobalEvents.instance.WhistleblowerKilled();
     }
 }

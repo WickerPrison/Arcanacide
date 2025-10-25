@@ -273,7 +273,7 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
-    void Attack()
+    public void Attack()
     {
         if (shield && !parry)
         {

@@ -438,8 +438,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
   colorChange: 0
+  colorChangeThreshold: 0.1
   originalColor: {r: 0.3137255, g: 0.8235295, b: 1, a: 1}
-  mapData: {fileID: 11400000, guid: 9913d3737bd3d5542a66c1f5364a8a49, type: 2}
+  newFloorColor: 0
+  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
 --- !u!114 &3290806479954555529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13630,6 +13632,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveSpeed: 15
+  colorChange: 0
+  oldColor: {r: 0, g: 0, b: 0, a: 0}
+  newColor: 0
+  colorData: {fileID: 0}
 --- !u!1 &8882205907066830062
 GameObject:
   m_ObjectHideFlags: 0

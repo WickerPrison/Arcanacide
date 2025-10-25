@@ -14,6 +14,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler onEnemyKilled;
     public event EventHandler onBossKilled;
     public event EventHandler onMinibossKilled;
+    public event EventHandler onWhistleblowerKilled;
     public event EventHandler onGemUsed;
     public event EventHandler onTestButton;
     public event Action<GlobalEvents, int> onPlayerMoneyChange;
@@ -63,6 +64,11 @@ public class GlobalEvents : MonoBehaviour
     public void MiniBossKilled()
     {
         onMinibossKilled?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void WhistleblowerKilled()
+    {
+        onWhistleblowerKilled?.Invoke(this, EventArgs.Empty);
     }
 
     public void GemUsed()

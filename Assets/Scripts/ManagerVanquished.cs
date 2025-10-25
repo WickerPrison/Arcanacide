@@ -16,6 +16,13 @@ public class ManagerVanquished : MonoBehaviour
         StartCoroutine(VanquishedMessage());
     }
 
+    private void Global_onWhistleblowerKilled(object sender, System.EventArgs e)
+    {
+        text.text = "Whistleblower Vanquished";
+        text.gameObject.SetActive(true);
+        StartCoroutine(VanquishedMessage());
+    }
+
     IEnumerator VanquishedMessage()
     {
         yield return new WaitForSeconds(messageTime);
@@ -33,10 +40,12 @@ public class ManagerVanquished : MonoBehaviour
     private void OnEnable()
     {
         GlobalEvents.instance.onBossKilled += onBossKilled;
+        GlobalEvents.instance.onWhistleblowerKilled += Global_onWhistleblowerKilled;
     }
 
     private void OnDisable()
     {
         GlobalEvents.instance.onBossKilled -= onBossKilled;
+        GlobalEvents.instance.onWhistleblowerKilled -= Global_onWhistleblowerKilled;
     }
 }
