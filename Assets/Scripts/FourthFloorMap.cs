@@ -9,6 +9,7 @@ public class FourthFloorMap : MonoBehaviour
     [SerializeField] GameObject[] maps;
     [SerializeField] MapData mapData;
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+    int recent;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class FourthFloorMap : MonoBehaviour
 
     IEnumerator GlitchEffect()
     {
-        float waitTime = Random.Range(0.5f, 2f);
+        float waitTime = Random.Range(2f, 5f);
         yield return new WaitForSeconds(waitTime);
 
         float rampUp = 0.4f;
@@ -61,6 +62,11 @@ public class FourthFloorMap : MonoBehaviour
         }
 
         int randMap = Random.Range(0, maps.Length);
+        while(randMap == recent)
+        {
+            randMap = Random.Range(0, maps.Length);
+        }
+        recent = randMap;
         maps[randMap].SetActive(true);
     }
 }

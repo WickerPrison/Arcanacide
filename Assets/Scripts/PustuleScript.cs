@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class PustuleScript : ArcProjectile
 {
-    [SerializeField] float pulseDamageRate;
+    [SerializeField] float pulseRate;
     [SerializeField] int pulseDamage;
     [SerializeField] EventReference pulseDamageSFX;
     [SerializeField] float pulseDamageVolume;
-    [SerializeField] float pulseHealRate;
+    [SerializeField] int pulseHeal;
     [SerializeField] EventReference pulseHealSFX;
     [SerializeField] SpriteRenderer pulseEffect;
     [System.NonSerialized] public EnemyScript enemyScript;
@@ -18,15 +18,15 @@ public class PustuleScript : ArcProjectile
     [SerializeField] Vector3 endScale;
     Collider sphereCollider;
     bool groundPustule = false;
-    float pulseDamageCounter = 0;
-    float pulseHealCounter = 0;
-    WaitForSeconds lifetime = new WaitForSeconds(15);
+    float pulseTimer;
+    WaitForSeconds lifetime = new WaitForSeconds(10);
     [SerializeField] Transform sphere;
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
     public override void Start()
     {
         sphereCollider = GetComponent<Collider>();
+        pulseTimer = pulseRate;
         base.Start();
     }
 
@@ -35,25 +35,20 @@ public class PustuleScript : ArcProjectile
         if (!groundPustule) return;
 
         Collider[] nearbyObjects = Physics.OverlapSphere(transform.position, 3);
-        foreach(Collider nearbyObject in nearbyObjects)
+
+        pulseTimer -= Time.deltaTime;
+        if(pulseTimer <= 0)
         {
-            if (nearbyObject.CompareTag("Player"))
+            pulseTimer = pulseRate;
+            foreach(Collider nearbyObject in nearbyObjects)
             {
-                pulseDamageCounter -= Time.deltaTime;
-                if(pulseDamageCounter <= 0)
+                if (nearbyObject.CompareTag("Player"))
                 {
-                    pulseDamageCounter = pulseDamageRate;
                     nearbyObject.GetComponent<PlayerScript>().LoseHealth(pulseDamage, EnemyAttackType.NONPARRIABLE, null);
                     RuntimeManager.PlayOneShot(pulseDamageSFX, pulseDamageVolume);
                 }
-            }
-            else if (nearbyObject.CompareTag("Enemy"))
-            {
-                pulseHealCounter += Time.deltaTime * pulseHealRate;
-                if(pulseHealCounter > 1)
+                else if (nearbyObject.CompareTag("Enemy"))
                 {
-                    int pulseHeal = Mathf.RoundToInt(pulseHealCounter);
-                    pulseHealCounter = 0;
                     nearbyObject.GetComponent<EnemyScript>().GainHealth(pulseHeal);
                     //RuntimeManager.PlayOneShot(pulseHealSFX, 0.5f);
                 }

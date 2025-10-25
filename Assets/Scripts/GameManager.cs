@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
             playerData.maxPatches = data.maxPatches;
             playerData.tutorials = data.tutorials;
             playerData.evidenceFound = data.evidenceFound;
+            playerData.hasWayfaerie = data.hasWayfaerie;
             playerData.money = data.money;
             playerData.lostMoney = data.lostMoney;
             playerData.strength = data.strength;
@@ -156,6 +157,7 @@ public class GameManager : MonoBehaviour
             mapData.miniboss1Killed = data.miniboss1Killed;
             mapData.miniboss2Killed = data.miniboss2Killed;
             mapData.miniboss3Killed = data.miniboss3Killed;
+            mapData.miniboss4Killed = data.miniboss4Killed;
             mapData.fireBossKilled = data.fireBossKilled;
             mapData.secretaryConvo = data.secretaryConvo;
             mapData.electricBossKilled = data.electricBossKilled;
@@ -163,6 +165,8 @@ public class GameManager : MonoBehaviour
             mapData.ACOn = data.ACOn;
             mapData.hasRemoteAC = data.hasRemoteAC;
             mapData.outsideFrankBossfight = data.outsideFrankBossfight;
+            mapData.resetPasswords = data.resetPasswords != null ? data.resetPasswords.ToList() : null;
+            mapData.itWorkerQuestComplete = data.itWorkerQuestComplete;
             mapData.iceBossKilled = data.iceBossKilled;
             mapData.iceBossPosition = new Vector3(data.iceBossPosition[0], data.iceBossPosition[1], data.iceBossPosition[2]);
             mapData.iceBossDirection = data.iceBossDirection;
@@ -222,6 +226,7 @@ public class GameManager : MonoBehaviour
         mapData.miniboss1Killed = false;
         mapData.miniboss2Killed = false;
         mapData.miniboss3Killed = false;
+        mapData.miniboss4Killed = false;
         mapData.fireBossKilled = fireBossKilled;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
@@ -229,6 +234,8 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
+        mapData.resetPasswords = null;
+        mapData.itWorkerQuestComplete = false;
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
         mapData.iceBossDirection = 0;
@@ -268,6 +275,7 @@ public class GameManager : MonoBehaviour
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
+        playerData.hasWayfaerie = false;
         playerData.money = 500;
         playerData.lostMoney = 0;
         playerData.strength = 1;
@@ -300,6 +308,7 @@ public class GameManager : MonoBehaviour
         mapData.miniboss1Killed = true;
         mapData.miniboss2Killed = false;
         mapData.miniboss3Killed = false;
+        mapData.miniboss4Killed = false;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = false;
@@ -310,6 +319,8 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
+        mapData.resetPasswords = null;
+        mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
@@ -351,6 +362,7 @@ public class GameManager : MonoBehaviour
         playerData.maxPatches = 2;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
+        playerData.hasWayfaerie = false;
         playerData.money = 4000;
         playerData.lostMoney = 0;
         playerData.strength = 1;
@@ -384,6 +396,7 @@ public class GameManager : MonoBehaviour
         mapData.miniboss1Killed = true;
         mapData.miniboss2Killed = true;
         mapData.miniboss3Killed = false;
+        mapData.miniboss4Killed = false;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;
@@ -394,6 +407,8 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
+        mapData.resetPasswords = null;
+        mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();
@@ -440,6 +455,7 @@ public class GameManager : MonoBehaviour
         playerData.maxPatches = 3;
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
+        playerData.hasWayfaerie = false;
         playerData.money = 15000;
         playerData.lostMoney = 0;
         playerData.strength = 1;
@@ -474,6 +490,7 @@ public class GameManager : MonoBehaviour
         mapData.miniboss1Killed = true;
         mapData.miniboss2Killed = true;
         mapData.miniboss3Killed = true;
+        mapData.miniboss4Killed = false;
         mapData.fireBossKilled = true;
         mapData.secretaryConvo = secretaryConvo;
         mapData.electricBossKilled = true;
@@ -484,6 +501,8 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = false;
         mapData.hasRemoteAC = true;
         mapData.outsideFrankBossfight = true;
+        mapData.resetPasswords = null;
+        mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 
         dialogueData.conversationsHad.Clear();

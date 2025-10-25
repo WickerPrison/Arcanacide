@@ -62,7 +62,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.StartAtFloor4();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        SceneManager.LoadScene("ChaosHub1");
+        SceneManager.LoadScene("IceElevator2");
     }
 
     public void QuitGame()

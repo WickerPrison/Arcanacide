@@ -1366,7 +1366,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.98039216, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5134,7 +5134,7 @@ ParticleSystem:
     dieWithParticles: 1
     sizeAffectsWidth: 0
     sizeAffectsLifetime: 0
-    inheritParticleColor: 0
+    inheritParticleColor: 1
     generateLightingData: 0
     splitSubEmitterRibbons: 0
     attachRibbonsToTransform: 0
@@ -5142,7 +5142,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.98071563, b: 0, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -7691,6 +7691,7 @@ GameObject:
   - component: {fileID: 2446076937009064088}
   - component: {fileID: 2142539440846040135}
   - component: {fileID: 2744264751910590850}
+  - component: {fileID: 1611967345225961701}
   m_Layer: 6
   m_Name: LightningThrower
   m_TagString: Enemy
@@ -7857,6 +7858,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
+  colorChange: 0
+  colorChangeThreshold: 0.02
+  originalColor: {r: 0.9568628, g: 0.003921569, b: 0.050980397, a: 1}
+  newFloorColor: 0
+  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
 --- !u!114 &2744264751910590850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7869,6 +7875,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e103c4bb860a48746acf2451ac72d4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1611967345225961701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253101904161657154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003d375ec41f471468eded5b9d11df7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorChange: 0
+  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
+  newLevelColor: 3
+  alpha: 255
+  particles:
+  - {fileID: 2543542485218002685}
+  - {fileID: 4120937834396339968}
 --- !u!1 &6287324563037613096
 GameObject:
   m_ObjectHideFlags: 0
@@ -8155,7 +8180,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.98039216, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -11923,7 +11948,7 @@ ParticleSystem:
     dieWithParticles: 1
     sizeAffectsWidth: 0
     sizeAffectsLifetime: 0
-    inheritParticleColor: 0
+    inheritParticleColor: 1
     generateLightingData: 0
     splitSubEmitterRibbons: 0
     attachRibbonsToTransform: 0
@@ -11931,7 +11956,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.98071563, b: 0, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

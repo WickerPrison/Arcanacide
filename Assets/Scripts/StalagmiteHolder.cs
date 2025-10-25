@@ -9,6 +9,10 @@ public class StalagmiteHolder : MonoBehaviour
     SortedDictionary<float, StalagmiteAttack> stalagmiteDict = new SortedDictionary<float, StalagmiteAttack>();
     [SerializeField] float waveSpeed;
     EnemyEvents enemyEvents;
+    [SerializeField] bool colorChange;
+    [SerializeField] Color oldColor;
+    [SerializeField] LevelColor newColor;
+    [SerializeField] ColorData colorData;
 
     private void Awake()
     {
@@ -24,6 +28,13 @@ public class StalagmiteHolder : MonoBehaviour
         {
             stalagmiteDict.Add(Vector3.Distance(transform.position, stalagmite.transform.position), stalagmite);
             stalagmite.enemyOfOrigin = enemyOfOrigin;
+        }
+        if (colorChange)
+        {
+            foreach(StalagmiteAttack stalagmite in stalagmites)
+            {
+                stalagmite.ColorChange(oldColor, colorData.GetColor(newColor));
+            }
         }
     }
 

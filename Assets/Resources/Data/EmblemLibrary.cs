@@ -30,8 +30,7 @@ public enum Patches
     SPELLSWORD,
     DEATH_AURA,
     ARCANE_MASTERY,
-    RECKLESS_ATTACK,
-    WAY_FAERIE
+    RECKLESS_ATTACK
 }
 
 public class Patch
@@ -86,7 +85,6 @@ public class EmblemLibrary : ScriptableObject
                     {Patches.DEATH_AURA, deathAura },
                     {Patches.ARCANE_MASTERY, arcaneMastery },
                     {Patches.RECKLESS_ATTACK, recklessAttack },
-                    {Patches.WAY_FAERIE, wayFaerie },
                 };
             };
             return PatchDictionary;
@@ -170,9 +168,6 @@ public class EmblemLibrary : ScriptableObject
 
     [System.NonSerialized] public Patch recklessAttack = new Patch("Reckless Attack",
     "Increase the damage of all attacks when you are low on health");
-
-    [System.NonSerialized] public Patch wayFaerie = new Patch("Way Faerie",
-    "An ancient Faerie will guide you to your final destination");
 
     public List<Patches> GetPatchesFromStrings(List<string> patches)
     {

@@ -8,6 +8,7 @@ using UnityEngine;
 public class ChaosZombie : EnemyController
 {
     [SerializeField] Transform[] handPustule;
+    AttackArcGenerator attackArc;
     ChaosSporesScript sporesScript;
     float sporesDuration = 6;
     float meleeRange = 3f;
@@ -16,6 +17,7 @@ public class ChaosZombie : EnemyController
     {
         base.Start();
         sporesScript = playerScript.GetComponentInChildren<ChaosSporesScript>();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
     }
 
     public override void EnemyAI()
@@ -71,5 +73,11 @@ public class ChaosZombie : EnemyController
     {
         base.AdditionalAttackEffects();
         sporesScript.StartChaosSpores(sporesDuration);
+    }
+
+    public override void StartStagger(float staggerDuration)
+    {
+        attackArc.HideAttackArc();
+        base.StartStagger(staggerDuration);
     }
 }

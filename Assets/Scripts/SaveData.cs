@@ -24,6 +24,7 @@ public class SaveData
     public int maxPatches;
     public List<string> tutorials;
     public List<string> evidenceFound;
+    public bool hasWayfaerie;
     public int money;
     public int lostMoney;
     public string path;
@@ -51,6 +52,7 @@ public class SaveData
     public bool miniboss1Killed;
     public bool miniboss2Killed;
     public bool miniboss3Killed;
+    public bool miniboss4Killed;
     public bool fireBossKilled;
     public bool secretaryConvo;
     public bool electricBossKilled;
@@ -61,6 +63,8 @@ public class SaveData
     public bool ACOn;
     public bool hasRemoteAC;
     public bool outsideFrankBossfight;
+    public int[] resetPasswords;
+    public bool itWorkerQuestComplete;
     public bool whistleblowerArrested;
 
     public List<string> conversationsHad;
@@ -92,6 +96,7 @@ public class SaveData
         maxPatches = playerData.maxPatches;
         tutorials = playerData.tutorials;
         evidenceFound = playerData.evidenceFound;
+        hasWayfaerie = playerData.hasWayfaerie;
         money = playerData.money;
         lostMoney = playerData.lostMoney;
         strength = playerData.strength;
@@ -121,6 +126,7 @@ public class SaveData
         miniboss1Killed = mapData.miniboss1Killed;
         miniboss2Killed = mapData.miniboss2Killed;
         miniboss3Killed = mapData.miniboss3Killed;
+        miniboss4Killed = mapData.miniboss4Killed;
         fireBossKilled = mapData.fireBossKilled;
         secretaryConvo = mapData.secretaryConvo;
         electricBossKilled = mapData.electricBossKilled;
@@ -131,6 +137,15 @@ public class SaveData
         iceBossPosition[1] = mapData.iceBossPosition.y;
         iceBossPosition[2] = mapData.iceBossPosition.z;
         iceBossDirection = mapData.iceBossDirection;
+        if(mapData.resetPasswords != null)
+        {
+            resetPasswords = mapData.resetPasswords.ToArray();
+        }
+        else
+        {
+            resetPasswords = null;
+        }
+        itWorkerQuestComplete = mapData.itWorkerQuestComplete;
         whistleblowerArrested = mapData.whistleblowerArrested;
 
         ACOn = mapData.ACOn;

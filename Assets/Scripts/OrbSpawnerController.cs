@@ -56,6 +56,10 @@ public class OrbSpawnerController : EnemyController
     void SpawnOrb()
     {
         LightningOrbController orb = Instantiate(lightningOrbPrefab).GetComponent<LightningOrbController>();
+        if (spriteEffects.colorChange)
+        {
+            orb.colorChange = true;
+        }
         // disabling and reenabling the navagent is a workaround for a bug in the navmesh that causes strange teleportations if you spawn an agent and then immediately set its position.
         orb.navAgent.enabled = false;
         orb.transform.position = spawnPoint.position;

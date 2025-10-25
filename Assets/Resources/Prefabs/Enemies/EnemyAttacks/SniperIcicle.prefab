@@ -4891,7 +4891,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4934,6 +4934,8 @@ GameObject:
   - component: {fileID: 8798966926774625946}
   - component: {fileID: 3612222564957158324}
   - component: {fileID: 4940658947643875157}
+  - component: {fileID: 3721175917812332529}
+  - component: {fileID: 4124745006208229506}
   m_Layer: 7
   m_Name: SniperIcicle
   m_TagString: Untagged
@@ -5002,3 +5004,39 @@ MonoBehaviour:
     Path: event:/IceImpact
   impactSFXvolume: 1
   lifetime: 3
+--- !u!114 &3721175917812332529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5673668488862911417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7a80407da7c0d34eab9c7c56db85524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorChange: 0
+  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
+  oldColor: {r: 0.31764707, g: 0.8235295, b: 0.9921569, a: 1}
+  newLevelColor: 0
+  renderers:
+  - {fileID: 3896102709927426328}
+--- !u!114 &4124745006208229506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5673668488862911417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003d375ec41f471468eded5b9d11df7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorChange: 0
+  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
+  newLevelColor: 0
+  particles:
+  - {fileID: 4983004003237267943}
+  alpha: 121

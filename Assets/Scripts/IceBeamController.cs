@@ -10,7 +10,9 @@ public class IceBeamController : EnemyController
     [SerializeField] LineRenderer line;
     Vector3 offset = new Vector3(0, 1.8f, 0);
     Gradient gradient;
-    [SerializeField] Color blueColor;
+    [SerializeField] LevelColor lazerColor;
+    [SerializeField] ColorData colorData;
+    Color blueColor;
     float alpha = 1;
     float aimValue;
     float maxAimValue = 3;
@@ -25,11 +27,13 @@ public class IceBeamController : EnemyController
     float crystalFloatDir = 1;
     [SerializeField] float crystalFloatRate;
     [SerializeField] float crystalFloatAmp;
+    [SerializeField] bool changeColor = false;
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
+        blueColor = colorData.GetColor(lazerColor);
         HideBeam();
 
         layerMask = LayerMask.GetMask("Default", "Player", "IFrames");
@@ -130,6 +134,13 @@ public class IceBeamController : EnemyController
         projectile.direction = playerScript.transform.position - transform.position;
         float angle = Vector3.SignedAngle(Vector3.forward, projectile.direction, Vector3.up);
         projectile.transform.rotation = Quaternion.Euler(25, 0, -angle);
+        if (changeColor)
+        {
+            SpriteColorChange spriteColorChange = projectile.GetComponent<SpriteColorChange>();
+            spriteColorChange.colorChange = true;
+            ParticleColorChange particleColorChange = projectile.GetComponent<ParticleColorChange>();
+            particleColorChange.colorChange = true;
+        }
         HideBeam();
         StartCoroutine(ShotClock());
     }

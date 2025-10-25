@@ -16,8 +16,8 @@ public class NoGravityObject : MonoBehaviour
         xRotation = Random.Range(-1f, 1f);
         yRotation = Random.Range(-1f, 1f);
         zRotation = Random.Range(-1f, 1f);
-        rotateSpeed = Random.Range(0f, 5f);
-        rotateVector = new Vector3(xRotation, yRotation, zRotation).normalized * rotateSpeed * Time.deltaTime;
+        rotateSpeed = Random.Range(1.5f, 2.5f);
+        rotateVector = rotateSpeed * Time.deltaTime * new Vector3(xRotation, yRotation, zRotation).normalized;
     }
 
     // Update is called once per frame

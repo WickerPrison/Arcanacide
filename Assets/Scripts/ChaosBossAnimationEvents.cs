@@ -23,7 +23,7 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
 
     public void TurnTowardsPlayer()
     {
-        facePlayer.SetDestination(new Vector3(6, 0, -9));
+        //facePlayer.SetDestination(new Vector3(6, 0, -9));
     }
 
     public void Summon(BossSummons summon)

@@ -95,6 +95,8 @@ public class MinibossAbilities : MonoBehaviour
     MinibossSpecialState specialState = MinibossSpecialState.NONE;
     WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();
 
+    public SpinPoints spinPoints;
+
     private void Start()
     {
         enemyController = GetComponent<EnemyController>();
@@ -539,13 +541,16 @@ public class MinibossAbilities : MonoBehaviour
 
     public void StartTeslaHarpoon()
     {
-        enemyController.frontAnimator.Play("Takeoff");
+        enemyController.state = EnemyState.ATTACKING;
+        minibossEvents.TeslaHarpoons();
+        enemyController.frontAnimator.Play("HarpoonTakeoff");
         enemyController.backAnimator.Play("Takeoff");
         enemyController.attackTime = teslaTime + 5;
     }
 
     public void HarpoonTakeoff()
     {
+        enemyScript.invincible = true;
         StartCoroutine(TeslaHarpoons());
     }
 
@@ -569,6 +574,7 @@ public class MinibossAbilities : MonoBehaviour
             yield return null;
         }
 
+        enemyScript.invincible = false;
         enemyController.frontAnimator.Play("Descend");
         enemyController.backAnimator.Play("Descend"); 
         descendTimer = 0;
@@ -604,7 +610,7 @@ public class MinibossAbilities : MonoBehaviour
     public void DroneLasers()
     {
         enemyController.state = EnemyState.ATTACKING;
-        enemyController.frontAnimator.Play("Takeoff");
+        enemyController.frontAnimator.Play("DroneTakeoff");
         enemyController.backAnimator.Play("Takeoff");
         minibossEvents.StartDroneLaser();
     }
@@ -645,6 +651,7 @@ public class MinibossAbilities : MonoBehaviour
         enemySound.OtherSounds(0, 1f);
         StartCoroutine(cameraScript.ScreenShake(.1f, .3f));
         minibossEvents.TriggerVfx("land");
+        minibossEvents.ThrustersOff();
         if(enemyController.playerDistance < 3.5f)
         {
             playerScript.HitPlayer(() =>
@@ -699,6 +706,11 @@ public class MinibossAbilities : MonoBehaviour
             beam.transform.localEulerAngles.z);
         facePlayer.SetDestination(beam.transform.position);
         facePlayer.ManualFace();
+    }
+
+    public void StartSpin()
+    {
+        minibossEvents.TeslaHarpoons();
     }
 
     public void StartStagger()

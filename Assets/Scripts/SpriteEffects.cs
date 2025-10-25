@@ -17,6 +17,12 @@ public class SpriteEffects : MonoBehaviour
     bool isDelayed = false;
     float dissolveSpeed;
     float dissolveProg = 0;
+    public bool colorChange = false;
+    [SerializeField] float colorChangeThreshold = 0.1f;
+    [SerializeField] Color originalColor;
+    [SerializeField] LevelColor newFloorColor;
+    Color newColor;
+    [SerializeField] ColorData colorData;
 
     private void Awake()
     {
@@ -27,6 +33,18 @@ public class SpriteEffects : MonoBehaviour
             if(renderer.sharedMaterial == spriteMaterial)
             {
                 renderers.Add(renderer);
+            }
+        }
+
+        if (colorChange)
+        {
+            newColor = colorData.GetColor(newFloorColor);
+            foreach(SpriteRenderer sprite in renderers)
+            {
+                sprite.material.SetFloat("_ColorChange", 1);
+                sprite.material.SetColor("_OriginalColor", originalColor);
+                sprite.material.SetColor("_NewColor", newColor);
+                sprite.material.SetFloat("_ColorChangeThreshold", colorChangeThreshold);
             }
         }
     }
@@ -102,11 +120,17 @@ public class SpriteEffects : MonoBehaviour
 
     private void OnEnable()
     {
-        enemyEvents.OnTakeDamage += StartFlash;
+        if(enemyEvents != null)
+        {
+            enemyEvents.OnTakeDamage += StartFlash;
+        }
     }
 
     private void OnDisable()
     {
-        enemyEvents.OnTakeDamage -= StartFlash;
+        if(enemyEvents != null)
+        {
+            enemyEvents.OnTakeDamage -= StartFlash;
+        }
     }
 }

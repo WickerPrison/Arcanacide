@@ -28,6 +28,7 @@ public class PlayerData : ScriptableObject
     public int maxPatches;
     public List<string> tutorials;
     public List<string> evidenceFound;
+    public bool hasWayfaerie;
     public int money;
     public int lostMoney;
 
@@ -132,6 +133,7 @@ public class PlayerData : ScriptableObject
         equippedPatches.Clear();
         maxPatches = 2;
         evidenceFound.Clear();
+        hasWayfaerie = false;
         money = 0;
         lostMoney = 0;
         strength = 1;

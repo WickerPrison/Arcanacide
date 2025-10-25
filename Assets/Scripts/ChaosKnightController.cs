@@ -25,6 +25,7 @@ public class ChaosKnightController : EnemyController
     Vector3 jumpPointDirection;
     StepWithAttack stepWithAttack;
     CameraFollow cameraScript;
+    AttackArcGenerator attackArc;
     [SerializeField] PlayVFX landVFX;
     [SerializeField] PlayVFX jumpVFX;
 
@@ -37,6 +38,7 @@ public class ChaosKnightController : EnemyController
         indicatorCircle.enabled = false;
         indicatorCircle.transform.parent = null;
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
     }
 
     private void FixedUpdate()
@@ -161,7 +163,7 @@ public class ChaosKnightController : EnemyController
     public override void StartStagger(float staggerDuration)
     {
         if (state == EnemyState.SPECIAL) return;
-
+        attackArc.HideAttackArc();
         base.StartStagger(staggerDuration);
     }
 
@@ -185,5 +187,11 @@ public class ChaosKnightController : EnemyController
         {
             enemyScript.blockAttack = true;
         }
+    }
+
+    public override void StartDying()
+    {
+        attackArc.HideAttackArc();
+        base.StartDying();
     }
 }

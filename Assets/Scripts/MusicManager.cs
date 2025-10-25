@@ -82,17 +82,23 @@ public class MusicManager : MonoBehaviour
         musicPlayer.ChangeState(MusicState.BOSSVICTORY);
     }
 
+    private void Global_onWhistleblowerKilled(object sender, System.EventArgs e)
+    {
+        musicPlayer.ChangeState(MusicState.BOSSVICTORY);
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onBossKilled += onBossKilled;
         GlobalEvents.instance.onPlayerDeath += onPlayerDeath;
+        GlobalEvents.instance.onWhistleblowerKilled += Global_onWhistleblowerKilled;
     }
-
 
     private void OnDisable()
     {
         GlobalEvents.instance.onBossKilled -= onBossKilled;
         GlobalEvents.instance.onPlayerDeath -= onPlayerDeath;
+        GlobalEvents.instance.onWhistleblowerKilled -= Global_onWhistleblowerKilled;
     }
 
 }

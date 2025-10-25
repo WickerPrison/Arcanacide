@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Takeoff
+  m_Name: HarpoonTakeoff
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -2779,8 +2779,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: Torso_0/Torso1/Torso2/Head_0/Head
+    attribute: m_LocalEulerAngles.x
+    path: Torso_0/Torso1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2790,7 +2790,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Torso_0/Torso1/Torso2/Head_0/Head
+    path: Torso_0/Torso1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2799,8 +2799,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Torso_0/Torso1/Torso2/Head_0/Head
+    attribute: m_LocalEulerAngles.z
+    path: Torso_0/Torso1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2839,8 +2839,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: Torso_0/Torso1/Torso2
+    attribute: m_LocalEulerAngles.x
+    path: Torso_0/Torso1/BackLeg_0/BackLeg1/BackLeg2/BackFoot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2850,7 +2850,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Torso_0/Torso1/Torso2
+    path: Torso_0/Torso1/BackLeg_0/BackLeg1/BackLeg2/BackFoot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2859,8 +2859,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Torso_0/Torso1/Torso2
+    attribute: m_LocalEulerAngles.z
+    path: Torso_0/Torso1/BackLeg_0/BackLeg1/BackLeg2/BackFoot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2899,37 +2899,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: Torso_0/Torso1
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: Torso_0/Torso1
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Torso_0/Torso1
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
     path: Torso_0/Torso1/FrontLeg_0/FrontLeg1/FrontLeg2/FrontFoot
     classID: 4
     script: {fileID: 0}
@@ -2949,8 +2919,38 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
+    attribute: m_LocalEulerAngles.z
     path: Torso_0/Torso1/FrontLeg_0/FrontLeg1/FrontLeg2/FrontFoot
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Torso_0/Torso1/Torso2
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: Torso_0/Torso1/Torso2
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: Torso_0/Torso1/Torso2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3020,7 +3020,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Torso_0/Torso1/BackLeg_0/BackLeg1/BackLeg2/BackFoot
+    path: Torso_0/Torso1/Torso2/Head_0/Head
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3030,7 +3030,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Torso_0/Torso1/BackLeg_0/BackLeg1/BackLeg2/BackFoot
+    path: Torso_0/Torso1/Torso2/Head_0/Head
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -3040,7 +3040,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Torso_0/Torso1/BackLeg_0/BackLeg1/BackLeg2/BackFoot
+    path: Torso_0/Torso1/Torso2/Head_0/Head
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
@@ -3061,7 +3061,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.41666666
-    functionName: Takeoff
+    functionName: HarpoonTakeoff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -12,6 +12,11 @@ Shader "Unlit/EnemySprite"
 		_DissolveProg ("Dissolve Progression", range(0,1)) = 0
 		_Density("Dissolve Density", float) = 0.5
 		_EdgeWidth("Edge Width", float) = 0.05
+
+		_ColorChange("Color Change", float) = 0
+		_OriginalColor("Original Color", Color) = (1,1,1,1)
+		_NewColor("New Color", Color) = (1,1,1,1)
+		_ColorChangeThreshold("Color Change Threshold", float) = 0.1
 	}
 
 	SubShader
@@ -37,6 +42,7 @@ Shader "Unlit/EnemySprite"
 			#pragma fragment frag
 			#pragma multi_compile _ PIXELSNAP_ON
 			#include "UnityCG.cginc"
+			#include "./Modules/ColorChange.hlsl"
 			
 			struct appdata_t
 			{
@@ -60,6 +66,10 @@ Shader "Unlit/EnemySprite"
 			float _DissolveProg;
 			float _Density;
 			float _EdgeWidth;
+			bool _ColorChange;
+			fixed4 _OriginalColor;
+			fixed4 _NewColor;
+			float _ColorChangeThreshold;
 
 			v2f vert(appdata_t IN)
 			{
@@ -100,6 +110,10 @@ Shader "Unlit/EnemySprite"
 				clip(c.a - 0.5);
                 float2 projection = IN.worldPos.xy * _Density;
                 fixed4 dissolveTex = tex2D(_DissolveTex, projection);
+
+				if(_ColorChange){
+					c.xyz = ColorChange(c, _OriginalColor, _NewColor, _ColorChangeThreshold);
+				}
 
                 float mask = dissolveTex - _DissolveProg;
                 clip(mask);

@@ -15,7 +15,7 @@ public class DoorSetup : MonoBehaviour
     [SerializeField] Vector3 offset;
 
     RoomSetupScript roomSetup;
-    float spawnPointDistance = 1.5f;
+    [SerializeField] float spawnPointDistance = 1.5f;
 
     enum DoorDirection
     {

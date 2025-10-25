@@ -30,12 +30,11 @@ public class StalagmiteAttack : MonoBehaviour
     [SerializeField] bool showInEditor;
     [System.NonSerialized] public bool isTriggered = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         int randInt = Random.Range(0, 2);
         ResetIcicles();
-        if(randInt == 0)
+        if (randInt == 0)
         {
             icicle = tallIcicle;
             start = tallIcicleStart;
@@ -47,6 +46,11 @@ public class StalagmiteAttack : MonoBehaviour
             start = bigIcicleStart;
             end = bigIcicleFinal;
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         peakWait = new WaitForSeconds(peakTime);
         hitbox = GetComponent<Collider>();
         hitbox.enabled = false;
@@ -134,6 +138,13 @@ public class StalagmiteAttack : MonoBehaviour
     {
         StopAllCoroutines();
         ResetIcicles();
+    }
+
+    public void ColorChange(Color oldColor, Color newColor)
+    {
+        icicle.material.SetFloat("_ColorChange", 1);
+        icicle.material.SetColor("_OriginalColor", oldColor);
+        icicle.material.SetColor("_NewColor", newColor);
     }
 
     private void OnValidate()

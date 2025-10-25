@@ -20,11 +20,13 @@ public class ElementalistController : EnemyController
     WaitForSeconds chaosOrbDelay = new WaitForSeconds(0.1f);
     float plantLineNum = 6;
     Vector3 chaosOrbVert = new Vector3(0, 0, 0);
+    AttackArcGenerator attackArc;
 
     public override void Start()
     {
         base.Start();
         stepWithAttack = GetComponent<StepWithAttack>();
+        attackArc = GetComponentInChildren<AttackArcGenerator>();
     }
 
     public override void EnemyAI()
@@ -42,8 +44,7 @@ public class ElementalistController : EnemyController
             if (playerDistance < meleeRange && attackTime <= 0)
             {
                 state = EnemyState.ATTACKING;
-                frontAnimator.Play("SwordAttack");
-                backAnimator.Play("SwordAttack");
+                PlayAnimation("SwordAttack");
                 attackTime = attackMaxTime;
             }
             else if (playerDistance < attackRange && attackTime <= 0)
@@ -54,20 +55,16 @@ public class ElementalistController : EnemyController
                 switch (randInt)
                 {
                     case 0:
-                        frontAnimator.Play("CastSpell");
-                        backAnimator.Play("CastSpell");
+                        PlayAnimation("CastSpell");
                         break;
                     case 1:
-                        frontAnimator.Play("IceStomp");
-                        backAnimator.Play("IceStomp");
+                        PlayAnimation("IceStomp");
                         break;
                     case 2:
-                        frontAnimator.Play("ChaosHead");
-                        backAnimator.Play("ChaosHead");
+                        PlayAnimation("ChaosHead");
                         break;
                     case 3:
-                        frontAnimator.Play("Bubbles");
-                        backAnimator.Play("Bubbles");
+                        PlayAnimation("Bubbles");
                         break;
                 }
             }
@@ -77,6 +74,12 @@ public class ElementalistController : EnemyController
         {
             attackTime -= Time.deltaTime;
         }
+    }
+
+    public void PlayAnimation(string animationName)
+    {
+        frontAnimator.Play(animationName);
+        backAnimator.Play(animationName);
     }
 
     public override void SpellAttack()
@@ -178,10 +181,17 @@ public class ElementalistController : EnemyController
         }
     }
 
+    public override void StartStagger(float staggerDuration)
+    {
+        attackArc.HideAttackArc();
+        base.StartStagger(staggerDuration);
+    }
+
     public override void StartDying()
     {
         chaosHeadFront.GetComponent<ParticleSystem>().Stop();
         chaosHeadBack.GetComponent<ParticleSystem>().Stop();
+        attackArc.HideAttackArc();
         base.StartDying();
     }
 }
