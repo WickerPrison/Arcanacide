@@ -162,6 +162,8 @@ public class MinibossV3Tests
         yield return new WaitForSeconds(1);
         Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
         dialogue.NextLine();
+        yield return new WaitForSeconds(0.5f);
+        dialogue.NextLine();
         yield return new WaitForSeconds(5);
         Assert.IsTrue(droneController1 == null);
         Assert.IsTrue(droneController0 == null);
@@ -191,6 +193,8 @@ public class MinibossV3Tests
         enemyScript.LoseHealth(enemyScript.health, 1);
         yield return new WaitForSeconds(1);
         Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
+        dialogue.NextLine();
+        yield return new WaitForSeconds(0.5f);
         dialogue.NextLine();
         yield return new WaitForSeconds(5);
         Assert.IsTrue(droneController1 == null);
