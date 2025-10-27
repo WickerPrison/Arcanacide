@@ -121,7 +121,7 @@ public class MeleeEnemyAnimationEvents : MonoBehaviour
         facePlayer.ManualFace();
     }
 
-    public void StartDissolve()
+    public virtual void StartDissolve()
     {
         StartCoroutine(spriteEffects.Dissolve());
     }
