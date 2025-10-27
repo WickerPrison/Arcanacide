@@ -29,6 +29,7 @@ public class MinibossV4Tests
         playerData.vitality = 30;
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
+        mapData.miniboss3Killed = false;
         mapData.miniboss4Killed = false;
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV4");
         dronePrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossDrone");

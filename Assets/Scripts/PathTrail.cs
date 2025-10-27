@@ -28,7 +28,7 @@ public class PathTrail : MonoBehaviour
         }
         if(pathTrails != null) pathTrails.Add(this);
         VFX = GetComponentInChildren<ParticleSystem>();
-        damagePerSecond = 1 + playerData.arcane * 0.5f;
+        damagePerSecond = 1f + playerData.arcane * 0.2f;
         fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
         fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
         fmodInstance.setTimelinePosition(Random.Range(0, 2000));
