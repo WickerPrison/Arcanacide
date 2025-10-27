@@ -94,14 +94,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
         attackArc.GetEnemiesInRange();
         foreach (EnemyScript enemy in gm.enemiesInRange)
         {
-            if (!enemy.blockAttack)
-            {
-                playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
-            }
-            else
-            {
-                enemy.GetComponentInChildren<EnemySound>().BlockAttack();
-            }
+            playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
         }
 
 
@@ -117,14 +110,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
         {
             if (Vector3.Distance(enemy.transform.position, transform.parent.position) < attackProfile.attackRange)
             {
-                if (!enemy.blockAttack)
-                {
-                    playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
-                }
-                else
-                {
-                    enemy.GetComponentInChildren<EnemySound>().BlockAttack();
-                }
+                playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
             }
         }
 

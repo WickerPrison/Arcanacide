@@ -219,7 +219,7 @@ public class MinibossV1Tests
         yield return null;
 
         EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(enemyScript.health, 1);
+        enemyScript.LoseHealthUnblockable(enemyScript.health, 1);
         yield return new WaitForSeconds(5);
         Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
         for(int i = 0; i < 3; i++)

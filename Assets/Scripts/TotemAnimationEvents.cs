@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TotemAnimationEvents : MonoBehaviour
+public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
 {
     [SerializeField] GameObject ripplePrefab;
     [SerializeField] ParticleSystem landingVFX;
@@ -21,6 +21,7 @@ public class TotemAnimationEvents : MonoBehaviour
     int numberOfBoxes = 50;
     float rippleSpeed = 5;
     float lifeTime = 1.5f;
+    public bool blockable { get; set; } = true;
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +49,10 @@ public class TotemAnimationEvents : MonoBehaviour
                 if (collider.gameObject.CompareTag("Enemy"))
                 {
                     EnemyScript enemyScript = collider.gameObject.GetComponent<EnemyScript>();
-                    enemyScript.LoseHealth(damage, poiseDamage);
-                    enemyScript.StartStagger(axeSpecial.staggerDuration);
+                    enemyScript.LoseHealth(damage, poiseDamage, this, () =>
+                    {
+                        enemyScript.StartStagger(axeSpecial.staggerDuration);
+                    });
                 }
                 else if (collider.gameObject.CompareTag("Player") && false)
                 {

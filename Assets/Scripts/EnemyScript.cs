@@ -16,14 +16,13 @@ public class EnemyScript : MonoBehaviour
     public EmblemLibrary emblemLibrary;
     EnemyController enemyController;
     EnemyEvents enemyEvents;
-    EnemySound enemySound;
+    public EnemySound enemySound;
     GameManager gm;
     public int maxHealth;
     [SerializeField] float maxPoise;
     [SerializeField] float poiseRegeneration;
     float staggerDuration = 2;
     [System.NonSerialized] public float DOT = 0;
-    [System.NonSerialized] public bool blockAttack = false;
     float damageDOT = 0;
     public bool invincible = false;
     [System.NonSerialized] public bool dying = false;
@@ -39,7 +38,7 @@ public class EnemyScript : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         health = maxHealth;
         poise = maxPoise;
@@ -75,7 +74,7 @@ public class EnemyScript : MonoBehaviour
             damageDOT += Time.deltaTime * (playerData.arcane / 2 + 2);
             if(damageDOT >= 1)
             {
-                LoseHealth(1, 0); ;
+                LoseHealthUnblockable(1, 0); ;
                 damageDOT -= 1;
             }
 
@@ -87,7 +86,13 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    public void LoseHealth(int damage, float poiseDamage)
+    public virtual void LoseHealth(int damage, float poiseDamage, IDamageEnemy damageEnemy, Action unblockedCallback)
+    {
+        LoseHealthUnblockable(damage, poiseDamage);
+        unblockedCallback();
+    }
+
+    public void LoseHealthUnblockable(int damage, float poiseDamage)
     {
         if (invincible)
         {
@@ -98,7 +103,7 @@ public class EnemyScript : MonoBehaviour
 
         enemyEvents.TakeDamage();
         health -= damage;
-        if(health < 0)
+        if (health < 0)
         {
             health = 0;
         }

@@ -21899,7 +21899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3585160761717849676}
   - component: {fileID: 1481926520920614432}
-  - component: {fileID: 3585160761717849671}
+  - component: {fileID: 7911632557773463970}
   - component: {fileID: 3585160761717849664}
   - component: {fileID: 3585160761717849665}
   - component: {fileID: 3585160761717849666}
@@ -21967,7 +21967,7 @@ MonoBehaviour:
   jumpPoint: {fileID: 7447934563137491156}
   landVFX: {fileID: 1258455657703637904}
   jumpVFX: {fileID: 6634046677080656830}
---- !u!114 &3585160761717849671
+--- !u!114 &7911632557773463970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21976,7 +21976,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3585160761717849677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248bb20279896f9498d22e98f6e8a646, type: 3}
+  m_Script: {fileID: 11500000, guid: c6bfb1960aa158d458e1f84f95762463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   reward: 800
@@ -21984,11 +21984,13 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  enemySound: {fileID: 2826769136734881215}
   maxHealth: 220
   maxPoise: 160
   poiseRegeneration: 5
   invincible: 0
   enemyGUID: 
+  blocking: 0
 --- !u!136 &3585160761717849664
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -22069,6 +22071,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
+  colorChange: 0
+  colorChangeThreshold: 0.1
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
+  newFloorColor: 0
+  colorData: {fileID: 0}
 --- !u!114 &5774026980423005905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22082,6 +22089,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 8478080611780760360}
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &7064934613251774657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31003,6 +31013,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+--- !u!114 &2826769136734881215 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8779652165198868378, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}
+  m_PrefabInstance: {fileID: 6840163735553976869}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15de66ba6b963e14d93de239b2180674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8753295578010414140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2852141265887872537, guid: 26112b27f638c6d489de8d5db10ecb48, type: 3}

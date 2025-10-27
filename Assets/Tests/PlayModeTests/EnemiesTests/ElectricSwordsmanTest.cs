@@ -88,7 +88,7 @@ public class ElectricSwordsmanTest
         swordsman.StartRings();
         yield return new WaitForSeconds(3);
         EnemyScript enemyScript = swordsman.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
         yield return new WaitForSeconds(1);
         Assert.AreEqual(LightningRingsState.DISABLED, swordsman.rings.state);
     }

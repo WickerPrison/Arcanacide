@@ -36,7 +36,7 @@ public class FlameThrowerTests
         Assert.IsTrue(flamethrower.isShooting);
 
         EnemyScript enemyScript = flamethrower.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
         yield return new WaitForSeconds(0.2f);
         Assert.IsFalse(flamethrower.isShooting);
     }
@@ -53,7 +53,7 @@ public class FlameThrowerTests
         Assert.IsTrue(flamethrower.isShooting);
 
         EnemyScript enemyScript = flamethrower.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(0, 1000);
+        enemyScript.LoseHealthUnblockable(0, 1000);
         yield return new WaitForSeconds(0.2f);
         Assert.IsFalse(flamethrower.isShooting);
     }
