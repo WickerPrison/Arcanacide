@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(EnemyScript))]
+[CustomEditor(typeof(EnemyScript), true)]
 public class EnemyScriptEditor : Editor
 {
     public override void OnInspectorGUI()
