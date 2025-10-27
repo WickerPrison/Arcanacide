@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatchEffects : MonoBehaviour
+public class PatchEffects : MonoBehaviour, IDamageEnemy
 {
     //Input in inspector
     [SerializeField] PlayerData playerData;
@@ -55,6 +55,7 @@ public class PatchEffects : MonoBehaviour
 
     float recklessAttackHealthMax = 0.3f;
 
+    public bool blockable { get; set; }
 
     [System.NonSerialized] public List<PathTrail> pathTrails = new List<PathTrail>();
 
@@ -200,10 +201,12 @@ public class PatchEffects : MonoBehaviour
         {
             if (Vector3.Distance(enemy.transform.position, transform.position) < explosiveHealingRange)
             {
-
-                enemy.LoseHealth(explosiveHealingDamage, explosiveHealingDamage);
-                EnemyController enemyController = enemy.GetComponent<EnemyController>();
-                enemyController.StartStagger(explosiveHealingStagger);
+                blockable = true;
+                enemy.LoseHealth(explosiveHealingDamage, explosiveHealingDamage, this, () =>
+                {
+                    EnemyController enemyController = enemy.GetComponent<EnemyController>();
+                    enemyController.StartStagger(explosiveHealingStagger);
+                });
             }
         }
     }

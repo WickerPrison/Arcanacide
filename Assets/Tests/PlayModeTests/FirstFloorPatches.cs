@@ -116,7 +116,7 @@ public class FirstFloorPatches
             EnemyScript enemyScript = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
             yield return null;
             enemyScript.reward = cost;
-            enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+            enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
 
             playerData.money = 0;
 
@@ -190,7 +190,7 @@ public class FirstFloorPatches
 
         int startingHealth = Mathf.FloorToInt(playerData.MaxHealth() * 0.5f);
         playerData.health = startingHealth;
-        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
 
         yield return new WaitForSeconds(0.2f);
         int healAmount = Mathf.FloorToInt(playerData.MaxHealth() * emblemLibrary.patchDictionary[Patches.VAMPIRIC_STRIKES].value);

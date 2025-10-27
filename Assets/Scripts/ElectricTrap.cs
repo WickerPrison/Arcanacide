@@ -44,7 +44,7 @@ public class ElectricTrap : MonoBehaviour
             {
                 foreach(EnemyScript enemy in enemiesInRange)
                 {
-                    enemy.LoseHealth(Mathf.FloorToInt(damage), 0);
+                    enemy.LoseHealthUnblockable(Mathf.FloorToInt(damage), 0);
 
                     if (playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
                     {

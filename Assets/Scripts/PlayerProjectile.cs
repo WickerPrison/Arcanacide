@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerProjectile : MonoBehaviour
+public class PlayerProjectile : MonoBehaviour, IDamageEnemy
 {
     public int speed;
     public PlayerMovement playerMovement;
@@ -18,6 +18,8 @@ public class PlayerProjectile : MonoBehaviour
     public float turnAngle;
     [System.NonSerialized] public Vector3 offset = new Vector3(0, 1, 0);
     float addedDOT;
+    public bool blockable { get; set; } = true;
+
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -39,15 +41,17 @@ public class PlayerProjectile : MonoBehaviour
         {
             damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMastery.value);
         }
-        enemyScript.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
-        enemyScript.ImpactVFX();
-        if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedPatches.Contains(Patches.BURNING_REFLECTION))
+        enemyScript.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier, this, () =>
         {
-            addedDOT = 10;
-        }
-        else addedDOT = 0;
-        enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
+            if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedPatches.Contains(Patches.BURNING_REFLECTION))
+            {
+                addedDOT = 10;
+            }
+            else addedDOT = 0;
+            enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
+        });
         RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+        enemyScript.ImpactVFX();
         KillProjectile();
     }
 

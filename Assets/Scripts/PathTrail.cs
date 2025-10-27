@@ -94,7 +94,7 @@ public class PathTrail : MonoBehaviour
         cd = maxCd;
         foreach(EnemyScript enemy in touchingEnemies)
         {
-            enemy.LoseHealth(Mathf.FloorToInt(damage), 0);
+            enemy.LoseHealthUnblockable(Mathf.FloorToInt(damage), 0);
         }
         damage = 0;
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerAbilities : MonoBehaviour
+public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 {
     //Input in inspector
     [SerializeField] PlayerData playerData;
@@ -81,6 +81,7 @@ public class PlayerAbilities : MonoBehaviour
     float clawSpecialDamageMult = 1.5f;
     [System.NonSerialized] public float clawSpecialStamCostMult = 1.5f;
     [System.NonSerialized] public float clawSpecialTakeDamageMult = 0.5f;
+    public bool blockable { get; set; }
 
     private void Awake()
     {
@@ -179,30 +180,34 @@ public class PlayerAbilities : MonoBehaviour
 
     public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile)
     {
-        if (!attackProfile.soundOnHitEvent.IsNull)
+        blockable = attackProfile.blockable;
+        enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier, this, () =>
         {
-            playerSound.PlaySoundEffect(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume);
-        }
+            if (!attackProfile.soundOnHitEvent.IsNull)
+            {
+                playerSound.PlaySoundEffect(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume);
+            }
 
-        if (enemy.DOT > 0 && playerData.equippedPatches.Contains(Patches.OPPORTUNE_STRIKE))
-        {
-            damage = Mathf.RoundToInt(damage * 1.2f);
-        }
+            if (enemy.DOT > 0 && playerData.equippedPatches.Contains(Patches.OPPORTUNE_STRIKE))
+            {
+                damage = Mathf.RoundToInt(damage * 1.2f);
+            }
 
-        enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
+            if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
+            {
+                enemy.GainDOT(emblemLibrary.rendingBlows.value);
+            }
+
+            enemy.GainDOT(attackProfile.durationDOT);
+
+            if (attackProfile.staggerDuration > 0)
+            {
+                EnemyController enemyController = enemy.GetComponent<EnemyController>();
+                enemyController.StartStagger(attackProfile.staggerDuration);
+            }
+        });
+
         if(attackProfile.impactVFX) enemy.ImpactVFX();
-        if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
-        {
-            enemy.GainDOT(emblemLibrary.rendingBlows.value);
-        }
-
-        enemy.GainDOT(attackProfile.durationDOT);
-
-        if (attackProfile.staggerDuration > 0)
-        {
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            enemyController.StartStagger(attackProfile.staggerDuration);
-        }
     }
 
     public int DamageModifiers(int attackPower)
@@ -464,7 +469,8 @@ public class PlayerAbilities : MonoBehaviour
 
             if (boltdamage > 1)
             {
-                closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0);
+                blockable = false;
+                closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0, this, () => { });
                 boltdamage = 0;
             }
         }

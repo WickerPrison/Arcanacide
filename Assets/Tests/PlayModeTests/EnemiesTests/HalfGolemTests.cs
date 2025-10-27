@@ -35,7 +35,7 @@ public class HalfGolemTests
         yield return null;
         for(int i = 0; i < 3; i++)
         {
-            enemyScript.LoseHealth(1, 1);
+            enemyScript.LoseHealthUnblockable(1, 1);
             yield return null;
         }
         yield return new WaitForSeconds(1f);
@@ -56,7 +56,7 @@ public class HalfGolemTests
         yield return null;
         for (int i = 0; i < 3; i++)
         {
-            enemyScript.LoseHealth(1, 1);
+            enemyScript.LoseHealthUnblockable(1, 1);
             yield return null;
         }
         yield return new WaitForSeconds(1f);

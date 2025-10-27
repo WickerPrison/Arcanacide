@@ -16,7 +16,7 @@ public class ChaosKnightController : EnemyController
     WaitForSeconds jumpTime = new WaitForSeconds(2.5f);
     Vector3 facingDirection;
     Vector3 playerDirection;
-    float backAngle;
+    float backAngle = 90;
     float jumpSpeed = 50;
     int jumpDamage = 70;
     float jumpPoiseDamage = 100;
@@ -28,10 +28,12 @@ public class ChaosKnightController : EnemyController
     AttackArcGenerator attackArc;
     [SerializeField] PlayVFX landVFX;
     [SerializeField] PlayVFX jumpVFX;
+    ChaosKnightEnemyScript chaosKnightEnemyScript;
 
     public override void Start()
     {
         base.Start();
+        chaosKnightEnemyScript = GetComponent<ChaosKnightEnemyScript>();
         stepWithAttack = GetComponent<StepWithAttack>();
         jumpPoint.parent = null;
         //attackTime = attackMaxTime;
@@ -68,6 +70,7 @@ public class ChaosKnightController : EnemyController
 
         if (state == EnemyState.IDLE)
         {
+            chaosKnightEnemyScript.blocking = true;
             //navAgent is the pathfinding component. It will be enabled whenever the enemy is allowed to walk
             if (navAgent.enabled == true)
             {
@@ -89,12 +92,10 @@ public class ChaosKnightController : EnemyController
             {
                 attackTime -= Time.deltaTime;
             }
-
-            PlayerBehind();
         }
         else
         {
-            enemyScript.blockAttack = false;
+            chaosKnightEnemyScript.blocking = false;
         }
     }
 
@@ -173,20 +174,13 @@ public class ChaosKnightController : EnemyController
         stepWithAttack.Step(0.15f);
         base.AttackHit(smearSpeed);
     }
-    
-    void PlayerBehind()
+
+    public bool AttackerBlockableAngle(Transform attacker)
     {
-        playerDirection = transform.position - playerScript.transform.position;
+        Vector3 attackerDirection = transform.position - attacker.position;
         facingDirection = attackPoint.position - transform.position;
-        float angle = Vector3.Angle(facingDirection, playerDirection);
-        if(angle < backAngle)
-        {
-            enemyScript.blockAttack = false;
-        }
-        else
-        {
-            enemyScript.blockAttack = true;
-        }
+        float angle = Vector3.Angle(-facingDirection, attackerDirection);
+        return angle < backAngle;
     }
 
     public override void StartDying()

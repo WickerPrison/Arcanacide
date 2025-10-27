@@ -77,7 +77,7 @@ public class MinibossV4Tests
         droneController1.minibossNum = 4;
         minibossAbilities.transform.position = new Vector3(3f, 0, -3f);
         yield return null;
-        enemyScript.LoseHealth(enemyScript.maxHealth, 1);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 1);
         yield return new WaitForSeconds(1);
         Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
         dialogue.NextLine();
@@ -111,7 +111,7 @@ public class MinibossV4Tests
         yield return new WaitForSeconds(1.5f);
 
         EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(enemyScript.health, 1);
+        enemyScript.LoseHealthUnblockable(enemyScript.health, 1);
         yield return new WaitForSeconds(1);
         Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
         dialogue.NextLine();

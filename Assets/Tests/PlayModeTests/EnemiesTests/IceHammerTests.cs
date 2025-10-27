@@ -117,7 +117,7 @@ public class IceHammerTests
         iceHammer.JumpSmash();
         yield return new WaitForSeconds(0.83f);
         EnemyScript enemyScript = iceHammer.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(1, 1000);
+        enemyScript.LoseHealthUnblockable(1, 1000);
         yield return new WaitForSeconds(3);
         Assert.AreEqual(playerData.health, playerData.MaxHealth());
     }
@@ -132,7 +132,7 @@ public class IceHammerTests
         iceHammer.JumpSmash();
         yield return new WaitForSeconds(0.5f);
         EnemyScript enemyScript = iceHammer.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
         yield return new WaitForSeconds(3);
         Assert.AreEqual(playerData.health, playerData.MaxHealth());
     }
@@ -147,7 +147,7 @@ public class IceHammerTests
 
         yield return new WaitForSeconds(0.7f);
         EnemyScript enemyScript = iceHammer.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
 
         yield return new WaitForSeconds(2f);
     }

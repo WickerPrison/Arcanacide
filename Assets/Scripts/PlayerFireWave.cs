@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFireWave : MonoBehaviour
+public class PlayerFireWave : MonoBehaviour, IDamageEnemy
 {
     [SerializeField] Collider hitBox;
     [SerializeField] GameObject fireWaveTrailPrefab;
@@ -17,6 +17,7 @@ public class PlayerFireWave : MonoBehaviour
     float speed = 15;
     float dist;
     float addedDOT;
+    public bool blockable { get; set; } = true;
 
     private void FixedUpdate()
     {
@@ -66,15 +67,17 @@ public class PlayerFireWave : MonoBehaviour
         {
             damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMastery.value);
         }
-        enemyScript.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier);
-        enemyScript.ImpactVFX();
-        if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedPatches.Contains(Patches.BURNING_REFLECTION))
+        enemyScript.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier, this, () =>
         {
-            addedDOT = 10;
-        }
-        else addedDOT = 0;
-        enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
-        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+            enemyScript.ImpactVFX();
+            if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedPatches.Contains(Patches.BURNING_REFLECTION))
+            {
+                addedDOT = 10;
+            }
+            else addedDOT = 0;
+            enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
+            RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+        });
     }
 
     void HitObject(Collider collision)
