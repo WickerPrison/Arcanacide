@@ -27,7 +27,7 @@ public class FlameThrowerTests
     public IEnumerator DeathExplosion()
     {
         Flamethrower flamethrower = GameObject.Instantiate(flamethrowerPrefab).GetComponent<Flamethrower>();
-        flamethrower.transform.position = new Vector3(-1f, 0, -1f).normalized * flamethrower.selfDestructRange * 0.95f;
+        flamethrower.transform.position = new Vector3(1f, 0, 1f).normalized * flamethrower.selfDestructRange * 0.95f;
         yield return null;
 
         EnemyScript enemyScript = flamethrower.GetComponent<EnemyScript>();
