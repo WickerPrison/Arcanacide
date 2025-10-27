@@ -31,7 +31,7 @@ public class FlameThrowerTests
         yield return null;
 
         EnemyScript enemyScript = flamethrower.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
         yield return new WaitForSeconds(4);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }

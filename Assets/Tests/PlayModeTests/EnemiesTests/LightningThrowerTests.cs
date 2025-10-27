@@ -29,7 +29,7 @@ public class LightningThrowerTests
         yield return null;
 
         EnemyScript enemyScript = lightningthrower.GetComponent<EnemyScript>();
-        enemyScript.LoseHealth(enemyScript.maxHealth, 0);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
         yield return new WaitForSeconds(2);
     }
 }
