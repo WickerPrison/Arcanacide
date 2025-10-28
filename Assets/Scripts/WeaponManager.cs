@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+enum PlayerWeapon
+{
+    SWORD, LANTERN, KNIFE, CLAWS
+}
+
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] Animator frontAnimator;
@@ -12,6 +17,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] List<GameObject> frontWeaponSprites;
     [SerializeField] List<GameObject> backWeaponSprites;
     [SerializeField] PlayerData playerData;
+    PlayerWeapon previousWeapon;
+    [SerializeField] PlayerWeapon editorWeapon;
     PlayerMovement playerController;
     PlayerEvents playerEvents;
     InputManager im;
@@ -19,6 +26,24 @@ public class WeaponManager : MonoBehaviour
     int[] specificWeaponMagicSources = new int[4];
     public event EventHandler OnStartWeaponMagic;
     public event EventHandler OnStopWeaponMagic;
+    Dictionary<PlayerWeapon, int> weapon_dict;
+    Dictionary<PlayerWeapon, int> weaponDict
+    {
+        get
+        {
+            if(weapon_dict == null)
+            {
+                weapon_dict = new Dictionary<PlayerWeapon, int>() 
+                { 
+                    { PlayerWeapon.SWORD, 0 },
+                    { PlayerWeapon.LANTERN, 1 },
+                    { PlayerWeapon.KNIFE, 2 },
+                    { PlayerWeapon.CLAWS, 3 }
+                };
+            }
+            return weapon_dict;
+        }
+    }
 
     private void Awake()
     {
@@ -134,5 +159,12 @@ public class WeaponManager : MonoBehaviour
         {
             sprite.SetActive(false);
         }
+    }
+
+    private void OnValidate()
+    {
+        if (previousWeapon == editorWeapon) return;
+        SetWeapon(weaponDict[editorWeapon]);
+        previousWeapon = editorWeapon;
     }
 }
