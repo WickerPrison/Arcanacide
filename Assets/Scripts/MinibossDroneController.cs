@@ -423,6 +423,7 @@ public class MinibossDroneController : MonoBehaviour
 
     private void MinibossEvents_onRecallDrones(object sender, EventArgs e)
     {
+        iceCloud.Stop();
         StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
     }
 
@@ -442,6 +443,7 @@ public class MinibossDroneController : MonoBehaviour
     private void MinibossEvents_onFlyAway(object sender, EventArgs e)
     {
         droneState = DroneState.DYING;
+        iceCloud.Stop();
         StartCoroutine(ToPosition(transform.position, transform.position + Vector3.up * 20, 2, () => Destroy(gameObject)));
     }
 
@@ -462,6 +464,7 @@ public class MinibossDroneController : MonoBehaviour
     private void MinibossEvents_OnStartDying(object sender, EventArgs e)
     {
         StopAllCoroutines();
+        iceCloud.Stop();
         StartCoroutine(ToPosition(transform.position, HoverPosition(), recallDroneTime, () => { droneState = DroneState.IDLE; }));
         onEndCharge?.Invoke(this, EventArgs.Empty);
         chargeHitbox.enabled = false;
