@@ -20,10 +20,9 @@ public class ParticleColorChange : MonoBehaviour
         foreach (ParticleSystem particle in particles)
         {
             ParticleSystem.MainModule main = particle.main;
-            main.startColor = new Color(newColor.r, newColor.g, newColor.b, alpha);
+            main.startColor = new Color(newColor.r, newColor.g, newColor.b, alpha / 255);
             if (main.playOnAwake)
             {
-                Debug.Log("test");
                 particle.Clear();
                 particle.Play();
             }

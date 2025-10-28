@@ -16,6 +16,7 @@ public class MinibossDroneController : MonoBehaviour
     [SerializeField] Transform backFirePoint;
     [SerializeField] AnimationCurve toDestinationCurve;
     [SerializeField] AnimationCurve[] hoverPattern;
+    [SerializeField] ParticleSystem iceCloud;
     Ellipse ellipse;
     EnemyScript enemyScript;
     EnemySound enemySound;
@@ -321,10 +322,11 @@ public class MinibossDroneController : MonoBehaviour
 
     IEnumerator ChargePositioning()
     {
-        if(droneId == 1)
+        if (droneId == 1)
         {
             yield return new WaitForSeconds(2);
         }
+        iceCloud.Play();
 
         Vector3 destination = playerScript.transform.position - toPlayer * 3 + perp * 2 * sign + offset;
 
@@ -368,6 +370,7 @@ public class MinibossDroneController : MonoBehaviour
         onEndCharge?.Invoke(this, EventArgs.Empty);
         chargeHitbox.enabled = false;
         droneState = DroneState.IDLE;
+        iceCloud.Stop();
     }
 
     private void OnTriggerEnter(Collider other)
