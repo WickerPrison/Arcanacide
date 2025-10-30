@@ -77,13 +77,16 @@ public class PlayerAttackHitEvents : MonoBehaviour
             attackDamage = playerAbilities.DetermineAttackDamage(attackProfile);
         }
 
-        switch (attackProfile.hitboxType)
+        switch (attackProfile.hitbox)
         {
-            case "Arc":
+            case HitboxType.ARC:
                 AttackArcHitbox(attackProfile, attackDamage);
                 break;
-            case "Circle":
+            case HitboxType.CIRCLE:
                 CircleHitbox(attackProfile, attackDamage);
+                break;
+            case HitboxType.AOE_ZAP:
+                AoeZapHitbox(attackProfile, attackDamage);
                 break;
         }
     }
@@ -118,6 +121,11 @@ public class PlayerAttackHitEvents : MonoBehaviour
         {
             StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
         }
+    }
+
+    void AoeZapHitbox(AttackProfiles attackProfiles, int attackDamage)
+    {
+
     }
 
     public void SwordSwoosh(AttackProfiles attackProfile)

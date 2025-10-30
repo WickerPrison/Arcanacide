@@ -2,7 +2,6 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Bolts : MonoBehaviour
 {
@@ -38,6 +37,11 @@ public class Bolts : MonoBehaviour
     public void SetPositions((Vector3, Vector3) tuple)
     {
         SetPositions(tuple.Item1, tuple.Item2);
+    }
+
+    public void SetIndividualBoltPosition(Vector3 startPos, Vector3 endPos, int index)
+    {
+        lightningBolts[index].SetPositions(startPos, endPos);
     }
 
     public void SoundOn()

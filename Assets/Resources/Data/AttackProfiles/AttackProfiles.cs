@@ -8,10 +8,15 @@ public enum AttackType
     REGULAR, HEAVY, SPECIAL, DEFLECT
 }
 
+public enum HitboxType
+{
+    NONE, ARC, CIRCLE, AOE_ZAP
+}
+
 [CreateAssetMenu]
 public class AttackProfiles : ScriptableObject
 {
-    public string hitboxType;
+    public HitboxType hitbox;
     public AttackType attackType;
 
     public int smearSpeed;

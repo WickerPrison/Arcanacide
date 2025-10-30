@@ -178,10 +178,14 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         return totalDamage; 
     }
 
-    public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile)
+    public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile, IDamageEnemy damageEnemy = null)
     {
-        blockable = attackProfile.blockable;
-        enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier, this, () =>
+        if(damageEnemy == null)
+        {
+            blockable = attackProfile.blockable;
+            damageEnemy = this;
+        }
+        enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier, damageEnemy, () =>
         {
             if (!attackProfile.soundOnHitEvent.IsNull)
             {
