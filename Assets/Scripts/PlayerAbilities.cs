@@ -429,6 +429,12 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         playerEvents.AxeSpecialAttack();
     }
 
+    public void KnifeCombo2Vfx(List<Vector3> targets)
+    {
+        int boltsFrontOrBack = playerAnimation.facingDirection > 1 ? 1 : 0;
+        bolts.BoltsAoeAttackVfx(targets, boltsOrigin[boltsFrontOrBack].position);
+    }
+
     public void KnifeSpecialAttack()
     {
         knifeSpecialAttackOn = true;

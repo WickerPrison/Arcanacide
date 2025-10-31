@@ -33,6 +33,8 @@ public class AttackProfiles : ScriptableObject
     public bool impactVFX = true;
     public bool blockable;
 
+    public int boltNum;
+
     public float bonusEffectDuration;
     public float durationDOT;
     public float staggerDuration;
