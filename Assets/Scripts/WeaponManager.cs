@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-enum PlayerWeapon
+public enum PlayerWeapon
 {
     SWORD, LANTERN, KNIFE, CLAWS
 }
@@ -17,12 +17,14 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] List<GameObject> frontWeaponSprites;
     [SerializeField] List<GameObject> backWeaponSprites;
     [SerializeField] PlayerData playerData;
-    PlayerWeapon previousWeapon;
-    [SerializeField] PlayerWeapon editorWeapon;
+    [System.NonSerialized] public PlayerWeapon previousWeapon;
+    public PlayerWeapon editorWeapon;
     PlayerMovement playerController;
     PlayerEvents playerEvents;
     InputManager im;
     [System.NonSerialized] public int weaponMagicSources;
+    [SerializeField] GameObject[] knifeOffhand;
+    [SerializeField] GameObject[] clawsOffhand;
     int[] specificWeaponMagicSources = new int[4];
     public event EventHandler OnStartWeaponMagic;
     public event EventHandler OnStopWeaponMagic;
@@ -134,8 +136,7 @@ public class WeaponManager : MonoBehaviour
         frontAnimator.runtimeAnimatorController = frontAnimatorControllers[weaponID];
         backAnimator.runtimeAnimatorController = backAnimatorControllers[weaponID];
         ClearSprites();
-        frontWeaponSprites[weaponID].SetActive(true);
-        backWeaponSprites[weaponID].SetActive(true);
+        ActivateWeaponSprite(weaponID);
 
         if (weaponMagicSources + specificWeaponMagicSources[weaponID] > 0)
         { 
@@ -147,6 +148,18 @@ public class WeaponManager : MonoBehaviour
     {
         frontWeaponSprites[weaponID].SetActive(true);
         backWeaponSprites[weaponID].SetActive(true);
+        for(int i = 0; i < 2; i++)
+        {
+            switch (weaponID)
+            {
+                case 2:
+                    knifeOffhand[i].SetActive(true);
+                    break;
+                case 3:
+                    clawsOffhand[i].SetActive(true);
+                    break;
+            }
+        }
     }
 
     void ClearSprites()
@@ -159,10 +172,19 @@ public class WeaponManager : MonoBehaviour
         {
             sprite.SetActive(false);
         }
+        foreach(GameObject sprite in knifeOffhand)
+        {
+            sprite.SetActive(false);
+        }
+        foreach(GameObject sprite in clawsOffhand)
+        {
+            sprite.SetActive(false);
+        }
     }
 
-    private void OnValidate()
+    public void InspectorChanged()
     {
+        Debug.Log("Inspector Changed");
         if (previousWeapon == editorWeapon) return;
         SetWeapon(weaponDict[editorWeapon]);
         previousWeapon = editorWeapon;
