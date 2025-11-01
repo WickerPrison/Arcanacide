@@ -477,7 +477,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         {
             bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f, 0));
             bolts.SoundOn();
-            boltdamage += playerData.arcane * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
+            boltdamage += playerData.strength * specialAttackProfiles[2].damageMultiplier * Time.deltaTime;
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
                 boltdamage += boltdamage * emblemLibrary.arcaneMastery.value;

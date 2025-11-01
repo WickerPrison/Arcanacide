@@ -22,7 +22,7 @@ public class ElectricTrap : MonoBehaviour
 
     private void Awake()
     {
-        damagePerSecond = playerData.arcane * 2;
+        damagePerSecond = playerData.strength * 2;
         sfx = GetComponent<StudioEventEmitter>();
     }
 
