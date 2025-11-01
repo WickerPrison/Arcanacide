@@ -24,6 +24,7 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onEndMirrorCloak;
     public event EventHandler onMeleeParry;
     public event EventHandler onSwordHeavyFullCharge;
+    public event EventHandler<(Vector3, bool)> onKnifeCombo1Vfx;
 
     public void DashStart()
     {
@@ -109,5 +110,10 @@ public class PlayerEvents : MonoBehaviour
     public void SwordHeavyFullCharge()
     {
         onSwordHeavyFullCharge?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void KnifeCombo1Vfx(Vector3 direction, bool front)
+    {
+        onKnifeCombo1Vfx?.Invoke(this, (direction, front));
     }
 }
