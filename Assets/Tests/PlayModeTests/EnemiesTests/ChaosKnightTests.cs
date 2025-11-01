@@ -55,4 +55,17 @@ public class ChaosKnightTests
         yield return new WaitForSeconds(2f);
         Assert.AreEqual(enemyScript.health, enemyScript.maxHealth);
     }
+
+    [UnityTest]
+    public IEnumerator GetShocked()
+    {
+        ChaosKnightController knight = GameObject.Instantiate(knightPrefab).GetComponent<ChaosKnightController>();
+        knight.attackTime = 100;
+        EnemyScript enemyScript = knight.GetComponent<EnemyScript>();
+        knight.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        enemyScript.GainElectricCharge(10 + enemyScript.chargeResistance);
+        yield return new WaitForSeconds(2f);
+        Assert.Less(enemyScript.health, enemyScript.maxHealth);
+    }
 }

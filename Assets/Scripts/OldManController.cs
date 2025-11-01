@@ -46,9 +46,7 @@ public class OldManController : EnemyController
                 int randNum = Random.Range(1,3);
                 if(randNum == 1)
                 {
-                    attackTime = attackMaxTime;
-                    frontAnimator.Play("TeleportAway");
-                    backAnimator.Play("TeleportAway");
+                    StartTeleport();
                 }
                 else if(randNum == 2)
                 {
@@ -62,6 +60,13 @@ public class OldManController : EnemyController
         {
             attackTime -= Time.deltaTime;
         }
+    }
+
+    public void StartTeleport()
+    {
+        attackTime = attackMaxTime;
+        frontAnimator.Play("TeleportAway");
+        backAnimator.Play("TeleportAway");
     }
 
     public override void Update()

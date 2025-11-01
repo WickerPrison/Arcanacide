@@ -18,6 +18,7 @@ public class EnemyEvents : MonoBehaviour
     public event EventHandler OnHideBossHealthbar;
     public event Action<EnemyEvents, float> OnUpdateHealth;
     public event EventHandler<string> OnTriggerVfx;
+    public event EventHandler onGetShocked;
 
 
     public void TakeDamage()
@@ -83,5 +84,10 @@ public class EnemyEvents : MonoBehaviour
     public void TriggerVfx(string name)
     {
         OnTriggerVfx?.Invoke(this, name);
+    }
+
+    public void GetShocked()
+    {
+        onGetShocked?.Invoke(this, EventArgs.Empty);
     }
 }

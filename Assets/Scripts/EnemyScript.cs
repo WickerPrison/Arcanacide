@@ -28,6 +28,10 @@ public class EnemyScript : MonoBehaviour
     [System.NonSerialized] public bool dying = false;
     public string enemyGUID = "";
     [System.NonSerialized] public List<EnemyState> nonStaggerableStates = new List<EnemyState>();
+    public int chargeResistance;
+    int maxCharge = 10;
+    [System.NonSerialized] public int electricCharge;
+
 
     private void Awake()
     {
@@ -42,6 +46,7 @@ public class EnemyScript : MonoBehaviour
     {
         health = maxHealth;
         poise = maxPoise;
+        maxCharge += chargeResistance;
         enemyController = GetComponent<EnemyController>();
         enemyEvents = GetComponent<EnemyEvents>();
         enemyEvents.UpdateHealth(1);
@@ -159,6 +164,20 @@ public class EnemyScript : MonoBehaviour
         {
             StartStagger(staggerDuration);
             poise = maxPoise;
+        }
+    }
+
+    public void GainElectricCharge(int amount)
+    {
+        Debug.Log(amount);
+        electricCharge += amount;
+        if(electricCharge >= maxCharge)
+        {
+            electricCharge = 0;
+            maxCharge += 2 + Mathf.FloorToInt(chargeResistance / 2);
+            enemyEvents.GetShocked();
+            enemySound.ElectricShock();
+            LoseHealthUnblockable(Mathf.FloorToInt(maxHealth * 0.1f) + 10, 50);
         }
     }
 

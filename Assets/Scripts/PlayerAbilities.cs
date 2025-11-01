@@ -76,6 +76,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     bool knifeSpecialAttackOn = false;
     Vector3 away = Vector3.one * 100;
     float boltdamage = 0;
+    float boltCharge = 0;
 
     float clawSpecialMaxTime = 15f;
     float clawSpecialDamageMult = 1.5f;
@@ -204,6 +205,11 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
             enemy.GainDOT(attackProfile.durationDOT);
 
+            if(attackProfile.electricChargeBuildup > 0)
+            {
+                enemy.GainElectricCharge(attackProfile.electricChargeBuildup);
+            }
+
             if (attackProfile.staggerDuration > 0)
             {
                 EnemyController enemyController = enemy.GetComponent<EnemyController>();
@@ -310,7 +316,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         parry = false;
     }
 
-    void HeavyAttack()
+    public void HeavyAttack()
     {
         if (playerAnimation.attacking)
         {
@@ -482,6 +488,13 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
                 blockable = false;
                 closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0, this, () => { });
                 boltdamage = 0;
+            }
+
+            boltCharge += specialAttackProfiles[2].electricChargeBuildup * Time.deltaTime;
+            if(boltCharge > 1)
+            {
+                closestEnemy.GainElectricCharge(Mathf.FloorToInt(boltCharge));
+                boltCharge = 0;
             }
         }
         else

@@ -11,6 +11,7 @@ public class EnemySound : MonoBehaviour
     [SerializeField] EventReference swordImpact;
     [SerializeField] EventReference enemySpell;
     [SerializeField] EventReference blockAttack;
+    [SerializeField] EventReference electricChargeShock;
     [SerializeField] List<AudioClip> otherSounds = new List<AudioClip>();
     [SerializeField] EventReference[] otherSFX;
     EventInstance fmodInstance;
@@ -38,6 +39,11 @@ public class EnemySound : MonoBehaviour
     public void EnemySpell()
     {
         RuntimeManager.PlayOneShot(enemySpell, 1);
+    }
+
+    public void ElectricShock()
+    {
+        RuntimeManager.PlayOneShot(electricChargeShock, 1);
     }
 
     public void OtherSounds(int indexNumber, float volume)

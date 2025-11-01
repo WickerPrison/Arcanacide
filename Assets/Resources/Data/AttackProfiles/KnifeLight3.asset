@@ -13,21 +13,22 @@ MonoBehaviour:
   m_Name: KnifeLight3
   m_EditorClassIdentifier: 
   hitbox: 1
-  attackType: 1
+  attackType: 0
   smearSpeed: 5
   stepWithAttack: 0.1
   halfConeAngle: 45
   attackRange: 1
-  damageMultiplier: 0
+  damageMultiplier: 0.5
   chargeDamage: 0
   fullChargeDamage: 0
   magicDamageMultiplier: 0
-  poiseDamageMultiplier: 0
+  poiseDamageMultiplier: 0.3
   staminaCost: 15
   manaCost: 0
   impactVFX: 1
   blockable: 1
   boltNum: 0
+  electricChargeBuildup: 0
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0
@@ -35,12 +36,12 @@ MonoBehaviour:
   screenShakeNoHit: {x: 0, y: 0}
   soundOnHitEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  soundOnHitVolume: 0
+      Data1: 428314037
+      Data2: 1127108808
+      Data3: 1309186218
+      Data4: 1243437851
+    Path: event:/SwordImpact
+  soundOnHitVolume: 0.6
   noHitSoundEvent:
     Guid:
       Data1: -1119663120

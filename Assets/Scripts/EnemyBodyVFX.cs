@@ -14,6 +14,7 @@ public class EnemyBodyVFX : MonoBehaviour
     [SerializeField] ParticleSystem impactVFX;
     [SerializeField] ParticleSystem dot;
     [SerializeField] ParticleSystem hitVFX;
+    [SerializeField] ParticleSystem shockVFX;
     EnemyEvents enemyEvents;
     EnemyController enemyController;
 
@@ -87,12 +88,18 @@ public class EnemyBodyVFX : MonoBehaviour
         dot.Stop();
     }
 
+    private void EnemyEvents_onGetShocked(object sender, System.EventArgs e)
+    {
+        shockVFX.Play();
+    }
+
     private void OnEnable()
     {
         enemyEvents.OnTakeDamage += OnTakeDamage;
         enemyEvents.OnAttackImpact += OnAttackImpact;
         enemyEvents.OnStartDOT += OnStartDOT;
         enemyEvents.OnStopDOT += OnStopDOT;
+        enemyEvents.onGetShocked += EnemyEvents_onGetShocked;
     }
 
     private void OnDisable()
@@ -101,5 +108,6 @@ public class EnemyBodyVFX : MonoBehaviour
         enemyEvents.OnAttackImpact -= OnAttackImpact;
         enemyEvents.OnStartDOT -= OnStartDOT;
         enemyEvents.OnStopDOT -= OnStopDOT;
+        enemyEvents.onGetShocked -= EnemyEvents_onGetShocked;
     }
 }
