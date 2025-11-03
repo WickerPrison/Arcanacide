@@ -301,6 +301,12 @@ public class PlayerAnimationEvents : MonoBehaviour
         electricSmear.Play();
     }
 
+    public void KnifeCombo1Vfx()
+    {
+        Vector3 direction = playerMovement.attackPoint.position - playerMovement.transform.position;
+        playerEvents.KnifeCombo1Vfx(direction, playerAnimation.facingFront);
+    }
+
     public void StartIceBreath()
     {
         iceBreath.StartIceBreath();

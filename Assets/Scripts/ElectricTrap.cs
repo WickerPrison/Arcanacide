@@ -11,6 +11,8 @@ public class ElectricTrap : MonoBehaviour
     [SerializeField] EventReference electricDamage;
     float damage = 0;
     float damagePerSecond;
+    float charge;
+    [SerializeField] float chargePerSecond;
     float duration = 3;
     float timer;
     Vector3 away = Vector3.one * 100;
@@ -20,7 +22,7 @@ public class ElectricTrap : MonoBehaviour
 
     private void Awake()
     {
-        damagePerSecond = playerData.arcane * 2;
+        damagePerSecond = playerData.strength * 2;
         sfx = GetComponent<StudioEventEmitter>();
     }
 
@@ -58,6 +60,17 @@ public class ElectricTrap : MonoBehaviour
                     StartCoroutine(SFXtimer());
                 }
                 damage = 0;
+            }
+
+            charge += chargePerSecond * Time.deltaTime;
+            if(charge > 1)
+            {
+                int amount = Mathf.FloorToInt(charge);
+                foreach (EnemyScript enemy in enemiesInRange)
+                {
+                    enemy.GainElectricCharge(amount);
+                }
+                charge = 0;
             }
         }
     }

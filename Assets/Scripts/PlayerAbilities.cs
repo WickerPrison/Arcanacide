@@ -76,6 +76,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     bool knifeSpecialAttackOn = false;
     Vector3 away = Vector3.one * 100;
     float boltdamage = 0;
+    float boltCharge = 0;
 
     float clawSpecialMaxTime = 15f;
     float clawSpecialDamageMult = 1.5f;
@@ -178,10 +179,14 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         return totalDamage; 
     }
 
-    public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile)
+    public void DamageEnemy(EnemyScript enemy, int damage, AttackProfiles attackProfile, IDamageEnemy damageEnemy = null)
     {
-        blockable = attackProfile.blockable;
-        enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier, this, () =>
+        if(damageEnemy == null)
+        {
+            blockable = attackProfile.blockable;
+            damageEnemy = this;
+        }
+        enemy.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier, damageEnemy, () =>
         {
             if (!attackProfile.soundOnHitEvent.IsNull)
             {
@@ -199,6 +204,11 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             }
 
             enemy.GainDOT(attackProfile.durationDOT);
+
+            if(attackProfile.electricChargeBuildup > 0)
+            {
+                enemy.GainElectricCharge(attackProfile.electricChargeBuildup);
+            }
 
             if (attackProfile.staggerDuration > 0)
             {
@@ -306,7 +316,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         parry = false;
     }
 
-    void HeavyAttack()
+    public void HeavyAttack()
     {
         if (playerAnimation.attacking)
         {
@@ -425,6 +435,12 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         playerEvents.AxeSpecialAttack();
     }
 
+    public void KnifeCombo2Vfx(List<Vector3> targets)
+    {
+        int boltsFrontOrBack = playerAnimation.facingDirection > 1 ? 1 : 0;
+        bolts.BoltsAoeAttackVfx(targets, boltsOrigin[boltsFrontOrBack].position);
+    }
+
     public void KnifeSpecialAttack()
     {
         knifeSpecialAttackOn = true;
@@ -461,7 +477,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         {
             bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, closestEnemy.transform.position + new Vector3(0, 1.1f, 0));
             bolts.SoundOn();
-            boltdamage += playerData.arcane * specialAttackProfiles[2].magicDamageMultiplier * Time.deltaTime;
+            boltdamage += playerData.strength * specialAttackProfiles[2].damageMultiplier * Time.deltaTime;
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
                 boltdamage += boltdamage * emblemLibrary.arcaneMastery.value;
@@ -472,6 +488,13 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
                 blockable = false;
                 closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0, this, () => { });
                 boltdamage = 0;
+            }
+
+            boltCharge += specialAttackProfiles[2].electricChargeBuildup * Time.deltaTime;
+            if(boltCharge > 1)
+            {
+                closestEnemy.GainElectricCharge(Mathf.FloorToInt(boltCharge));
+                boltCharge = 0;
             }
         }
         else

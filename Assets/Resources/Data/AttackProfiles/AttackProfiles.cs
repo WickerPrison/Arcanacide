@@ -8,10 +8,15 @@ public enum AttackType
     REGULAR, HEAVY, SPECIAL, DEFLECT
 }
 
+public enum HitboxType
+{
+    NONE, ARC, CIRCLE, AOE_ZAP
+}
+
 [CreateAssetMenu]
 public class AttackProfiles : ScriptableObject
 {
-    public string hitboxType;
+    public HitboxType hitbox;
     public AttackType attackType;
 
     public int smearSpeed;
@@ -27,6 +32,10 @@ public class AttackProfiles : ScriptableObject
     public float manaCost;
     public bool impactVFX = true;
     public bool blockable;
+
+    public int boltNum;
+
+    public int electricChargeBuildup;
 
     public float bonusEffectDuration;
     public float durationDOT;
