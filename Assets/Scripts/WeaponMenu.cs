@@ -51,7 +51,7 @@ public class WeaponMenu : MonoBehaviour
         controls.Menu.MenuLantern.performed += ctx => SelectWeapon(MenuWeaponSelected.LANTERN);
         controls.Menu.MenuKnife.performed += ctx => SelectWeapon(MenuWeaponSelected.KNIFE);
         controls.Menu.MenuClaws.performed += ctx => SelectWeapon(MenuWeaponSelected.CLAWS);
-        controls.Menu.Back.performed += ctx => LeaveMenu();
+        controls.Menu.Back.performed += ctx => Back();
     }
 
     private void Start()
@@ -89,7 +89,7 @@ public class WeaponMenu : MonoBehaviour
         }
 
         initialScale = weaponsIcon.localScale;
-        SelectWeapon(MenuWeaponSelected.SWORD);
+        SelectWeapon(MenuWeaponSelected.NONE);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(backButton);
     }
@@ -190,6 +190,18 @@ public class WeaponMenu : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         weaponsIcon.localPosition = centerPosition;
+    }
+
+    void Back()
+    {
+        if(weaponSelected != MenuWeaponSelected.NONE)
+        {
+            SelectWeapon(MenuWeaponSelected.NONE);
+        }
+        else
+        {
+            LeaveMenu();
+        }
     }
 
     public void LeaveMenu()
