@@ -16,7 +16,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] Animator backAnimator;
     [SerializeField] ExternalLanternFairy lanternFairy;
     [SerializeField] AttackProfiles lanternComboNoFairy;
-    [SerializeField] ClawVFX clawVFX;
+    [SerializeField] ClawVFX[] clawVFX;
 
     //player scripts
     PlayerScript playerScript;
@@ -40,7 +40,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     private void Awake()
     {
-        clawVFX = transform.parent.GetComponentInChildren<ClawVFX>();
+        clawVFX = transform.parent.GetComponentsInChildren<ClawVFX>();
         playerEvents = GetComponentInParent<PlayerEvents>();
     }
 
@@ -280,7 +280,13 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void BigClaw(AttackProfiles attackProfile)
     {
-        clawVFX.StartVFX(attackProfile);
+        clawVFX[0].StartVFX(attackProfile.smearRotations);
+    }
+
+    public void DoubleClaw(AttackProfiles attackProfile)
+    {
+        clawVFX[0].StartVFX(attackProfile.smearRotations);
+        clawVFX[1].StartVFX(attackProfile.secondClawRot);
     }
 
     public void ParryWindow()

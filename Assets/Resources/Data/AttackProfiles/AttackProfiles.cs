@@ -52,4 +52,5 @@ public class AttackProfiles : ScriptableObject
     public List<Vector3> smearPositions;
     public List<Vector3> smearRotations;
     public List<Vector3> smearScales;
+    public List<Vector3> secondClawRot;
 }
