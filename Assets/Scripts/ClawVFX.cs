@@ -24,10 +24,6 @@ public class ClawVFX : MonoBehaviour
             );
         foreach (ParticleSystem swipe in singleClaw)
         {
-            ParticleSystem.MainModule main = swipe.main;
-            //main.startRotationY = (attackPoint.rotation.eulerAngles.y + zRot[playerAnimation.facingDirection].y) * Mathf.Deg2Rad;
-            //main.startRotationX = zRot[playerAnimation.facingDirection].x * Mathf.Deg2Rad;
-
             swipe.Play();
         }
     }

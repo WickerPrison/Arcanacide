@@ -362,6 +362,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerScript.LoseStamina(profile.staminaCost);
     }
 
+    public void Waterfowl()
+    {
+        playerEvents.Waterfowl();
+    }
+
     private void onPlayerStagger(object sender, EventArgs e)
     {
         SwitchWeaponSprite(playerData.currentWeapon);
