@@ -33,4 +33,16 @@ public static class Utils
         newDirection.z = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.z;
         return newDirection;
     }
+
+    public static void DrawDebugCircle(int pointNum, float radius, Vector3 center, float duration = 5)
+    {
+        float percent = 360 / pointNum;
+        for (int i = 0; i < pointNum; i++)
+        {
+            float t = percent * i;
+            Vector3 pos1 = RotateDirection(Vector3.right, t).normalized * radius + center;
+            Vector3 pos2 = RotateDirection(Vector3.right, t + percent).normalized * radius + center;
+            Debug.DrawLine(pos1, pos2, Color.red, duration);
+        }
+    }
 }
