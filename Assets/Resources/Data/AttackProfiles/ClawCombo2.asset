@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: ClawCombo2
   m_EditorClassIdentifier: 
-  hitbox: 1
+  hitbox: 2
   attackType: 1
   smearSpeed: 0
   stepWithAttack: 0
-  halfConeAngle: 45
-  attackRange: 3
+  halfConeAngle: 0
+  attackRange: 0
   damageMultiplier: 0.75
   chargeDamage: 0
   fullChargeDamage: 0
   magicDamageMultiplier: 0.75
   poiseDamageMultiplier: 1
-  staminaCost: 30
+  staminaCost: 0
   manaCost: 0
   impactVFX: 1
   blockable: 1
@@ -32,24 +32,24 @@ MonoBehaviour:
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0.2
-  screenShakeOnHit: {x: 0.15, y: 0.08}
-  screenShakeNoHit: {x: 0, y: 0}
+  screenShakeOnHit: {x: 0, y: 0}
+  screenShakeNoHit: {x: 0.25, y: 0.08}
   soundOnHitEvent:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  soundOnHitVolume: 0
-  noHitSoundEvent:
     Guid:
       Data1: -603102044
       Data2: 1128938890
       Data3: -1731959668
       Data4: 321853005
     Path: event:/IceImpact
-  soundNoHitVolume: 1
+  soundOnHitVolume: 1
+  noHitSoundEvent:
+    Guid:
+      Data1: 596054096
+      Data2: 1089662140
+      Data3: 1063899299
+      Data4: -513444934
+    Path: event:/BigSmash
+  soundNoHitVolume: 1.5
   smearPositions: []
   smearRotations: []
   smearScales: []

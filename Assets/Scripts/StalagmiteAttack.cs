@@ -27,6 +27,7 @@ public class StalagmiteAttack : MonoBehaviour
     [SerializeField] EventReference iceImpact;
     Vector3 localPos;
     Transform holder;
+    [SerializeField] bool attackEnemy;
     [SerializeField] bool showInEditor;
     [System.NonSerialized] public bool isTriggered = false;
 
@@ -113,9 +114,17 @@ public class StalagmiteAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!attackEnemy)
+        {
+            HitPlayer(other);
+        }
+    }
+
+    void HitPlayer(Collider other)
+    {
         if (other.CompareTag("Player"))
         {
-            if(playerScript == null)
+            if (playerScript == null)
             {
                 playerScript = other.GetComponent<PlayerScript>();
             }

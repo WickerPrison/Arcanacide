@@ -17,6 +17,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] ExternalLanternFairy lanternFairy;
     [SerializeField] AttackProfiles lanternComboNoFairy;
     [SerializeField] ClawVFX[] clawVFX;
+    [SerializeField] PlayerStalagmiteHolder stalagmiteHolder;
 
     //player scripts
     PlayerScript playerScript;
@@ -58,6 +59,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         weaponManager = GetComponentInParent<WeaponManager>();
         playerAttackHitEvents = GetComponent<PlayerAttackHitEvents>();
         iceBreath = playerScript.gameObject.GetComponentInChildren<IceBreath>();
+        stalagmiteHolder.gameObject.SetActive(true);
     }
 
     public void SwitchWeaponSprite(int weaponID)
@@ -365,6 +367,11 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void Waterfowl()
     {
         playerEvents.Waterfowl();
+    }
+
+    public void Stalagmites()
+    {
+        stalagmiteHolder.TriggerWave();
     }
 
     private void onPlayerStagger(object sender, EventArgs e)

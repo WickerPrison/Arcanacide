@@ -13,16 +13,17 @@ public class StalagmiteHolder : MonoBehaviour
     [SerializeField] Color oldColor;
     [SerializeField] LevelColor newColor;
     [SerializeField] ColorData colorData;
+    EnemyScript enemyOfOrigin;
 
-    private void Awake()
+    public virtual void Awake()
     {
         enemyEvents = GetComponentInParent<EnemyEvents>();
+        enemyOfOrigin = GetComponentInParent<EnemyScript>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        EnemyScript enemyOfOrigin = GetComponentInParent<EnemyScript>();
         stalagmites = GetComponentsInChildren<StalagmiteAttack>();
         foreach(StalagmiteAttack stalagmite in stalagmites)
         {
@@ -76,13 +77,13 @@ public class StalagmiteHolder : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    public virtual void OnEnable()
     {
         enemyEvents.OnStagger += EnemyEvents_OnStagger;
         enemyEvents.OnStartDying += EnemyEvents_OnStartDying;
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         enemyEvents.OnStagger -= EnemyEvents_OnStagger;
         enemyEvents.OnStartDying -= EnemyEvents_OnStartDying;
