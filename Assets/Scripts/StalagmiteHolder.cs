@@ -5,7 +5,7 @@ using System.Linq;
 
 public class StalagmiteHolder : MonoBehaviour
 {
-    StalagmiteAttack[] stalagmites;
+    [System.NonSerialized] public StalagmiteAttack[] stalagmites;
     SortedDictionary<float, StalagmiteAttack> stalagmiteDict = new SortedDictionary<float, StalagmiteAttack>();
     [SerializeField] float waveSpeed;
     EnemyEvents enemyEvents;
@@ -22,7 +22,7 @@ public class StalagmiteHolder : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         stalagmites = GetComponentsInChildren<StalagmiteAttack>();
         foreach(StalagmiteAttack stalagmite in stalagmites)

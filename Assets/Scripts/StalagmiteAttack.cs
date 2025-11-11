@@ -30,6 +30,9 @@ public class StalagmiteAttack : MonoBehaviour
     [SerializeField] bool attackEnemy;
     [SerializeField] bool showInEditor;
     [System.NonSerialized] public bool isTriggered = false;
+    [System.NonSerialized] public PlayerAbilities playerAbilities;
+    [System.NonSerialized] public AttackProfiles attackProfile;
+
 
     private void Awake()
     {
@@ -70,7 +73,7 @@ public class StalagmiteAttack : MonoBehaviour
     public void Trigger()
     {
         NavMeshHit navMeshHit;
-        if(NavMesh.SamplePosition(transform.position, out navMeshHit, 0.1f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(transform.position, out navMeshHit, 0.1f, NavMesh.AllAreas))
         {
             StartCoroutine(Emerge(icicle, start, end));
         }
@@ -88,7 +91,7 @@ public class StalagmiteAttack : MonoBehaviour
         isTriggered = true;
         float emergeTimer = 0;
         transform.SetParent(null);
-        while(emergeTimer < emergeTime)
+        while (emergeTimer < emergeTime)
         {
             icicle.transform.localPosition = Vector3.Lerp(start, end, emergeTimer / emergeTime);
             emergeTimer += Time.deltaTime;
@@ -118,29 +121,40 @@ public class StalagmiteAttack : MonoBehaviour
         {
             HitPlayer(other);
         }
+        else
+        {
+            HitEnemy(other);
+        }
     }
 
     void HitPlayer(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+        if (playerScript == null)
         {
-            if (playerScript == null)
-            {
-                playerScript = other.GetComponent<PlayerScript>();
-            }
-
-            playerScript.HitPlayer(() =>
-            {
-                playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
-                playerScript.LosePoise(poiseDamage);
-                playerScript.StartStagger(0.2f);
-                RuntimeManager.PlayOneShot(iceImpact, 1f);
-                hitbox.enabled = false;
-            }, () =>
-            {
-                playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
-            });
+            playerScript = other.GetComponent<PlayerScript>();
         }
+
+        playerScript.HitPlayer(() =>
+        {
+            playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
+            playerScript.LosePoise(poiseDamage);
+            playerScript.StartStagger(0.2f);
+            RuntimeManager.PlayOneShot(iceImpact, 1f);
+            hitbox.enabled = false;
+        }, () =>
+        {
+            playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
+        });
+    }
+
+    void HitEnemy(Collider other)
+    {
+        if (!other.CompareTag("Enemy")) return;
+        EnemyScript enemyScript = other.GetComponent<EnemyScript>();
+
+        int damage = playerAbilities.DetermineAttackDamage(attackProfile);
+        playerAbilities.DamageEnemy(enemyScript, damage, attackProfile);
     }
 
     public void CancelStalagmite()
