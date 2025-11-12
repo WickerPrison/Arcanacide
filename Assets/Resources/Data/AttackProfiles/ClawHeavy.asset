@@ -12,21 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: ClawHeavy
   m_EditorClassIdentifier: 
-  hitboxType: 
+  hitbox: 0
   attackType: 1
   smearSpeed: 0
   stepWithAttack: 0
   halfConeAngle: 0
   attackRange: 3
-  damageMultiplier: 0.4
+  damageMultiplier: 0.8
   chargeDamage: 0
   fullChargeDamage: 0
-  magicDamageMultiplier: 0.4
+  magicDamageMultiplier: 0
   poiseDamageMultiplier: 0
-  staminaCost: 5
+  staminaCost: 10
   manaCost: 0
   impactVFX: 0
   blockable: 1
+  boltNum: 0
+  electricChargeBuildup: 0
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0
@@ -51,3 +53,4 @@ MonoBehaviour:
   smearPositions: []
   smearRotations: []
   smearScales: []
+  secondClawRot: []

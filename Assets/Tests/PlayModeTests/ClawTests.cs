@@ -41,4 +41,21 @@ public class ClawTests
         yield return new WaitForSeconds(3);
         Assert.Less(testDummy1.health, testDummy1.maxHealth);
     }
+
+    [UnityTest]
+    public IEnumerator Heavy()
+    {
+        playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
+        weaponManager = playerAnimation.GetComponent<WeaponManager>();
+        EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy1.transform.position = new Vector3(2f, 0, -2f);
+        testDummy1.maxHealth *= 10;
+        testDummy1.health = testDummy1.maxHealth;
+        yield return null;
+        weaponManager.SwitchWeapon(3);
+        yield return new WaitForSeconds(2);
+        playerAnimation.PlayAnimation("HeavyAttack");
+        yield return new WaitForSeconds(10);
+        Assert.Less(testDummy1.health, testDummy1.maxHealth);
+    }
 }
