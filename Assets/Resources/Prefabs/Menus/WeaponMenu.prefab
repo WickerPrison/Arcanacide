@@ -2875,8 +2875,8 @@ PrefabInstance:
       propertyPath: m_text
       value: "Dragon Fury\r\nYou are filled with the rage of a frost dragon. \r\n\r\nLet
         out a roar that staggers nearby enemies and greatly reduces their poise.
-        For a short time you deal more damage and take less damage but you use more
-        Stamina. Costs 40 Mana to activate."
+        For a short time you deal double damage and take double damage but you use
+        more Stamina. Costs 40 Mana to activate.\r\n"
       objectReference: {fileID: 0}
     - target: {fileID: 1597460374287591029, guid: 45e1187a709aa7d49ae2f1ad171cb369, type: 3}
       propertyPath: m_Enabled
@@ -2898,15 +2898,25 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Light -> Heavy
 
-        Make a normal light attack, while also dashing
-        backwards to safety.
+        Strike with both claws, then shred all foes
+        around you with the spirit of an ancient frost dragon.
 
+        
 
-        Light -> Light -> Heavy
+        Light
+        -> Light -> Heavy
 
-        Shoot out
-        a blast of icy energy, dealing Physical and Arcane damage in an area in front
-        of you.'
+        Summon icicles, dealing Physical damage to foes
+        in a large area in front of you.
+
+        
+
+        Light -> Light -> Light
+
+        Slash
+        with both claws
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 3818583014088901719, guid: 45e1187a709aa7d49ae2f1ad171cb369, type: 3}
       propertyPath: m_Pivot.x
@@ -3008,27 +3018,31 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Light Attack
 
-        A claw strike that deals Physical and Arcane
-        damage.
+        A claw slash that deals Physical damage.
 
 
-        Heavy Attack
+        Heavy
+        Attack
 
-        Hold down the Heavy Attack button
-        to channel the icy breath of a frost dragon, dealing both Physical and Arcane
-        damage.'
+        Hold down the Heavy Attack button to channel the icy breath
+        of a frost dragon, dealing high Physical damage.'
       objectReference: {fileID: 0}
     - target: {fileID: 8813403426124584740, guid: 45e1187a709aa7d49ae2f1ad171cb369, type: 3}
       propertyPath: m_text
-      value: 'Frost dragons are difficult to find, and even more difficult to kill.
-        Weapons crafted from their teeth are rare and powerful treasures. Failure
-        to pay luxury goods tax on weapons like this would earn someone the eternal
-        enmity of the IRS.
+      value: 'Damage Scaling: <color=white>Strength</color>
+
+        Frost dragons
+        are difficult to find, and even more difficult to kill. Weapons crafted from
+        their teeth are rare and powerful treasures. Failure to pay luxury goods
+        tax on weapons like this would earn someone the eternal enmity of the IRS.
 
 
-        The Frostbite Fangs deal a combination of Physical
-        and Arcane damage and will be deadly in the hands of someone with high Arcane
-        skill, great Strength, or a combination of both.'
+
+        The
+        Frostbite Fangs deal extremely high Physical damage, but their icy aura makes
+        the Stamina cost of using them very high.
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45e1187a709aa7d49ae2f1ad171cb369, type: 3}
