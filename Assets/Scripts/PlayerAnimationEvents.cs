@@ -35,6 +35,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     IceBreath iceBreath;
     ElectricTrap electricTrap;
     WeaponManager weaponManager;
+    [System.NonSerialized] public TestingEvents testingEvents;
+
 
     //variables
     bool doLanternCombo;
@@ -132,6 +134,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void AttackFalse()
     {
         playerAnimation.EndChain();
+        if (testingEvents != null) testingEvents.AttackFalse();
     }
 
     public void EndAttack()
@@ -139,6 +142,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation.attacking = false;
         playerMovement.lockPosition = false;
         playerAnimation.EndChain();
+        if (testingEvents != null) testingEvents.AttackFalse();
     }
 
     public void Heal()
