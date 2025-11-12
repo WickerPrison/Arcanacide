@@ -844,11 +844,13 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  enemySound: {fileID: 0}
   maxHealth: 200
   maxPoise: 100
   poiseRegeneration: 5
   invincible: 0
   enemyGUID: 
+  chargeResistance: 0
 --- !u!114 &3855204322953762834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,6 +1027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
   colorChange: 0
+  colorChangeThreshold: 0.1
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   newFloorColor: 0
   colorData: {fileID: 0}
@@ -32373,6 +32376,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -32439,6 +32446,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -32505,7 +32516,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -32557,6 +32580,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &4648269981756197285 stripped
@@ -32571,7 +32598,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -32623,6 +32662,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &4679154501890451952 stripped
@@ -32637,6 +32680,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -32703,6 +32750,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -32769,6 +32820,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -32835,6 +32890,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -32901,6 +32960,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -32967,6 +33030,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -33033,6 +33100,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -33099,6 +33170,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -33165,6 +33240,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -33231,7 +33310,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -33283,6 +33374,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &5269046343503674740 stripped
@@ -33297,7 +33392,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -33348,6 +33455,10 @@ PrefabInstance:
     - target: {fileID: 7089523874588616971, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Name
       value: StalagmiteAttack (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
@@ -33448,6 +33559,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -33514,7 +33629,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -33566,6 +33693,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &6174797327978758367 stripped
@@ -33580,7 +33711,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -33632,6 +33775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &6155396733926192640 stripped
@@ -33646,7 +33793,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -33698,6 +33857,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &5816858619656100096 stripped
@@ -33712,6 +33875,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -33778,7 +33945,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -33830,6 +34009,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &5956021089693299101 stripped
@@ -33844,7 +34027,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -33896,6 +34091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &5946361349594136075 stripped
@@ -33910,7 +34109,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -33962,6 +34173,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &6671141278782448731 stripped
@@ -33976,6 +34191,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34042,7 +34261,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -34094,6 +34325,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &6703071808477231805 stripped
@@ -34108,7 +34343,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -34160,6 +34407,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (29)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &6902868766676197152 stripped
@@ -34174,7 +34425,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -34226,6 +34489,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (34)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &6539640725948602477 stripped
@@ -34240,6 +34507,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34306,7 +34577,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -34358,6 +34641,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &6568878650254970810 stripped
@@ -34372,7 +34659,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -34424,6 +34723,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &7236407149641675010 stripped
@@ -34438,7 +34741,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -34490,6 +34805,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &7339063962169796627 stripped
@@ -34504,6 +34823,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34570,6 +34893,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34636,6 +34963,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34702,7 +35033,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -34754,6 +35097,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &7195656250995145078 stripped
@@ -34768,6 +35115,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34834,6 +35185,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34900,6 +35255,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -34966,6 +35325,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35032,6 +35395,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35098,6 +35465,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35164,6 +35535,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35230,6 +35605,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35296,6 +35675,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35362,7 +35745,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -35414,6 +35809,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &8526589469682105055 stripped
@@ -35428,6 +35827,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35494,7 +35897,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -35546,6 +35961,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (28)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &8610260964138857008 stripped
@@ -35560,7 +35979,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -35612,6 +36043,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &8594148951818200180 stripped
@@ -35626,6 +36061,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35692,7 +36131,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -35743,6 +36194,10 @@ PrefabInstance:
     - target: {fileID: 7089523874588616971, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Name
       value: StalagmiteAttack (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
@@ -35888,6 +36343,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -35954,6 +36413,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36020,6 +36483,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36086,7 +36553,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -36138,6 +36617,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &8811998343380995122 stripped
@@ -36152,6 +36635,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36218,6 +36705,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36390,6 +36881,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36456,6 +36951,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36522,6 +37021,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36588,7 +37091,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -36640,6 +37155,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (24)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &259744084491291688 stripped
@@ -36654,7 +37173,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -36706,6 +37237,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &278323192188585043 stripped
@@ -36720,6 +37255,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36786,7 +37325,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -36838,6 +37389,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &876853000181175977 stripped
@@ -36852,6 +37407,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36918,6 +37477,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -36984,6 +37547,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37050,6 +37617,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37116,7 +37687,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -37168,6 +37751,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &1076088262387150352 stripped
@@ -37182,7 +37769,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -37234,6 +37833,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (30)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &805526696906407500 stripped
@@ -37248,6 +37851,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37314,6 +37921,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37380,7 +37991,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -37432,6 +38055,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &1431202301036042226 stripped
@@ -37446,7 +38073,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -37498,6 +38137,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &2068295758717141355 stripped
@@ -37512,6 +38155,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37578,6 +38225,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37644,6 +38295,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37710,7 +38365,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -37762,6 +38429,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &1851857105391507139 stripped
@@ -37776,7 +38447,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -37828,6 +38511,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (32)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &1846562118095497272 stripped
@@ -37842,6 +38529,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37908,6 +38599,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -37974,6 +38669,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38040,6 +38739,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38106,7 +38809,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -38158,6 +38873,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &2522331136600001251 stripped
@@ -38172,7 +38891,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -38224,6 +38955,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (33)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &3442447352674093033 stripped
@@ -38238,6 +38973,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38304,6 +39043,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38370,6 +39113,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38436,6 +39183,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38502,6 +39253,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38568,6 +39323,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38748,6 +39507,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38814,6 +39577,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -38880,7 +39647,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -38932,6 +39711,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StalagmiteAttack (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
 --- !u!4 &4151482332333979393 stripped
@@ -38946,6 +39729,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8748900908896553694}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -39012,7 +39799,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8988242203014453652}
     m_Modifications:
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: attackPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017043533901546343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: showInEditor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3510200511390278343, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991441948448038102, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -39063,6 +39862,10 @@ PrefabInstance:
     - target: {fileID: 7089523874588616971, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
       propertyPath: m_Name
       value: StalagmiteAttack (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484898337144533930, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf73e5ca4ede910479e9f5d931b8f9cf, type: 3}

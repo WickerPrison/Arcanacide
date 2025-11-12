@@ -16,7 +16,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] Animator backAnimator;
     [SerializeField] ExternalLanternFairy lanternFairy;
     [SerializeField] AttackProfiles lanternComboNoFairy;
-    [SerializeField] ClawVFX clawVFX;
+    [SerializeField] ClawVFX[] clawVFX;
+    [SerializeField] PlayerStalagmiteHolder stalagmiteHolder;
 
     //player scripts
     PlayerScript playerScript;
@@ -40,7 +41,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     private void Awake()
     {
-        clawVFX = transform.parent.GetComponentInChildren<ClawVFX>();
+        clawVFX = transform.parent.GetComponentsInChildren<ClawVFX>();
         playerEvents = GetComponentInParent<PlayerEvents>();
     }
 
@@ -58,6 +59,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         weaponManager = GetComponentInParent<WeaponManager>();
         playerAttackHitEvents = GetComponent<PlayerAttackHitEvents>();
         iceBreath = playerScript.gameObject.GetComponentInChildren<IceBreath>();
+        stalagmiteHolder.gameObject.SetActive(true);
     }
 
     public void SwitchWeaponSprite(int weaponID)
@@ -280,7 +282,13 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void BigClaw(AttackProfiles attackProfile)
     {
-        clawVFX.StartVFX(attackProfile);
+        clawVFX[0].StartVFX(attackProfile.smearRotations);
+    }
+
+    public void DoubleClaw(AttackProfiles attackProfile)
+    {
+        clawVFX[0].StartVFX(attackProfile.smearRotations);
+        clawVFX[1].StartVFX(attackProfile.secondClawRot);
     }
 
     public void ParryWindow()
@@ -354,6 +362,16 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void LoseStamina(AttackProfiles profile)
     {
         playerScript.LoseStamina(profile.staminaCost);
+    }
+
+    public void Waterfowl()
+    {
+        playerEvents.Waterfowl();
+    }
+
+    public void Stalagmites()
+    {
+        stalagmiteHolder.TriggerWave();
     }
 
     private void onPlayerStagger(object sender, EventArgs e)

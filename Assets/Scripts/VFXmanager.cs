@@ -13,6 +13,7 @@ public class VFXmanager : MonoBehaviour
     [SerializeField] SpriteRenderer parryPulse1;
     [SerializeField] SpriteRenderer parryPulse2;
     [SerializeField] FireRing fireRing;
+    [SerializeField] ParticleSystem waterFowl;
     float parryPulseDuration = 0.2f;
     float parryPulseTimer;
     float parryPulseFadeaway = 0.1f;
@@ -143,6 +144,11 @@ public class VFXmanager : MonoBehaviour
         mirrorCloak.enabled = false;
     }
 
+    private void PlayerEvents_onWaterfowl(object sender, System.EventArgs e)
+    {
+        waterFowl.Play();
+    }
+
     private void OnEnable()
     {
         playerEvents.onDashStart += onDashStart;
@@ -154,8 +160,8 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onEndMirrorCloak += onEndMirrorCloak;
         playerEvents.onMeleeParry += onMeleeParry;
         playerEvents.onEndLanternCombo += EndLanternCombo;
+        playerEvents.onWaterfowl += PlayerEvents_onWaterfowl;
     }
-
 
     private void OnDisable()
     {
@@ -168,5 +174,6 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onEndMirrorCloak -= onEndMirrorCloak;
         playerEvents.onMeleeParry -= onMeleeParry;
         playerEvents.onEndLanternCombo -= EndLanternCombo;
+        playerEvents.onWaterfowl -= PlayerEvents_onWaterfowl;
     }
 }

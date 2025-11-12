@@ -15,18 +15,20 @@ MonoBehaviour:
   hitbox: 1
   attackType: 1
   smearSpeed: 0
-  stepWithAttack: 0
+  stepWithAttack: 0.15
   halfConeAngle: 45
   attackRange: 2.5
-  damageMultiplier: 0.75
+  damageMultiplier: 1
   chargeDamage: 0
   fullChargeDamage: 0
-  magicDamageMultiplier: 0.75
-  poiseDamageMultiplier: 1
-  staminaCost: 20
+  magicDamageMultiplier: 0
+  poiseDamageMultiplier: 0.8
+  staminaCost: 40
   manaCost: 0
   impactVFX: 1
   blockable: 1
+  boltNum: 0
+  electricChargeBuildup: 0
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0
@@ -49,5 +51,14 @@ MonoBehaviour:
     Path: event:/SwordSwoosh
   soundNoHitVolume: 1
   smearPositions: []
-  smearRotations: []
+  smearRotations:
+  - {x: -15, y: -10, z: 92}
+  - {x: -15, y: -10, z: 92}
+  - {x: -15, y: -10, z: 92}
+  - {x: -15, y: -10, z: 92}
   smearScales: []
+  secondClawRot:
+  - {x: -15, y: 10, z: 90}
+  - {x: -15, y: 10, z: 90}
+  - {x: -15, y: 10, z: 90}
+  - {x: -15, y: 10, z: 90}

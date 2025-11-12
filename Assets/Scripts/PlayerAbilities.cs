@@ -79,9 +79,9 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     float boltCharge = 0;
 
     float clawSpecialMaxTime = 15f;
-    float clawSpecialDamageMult = 1.5f;
+    float clawSpecialDamageMult = 2f;
     [System.NonSerialized] public float clawSpecialStamCostMult = 1.5f;
-    [System.NonSerialized] public float clawSpecialTakeDamageMult = 0.5f;
+    [System.NonSerialized] public float clawSpecialTakeDamageMult = 2f;
     public bool blockable { get; set; }
 
     private void Awake()

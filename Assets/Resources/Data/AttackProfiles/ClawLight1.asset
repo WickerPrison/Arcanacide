@@ -18,15 +18,17 @@ MonoBehaviour:
   stepWithAttack: 0.15
   halfConeAngle: 45
   attackRange: 2.5
-  damageMultiplier: 0.75
+  damageMultiplier: 0.8
   chargeDamage: 0
   fullChargeDamage: 0
-  magicDamageMultiplier: 0.75
-  poiseDamageMultiplier: 1
-  staminaCost: 15
+  magicDamageMultiplier: 0
+  poiseDamageMultiplier: 0.5
+  staminaCost: 20
   manaCost: 0
   impactVFX: 1
   blockable: 1
+  boltNum: 0
+  electricChargeBuildup: 0
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0
@@ -50,8 +52,9 @@ MonoBehaviour:
   soundNoHitVolume: 1
   smearPositions: []
   smearRotations:
-  - {x: 90, y: -140, z: 0}
-  - {x: -90, y: -50, z: 0}
-  - {x: 90, y: -140, z: 0}
-  - {x: -90, y: -50, z: 0}
+  - {x: 0, y: 5, z: 155}
+  - {x: 0, y: -5, z: 25}
+  - {x: 0, y: -5, z: 145}
+  - {x: 0, y: 5, z: 25}
   smearScales: []
+  secondClawRot: []
