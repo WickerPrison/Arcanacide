@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 
-public class CalculateLightDpsTests
+public class CalculateCombo1
 {
     PlayerData playerData;
     BalanceData balanceData;
@@ -19,6 +19,7 @@ public class CalculateLightDpsTests
     int healthCounter;
     int hitCounter;
     bool doneAttacking = false;
+    int attacksCounter = 1;
     EnemyScript testDummy;
     Dictionary<BalanceWeaponType, int> weaponIndexDict = new Dictionary<BalanceWeaponType, int>
     {
@@ -57,74 +58,78 @@ public class CalculateLightDpsTests
     }
 
     [UnityTest]
-    public IEnumerator CalculateSwordLightCurve()
+    public IEnumerator CalculateSwordCombo1Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.SWORD);
+        balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.SWORD);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
-        for(int i = 0; i < stats.Length; i++)
+        for (int i = 0; i < stats.Length; i++)
         {
             playerData.strength = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.SWORD, stats[i], health[i]);
+            attacksCounter = 1;
+            yield return DoCombo1(BalanceWeaponType.SWORD, stats[i], health[i]);
         }
     }
 
     [UnityTest]
-    public IEnumerator CalculateLanternLightCurve()
+    public IEnumerator CalculateLanternCombo1Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.LANTERN);
+        balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.LANTERN);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
-        for(int i = 0; i < stats.Length; i++)
+        for (int i = 0; i < stats.Length; i++)
         {
             playerData.arcane = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.LANTERN, stats[i], health[i]);
+            attacksCounter = 1;
+            yield return DoCombo1(BalanceWeaponType.LANTERN, stats[i], health[i]);
         }
     }
 
     [UnityTest]
-    public IEnumerator CalculateKnifeLightCurve()
+    public IEnumerator CalculateKnifeCombo1Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.KNIFE);
+        balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.KNIFE);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
-        for(int i = 0; i < stats.Length; i++)
+        for (int i = 0; i < stats.Length; i++)
         {
             playerData.strength = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.KNIFE, stats[i], health[i]);
+            attacksCounter = 1;
+            yield return DoCombo1(BalanceWeaponType.KNIFE, stats[i], health[i]);
         }
     }
 
     [UnityTest]
-    public IEnumerator CalculateClawsLightCurve()
+    public IEnumerator CalculateClawsCombo1Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.CLAWS);
+        balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.CLAWS);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
-        for(int i = 0; i < stats.Length; i++)
+        for (int i = 0; i < stats.Length; i++)
         {
             playerData.strength = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.CLAWS, stats[i], health[i]);
+            attacksCounter = 1;
+            yield return DoCombo1(BalanceWeaponType.CLAWS, stats[i], health[i]);
         }
     }
 
-    IEnumerator DoLightCombo(BalanceWeaponType type, int stat, int health)
+    IEnumerator DoCombo1(BalanceWeaponType type, int stat, int health)
     {
         int weaponIndex = weaponIndexDict[type];
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
@@ -140,11 +145,11 @@ public class CalculateLightDpsTests
         yield return new WaitForSeconds(seconds);
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
-        balanceData.SetDps(stat, dps, BalanceAttackType.LIGHT, type);
-        balanceData.lightStamPerSecond[weaponIndex] = stamPerSec;
-        balanceData.lightMaxDps[weaponIndex] = dps;
-        balanceData.lightHitRate[weaponIndex] = hitCounter / seconds;
-        Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
+        balanceData.SetDps(stat, dps, BalanceAttackType.COMBO1, type);
+        balanceData.combo1StamPerSecond[weaponIndex] = stamPerSec;
+        balanceData.combo1MaxDps[weaponIndex] = dps;
+        balanceData.combo1HitRate[weaponIndex] = hitCounter / seconds;
+        Debug.Log($"{type} Combo1 DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);
@@ -158,9 +163,19 @@ public class CalculateLightDpsTests
         healthCounter += testDummy.maxHealth - testDummy.health;
         testDummy.GainHealth(1000);
         hitCounter++;
+        attacksCounter++;
         if (!doneAttacking)
         {
-            playerAbilities.Attack();
+            if(attacksCounter == 2)
+            {
+                playerAbilities.HeavyAttack();
+                attacksCounter = 0;
+            }
+            else
+            {
+                playerAbilities.Attack();
+            }
+
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 
-public class CalculateLightDpsTests
+public class CalculateCombo2
 {
     PlayerData playerData;
     BalanceData balanceData;
@@ -19,6 +19,7 @@ public class CalculateLightDpsTests
     int healthCounter;
     int hitCounter;
     bool doneAttacking = false;
+    int attacksCounter = 1;
     EnemyScript testDummy;
     Dictionary<BalanceWeaponType, int> weaponIndexDict = new Dictionary<BalanceWeaponType, int>
     {
@@ -53,78 +54,83 @@ public class CalculateLightDpsTests
         PlayerAnimationEvents playerAnimationEvents = playerAnimation.GetComponentInChildren<PlayerAnimationEvents>();
         playerScript.testingEvents = testingEvents;
         testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
+        testingEvents.onFaerieReturn += TestingEvents_onFaerieReturn;
         weaponManager = playerAnimation.GetComponent<WeaponManager>();
     }
 
     [UnityTest]
-    public IEnumerator CalculateSwordLightCurve()
+    public IEnumerator CalculateSwordCombo2Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.SWORD);
+        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.SWORD);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
-        for(int i = 0; i < stats.Length; i++)
+        for (int i = 0; i < stats.Length; i++)
         {
             playerData.strength = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.SWORD, stats[i], health[i]);
+            attacksCounter = 1;
+            yield return DoCombo2(BalanceWeaponType.SWORD, stats[i], health[i]);
         }
     }
 
     [UnityTest]
-    public IEnumerator CalculateLanternLightCurve()
+    public IEnumerator CalculateLanternCombo2Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.LANTERN);
+        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.LANTERN);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
-        for(int i = 0; i < stats.Length; i++)
+        for (int i = 0; i < stats.Length; i++)
         {
             playerData.arcane = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.LANTERN, stats[i], health[i]);
+            attacksCounter = 1;
+            yield return DoCombo2(BalanceWeaponType.LANTERN, stats[i], health[i]);
         }
     }
 
     [UnityTest]
-    public IEnumerator CalculateKnifeLightCurve()
+    public IEnumerator CalculateKnifeCombo2Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.KNIFE);
+        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.KNIFE);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
-        for(int i = 0; i < stats.Length; i++)
+        for (int i = 0; i < stats.Length; i++)
         {
             playerData.strength = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.KNIFE, stats[i], health[i]);
+            attacksCounter = 1;
+            yield return DoCombo2(BalanceWeaponType.KNIFE, stats[i], health[i]);
         }
     }
 
     [UnityTest]
-    public IEnumerator CalculateClawsLightCurve()
+    public IEnumerator CalculateClawsCombo2Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.CLAWS);
+        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.CLAWS);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
-        for(int i = 0; i < stats.Length; i++)
+        for (int i = 0; i < stats.Length; i++)
         {
             playerData.strength = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.CLAWS, stats[i], health[i]);
+            attacksCounter = 1;
+            yield return DoCombo2(BalanceWeaponType.CLAWS, stats[i], health[i]);
         }
     }
 
-    IEnumerator DoLightCombo(BalanceWeaponType type, int stat, int health)
+    IEnumerator DoCombo2(BalanceWeaponType type, int stat, int health)
     {
         int weaponIndex = weaponIndexDict[type];
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
@@ -140,11 +146,11 @@ public class CalculateLightDpsTests
         yield return new WaitForSeconds(seconds);
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
-        balanceData.SetDps(stat, dps, BalanceAttackType.LIGHT, type);
-        balanceData.lightStamPerSecond[weaponIndex] = stamPerSec;
-        balanceData.lightMaxDps[weaponIndex] = dps;
-        balanceData.lightHitRate[weaponIndex] = hitCounter / seconds;
-        Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
+        balanceData.SetDps(stat, dps, BalanceAttackType.COMBO2, type);
+        balanceData.combo2StamPerSecond[weaponIndex] = stamPerSec;
+        balanceData.combo2MaxDps[weaponIndex] = dps;
+        balanceData.combo2HitRate[weaponIndex] = hitCounter / seconds;
+        Debug.Log($"{type} Combo2 DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);
@@ -158,9 +164,29 @@ public class CalculateLightDpsTests
         healthCounter += testDummy.maxHealth - testDummy.health;
         testDummy.GainHealth(1000);
         hitCounter++;
+        attacksCounter++;
         if (!doneAttacking)
         {
-            playerAbilities.Attack();
+            if(attacksCounter == 3)
+            {
+                playerAbilities.HeavyAttack();
+                attacksCounter = 0;
+            }
+            else
+            {
+                playerAbilities.Attack();
+            }
+
         }
+    }
+
+    private void TestingEvents_onFaerieReturn(object sender, System.EventArgs e)
+    {
+        staminaCounter += playerData.MaxStamina() - playerScript.stamina;
+        playerScript.GainStamina(1000);
+        healthCounter += testDummy.maxHealth - testDummy.health;
+        testDummy.GainHealth(1000);
+        attacksCounter = 1;
+        playerAbilities.Attack();
     }
 }

@@ -8,6 +8,11 @@ public enum BalanceWeaponType
     SWORD, LANTERN, KNIFE, CLAWS
 }
 
+public enum BalanceAttackType
+{
+    LIGHT, COMBO1, COMBO2
+}
+
 [CreateAssetMenu]
 public class BalanceData : ScriptableObject
 {
@@ -18,15 +23,6 @@ public class BalanceData : ScriptableObject
     public float[] lightMaxDps;
     public float[] lightStamPerSecond;
     public float[] lightHitRate;
-
-    public AnimationCurve swordHeavyDps;
-    public AnimationCurve lanternHeavyDps;
-    public AnimationCurve knifeHeavyDps;
-    public AnimationCurve clawsHeavyDps;
-    public float[] heavyMaxDps;
-    public float[] heavyStamPerSecond;
-    public float[] heavyHitRate;
-
     Dictionary<BalanceWeaponType, AnimationCurve> _lightDpsCurveDict;
     Dictionary<BalanceWeaponType, AnimationCurve> lightDpsCurveDict
     {
@@ -46,13 +42,95 @@ public class BalanceData : ScriptableObject
         }
     }
 
-    public void SetDps(int stat, float dps, BalanceWeaponType weaponType)
+
+    public AnimationCurve swordHeavyDps;
+    public AnimationCurve lanternHeavyDps;
+    public AnimationCurve knifeHeavyDps;
+    public AnimationCurve clawsHeavyDps;
+    public float[] heavyMaxDps;
+    public float[] heavyStamPerSecond;
+    public float[] heavyHitRate;
+
+
+    [SerializeField] AnimationCurve swordCombo1Dps;
+    [SerializeField] AnimationCurve lanternCombo1Dps;
+    [SerializeField] AnimationCurve knifeCombo1Dps;
+    [SerializeField] AnimationCurve clawsCombo1Dps;
+    public float[] combo1MaxDps;
+    public float[] combo1StamPerSecond;
+    public float[] combo1HitRate;
+    Dictionary<BalanceWeaponType, AnimationCurve> _combo1DpsCurveDict;
+    Dictionary<BalanceWeaponType, AnimationCurve> combo1DpsCurveDict
     {
-        lightDpsCurveDict[weaponType].AddKey(stat, dps);
+        get
+        {
+            if (_combo1DpsCurveDict == null)
+            {
+                _combo1DpsCurveDict = new Dictionary<BalanceWeaponType, AnimationCurve>()
+                {
+                    { BalanceWeaponType.SWORD, swordCombo1Dps },
+                    { BalanceWeaponType.LANTERN, lanternCombo1Dps },
+                    { BalanceWeaponType.KNIFE, knifeCombo1Dps },
+                    { BalanceWeaponType.CLAWS, clawsCombo1Dps },
+                };
+            }
+            return _combo1DpsCurveDict;
+        }
     }
 
-    public void ClearDps(BalanceWeaponType weaponType)
+    [SerializeField] AnimationCurve swordCombo2Dps;
+    [SerializeField] AnimationCurve lanternCombo2Dps;
+    [SerializeField] AnimationCurve knifeCombo2Dps;
+    [SerializeField] AnimationCurve clawsCombo2Dps;
+    public float[] combo2MaxDps;
+    public float[] combo2StamPerSecond;
+    public float[] combo2HitRate;
+    Dictionary<BalanceWeaponType, AnimationCurve> _combo2DpsCurveDict;
+    Dictionary<BalanceWeaponType, AnimationCurve> combo2DpsCurveDict
     {
-        lightDpsCurveDict[weaponType].keys = new Keyframe[0];
+        get
+        {
+            if (_combo2DpsCurveDict == null)
+            {
+                _combo2DpsCurveDict = new Dictionary<BalanceWeaponType, AnimationCurve>()
+                {
+                    { BalanceWeaponType.SWORD, swordCombo2Dps },
+                    { BalanceWeaponType.LANTERN, lanternCombo2Dps },
+                    { BalanceWeaponType.KNIFE, knifeCombo2Dps },
+                    { BalanceWeaponType.CLAWS, clawsCombo2Dps },
+                };
+            }
+            return _combo2DpsCurveDict;
+        }
+    }
+
+
+    Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>> _dictDict;
+    Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>> dictDict
+    {
+        get
+        {
+            if(_dictDict == null)
+            {
+                _dictDict = new Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>>()
+                {
+                    { BalanceAttackType.LIGHT, lightDpsCurveDict },
+                    { BalanceAttackType.COMBO1, combo1DpsCurveDict },
+                    { BalanceAttackType.COMBO2, combo2DpsCurveDict },
+                };
+            }
+            return _dictDict;
+        }
+    }
+
+
+    public void SetDps(int stat, float dps, BalanceAttackType attackType, BalanceWeaponType weaponType)
+    {
+        dictDict[attackType][weaponType].AddKey(stat, dps);
+    }
+
+    public void ClearDps(BalanceAttackType attackType, BalanceWeaponType weaponType)
+    {
+        dictDict[attackType][weaponType].keys = new Keyframe[0];
     }
 }
