@@ -33,6 +33,7 @@ public class PlayerScript : MonoBehaviour
 
     //other scripts
     GameManager gm;
+    [System.NonSerialized] public TestingEvents testingEvents;
 
     //stamina variables
     public float stamina { get; private set; }

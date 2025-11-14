@@ -35,7 +35,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     IceBreath iceBreath;
     ElectricTrap electricTrap;
     WeaponManager weaponManager;
-    [System.NonSerialized] public TestingEvents testingEvents;
+
 
 
     //variables
@@ -114,6 +114,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         if (electricTrap == null)
         {
             electricTrap = Instantiate(electricTrapPrefab).GetComponent<ElectricTrap>();
+            electricTrap.playerScript = playerScript;
         }
 
         electricTrap.transform.position = transform.parent.position;
@@ -134,7 +135,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void AttackFalse()
     {
         playerAnimation.EndChain();
-        if (testingEvents != null) testingEvents.AttackFalse();
+        if (playerScript.testingEvents != null) playerScript.testingEvents.AttackFalse();
     }
 
     public void EndAttack()
@@ -142,7 +143,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation.attacking = false;
         playerMovement.lockPosition = false;
         playerAnimation.EndChain();
-        if (testingEvents != null) testingEvents.AttackFalse();
+        if (playerScript.testingEvents != null) playerScript.testingEvents.AttackFalse();
     }
 
     public void Heal()

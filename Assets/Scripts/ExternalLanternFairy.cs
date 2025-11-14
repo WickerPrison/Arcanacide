@@ -9,6 +9,7 @@ public class ExternalLanternFairy : MonoBehaviour
     Transform movePoint;
     PlayerEvents playerEvents;
     PlayerAnimation playerAnimation;
+    PlayerScript playerScript;
     SpriteRenderer spriteRenderer;
     ParticleSystem trail;
     [System.NonSerialized] public bool isInLantern = true;
@@ -30,6 +31,7 @@ public class ExternalLanternFairy : MonoBehaviour
     private void Start()
     {
         playerAnimation = GetComponentInParent<PlayerAnimation>();
+        playerScript = GetComponentInParent<PlayerScript>();
         movePoint = GetComponentsInChildren<Transform>()[1];
         movePoint.parent = transform.parent;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -74,6 +76,7 @@ public class ExternalLanternFairy : MonoBehaviour
                         isDoingSpecial = false;
                         returning = false;
                         ToggleSprites(true);
+                        if (playerScript.testingEvents != null) playerScript.testingEvents.FaerieReturn();
                     }
                     break;
             }

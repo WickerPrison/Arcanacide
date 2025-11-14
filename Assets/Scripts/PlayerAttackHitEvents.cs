@@ -23,7 +23,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
     PlayerAttackArc attackArc;
 
     bool charging = false;
-    float chargeTimer;
+    [System.NonSerialized] public float chargeTimer;
     float chargeDecimal;
 
     private void Start()
@@ -179,7 +179,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
         chargeTimer = value;
     }
 
-    public void StartCharge()
+    public void StartCharge(AttackProfiles attackProfile)
     {
         charging = true;
     }

@@ -333,7 +333,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    void EndHeavyAttack()
+    public void EndHeavyAttack()
     {
         if (!heavyAttackActive) return;
 
@@ -347,7 +347,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             if(fullyCharged)
             {
                 SlashProjectile swordProectile = Instantiate(swordProjectilePrefab).GetComponent<SlashProjectile>();
-                swordProectile.transform.position = transform.position + new Vector3(0, 1, 0);
+                swordProectile.transform.position = transform.position + new Vector3(0, 0.1f, 0);
                 swordProectile.direction = Vector3.Normalize(attackPoint.position - transform.position);
                 swordProectile.playerAbilities = this;
             }

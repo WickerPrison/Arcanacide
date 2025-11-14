@@ -43,7 +43,7 @@ public class EnemySound : MonoBehaviour
 
     public void ElectricShock()
     {
-        RuntimeManager.PlayOneShot(electricChargeShock, 1);
+        RuntimeManager.PlayOneShot(electricChargeShock, 0.5f);
     }
 
     public void OtherSounds(int indexNumber, float volume)

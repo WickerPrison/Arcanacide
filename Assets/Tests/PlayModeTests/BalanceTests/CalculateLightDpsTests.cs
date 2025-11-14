@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 
-public class CalculateDpsTests
+public class CalculateLightDpsTests
 {
     PlayerData playerData;
     BalanceData balanceData;
@@ -18,6 +18,7 @@ public class CalculateDpsTests
     float staminaCounter;
     int healthCounter;
     int hitCounter;
+    bool doneAttacking = false;
     EnemyScript testDummy;
     Dictionary<BalanceWeaponType, int> weaponIndexDict = new Dictionary<BalanceWeaponType, int>
     {
@@ -50,7 +51,7 @@ public class CalculateDpsTests
         playerAbilities = playerAnimation.GetComponent<PlayerAbilities>();
         playerScript = playerAnimation.GetComponent<PlayerScript>();
         PlayerAnimationEvents playerAnimationEvents = playerAnimation.GetComponentInChildren<PlayerAnimationEvents>();
-        playerAnimationEvents.testingEvents = testingEvents;
+        playerScript.testingEvents = testingEvents;
         testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
         weaponManager = playerAnimation.GetComponent<WeaponManager>();
     }
@@ -67,6 +68,7 @@ public class CalculateDpsTests
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
+            doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.SWORD, stats[i], health[i]);
         }
     }
@@ -83,6 +85,7 @@ public class CalculateDpsTests
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
+            doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.LANTERN, stats[i], health[i]);
         }
     }
@@ -99,6 +102,7 @@ public class CalculateDpsTests
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
+            doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.KNIFE, stats[i], health[i]);
         }
     }
@@ -115,6 +119,7 @@ public class CalculateDpsTests
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
+            doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.CLAWS, stats[i], health[i]);
         }
     }
@@ -136,11 +141,13 @@ public class CalculateDpsTests
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, type);
-        balanceData.stamPerSecond[weaponIndex] = stamPerSec;
-        balanceData.maxDps[weaponIndex] = dps;
-        balanceData.hitRate[weaponIndex] = hitCounter / seconds;
+        balanceData.lightStamPerSecond[weaponIndex] = stamPerSec;
+        balanceData.lightMaxDps[weaponIndex] = dps;
+        balanceData.lightHitRate[weaponIndex] = hitCounter / seconds;
         Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
+        doneAttacking = true;
+        yield return new WaitForSeconds(5);
         testDummy.Death();
     }
 
@@ -151,6 +158,9 @@ public class CalculateDpsTests
         healthCounter += testDummy.maxHealth - testDummy.health;
         testDummy.GainHealth(1000);
         hitCounter++;
-        playerAbilities.Attack();
+        if (!doneAttacking)
+        {
+            playerAbilities.Attack();
+        }
     }
 }
