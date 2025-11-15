@@ -45,7 +45,7 @@ public class CalculateCombo1
         playerData.unlockedWeapons.Add(3);
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
 
-        Time.timeScale = 10;
+        Time.timeScale = 1;
         staminaCounter = 0;
         playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
@@ -137,7 +137,7 @@ public class CalculateCombo1
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
-        playerData.currentWeapon = 3;
+        playerData.currentWeapon = weaponIndex + 1 < 4 ? weaponIndex + 1 : 0;
         weaponManager.SwitchWeapon(weaponIndex);
         yield return new WaitForSeconds(2);
         playerAbilities.Attack();

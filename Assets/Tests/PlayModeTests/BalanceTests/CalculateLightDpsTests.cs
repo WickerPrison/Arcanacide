@@ -132,7 +132,7 @@ public class CalculateLightDpsTests
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
-        playerData.currentWeapon = 3;
+        playerData.currentWeapon = weaponIndex + 1 < 4 ? weaponIndex + 1 : 0;
         weaponManager.SwitchWeapon(weaponIndex);
         yield return new WaitForSeconds(2);
         playerAbilities.Attack();

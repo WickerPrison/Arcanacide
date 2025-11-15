@@ -9,6 +9,7 @@ public class PathTrail : MonoBehaviour
     [SerializeField] PlayerData playerData;
     ParticleSystem VFX;
     [SerializeField] EventReference fmodEvent;
+    public float radius;
     EventInstance fmodInstance;
     float duration = 3;
     float damagePerSecond;
@@ -17,16 +18,16 @@ public class PathTrail : MonoBehaviour
     float cd = 0;
     float maxCd = 0.3f;
     List<EnemyScript> touchingEnemies = new List<EnemyScript>();
-    [System.NonSerialized] public List<PathTrail> pathTrails;
+    public PlayerTrailManager trailManager;
 
     private void Start()
     {
-        if (!HasSpace())
+        if (!trailManager.HasSpace(transform.position, radius))
         {
             Destroy(gameObject);
             return;
         }
-        if(pathTrails != null) pathTrails.Add(this);
+        trailManager.pathTrails.Add(this);
         VFX = GetComponentInChildren<ParticleSystem>();
         damagePerSecond = 1f + playerData.arcane * 0.2f;
         fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
@@ -85,31 +86,18 @@ public class PathTrail : MonoBehaviour
 
         damage += damagePerSecond * Time.deltaTime;
 
-        if(cd > 0 || damage < 1)
+        if (cd > 0 || damage < 1)
         {
             cd -= Time.deltaTime;
             return;
         }
 
         cd = maxCd;
-        foreach(EnemyScript enemy in touchingEnemies)
+        foreach (EnemyScript enemy in touchingEnemies)
         {
             enemy.LoseHealthUnblockable(Mathf.FloorToInt(damage), 0);
         }
         damage = 0;
-    }
-
-    bool HasSpace()
-    {
-        if (pathTrails == null) return true;
-        foreach(PathTrail pathTrail in pathTrails)
-        {
-            if(Vector3.Distance(pathTrail.transform.position, transform.position) < 0.7)
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     void Death()
@@ -118,6 +106,6 @@ public class PathTrail : MonoBehaviour
         VFX.Stop();
         fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         fmodInstance.release();
-        if(pathTrails != null) pathTrails.Remove(this);
+        trailManager.pathTrails.Remove(this);
     }
 }
