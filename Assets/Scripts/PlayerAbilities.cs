@@ -381,7 +381,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    void EndSpecialAttack()
+    public void EndSpecialAttack()
     {
         if (playerData.currentWeapon == 2 && knifeSpecialAttackOn)
         {

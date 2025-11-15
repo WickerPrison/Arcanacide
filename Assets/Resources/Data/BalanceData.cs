@@ -124,6 +124,11 @@ public class BalanceData : ScriptableObject
         }
     }
 
+    public AnimationCurve knifeSpecialDps;
+    public float knifeSpecialMaxDps;
+    public float knifeSpecialStamPerSecond;
+    public float knifeSpecialManaPerSecond;
+
 
     public void SetDps(int stat, float dps, BalanceAttackType attackType, BalanceWeaponType weaponType)
     {
