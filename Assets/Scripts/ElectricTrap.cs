@@ -9,6 +9,7 @@ public class ElectricTrap : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] EventReference electricDamage;
+    [System.NonSerialized] public PlayerScript playerScript;
     float damage = 0;
     float damagePerSecond;
     float charge;
@@ -35,6 +36,7 @@ public class ElectricTrap : MonoBehaviour
             {
                 transform.position = away;
                 sfx.Stop();
+                if (playerScript.testingEvents != null) playerScript.testingEvents.ElectricTrapDone();
             }
         }
 

@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5366754199504666561
 Transform:
   m_ObjectHideFlags: 0
@@ -26189,7 +26189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1437747475906062329
 Transform:
   m_ObjectHideFlags: 0
@@ -26274,7 +26274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4064096033354273479
 Transform:
   m_ObjectHideFlags: 0
@@ -47750,7 +47750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9013809121557959745
 Transform:
   m_ObjectHideFlags: 0
@@ -62588,6 +62588,7 @@ GameObject:
   - component: {fileID: 5271526235694559231}
   - component: {fileID: 8750950683635077094}
   - component: {fileID: 75523108185353626}
+  - component: {fileID: 1936977885005379739}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -62639,7 +62640,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6bec67186be8c2a478bbbceec0053577, type: 2}
   axeHeavyProfile: {fileID: 11400000, guid: a20c30f881b926442996c2863e432579, type: 2}
   lanternCombo2Profile: {fileID: 11400000, guid: c4106f081f1230248aba04b750203602, type: 2}
-  fireTrailPrefab: {fileID: 4283489857923117263, guid: 94d864412ee9c6243932e7c89686c25c, type: 3}
+  lanternCombo2TrailProfile: {fileID: 11400000, guid: 9eadb1058aba0a24f804e11edef2df94, type: 2}
   projectilePrefab: {fileID: 7335286762330827417, guid: db13e2660fafcdc42aa6a166b089e4e1, type: 3}
   bolts: {fileID: 5628502273643509926}
   boltsOrigin:
@@ -62691,7 +62692,7 @@ MonoBehaviour:
   - {fileID: 4101213123070827847}
   - {fileID: 246970868213114919}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
-  editorWeapon: 3
+  editorWeapon: 2
   knifeOffhand:
   - {fileID: 8171237114585130713}
   - {fileID: 6949352607887502909}
@@ -62714,6 +62715,7 @@ MonoBehaviour:
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
   arcaneStepHolderPrefab: {fileID: 0}
   pathTrailPrefab: {fileID: 4858251652121785841, guid: 1e836e9d474f207419a199a40ad04d17, type: 3}
+  pathOfPathProfile: {fileID: 11400000, guid: 208ecf7643e4fd142bedabc514d2162c, type: 2}
   parryProfile: {fileID: 11400000, guid: 8f4a8ad5bdacc634bb539dad6ddab79c, type: 2}
 --- !u!114 &4614688894240553598
 MonoBehaviour:
@@ -62736,6 +62738,7 @@ MonoBehaviour:
   rotationPointY: 1.6
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  swordHeavyProfile: {fileID: 11400000, guid: d5beb5eaa3ebeba4a999d2bc6ccf24af, type: 2}
   shoveVFX: {fileID: 6321697753119861189}
   facingDirection: 0
 --- !u!114 &4614688894240553584
@@ -62872,6 +62875,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attenuationObject: {fileID: 4614688894240553594}
+--- !u!114 &1936977885005379739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614688894240553594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e352c6559238c4485bd6270085ff48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4624565988039198084
 GameObject:
   m_ObjectHideFlags: 0
@@ -62959,7 +62974,7 @@ Animator:
   m_GameObject: {fileID: 4624565988039198084}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 32d2bfc1cb197da44a0b205d78a49650, type: 2}
+  m_Controller: {fileID: 9100000, guid: 76d654393f3228e4b8f6bb685b02016e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -107991,7 +108006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7015715467399612929
 Transform:
   m_ObjectHideFlags: 0
@@ -113544,6 +113559,7 @@ MonoBehaviour:
   fireballCharge: 0
   fireballProfile: {fileID: 11400000, guid: efa9bc202ea2a4641aa7e63bf70c3f94, type: 2}
   fireWaveProfile: {fileID: 11400000, guid: 05d8f9b946af9574391abf2cff6f10af, type: 2}
+  fireWaveTrailProfile: {fileID: 11400000, guid: 56b03c4e288920b47a5491fa78de2451, type: 2}
   fireballPrefab: {fileID: 8234779006693281187, guid: ad1cd42db013d8f40a5596ae3fdbd342, type: 3}
   fireWavePrefab: {fileID: 6485067406438384046, guid: 55f042c5015f34140a8b87873b764211, type: 3}
 --- !u!95 &2878037202980228874
@@ -113556,7 +113572,7 @@ Animator:
   m_GameObject: {fileID: 7395915469892964241}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 45ec4a45fc92f6e47b1b244ef930cbcd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 03af293f76318cb46b9da2955ceccda9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -118691,7 +118707,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3210260546811379262
 Transform:
   m_ObjectHideFlags: 0
@@ -124013,7 +124029,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3814397681736751211
 Transform:
   m_ObjectHideFlags: 0
@@ -148591,7 +148607,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9128014904489408500
 Transform:
   m_ObjectHideFlags: 0

@@ -32,6 +32,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] float rotationPointY;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] PlayerData playerData;
+    [SerializeField] AttackProfiles swordHeavyProfile;
 
     Vector3 away = new Vector3(100, 100, 100);
     Vector3 frontAnimatorPosition;
@@ -178,7 +179,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public float EndSwordHeavy()
     {
-        return attackHitEvents.EndCharge(1);
+        return attackHitEvents.EndCharge(swordHeavyProfile.maxChargeTime);
     }
 
     void FaceJoystick()

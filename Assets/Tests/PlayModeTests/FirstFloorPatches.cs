@@ -21,7 +21,7 @@ public class FirstFloorPatches
         emblemLibrary = Resources.Load<EmblemLibrary>("Data/EmblemLibrary");
         
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
-        Time.timeScale = 4;
+        Time.timeScale = 1;
     }
 
     [TearDown]
@@ -65,6 +65,7 @@ public class FirstFloorPatches
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerData.equippedPatches.Add(Patches.ARCANE_STEP);
         PatchEffects patchEffects = playerScript.gameObject.GetComponent<PatchEffects>();
+        PlayerTrailManager trailManager = playerScript.gameObject.GetComponent<PlayerTrailManager>();
         patchEffects.ArcaneStepDodgeThrough();
 
         PlayerMovement playerMovement = playerScript.GetComponent<PlayerMovement>();
@@ -75,14 +76,14 @@ public class FirstFloorPatches
 
         yield return new WaitForSeconds(0.5f);
 
-        Assert.AreEqual(5, patchEffects.pathTrails.Count);
+        Assert.AreEqual(5, trailManager.pathTrails.Count);
 
         playerMovement.moveDirection = -Vector3.right;
         playerMovement.Dodge();
 
         yield return new WaitForSeconds(0.5f);
 
-        Assert.AreEqual(6, patchEffects.pathTrails.Count);
+        Assert.AreEqual(6, trailManager.pathTrails.Count);
     }
 
     [UnityTest]

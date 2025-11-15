@@ -45,4 +45,9 @@ public static class Utils
             Debug.DrawLine(pos1, pos2, Color.red, duration);
         }
     }
+
+    public static void IncorrectInitialization(string className)
+    {
+        throw new System.Exception($"{className} must be initialized with constructor method");
+    }
 }

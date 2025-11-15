@@ -9,6 +9,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] GameObject arcaneStepHolderPrefab;
     [SerializeField] GameObject pathTrailPrefab;
+    [SerializeField] AttackProfiles pathOfPathProfile;
     [SerializeField] AttackProfiles parryProfile;
 
     //player scripts
@@ -19,6 +20,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     PlayerAbilities playerAbilities;
     PlayerSound playerSound;
     PlayerAnimation playerAnimation;
+    PlayerTrailManager trailManager;
 
     //other scripts
     CameraFollow cameraScript;
@@ -57,8 +59,6 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
 
     public bool blockable { get; set; }
 
-    [System.NonSerialized] public List<PathTrail> pathTrails = new List<PathTrail>();
-
     private void Awake()
     {
         playerEvents = GetComponent<PlayerEvents>();
@@ -71,6 +71,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
         playerAbilities = GetComponent<PlayerAbilities>();
         playerHealth = GetComponent<PlayerHealth>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        trailManager = GetComponent<PlayerTrailManager>();
         playerSound = GetComponentInChildren<PlayerSound>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         gm = GlobalEvents.instance.gameObject.GetComponent<GameManager>();
@@ -226,10 +227,8 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     void SpawnArcaneStep()
     {
         dist = 0;
-        GameObject pathTrail;
-        pathTrail = Instantiate(pathTrailPrefab);
-        pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        pathTrail.GetComponent<PathTrail>().pathTrails = pathTrails;
+        Vector3 spawnPosition = new Vector3(transform.position.x, 0, transform.position.z);
+        PathTrail.Instantiate(pathTrailPrefab, spawnPosition, trailManager, pathOfPathProfile);
     }
 
     public void ArcaneStepDodgeThrough()

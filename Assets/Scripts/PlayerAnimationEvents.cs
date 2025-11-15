@@ -36,6 +36,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     ElectricTrap electricTrap;
     WeaponManager weaponManager;
 
+
+
     //variables
     bool doLanternCombo;
 
@@ -112,6 +114,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         if (electricTrap == null)
         {
             electricTrap = Instantiate(electricTrapPrefab).GetComponent<ElectricTrap>();
+            electricTrap.playerScript = playerScript;
         }
 
         electricTrap.transform.position = transform.parent.position;
@@ -132,6 +135,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void AttackFalse()
     {
         playerAnimation.EndChain();
+        if (playerScript.testingEvents != null) playerScript.testingEvents.AttackFalse();
     }
 
     public void EndAttack()
@@ -139,6 +143,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAnimation.attacking = false;
         playerMovement.lockPosition = false;
         playerAnimation.EndChain();
+        if (playerScript.testingEvents != null) playerScript.testingEvents.AttackFalse();
     }
 
     public void Heal()

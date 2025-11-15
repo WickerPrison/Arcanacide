@@ -12,7 +12,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] AttackProfiles axeHeavyProfile;
     [SerializeField] AttackProfiles lanternCombo2Profile;
-    [SerializeField] GameObject fireTrailPrefab;
+    [SerializeField] AttackProfiles lanternCombo2TrailProfile;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
@@ -31,6 +31,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     PlayerScript playerScript;
     PlayerAnimation playerAnimation;
     PlayerEvents playerEvents;
+    PlayerTrailManager trailManager;
     PatchEffects patchEffects;
     WeaponManager weaponManager;
     PlayerSound playerSound;
@@ -96,6 +97,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         playerAnimation = GetComponent<PlayerAnimation>();
         playerMovement = GetComponent<PlayerMovement>();
         playerScript = GetComponent<PlayerScript>();
+        trailManager = GetComponent<PlayerTrailManager>();
         patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
         playerSound = GetComponentInChildren<PlayerSound>();;
@@ -138,21 +140,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             if (playerData.mana <= 0)
             {
                 playerAnimation.PlayAnimation("StopBlocking");
-            }
-        }
-
-        if (playerData.currentWeapon == 1 && backstepActive)
-        {
-            if (backstepTimer <= 0)
-            {
-                GameObject pathTrail;
-                pathTrail = Instantiate(fireTrailPrefab);
-                pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-                backstepTimer = backstepMaxTime;
-            }
-            else
-            {
-                backstepTimer -= Time.deltaTime;
             }
         }
     }
@@ -333,7 +320,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    void EndHeavyAttack()
+    public void EndHeavyAttack()
     {
         if (!heavyAttackActive) return;
 
@@ -347,7 +334,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             if(fullyCharged)
             {
                 SlashProjectile swordProectile = Instantiate(swordProjectilePrefab).GetComponent<SlashProjectile>();
-                swordProectile.transform.position = transform.position + new Vector3(0, 1, 0);
+                swordProectile.transform.position = transform.position + new Vector3(0, 0.1f, 0);
                 swordProectile.direction = Vector3.Normalize(attackPoint.position - transform.position);
                 swordProectile.playerAbilities = this;
             }
@@ -394,7 +381,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    void EndSpecialAttack()
+    public void EndSpecialAttack()
     {
         if (playerData.currentWeapon == 2 && knifeSpecialAttackOn)
         {
@@ -516,11 +503,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     {
         for (int i = 0; i < fireRainAmount; i++)
         {
-            FireRain fireRain = Instantiate(fireRainPrefab).GetComponent<FireRain>();
-            fireRain.origin = origin;
-            fireRain.maxDelay = fireRainMaxDelay;
-            fireRain.attackProfile = lanternCombo2Profile;
-            fireRain.hasNavmesh = sceneHasNavmesh;
+            FireRain.Instantiate(fireRainPrefab, origin, fireRainMaxDelay, lanternCombo2Profile, lanternCombo2TrailProfile, trailManager, sceneHasNavmesh);
         }
         StartCoroutine(EndFireRain());
     }

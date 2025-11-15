@@ -9,10 +9,12 @@ public class SwordGlow : MonoBehaviour
     Vector3 startScale = new Vector3(1.2f, 1.2f, 1f);
     Vector3 maxScale = new Vector3(2f, 1.25f, 1f);
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+    PlayerScript playerScript;
 
     private void Awake()
     {
         playerEvents = GetComponentInParent<PlayerEvents>();
+        playerScript = GetComponentInParent<PlayerScript>();
     }
 
     private void OnEnable()
@@ -50,5 +52,6 @@ public class SwordGlow : MonoBehaviour
             transform.localScale = Vector3.Lerp(startScale, maxScale, timer / pulseDownTime);
             yield return endOfFrame;
         }
+        if (playerScript.testingEvents != null) playerScript.testingEvents.FullyCharged();
     }
 }

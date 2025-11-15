@@ -5,16 +5,33 @@ using UnityEngine.AI;
 
 public class FireRain : PlayerProjectile, IKillChildren
 {
-    [System.NonSerialized] public Vector3 origin;
-    [System.NonSerialized] public float maxDelay;
-    [System.NonSerialized] public bool hasNavmesh = true;
+    Vector3 origin;
+    float maxDelay;
+    bool hasNavmesh = true;
     [SerializeField] ParticleSystem vfx;
     [SerializeField] KilledByParent indicatorCircle;
+    AttackProfiles trailProfile;
+    [SerializeField] GameObject fireTrailPrefab;
     public event EventHandler onKillChildren;
     Vector3 destination;
     Vector3 direction;
     bool start = false;
     Collider hitBox;
+    bool instantiatedCorrectly = false;
+    PlayerTrailManager trailManager;
+
+    public static FireRain Instantiate(GameObject prefab, Vector3 origin, float maxDelay, AttackProfiles attackProfile, AttackProfiles trailProfile, PlayerTrailManager trailManager, bool hasNavmesh = true)
+    {
+        FireRain fireRain = Instantiate(prefab).GetComponent<FireRain>();
+        fireRain.origin = origin;
+        fireRain.maxDelay = maxDelay;
+        fireRain.attackProfile = attackProfile;
+        fireRain.trailProfile = trailProfile;
+        fireRain.trailManager = trailManager;
+        fireRain.hasNavmesh = hasNavmesh;
+        fireRain.instantiatedCorrectly = true;
+        return fireRain;
+    }
 
     private void Awake()
     {
@@ -24,6 +41,10 @@ public class FireRain : PlayerProjectile, IKillChildren
 
     private void Start()
     {
+        if (!instantiatedCorrectly)
+        {
+            Utils.IncorrectInitialization("FireRain");
+        }
         transform.position = origin;
         float randX = UnityEngine.Random.Range(-maxDelay, maxDelay);
         float randZ = UnityEngine.Random.Range(-maxDelay, maxDelay);
@@ -48,6 +69,18 @@ public class FireRain : PlayerProjectile, IKillChildren
         vfx.Play();
     }
 
+    public override void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            HitEnemy(collision, false);
+        }
+        else
+        {
+            HitObject(collision);
+        }
+    }
+
     public override void FixedUpdate()
     {
         if (!start) return;
@@ -56,6 +89,8 @@ public class FireRain : PlayerProjectile, IKillChildren
 
         if (transform.position.y < 0)
         {
+            Vector3 spawnPosition = new Vector3(transform.position.x, 0, transform.position.z);
+            PathTrail.Instantiate(fireTrailPrefab, spawnPosition, trailManager, trailProfile);
             HitObject(GetComponent<Collider>());
         }
     }

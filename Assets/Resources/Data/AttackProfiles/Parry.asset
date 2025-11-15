@@ -12,21 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: Parry
   m_EditorClassIdentifier: 
-  hitboxType: 
+  hitbox: 0
   attackType: 3
   smearSpeed: 0
   stepWithAttack: 0
   halfConeAngle: 0
   attackRange: 0
-  damageMultiplier: 0
+  damageMultiplier: 0.6
   chargeDamage: 0
   fullChargeDamage: 0
-  magicDamageMultiplier: 1
+  maxChargeTime: 0
+  magicDamageMultiplier: 0.6
   poiseDamageMultiplier: 2
   staminaCost: 0
   manaCost: 0
   impactVFX: 1
   blockable: 1
+  boltNum: 0
+  electricChargeBuildup: 0
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0.5
@@ -51,3 +54,4 @@ MonoBehaviour:
   smearPositions: []
   smearRotations: []
   smearScales: []
+  secondClawRot: []

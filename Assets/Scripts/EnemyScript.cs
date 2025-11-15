@@ -169,7 +169,6 @@ public class EnemyScript : MonoBehaviour
 
     public void GainElectricCharge(int amount)
     {
-        Debug.Log(amount);
         electricCharge += amount;
         if(electricCharge >= maxCharge)
         {

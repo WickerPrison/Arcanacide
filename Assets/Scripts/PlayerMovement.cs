@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     
     //facing direction variables
     Vector3 mouseDirection;
-    Vector2 rightStickValue;
+    [System.NonSerialized] public Vector2 rightStickValue;
     float lockOnDistance = 10;
     [System.NonSerialized] public Vector2 lookDir;
     [System.NonSerialized] public GameObject pauseMenu;
