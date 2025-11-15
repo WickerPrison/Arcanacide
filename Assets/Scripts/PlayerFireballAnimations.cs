@@ -13,11 +13,13 @@ public class PlayerFireballAnimations : MonoBehaviour
     PlayerFireball fireball;
     PlayerFireWave fireWave;
     PlayerScript playerScript;
+    PlayerTrailManager trailManager;
 
     private void Start()
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerScript = playerMovement.gameObject.GetComponent<PlayerScript>();
+        trailManager = playerMovement.gameObject.GetComponent<PlayerTrailManager>();
     }
 
     public void SpawnFireball()
@@ -37,10 +39,9 @@ public class PlayerFireballAnimations : MonoBehaviour
 
     public void SpawnFireWave()
     {
-        fireWave = Instantiate(fireWavePrefab).GetComponent<PlayerFireWave>();
         Vector3 direction = Vector3.Normalize(playerMovement.attackPoint.position - playerMovement.transform.position);
-        fireWave.transform.position = playerMovement.transform.position + direction * 1.5f;
-        fireWave.transform.LookAt(fireWave.transform.position + direction);
+        Vector3 spawnPosition = playerMovement.transform.position + direction * 1.5f;
+        fireWave = PlayerFireWave.Instantiate(fireWavePrefab, spawnPosition, direction, trailManager);
     }
 
     public void LaunchFireWave()

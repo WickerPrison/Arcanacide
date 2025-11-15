@@ -19,9 +19,24 @@ public class PathTrail : MonoBehaviour
     float maxCd = 0.3f;
     List<EnemyScript> touchingEnemies = new List<EnemyScript>();
     public PlayerTrailManager trailManager;
+    public bool initializedCorrectly = false;
+
+    public static PathTrail Instantiate(GameObject pathTrailPrefab, Vector3 spawnPosition, PlayerTrailManager trailManager)
+    {
+        PathTrail pathTrail = GameObject.Instantiate(pathTrailPrefab).GetComponent<PathTrail>();
+        pathTrail.transform.position = spawnPosition;
+        pathTrail.trailManager = trailManager;
+        pathTrail.initializedCorrectly = true;
+        return pathTrail;
+    }
 
     private void Start()
     {
+        if (!initializedCorrectly)
+        {
+            throw new System.Exception("Use the constructor method to instantiate this class!");
+        }
+
         if (!trailManager.HasSpace(transform.position, radius))
         {
             Destroy(gameObject);

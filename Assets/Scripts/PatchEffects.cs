@@ -226,10 +226,8 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     void SpawnArcaneStep()
     {
         dist = 0;
-        GameObject pathTrail;
-        pathTrail = Instantiate(pathTrailPrefab);
-        pathTrail.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        pathTrail.GetComponent<PathTrail>().trailManager = trailManager;
+        Vector3 spawnPosition = new Vector3(transform.position.x, 0, transform.position.z);
+        PathTrail.Instantiate(pathTrailPrefab, spawnPosition, trailManager);
     }
 
     public void ArcaneStepDodgeThrough()

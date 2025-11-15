@@ -12,7 +12,6 @@ public class PlayerTrailManager : MonoBehaviour
         foreach (PathTrail pathTrail in pathTrails)
         {
             float enoughSpace = (radius + pathTrail.radius) * 0.7f;
-            Debug.Log(enoughSpace);
             if (Vector3.Distance(pathTrail.transform.position, position) < enoughSpace)
             {
                 return false;
