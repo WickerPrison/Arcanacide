@@ -35,7 +35,7 @@ public class PlayerFireWave : MonoBehaviour, IDamageEnemy
     {
         if (!instantiatedCorrectly)
         {
-            throw new System.Exception("Use constructor method to instantiate this class");
+            Utils.IncorrectInitialization("PlayerFireWave");
         }
     }
 

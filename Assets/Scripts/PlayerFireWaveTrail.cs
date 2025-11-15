@@ -28,7 +28,7 @@ public class PlayerFireWaveTrail : MonoBehaviour
     {
         if (!initializedCorrectly)
         {
-            throw new System.Exception("Use constructor method to initialize this prefab");
+            Utils.IncorrectInitialization("PlayerFireWaveTrail");
         }
     }
 }

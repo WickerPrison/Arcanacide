@@ -18,8 +18,8 @@ public class PathTrail : MonoBehaviour
     float cd = 0;
     float maxCd = 0.3f;
     List<EnemyScript> touchingEnemies = new List<EnemyScript>();
-    public PlayerTrailManager trailManager;
-    public bool initializedCorrectly = false;
+    [System.NonSerialized] public PlayerTrailManager trailManager;
+    [System.NonSerialized] public bool initializedCorrectly = false;
 
     public static PathTrail Instantiate(GameObject pathTrailPrefab, Vector3 spawnPosition, PlayerTrailManager trailManager)
     {
@@ -34,7 +34,7 @@ public class PathTrail : MonoBehaviour
     {
         if (!initializedCorrectly)
         {
-            throw new System.Exception("Use the constructor method to instantiate this class!");
+            Utils.IncorrectInitialization("PathTrail");
         }
 
         if (!trailManager.HasSpace(transform.position, radius))
@@ -43,7 +43,7 @@ public class PathTrail : MonoBehaviour
             return;
         }
         trailManager.pathTrails.Add(this);
-        VFX = GetComponentInChildren<ParticleSystem>();
+        VFX = GetComponent<ParticleSystem>();
         damagePerSecond = 1f + playerData.arcane * 0.2f;
         fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
         fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));

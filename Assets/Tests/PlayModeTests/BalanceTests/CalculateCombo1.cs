@@ -45,7 +45,7 @@ public class CalculateCombo1
         playerData.unlockedWeapons.Add(3);
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
 
-        Time.timeScale = 1;
+        Time.timeScale = 10;
         staminaCounter = 0;
         playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
