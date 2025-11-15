@@ -21,12 +21,13 @@ public class PlayerFireWave : MonoBehaviour, IDamageEnemy
     public bool blockable { get; set; } = true;
     private bool instantiatedCorrectly = false;
 
-    public static PlayerFireWave Instantiate(GameObject prefab, Vector3 spawnPosition, Vector3 direction, PlayerTrailManager trailManager)
+    public static PlayerFireWave Instantiate(GameObject prefab, Vector3 spawnPosition, Vector3 direction, PlayerTrailManager trailManager, AttackProfiles attackProfile)
     {
         PlayerFireWave wave = Instantiate(prefab).GetComponent<PlayerFireWave>();
         wave.transform.position = spawnPosition;
         wave.transform.LookAt(spawnPosition + direction);
         wave.trailManager = trailManager;
+        wave.attackProfile = attackProfile;
         wave.instantiatedCorrectly = true;
         return wave;
     }
@@ -62,7 +63,7 @@ public class PlayerFireWave : MonoBehaviour, IDamageEnemy
 
     void SpawnTrailElement()
     {
-        PlayerFireWaveTrail.Instantiate(fireWaveTrailPrefab, transform.position, transform.rotation, trailManager);
+        PlayerFireWaveTrail.Instantiate(fireWaveTrailPrefab, transform.position, transform.rotation, trailManager, attackProfile);
     }
 
     private void OnTriggerEnter(Collider collision)

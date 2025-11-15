@@ -7,6 +7,7 @@ public class PlayerFireballAnimations : MonoBehaviour
     public float fireballCharge;
     [SerializeField] AttackProfiles fireballProfile;
     [SerializeField] AttackProfiles fireWaveProfile;
+    [SerializeField] AttackProfiles fireWaveTrailProfile;
     [SerializeField] GameObject fireballPrefab;
     [SerializeField] GameObject fireWavePrefab;
     PlayerMovement playerMovement;
@@ -41,7 +42,7 @@ public class PlayerFireballAnimations : MonoBehaviour
     {
         Vector3 direction = Vector3.Normalize(playerMovement.attackPoint.position - playerMovement.transform.position);
         Vector3 spawnPosition = playerMovement.transform.position + direction * 1.5f;
-        fireWave = PlayerFireWave.Instantiate(fireWavePrefab, spawnPosition, direction, trailManager);
+        fireWave = PlayerFireWave.Instantiate(fireWavePrefab, spawnPosition, direction, trailManager, fireWaveTrailProfile);
     }
 
     public void LaunchFireWave()

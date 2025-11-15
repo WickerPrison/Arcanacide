@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: LanternCombo2
   m_EditorClassIdentifier: 
-  hitboxType: 0
+  hitbox: 0
   attackType: 1
   smearSpeed: 0
   stepWithAttack: 0
@@ -21,12 +21,15 @@ MonoBehaviour:
   damageMultiplier: 0
   chargeDamage: 0
   fullChargeDamage: 0
-  magicDamageMultiplier: 1
+  maxChargeTime: 0
+  magicDamageMultiplier: 1.5
   poiseDamageMultiplier: 1
   staminaCost: 20
   manaCost: 0
   impactVFX: 1
   blockable: 1
+  boltNum: 0
+  electricChargeBuildup: 0
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0.1
@@ -51,3 +54,4 @@ MonoBehaviour:
   smearPositions: []
   smearRotations: []
   smearScales: []
+  secondClawRot: []

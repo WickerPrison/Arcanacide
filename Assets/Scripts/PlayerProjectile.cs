@@ -21,7 +21,7 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
     public bool blockable { get; set; } = true;
 
 
-    private void OnTriggerEnter(Collider collision)
+    public virtual void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -33,7 +33,7 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
         }
     }
 
-    public virtual void HitEnemy(Collider collision)
+    public virtual void HitEnemy(Collider collision, bool destroyOnCollision = true)
     {
         EnemyScript enemyScript = collision.gameObject.GetComponent<EnemyScript>();
         int damage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
@@ -52,7 +52,10 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
         });
         RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         enemyScript.ImpactVFX();
-        KillProjectile();
+        if (destroyOnCollision)
+        {
+            KillProjectile();
+        }
     }
 
     public virtual void HitObject(Collider collision)

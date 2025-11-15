@@ -7,8 +7,9 @@ public class PlayerFireWaveTrail : MonoBehaviour
     private bool initializedCorrectly = false;
     [System.NonSerialized] public PlayerTrailManager trailManager;
     PathTrail[] pathTrails;
+    [SerializeField] AttackProfiles attackProfile;
 
-    public static PlayerFireWaveTrail Instantiate(GameObject prefab, Vector3 spawnPosition, Quaternion spawnRotation, PlayerTrailManager trailManager)
+    public static PlayerFireWaveTrail Instantiate(GameObject prefab, Vector3 spawnPosition, Quaternion spawnRotation, PlayerTrailManager trailManager, AttackProfiles attackProfile)
     {
         PlayerFireWaveTrail trail = Instantiate(prefab).GetComponent<PlayerFireWaveTrail>();
         trail.transform.position = spawnPosition;
@@ -19,6 +20,7 @@ public class PlayerFireWaveTrail : MonoBehaviour
         foreach (PathTrail pathTrail in trail.pathTrails)
         {
             pathTrail.trailManager = trailManager;
+            pathTrail.attackProfile = attackProfile;
             pathTrail.initializedCorrectly = true;
         }
         return trail;

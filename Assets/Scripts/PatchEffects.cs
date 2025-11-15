@@ -9,6 +9,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] GameObject arcaneStepHolderPrefab;
     [SerializeField] GameObject pathTrailPrefab;
+    [SerializeField] AttackProfiles pathOfPathProfile;
     [SerializeField] AttackProfiles parryProfile;
 
     //player scripts
@@ -227,7 +228,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     {
         dist = 0;
         Vector3 spawnPosition = new Vector3(transform.position.x, 0, transform.position.z);
-        PathTrail.Instantiate(pathTrailPrefab, spawnPosition, trailManager);
+        PathTrail.Instantiate(pathTrailPrefab, spawnPosition, trailManager, pathOfPathProfile);
     }
 
     public void ArcaneStepDodgeThrough()
