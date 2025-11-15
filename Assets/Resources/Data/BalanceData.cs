@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum BalanceWeaponType
@@ -127,6 +128,9 @@ public class BalanceData : ScriptableObject
     public void SetDps(int stat, float dps, BalanceAttackType attackType, BalanceWeaponType weaponType)
     {
         dictDict[attackType][weaponType].AddKey(stat, dps);
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+#endif
     }
 
     public void ClearDps(BalanceAttackType attackType, BalanceWeaponType weaponType)

@@ -161,6 +161,7 @@ public class CalculateCombo1
         staminaCounter += playerData.MaxStamina() - playerScript.stamina;
         playerScript.GainStamina(1000);
         healthCounter += testDummy.maxHealth - testDummy.health;
+        Debug.Log(testDummy.maxHealth - testDummy.health);
         testDummy.GainHealth(1000);
         hitCounter++;
         attacksCounter++;
