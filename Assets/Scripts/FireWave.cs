@@ -10,7 +10,6 @@ public class FireWave : MonoBehaviour
     Vector3 moveDirection;
     float lifetime = 10;
     public EnemyScript enemyOfOrigin;
-    public bool nonEnemyWall = false;
 
     private void Start()
     {
