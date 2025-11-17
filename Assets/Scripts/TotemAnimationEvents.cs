@@ -39,7 +39,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
         int damage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
         if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
         {
-            damage += Mathf.RoundToInt(damage * emblemLibrary.arcaneMastery.value);
+            damage += Mathf.RoundToInt(damage * (float)emblemLibrary.arcaneMastery.value);
         }
         int poiseDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
         foreach(Collider collider in touchingCollider)
@@ -81,7 +81,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
             waveBox.damage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
-                waveBox.damage += Mathf.RoundToInt(waveBox.damage * emblemLibrary.arcaneMastery.value);
+                waveBox.damage += Mathf.RoundToInt(waveBox.damage * (float)emblemLibrary.arcaneMastery.value);
             }
             waveBox.poiseDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
         }

@@ -37,8 +37,8 @@ public class Patch
 {
     public string name;
     public string description;
-    public float value;
-    public Patch(string patchName, string patchDescription, float otherVal = 0)
+    public object value;
+    public Patch(string patchName, string patchDescription, object otherVal = default(object))
     {
         name = patchName;
         description = patchDescription;
@@ -110,7 +110,7 @@ public class EmblemLibrary : ScriptableObject
         "Earn more money each time you kill an enemy", 1.25f);
 
     [System.NonSerialized] public Patch shellCompany = new Patch("Shell Company",
-        "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking");
+        "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking", (1.2f, 0.5f)); //(dodge, block)
 
     [System.NonSerialized] public Patch closeCall = new Patch("Close Call",
        "Increase all Physical damage for a short time after a Perfect Dodge");

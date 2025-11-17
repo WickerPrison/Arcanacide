@@ -62,7 +62,7 @@ public class PlayerScript : MonoBehaviour
         {
             if(_magicalAccelerationValue == 0)
             {
-                _magicalAccelerationValue = emblemLibrary.patchDictionary[Patches.MAGICAL_ACCELERATION].value;
+                _magicalAccelerationValue = (float)emblemLibrary.patchDictionary[Patches.MAGICAL_ACCELERATION].value;
             }
             return _magicalAccelerationValue;
         }

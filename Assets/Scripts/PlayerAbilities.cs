@@ -130,7 +130,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         {
             if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
             {
-                playerScript.LoseMana(Time.deltaTime * blockManaCost / 2);
+                playerScript.LoseMana(Time.deltaTime * blockManaCost * (((float, float))emblemLibrary.shellCompany.value).Item2);
             }
             else
             {
@@ -187,7 +187,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
             if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
             {
-                enemy.GainDOT(emblemLibrary.rendingBlows.value);
+                enemy.GainDOT((float)emblemLibrary.rendingBlows.value);
             }
 
             enemy.GainDOT(attackProfile.durationDOT);
@@ -216,7 +216,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
-                extraDamage += attackPower * emblemLibrary.arcaneMastery.value;
+                extraDamage += attackPower * (float)emblemLibrary.arcaneMastery.value;
             }
         }
 
@@ -226,7 +226,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
-                extraDamage += attackPower * emblemLibrary.arcaneMastery.value;
+                extraDamage += attackPower * (float)emblemLibrary.arcaneMastery.value;
             }
         }
 
@@ -467,7 +467,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             boltdamage += playerData.strength * specialAttackProfiles[2].damageMultiplier * Time.deltaTime;
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
-                boltdamage += boltdamage * emblemLibrary.arcaneMastery.value;
+                boltdamage += boltdamage * (float)emblemLibrary.arcaneMastery.value;
             }
 
             if (boltdamage > 1)

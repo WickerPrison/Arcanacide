@@ -145,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
             {
-                staminaCost *= 2;
+                staminaCost *= (((float, float))emblemLibrary.shellCompany.value).Item1;
             }
 
             playerScript.LoseStamina(staminaCost);

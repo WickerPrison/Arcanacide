@@ -203,7 +203,7 @@ public class EnemyScript : MonoBehaviour
 
         if (playerData.equippedPatches.Contains(Patches.PAY_RAISE))
         {
-            GlobalEvents.instance.MoneyChange(Mathf.RoundToInt(reward * emblemLibrary.patchDictionary[Patches.PAY_RAISE].value));
+            GlobalEvents.instance.MoneyChange(Mathf.RoundToInt(reward * (float)emblemLibrary.patchDictionary[Patches.PAY_RAISE].value));
         }
         else
         {

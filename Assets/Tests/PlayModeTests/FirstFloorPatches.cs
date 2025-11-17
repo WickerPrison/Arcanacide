@@ -122,7 +122,7 @@ public class FirstFloorPatches
             playerData.money = 0;
 
             yield return new WaitForSeconds(0.2f);
-            int expected = Mathf.RoundToInt(enemyScript.reward * emblemLibrary.patchDictionary[Patches.PAY_RAISE].value);
+            int expected = Mathf.RoundToInt(enemyScript.reward * (float)emblemLibrary.patchDictionary[Patches.PAY_RAISE].value);
 
             Assert.AreEqual(expected, playerData.money);
         }
@@ -140,7 +140,7 @@ public class FirstFloorPatches
         playerMovement.moveDirection = Vector3.right;
         playerMovement.Dodge();
 
-        float correctStaminaVal = playerData.MaxStamina() - playerMovement.dashStaminaCost * 2f;
+        float correctStaminaVal = playerData.MaxStamina() - playerMovement.dashStaminaCost * (((float, float))emblemLibrary.shellCompany.value).Item1;
 
         Assert.AreEqual(correctStaminaVal, playerScript.stamina);
 
@@ -161,7 +161,7 @@ public class FirstFloorPatches
 
         yield return new WaitForSeconds(1);
 
-        float expected = playerData.maxMana - playerAbilities.blockManaCost / 2;
+        float expected = playerData.maxMana - playerAbilities.blockManaCost * (((float, float))emblemLibrary.shellCompany.value).Item2;
         float difference = Mathf.Abs(expected - playerData.mana);
 
         Assert.Less(difference, 2);
@@ -194,7 +194,7 @@ public class FirstFloorPatches
         enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
 
         yield return new WaitForSeconds(0.2f);
-        int healAmount = Mathf.FloorToInt(playerData.MaxHealth() * emblemLibrary.patchDictionary[Patches.VAMPIRIC_STRIKES].value);
+        int healAmount = Mathf.FloorToInt(playerData.MaxHealth() * (float)emblemLibrary.patchDictionary[Patches.VAMPIRIC_STRIKES].value);
         int expected = startingHealth + healAmount;
 
         Assert.AreEqual(expected, playerData.health);
@@ -222,7 +222,7 @@ public class FirstFloorPatches
 
         playerScript.LoseMana(playerData.maxMana);
 
-        float magicallAccelerationValue = emblemLibrary.patchDictionary[Patches.MAGICAL_ACCELERATION].value;
+        float magicallAccelerationValue = (float)emblemLibrary.patchDictionary[Patches.MAGICAL_ACCELERATION].value;
 
         float delayTime = playerScript.maxManaDelay / magicallAccelerationValue;
 

@@ -151,10 +151,10 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
             extraDamage += physicalDamage * closeCallDamage;
         }
 
-        if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > emblemLibrary.spellsword.value)
+        if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > (float)emblemLibrary.spellsword.value)
         {
             extraDamage += physicalDamage * spellswordDamage;
-            playerScript.LoseMana(emblemLibrary.spellsword.value);
+            playerScript.LoseMana((float)emblemLibrary.spellsword.value);
         }
 
         return physicalDamage + Mathf.RoundToInt(extraDamage);
@@ -247,7 +247,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     {
         if (playerData.equippedPatches.Contains(Patches.VAMPIRIC_STRIKES))
         {
-            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() * emblemLibrary.patchDictionary[Patches.VAMPIRIC_STRIKES].value);
+            int healAmount = Mathf.FloorToInt(playerData.MaxHealth() * (float)emblemLibrary.patchDictionary[Patches.VAMPIRIC_STRIKES].value);
             playerHealth.PartialHeal(healAmount);
         }
     }
