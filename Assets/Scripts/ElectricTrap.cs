@@ -9,22 +9,38 @@ public class ElectricTrap : MonoBehaviour
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [SerializeField] EventReference electricDamage;
-    [System.NonSerialized] public PlayerScript playerScript;
+    PlayerScript playerScript;
+    PlayerAbilities playerAbilities;
     float damage = 0;
     float damagePerSecond;
     float charge;
-    [SerializeField] float chargePerSecond;
     float duration = 3;
     float timer;
     Vector3 away = Vector3.one * 100;
     bool canMakeDamageSound = true;
     List<EnemyScript> enemiesInRange = new List<EnemyScript>();
     StudioEventEmitter sfx;
+    [SerializeField] AttackProfiles attackProfile;
+    bool instantiatedCorrectly = false;
+
+    public static ElectricTrap Instantiate(GameObject prefab, PlayerScript playerScript, PlayerAbilities playerAbilities)
+    {
+        ElectricTrap electricTrap = Instantiate(prefab).GetComponent<ElectricTrap>();
+        electricTrap.playerScript = playerScript;
+        electricTrap.playerAbilities = playerAbilities;
+        electricTrap.instantiatedCorrectly = true;
+        return electricTrap;
+    }
 
     private void Awake()
     {
-        damagePerSecond = playerData.strength * 2;
         sfx = GetComponent<StudioEventEmitter>();
+    }
+
+    private void Start()
+    {
+        if (!instantiatedCorrectly) Utils.IncorrectInitialization("ElectricTrap");
+        damagePerSecond = playerAbilities.DetermineAttackDamage(attackProfile);
     }
 
     private void Update()
@@ -64,7 +80,7 @@ public class ElectricTrap : MonoBehaviour
                 damage = 0;
             }
 
-            charge += chargePerSecond * Time.deltaTime;
+            charge += attackProfile.electricChargeBuildup * Time.deltaTime;
             if(charge > 1)
             {
                 int amount = Mathf.FloorToInt(charge);
