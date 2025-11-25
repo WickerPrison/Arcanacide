@@ -104,7 +104,7 @@ public class EmblemLibrary : ScriptableObject
         "Refund health whenever you kill an enemy", 0.125f);
 
     [System.NonSerialized] public Patch quickstep = new Patch("Quickstep",
-        "Dodging does not use as much Stamina");
+        "Dodging does not use as much Stamina", 0.8f);
 
     [System.NonSerialized] public Patch payRaise = new Patch("Pay Raise",
         "Earn more money each time you kill an enemy", 1.25f);

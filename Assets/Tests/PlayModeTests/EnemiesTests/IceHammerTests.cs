@@ -140,6 +140,7 @@ public class IceHammerTests
     [UnityTest]
     public IEnumerator StompDeath()
     {
+        int initialCount = GameObject.FindObjectsOfType<StalagmiteAttack>().Length;
         IceHammerController iceHammer = GameObject.Instantiate(iceHammerPrefab).GetComponent<IceHammerController>();
         iceHammer.transform.position = new Vector3(-3f, 0, 3f);
         yield return null;
@@ -149,7 +150,26 @@ public class IceHammerTests
         EnemyScript enemyScript = iceHammer.GetComponent<EnemyScript>();
         enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 0);
 
+        yield return new WaitForSeconds(5f);
+        Assert.AreEqual(playerData.MaxHealth(), playerData.health);
+        int count = GameObject.FindObjectsOfType<StalagmiteAttack>().Length;
+        Assert.AreEqual(initialCount, count);
+    }
+
+    [UnityTest]
+    public IEnumerator StompStagger()
+    {
+        IceHammerController iceHammer = GameObject.Instantiate(iceHammerPrefab).GetComponent<IceHammerController>();
+        iceHammer.transform.position = new Vector3(-3f, 0, 3f);
+        yield return null;
+        iceHammer.StartStomp();
+
+        yield return new WaitForSeconds(0.7f);
+        EnemyScript enemyScript = iceHammer.GetComponent<EnemyScript>();
+        enemyScript.LoseHealthUnblockable(1, 700);
+
         yield return new WaitForSeconds(2f);
+        Assert.AreEqual(playerData.MaxHealth(), playerData.health);
     }
 
     [UnityTest]

@@ -65,4 +65,29 @@ public class HalfGolemTests
         yield return new WaitForSeconds(4f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
+
+    [UnityTest]
+    public IEnumerator DeathDuringStalagmites()
+    {
+        int initialCount = GameObject.FindObjectsOfType<StalagmiteAttack>().Length;
+        HalfGolemController halfGolem = GameObject.Instantiate(halfGolemPrefab).GetComponent<HalfGolemController>();
+        halfGolem.transform.position = new Vector3(7f, 0, 7f);
+        EnemyScript enemyScript = halfGolem.GetComponent<EnemyScript>();
+        halfGolem.state = EnemyState.IDLE;
+        halfGolem.attackTime = 1000;
+        yield return null;
+        for (int i = 0; i < 3; i++)
+        {
+            enemyScript.LoseHealthUnblockable(1, 1);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        halfGolem.DoubleAttack();
+
+        yield return new WaitForSeconds(2f);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 2);
+        yield return new WaitForSeconds(4);
+        int count = GameObject.FindObjectsOfType<StalagmiteAttack>().Length;
+        Assert.AreEqual(initialCount, count);
+    }
 }

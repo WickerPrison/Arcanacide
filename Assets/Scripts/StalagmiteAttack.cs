@@ -159,6 +159,9 @@ public class StalagmiteAttack : MonoBehaviour
 
     public void CancelStalagmite()
     {
+        transform.SetParent(holder);
+        transform.localPosition = localPos;
+        hitbox.enabled = false;
         StopAllCoroutines();
         ResetIcicles();
     }
