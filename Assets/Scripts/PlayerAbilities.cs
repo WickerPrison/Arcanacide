@@ -471,7 +471,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
             if (boltdamage > 1)
             {
-                blockable = false;
+                blockable = specialAttackProfiles[2].blockable;
                 closestEnemy.LoseHealth(Mathf.FloorToInt(boltdamage), 0, this, () => { });
                 boltdamage = 0;
             }

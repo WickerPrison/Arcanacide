@@ -122,10 +122,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 attackTime = 5;
                 break;
             case 3:
-                state = EnemyState.ATTACKING;
-                frontAnimator.Play("Knights");
-                backAnimator.Play("Knights");
-                
+                StartKnightsAttack();
                 break;
             case 4:
                 state = EnemyState.ATTACKING;
@@ -166,10 +163,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 attackTime = 5;
                 break;
             case 3:
-                state = EnemyState.ATTACKING;
-                frontAnimator.Play("Knights");
-                backAnimator.Play("Knights");
-
+                StartKnightsAttack();
                 break;
             case 4:
                 state = EnemyState.ATTACKING;
@@ -181,6 +175,13 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 }));
                 break;
         }
+    }
+
+    public void StartKnightsAttack()
+    {
+        state = EnemyState.ATTACKING;
+        frontAnimator.Play("Knights");
+        backAnimator.Play("Knights");
     }
 
     IEnumerator DelayAttack(float delay, Action action)
@@ -224,6 +225,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public override void StartDying()
     {
+        state = EnemyState.DYING;
         enemyScript.invincible = true;
         enemyScript.health = 1;
         bossEvents.FreezeAssistant();
