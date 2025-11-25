@@ -44,6 +44,41 @@ public class KnifeTests
     }
 
     [UnityTest]
+    public IEnumerator HeavyEnemyDeath()
+    {
+        playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
+        weaponManager = playerAbilities.GetComponent<WeaponManager>();
+        EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy1.transform.position = new Vector3(1.5f, 0, -1.5f);
+        yield return null;
+        weaponManager.SwitchWeapon(2);
+        yield return new WaitForSeconds(2);
+        playerAbilities.HeavyAttack();
+        yield return new WaitForSeconds(2);
+        testDummy1.LoseHealthUnblockable(10000, 2);
+        ElectricTrap trap = GameObject.FindObjectOfType<ElectricTrap>();
+        yield return new WaitForSeconds(2);
+        Assert.AreEqual(0, trap.GetEnemiesInRangeCount());
+    }
+
+    [UnityTest]
+    public IEnumerator HeavyTimeoutEnemyCount()
+    {
+        playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
+        weaponManager = playerAbilities.GetComponent<WeaponManager>();
+        EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy1.transform.position = new Vector3(1.5f, 0, -1.5f);
+        yield return null;
+        weaponManager.SwitchWeapon(2);
+        yield return new WaitForSeconds(2);
+        playerAbilities.HeavyAttack();
+        yield return new WaitForSeconds(5);
+        ElectricTrap trap = GameObject.FindObjectOfType<ElectricTrap>();
+        yield return new WaitForSeconds(2);
+        Assert.AreEqual(0, trap.GetEnemiesInRangeCount());
+    }
+
+    [UnityTest]
     public IEnumerator SpecialAttack()
     {
         playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();

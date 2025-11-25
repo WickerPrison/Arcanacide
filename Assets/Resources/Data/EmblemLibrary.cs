@@ -113,7 +113,7 @@ public class EmblemLibrary : ScriptableObject
         "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking", (1.2f, 0.5f)); //(dodge, block)
 
     [System.NonSerialized] public Patch closeCall = new Patch("Close Call",
-       "Increase all Physical damage for a short time after a Perfect Dodge");
+       "Increase all Physical damage for a short time after a Perfect Dodge", 0.2f);
 
     [System.NonSerialized] public Patch arcaneRemains = new Patch("Arcane Remains",
         "Increase damage of all attacks when near your Remnant. Collecting your Remnant restores you to full health");

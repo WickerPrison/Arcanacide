@@ -375,6 +375,7 @@ public class IceBoss : EnemyController, IEndDialogue
             yield return endOfFrame;
         }
 
+        state = EnemyState.DYING;
         healthbarMaterial.SetFloat("_IceThreshold", 0);
         frontAnimator.Play("Death");
         backAnimator.Play("Death");
@@ -443,7 +444,7 @@ public class IceBoss : EnemyController, IEndDialogue
         enemyEvents.OnTakeDamage += TakeDamage;
     }
 
-    void IEndDialogue.EndDialogue()
+    public void EndDialogue()
     {
         state = EnemyState.IDLE;
         musicManager.ChangeMusicState(MusicState.BOSSMUSIC);

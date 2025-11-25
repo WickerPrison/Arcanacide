@@ -165,7 +165,8 @@ public class GameManager : MonoBehaviour
             mapData.ACOn = data.ACOn;
             mapData.hasRemoteAC = data.hasRemoteAC;
             mapData.outsideFrankBossfight = data.outsideFrankBossfight;
-            mapData.resetPasswords = data.resetPasswords != null ? data.resetPasswords.ToList() : null;
+            mapData.itWorkerQuestStarted = data.itWorkerQuestStarted;
+            mapData.resetPasswords = data.resetPasswords.ToList();
             mapData.itWorkerQuestComplete = data.itWorkerQuestComplete;
             mapData.iceBossKilled = data.iceBossKilled;
             mapData.iceBossPosition = new Vector3(data.iceBossPosition[0], data.iceBossPosition[1], data.iceBossPosition[2]);
@@ -234,7 +235,8 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
-        mapData.resetPasswords = null;
+        mapData.itWorkerQuestStarted = false;
+        mapData.resetPasswords.Clear();
         mapData.itWorkerQuestComplete = false;
         mapData.iceBossKilled = false;
         mapData.iceBossPosition = Vector3.zero;
@@ -319,6 +321,7 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
+        mapData.itWorkerQuestStarted = false;
         mapData.resetPasswords = null;
         mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
@@ -363,7 +366,7 @@ public class GameManager : MonoBehaviour
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
         playerData.hasWayfaerie = false;
-        playerData.money = 4000;
+        playerData.money = 5000;
         playerData.lostMoney = 0;
         playerData.strength = 1;
         playerData.dexterity = 1;
@@ -407,6 +410,7 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = true;
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
+        mapData.itWorkerQuestStarted = false;
         mapData.resetPasswords = null;
         mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
@@ -501,6 +505,7 @@ public class GameManager : MonoBehaviour
         mapData.ACOn = false;
         mapData.hasRemoteAC = true;
         mapData.outsideFrankBossfight = true;
+        mapData.itWorkerQuestStarted = false;
         mapData.resetPasswords = null;
         mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;

@@ -139,6 +139,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
+        enemyEvents.Stagger();
         staggerTimer += staggerDuration;
         state = EnemyState.STAGGERED;
         navAgent.enabled = false;

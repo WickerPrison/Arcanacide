@@ -49,6 +49,7 @@ public class MapData : ScriptableObject
     public bool ACOn;
     public bool hasRemoteAC;
     public bool outsideFrankBossfight;
+    public bool itWorkerQuestStarted;
     public List<int> resetPasswords;
     public bool itWorkerQuestComplete;
 

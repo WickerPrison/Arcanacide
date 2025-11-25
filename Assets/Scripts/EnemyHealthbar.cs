@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyHealthbar : MonoBehaviour
 {
-    [SerializeField] EnemyEvents enemyEvents;
+    public EnemyEvents enemyEvents;
     [SerializeField] RectMask2D mask;
     [SerializeField] RectMask2D delayMask;
     [SerializeField] float maxSize;

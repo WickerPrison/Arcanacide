@@ -199,8 +199,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
             if (attackProfile.staggerDuration > 0)
             {
-                EnemyController enemyController = enemy.GetComponent<EnemyController>();
-                enemyController.StartStagger(attackProfile.staggerDuration);
+                enemy.StartStagger(attackProfile.staggerDuration);
             }
         });
 

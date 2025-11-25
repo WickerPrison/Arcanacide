@@ -16,7 +16,7 @@ public class ElectricTrap : MonoBehaviour
     float charge;
     float duration = 3;
     float timer;
-    Vector3 away = Vector3.one * 100;
+    Vector3 away = Vector3.one * -75;
     bool canMakeDamageSound = true;
     List<EnemyScript> enemiesInRange = new List<EnemyScript>();
     StudioEventEmitter sfx;
@@ -145,5 +145,10 @@ public class ElectricTrap : MonoBehaviour
         {
             if (enemiesInRange[i] == null) enemiesInRange.RemoveAt(i);
         }
+    }
+
+    public int GetEnemiesInRangeCount()
+    {
+        return enemiesInRange.Count;
     }
 }

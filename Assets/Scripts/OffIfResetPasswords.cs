@@ -29,7 +29,7 @@ public class OffIfResetPasswords : MonoBehaviour
             return;
         }
 
-        bool isFinished = mapData.resetPasswords != null && mapData.resetPasswords.Count == 4;
+        bool isFinished = mapData.resetPasswords.Count == 4;
         bool shouldBeOn = onWhenFinished == isFinished;
         gameObject.SetActive(shouldBeOn);
         if (!shouldBeOn)

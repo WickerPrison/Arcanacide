@@ -74,7 +74,6 @@ public class MinibossDroneController : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(minibossNum);
         if (minibossNum == 3 && mapData.miniboss3Killed) Destroy(gameObject);
         if (minibossNum == 4 && mapData.miniboss4Killed) Destroy(gameObject);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();

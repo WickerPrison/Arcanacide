@@ -79,6 +79,21 @@ public class ElectricSwordsmanTest
     }
 
     [UnityTest]
+    public IEnumerator RingInterruptedByMicroStagger()
+    {
+        ElectricSwordsmanController swordsman = GameObject.Instantiate(swordsmanPrefab).GetComponent<ElectricSwordsmanController>();
+        swordsman.transform.position = new Vector3(5f, 0, 5f);
+        yield return null;
+
+        swordsman.StartRings();
+        yield return new WaitForSeconds(3);
+        EnemyScript enemyScript = swordsman.GetComponent<EnemyScript>();
+        enemyScript.LoseHealthUnblockable(1, 1f);
+        yield return new WaitForSeconds(10);
+        Assert.AreEqual(LightningRingsState.DISABLED, swordsman.rings.state);
+    }
+
+    [UnityTest]
     public IEnumerator RingInterruptedByDeath()
     {
         ElectricSwordsmanController swordsman = GameObject.Instantiate(swordsmanPrefab).GetComponent<ElectricSwordsmanController>();
