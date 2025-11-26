@@ -25,6 +25,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] GameObject totemPrefab;
     [SerializeField] Transform attackPoint;
     [SerializeField] GameObject swordProjectilePrefab;
+    [SerializeField] ClawSpecial clawSpecialBuff;
 
     //player scripts
     PlayerMovement playerMovement;
@@ -79,10 +80,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     float boltdamage = 0;
     float boltCharge = 0;
 
-    float clawSpecialMaxTime = 15f;
-    float clawSpecialDamageMult = 2f;
-    [System.NonSerialized] public float clawSpecialStamCostMult = 1.5f;
-    [System.NonSerialized] public float clawSpecialTakeDamageMult = 2f;
     public bool blockable { get; set; }
 
     private void Awake()
@@ -221,7 +218,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
         if (playerData.clawSpecialOn)
         {
-            extraDamage += attackPower * clawSpecialDamageMult;
+            extraDamage += attackPower * clawSpecialBuff.dealDamageMod;
 
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
@@ -494,7 +491,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     private void onClawSpecial(object sender, System.EventArgs e)
     {
         playerScript.LoseMana(specialAttackProfiles[3].manaCost);
-        playerData.clawSpecialTimer = clawSpecialMaxTime;
+        playerData.clawSpecialTimer = clawSpecialBuff.duration;
         playerData.clawSpecialOn = true;
     }
 

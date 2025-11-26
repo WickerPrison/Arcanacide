@@ -161,7 +161,7 @@ public class EmblemLibrary : ScriptableObject
     "Your attacks deal extra Physical damage but consume Mana", 15);
 
     [System.NonSerialized] public Patch deathAura = new Patch("Death Aura",
-    "Your regain Mana faster when near your Remnant. Collecting your Remnant restores you to full Mana");
+    "You regain Mana faster when near your Remnant. Collecting your Remnant restores you to full Mana");
 
     [System.NonSerialized] public Patch arcaneMastery = new Patch("Arcane Mastery",
     "Your Special Attacks do extra damage", 0.3f);
