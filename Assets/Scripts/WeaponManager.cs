@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum PlayerWeapon
-{
-    SWORD, LANTERN, KNIFE, CLAWS
-}
-
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] Animator frontAnimator;

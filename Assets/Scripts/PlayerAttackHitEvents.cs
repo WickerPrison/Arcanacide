@@ -48,6 +48,11 @@ public class PlayerAttackHitEvents : MonoBehaviour
         }
     }
 
+    public void AttackHit(AttackProfiles attackProfile, AttackProfiles secondaryProfile)
+    {
+        AttackHit(attackProfile);
+    }
+
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
     public void AttackHit(AttackProfiles attackProfile)
     {
