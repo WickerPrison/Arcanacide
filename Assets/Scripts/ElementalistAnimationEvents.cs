@@ -33,7 +33,7 @@ public class ElementalistAnimationEvents : MeleeEnemyAnimationEvents
 
     public void ChaosHead()
     {
-        StartCoroutine(controller.ChaosHead());
+        controller.StartChaosHead();
     }
 
     public void PlantAttack()

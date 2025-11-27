@@ -204,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
         lockAttackPoint = false;
     }
 
-    void LockOn()
+    public void LockOn()
     {
         if (gm.enemies.Count < 1)
         {

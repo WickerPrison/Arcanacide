@@ -21,6 +21,7 @@ public class ElementalistController : EnemyController
     float plantLineNum = 6;
     Vector3 chaosOrbVert = new Vector3(0, 0, 0);
     AttackArcGenerator attackArc;
+    Coroutine chaosHeadCoroutine;
 
     public override void Start()
     {
@@ -143,7 +144,12 @@ public class ElementalistController : EnemyController
         iceRipple.enemyOfOrigin = enemyScript;
     }
 
-    public IEnumerator ChaosHead()
+    public void StartChaosHead()
+    {
+        chaosHeadCoroutine = StartCoroutine(ChaosHead());
+    }
+
+    IEnumerator ChaosHead()
     {
         Vector3 direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
         float angle = 0;
@@ -192,6 +198,7 @@ public class ElementalistController : EnemyController
         chaosHeadFront.GetComponent<ParticleSystem>().Stop();
         chaosHeadBack.GetComponent<ParticleSystem>().Stop();
         attackArc.HideAttackArc();
+        if(chaosHeadCoroutine != null) StopCoroutine(chaosHeadCoroutine);
         base.StartDying();
     }
 }

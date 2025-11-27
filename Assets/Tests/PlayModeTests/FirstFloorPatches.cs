@@ -98,7 +98,7 @@ public class FirstFloorPatches
         playerMovement.moveDirection = Vector3.right;
         playerMovement.Dodge();
 
-        float correctStaminaVal = playerData.MaxStamina() - playerMovement.dashStaminaCost / 2f;
+        float correctStaminaVal = playerData.MaxStamina() - playerMovement.dashStaminaCost * (float)emblemLibrary.quickstep.value;
 
         Assert.AreEqual(correctStaminaVal, playerScript.stamina);
 
