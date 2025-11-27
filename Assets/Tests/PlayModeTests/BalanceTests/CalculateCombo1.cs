@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class CalculateCombo1
 {
@@ -15,6 +16,7 @@ public class CalculateCombo1
     WeaponManager weaponManager;
     TestingEvents testingEvents;
     PlayerScript playerScript;
+    PlayerMovement playerMovement;
     float staminaCounter;
     int healthCounter;
     int hitCounter;
@@ -51,6 +53,7 @@ public class CalculateCombo1
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
         playerAbilities = playerAnimation.GetComponent<PlayerAbilities>();
         playerScript = playerAnimation.GetComponent<PlayerScript>();
+        playerMovement = playerAnimation.GetComponent<PlayerMovement>();
         PlayerAnimationEvents playerAnimationEvents = playerAnimation.GetComponentInChildren<PlayerAnimationEvents>();
         playerScript.testingEvents = testingEvents;
         testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
@@ -161,7 +164,6 @@ public class CalculateCombo1
         staminaCounter += playerData.MaxStamina() - playerScript.stamina;
         playerScript.GainStamina(1000);
         healthCounter += testDummy.maxHealth - testDummy.health;
-        Debug.Log(testDummy.maxHealth - testDummy.health);
         testDummy.GainHealth(1000);
         hitCounter++;
         attacksCounter++;

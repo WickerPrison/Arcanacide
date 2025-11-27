@@ -36,4 +36,35 @@ public class ElementalistTests
 
         yield return new WaitForSeconds(4f);
     }
+
+    [UnityTest]
+    public IEnumerator ChaosHeadDeath()
+    {
+        ElementalistController elementalist = GameObject.Instantiate(elementalistPrefab).GetComponent<ElementalistController>();
+        elementalist.transform.position = new Vector3(2.5f, 0, 2.5f);
+        elementalist.state = EnemyState.IDLE;
+        elementalist.attackTime = 1000;
+        yield return null;
+        elementalist.PlayAnimation("ChaosHead");
+
+        yield return new WaitForSeconds(1f);
+        
+        EnemyScript enemyScript = elementalist.GetComponent<EnemyScript>();
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 2);
+        yield return new WaitForSeconds(2);
+        Assert.AreEqual(playerData.MaxHealth(), playerData.health);
+    }
+
+    [UnityTest]
+    public IEnumerator Death()
+    {
+        ElementalistController elementalist = GameObject.Instantiate(elementalistPrefab).GetComponent<ElementalistController>();
+        elementalist.transform.position = new Vector3(2.5f, 0, 2.5f);
+        elementalist.state = EnemyState.IDLE;
+        elementalist.attackTime = 1000;
+        yield return null;
+        EnemyScript enemyScript = elementalist.GetComponent<EnemyScript>();
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 2);
+        yield return new WaitForSeconds(2);
+    }
 }

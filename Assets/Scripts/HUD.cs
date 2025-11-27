@@ -17,6 +17,7 @@ public class HUD : MonoBehaviour
     [SerializeField] GameObject map;
     [SerializeField] ScreenMessage maxManaMessage;
     [SerializeField] Image fadeToBlack;
+    [SerializeField] EnemyHealthbar bossHealthbar;
     public List<Sprite> gemSprites = new List<Sprite>();
     [SerializeField] Sprite unbrokenGem;
     public Image gemImage;
@@ -164,5 +165,12 @@ public class HUD : MonoBehaviour
     {
         GlobalEvents.instance.onGemUsed -= onGemUsed;
         GlobalEvents.instance.onACWallSwitch -= Global_onACWallSwitch;
+    }
+
+    // methods for testing
+    public void EnableBossHealthbar(EnemyEvents events)
+    {
+        bossHealthbar.enemyEvents = events;
+        bossHealthbar.gameObject.SetActive(true);
     }
 }

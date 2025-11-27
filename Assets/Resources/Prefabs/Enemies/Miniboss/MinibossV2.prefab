@@ -1235,7 +1235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19dc0b274e8ac8e4ab23bb11ca33323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  takeoffType: 0
   attackArc: {fileID: 0}
 --- !u!114 &6632002743390878821
 MonoBehaviour:
@@ -1575,11 +1574,13 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
-  maxHealth: 450
+  enemySound: {fileID: 0}
+  maxHealth: 800
   maxPoise: 200
   poiseRegeneration: 10
   invincible: 0
   enemyGUID: 
+  chargeResistance: 0
 --- !u!114 &115728272912825133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1672,6 +1673,7 @@ MonoBehaviour:
   sweepTime: 1
   landingIndicator: {fileID: 0}
   landTime: 0
+  spinPoints: {fileID: 0}
 --- !u!195 &8728546163967595537
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1737,6 +1739,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
+  colorChange: 0
+  colorChangeThreshold: 0.1
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
+  newFloorColor: 0
+  colorData: {fileID: 0}
 --- !u!114 &5461664029907091003
 MonoBehaviour:
   m_ObjectHideFlags: 0

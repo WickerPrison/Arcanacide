@@ -27,7 +27,6 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     GameManager gm;
 
     //damage multipliers
-    float closeCallDamage = 0.3f;
     float arcaneRemainsDamage = 0.5f;
     float confidentKillerDamage = 0.4f;
     float spellswordDamage = 0.5f;
@@ -148,7 +147,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
         float extraDamage = 0;
         if (playerData.equippedPatches.Contains(Patches.CLOSE_CALL) && closeCallTimer > 0)
         {
-            extraDamage += physicalDamage * closeCallDamage;
+            extraDamage += physicalDamage * (float)emblemLibrary.patchDictionary[Patches.CLOSE_CALL].value;
         }
 
         if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > (float)emblemLibrary.spellsword.value)

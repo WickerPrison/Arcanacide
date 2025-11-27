@@ -63,6 +63,7 @@ public class SaveData
     public bool ACOn;
     public bool hasRemoteAC;
     public bool outsideFrankBossfight;
+    public bool itWorkerQuestStarted;
     public int[] resetPasswords;
     public bool itWorkerQuestComplete;
     public bool whistleblowerArrested;
@@ -137,14 +138,8 @@ public class SaveData
         iceBossPosition[1] = mapData.iceBossPosition.y;
         iceBossPosition[2] = mapData.iceBossPosition.z;
         iceBossDirection = mapData.iceBossDirection;
-        if(mapData.resetPasswords != null)
-        {
-            resetPasswords = mapData.resetPasswords.ToArray();
-        }
-        else
-        {
-            resetPasswords = null;
-        }
+        itWorkerQuestStarted = mapData.itWorkerQuestStarted;
+        resetPasswords = mapData.resetPasswords.ToArray();
         itWorkerQuestComplete = mapData.itWorkerQuestComplete;
         whistleblowerArrested = mapData.whistleblowerArrested;
 

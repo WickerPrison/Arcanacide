@@ -43,7 +43,7 @@ public class BossController : EnemyController, IEndDialogue
     public bool pauseTimer = false;
     int fireBallDamage = 20;
     int fireBallPoiseDamage = 15;
-    public int phase = 1;
+    [System.NonSerialized] public int phase = 1;
     int phaseTrigger;
     int phaseCounter = 3;
     int fireRingDamage = 50;
@@ -65,7 +65,7 @@ public class BossController : EnemyController, IEndDialogue
         fireRing = GetComponentInChildren<FireRing>();
         state = EnemyState.UNAWARE;
         musicManager = gm.GetComponentInChildren<MusicManager>();
-        phaseTrigger = Mathf.RoundToInt(enemyScript.maxHealth / 2);
+        phaseTrigger = Mathf.RoundToInt(enemyScript.maxHealth * 0.65f);
         if (mapData.fireBossKilled)
         {
             enemyEvents.HideBossHealthbar();

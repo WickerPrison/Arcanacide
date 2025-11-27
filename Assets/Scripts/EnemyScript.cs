@@ -106,8 +106,8 @@ public class EnemyScript : MonoBehaviour
         }
         if (enemyController.state == EnemyState.DYING) return;
 
-        enemyEvents.TakeDamage();
         health -= damage;
+        enemyEvents.TakeDamage();
         if (health < 0)
         {
             health = 0;
@@ -183,7 +183,6 @@ public class EnemyScript : MonoBehaviour
     public void StartStagger(float staggerDuration)
     {
         if (invincible) return;
-        enemyEvents.Stagger();
         enemyController.StartStagger(staggerDuration);
     }
 

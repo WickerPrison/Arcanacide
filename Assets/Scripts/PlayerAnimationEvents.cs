@@ -113,8 +113,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         if (electricTrap == null)
         {
-            electricTrap = Instantiate(electricTrapPrefab).GetComponent<ElectricTrap>();
-            electricTrap.playerScript = playerScript;
+            electricTrap = ElectricTrap.Instantiate(electricTrapPrefab, playerScript, playerAbilities);
         }
 
         electricTrap.transform.position = transform.parent.position;

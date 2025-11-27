@@ -16,9 +16,9 @@ public class FourthFloorITWorker : MonoBehaviour
     private void Awake()
     {
         dialogue = GetComponent<NPCDialogue>();
-        dialogue.getConversationIndex = () => { return mapData.resetPasswords == null ? 7 : 8; };
+        dialogue.getConversationIndex = () => { return mapData.itWorkerQuestStarted ? 8 : 7; };
         dialogue.endConversationCallback = EndConversation;
-        if (mapData.resetPasswords != null && mapData.resetPasswords.Count == 4)
+        if (mapData.resetPasswords.Count == 4)
         {
             gameObject.SetActive(false);
             return;
@@ -65,7 +65,7 @@ public class FourthFloorITWorker : MonoBehaviour
     {
         inDialogue = false;
         faceDirection.DirectionalFace(FacingDirections.BACK_RIGHT);
-        if (mapData.resetPasswords == null) mapData.resetPasswords = new List<int>();
+        if (!mapData.itWorkerQuestStarted) mapData.itWorkerQuestStarted = true;
     }
 
     private void onStartDialogue(object sender, System.EventArgs e)

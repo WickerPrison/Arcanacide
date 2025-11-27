@@ -20,7 +20,7 @@ public class ResetPassword : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         dialogue = GetComponent<Dialogue>();
-        if(mapData.resetPasswords == null)
+        if(!mapData.itWorkerQuestStarted)
         {
             dialogue.conversationNum = 4;
         }
@@ -35,7 +35,7 @@ public class ResetPassword : MonoBehaviour
     void Start()
     {
         im.controls.Gameplay.Interact.performed += ctx => Investigate();
-        if (mapData.resetPasswords != null && mapData.resetPasswords.Contains(resetIndex))
+        if (mapData.resetPasswords.Contains(resetIndex))
         {
             if (wayFaerie != null)
             {
@@ -48,7 +48,7 @@ public class ResetPassword : MonoBehaviour
     void Update()
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
-        if (mapData.resetPasswords != null && mapData.resetPasswords.Contains(resetIndex))
+        if (mapData.resetPasswords.Contains(resetIndex))
         {
             if (wayFaerie != null) wayFaerie.Stop();
             message.SetActive(false);
@@ -65,11 +65,11 @@ public class ResetPassword : MonoBehaviour
         }
     }
 
-    void Investigate()
+    public void Investigate()
     {
         if (playerDistance > interactDistance) return;
 
-        if(mapData.resetPasswords == null)
+        if(!mapData.itWorkerQuestStarted)
         {
             if (wayFaerie != null) wayFaerie.Stop();
             dialogue.StartConversation();

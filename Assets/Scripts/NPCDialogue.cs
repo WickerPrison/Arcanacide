@@ -63,7 +63,7 @@ public class NPCDialogue : MonoBehaviour
         }
     }
 
-    void StartConversation()
+    public void StartConversation()
     {
         if (playerDistance > interactDistance) return;
 
@@ -79,7 +79,7 @@ public class NPCDialogue : MonoBehaviour
         dialogue.SetText(currentLine[1]);
     }
 
-    void NextLine()
+    public void NextLine()
     {
         if (!inDialogue) return;
 

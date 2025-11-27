@@ -104,7 +104,7 @@ public class EmblemLibrary : ScriptableObject
         "Refund health whenever you kill an enemy", 0.125f);
 
     [System.NonSerialized] public Patch quickstep = new Patch("Quickstep",
-        "Dodging does not use as much Stamina");
+        "Dodging does not use as much Stamina", 0.8f);
 
     [System.NonSerialized] public Patch payRaise = new Patch("Pay Raise",
         "Earn more money each time you kill an enemy", 1.25f);
@@ -113,7 +113,7 @@ public class EmblemLibrary : ScriptableObject
         "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking", (1.2f, 0.5f)); //(dodge, block)
 
     [System.NonSerialized] public Patch closeCall = new Patch("Close Call",
-       "Increase all Physical damage for a short time after a Perfect Dodge");
+       "Increase all Physical damage for a short time after a Perfect Dodge", 0.2f);
 
     [System.NonSerialized] public Patch arcaneRemains = new Patch("Arcane Remains",
         "Increase damage of all attacks when near your Remnant. Collecting your Remnant restores you to full health");
@@ -161,7 +161,7 @@ public class EmblemLibrary : ScriptableObject
     "Your attacks deal extra Physical damage but consume Mana", 15);
 
     [System.NonSerialized] public Patch deathAura = new Patch("Death Aura",
-    "Your regain Mana faster when near your Remnant. Collecting your Remnant restores you to full Mana");
+    "You regain Mana faster when near your Remnant. Collecting your Remnant restores you to full Mana");
 
     [System.NonSerialized] public Patch arcaneMastery = new Patch("Arcane Mastery",
     "Your Special Attacks do extra damage", 0.3f);

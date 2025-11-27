@@ -61,11 +61,6 @@ public class MusicPlayer : MonoBehaviour
             {MusicState.OUTRO, "OUTRO" },
             {MusicState.MAINMENU, "MAIN MENU" }
         };
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         DontDestroyOnLoad(gameObject);
     }
 

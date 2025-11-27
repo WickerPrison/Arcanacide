@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [System.NonSerialized] public Vector3 dashDirection;
     [System.NonSerialized] public bool isDashing = false;
     [NonSerialized] public float dashSpeed = 1000;
-    [NonSerialized] public float dashStaminaCost = 30f;
+    [NonSerialized] public float dashStaminaCost = 25f;
     
     //facing direction variables
     Vector3 mouseDirection;
@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
             dashDirection = moveDirection.normalized;
             if (playerData.equippedPatches.Contains(Patches.QUICKSTEP))
             {
-                staminaCost /= 2;
+                staminaCost *= (float)emblemLibrary.quickstep.value;
             }
 
             if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
@@ -204,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
         lockAttackPoint = false;
     }
 
-    void LockOn()
+    public void LockOn()
     {
         if (gm.enemies.Count < 1)
         {
