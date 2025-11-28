@@ -87,6 +87,7 @@ public class CalculateCombo1
         for (int i = 0; i < stats.Length; i++)
         {
             playerData.arcane = stats[i];
+            playerData.equippedElements[1] = WeaponElement.FIRE;
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;

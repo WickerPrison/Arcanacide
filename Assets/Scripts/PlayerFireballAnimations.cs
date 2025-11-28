@@ -42,7 +42,7 @@ public class PlayerFireballAnimations : MonoBehaviour
     {
         Vector3 direction = Vector3.Normalize(playerMovement.attackPoint.position - playerMovement.transform.position);
         Vector3 spawnPosition = playerMovement.transform.position + direction * 1.5f;
-        fireWave = PlayerFireWave.Instantiate(fireWavePrefab, spawnPosition, direction, trailManager, fireWaveTrailProfile);
+        fireWave = PlayerFireWave.Instantiate(fireWavePrefab, spawnPosition, direction, trailManager, fireWaveProfile, fireWaveTrailProfile);
     }
 
     public void LaunchFireWave()

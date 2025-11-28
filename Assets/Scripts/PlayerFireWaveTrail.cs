@@ -7,7 +7,6 @@ public class PlayerFireWaveTrail : MonoBehaviour
     private bool initializedCorrectly = false;
     [System.NonSerialized] public PlayerTrailManager trailManager;
     PathTrail[] pathTrails;
-    [SerializeField] AttackProfiles attackProfile;
 
     public static PlayerFireWaveTrail Instantiate(GameObject prefab, Vector3 spawnPosition, Quaternion spawnRotation, PlayerTrailManager trailManager, AttackProfiles attackProfile)
     {

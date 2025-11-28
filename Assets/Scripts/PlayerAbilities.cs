@@ -26,6 +26,9 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] Transform attackPoint;
     [SerializeField] GameObject swordProjectilePrefab;
     [SerializeField] ClawSpecial clawSpecialBuff;
+    [SerializeField] GameObject fireWavePrefab;
+    [SerializeField] AttackProfiles fireSwordWaveProfile;
+    [SerializeField] AttackProfiles fireSwordTrailProfile;
 
     //player scripts
     PlayerMovement playerMovement;
@@ -320,6 +323,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     {
         if (!heavyAttackActive) return;
 
+
         if (playerData.currentWeapon == 3)
         {
             playerAnimation.PlayAnimation("EndHeavyAttack");
@@ -329,10 +333,19 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             bool fullyCharged = playerAnimation.EndSwordHeavy() >= 1;
             if(fullyCharged)
             {
-                SlashProjectile swordProectile = Instantiate(swordProjectilePrefab).GetComponent<SlashProjectile>();
-                swordProectile.transform.position = transform.position + new Vector3(0, 0.1f, 0);
-                swordProectile.direction = Vector3.Normalize(attackPoint.position - transform.position);
-                swordProectile.playerAbilities = this;
+                Vector3 direction = Vector3.Normalize(playerMovement.attackPoint.position - transform.position);
+                switch (playerData.equippedElements[0])
+                {
+                    case WeaponElement.DEFAULT:
+                        Vector3 slashSpawnPosition = transform.position + new Vector3(0, 0.1f, 0);
+                        SlashProjectile.Instantiate(swordProjectilePrefab, slashSpawnPosition, direction, this);
+                        break;
+                    case WeaponElement.FIRE:
+                        Vector3 waveSpawnPosition = transform.position + direction * 1.5f;
+                        PlayerFireWave.Instantiate(fireWavePrefab, waveSpawnPosition, direction, trailManager, fireSwordWaveProfile, fireSwordTrailProfile).LaunchFireWave();
+                        break;
+                }
+
             }
             playerAnimation.SetBool("chargeHeavy", false);
         }
