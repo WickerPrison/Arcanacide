@@ -9,32 +9,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: LanternCombo2Trail
+  m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
+  m_Name: FireSwordLight3
   m_EditorClassIdentifier: 
-  hitbox: 0
+  hitbox: 2
   attackType: 0
   smearSpeed: 0
   stepWithAttack: 0
   halfConeAngle: 0
-  attackRange: 0
+  attackRange: 4
   damageMultiplier: 0
+  magicDamageMultiplier: 1
+  poiseDamageMultiplier: 1.2
+  staminaCost: 17
   chargeDamage: 0
   fullChargeDamage: 0
   maxChargeTime: 0
-  magicDamageMultiplier: 0.3
-  poiseDamageMultiplier: 0
-  staminaCost: 0
   manaCost: 0
   impactVFX: 1
-  blockable: 0
+  blockable: 1
   boltNum: 0
   electricChargeBuildup: 0
   bonusEffectDuration: 0
-  durationDOT: 5
-  staggerDuration: 0
+  durationDOT: 0
+  staggerDuration: 0.5
   screenShakeOnHit: {x: 0, y: 0}
-  screenShakeNoHit: {x: 0, y: 0}
+  screenShakeNoHit: {x: 0.15, y: 0.3}
   soundOnHitEvent:
     Guid:
       Data1: 0
@@ -42,15 +42,15 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
-  soundOnHitVolume: 0
+  soundOnHitVolume: 1
   noHitSoundEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  soundNoHitVolume: 0
+      Data1: 596054096
+      Data2: 1089662140
+      Data3: 1063899299
+      Data4: -513444934
+    Path: event:/BigSmash
+  soundNoHitVolume: 1
   smearPositions: []
   smearRotations: []
   smearScales: []

@@ -186,7 +186,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
         chargeTimer = value;
     }
 
-    public void StartCharge(AttackProfiles attackProfile)
+    public void StartCharge()
     {
         charging = true;
     }
