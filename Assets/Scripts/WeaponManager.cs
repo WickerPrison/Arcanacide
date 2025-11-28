@@ -23,24 +23,6 @@ public class WeaponManager : MonoBehaviour
     int[] specificWeaponMagicSources = new int[4];
     public event EventHandler OnStartWeaponMagic;
     public event EventHandler OnStopWeaponMagic;
-    Dictionary<PlayerWeapon, int> weapon_dict;
-    Dictionary<PlayerWeapon, int> weaponDict
-    {
-        get
-        {
-            if(weapon_dict == null)
-            {
-                weapon_dict = new Dictionary<PlayerWeapon, int>() 
-                { 
-                    { PlayerWeapon.SWORD, 0 },
-                    { PlayerWeapon.LANTERN, 1 },
-                    { PlayerWeapon.KNIFE, 2 },
-                    { PlayerWeapon.CLAWS, 3 }
-                };
-            }
-            return weapon_dict;
-        }
-    }
 
     private void Awake()
     {
@@ -141,11 +123,12 @@ public class WeaponManager : MonoBehaviour
 
     public void ActivateWeaponSprite(int weaponID)
     {
-        frontWeaponSprites[weaponID].SetActive(true);
-        backWeaponSprites[weaponID].SetActive(true);
+        int weaponSpriteId = WeaponSpriteId(weaponID);
+        frontWeaponSprites[weaponSpriteId].SetActive(true);
+        backWeaponSprites[weaponSpriteId].SetActive(true);
         for(int i = 0; i < 2; i++)
         {
-            switch (weaponID)
+            switch (weaponSpriteId)
             {
                 case 2:
                     knifeOffhand[i].SetActive(true);
@@ -154,6 +137,20 @@ public class WeaponManager : MonoBehaviour
                     clawsOffhand[i].SetActive(true);
                     break;
             }
+        }
+    }
+
+    public int WeaponSpriteId(int weaponID)
+    {
+        WeaponElement element = playerData.equippedElements[weaponID];
+        switch((weaponID, element)) 
+        { 
+            case (0, WeaponElement.DEFAULT): return 0;
+            case (1, WeaponElement.FIRE): return 1;
+            case (2, WeaponElement.ELECTRICITY): return 2;
+            case (3, WeaponElement.ICE): return 3;
+            case (0, WeaponElement.FIRE): return 4;
+            default: return -1;
         }
     }
 
@@ -181,7 +178,7 @@ public class WeaponManager : MonoBehaviour
     {
         Debug.Log("Inspector Changed");
         if (previousWeapon == editorWeapon) return;
-        SetWeapon(weaponDict[editorWeapon]);
+        SetWeapon(Utils.GetWeaponIndex(editorWeapon));
         previousWeapon = editorWeapon;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum UnlockableAbilities
@@ -47,8 +48,14 @@ public class PlayerData : ScriptableObject
     public Vector2 moveDir;
 
     public List<int> unlockedWeapons;
+    public List<WeaponElement> unlockedSwords;
+    public List<WeaponElement> unlockedLanterns;
+    public List<WeaponElement> unlockedKnives;
+    public List<WeaponElement> unlockedClaws;
+
     public int currentWeapon;
     public bool newWeapon;
+    public WeaponElement[] equippedElements;
 
     public float swordSpecialTimer;
     public bool clawSpecialOn;
@@ -70,6 +77,24 @@ public class PlayerData : ScriptableObject
         { "More Patches 2", UnlockableAbilities.MORE_PATCHES_2 },
     };
 
+    public Dictionary<WeaponElement, string> elementToString = new Dictionary<WeaponElement, string>
+    {
+        { WeaponElement.DEFAULT , "default" },
+        { WeaponElement.FIRE, "fire" },
+        { WeaponElement.ELECTRICITY, "electricity" },
+        { WeaponElement.ICE, "ice" },
+        { WeaponElement.CHAOS, "chaos" },
+    };
+
+    public Dictionary<string, WeaponElement> stringToElement = new Dictionary<string, WeaponElement>
+    {
+        { "default", WeaponElement.DEFAULT },
+        { "fire", WeaponElement.FIRE },
+        { "electricity", WeaponElement.ELECTRICITY },
+        { "ice", WeaponElement.ICE },
+        { "chaos", WeaponElement.CHAOS },
+    };
+
     public List<string> GetUnlockedStrings()
     {
         List<string> unlockedStrings = new List<string>();
@@ -87,6 +112,16 @@ public class PlayerData : ScriptableObject
         {
             unlockedAbilities.Add(stringToUnlock[unlockedString]);
         }
+    }
+
+    public List<string> GetStringsFromElements(List<WeaponElement> weaponElements)
+    {
+        return weaponElements.Select(element => elementToString[element]).ToList();
+    }
+
+    public List<WeaponElement> GetElementsFromStrings(List<string> strings)
+    {
+        return strings.Select(elementString => stringToElement[elementString]).ToList();
     }
 
     public int MaxHealth()
@@ -148,8 +183,14 @@ public class PlayerData : ScriptableObject
         killedEnemiesAtGetShield = 0;
         unlockedWeapons.Clear();
         unlockedWeapons.Add(0);
+        unlockedSwords.Clear();
+        unlockedSwords.Add(WeaponElement.DEFAULT);
+        unlockedLanterns.Clear();
+        unlockedKnives.Clear();
+        unlockedClaws.Clear();
         newWeapon = true;
         currentWeapon = 0;
+        equippedElements = new WeaponElement[4];
         swordSpecialTimer = 0;
         clawSpecialOn = false;
         clawSpecialTimer = 0;

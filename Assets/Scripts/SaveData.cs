@@ -39,8 +39,13 @@ public class SaveData
     public int killedEnemiesNum;
     public int killedEnemiesAtGetShield;
     public List<int> unlockedWeapons;
+    public List<string> unlockedSwords;
+    public List<string> unlockedLanterns;
+    public List<string> unlockedKnives;
+    public List<string> unlockedClaws;
     public int currentWeapon;
     public bool newWeapon;
+    public string[] equippedElements;
 
     public int[] unlockedDoors;
     public int[] visitedRooms;
@@ -110,9 +115,14 @@ public class SaveData
         killedEnemiesNum = playerData.killedEnemiesNum;
         killedEnemiesAtGetShield = playerData.killedEnemiesAtGetShield;
         unlockedWeapons = playerData.unlockedWeapons;
+        unlockedSwords = playerData.GetStringsFromElements(playerData.unlockedSwords);
+        unlockedLanterns = playerData.GetStringsFromElements(playerData.unlockedLanterns);
+        unlockedKnives = playerData.GetStringsFromElements(playerData.unlockedKnives);
+        unlockedClaws = playerData.GetStringsFromElements(playerData.unlockedClaws);
+
         currentWeapon = playerData.currentWeapon;
         newWeapon = playerData.newWeapon;
-
+        equippedElements = playerData.GetStringsFromElements(playerData.equippedElements.ToList()).ToArray();
 
         unlockedDoors = mapData.unlockedDoors.ToArray();
         visitedRooms = mapData.visitedRooms.ToArray();

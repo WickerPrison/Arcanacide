@@ -48,9 +48,11 @@ public class PlayerAttackHitEvents : MonoBehaviour
         }
     }
 
-    public void AttackHit(AttackProfiles attackProfile, AttackProfiles secondaryProfile)
+    public void AttackHitEvent(AttackHit attackHit)
     {
-        AttackHit(attackProfile);
+        int weaponIndex = Utils.GetWeaponIndex(attackHit.weaponCategory);
+        AttackProfiles profile = attackHit.GetProfile(playerData.equippedElements[weaponIndex]);
+        AttackHit(profile);
     }
 
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly

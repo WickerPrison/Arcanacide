@@ -50,4 +50,16 @@ public static class Utils
     {
         throw new System.Exception($"{className} must be initialized with constructor method");
     }
+
+    public static int GetWeaponIndex(PlayerWeapon weapon)
+    {
+        switch (weapon)
+        {
+            case PlayerWeapon.SWORD: return 0;
+            case PlayerWeapon.LANTERN: return 1;
+            case PlayerWeapon.KNIFE: return 2;
+            case PlayerWeapon.CLAWS: return 3;
+            default: return -1;
+        }
+    }
 }

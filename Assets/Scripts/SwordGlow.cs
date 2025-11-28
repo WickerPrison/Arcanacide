@@ -6,8 +6,8 @@ using UnityEngine;
 public class SwordGlow : MonoBehaviour
 {
     PlayerEvents playerEvents;
-    Vector3 startScale = new Vector3(1.2f, 1.2f, 1f);
-    Vector3 maxScale = new Vector3(2f, 1.25f, 1f);
+    [SerializeField] Vector3 startScale = new Vector3(1.2f, 1.2f, 1f);
+    [SerializeField] Vector3 maxScale = new Vector3(2f, 1.25f, 1f);
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
     PlayerScript playerScript;
 
