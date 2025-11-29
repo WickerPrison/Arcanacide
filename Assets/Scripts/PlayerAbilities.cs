@@ -201,6 +201,8 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             {
                 enemy.StartStagger(attackProfile.staggerDuration);
             }
+
+            GlobalEvents.instance.PlayerDealDamage(damage);
         });
 
         if(attackProfile.impactVFX) enemy.ImpactVFX();
@@ -211,7 +213,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         float extraDamage = 0;
         if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0 && playerData.equippedElements[0] == WeaponElement.DEFAULT)
         {
-            Debug.Log(specialAttackProfiles[0].damageMultiplier);
             extraDamage += attackPower * specialAttackProfiles[0].damageMultiplier;
 
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
@@ -402,13 +403,12 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    public void SwordSpecialAttack()
+    public void SwordSpecialAttack(AttackProfiles attackProfile)
     {
-        Debug.Log(specialAttackProfiles[0].name);
-        playerScript.LoseStamina(specialAttackProfiles[0].staminaCost);
-        playerScript.LoseMana(specialAttackProfiles[0].manaCost);
+        playerScript.LoseStamina(attackProfile.staminaCost);
+        playerScript.LoseMana(attackProfile.manaCost);
 
-        playerData.swordSpecialTimer = specialAttackProfiles[0].bonusEffectDuration;
+        playerData.swordSpecialTimer = attackProfile.bonusEffectDuration;
         weaponManager.AddSpecificWeaponSource(0);
     }
 

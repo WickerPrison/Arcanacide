@@ -58,7 +58,6 @@ public class OrbitFlame : PlayerProjectile
 
     public override void KillProjectile()
     {
-        Debug.Log("kill projectile");
         deathCallback(this);
         base.KillProjectile();
     }
