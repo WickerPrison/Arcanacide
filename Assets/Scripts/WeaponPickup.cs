@@ -7,8 +7,10 @@ public class WeaponPickup : MonoBehaviour
 {
     [SerializeField] GameObject message;
     [SerializeField] PlayerData playerData;
-    [SerializeField] int weaponID;
+    [SerializeField] PlayerWeapon weapon;
+    [SerializeField] WeaponElement weaponElement;
     [SerializeField] float interactDistance = 2;
+    int weaponID;
     Transform player;
     InputManager im;
     TutorialManager tutorialManager;
@@ -21,6 +23,7 @@ public class WeaponPickup : MonoBehaviour
 
     void Start()
     {
+        weaponID = Utils.GetWeaponIndex(weapon);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         if (playerData.unlockedWeapons.Contains(weaponID))
         {
@@ -52,7 +55,11 @@ public class WeaponPickup : MonoBehaviour
     {
         if (playerDistance <= interactDistance)
         {
-            playerData.unlockedWeapons.Add(weaponID);
+            if (!playerData.unlockedWeapons.Contains(weaponID))
+            {
+                playerData.unlockedWeapons.Add(weaponID);
+            }
+            playerData.GetElementList(weaponID).Add(weaponElement);
             playerData.newWeapon = true;
             TriggerTutorial();
             Destroy(gameObject);

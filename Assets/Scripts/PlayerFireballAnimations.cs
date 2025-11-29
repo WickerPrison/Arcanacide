@@ -18,12 +18,14 @@ public class PlayerFireballAnimations : MonoBehaviour
     PlayerFireWave fireWave;
     PlayerScript playerScript;
     PlayerTrailManager trailManager;
+    OrbitFlames orbitFlames;
 
     private void Start()
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerScript = playerMovement.gameObject.GetComponent<PlayerScript>();
         trailManager = playerMovement.gameObject.GetComponent<PlayerTrailManager>();
+        orbitFlames = playerMovement.GetComponent<OrbitFlames>();
     }
 
     public void SpawnFireball()
@@ -59,5 +61,11 @@ public class PlayerFireballAnimations : MonoBehaviour
     {
         if (playerData.equippedElements[0] != WeaponElement.FIRE) return;
         PlayerFireCircle.Instantiate(fireCirclePrefab, playerScript.transform.position, trailManager, fireCircleTrailProfile);
+    }
+
+    public void SpawnOrbitFlames()
+    {
+        if (playerData.equippedElements[0] != WeaponElement.FIRE) return;
+        orbitFlames.InitialSpawn();
     }
 }

@@ -209,8 +209,9 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     public int DamageModifiers(int attackPower)
     {
         float extraDamage = 0;
-        if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0)
+        if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0 && playerData.equippedElements[0] == WeaponElement.DEFAULT)
         {
+            Debug.Log(specialAttackProfiles[0].damageMultiplier);
             extraDamage += attackPower * specialAttackProfiles[0].damageMultiplier;
 
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
@@ -403,6 +404,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     public void SwordSpecialAttack()
     {
+        Debug.Log(specialAttackProfiles[0].name);
         playerScript.LoseStamina(specialAttackProfiles[0].staminaCost);
         playerScript.LoseMana(specialAttackProfiles[0].manaCost);
 
