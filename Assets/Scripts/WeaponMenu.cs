@@ -21,6 +21,7 @@ public class WeaponMenu : MonoBehaviour
     [SerializeField] RectTransform weaponsIcon;
     [SerializeField] List<Vector3> positions;
     [SerializeField] GameObject backButton;
+    [SerializeField] GameObject switchWeapon;
     [SerializeField] GameObject numbers;
 
     SoundManager sm;
@@ -153,6 +154,7 @@ public class WeaponMenu : MonoBehaviour
 
     IEnumerator MoveIcon(MenuWeaponSelected weapon)
     {
+        switchWeapon.gameObject.SetActive(false);
         Vector3 currentPosition = weaponsDescriptions.localPosition;
         Vector3 currentScale = weaponsIcon.localScale;
         Vector3 targetScale;
@@ -176,6 +178,21 @@ public class WeaponMenu : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         movingIcon = false;
+
+        if (weapon != MenuWeaponSelected.NONE && playerData.GetElementList(intDict[weapon]).Count > 1) 
+        { 
+            switchWeapon.SetActive(true);
+        }
+    }
+
+    public void ChangeWeapon()
+    {
+        int weaponIndex = intDict[weaponSelected];
+        List<WeaponElement> elements = playerData.GetElementList(weaponIndex);
+        int index = elements.IndexOf(playerData.equippedElements[weaponIndex]);
+        int newIndex = index + 1 >= elements.Count ? 0 : index + 1;
+        playerData.equippedElements[weaponIndex] = elements[newIndex];
+        GlobalEvents.instance.ChangeWeapon(weaponIndex);
     }
 
     IEnumerator FailToPress()

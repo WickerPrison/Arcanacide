@@ -181,4 +181,19 @@ public class WeaponManager : MonoBehaviour
         SetWeapon(Utils.GetWeaponIndex(editorWeapon));
         previousWeapon = editorWeapon;
     }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onChangeWeapon += Instance_onChangeWeapon;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onChangeWeapon -= Instance_onChangeWeapon;
+    }
+
+    private void Instance_onChangeWeapon(object sender, int index)
+    {
+        SetWeapon(playerData.currentWeapon);
+    }
 }
