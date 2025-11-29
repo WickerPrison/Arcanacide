@@ -8,8 +8,11 @@ public class PlayerFireballAnimations : MonoBehaviour
     [SerializeField] AttackProfiles fireballProfile;
     [SerializeField] AttackProfiles fireWaveProfile;
     [SerializeField] AttackProfiles fireWaveTrailProfile;
+    [SerializeField] AttackProfiles fireCircleTrailProfile;
     [SerializeField] GameObject fireballPrefab;
     [SerializeField] GameObject fireWavePrefab;
+    [SerializeField] GameObject fireCirclePrefab;
+    [SerializeField] PlayerData playerData;
     PlayerMovement playerMovement;
     PlayerFireball fireball;
     PlayerFireWave fireWave;
@@ -50,5 +53,11 @@ public class PlayerFireballAnimations : MonoBehaviour
         playerScript.LoseStamina(fireWaveProfile.staminaCost);
         fireWave.LaunchFireWave();
         fireWave = null;
+    }
+
+    public void SpawnFireCircle()
+    {
+        if (playerData.equippedElements[0] != WeaponElement.FIRE) return;
+        PlayerFireCircle.Instantiate(fireCirclePrefab, playerScript.transform.position, trailManager, fireCircleTrailProfile);
     }
 }

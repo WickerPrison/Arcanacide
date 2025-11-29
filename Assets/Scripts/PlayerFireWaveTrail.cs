@@ -7,6 +7,7 @@ public class PlayerFireWaveTrail : MonoBehaviour
     private bool initializedCorrectly = false;
     [System.NonSerialized] public PlayerTrailManager trailManager;
     PathTrail[] pathTrails;
+    AttackProfiles attackProfile;
 
     public static PlayerFireWaveTrail Instantiate(GameObject prefab, Vector3 spawnPosition, Quaternion spawnRotation, PlayerTrailManager trailManager, AttackProfiles attackProfile)
     {
@@ -14,6 +15,7 @@ public class PlayerFireWaveTrail : MonoBehaviour
         trail.transform.position = spawnPosition;
         trail.transform.rotation = spawnRotation;
         trail.trailManager = trailManager;
+        trail.attackProfile = attackProfile;
         trail.initializedCorrectly = true;
         trail.pathTrails = trail.GetComponentsInChildren<PathTrail>();
         foreach (PathTrail pathTrail in trail.pathTrails)
@@ -31,5 +33,13 @@ public class PlayerFireWaveTrail : MonoBehaviour
         {
             Utils.IncorrectInitialization("PlayerFireWaveTrail");
         }
+
+        StartCoroutine(DeathTimer((attackProfile.durationDOT + 2) * 1.5f));
+    }
+
+    IEnumerator DeathTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Destroy(gameObject);
     }
 }
