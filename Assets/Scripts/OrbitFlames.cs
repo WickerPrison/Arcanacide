@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class OrbitFlames : MonoBehaviour
@@ -91,6 +92,11 @@ public class OrbitFlames : MonoBehaviour
             damageCounter = 0;
             RefillSlot();
         }
+    }
+
+    public int CountNonNull()
+    {
+        return orbitFlames.Count(flame  => flame != null);
     }
 
     private void OnEnable()
