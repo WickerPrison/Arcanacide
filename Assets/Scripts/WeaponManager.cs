@@ -89,6 +89,7 @@ public class WeaponManager : MonoBehaviour
         frontAnimator.Play("SwitchWeapon");
         backAnimator.Play("SwitchWeapon");
 
+
         if(weaponMagicSources + specificWeaponMagicSources[nextWeapon] > 0)
         {
             OnStartWeaponMagic?.Invoke(this, EventArgs.Empty);

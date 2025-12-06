@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum BalanceWeaponType
 {
-    SWORD, LANTERN, KNIFE, CLAWS
+    SWORD, LANTERN, KNIFE, CLAWS, FIRESWORD
 }
 
 public enum BalanceAttackType
@@ -21,6 +21,7 @@ public class BalanceData : ScriptableObject
     [SerializeField] AnimationCurve lanternLightDps;
     [SerializeField] AnimationCurve knifeLightDps;
     [SerializeField] AnimationCurve clawsLightDps;
+    [SerializeField] AnimationCurve fireSwordLightDps;
     public float[] lightMaxDps;
     public float[] lightStamPerSecond;
     public float[] lightHitRate;
@@ -37,6 +38,7 @@ public class BalanceData : ScriptableObject
                     { BalanceWeaponType.LANTERN, lanternLightDps },
                     { BalanceWeaponType.KNIFE, knifeLightDps },
                     { BalanceWeaponType.CLAWS, clawsLightDps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordLightDps },
                 };
             }
             return _lightDpsCurveDict;
@@ -48,6 +50,7 @@ public class BalanceData : ScriptableObject
     public AnimationCurve lanternHeavyDps;
     public AnimationCurve knifeHeavyDps;
     public AnimationCurve clawsHeavyDps;
+    public AnimationCurve fireSwordHeavyDps;
     public float[] heavyMaxDps;
     public float[] heavyStamPerSecond;
     public float[] heavyHitRate;
@@ -57,6 +60,7 @@ public class BalanceData : ScriptableObject
     [SerializeField] AnimationCurve lanternCombo1Dps;
     [SerializeField] AnimationCurve knifeCombo1Dps;
     [SerializeField] AnimationCurve clawsCombo1Dps;
+    [SerializeField] AnimationCurve fireSwordCombo1Dps;
     public float[] combo1MaxDps;
     public float[] combo1StamPerSecond;
     public float[] combo1HitRate;
@@ -73,6 +77,7 @@ public class BalanceData : ScriptableObject
                     { BalanceWeaponType.LANTERN, lanternCombo1Dps },
                     { BalanceWeaponType.KNIFE, knifeCombo1Dps },
                     { BalanceWeaponType.CLAWS, clawsCombo1Dps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordCombo1Dps },
                 };
             }
             return _combo1DpsCurveDict;
@@ -83,6 +88,7 @@ public class BalanceData : ScriptableObject
     [SerializeField] AnimationCurve lanternCombo2Dps;
     [SerializeField] AnimationCurve knifeCombo2Dps;
     [SerializeField] AnimationCurve clawsCombo2Dps;
+    [SerializeField] AnimationCurve fireSwordCombo2Dps;
     public float[] combo2MaxDps;
     public float[] combo2StamPerSecond;
     public float[] combo2HitRate;
@@ -99,6 +105,7 @@ public class BalanceData : ScriptableObject
                     { BalanceWeaponType.LANTERN, lanternCombo2Dps },
                     { BalanceWeaponType.KNIFE, knifeCombo2Dps },
                     { BalanceWeaponType.CLAWS, clawsCombo2Dps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordCombo2Dps },
                 };
             }
             return _combo2DpsCurveDict;

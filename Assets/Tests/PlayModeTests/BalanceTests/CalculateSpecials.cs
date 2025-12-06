@@ -42,10 +42,7 @@ public class CalculateSpecials
         playerData.maxMana = 500;
         playerData.mana = playerData.maxMana;
         playerData.hasHealthGem = true;
-        playerData.unlockedWeapons.Add(0);
-        playerData.unlockedWeapons.Add(1);
-        playerData.unlockedWeapons.Add(2);
-        playerData.unlockedWeapons.Add(3);
+        playerData.UnlockAllWeapons();
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
         playerData.dexterity = 30;
 

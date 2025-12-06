@@ -207,4 +207,31 @@ public class PlayerData : ScriptableObject
         clawSpecialOn = false;
         clawSpecialTimer = 0;
     }
+
+    public void UnlockAllWeapons()
+    {
+        unlockedWeapons.Clear();
+        unlockedWeapons.Add(0);
+        unlockedWeapons.Add(1);
+        unlockedWeapons.Add(2);
+        unlockedWeapons.Add(3);
+
+        unlockedSwords.Clear();
+        unlockedSwords.Add(WeaponElement.DEFAULT);
+        unlockedSwords.Add(WeaponElement.FIRE);
+
+        unlockedLanterns.Clear();
+        unlockedLanterns.Add(WeaponElement.FIRE);
+
+        unlockedKnives.Clear();
+        unlockedKnives.Add(WeaponElement.ELECTRICITY);
+
+        unlockedClaws.Clear();
+        unlockedClaws.Add(WeaponElement.CHAOS);
+
+        equippedElements[0] = WeaponElement.DEFAULT;
+        equippedElements[1] = WeaponElement.FIRE;
+        equippedElements[2] = WeaponElement.ELECTRICITY;
+        equippedElements[3] = WeaponElement.ICE;
+    }
 }

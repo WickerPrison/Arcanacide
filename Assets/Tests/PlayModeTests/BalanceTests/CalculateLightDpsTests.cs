@@ -20,13 +20,6 @@ public class CalculateLightDpsTests
     int hitCounter;
     bool doneAttacking = false;
     EnemyScript testDummy;
-    Dictionary<BalanceWeaponType, int> weaponIndexDict = new Dictionary<BalanceWeaponType, int>
-    {
-        { BalanceWeaponType.SWORD, 0 },
-        { BalanceWeaponType.LANTERN, 1 },
-        { BalanceWeaponType.KNIFE, 2 },
-        { BalanceWeaponType.CLAWS, 3 },
-    };
 
     [UnitySetUp]
     public IEnumerator Setup()
@@ -38,10 +31,7 @@ public class CalculateLightDpsTests
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.hasHealthGem = true;
-        playerData.unlockedWeapons.Add(0);
-        playerData.unlockedWeapons.Add(1);
-        playerData.unlockedWeapons.Add(2);
-        playerData.unlockedWeapons.Add(3);
+        playerData.UnlockAllWeapons();
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
 
         Time.timeScale = 10;
@@ -124,15 +114,35 @@ public class CalculateLightDpsTests
         }
     }
 
+    [UnityTest]
+    public IEnumerator CalculateFireSwordLightCurve()
+    {
+        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.SWORD);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoLightCombo(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
+        }
+    }
+
+
     IEnumerator DoLightCombo(BalanceWeaponType type, int stat, int health)
     {
-        int weaponIndex = weaponIndexDict[type];
+        int reportIndex = BalanceTestUtils.weaponIndexDict[type];
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(1.5f, 0, -1.5f);
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
-        playerData.currentWeapon = weaponIndex + 1 < 4 ? weaponIndex + 1 : 0;
+        int weaponIndex = reportIndex > 3 ? reportIndex - 4 : reportIndex;
+        playerData.currentWeapon = weaponIndex == 0 ? 1 : 0;
+        playerData.equippedElements[weaponIndex] = BalanceTestUtils.weaponElementDict[type];
         weaponManager.SwitchWeapon(weaponIndex);
         yield return new WaitForSeconds(2);
         playerAbilities.Attack();
@@ -141,9 +151,9 @@ public class CalculateLightDpsTests
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, BalanceAttackType.LIGHT, type);
-        balanceData.lightStamPerSecond[weaponIndex] = stamPerSec;
-        balanceData.lightMaxDps[weaponIndex] = dps;
-        balanceData.lightHitRate[weaponIndex] = hitCounter / seconds;
+        balanceData.lightStamPerSecond[reportIndex] = stamPerSec;
+        balanceData.lightMaxDps[reportIndex] = dps;
+        balanceData.lightHitRate[reportIndex] = hitCounter / seconds;
         Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
