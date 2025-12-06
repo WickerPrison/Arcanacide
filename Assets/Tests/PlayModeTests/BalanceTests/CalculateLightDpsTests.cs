@@ -117,7 +117,7 @@ public class CalculateLightDpsTests
     [UnityTest]
     public IEnumerator CalculateFireSwordLightCurve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.SWORD);
+        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.FIRESWORD);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
         for (int i = 0; i < stats.Length; i++)

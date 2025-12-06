@@ -11,7 +11,7 @@ public enum BalanceWeaponType
 
 public enum BalanceAttackType
 {
-    LIGHT, COMBO1, COMBO2
+    LIGHT, COMBO1, COMBO2, SPECIAL
 }
 
 [CreateAssetMenu]
@@ -112,29 +112,50 @@ public class BalanceData : ScriptableObject
         }
     }
 
+    public AnimationCurve swordSpecialDps;
+    public AnimationCurve knifeSpecialDps;
+    public AnimationCurve fireSwordSpecialDps;
+    public float[] specialMaxDps;
+    public float[] specialStamPerSecond;
+    public float[] specialManaPerSecond;
+    public float[] specialHitRate;
+
+    Dictionary<BalanceWeaponType, AnimationCurve> _specialDpsCurveDict;
+    Dictionary<BalanceWeaponType, AnimationCurve> specialDpsCurveDict
+    {
+        get
+        {
+            if (_specialDpsCurveDict == null)
+            {
+                _specialDpsCurveDict = new Dictionary<BalanceWeaponType, AnimationCurve>()
+                {
+                    { BalanceWeaponType.SWORD, swordSpecialDps },
+                    { BalanceWeaponType.KNIFE, knifeSpecialDps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordSpecialDps },
+                };
+            }
+            return _specialDpsCurveDict;
+        }
+    }
 
     Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>> _dictDict;
     Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>> dictDict
     {
         get
         {
-            if(_dictDict == null)
+            if (_dictDict == null)
             {
                 _dictDict = new Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>>()
                 {
                     { BalanceAttackType.LIGHT, lightDpsCurveDict },
                     { BalanceAttackType.COMBO1, combo1DpsCurveDict },
                     { BalanceAttackType.COMBO2, combo2DpsCurveDict },
+                    { BalanceAttackType.SPECIAL, specialDpsCurveDict },
                 };
             }
             return _dictDict;
         }
     }
-
-    public AnimationCurve knifeSpecialDps;
-    public float knifeSpecialMaxDps;
-    public float knifeSpecialStamPerSecond;
-    public float knifeSpecialManaPerSecond;
 
 
     public void SetDps(int stat, float dps, BalanceAttackType attackType, BalanceWeaponType weaponType)

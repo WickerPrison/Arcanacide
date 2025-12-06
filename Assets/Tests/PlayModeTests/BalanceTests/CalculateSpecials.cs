@@ -22,13 +22,7 @@ public class CalculateSpecials
     bool doneAttacking = false;
     EnemyScript testDummy;
     PlayerAttackHitEvents playerAttackHitEvents;
-    Dictionary<BalanceWeaponType, int> weaponIndexDict = new Dictionary<BalanceWeaponType, int>
-    {
-        { BalanceWeaponType.SWORD, 0 },
-        { BalanceWeaponType.LANTERN, 1 },
-        { BalanceWeaponType.KNIFE, 2 },
-        { BalanceWeaponType.CLAWS, 3 },
-    };
+    BalanceWeaponType currentWeaponType;
 
     [UnitySetUp]
     public IEnumerator Setup()
@@ -54,14 +48,91 @@ public class CalculateSpecials
         playerScript = playerAnimation.GetComponent<PlayerScript>();
         playerAttackHitEvents = playerScript.GetComponentInChildren<PlayerAttackHitEvents>();
         playerScript.testingEvents = testingEvents;
+        testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
         weaponManager = playerAnimation.GetComponent<WeaponManager>();
     }
 
+    [UnityTest]
+    public IEnumerator CalculateSwordSpecialCurve()
+    {
+        currentWeaponType = BalanceWeaponType.SWORD;
+        balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.SWORD);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.strength = stats[i];
+            playerData.swordSpecialTimer = 0; 
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoLightCombo(BalanceWeaponType.SWORD, stats[i], health[i]);
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator CalculateFireSwordSpecialCurve()
+    {
+        currentWeaponType = BalanceWeaponType.FIRESWORD;
+        balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.FIRESWORD);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            playerData.swordSpecialTimer = 0;
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoLightCombo(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
+        }
+    }
+
+    IEnumerator DoLightCombo(BalanceWeaponType type, int stat, int health)
+    {
+        int reportIndex = BalanceTestUtils.weaponIndexDict[type];
+        testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy.transform.position = new Vector3(1.5f, 0, -1.5f);
+        testDummy.maxHealth = health;
+        testDummy.health = testDummy.maxHealth;
+        yield return null;
+        int weaponIndex = reportIndex > 3 ? reportIndex - 4 : reportIndex;
+        playerData.currentWeapon = weaponIndex == 0 ? 1 : 0;
+        playerData.equippedElements[weaponIndex] = BalanceTestUtils.weaponElementDict[type];
+        weaponManager.SwitchWeapon(weaponIndex);
+        yield return new WaitForSeconds(2);
+        playerAbilities.SpecialAttack();
+        yield return new WaitForSeconds(1.5f);
+        playerAbilities.Attack();
+        float seconds = 60;
+        yield return new WaitForSeconds(seconds);
+        float dps = healthCounter / seconds;
+        switch(type)
+        {
+            case BalanceWeaponType.SWORD:
+                dps -= balanceData.swordHeavyDps.Evaluate(stat);
+                break;
+            case BalanceWeaponType.FIRESWORD:
+                dps -= balanceData.fireSwordHeavyDps.Evaluate(stat);
+                break;
+        }
+        float stamPerSec = staminaCounter / seconds;
+        balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, type);
+        balanceData.specialMaxDps[reportIndex] = dps;
+        Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
+        Debug.Log($"Stamina Per Second: {stamPerSec}");
+        doneAttacking = true;
+        yield return new WaitForSeconds(5);
+        testDummy.Death();
+    }
 
 
     [UnityTest]
     public IEnumerator CalculateKnifeSpecialCurve()
     {
+        currentWeaponType = BalanceWeaponType.KNIFE;
         balanceData.knifeSpecialDps.keys = new Keyframe[0];
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
@@ -102,10 +173,10 @@ public class CalculateSpecials
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         float manaPerSec = manaCounter / seconds;
-        balanceData.knifeSpecialDps.AddKey(playerData.strength, dps);
-        balanceData.knifeSpecialStamPerSecond = stamPerSec;
-        balanceData.knifeSpecialMaxDps = dps;
-        balanceData.knifeSpecialManaPerSecond = manaPerSec;
+        balanceData.SetDps(playerData.strength, dps, BalanceAttackType.SPECIAL, BalanceWeaponType.KNIFE);
+        balanceData.specialStamPerSecond[2] = stamPerSec;
+        balanceData.specialMaxDps[2] = dps;
+        balanceData.specialManaPerSecond[2] = manaPerSec;
         Debug.Log($"Knife Special DPS with {playerData.strength} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         playerAbilities.EndSpecialAttack();
@@ -128,7 +199,18 @@ public class CalculateSpecials
         hitCounter++;
         if (!doneAttacking)
         {
-            playerAbilities.SpecialAttack();
+            switch (currentWeaponType)
+            {
+                case BalanceWeaponType.KNIFE:
+                    playerAbilities.SpecialAttack();
+                    break;
+                case BalanceWeaponType.SWORD:
+                case BalanceWeaponType.FIRESWORD:
+                    playerAbilities.Attack();
+                    playerData.swordSpecialTimer = 100;
+                    break;
+
+            }
         }
     }
 }
