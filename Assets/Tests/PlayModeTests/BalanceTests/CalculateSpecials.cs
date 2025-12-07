@@ -112,10 +112,10 @@ public class CalculateSpecials
         switch(type)
         {
             case BalanceWeaponType.SWORD:
-                dps -= balanceData.swordHeavyDps.Evaluate(stat);
+                dps -= balanceData.swordLightDps.Evaluate(stat);
                 break;
             case BalanceWeaponType.FIRESWORD:
-                dps -= balanceData.fireSwordHeavyDps.Evaluate(stat);
+                dps -= balanceData.fireSwordLightDps.Evaluate(stat);
                 break;
         }
         float stamPerSec = staminaCounter / seconds;

@@ -60,7 +60,7 @@ public class CalculateHeavyDps
             hitCounter = 0;
             playerData.equippedElements[0] = WeaponElement.DEFAULT;
             doneAttacking = false;
-            yield return DoSwordHeavy(0);
+            yield return DoSwordHeavy(0, stats[i], BalanceWeaponType.SWORD);
         }
     }
 
@@ -77,11 +77,11 @@ public class CalculateHeavyDps
             hitCounter = 0;
             playerData.equippedElements[0] = WeaponElement.FIRE;
             doneAttacking = false;
-            yield return DoSwordHeavy(4);
+            yield return DoSwordHeavy(4, stats[i], BalanceWeaponType.FIRESWORD);
         }
     }
 
-    IEnumerator DoSwordHeavy(int reportIndex)
+    IEnumerator DoSwordHeavy(int reportIndex, int stat, BalanceWeaponType type)
     {
         testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
         testingEvents.onFullyCharged += (sender, e) =>
@@ -102,6 +102,7 @@ public class CalculateHeavyDps
         yield return new WaitForSeconds(seconds);
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
+        balanceData.SetDps(stat, dps, BalanceAttackType.HEAVY, type);
         balanceData.swordHeavyDps.AddKey(playerData.strength, dps);
         balanceData.heavyStamPerSecond[reportIndex] = stamPerSec;
         balanceData.heavyMaxDps[reportIndex] = dps;

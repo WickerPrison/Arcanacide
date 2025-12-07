@@ -11,17 +11,17 @@ public enum BalanceWeaponType
 
 public enum BalanceAttackType
 {
-    LIGHT, COMBO1, COMBO2, SPECIAL
+    LIGHT, COMBO1, COMBO2, SPECIAL, HEAVY
 }
 
 [CreateAssetMenu]
 public class BalanceData : ScriptableObject
 {
-    [SerializeField] AnimationCurve swordLightDps;
+    public AnimationCurve swordLightDps;
     [SerializeField] AnimationCurve lanternLightDps;
     [SerializeField] AnimationCurve knifeLightDps;
     [SerializeField] AnimationCurve clawsLightDps;
-    [SerializeField] AnimationCurve fireSwordLightDps;
+    public AnimationCurve fireSwordLightDps;
     public float[] lightMaxDps;
     public float[] lightStamPerSecond;
     public float[] lightHitRate;
@@ -54,6 +54,25 @@ public class BalanceData : ScriptableObject
     public float[] heavyMaxDps;
     public float[] heavyStamPerSecond;
     public float[] heavyHitRate;
+    Dictionary<BalanceWeaponType, AnimationCurve> _heavyDpsCurveDict;
+    Dictionary<BalanceWeaponType, AnimationCurve> heavyDpsCurveDict
+    {
+        get
+        {
+            if (_heavyDpsCurveDict == null)
+            {
+                _heavyDpsCurveDict = new Dictionary<BalanceWeaponType, AnimationCurve>()
+                {
+                    { BalanceWeaponType.SWORD, swordHeavyDps },
+                    { BalanceWeaponType.LANTERN, lanternHeavyDps },
+                    { BalanceWeaponType.KNIFE, knifeHeavyDps },
+                    { BalanceWeaponType.CLAWS, clawsHeavyDps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordHeavyDps },
+                };
+            }
+            return _heavyDpsCurveDict;
+        }
+    }
 
 
     [SerializeField] AnimationCurve swordCombo1Dps;
@@ -151,6 +170,7 @@ public class BalanceData : ScriptableObject
                     { BalanceAttackType.COMBO1, combo1DpsCurveDict },
                     { BalanceAttackType.COMBO2, combo2DpsCurveDict },
                     { BalanceAttackType.SPECIAL, specialDpsCurveDict },
+                    { BalanceAttackType.HEAVY, heavyDpsCurveDict },
                 };
             }
             return _dictDict;

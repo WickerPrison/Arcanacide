@@ -31,6 +31,7 @@ public class AttackProfiles : ScriptableObject
     public float fullChargeDamage;
     public float maxChargeTime;
     public float manaCost;
+    public float specialValue;
     public bool impactVFX = true;
     public bool blockable;
 

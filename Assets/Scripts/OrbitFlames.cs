@@ -23,7 +23,7 @@ public class OrbitFlames : MonoBehaviour
         {
             if(_rechargeDamage == 0)
             {
-                _rechargeDamage = playerAbilities.DetermineAttackDamage(attackProfile);
+                _rechargeDamage = Mathf.RoundToInt(playerAbilities.DetermineAttackDamage(attackProfile) * attackProfile.specialValue);
             }
             return _rechargeDamage;
         }
