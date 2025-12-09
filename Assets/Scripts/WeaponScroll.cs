@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem;
+using System;
 
 public class WeaponScroll : MonoBehaviour
 {
@@ -11,17 +12,17 @@ public class WeaponScroll : MonoBehaviour
     [SerializeField] TextMeshProUGUI leftScroll;
     [SerializeField] TextMeshProUGUI rightScroll;
     [SerializeField] List<RectTransform> titles;
-    [SerializeField] List<RectTransform> bodies;
-    [SerializeField] int titleSpacing = 200;
-    [SerializeField] int bodySpacing = 600;
+    public int titleSpacing = 200;
+    public int bodySpacing = 600;
     [SerializeField] PlayerData playerData;
     WeaponMenu weaponMenu;
     InputManager im;
-    int position = 0;
+    [System.NonSerialized] public int position = 0;
     float ratio;
     float smallerScale = 0.7f;
-    float scrollTime = 0.5f;
+    [System.NonSerialized] public float scrollTime = 0.5f;
     int maxPosition = 3;
+    public event EventHandler onScroll;
 
     void Awake()
     {
@@ -54,7 +55,6 @@ public class WeaponScroll : MonoBehaviour
         for (int i = 0; i < titles.Count; i++)
         {
             titles[i].localPosition = new Vector3(i * titleSpacing - position * titleSpacing, 0, 0);
-            bodies[i].localPosition = new Vector3(i * bodySpacing - position * bodySpacing, 0, 0);
             if (i == 0)
             {
                 titles[i].localScale = Vector3.one;
@@ -64,15 +64,10 @@ public class WeaponScroll : MonoBehaviour
                 titles[i].localScale = Vector3.one * smallerScale;
             }
         }
-
-        if(!playerData.unlockedAbilities.Contains(UnlockableAbilities.SPECIAL_ATTACK))
-        {
-            bodies[bodies.Count - 1].GetComponent<TextMeshProUGUI>().text = "You have not unlocked Special Attacks.";
-        }
     }
 
 
-    IEnumerator MoveObject(Transform objectTransform, Vector3 destination, Vector3 currentPosition, float time)
+    public IEnumerator MoveObject(Transform objectTransform, Vector3 destination, Vector3 currentPosition, float time)
     {
         float timer = time;
         while (timer > 0)
@@ -119,10 +114,8 @@ public class WeaponScroll : MonoBehaviour
                 if (position == i) scale = 1;
 
                 StartCoroutine(ScaleObject(titles[i], Vector3.one * scale, titles[i].localScale, scrollTime));
-
-                Vector3 bodyPosition = new Vector3(i * bodySpacing - position * bodySpacing, 0, 0);
-                StartCoroutine(MoveObject(bodies[i], bodyPosition, bodies[i].localPosition, scrollTime));
             }
+            onScroll?.Invoke(this, EventArgs.Empty);
         }
     }
 }

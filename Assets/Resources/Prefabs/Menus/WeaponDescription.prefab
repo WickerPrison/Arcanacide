@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6896552267066808282}
   - component: {fileID: 1597460374287591029}
+  - component: {fileID: 447695775638856764}
   m_Layer: 5
   m_Name: MainBody
   m_TagString: Untagged
@@ -55,6 +56,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &447695775638856764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981956808875581989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420e040329fe7c146927499d0249854e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sections:
+  - {fileID: 7365767716991103679}
+  - {fileID: 1477837035661059146}
+  - {fileID: 5725513765953013302}
+  - {fileID: 4606865910076651312}
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
 --- !u!1 &2041628750840522888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,11 +1155,6 @@ MonoBehaviour:
   - {fileID: 1400135096153600099}
   - {fileID: 3736513317987323794}
   - {fileID: 711527825328689539}
-  bodies:
-  - {fileID: 7365767716991103679}
-  - {fileID: 1477837035661059146}
-  - {fileID: 5725513765953013302}
-  - {fileID: 4606865910076651312}
   titleSpacing: 200
   bodySpacing: 600
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
@@ -1566,6 +1580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7918164425490945476}
   - component: {fileID: 1024103373696782942}
+  - component: {fileID: 4756031789404169253}
   m_Layer: 5
   m_Name: SecondaryBody
   m_TagString: Untagged
@@ -1611,6 +1626,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &4756031789404169253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678979319543367935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420e040329fe7c146927499d0249854e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sections:
+  - {fileID: 8957799945774020961}
+  - {fileID: 375874443107444831}
+  - {fileID: 8830662801283869691}
+  - {fileID: 4009214103626106430}
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
 --- !u!1 &5775199970032248307
 GameObject:
   m_ObjectHideFlags: 0
