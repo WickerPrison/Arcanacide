@@ -305,7 +305,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             heavyAttackActive = true;
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = playerData.currentWeapon != 3;
-            if (playerData.currentWeapon == 0) playerAnimation.SetBool("chargeHeavy", true);
+            if (playerData.currentWeapon == 0 || playerData.currentWeapon == 3) playerAnimation.SetBool("chargeHeavy", true);
             playerAnimation.PlayAnimation("HeavyAttack");
         }
     }
@@ -317,7 +317,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
         if (playerData.currentWeapon == 3)
         {
-            playerAnimation.PlayAnimation("EndHeavyAttack");
+            playerAnimation.SetBool("chargeHeavy", false);
         }
         else if(playerData.currentWeapon == 0)
         {
