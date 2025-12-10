@@ -21,7 +21,6 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] ClawSpecial clawSpecialBuff;
 
     //player scripts
     PlayerAbilities playerAbilities;
@@ -165,8 +164,6 @@ public class PlayerScript : MonoBehaviour
 
     public void LoseStamina(float amount)
     {
-        if (playerData.clawSpecialOn) amount *= clawSpecialBuff.staminaMod;
-
         stamina -= amount;
         if(stamina < 0)
         {

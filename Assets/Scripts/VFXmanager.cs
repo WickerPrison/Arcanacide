@@ -45,7 +45,6 @@ public class VFXmanager : MonoBehaviour
         tempColor.a = 0;
         parryPulse1.color = tempColor;
         parryPulse2.color = tempColor;
-        if (playerData.clawSpecialOn) clawSpecialVFX.Play();
         mirrorCloak.enabled = playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK);
     }
 
@@ -70,11 +69,6 @@ public class VFXmanager : MonoBehaviour
     private void EndLanternCombo(object sender, System.EventArgs e)
     {
         fireRing.Explode();
-    }
-
-    private void OnClawSpecial(object sender, System.EventArgs e)
-    {
-        clawSpecialVFX.Play();
     }
 
     private void onMeleeParry(object sender, System.EventArgs e)
@@ -116,10 +110,6 @@ public class VFXmanager : MonoBehaviour
         parryPulse2.color = tempColor;
     }
 
-    private void OnEndClawSpecial(object sender, System.EventArgs e)
-    {
-        clawSpecialVFX.Stop();
-    }
     private void onStartMirrorCloak(object sender, System.EventArgs e)
     {
         mirrorCloak.enabled = true;
@@ -154,8 +144,6 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onDashStart += onDashStart;
         playerEvents.onAttackImpact += onAttackImpact;
         playerEvents.onTakeDamage += onTakeDamage;
-        playerEvents.onClawSpecial += OnClawSpecial;
-        playerEvents.onEndClawSpecial += OnEndClawSpecial;
         playerEvents.onStartMirrorCloak += onStartMirrorCloak;
         playerEvents.onEndMirrorCloak += onEndMirrorCloak;
         playerEvents.onMeleeParry += onMeleeParry;
@@ -168,8 +156,6 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onDashStart -= onDashStart;
         playerEvents.onAttackImpact -= onAttackImpact;
         playerEvents.onTakeDamage -= onTakeDamage;
-        playerEvents.onClawSpecial -= OnClawSpecial;
-        playerEvents.onEndClawSpecial -= OnEndClawSpecial;
         playerEvents.onStartMirrorCloak -= onStartMirrorCloak;
         playerEvents.onEndMirrorCloak -= onEndMirrorCloak;
         playerEvents.onMeleeParry -= onMeleeParry;

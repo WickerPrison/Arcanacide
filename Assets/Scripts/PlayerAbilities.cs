@@ -25,7 +25,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] GameObject totemPrefab;
     [SerializeField] Transform attackPoint;
     [SerializeField] GameObject swordProjectilePrefab;
-    [SerializeField] ClawSpecial clawSpecialBuff;
     [SerializeField] GameObject fireWavePrefab;
     [SerializeField] AttackProfiles fireSwordWaveProfile;
     [SerializeField] AttackProfiles fireSwordTrailProfile;
@@ -214,16 +213,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0 && playerData.equippedElements[0] == WeaponElement.DEFAULT)
         {
             extraDamage += attackPower * specialAttackProfiles[0].damageMultiplier;
-
-            if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
-            {
-                extraDamage += attackPower * (float)emblemLibrary.arcaneMastery.value;
-            }
-        }
-
-        if (playerData.clawSpecialOn)
-        {
-            extraDamage += attackPower * clawSpecialBuff.dealDamageMod;
 
             if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
             {
@@ -503,13 +492,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    private void onClawSpecial(object sender, System.EventArgs e)
-    {
-        playerScript.LoseMana(specialAttackProfiles[3].manaCost);
-        playerData.clawSpecialTimer = clawSpecialBuff.duration;
-        playerData.clawSpecialOn = true;
-    }
-
     private void PlayerEvents_onStartFireRain(object sender, Vector3 origin)
     {
         for (int i = 0; i < fireRainAmount; i++)
@@ -567,7 +549,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     private void OnEnable()
     {
         playerEvents.onPlayerStagger += onPlayerStagger;
-        playerEvents.onClawSpecial += onClawSpecial;
         playerEvents.onBackstepStart += onBackstepStart;
         playerEvents.onDashEnd += PlayerEvents_onDashEnd;
         playerEvents.onStartFireRain += PlayerEvents_onStartFireRain;
@@ -577,7 +558,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= onPlayerStagger;
-        playerEvents.onClawSpecial -= onClawSpecial;
         playerEvents.onBackstepStart -= onBackstepStart;
         playerEvents.onDashEnd -= PlayerEvents_onDashEnd;
         playerEvents.onStartFireRain -= PlayerEvents_onStartFireRain;

@@ -18,8 +18,6 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onLanternCombo;
     public event EventHandler<Vector3> onStartFireRain;
     public event EventHandler onEndLanternCombo;
-    public event EventHandler onClawSpecial;
-    public event EventHandler onEndClawSpecial;
     public event EventHandler onStartMirrorCloak;
     public event EventHandler onEndMirrorCloak;
     public event EventHandler onMeleeParry;
@@ -81,16 +79,6 @@ public class PlayerEvents : MonoBehaviour
     public void EndLanternCombo()
     {
         onEndLanternCombo?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void ClawSpecialAttack()
-    {
-        onClawSpecial?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void EndClawSpecialAttack()
-    {
-        onEndClawSpecial?.Invoke(this, EventArgs.Empty);
     }
 
     public void StartMirrorCloak()

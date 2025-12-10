@@ -94,16 +94,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector3.zero;
         }
 
-        if(playerData.clawSpecialTimer > 0)
-        {
-            playerData.clawSpecialTimer -= Time.deltaTime;
-            if(playerData.clawSpecialTimer <= 0)
-            {
-                playerData.clawSpecialOn = false;
-                playerEvents.EndClawSpecialAttack();
-            }
-        }
-
         CheckForController();
     }
 

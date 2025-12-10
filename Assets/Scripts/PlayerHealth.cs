@@ -8,7 +8,6 @@ public class PlayerHealth : MonoBehaviour
     //input in inspector
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] ClawSpecial clawSpecialBuff;
 
     //player scripts
     PatchEffects patchEffects;
@@ -82,11 +81,6 @@ public class PlayerHealth : MonoBehaviour
             patchEffects.barrier = false;
             patchEffects.barrierTimer = patchEffects.maxBarrierTimer;
             return;
-        }
-
-        if (playerData.clawSpecialOn)
-        {
-            damage = Mathf.CeilToInt(damage * clawSpecialBuff.takeDamageMod);
         }
 
         if (damage > playerData.health && playerData.equippedPatches.Contains(Patches.ARCANE_PRESERVATION))

@@ -66,6 +66,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
         }
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackProfile.staminaCost);
+        playerScript.LoseMana(attackProfile.manaCost);
         smear.particleSmear(attackProfile);
 
 

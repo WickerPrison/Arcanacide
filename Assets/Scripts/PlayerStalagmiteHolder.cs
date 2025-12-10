@@ -6,6 +6,9 @@ public class PlayerStalagmiteHolder : StalagmiteHolder
 {
     PlayerAbilities playerAbilities;
     [SerializeField] AttackProfiles attackProfile;
+    Quaternion startingRotation;
+    Vector3 startingPosition;
+    Transform attackPoint;
 
     public override void Awake()
     {
@@ -20,6 +23,20 @@ public class PlayerStalagmiteHolder : StalagmiteHolder
             stalagmite.attackProfile = attackProfile;
             stalagmite.playerAbilities = playerAbilities;
         }
+
+        attackPoint = transform.parent;
+        startingPosition = transform.localPosition;
+        startingRotation = transform.localRotation;
+    }
+
+    public override void TriggerWave()
+    {
+        base.CancelWave();
+        transform.SetParent(attackPoint);
+        transform.localRotation = startingRotation;
+        transform.localPosition = startingPosition;
+        transform.parent = null;
+        base.TriggerWave();
     }
 
     public override void OnDisable()

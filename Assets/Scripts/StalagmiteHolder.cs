@@ -47,7 +47,7 @@ public class StalagmiteHolder : MonoBehaviour
         }
     }
 
-    public void TriggerWave()
+    public virtual void TriggerWave()
     {
         StartCoroutine(Wave());
     }
@@ -68,7 +68,7 @@ public class StalagmiteHolder : MonoBehaviour
         }
     }
 
-    void CancelWave()
+    public void CancelWave()
     {
         StopAllCoroutines();
         foreach(StalagmiteAttack stalagmite in stalagmites)

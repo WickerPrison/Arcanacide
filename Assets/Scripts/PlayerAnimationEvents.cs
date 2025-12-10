@@ -127,12 +127,6 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAbilities.KnifeSpecialAttack();
     }
 
-    public void ClawsSpecialAttack()
-    {
-        Shove();
-        playerEvents.ClawSpecialAttack();
-    }
-
     public void AttackFalse()
     {
         playerAnimation.EndChain();
