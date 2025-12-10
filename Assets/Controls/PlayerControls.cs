@@ -681,6 +681,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""084465e1-eb2a-46e4-9ca0-ed92746d0455"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -936,6 +945,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""MenuLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b573b26-8161-4919-bc30-ca1a44f73cc0"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""441e5063-f445-41da-abf9-321a4779bd34"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwitchWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1042,6 +1073,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Menu_MenuClaws = m_Menu.FindAction("MenuClaws", throwIfNotFound: true);
         m_Menu_MenuRight = m_Menu.FindAction("MenuRight", throwIfNotFound: true);
         m_Menu_MenuLeft = m_Menu.FindAction("MenuLeft", throwIfNotFound: true);
+        m_Menu_SwitchWeapon = m_Menu.FindAction("SwitchWeapon", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_Next = m_Dialogue.FindAction("Next", throwIfNotFound: true);
@@ -1300,6 +1332,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menu_MenuClaws;
     private readonly InputAction m_Menu_MenuRight;
     private readonly InputAction m_Menu_MenuLeft;
+    private readonly InputAction m_Menu_SwitchWeapon;
     public struct MenuActions
     {
         private @PlayerControls m_Wrapper;
@@ -1314,6 +1347,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @MenuClaws => m_Wrapper.m_Menu_MenuClaws;
         public InputAction @MenuRight => m_Wrapper.m_Menu_MenuRight;
         public InputAction @MenuLeft => m_Wrapper.m_Menu_MenuLeft;
+        public InputAction @SwitchWeapon => m_Wrapper.m_Menu_SwitchWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1353,6 +1387,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @MenuLeft.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuLeft;
                 @MenuLeft.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuLeft;
                 @MenuLeft.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuLeft;
+                @SwitchWeapon.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnSwitchWeapon;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -1387,6 +1424,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @MenuLeft.started += instance.OnMenuLeft;
                 @MenuLeft.performed += instance.OnMenuLeft;
                 @MenuLeft.canceled += instance.OnMenuLeft;
+                @SwitchWeapon.started += instance.OnSwitchWeapon;
+                @SwitchWeapon.performed += instance.OnSwitchWeapon;
+                @SwitchWeapon.canceled += instance.OnSwitchWeapon;
             }
         }
     }
@@ -1477,6 +1517,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMenuClaws(InputAction.CallbackContext context);
         void OnMenuRight(InputAction.CallbackContext context);
         void OnMenuLeft(InputAction.CallbackContext context);
+        void OnSwitchWeapon(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {
