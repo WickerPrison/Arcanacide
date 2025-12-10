@@ -5,14 +5,29 @@ using UnityEngine;
 
 public class SlashProjectile : MonoBehaviour
 {
-    [System.NonSerialized] public Vector3 direction;
-    [System.NonSerialized] public PlayerAbilities playerAbilities;
+    Vector3 direction;
+    PlayerAbilities playerAbilities;
     [SerializeField] AttackProfiles attackProfile;
     [SerializeField] float speed;
     [SerializeField] float lifetime;
+    bool instantiatedCorrectly = false;
+
+    public static SlashProjectile Instantiate(GameObject prefab, Vector3 spawnPosition, Vector3 direction, PlayerAbilities playerAbilities)
+    {
+        SlashProjectile slashProjectile = GameObject.Instantiate(prefab).GetComponent<SlashProjectile>();
+        slashProjectile.transform.position = spawnPosition;
+        slashProjectile.direction = direction;
+        slashProjectile.playerAbilities = playerAbilities;
+        slashProjectile.instantiatedCorrectly = true;
+        return slashProjectile;
+    }
 
     private void Start()
     {
+        if (!instantiatedCorrectly)
+        {
+            Utils.IncorrectInitialization("PlayerFireWave");
+        }
         transform.rotation = Quaternion.LookRotation(direction);
     }
 

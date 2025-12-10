@@ -6,21 +6,22 @@ using UnityEngine;
 
 public enum BalanceWeaponType
 {
-    SWORD, LANTERN, KNIFE, CLAWS
+    SWORD, LANTERN, KNIFE, CLAWS, FIRESWORD
 }
 
 public enum BalanceAttackType
 {
-    LIGHT, COMBO1, COMBO2
+    LIGHT, COMBO1, COMBO2, SPECIAL, HEAVY
 }
 
 [CreateAssetMenu]
 public class BalanceData : ScriptableObject
 {
-    [SerializeField] AnimationCurve swordLightDps;
+    public AnimationCurve swordLightDps;
     [SerializeField] AnimationCurve lanternLightDps;
     [SerializeField] AnimationCurve knifeLightDps;
     [SerializeField] AnimationCurve clawsLightDps;
+    public AnimationCurve fireSwordLightDps;
     public float[] lightMaxDps;
     public float[] lightStamPerSecond;
     public float[] lightHitRate;
@@ -37,6 +38,7 @@ public class BalanceData : ScriptableObject
                     { BalanceWeaponType.LANTERN, lanternLightDps },
                     { BalanceWeaponType.KNIFE, knifeLightDps },
                     { BalanceWeaponType.CLAWS, clawsLightDps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordLightDps },
                 };
             }
             return _lightDpsCurveDict;
@@ -48,15 +50,36 @@ public class BalanceData : ScriptableObject
     public AnimationCurve lanternHeavyDps;
     public AnimationCurve knifeHeavyDps;
     public AnimationCurve clawsHeavyDps;
+    public AnimationCurve fireSwordHeavyDps;
     public float[] heavyMaxDps;
     public float[] heavyStamPerSecond;
     public float[] heavyHitRate;
+    Dictionary<BalanceWeaponType, AnimationCurve> _heavyDpsCurveDict;
+    Dictionary<BalanceWeaponType, AnimationCurve> heavyDpsCurveDict
+    {
+        get
+        {
+            if (_heavyDpsCurveDict == null)
+            {
+                _heavyDpsCurveDict = new Dictionary<BalanceWeaponType, AnimationCurve>()
+                {
+                    { BalanceWeaponType.SWORD, swordHeavyDps },
+                    { BalanceWeaponType.LANTERN, lanternHeavyDps },
+                    { BalanceWeaponType.KNIFE, knifeHeavyDps },
+                    { BalanceWeaponType.CLAWS, clawsHeavyDps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordHeavyDps },
+                };
+            }
+            return _heavyDpsCurveDict;
+        }
+    }
 
 
     [SerializeField] AnimationCurve swordCombo1Dps;
     [SerializeField] AnimationCurve lanternCombo1Dps;
     [SerializeField] AnimationCurve knifeCombo1Dps;
     [SerializeField] AnimationCurve clawsCombo1Dps;
+    [SerializeField] AnimationCurve fireSwordCombo1Dps;
     public float[] combo1MaxDps;
     public float[] combo1StamPerSecond;
     public float[] combo1HitRate;
@@ -73,6 +96,7 @@ public class BalanceData : ScriptableObject
                     { BalanceWeaponType.LANTERN, lanternCombo1Dps },
                     { BalanceWeaponType.KNIFE, knifeCombo1Dps },
                     { BalanceWeaponType.CLAWS, clawsCombo1Dps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordCombo1Dps },
                 };
             }
             return _combo1DpsCurveDict;
@@ -83,6 +107,7 @@ public class BalanceData : ScriptableObject
     [SerializeField] AnimationCurve lanternCombo2Dps;
     [SerializeField] AnimationCurve knifeCombo2Dps;
     [SerializeField] AnimationCurve clawsCombo2Dps;
+    [SerializeField] AnimationCurve fireSwordCombo2Dps;
     public float[] combo2MaxDps;
     public float[] combo2StamPerSecond;
     public float[] combo2HitRate;
@@ -99,35 +124,58 @@ public class BalanceData : ScriptableObject
                     { BalanceWeaponType.LANTERN, lanternCombo2Dps },
                     { BalanceWeaponType.KNIFE, knifeCombo2Dps },
                     { BalanceWeaponType.CLAWS, clawsCombo2Dps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordCombo2Dps },
                 };
             }
             return _combo2DpsCurveDict;
         }
     }
 
+    public AnimationCurve swordSpecialDps;
+    public AnimationCurve knifeSpecialDps;
+    public AnimationCurve fireSwordSpecialDps;
+    public float[] specialMaxDps;
+    public float[] specialStamPerSecond;
+    public float[] specialManaPerSecond;
+    public float[] specialHitRate;
+
+    Dictionary<BalanceWeaponType, AnimationCurve> _specialDpsCurveDict;
+    Dictionary<BalanceWeaponType, AnimationCurve> specialDpsCurveDict
+    {
+        get
+        {
+            if (_specialDpsCurveDict == null)
+            {
+                _specialDpsCurveDict = new Dictionary<BalanceWeaponType, AnimationCurve>()
+                {
+                    { BalanceWeaponType.SWORD, swordSpecialDps },
+                    { BalanceWeaponType.KNIFE, knifeSpecialDps },
+                    { BalanceWeaponType.FIRESWORD, fireSwordSpecialDps },
+                };
+            }
+            return _specialDpsCurveDict;
+        }
+    }
 
     Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>> _dictDict;
     Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>> dictDict
     {
         get
         {
-            if(_dictDict == null)
+            if (_dictDict == null)
             {
                 _dictDict = new Dictionary<BalanceAttackType, Dictionary<BalanceWeaponType, AnimationCurve>>()
                 {
                     { BalanceAttackType.LIGHT, lightDpsCurveDict },
                     { BalanceAttackType.COMBO1, combo1DpsCurveDict },
                     { BalanceAttackType.COMBO2, combo2DpsCurveDict },
+                    { BalanceAttackType.SPECIAL, specialDpsCurveDict },
+                    { BalanceAttackType.HEAVY, heavyDpsCurveDict },
                 };
             }
             return _dictDict;
         }
     }
-
-    public AnimationCurve knifeSpecialDps;
-    public float knifeSpecialMaxDps;
-    public float knifeSpecialStamPerSecond;
-    public float knifeSpecialManaPerSecond;
 
 
     public void SetDps(int stat, float dps, BalanceAttackType attackType, BalanceWeaponType weaponType)

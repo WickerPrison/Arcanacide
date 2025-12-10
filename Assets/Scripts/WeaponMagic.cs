@@ -19,19 +19,21 @@ public class WeaponMagic : MonoBehaviour
 
     private void WeaponManager_OnStopWeaponMagic(object sender, System.EventArgs e)
     {
-        weaponMagics[playerData.currentWeapon].Stop();
-        if (offhandWeaponMagics[playerData.currentWeapon] != null)
+        int weaponMagicId = weaponManager.WeaponSpriteId(playerData.currentWeapon);
+        weaponMagics[weaponMagicId].Stop();
+        if (offhandWeaponMagics[weaponMagicId] != null)
         {
-            offhandWeaponMagics[playerData.currentWeapon].Stop();
+            offhandWeaponMagics[weaponMagicId].Stop();
         }
     }
 
     private void WeaponManager_OnStartWeaponMagic(object sender, System.EventArgs e)
     {
-        weaponMagics[playerData.currentWeapon].Play();
-        if (offhandWeaponMagics[playerData.currentWeapon] != null)
+        int weaponMagicId = weaponManager.WeaponSpriteId(playerData.currentWeapon);
+        weaponMagics[weaponMagicId].Play();
+        if (offhandWeaponMagics[weaponMagicId] != null)
         {
-            offhandWeaponMagics[playerData.currentWeapon].Play();
+            offhandWeaponMagics[weaponMagicId].Play();
         }
     }
 }

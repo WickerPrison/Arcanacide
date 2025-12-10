@@ -50,4 +50,41 @@ public static class Utils
     {
         throw new System.Exception($"{className} must be initialized with constructor method");
     }
+
+    public static int GetWeaponIndex(PlayerWeapon weapon)
+    {
+        switch (weapon)
+        {
+            case PlayerWeapon.SWORD: return 0;
+            case PlayerWeapon.LANTERN: return 1;
+            case PlayerWeapon.KNIFE: return 2;
+            case PlayerWeapon.CLAWS: return 3;
+            default: return -1;
+        }
+    }
+
+    public static int GetWeaponIndex(MenuWeaponSelected weapon)
+    {
+        switch (weapon)
+        {
+            case MenuWeaponSelected.SWORD: return 0;
+            case MenuWeaponSelected.LANTERN: return 1;
+            case MenuWeaponSelected.KNIFE: return 2;
+            case MenuWeaponSelected.CLAWS: return 3;
+            default: return -1;
+        }
+    }
+
+    public static int GetElementIndex(WeaponElement element) 
+    {
+        switch (element)
+        {
+            case WeaponElement.DEFAULT: return 0;
+            case WeaponElement.FIRE: return 1;
+            case WeaponElement.ELECTRICITY: return 2;
+            case WeaponElement.ICE: return 3;
+            case WeaponElement.CHAOS: return 4;
+            default: return -1;
+        }
+    }
 }

@@ -70,9 +70,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         weaponManager.CheckWeaponMagic();
     }
 
-    public void SwordSpecialAttack()
+    public void SwordSpecialAttack(AttackHit attackHit)
     {
-        playerAbilities.SwordSpecialAttack();
+        int weaponIndex = Utils.GetWeaponIndex(attackHit.weaponCategory);
+        AttackProfiles profile = attackHit.GetProfile(playerData.equippedElements[weaponIndex]);
+        playerAbilities.SwordSpecialAttack(profile);
     }
 
     public void AxeHeavy()

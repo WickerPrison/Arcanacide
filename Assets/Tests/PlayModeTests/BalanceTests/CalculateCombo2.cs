@@ -21,13 +21,6 @@ public class CalculateCombo2
     bool doneAttacking = false;
     int attacksCounter = 1;
     EnemyScript testDummy;
-    Dictionary<BalanceWeaponType, int> weaponIndexDict = new Dictionary<BalanceWeaponType, int>
-    {
-        { BalanceWeaponType.SWORD, 0 },
-        { BalanceWeaponType.LANTERN, 1 },
-        { BalanceWeaponType.KNIFE, 2 },
-        { BalanceWeaponType.CLAWS, 3 },
-    };
 
     [UnitySetUp]
     public IEnumerator Setup()
@@ -39,10 +32,7 @@ public class CalculateCombo2
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.hasHealthGem = true;
-        playerData.unlockedWeapons.Add(0);
-        playerData.unlockedWeapons.Add(1);
-        playerData.unlockedWeapons.Add(2);
-        playerData.unlockedWeapons.Add(3);
+        playerData.UnlockAllWeapons();
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
 
         Time.timeScale = 10;
@@ -130,15 +120,35 @@ public class CalculateCombo2
         }
     }
 
+    [UnityTest]
+    public IEnumerator CalculateFireSwordCombo2Curve()
+    {
+        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.FIRESWORD);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            attacksCounter = 1;
+            yield return DoCombo2(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
+        }
+    }
+
     IEnumerator DoCombo2(BalanceWeaponType type, int stat, int health)
     {
-        int weaponIndex = weaponIndexDict[type];
+        int reportIndex = BalanceTestUtils.weaponIndexDict[type];
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(1.5f, 0, -1.5f);
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
-        playerData.currentWeapon = weaponIndex + 1 < 4 ? weaponIndex + 1 : 0;
+        int weaponIndex = reportIndex > 3 ? reportIndex - 4 : reportIndex;
+        playerData.currentWeapon = weaponIndex == 0 ? 1 : 0;
+        playerData.equippedElements[weaponIndex] = BalanceTestUtils.weaponElementDict[type];
         weaponManager.SwitchWeapon(weaponIndex);
         yield return new WaitForSeconds(2);
         playerAbilities.Attack();
@@ -147,9 +157,9 @@ public class CalculateCombo2
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, BalanceAttackType.COMBO2, type);
-        balanceData.combo2StamPerSecond[weaponIndex] = stamPerSec;
-        balanceData.combo2MaxDps[weaponIndex] = dps;
-        balanceData.combo2HitRate[weaponIndex] = hitCounter / seconds;
+        balanceData.combo2StamPerSecond[reportIndex] = stamPerSec;
+        balanceData.combo2MaxDps[reportIndex] = dps;
+        balanceData.combo2HitRate[reportIndex] = hitCounter / seconds;
         Debug.Log($"{type} Combo2 DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;

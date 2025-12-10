@@ -3513,17 +3513,24 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
+    functionName: Step
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.15
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
     functionName: LockPosition
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0
-    functionName: Step
+  - time: 0.48333332
+    functionName: SpawnFireCircle
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0.15
+    floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.48333332
@@ -3534,9 +3541,9 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.48333332
-    functionName: AttackHit
+    functionName: AttackHitEvent
     data: 
-    objectReferenceParameter: {fileID: 11400000, guid: a6aa091c9a5d75e45a8626bb65c2fe7d, type: 2}
+    objectReferenceParameter: {fileID: 11400000, guid: 6b7b5892088d7e241a5a753b038861ee, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

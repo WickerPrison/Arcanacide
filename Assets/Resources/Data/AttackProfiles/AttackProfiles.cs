@@ -24,13 +24,14 @@ public class AttackProfiles : ScriptableObject
     public int halfConeAngle;
     public float attackRange;
     public float damageMultiplier;
-    public float chargeDamage;
-    public float fullChargeDamage;
-    public float maxChargeTime;
     public float magicDamageMultiplier;
     public float poiseDamageMultiplier;
     public float staminaCost;
+    public float chargeDamage;
+    public float fullChargeDamage;
+    public float maxChargeTime;
     public float manaCost;
+    public float specialValue;
     public bool impactVFX = true;
     public bool blockable;
 

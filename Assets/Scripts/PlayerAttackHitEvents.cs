@@ -48,6 +48,13 @@ public class PlayerAttackHitEvents : MonoBehaviour
         }
     }
 
+    public void AttackHitEvent(AttackHit attackHit)
+    {
+        int weaponIndex = Utils.GetWeaponIndex(attackHit.weaponCategory);
+        AttackProfiles profile = attackHit.GetProfile(playerData.equippedElements[weaponIndex]);
+        AttackHit(profile);
+    }
+
     //this funciton determines if any enemies were hit by the attack and deals damage accordingly
     public void AttackHit(AttackProfiles attackProfile)
     {
@@ -179,7 +186,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
         chargeTimer = value;
     }
 
-    public void StartCharge(AttackProfiles attackProfile)
+    public void StartCharge()
     {
         charging = true;
     }

@@ -26,6 +26,9 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] Transform attackPoint;
     [SerializeField] GameObject swordProjectilePrefab;
     [SerializeField] ClawSpecial clawSpecialBuff;
+    [SerializeField] GameObject fireWavePrefab;
+    [SerializeField] AttackProfiles fireSwordWaveProfile;
+    [SerializeField] AttackProfiles fireSwordTrailProfile;
 
     //player scripts
     PlayerMovement playerMovement;
@@ -198,6 +201,8 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             {
                 enemy.StartStagger(attackProfile.staggerDuration);
             }
+
+            GlobalEvents.instance.PlayerDealDamage(damage);
         });
 
         if(attackProfile.impactVFX) enemy.ImpactVFX();
@@ -206,7 +211,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     public int DamageModifiers(int attackPower)
     {
         float extraDamage = 0;
-        if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0)
+        if(playerData.swordSpecialTimer > 0 && playerData.currentWeapon == 0 && playerData.equippedElements[0] == WeaponElement.DEFAULT)
         {
             extraDamage += attackPower * specialAttackProfiles[0].damageMultiplier;
 
@@ -320,6 +325,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     {
         if (!heavyAttackActive) return;
 
+
         if (playerData.currentWeapon == 3)
         {
             playerAnimation.PlayAnimation("EndHeavyAttack");
@@ -329,10 +335,19 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             bool fullyCharged = playerAnimation.EndSwordHeavy() >= 1;
             if(fullyCharged)
             {
-                SlashProjectile swordProectile = Instantiate(swordProjectilePrefab).GetComponent<SlashProjectile>();
-                swordProectile.transform.position = transform.position + new Vector3(0, 0.1f, 0);
-                swordProectile.direction = Vector3.Normalize(attackPoint.position - transform.position);
-                swordProectile.playerAbilities = this;
+                Vector3 direction = Vector3.Normalize(playerMovement.attackPoint.position - transform.position);
+                switch (playerData.equippedElements[0])
+                {
+                    case WeaponElement.DEFAULT:
+                        Vector3 slashSpawnPosition = transform.position + new Vector3(0, 0.1f, 0);
+                        SlashProjectile.Instantiate(swordProjectilePrefab, slashSpawnPosition, direction, this);
+                        break;
+                    case WeaponElement.FIRE:
+                        Vector3 waveSpawnPosition = transform.position + direction * 1.5f;
+                        PlayerFireWave.Instantiate(fireWavePrefab, waveSpawnPosition, direction, trailManager, fireSwordWaveProfile, fireSwordTrailProfile).LaunchFireWave();
+                        break;
+                }
+
             }
             playerAnimation.SetBool("chargeHeavy", false);
         }
@@ -388,12 +403,12 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    public void SwordSpecialAttack()
+    public void SwordSpecialAttack(AttackProfiles attackProfile)
     {
-        playerScript.LoseStamina(specialAttackProfiles[0].staminaCost);
-        playerScript.LoseMana(specialAttackProfiles[0].manaCost);
+        playerScript.LoseStamina(attackProfile.staminaCost);
+        playerScript.LoseMana(attackProfile.manaCost);
 
-        playerData.swordSpecialTimer = specialAttackProfiles[0].bonusEffectDuration;
+        playerData.swordSpecialTimer = attackProfile.bonusEffectDuration;
         weaponManager.AddSpecificWeaponSource(0);
     }
 

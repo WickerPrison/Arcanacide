@@ -21,6 +21,9 @@ public class WeaponMenu : MonoBehaviour
     [SerializeField] RectTransform weaponsIcon;
     [SerializeField] List<Vector3> positions;
     [SerializeField] GameObject backButton;
+    [SerializeField] GameObject switchWeapon;
+    [SerializeField] GameObject switchButtonPrompt;
+    [SerializeField] GameObject restToSwitchMessage;
     [SerializeField] GameObject numbers;
 
     SoundManager sm;
@@ -52,6 +55,7 @@ public class WeaponMenu : MonoBehaviour
         controls.Menu.MenuKnife.performed += ctx => SelectWeapon(MenuWeaponSelected.KNIFE);
         controls.Menu.MenuClaws.performed += ctx => SelectWeapon(MenuWeaponSelected.CLAWS);
         controls.Menu.Back.performed += ctx => Back();
+        controls.Menu.SwitchWeapon.performed += ctx => ChangeWeapon();
     }
 
     private void Start()
@@ -92,6 +96,14 @@ public class WeaponMenu : MonoBehaviour
         SelectWeapon(MenuWeaponSelected.SWORD);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(backButton);
+        if(restMenu != null)
+        {
+            restToSwitchMessage.SetActive(false);
+        }
+        else
+        {
+            switchButtonPrompt.SetActive(false);
+        }
     }
 
     private void Update()
@@ -166,6 +178,9 @@ public class WeaponMenu : MonoBehaviour
             targetScale = initialScale / 2;
         }
 
+        bool showAlternateWeaponPrompt = ShowAlternateWeaponPrompt(weapon);
+        if (!showAlternateWeaponPrompt) switchWeapon.SetActive(false);
+
         timer = transitionTime;
         while (timer > 0)
         {
@@ -176,6 +191,26 @@ public class WeaponMenu : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         movingIcon = false;
+
+        if (showAlternateWeaponPrompt) switchWeapon.SetActive(true);
+    }
+
+    bool ShowAlternateWeaponPrompt(MenuWeaponSelected weapon)
+    {
+        if (weapon == MenuWeaponSelected.NONE) return false;
+        if (playerData.GetElementList(intDict[weapon]).Count <= 1) return false;
+        return true;
+    }
+
+    public void ChangeWeapon()
+    {
+        if (restMenu == null) return;
+        int weaponIndex = intDict[weaponSelected];
+        List<WeaponElement> elements = playerData.GetElementList(weaponIndex);
+        int index = elements.IndexOf(playerData.equippedElements[weaponIndex]);
+        int newIndex = index + 1 >= elements.Count ? 0 : index + 1;
+        playerData.equippedElements[weaponIndex] = elements[newIndex];
+        GlobalEvents.instance.ChangeWeapon(weaponIndex);
     }
 
     IEnumerator FailToPress()

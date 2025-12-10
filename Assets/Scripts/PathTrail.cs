@@ -7,7 +7,7 @@ using UnityEngine;
 public class PathTrail : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
-    ParticleSystem VFX;
+    [SerializeField] ParticleSystem VFX;
     [SerializeField] EventReference fmodEvent;
     public float radius;
     EventInstance fmodInstance;
@@ -45,28 +45,12 @@ public class PathTrail : MonoBehaviour
             return;
         }
         trailManager.pathTrails.Add(this);
-        VFX = GetComponent<ParticleSystem>();
         duration = attackProfile.durationDOT;
         damagePerSecond = 1f + playerData.arcane * attackProfile.magicDamageMultiplier;
         fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
         fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
         fmodInstance.setTimelinePosition(Random.Range(0, 2000));
     }
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("Enemy") && !dead)
-    //    {
-    //        EnemyScript enemyScript;
-    //        enemyScript = other.gameObject.GetComponent<EnemyScript>();
-    //        damage += damagePerSecond * Time.deltaTime;
-    //        if (damage > 1)
-    //        {
-    //            enemyScript.LoseHealth(Mathf.FloorToInt(damage), 0);
-    //            damage = 0;
-    //        }
-    //    }
-    //}
 
     private void OnTriggerEnter(Collider other)
     {

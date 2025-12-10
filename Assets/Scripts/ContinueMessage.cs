@@ -10,12 +10,14 @@ public class ContinueMessage : MonoBehaviour
     [SerializeField] SettingsData settingsData;
     [SerializeField] Sprite[] buttonIconSprites;
     [SerializeField] TMP_SpriteAsset[] buttonIconTMProSprites;
+    [SerializeField] string customMessage;
     Dictionary<Sprite, TMP_SpriteAsset> TMPSpriteDict;
     Dictionary<string, string> displayStringDict;
     string bindingName;
     int bindingIndex = 0;
     string buttonPromptString;
     TextMeshProUGUI continueMessage;
+    string displayString = "Continue";
     InputManager im;
 
     Vector3 initialScale;
@@ -27,6 +29,10 @@ public class ContinueMessage : MonoBehaviour
     {
         im = GlobalEvents.instance.gameObject.GetComponent<InputManager>();
         continueMessage = gameObject.GetComponent<TextMeshProUGUI>();
+        if(customMessage != "")
+        {
+            displayString = customMessage;
+        }
         initialScale = transform.localScale;
         TMPSpriteDict = new Dictionary<Sprite, TMP_SpriteAsset>();
         for (int i = 0; i < buttonIconSprites.Length; i++)
@@ -61,6 +67,6 @@ public class ContinueMessage : MonoBehaviour
         }
         else buttonPromptString = bindingName;
 
-        continueMessage.text = "Continue: " + buttonPromptString;
+        continueMessage.text = $"{displayString}: {buttonPromptString}";
     }
 }

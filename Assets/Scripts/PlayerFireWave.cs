@@ -12,7 +12,8 @@ public class PlayerFireWave : MonoBehaviour, IDamageEnemy
     [SerializeField] float impactSFXvolume;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] AttackProfiles attackProfile;
+    AttackProfiles attackProfile;
+    AttackProfiles trailAttackProfile;
     private PlayerTrailManager trailManager;
     bool launched = false;
     float speed = 15;
@@ -21,13 +22,20 @@ public class PlayerFireWave : MonoBehaviour, IDamageEnemy
     public bool blockable { get; set; } = true;
     private bool instantiatedCorrectly = false;
 
-    public static PlayerFireWave Instantiate(GameObject prefab, Vector3 spawnPosition, Vector3 direction, PlayerTrailManager trailManager, AttackProfiles attackProfile)
-    {
+    public static PlayerFireWave Instantiate(
+        GameObject prefab,
+        Vector3 spawnPosition,
+        Vector3 direction,
+        PlayerTrailManager trailManager,
+        AttackProfiles attackProfile, 
+        AttackProfiles trailAttackProfile
+    ){
         PlayerFireWave wave = Instantiate(prefab).GetComponent<PlayerFireWave>();
         wave.transform.position = spawnPosition;
         wave.transform.LookAt(spawnPosition + direction);
         wave.trailManager = trailManager;
         wave.attackProfile = attackProfile;
+        wave.trailAttackProfile = trailAttackProfile;
         wave.instantiatedCorrectly = true;
         return wave;
     }
@@ -63,7 +71,7 @@ public class PlayerFireWave : MonoBehaviour, IDamageEnemy
 
     void SpawnTrailElement()
     {
-        PlayerFireWaveTrail.Instantiate(fireWaveTrailPrefab, transform.position, transform.rotation, trailManager, attackProfile);
+        PlayerFireWaveTrail.Instantiate(fireWaveTrailPrefab, transform.position, transform.rotation, trailManager, trailAttackProfile);
     }
 
     private void OnTriggerEnter(Collider collision)
