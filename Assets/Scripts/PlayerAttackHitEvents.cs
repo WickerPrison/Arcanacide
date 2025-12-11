@@ -190,6 +190,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
     public void StartCharge()
     {
         charging = true;
+        if (playerScript.testingEvents != null) playerScript.testingEvents.StartCharging();
     }
 
     public void ChargeFalse()

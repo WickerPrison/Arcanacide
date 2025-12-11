@@ -332,7 +332,15 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void MaxCharge()
     {
-        playerEvents.SwordHeavyFullCharge();
+        switch (playerData.currentWeapon)
+        {
+            case 0:
+                playerEvents.SwordHeavyFullCharge();
+                break;
+            case 3:
+                if (playerScript.testingEvents != null) playerScript.testingEvents.FullyCharged();
+                break;
+        }
     }
 
     public void CheckIfCanLanternCombo2()

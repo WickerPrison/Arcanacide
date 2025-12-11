@@ -11,7 +11,7 @@ public enum BalanceWeaponType
 
 public enum BalanceAttackType
 {
-    LIGHT, COMBO1, COMBO2, SPECIAL, HEAVY
+    LIGHT, COMBO1, COMBO2, SPECIAL, HEAVY, HEAVY_NO_CHARGE
 }
 
 [CreateAssetMenu]
@@ -71,6 +71,30 @@ public class BalanceData : ScriptableObject
                 };
             }
             return _heavyDpsCurveDict;
+        }
+    }
+
+    public AnimationCurve swordHeavyDpsNoCharge;
+    public AnimationCurve clawsHeavyDpsNoCharge;
+    public AnimationCurve fireSwordHeavyDpsNoCharge;
+    public float[] heavyNoChargeMaxDps;
+    public float[] heavyNoChargeStamPerSecond;
+    public float[] heavyNoChargeHitRate;
+    Dictionary<BalanceWeaponType, AnimationCurve> _heavyNoChargeDpsCurveDict;
+    Dictionary<BalanceWeaponType, AnimationCurve> heavyNoChargeDpsCurveDict
+    {
+        get
+        {
+            if (_heavyNoChargeDpsCurveDict == null)
+            {
+                _heavyNoChargeDpsCurveDict = new Dictionary<BalanceWeaponType, AnimationCurve>()
+                {
+                    { BalanceWeaponType.SWORD, swordHeavyDpsNoCharge },
+                    { BalanceWeaponType.CLAWS, clawsHeavyDpsNoCharge },
+                    { BalanceWeaponType.FIRESWORD, fireSwordHeavyDpsNoCharge },
+                };
+            }
+            return _heavyNoChargeDpsCurveDict;
         }
     }
 
@@ -171,6 +195,7 @@ public class BalanceData : ScriptableObject
                     { BalanceAttackType.COMBO2, combo2DpsCurveDict },
                     { BalanceAttackType.SPECIAL, specialDpsCurveDict },
                     { BalanceAttackType.HEAVY, heavyDpsCurveDict },
+                    { BalanceAttackType.HEAVY_NO_CHARGE, heavyNoChargeDpsCurveDict },
                 };
             }
             return _dictDict;
