@@ -134,8 +134,22 @@ public class VFXmanager : MonoBehaviour
         mirrorCloak.enabled = false;
     }
 
-    private void PlayerEvents_onWaterfowl(object sender, System.EventArgs e)
+    private void PlayerEvents_onWaterfowl(object sender, float chargeDecimal)
     {
+        ParticleSystem.EmissionModule emissions = waterFowl.emission;
+
+        (short count, short cycleCount) = ((short, short))(chargeDecimal switch
+        {
+            >= 1f => (6, 4),
+            > 0.8f => (6, 3),
+            > 0.6f => (5, 3),
+            > 0.4f => (4, 3),
+            > 0.2f => (4, 2),
+            _ => (3, 2)
+        });
+        float time = 0;
+        float interval = 0.1f;
+        emissions.SetBurst(0, new ParticleSystem.Burst(time, count, count, cycleCount, interval));
         waterFowl.Play();
     }
 

@@ -14,6 +14,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerAbilities playerAbilities;
     PlayerMovement playerMovement;
+    PlayerEvents playerEvents;
 
     //other scripts
     GameManager gm;
@@ -32,6 +33,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
         playerAnimation = playerScript.GetComponent<PlayerAnimation>();
         playerAbilities = playerScript.GetComponent<PlayerAbilities>();
         playerMovement = playerScript.GetComponent<PlayerMovement>();
+        playerEvents = playerScript.GetComponent<PlayerEvents>();
 
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         stepWithAttack = transform.parent.GetComponent<StepWithAttack>();
@@ -209,5 +211,10 @@ public class PlayerAttackHitEvents : MonoBehaviour
             chargeDecimal = chargeTimer / chargeTime;
         }
         return chargeDecimal;
+    }
+
+    public void Waterfowl()
+    {
+        playerEvents.Waterfowl(chargeDecimal);
     }
 }

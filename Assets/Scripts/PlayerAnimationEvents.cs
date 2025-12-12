@@ -372,11 +372,6 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerScript.LoseStamina(profile.staminaCost);
     }
 
-    public void Waterfowl()
-    {
-        playerEvents.Waterfowl();
-    }
-
     public void Stalagmites()
     {
         stalagmiteHolder.TriggerWave();

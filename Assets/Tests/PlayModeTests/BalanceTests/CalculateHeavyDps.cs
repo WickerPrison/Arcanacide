@@ -268,18 +268,41 @@ public class CalculateHeavyDps
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoClawsHeavy(3, stats[i], BalanceWeaponType.CLAWS);
+            yield return DoClawsHeavy(3, stats[i], BalanceWeaponType.CLAWS, BalanceAttackType.HEAVY);
         }
     }
 
-    IEnumerator DoClawsHeavy(int reportIndex, int stat, BalanceWeaponType type)
+    [UnityTest]
+    public IEnumerator CalculateClawsHeavyNoChargeCurve()
+    {
+        balanceData.clawsHeavyDpsNoCharge.keys = new Keyframe[0];
+        int[] stats = { 1, 15, 30 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.strength = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoClawsHeavy(3, stats[i], BalanceWeaponType.CLAWS, BalanceAttackType.HEAVY_NO_CHARGE);
+        }
+    }
+
+    IEnumerator DoClawsHeavy(int reportIndex, int stat, BalanceWeaponType type, BalanceAttackType attackType)
     {
         testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
-        testingEvents.onFullyCharged += (sender, e) =>
+        if(attackType == BalanceAttackType.HEAVY)
         {
-            playerAttackHitEvents.chargeTimer = 1;
-            playerAbilities.EndHeavyAttack();
-        };
+            testingEvents.onFullyCharged += (sender, e) =>
+            {
+                playerAttackHitEvents.chargeTimer = 1.5f;
+                playerAbilities.EndHeavyAttack();
+            };
+        }
+        else
+        {
+            testingEvents.onStartCharging += TestingEvents_onStartCharging;
+        }
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(2f, 0, -2f);
         testDummy.maxHealth *= 100;
@@ -289,15 +312,28 @@ public class CalculateHeavyDps
         weaponManager.SwitchWeapon(3);
         yield return new WaitForSeconds(2);
         playerAbilities.HeavyAttack();
+        if (attackType == BalanceAttackType.HEAVY_NO_CHARGE)
+        {
+            yield return null;
+            playerAbilities.EndHeavyAttack();
+        }
         float seconds = 60;
         yield return new WaitForSeconds(seconds);
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
-        balanceData.SetDps(stat, dps, BalanceAttackType.HEAVY, type);
-        balanceData.swordHeavyDps.AddKey(playerData.strength, dps);
-        balanceData.heavyStamPerSecond[reportIndex] = stamPerSec;
-        balanceData.heavyMaxDps[reportIndex] = dps;
-        balanceData.heavyHitRate[reportIndex] = hitCounter / seconds;
+        balanceData.SetDps(stat, dps, attackType, type);
+        if(attackType == BalanceAttackType.HEAVY)
+        {
+            balanceData.heavyStamPerSecond[reportIndex] = stamPerSec;
+            balanceData.heavyMaxDps[reportIndex] = dps;
+            balanceData.heavyHitRate[reportIndex] = hitCounter / seconds;
+        }
+        else
+        {
+            balanceData.heavyNoChargeStamPerSecond[reportIndex] = stamPerSec;
+            balanceData.heavyNoChargeMaxDps[reportIndex] = dps;
+            balanceData.heavyNoChargeHitRate[reportIndex] = hitCounter / seconds;
+        }
         Debug.Log($"Sword Heavy DPS with {playerData.strength} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
@@ -325,6 +361,6 @@ public class CalculateHeavyDps
 
     private void TestingEvents_onStartCharging(object sender, System.EventArgs e)
     {
-        playerAnimation.SetBool("chargeHeavy", false);
+        playerAbilities.EndHeavyAttack();
     }
 }

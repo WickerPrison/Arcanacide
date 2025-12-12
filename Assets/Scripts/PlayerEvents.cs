@@ -23,7 +23,7 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onMeleeParry;
     public event EventHandler onSwordHeavyFullCharge;
     public event EventHandler<(Vector3, bool)> onKnifeCombo1Vfx;
-    public event EventHandler onWaterfowl;
+    public event EventHandler<float> onWaterfowl;
 
     public void DashStart()
     {
@@ -106,8 +106,8 @@ public class PlayerEvents : MonoBehaviour
         onKnifeCombo1Vfx?.Invoke(this, (direction, front));
     }
 
-    public void Waterfowl()
+    public void Waterfowl(float chargeDecimal)
     {
-        onWaterfowl?.Invoke(this, EventArgs.Empty);
+        onWaterfowl?.Invoke(this, chargeDecimal);
     }
 }

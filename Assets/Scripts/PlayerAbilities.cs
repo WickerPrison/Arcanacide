@@ -314,9 +314,9 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     {
         if (!heavyAttackActive) return;
 
-
         if (playerData.currentWeapon == 3)
         {
+            float chargeDecimal = playerAnimation.EndClawHeavy();
             playerAnimation.SetBool("chargeHeavy", false);
         }
         else if(playerData.currentWeapon == 0)
