@@ -315,6 +315,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerEvents.KnifeCombo1Vfx(direction, playerAnimation.facingFront);
     }
 
+    public void IceBreath()
+    {
+        playerEvents.IceBreath();
+    }
+
     public void StartIceBreath()
     {
         iceBreath.StartIceBreath();

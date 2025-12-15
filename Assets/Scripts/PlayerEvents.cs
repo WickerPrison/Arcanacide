@@ -24,6 +24,7 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onSwordHeavyFullCharge;
     public event EventHandler<(Vector3, bool)> onKnifeCombo1Vfx;
     public event EventHandler<float> onWaterfowl;
+    public event EventHandler onIceBreath;
 
     public void DashStart()
     {
@@ -109,5 +110,10 @@ public class PlayerEvents : MonoBehaviour
     public void Waterfowl(float chargeDecimal)
     {
         onWaterfowl?.Invoke(this, chargeDecimal);
+    }
+
+    public void IceBreath()
+    {
+        onIceBreath?.Invoke(this, EventArgs.Empty);
     }
 }

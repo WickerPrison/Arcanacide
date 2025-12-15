@@ -14,6 +14,7 @@ public class VFXmanager : MonoBehaviour
     [SerializeField] SpriteRenderer parryPulse2;
     [SerializeField] FireRing fireRing;
     [SerializeField] ParticleSystem waterFowl;
+    [SerializeField] ParticleSystem iceBreath;
     float parryPulseDuration = 0.2f;
     float parryPulseTimer;
     float parryPulseFadeaway = 0.1f;
@@ -22,6 +23,8 @@ public class VFXmanager : MonoBehaviour
     Vector3 parryPulsePosition1;
     Vector3 parryPulsePosition2;
     Color tempColor;
+    PlayerScript playerScript;
+    Transform attackPoint;
 
     [SerializeField] ParticleSystem clawSpecialVFX;
 
@@ -39,6 +42,8 @@ public class VFXmanager : MonoBehaviour
 
     private void Start()
     {
+        playerScript = GetComponentInParent<PlayerScript>();
+        attackPoint = playerScript.GetComponentInChildren<AttackArcGenerator>().transform;
         parryPulsePosition1 = parryPulse1.transform.localPosition;
         parryPulsePosition2 = parryPulse2.transform.localPosition;
         tempColor = parryPulse1.color;
@@ -153,6 +158,14 @@ public class VFXmanager : MonoBehaviour
         waterFowl.Play();
     }
 
+    private void PlayerEvents_onIceBreath(object sender, System.EventArgs e)
+    {
+        Vector3 lookDirection = attackPoint.position - playerScript.transform.position;
+        lookDirection = new Vector3(lookDirection.x, 0, lookDirection.z).normalized;
+        iceBreath.transform.rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+        iceBreath.Play();
+    }
+
     private void OnEnable()
     {
         playerEvents.onDashStart += onDashStart;
@@ -163,6 +176,7 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onMeleeParry += onMeleeParry;
         playerEvents.onEndLanternCombo += EndLanternCombo;
         playerEvents.onWaterfowl += PlayerEvents_onWaterfowl;
+        playerEvents.onIceBreath += PlayerEvents_onIceBreath;
     }
 
     private void OnDisable()
@@ -175,5 +189,6 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onMeleeParry -= onMeleeParry;
         playerEvents.onEndLanternCombo -= EndLanternCombo;
         playerEvents.onWaterfowl -= PlayerEvents_onWaterfowl;
+        playerEvents.onIceBreath -= PlayerEvents_onIceBreath;
     }
 }
