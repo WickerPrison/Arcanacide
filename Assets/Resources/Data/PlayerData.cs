@@ -58,8 +58,6 @@ public class PlayerData : ScriptableObject
     public WeaponElement[] equippedElements;
 
     public float swordSpecialTimer;
-    public bool clawSpecialOn;
-    public float clawSpecialTimer;
 
     public Dictionary<UnlockableAbilities, string> unlockToString = new Dictionary<UnlockableAbilities, string>
     {
@@ -204,8 +202,6 @@ public class PlayerData : ScriptableObject
         currentWeapon = 0;
         equippedElements = new WeaponElement[4];
         swordSpecialTimer = 0;
-        clawSpecialOn = false;
-        clawSpecialTimer = 0;
     }
 
     public void UnlockAllWeapons()

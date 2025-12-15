@@ -127,12 +127,6 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAbilities.KnifeSpecialAttack();
     }
 
-    public void ClawsSpecialAttack()
-    {
-        Shove();
-        playerEvents.ClawSpecialAttack();
-    }
-
     public void AttackFalse()
     {
         playerAnimation.EndChain();
@@ -321,6 +315,11 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerEvents.KnifeCombo1Vfx(direction, playerAnimation.facingFront);
     }
 
+    public void IceBreath()
+    {
+        playerEvents.IceBreath();
+    }
+
     public void StartIceBreath()
     {
         iceBreath.StartIceBreath();
@@ -338,7 +337,15 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void MaxCharge()
     {
-        playerEvents.SwordHeavyFullCharge();
+        switch (playerData.currentWeapon)
+        {
+            case 0:
+                playerEvents.SwordHeavyFullCharge();
+                break;
+            case 3:
+                if (playerScript.testingEvents != null) playerScript.testingEvents.FullyCharged();
+                break;
+        }
     }
 
     public void CheckIfCanLanternCombo2()
@@ -368,11 +375,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void LoseStamina(AttackProfiles profile)
     {
         playerScript.LoseStamina(profile.staminaCost);
-    }
-
-    public void Waterfowl()
-    {
-        playerEvents.Waterfowl();
     }
 
     public void Stalagmites()

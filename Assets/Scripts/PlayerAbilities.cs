@@ -25,7 +25,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] GameObject totemPrefab;
     [SerializeField] Transform attackPoint;
     [SerializeField] GameObject swordProjectilePrefab;
-    [SerializeField] ClawSpecial clawSpecialBuff;
     [SerializeField] GameObject fireWavePrefab;
     [SerializeField] AttackProfiles fireSwordWaveProfile;
     [SerializeField] AttackProfiles fireSwordTrailProfile;
@@ -221,16 +220,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             }
         }
 
-        if (playerData.clawSpecialOn)
-        {
-            extraDamage += attackPower * clawSpecialBuff.dealDamageMod;
-
-            if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
-            {
-                extraDamage += attackPower * (float)emblemLibrary.arcaneMastery.value;
-            }
-        }
-
         return attackPower + Mathf.RoundToInt(extraDamage);
     }
 
@@ -316,7 +305,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             heavyAttackActive = true;
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = playerData.currentWeapon != 3;
-            if (playerData.currentWeapon == 0) playerAnimation.SetBool("chargeHeavy", true);
+            if (playerData.currentWeapon == 0 || playerData.currentWeapon == 3) playerAnimation.SetBool("chargeHeavy", true);
             playerAnimation.PlayAnimation("HeavyAttack");
         }
     }
@@ -325,10 +314,10 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     {
         if (!heavyAttackActive) return;
 
-
         if (playerData.currentWeapon == 3)
         {
-            playerAnimation.PlayAnimation("EndHeavyAttack");
+            float chargeDecimal = playerAnimation.EndClawHeavy();
+            playerAnimation.SetBool("chargeHeavy", false);
         }
         else if(playerData.currentWeapon == 0)
         {
@@ -503,13 +492,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    private void onClawSpecial(object sender, System.EventArgs e)
-    {
-        playerScript.LoseMana(specialAttackProfiles[3].manaCost);
-        playerData.clawSpecialTimer = clawSpecialBuff.duration;
-        playerData.clawSpecialOn = true;
-    }
-
     private void PlayerEvents_onStartFireRain(object sender, Vector3 origin)
     {
         for (int i = 0; i < fireRainAmount; i++)
@@ -567,7 +549,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     private void OnEnable()
     {
         playerEvents.onPlayerStagger += onPlayerStagger;
-        playerEvents.onClawSpecial += onClawSpecial;
         playerEvents.onBackstepStart += onBackstepStart;
         playerEvents.onDashEnd += PlayerEvents_onDashEnd;
         playerEvents.onStartFireRain += PlayerEvents_onStartFireRain;
@@ -577,7 +558,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     private void OnDisable()
     {
         playerEvents.onPlayerStagger -= onPlayerStagger;
-        playerEvents.onClawSpecial -= onClawSpecial;
         playerEvents.onBackstepStart -= onBackstepStart;
         playerEvents.onDashEnd -= PlayerEvents_onDashEnd;
         playerEvents.onStartFireRain -= PlayerEvents_onStartFireRain;

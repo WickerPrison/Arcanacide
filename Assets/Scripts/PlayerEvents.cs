@@ -18,14 +18,13 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onLanternCombo;
     public event EventHandler<Vector3> onStartFireRain;
     public event EventHandler onEndLanternCombo;
-    public event EventHandler onClawSpecial;
-    public event EventHandler onEndClawSpecial;
     public event EventHandler onStartMirrorCloak;
     public event EventHandler onEndMirrorCloak;
     public event EventHandler onMeleeParry;
     public event EventHandler onSwordHeavyFullCharge;
     public event EventHandler<(Vector3, bool)> onKnifeCombo1Vfx;
-    public event EventHandler onWaterfowl;
+    public event EventHandler<float> onWaterfowl;
+    public event EventHandler onIceBreath;
 
     public void DashStart()
     {
@@ -83,16 +82,6 @@ public class PlayerEvents : MonoBehaviour
         onEndLanternCombo?.Invoke(this, EventArgs.Empty);
     }
 
-    public void ClawSpecialAttack()
-    {
-        onClawSpecial?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void EndClawSpecialAttack()
-    {
-        onEndClawSpecial?.Invoke(this, EventArgs.Empty);
-    }
-
     public void StartMirrorCloak()
     {
         onStartMirrorCloak?.Invoke(this, EventArgs.Empty);
@@ -118,8 +107,13 @@ public class PlayerEvents : MonoBehaviour
         onKnifeCombo1Vfx?.Invoke(this, (direction, front));
     }
 
-    public void Waterfowl()
+    public void Waterfowl(float chargeDecimal)
     {
-        onWaterfowl?.Invoke(this, EventArgs.Empty);
+        onWaterfowl?.Invoke(this, chargeDecimal);
+    }
+
+    public void IceBreath()
+    {
+        onIceBreath?.Invoke(this, EventArgs.Empty);
     }
 }

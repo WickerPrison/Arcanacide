@@ -149,8 +149,6 @@ public class GameManager : MonoBehaviour
             playerData.newWeapon = data.newWeapon;
             playerData.equippedElements = playerData.GetElementsFromStrings(data.equippedElements.ToList()).ToArray();
             playerData.swordSpecialTimer = 0;
-            playerData.clawSpecialOn = false;
-            playerData.clawSpecialTimer = 0;
 
             mapData.unlockedDoors = data.unlockedDoors.ToList();
             mapData.visitedRooms = data.visitedRooms.ToList();
@@ -311,8 +309,6 @@ public class GameManager : MonoBehaviour
         playerData.equippedElements[0] = WeaponElement.DEFAULT;
         playerData.equippedElements[1] = WeaponElement.FIRE;
         playerData.swordSpecialTimer = 0;
-        playerData.clawSpecialOn = false;
-        playerData.clawSpecialTimer = 0;
 
         mapData.doorNumber = 1;
         mapData.unlockedDoors.Clear();
@@ -411,8 +407,6 @@ public class GameManager : MonoBehaviour
         playerData.equippedElements[1] = WeaponElement.FIRE;
         playerData.equippedElements[2] = WeaponElement.ELECTRICITY;
         playerData.swordSpecialTimer = 0;
-        playerData.clawSpecialOn = false;
-        playerData.clawSpecialTimer = 0;
 
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();
@@ -519,8 +513,6 @@ public class GameManager : MonoBehaviour
         playerData.equippedElements[2] = WeaponElement.ELECTRICITY;
         playerData.equippedElements[3] = WeaponElement.ICE;
         playerData.swordSpecialTimer = 0;
-        playerData.clawSpecialOn = false;
-        playerData.clawSpecialTimer = 0;
 
         mapData.doorNumber = 0;
         mapData.unlockedDoors.Clear();

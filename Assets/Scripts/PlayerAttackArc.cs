@@ -76,7 +76,7 @@ public class PlayerAttackArc : AttackArcGenerator
                 angle -= angleToZero * Mathf.Rad2Deg;
             }
             Vector3 direction = new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), 0, Mathf.Cos(Mathf.Deg2Rad * angle));
-            //Debug.DrawRay(transform.position, direction.normalized * radius, Color.red);
+            //Debug.DrawRay(transform.position, direction.normalized * radius, Color.red, 5f);
             if (Physics.Raycast(transform.position, direction.normalized, out hit, radius, enemiesLayerMask, QueryTriggerInteraction.Ignore))
             {
                 AddToEnemiesInRange(hit);
@@ -87,7 +87,7 @@ public class PlayerAttackArc : AttackArcGenerator
         float leftSideDistance = Vector3.Distance(vertices[0], vertices[leftIndex]);
         Vector3 leftSideDirection = Quaternion.AngleAxis(-angleLeftSide, Vector3.up) * transform.forward;
 
-        //Debug.DrawRay(transform.position + baseDirection * vertices[0].magnitude, leftSideDirection.normalized * leftSideDistance, Color.red);
+        //Debug.DrawRay(transform.position + baseDirection * vertices[0].magnitude, leftSideDirection.normalized * leftSideDistance, Color.red, 5f);
         if(Physics.Raycast(transform.position + baseDirection * vertices[0].magnitude, leftSideDirection.normalized, out hit, leftSideDistance, enemiesLayerMask, QueryTriggerInteraction.Ignore))
         {
             AddToEnemiesInRange(hit);
@@ -97,13 +97,13 @@ public class PlayerAttackArc : AttackArcGenerator
         float rightSideDistance = Vector3.Distance(vertices[arcPoints], vertices[arcPoints - rightIndex]);
         Vector3 rightSideDirection = Quaternion.AngleAxis(angleRightSide, Vector3.up) * transform.forward;
 
-        //Debug.DrawRay(transform.position + baseDirection * vertices[arcPoints].magnitude, rightSideDirection.normalized * rightSideDistance, Color.red);
-        if(Physics.Raycast(transform.position + baseDirection * vertices[arcPoints].magnitude, rightSideDirection.normalized, out hit, rightSideDistance, enemiesLayerMask, QueryTriggerInteraction.Ignore))
+        //Debug.DrawRay(transform.position + baseDirection * vertices[arcPoints].magnitude, rightSideDirection.normalized * rightSideDistance, Color.red, 5f);
+        if (Physics.Raycast(transform.position + baseDirection * vertices[arcPoints].magnitude, rightSideDirection.normalized, out hit, rightSideDistance, enemiesLayerMask, QueryTriggerInteraction.Ignore))
         {
             AddToEnemiesInRange(hit);
         }
 
-        //Debug.DrawRay(transform.parent.position, transform.forward * radius, Color.red);
+        //Debug.DrawRay(transform.parent.position, transform.forward * radius, Color.red, 5f);
         if(Physics.Raycast(transform.parent.position, transform.forward, out hit, radius, enemiesLayerMask, QueryTriggerInteraction.Ignore))
         {
             AddToEnemiesInRange(hit);

@@ -14,6 +14,7 @@ public class VFXmanager : MonoBehaviour
     [SerializeField] SpriteRenderer parryPulse2;
     [SerializeField] FireRing fireRing;
     [SerializeField] ParticleSystem waterFowl;
+    [SerializeField] ParticleSystem iceBreath;
     float parryPulseDuration = 0.2f;
     float parryPulseTimer;
     float parryPulseFadeaway = 0.1f;
@@ -22,6 +23,8 @@ public class VFXmanager : MonoBehaviour
     Vector3 parryPulsePosition1;
     Vector3 parryPulsePosition2;
     Color tempColor;
+    PlayerScript playerScript;
+    Transform attackPoint;
 
     [SerializeField] ParticleSystem clawSpecialVFX;
 
@@ -39,13 +42,14 @@ public class VFXmanager : MonoBehaviour
 
     private void Start()
     {
+        playerScript = GetComponentInParent<PlayerScript>();
+        attackPoint = playerScript.GetComponentInChildren<AttackArcGenerator>().transform;
         parryPulsePosition1 = parryPulse1.transform.localPosition;
         parryPulsePosition2 = parryPulse2.transform.localPosition;
         tempColor = parryPulse1.color;
         tempColor.a = 0;
         parryPulse1.color = tempColor;
         parryPulse2.color = tempColor;
-        if (playerData.clawSpecialOn) clawSpecialVFX.Play();
         mirrorCloak.enabled = playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK);
     }
 
@@ -70,11 +74,6 @@ public class VFXmanager : MonoBehaviour
     private void EndLanternCombo(object sender, System.EventArgs e)
     {
         fireRing.Explode();
-    }
-
-    private void OnClawSpecial(object sender, System.EventArgs e)
-    {
-        clawSpecialVFX.Play();
     }
 
     private void onMeleeParry(object sender, System.EventArgs e)
@@ -116,10 +115,6 @@ public class VFXmanager : MonoBehaviour
         parryPulse2.color = tempColor;
     }
 
-    private void OnEndClawSpecial(object sender, System.EventArgs e)
-    {
-        clawSpecialVFX.Stop();
-    }
     private void onStartMirrorCloak(object sender, System.EventArgs e)
     {
         mirrorCloak.enabled = true;
@@ -144,9 +139,31 @@ public class VFXmanager : MonoBehaviour
         mirrorCloak.enabled = false;
     }
 
-    private void PlayerEvents_onWaterfowl(object sender, System.EventArgs e)
+    private void PlayerEvents_onWaterfowl(object sender, float chargeDecimal)
     {
+        ParticleSystem.EmissionModule emissions = waterFowl.emission;
+
+        (short count, short cycleCount) = ((short, short))(chargeDecimal switch
+        {
+            >= 1f => (6, 4),
+            > 0.8f => (6, 3),
+            > 0.6f => (5, 3),
+            > 0.4f => (4, 3),
+            > 0.2f => (4, 2),
+            _ => (3, 2)
+        });
+        float time = 0;
+        float interval = 0.1f;
+        emissions.SetBurst(0, new ParticleSystem.Burst(time, count, count, cycleCount, interval));
         waterFowl.Play();
+    }
+
+    private void PlayerEvents_onIceBreath(object sender, System.EventArgs e)
+    {
+        Vector3 lookDirection = attackPoint.position - playerScript.transform.position;
+        lookDirection = new Vector3(lookDirection.x, 0, lookDirection.z).normalized;
+        iceBreath.transform.rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+        iceBreath.Play();
     }
 
     private void OnEnable()
@@ -154,13 +171,12 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onDashStart += onDashStart;
         playerEvents.onAttackImpact += onAttackImpact;
         playerEvents.onTakeDamage += onTakeDamage;
-        playerEvents.onClawSpecial += OnClawSpecial;
-        playerEvents.onEndClawSpecial += OnEndClawSpecial;
         playerEvents.onStartMirrorCloak += onStartMirrorCloak;
         playerEvents.onEndMirrorCloak += onEndMirrorCloak;
         playerEvents.onMeleeParry += onMeleeParry;
         playerEvents.onEndLanternCombo += EndLanternCombo;
         playerEvents.onWaterfowl += PlayerEvents_onWaterfowl;
+        playerEvents.onIceBreath += PlayerEvents_onIceBreath;
     }
 
     private void OnDisable()
@@ -168,12 +184,11 @@ public class VFXmanager : MonoBehaviour
         playerEvents.onDashStart -= onDashStart;
         playerEvents.onAttackImpact -= onAttackImpact;
         playerEvents.onTakeDamage -= onTakeDamage;
-        playerEvents.onClawSpecial -= OnClawSpecial;
-        playerEvents.onEndClawSpecial -= OnEndClawSpecial;
         playerEvents.onStartMirrorCloak -= onStartMirrorCloak;
         playerEvents.onEndMirrorCloak -= onEndMirrorCloak;
         playerEvents.onMeleeParry -= onMeleeParry;
         playerEvents.onEndLanternCombo -= EndLanternCombo;
         playerEvents.onWaterfowl -= PlayerEvents_onWaterfowl;
+        playerEvents.onIceBreath -= PlayerEvents_onIceBreath;
     }
 }
