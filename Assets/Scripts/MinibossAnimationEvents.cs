@@ -15,7 +15,7 @@ public class MinibossAnimationEvents : MonoBehaviour
 
     private void Awake()
     {
-        minibossEvents = GetComponentInParent<MinibossEvents>(); 
+        minibossEvents = GetComponentInParent<MinibossEvents>();
     }
 
     private void Start()
@@ -94,7 +94,7 @@ public class MinibossAnimationEvents : MonoBehaviour
 
     IEnumerator Flying()
     {
-        while(abilities.transform.position.y < 20)
+        while (abilities.transform.position.y < 20)
         {
             abilities.transform.position += new Vector3(0, 25 * Time.deltaTime, 0);
             yield return null;
@@ -112,6 +112,16 @@ public class MinibossAnimationEvents : MonoBehaviour
     public void RecallDrones()
     {
         minibossEvents.RecallDrones();
+    }
+
+    public void ExtendBlades(int bladeId)
+    {
+        minibossEvents.ExtendBlades(bladeId);
+    }
+
+    public void RetractBlades(int bladeId)
+    {
+        minibossEvents.RetractBlades(bladeId);
     }
 
     private void OnEnable()

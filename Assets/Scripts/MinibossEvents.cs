@@ -15,6 +15,8 @@ public class MinibossEvents : EnemyEvents
     public event EventHandler onFlyAway;
     public event EventHandler onTeslaHarpoons;
     public event EventHandler onDissolve;
+    public event EventHandler<int> onExtendBlades;
+    public event EventHandler<int> onRetractBlades;
 
     public void ThrustersOn()
     {
@@ -64,5 +66,15 @@ public class MinibossEvents : EnemyEvents
     public void Dissolve()
     {
         onDissolve?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ExtendBlades(int bladeId)
+    {
+        onExtendBlades?.Invoke(this, bladeId);
+    }
+
+    public void RetractBlades(int bladeId)
+    {
+        onRetractBlades?.Invoke(this, bladeId);
     }
 }

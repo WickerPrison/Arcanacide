@@ -11,9 +11,9 @@ Shader "Unlit/AttackIndicator"
 		{
 			Tags
 			{
-				"Queue" = "Transparent"
+				"Queue" = "Background"
 				"IgnoreProjector" = "True"
-				"RenderType" = "Transparent"
+				"RenderType" = "Background"
 				"PreviewType" = "Plane"
 				"CanUseSpriteAtlas" = "True"
 			}
@@ -27,7 +27,7 @@ Shader "Unlit/AttackIndicator"
 			{
 				Ref 2
 				Comp Equal
-				Pass IncrSat
+				Pass Zero
 			}
 
 			Pass

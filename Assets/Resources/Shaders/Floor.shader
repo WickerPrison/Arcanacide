@@ -11,9 +11,9 @@ Shader "Unlit/Floor"
 		{
 			Tags
 			{
-				"Queue" = "Transparent"
+				"Queue" = "Background"
 				"IgnoreProjector" = "True"
-				"RenderType" = "Transparent"
+				"RenderType" = "Background"
 				"PreviewType" = "Plane"
 				"CanUseSpriteAtlas" = "True"
 			}
