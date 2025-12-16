@@ -57,7 +57,6 @@ public class MinibossBlade : MonoBehaviour
         Vector3 startRot1 = blade1.localEulerAngles;
         Vector3 startRot2 = blade2.localEulerAngles;
 
-        Debug.Log($"Start Rot1: {startRot1}, In Rot1: {inRot}");
         float timer = bladeTime;
         while(timer > 0)
         {
@@ -67,7 +66,7 @@ public class MinibossBlade : MonoBehaviour
 
             blade2.localPosition = Vector3.Lerp(startPos2, endPos2, rat);
             blade2.localRotation = Quaternion.Euler(Vector3.Lerp(startRot2, endRot2, rat));
-            Debug.Log(rat);
+
             timer -= Time.deltaTime;
             yield return null;
         }
