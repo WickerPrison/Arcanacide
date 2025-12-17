@@ -218,6 +218,7 @@ public class PlayerData : ScriptableObject
 
         unlockedLanterns.Clear();
         unlockedLanterns.Add(WeaponElement.FIRE);
+        unlockedLanterns.Add(WeaponElement.ELECTRICITY);
 
         unlockedKnives.Clear();
         unlockedKnives.Add(WeaponElement.ELECTRICITY);
