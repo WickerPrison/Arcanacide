@@ -5,11 +5,9 @@ using UnityEngine;
 public class PlayerFireballAnimations : MonoBehaviour
 {
     public float fireballCharge;
-    [SerializeField] AttackProfiles fireballProfile;
     [SerializeField] AttackProfiles fireWaveProfile;
     [SerializeField] AttackProfiles fireWaveTrailProfile;
     [SerializeField] AttackProfiles fireCircleTrailProfile;
-    [SerializeField] GameObject fireballPrefab;
     [SerializeField] GameObject fireWavePrefab;
     [SerializeField] GameObject fireCirclePrefab;
     [SerializeField] PlayerData playerData;
@@ -28,17 +26,17 @@ public class PlayerFireballAnimations : MonoBehaviour
         orbitFlames = playerMovement.GetComponent<OrbitFlames>();
     }
 
-    public void SpawnFireball()
+    public void SpawnFireball(AttackHit attackHit)
     {
-        fireball = Instantiate(fireballPrefab).GetComponent<PlayerFireball>();
+        fireball = Instantiate(attackHit.GetPrefab(playerData.equippedElements[1])).GetComponent<PlayerFireball>();
         fireball.fireballAnimations = this;
         fireball.playerMovement = playerMovement;
-        fireball.attackProfile = fireballProfile;
+        fireball.attackProfile = attackHit.GetProfile(playerData.equippedElements[1]);
     }
 
-    public void LaunchFireball()
+    public void LaunchFireball(AttackHit attackHit)
     {
-        playerScript.LoseStamina(fireballProfile.staminaCost);
+        playerScript.LoseStamina(attackHit.GetProfile(playerData.equippedElements[1]).staminaCost);
         fireball.LaunchFireball();
         fireball = null;
     }

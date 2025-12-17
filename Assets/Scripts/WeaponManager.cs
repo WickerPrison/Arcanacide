@@ -151,6 +151,7 @@ public class WeaponManager : MonoBehaviour
             case (2, WeaponElement.ELECTRICITY): return 2;
             case (3, WeaponElement.ICE): return 3;
             case (0, WeaponElement.FIRE): return 4;
+            case (1, WeaponElement.ELECTRICITY): return 5;
             default: return -1;
         }
     }
