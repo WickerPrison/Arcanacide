@@ -25,6 +25,11 @@ public class MinibossBlade : MonoBehaviour
         SetRetraction();
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        SetRetraction();
+    }
+
     private void Update()
     {
         SetRetraction();
@@ -32,10 +37,10 @@ public class MinibossBlade : MonoBehaviour
 
     void SetRetraction()
     {
-        blade1.localPosition = Vector3.Lerp(outPos, inPos, retraction);
-        blade1.localRotation = Quaternion.Euler(Vector3.Lerp(outRot, inRot, retraction));
+        blade1.localPosition = Vector3.Lerp(inPos, outPos, retraction);
+        blade1.localRotation = Quaternion.Euler(Vector3.Lerp(inRot, outRot, retraction));
 
-        blade2.localPosition = Vector3.Lerp(outPos2, inPos2, retraction);
-        blade2.localRotation = Quaternion.Euler(Vector3.Lerp(outRot2, inRot2, retraction));
+        blade2.localPosition = Vector3.Lerp(inPos2, outPos2, retraction);
+        blade2.localRotation = Quaternion.Euler(Vector3.Lerp(inRot2, outRot2, retraction));
     }
 }
