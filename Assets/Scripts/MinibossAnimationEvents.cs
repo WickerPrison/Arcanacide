@@ -114,16 +114,6 @@ public class MinibossAnimationEvents : MonoBehaviour
         minibossEvents.RecallDrones();
     }
 
-    public void ExtendBlades(int bladeId)
-    {
-        minibossEvents.ExtendBlades(bladeId);
-    }
-
-    public void RetractBlades(int bladeId)
-    {
-        minibossEvents.RetractBlades(bladeId);
-    }
-
     private void OnEnable()
     {
         minibossEvents.OnStagger += EnemyEvents_OnStagger;
