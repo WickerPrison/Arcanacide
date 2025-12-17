@@ -77,9 +77,9 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAbilities.SwordSpecialAttack(profile);
     }
 
-    public void AxeHeavy()
+    public void LanternHeavy(AttackHit attackHit)
     {
-        playerAbilities.AxeHeavy();
+        playerAbilities.LanternHeavy(attackHit.GetProfile(playerData.equippedElements[1]));
     }
 
     public void LanternCombo()

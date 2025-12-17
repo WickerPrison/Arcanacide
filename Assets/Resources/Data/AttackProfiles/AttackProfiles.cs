@@ -18,6 +18,7 @@ public class AttackProfiles : ScriptableObject
 {
     public HitboxType hitbox;
     public AttackType attackType;
+    public WeaponElement element;
 
     public int smearSpeed;
     public float stepWithAttack;

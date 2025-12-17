@@ -344,21 +344,12 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         heavyAttackActive = false;
     }
 
-    public void AxeHeavy()
+    public void LanternHeavy(AttackProfiles profile)
     {
-        playerScript.LoseStamina(axeHeavyProfile.staminaCost);
-        FairyProjectile fairyProjectile = Instantiate(fairyProjectilePrefab).GetComponent<FairyProjectile>();
-        if (playerAnimation.facingFront)
-        {
-            fairyProjectile.transform.position = internalLanternFairies[0].transform.position;
-        }
-        else
-        {
-            fairyProjectile.transform.position = internalLanternFairies[1].transform.position;
-        }
-        fairyProjectile.direction = attackPoint.position - transform.position;
-        fairyProjectile.lanternFairy = lanternFairy;
-        fairyProjectile.playerAbilities = this;
+        playerScript.LoseStamina(profile.staminaCost);
+        Vector3 position = playerAnimation.facingFront ? internalLanternFairies[0].transform.position : internalLanternFairies[1].transform.position;
+        Vector3 direction = attackPoint.position - transform.position;
+        FairyProjectile.Instantiate(fairyProjectilePrefab, position, direction, lanternFairy, this, profile);
     }
 
     public void SpecialAttack()

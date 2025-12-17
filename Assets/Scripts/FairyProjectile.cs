@@ -8,8 +8,9 @@ public class FairyProjectile : MonoBehaviour
     [System.NonSerialized] public ExternalLanternFairy lanternFairy;
     [System.NonSerialized] public Vector3 direction;
     [System.NonSerialized] public PlayerAbilities playerAbilities;
-    [SerializeField] AttackProfiles axeHeavyProfile;
-    [SerializeField] ParticleSystem explosion;
+    [SerializeField] ParticleSystem fireExplosion;
+    [SerializeField] ParticleSystem lightningExplosion;
+    AttackProfiles attackProfile;
     ParticleSystem trail;
     GameManager gm;
     Transform target;
@@ -19,9 +20,26 @@ public class FairyProjectile : MonoBehaviour
     float range = 7;
     bool stop = false;
     bool selfDestructed = false;
+    bool instantiatedCorrectly = false;
+
+    public static FairyProjectile Instantiate(GameObject prefab, Vector3 position, Vector3 direction, ExternalLanternFairy lanternFairy, PlayerAbilities playerAbilities, AttackProfiles attackProfile)
+    {
+        FairyProjectile fairyProjectile = Instantiate(prefab).GetComponent<FairyProjectile>();
+        fairyProjectile.transform.position = position;
+        fairyProjectile.direction = direction;
+        fairyProjectile.lanternFairy = lanternFairy;
+        fairyProjectile.playerAbilities = playerAbilities;
+        fairyProjectile.attackProfile = attackProfile;
+        fairyProjectile.instantiatedCorrectly = true;
+        return fairyProjectile;
+    }
 
     private void Start()
     {
+        if (!instantiatedCorrectly)
+        {
+            Utils.IncorrectInitialization("FairyProjectile");
+        }
         trail = gameObject.GetComponent<ParticleSystem>();
         lanternFairy.ToggleSprites(false);
         initialPos = playerAbilities.transform.position;
@@ -69,19 +87,32 @@ public class FairyProjectile : MonoBehaviour
         selfDestructed = true;
         stop = true;
         yield return new WaitForSeconds(.5f);
-        explosion.Play();
-        int damage = playerAbilities.DetermineAttackDamage(axeHeavyProfile);
-        RuntimeManager.PlayOneShot(axeHeavyProfile.noHitSoundEvent, axeHeavyProfile.soundNoHitVolume, transform.position);
+        PlayExplosion(attackProfile.element);
+        int damage = playerAbilities.DetermineAttackDamage(attackProfile);
+        RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
         Vector3 groundPosition = new Vector3(transform.position.x, 0, transform.position.z);
         foreach(EnemyScript enemy in gm.enemies)
         {
-            if(Vector3.Distance(enemy.transform.position, groundPosition) < axeHeavyProfile.attackRange)
+            if(Vector3.Distance(enemy.transform.position, groundPosition) < attackProfile.attackRange)
             {
-                playerAbilities.DamageEnemy(enemy, damage, axeHeavyProfile);
+                playerAbilities.DamageEnemy(enemy, damage, attackProfile);
             }
         }
         yield return new WaitForSeconds(0.7f);
         Return();
+    }
+
+    void PlayExplosion(WeaponElement element)
+    {
+        switch (element)
+        {
+            case WeaponElement.FIRE:
+                fireExplosion.Play();
+                break;
+            case WeaponElement.ELECTRICITY:
+                lightningExplosion.Play();
+                break;
+        }
     }
 
     void Return()
