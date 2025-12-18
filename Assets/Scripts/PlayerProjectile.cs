@@ -50,17 +50,20 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
             else addedDOT = 0;
             enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
         });
-        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+
         enemyScript.ImpactVFX();
         if (destroyOnCollision)
         {
             KillProjectile();
         }
+        else
+        {
+            RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+        }
     }
 
     public virtual void HitObject(Collider collision)
     {
-        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         KillProjectile();
     }
 
@@ -99,6 +102,7 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
 
     public virtual void KillProjectile()
     {
+        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 }

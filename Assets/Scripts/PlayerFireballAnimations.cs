@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerFireballAnimations : MonoBehaviour
 {
     public float fireballCharge;
     [SerializeField] AttackProfiles fireWaveProfile;
+    [SerializeField] AttackProfiles electricArtilleryProfile;
     [SerializeField] AttackProfiles fireWaveTrailProfile;
     [SerializeField] AttackProfiles fireCircleTrailProfile;
     [SerializeField] GameObject fireWavePrefab;
+    [SerializeField] GameObject electricArtilleryPrefab;
     [SerializeField] GameObject fireCirclePrefab;
     [SerializeField] PlayerData playerData;
     PlayerMovement playerMovement;
@@ -17,6 +20,7 @@ public class PlayerFireballAnimations : MonoBehaviour
     PlayerScript playerScript;
     PlayerTrailManager trailManager;
     OrbitFlames orbitFlames;
+    public event EventHandler onLaunchFireWave;
 
     private void Start()
     {
@@ -44,15 +48,36 @@ public class PlayerFireballAnimations : MonoBehaviour
     public void SpawnFireWave()
     {
         Vector3 direction = Vector3.Normalize(playerMovement.attackPoint.position - playerMovement.transform.position);
-        Vector3 spawnPosition = playerMovement.transform.position + direction * 1.5f;
-        fireWave = PlayerFireWave.Instantiate(fireWavePrefab, spawnPosition, direction, trailManager, fireWaveProfile, fireWaveTrailProfile);
+        switch (playerData.equippedElements[1])
+        {
+            case WeaponElement.FIRE:
+                Vector3 spawnPosition = playerMovement.transform.position + direction * 1.5f;
+                fireWave = PlayerFireWave.Instantiate(fireWavePrefab, spawnPosition, direction, trailManager, fireWaveProfile, fireWaveTrailProfile);
+                break;
+            case WeaponElement.ELECTRICITY:
+                Vector3 spawnOrigin = playerMovement.transform.position - direction * 1.5f;
+                for(int i = 0; i < 5; i++)
+                {
+                    ElectricArtillery.Instantiate(electricArtilleryPrefab, spawnOrigin, direction, this, electricArtilleryProfile);
+                }
+                break;
+        }
+
     }
 
     public void LaunchFireWave()
     {
-        playerScript.LoseStamina(fireWaveProfile.staminaCost);
-        fireWave.LaunchFireWave();
-        fireWave = null;
+        switch (playerData.equippedElements[1])
+        {
+            case WeaponElement.FIRE:
+                playerScript.LoseStamina(fireWaveProfile.staminaCost);
+                fireWave.LaunchFireWave();
+                fireWave = null;
+                break;
+            case WeaponElement.ELECTRICITY:
+                onLaunchFireWave?.Invoke(this, EventArgs.Empty);
+                break;
+        }
     }
 
     public void SpawnFireCircle()
