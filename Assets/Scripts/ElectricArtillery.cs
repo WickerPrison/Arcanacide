@@ -29,7 +29,7 @@ public class ElectricArtillery : PlayerProjectile
         electricArtillery.transform.position = spawnOrigin + new Vector3(xOffset, yOffset, zOffset);
         electricArtillery.state = ElectricArtilleryState.SPAWNED;
 
-        float targetSpread = 4f;
+        float targetSpread = 8f;
         xOffset = Random.Range(-targetSpread, targetSpread);
         zOffset = Random.Range(-targetSpread, targetSpread);
         float distance = Random.Range(10f, 15f);

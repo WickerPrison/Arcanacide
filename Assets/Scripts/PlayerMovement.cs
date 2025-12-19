@@ -152,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
         if (lockAttackPoint)
         {
             attackPoint.position = attackPointPos;
+            return;
         }
 
         if (!CanInput() && !canWalk) return;
@@ -160,8 +161,7 @@ public class PlayerMovement : MonoBehaviour
         {
             mouseDirection = playerAnimation.mousePosition - playerAnimation.playerScreenPosition;
             mouseDirection = new Vector3(mouseDirection.x, 0, mouseDirection.y);
-            attackPoint.transform.position = transform.position + mouseDirection.normalized;
-            attackPoint.transform.rotation = Quaternion.LookRotation(mouseDirection.normalized);
+            SetLookDirection(mouseDirection);
         }
         else
         {
@@ -175,11 +175,16 @@ public class PlayerMovement : MonoBehaviour
                 lookDir = rightStickValue.normalized;
             }
             Vector3 lookDirection = new Vector3(lookDir.x, 0, lookDir.y);
-            attackPoint.transform.position = transform.position + lookDirection.normalized;
-            if(lookDirection.normalized != Vector3.zero)
-            {
-                attackPoint.transform.rotation = Quaternion.LookRotation(lookDirection.normalized);
-            }
+            SetLookDirection(lookDirection);
+        }
+    }
+
+    public void SetLookDirection(Vector3 lookDir)
+    {
+        attackPoint.transform.position = transform.position + lookDir.normalized;
+        if(lookDir.normalized != Vector3.zero)
+        {
+            attackPoint.transform.rotation = Quaternion.LookRotation(lookDir.normalized);
         }
     }
 

@@ -49,6 +49,11 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
             }
             else addedDOT = 0;
             enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
+
+            if (attackProfile.electricChargeBuildup > 0)
+            {
+                enemyScript.GainElectricCharge(attackProfile.electricChargeBuildup);
+            }
         });
 
         enemyScript.ImpactVFX();
