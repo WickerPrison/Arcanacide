@@ -152,11 +152,8 @@ public class CalculateLightDpsTests
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, BalanceAttackType.LIGHT, type);
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.LIGHT);
-        balanceData.lightStamPerSecond[reportIndex] = stamPerSec;
         balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.LIGHT);
-        balanceData.lightMaxDps[reportIndex] = dps;
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.LIGHT);
-        balanceData.lightHitRate[reportIndex] = hitCounter / seconds;
         Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;

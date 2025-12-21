@@ -51,7 +51,7 @@ public class CalculateHeavyDps
     [UnityTest]
     public IEnumerator CalculateSwordHeavyCurve()
     {
-        balanceData.swordHeavyDps.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.SWORD);
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -68,7 +68,7 @@ public class CalculateHeavyDps
     [UnityTest]
     public IEnumerator CalculateSwordHeavyCurveNoCharge()
     {
-        balanceData.swordHeavyDpsNoCharge.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.HEAVY_NO_CHARGE, BalanceWeaponType.SWORD);
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -85,7 +85,7 @@ public class CalculateHeavyDps
     [UnityTest]
     public IEnumerator CalculateFireSwordHeavyCurve()
     {
-        balanceData.fireSwordHeavyDps.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.FIRESWORD);
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -102,7 +102,7 @@ public class CalculateHeavyDps
     [UnityTest]
     public IEnumerator CalculateFireSwordHeavyCurveNoCharge()
     {
-        balanceData.fireSwordHeavyDpsNoCharge.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.HEAVY_NO_CHARGE, BalanceWeaponType.FIRESWORD);
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -153,18 +153,6 @@ public class CalculateHeavyDps
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, attackType);
         balanceData.SetMaxDps(dps, reportIndex, attackType);
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, attackType);
-        if(attackType == BalanceAttackType.HEAVY)
-        {
-            balanceData.heavyStamPerSecond[reportIndex] = stamPerSec;
-            balanceData.heavyMaxDps[reportIndex] = dps;
-            balanceData.heavyHitRate[reportIndex] = hitCounter / seconds;
-        }
-        else
-        {
-            balanceData.heavyNoChargeStamPerSecond[reportIndex] = stamPerSec;
-            balanceData.heavyNoChargeMaxDps[reportIndex] = dps;
-            balanceData.heavyNoChargeHitRate[reportIndex] = hitCounter / seconds;
-        }
         Debug.Log($"Sword Heavy DPS with {playerData.strength} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
@@ -175,7 +163,7 @@ public class CalculateHeavyDps
     [UnityTest]
     public IEnumerator CalculateLanternHeavyCurve()
     {
-        balanceData.lanternHeavyDps.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.LANTERN);
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -208,9 +196,6 @@ public class CalculateHeavyDps
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.HEAVY);
         balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.HEAVY);
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.HEAVY);
-        balanceData.heavyStamPerSecond[1] = stamPerSec;
-        balanceData.heavyMaxDps[1] = dps;
-        balanceData.heavyHitRate[1] = hitCounter / seconds;
         Debug.Log($"Lantern Heavy DPS with {playerData.arcane} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
@@ -221,7 +206,7 @@ public class CalculateHeavyDps
     [UnityTest]
     public IEnumerator CalculateKnifeHeavyCurve()
     {
-        balanceData.knifeHeavyDps.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.KNIFE);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
         for (int i = 0; i < stats.Length; i++)
@@ -256,9 +241,6 @@ public class CalculateHeavyDps
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.HEAVY);
         balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.HEAVY);
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.HEAVY);
-        balanceData.heavyStamPerSecond[2] = stamPerSec;
-        balanceData.heavyMaxDps[2] = dps;
-        balanceData.heavyHitRate[2] = hitCounter / seconds;
         Debug.Log($"Knife Heavy DPS with {playerData.strength} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
@@ -269,7 +251,7 @@ public class CalculateHeavyDps
     [UnityTest]
     public IEnumerator CalculateClawsHeavyCurve()
     {
-        balanceData.clawsHeavyDps.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.CLAWS);
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -285,7 +267,7 @@ public class CalculateHeavyDps
     [UnityTest]
     public IEnumerator CalculateClawsHeavyNoChargeCurve()
     {
-        balanceData.clawsHeavyDpsNoCharge.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.HEAVY_NO_CHARGE, BalanceWeaponType.CLAWS);
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -335,18 +317,6 @@ public class CalculateHeavyDps
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, attackType);
         balanceData.SetMaxDps(dps, reportIndex, attackType);
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, attackType);
-        if (attackType == BalanceAttackType.HEAVY)
-        {
-            balanceData.heavyStamPerSecond[reportIndex] = stamPerSec;
-            balanceData.heavyMaxDps[reportIndex] = dps;
-            balanceData.heavyHitRate[reportIndex] = hitCounter / seconds;
-        }
-        else
-        {
-            balanceData.heavyNoChargeStamPerSecond[reportIndex] = stamPerSec;
-            balanceData.heavyNoChargeMaxDps[reportIndex] = dps;
-            balanceData.heavyNoChargeHitRate[reportIndex] = hitCounter / seconds;
-        }
         Debug.Log($"Sword Heavy DPS with {playerData.strength} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;

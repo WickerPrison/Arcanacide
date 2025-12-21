@@ -122,7 +122,6 @@ public class CalculateSpecials
         }
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, type);
-        balanceData.specialMaxDps[reportIndex] = dps;
         balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.SPECIAL);
         Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
@@ -136,7 +135,7 @@ public class CalculateSpecials
     public IEnumerator CalculateKnifeSpecialCurve()
     {
         currentWeaponType = BalanceWeaponType.KNIFE;
-        balanceData.knifeSpecialDps.keys = new Keyframe[0];
+        balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.KNIFE);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
         for (int i = 0; i < stats.Length; i++)
@@ -181,9 +180,6 @@ public class CalculateSpecials
         balanceData.SetMaxDps(dps, 2, BalanceAttackType.SPECIAL);
         balanceData.SetHitRate(hitCounter / seconds, 2, BalanceAttackType.SPECIAL);
         balanceData.SetSpecialManaPerSec(manaPerSec, 2);
-        balanceData.specialStamPerSecond[2] = stamPerSec;
-        balanceData.specialMaxDps[2] = dps;
-        balanceData.specialManaPerSecond[2] = manaPerSec;
         Debug.Log($"Knife Special DPS with {playerData.strength} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         playerAbilities.EndSpecialAttack();

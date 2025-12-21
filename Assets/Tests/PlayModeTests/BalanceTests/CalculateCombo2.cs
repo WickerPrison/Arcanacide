@@ -179,9 +179,6 @@ public class CalculateCombo2
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.COMBO2);
         balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.COMBO2);
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.COMBO2);
-        balanceData.combo2StamPerSecond[reportIndex] = stamPerSec;
-        balanceData.combo2MaxDps[reportIndex] = dps;
-        balanceData.combo2HitRate[reportIndex] = hitCounter / seconds;
         Debug.Log($"{type} Combo2 DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
