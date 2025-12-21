@@ -118,19 +118,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
 
     void CircleHitbox(AttackProfiles attackProfile, int attackDamage)
     {
-        Utils.DrawDebugCircle(12, attackProfile.attackRange, transform.parent.position, 3);
-        foreach (EnemyScript enemy in gm.enemies)
-        {
-            if (Vector3.Distance(enemy.transform.position, transform.parent.position) < attackProfile.attackRange)
-            {
-                playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
-            }
-        }
-
-        if (gm.enemiesInRange.Count > 0 && attackProfile.screenShakeOnHit != Vector2.zero)
-        {
-            StartCoroutine(cameraScript.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y));
-        }
+        Utils.CircleHitbox(attackProfile, attackDamage, transform.parent.position, gm, playerAbilities);
     }
 
     void AoeZapHitbox(AttackProfiles attackProfile, int attackDamage)

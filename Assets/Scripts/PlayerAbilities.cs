@@ -11,7 +11,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] AttackProfiles parryProfile;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] AttackProfiles axeHeavyProfile;
-    [SerializeField] AttackProfiles lanternCombo2Profile;
+    [SerializeField] AttackHit lanternCombo2AttackHit;
     [SerializeField] AttackProfiles lanternCombo2TrailProfile;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
@@ -20,6 +20,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] Transform[] internalLanternFairies;
     [SerializeField] GameObject fairyProjectilePrefab;
     [SerializeField] GameObject fireRainPrefab;
+    [SerializeField] GameObject skyBoltPrefab;
     [SerializeField] Transform frontSwordTip;
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
@@ -104,7 +105,12 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
         if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(0);
 
-        fireRainDelayWait = new WaitForSeconds(fireRainMaxDelay);
+        fireRainDelayWait = playerData.equippedElements[1] switch
+        {
+            WeaponElement.FIRE => new WaitForSeconds(fireRainMaxDelay),
+            WeaponElement.ELECTRICITY => new WaitForSeconds(3.3f),
+            _ => new WaitForSeconds(3f)
+        };
 
         SetupControls();
     }
@@ -485,11 +491,23 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     private void PlayerEvents_onStartFireRain(object sender, Vector3 origin)
     {
-        for (int i = 0; i < fireRainAmount; i++)
+        switch (playerData.equippedElements[1])
         {
-            FireRain.Instantiate(fireRainPrefab, origin, fireRainMaxDelay, lanternCombo2Profile, lanternCombo2TrailProfile, trailManager, sceneHasNavmesh);
+            case WeaponElement.FIRE:
+                for (int i = 0; i < fireRainAmount; i++)
+                {
+                    FireRain.Instantiate(fireRainPrefab, origin, fireRainMaxDelay, lanternCombo2AttackHit.fireProfile, lanternCombo2TrailProfile, trailManager, sceneHasNavmesh);
+                }
+                StartCoroutine(EndFireRain());
+                break;
+            case WeaponElement.ELECTRICITY:
+                for(int i = 0; i < lanternCombo2AttackHit.electricityProfile.boltNum; i++)
+                {
+                    SkyBolt.Instantiate(skyBoltPrefab, transform.position, lanternCombo2AttackHit.electricityProfile, this);
+                }
+                StartCoroutine(EndFireRain());
+                break;
         }
-        StartCoroutine(EndFireRain());
     }
 
     IEnumerator EndFireRain()

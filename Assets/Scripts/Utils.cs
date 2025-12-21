@@ -46,6 +46,23 @@ public static class Utils
         }
     }
 
+    public static void CircleHitbox(AttackProfiles attackProfile, int attackDamage, Vector3 center, GameManager gm, PlayerAbilities playerAbilities)
+    {
+        Utils.DrawDebugCircle(12, attackProfile.attackRange, center, 3);
+        foreach (EnemyScript enemy in gm.enemies)
+        {
+            if (Vector3.Distance(enemy.transform.position, center) < attackProfile.attackRange)
+            {
+                playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
+            }
+        }
+
+        if (gm.enemiesInRange.Count > 0 && attackProfile.screenShakeOnHit != Vector2.zero)
+        {
+            GlobalEvents.instance.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y);
+        }
+    }
+
     public static void IncorrectInitialization(string className)
     {
         throw new System.Exception($"{className} must be initialized with constructor method");
