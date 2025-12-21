@@ -9,6 +9,7 @@ public class CalculateSpecials
 {
     PlayerData playerData;
     BalanceData balanceData;
+    BalanceAttackData lightData;
     GameObject testDummyPrefab;
     PlayerAnimation playerAnimation;
     PlayerAbilities playerAbilities;
@@ -30,7 +31,8 @@ public class CalculateSpecials
         SceneManager.LoadScene("Testing");
         yield return null;
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
-        balanceData = Resources.Load<BalanceData>("Data/BalanceData");
+        balanceData = Resources.Load<BalanceData>("Data/BalanceData/BalanceData");
+        lightData = Resources.Load<BalanceAttackData>("Data/BalanceData/LightData");
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.maxMana = 500;
@@ -112,15 +114,16 @@ public class CalculateSpecials
         switch(type)
         {
             case BalanceWeaponType.SWORD:
-                dps -= balanceData.swordLightDps.Evaluate(stat);
+                dps -= lightData.swordDps.Evaluate(stat);
                 break;
             case BalanceWeaponType.FIRESWORD:
-                dps -= balanceData.fireSwordLightDps.Evaluate(stat);
+                dps -= lightData.fireSwordDps.Evaluate(stat);
                 break;
         }
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, type);
         balanceData.specialMaxDps[reportIndex] = dps;
+        balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.SPECIAL);
         Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
@@ -174,6 +177,10 @@ public class CalculateSpecials
         float stamPerSec = staminaCounter / seconds;
         float manaPerSec = manaCounter / seconds;
         balanceData.SetDps(playerData.strength, dps, BalanceAttackType.SPECIAL, BalanceWeaponType.KNIFE);
+        balanceData.SetStamPerSecond(stamPerSec, 2, BalanceAttackType.SPECIAL);
+        balanceData.SetMaxDps(dps, 2, BalanceAttackType.SPECIAL);
+        balanceData.SetHitRate(hitCounter / seconds, 2, BalanceAttackType.SPECIAL);
+        balanceData.SetSpecialManaPerSec(manaPerSec, 2);
         balanceData.specialStamPerSecond[2] = stamPerSec;
         balanceData.specialMaxDps[2] = dps;
         balanceData.specialManaPerSecond[2] = manaPerSec;

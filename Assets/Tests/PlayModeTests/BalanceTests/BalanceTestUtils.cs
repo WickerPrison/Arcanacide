@@ -11,6 +11,7 @@ public static class BalanceTestUtils
         { BalanceWeaponType.KNIFE, 2 },
         { BalanceWeaponType.CLAWS, 3 },
         { BalanceWeaponType.FIRESWORD, 4 },
+        { BalanceWeaponType.ELECTRICLANTERN, 5 },
     };
 
     public static Dictionary<BalanceWeaponType, WeaponElement> weaponElementDict = new Dictionary<BalanceWeaponType, WeaponElement>
@@ -20,5 +21,6 @@ public static class BalanceTestUtils
         { BalanceWeaponType.KNIFE, WeaponElement.ELECTRICITY },
         { BalanceWeaponType.CLAWS, WeaponElement.ICE },
         { BalanceWeaponType.FIRESWORD, WeaponElement.FIRE },
+        { BalanceWeaponType.ELECTRICLANTERN, WeaponElement.ELECTRICITY },
     };
 }

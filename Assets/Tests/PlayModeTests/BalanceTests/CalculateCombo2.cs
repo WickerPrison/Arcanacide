@@ -28,7 +28,7 @@ public class CalculateCombo2
         SceneManager.LoadScene("Testing");
         yield return null;
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
-        balanceData = Resources.Load<BalanceData>("Data/BalanceData");
+        balanceData = Resources.Load<BalanceData>("Data/BalanceData/BalanceData");
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.hasHealthGem = true;
@@ -67,6 +67,24 @@ public class CalculateCombo2
     }
 
     [UnityTest]
+    public IEnumerator CalculateFireSwordCombo2Curve()
+    {
+        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.FIRESWORD);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            attacksCounter = 1;
+            yield return DoCombo2(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
+        }
+    }
+
+    [UnityTest]
     public IEnumerator CalculateLanternCombo2Curve()
     {
         balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.LANTERN);
@@ -81,6 +99,25 @@ public class CalculateCombo2
             doneAttacking = false;
             attacksCounter = 1;
             yield return DoCombo2(BalanceWeaponType.LANTERN, stats[i], health[i]);
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator CalculateElectricLanternCombo2Curve()
+    {
+        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.ELECTRICLANTERN);
+        int[] stats = { 1, 10, 20 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            playerData.strength = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            attacksCounter = 1;
+            yield return DoCombo2(BalanceWeaponType.ELECTRICLANTERN, stats[i], health[i]);
         }
     }
 
@@ -120,24 +157,6 @@ public class CalculateCombo2
         }
     }
 
-    [UnityTest]
-    public IEnumerator CalculateFireSwordCombo2Curve()
-    {
-        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.FIRESWORD);
-        int[] stats = { 1, 15, 30 };
-        int[] health = { 120, 250, 400 };
-        for (int i = 0; i < stats.Length; i++)
-        {
-            playerData.arcane = stats[i];
-            staminaCounter = 0;
-            healthCounter = 0;
-            hitCounter = 0;
-            doneAttacking = false;
-            attacksCounter = 1;
-            yield return DoCombo2(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
-        }
-    }
-
     IEnumerator DoCombo2(BalanceWeaponType type, int stat, int health)
     {
         int reportIndex = BalanceTestUtils.weaponIndexDict[type];
@@ -157,6 +176,9 @@ public class CalculateCombo2
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, BalanceAttackType.COMBO2, type);
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.COMBO2);
+        balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.COMBO2);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.COMBO2);
         balanceData.combo2StamPerSecond[reportIndex] = stamPerSec;
         balanceData.combo2MaxDps[reportIndex] = dps;
         balanceData.combo2HitRate[reportIndex] = hitCounter / seconds;

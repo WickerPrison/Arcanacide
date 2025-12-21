@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum BalanceWeaponType
 {
-    SWORD, LANTERN, KNIFE, CLAWS, FIRESWORD
+    SWORD, LANTERN, KNIFE, CLAWS, FIRESWORD, ELECTRICLANTERN
 }
 
 public enum BalanceAttackType
@@ -132,6 +132,7 @@ public class BalanceData : ScriptableObject
     [SerializeField] AnimationCurve knifeCombo2Dps;
     [SerializeField] AnimationCurve clawsCombo2Dps;
     [SerializeField] AnimationCurve fireSwordCombo2Dps;
+    [SerializeField] AnimationCurve electricLanternCombo2Dps;
     public float[] combo2MaxDps;
     public float[] combo2StamPerSecond;
     public float[] combo2HitRate;
@@ -149,6 +150,7 @@ public class BalanceData : ScriptableObject
                     { BalanceWeaponType.KNIFE, knifeCombo2Dps },
                     { BalanceWeaponType.CLAWS, clawsCombo2Dps },
                     { BalanceWeaponType.FIRESWORD, fireSwordCombo2Dps },
+                    { BalanceWeaponType.ELECTRICLANTERN, electricLanternCombo2Dps },
                 };
             }
             return _combo2DpsCurveDict;
@@ -203,9 +205,41 @@ public class BalanceData : ScriptableObject
     }
 
 
+    [SerializeField] BalanceAttackData light;
+    [SerializeField] BalanceAttackData heavy;
+    [SerializeField] BalanceAttackData heavyNoCharge;
+    [SerializeField] BalanceAttackData combo1;
+    [SerializeField] BalanceAttackData combo2;
+    [SerializeField] BalanceAttackData special;
+    Dictionary<BalanceAttackType, BalanceAttackData> _typeDict;
+    Dictionary<BalanceAttackType, BalanceAttackData> typeDict
+    {
+        get
+        {
+            if (_typeDict == null)
+            {
+                _typeDict = new Dictionary<BalanceAttackType, BalanceAttackData>()
+                {
+                    { BalanceAttackType.LIGHT, light },
+                    { BalanceAttackType.HEAVY, heavy },
+                    { BalanceAttackType.HEAVY_NO_CHARGE, heavyNoCharge },
+                    { BalanceAttackType.COMBO1, combo1 },
+                    { BalanceAttackType.COMBO2, combo2 },
+                    { BalanceAttackType.SPECIAL, special },
+                };
+            }
+            return _typeDict;
+        }
+    }
+
     public void SetDps(int stat, float dps, BalanceAttackType attackType, BalanceWeaponType weaponType)
     {
         dictDict[attackType][weaponType].AddKey(stat, dps);
+        if (typeDict.ContainsKey(attackType))
+        {
+            typeDict[attackType].SetDps(stat, dps, weaponType);
+        }
+
 #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
 #endif
@@ -214,5 +248,32 @@ public class BalanceData : ScriptableObject
     public void ClearDps(BalanceAttackType attackType, BalanceWeaponType weaponType)
     {
         dictDict[attackType][weaponType].keys = new Keyframe[0];
+        if (typeDict.ContainsKey(attackType))
+        {
+            typeDict[attackType].ClearDps(weaponType);
+        }
+    }
+
+    public void SetMaxDps(float value, int weaponType, BalanceAttackType attackType)
+    {
+        if (!typeDict.ContainsKey(attackType)) return;
+        typeDict[attackType].SetMaxDps(value, weaponType);
+    }
+
+    public void SetStamPerSecond(float value, int weaponType, BalanceAttackType attackType)
+    {
+        if (!typeDict.ContainsKey(attackType)) return;
+        typeDict[attackType].SetStamPerSecond(value, weaponType);
+    }
+
+    public void SetHitRate(float value, int weaponType, BalanceAttackType attackType)
+    {
+        if (!typeDict.ContainsKey(attackType)) return;
+        typeDict[attackType].SetHitRate(value, weaponType);
+    }
+
+    public void SetSpecialManaPerSec(float value, int weaponType)
+    {
+        ((SpecialAttackData)typeDict[BalanceAttackType.SPECIAL]).SetManaPerSec(value, weaponType);
     }
 }

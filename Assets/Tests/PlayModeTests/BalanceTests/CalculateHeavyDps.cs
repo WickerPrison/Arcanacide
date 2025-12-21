@@ -28,7 +28,8 @@ public class CalculateHeavyDps
         SceneManager.LoadScene("Testing");
         yield return null;
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
-        balanceData = Resources.Load<BalanceData>("Data/BalanceData");
+        balanceData = Resources.Load<BalanceData>("Data/BalanceData/BalanceData");
+        Debug.Log(balanceData);
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.hasHealthGem = true;
@@ -149,6 +150,9 @@ public class CalculateHeavyDps
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, attackType, type);
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, attackType);
+        balanceData.SetMaxDps(dps, reportIndex, attackType);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, attackType);
         if(attackType == BalanceAttackType.HEAVY)
         {
             balanceData.heavyStamPerSecond[reportIndex] = stamPerSec;
@@ -180,11 +184,11 @@ public class CalculateHeavyDps
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLanternHeavy();
+            yield return DoLanternHeavy(1);
         }
     }
 
-    IEnumerator DoLanternHeavy()
+    IEnumerator DoLanternHeavy(int reportIndex)
     {
         testingEvents.onFaerieReturn += TestingEvents_onAttackFalse;
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
@@ -200,7 +204,10 @@ public class CalculateHeavyDps
         yield return new WaitForSeconds(seconds);
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
-        balanceData.lanternHeavyDps.AddKey(playerData.arcane, dps);
+        balanceData.SetDps(playerData.arcane, dps, BalanceAttackType.HEAVY, BalanceWeaponType.LANTERN);
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.HEAVY);
+        balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.HEAVY);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.HEAVY);
         balanceData.heavyStamPerSecond[1] = stamPerSec;
         balanceData.heavyMaxDps[1] = dps;
         balanceData.heavyHitRate[1] = hitCounter / seconds;
@@ -224,11 +231,11 @@ public class CalculateHeavyDps
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoKnifeHeavy(health[i]); ;
+            yield return DoKnifeHeavy(health[i], 2); ;
         }
     }
 
-    IEnumerator DoKnifeHeavy(int health)
+    IEnumerator DoKnifeHeavy(int health, int reportIndex)
     {
         testingEvents.onElectricTrapDone += TestingEvents_onAttackFalse;
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
@@ -245,7 +252,10 @@ public class CalculateHeavyDps
         ResetForNextAttack();
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
-        balanceData.knifeHeavyDps.AddKey(playerData.strength, dps);
+        balanceData.SetDps(playerData.strength, dps, BalanceAttackType.HEAVY, BalanceWeaponType.KNIFE);
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.HEAVY);
+        balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.HEAVY);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.HEAVY);
         balanceData.heavyStamPerSecond[2] = stamPerSec;
         balanceData.heavyMaxDps[2] = dps;
         balanceData.heavyHitRate[2] = hitCounter / seconds;
@@ -322,7 +332,10 @@ public class CalculateHeavyDps
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, attackType, type);
-        if(attackType == BalanceAttackType.HEAVY)
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, attackType);
+        balanceData.SetMaxDps(dps, reportIndex, attackType);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, attackType);
+        if (attackType == BalanceAttackType.HEAVY)
         {
             balanceData.heavyStamPerSecond[reportIndex] = stamPerSec;
             balanceData.heavyMaxDps[reportIndex] = dps;
