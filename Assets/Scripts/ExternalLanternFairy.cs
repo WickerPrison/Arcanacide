@@ -83,7 +83,7 @@ public class ExternalLanternFairy : MonoBehaviour
         }
     }
 
-    private void StartAxeSpecial(object sender, System.EventArgs e)
+    private void StartLanternSpecial(object sender, AttackProfiles attackProfile)
     {
         isDoingSpecial = true;
         if (playerAnimation.facingFront)
@@ -170,14 +170,14 @@ public class ExternalLanternFairy : MonoBehaviour
 
     private void OnEnable()
     {
-        playerEvents.onAxeSpecial += StartAxeSpecial;
+        playerEvents.onLanternSpecial += StartLanternSpecial;
         playerEvents.onLanternCombo += StartLanternCombo;
         playerEvents.onPlayerStagger += onPlayerStagger;
     }
 
     private void OnDisable()
     {
-        playerEvents.onAxeSpecial -= StartAxeSpecial;
+        playerEvents.onLanternSpecial -= StartLanternSpecial;
         playerEvents.onLanternCombo -= StartLanternCombo;
         playerEvents.onPlayerStagger -= onPlayerStagger;
     }

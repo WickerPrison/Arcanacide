@@ -9,39 +9,65 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
     [SerializeField] ParticleSystem landingVFX;
     [SerializeField] EventReference landingSFX;
     [SerializeField] EventReference rippleSFX;
-    [SerializeField] AttackProfiles axeSpecial;
+    [SerializeField] AttackProfiles lanternSpecialRipple;
+    [SerializeField] AttackProfiles zapProfile;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
     [System.NonSerialized] public ExternalLanternFairy lanternFairy;
     [SerializeField] Transform fairySprite;
-    CameraFollow cameraScript;
     TouchingCollider colliderScript;
     List<Collider> touchingCollider;
+    [System.NonSerialized] public PlayerAbilities playerAbilities;
+    [System.NonSerialized] public AttackProfiles attackProfile;
+    [SerializeField] ParticleSystem fireVfx;
+    [SerializeField] ParticleSystem electricityVfx;
+    [SerializeField] ParticleSystem electricTrail;
+    [SerializeField] Bolts bolts;
+    GameManager _gm;
+    GameManager gm
+    {
+        get
+        {
+            if(_gm == null)
+            {
+                _gm = GlobalEvents.instance.GetComponent<GameManager>();
+            }
+            return _gm;
+        }
+    }
     float startRadius = 2;
     int numberOfBoxes = 50;
-    float rippleSpeed = 5;
-    float lifeTime = 1.5f;
+    Animator animator;
+    
     public bool blockable { get; set; } = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         colliderScript = GetComponentInParent<TouchingCollider>();
+        animator = GetComponent<Animator>();
+        switch (attackProfile.element)
+        {
+            case WeaponElement.FIRE:
+                animator.SetInteger("Element", 1);
+                fireVfx.Play();
+                break;
+            case WeaponElement.ELECTRICITY:
+                animator.SetInteger("Element", 2);
+                electricityVfx.Play();
+                electricTrail.Play();
+                break;
+        }
     }
 
     public void Landing()
     {
         landingVFX.Play();
-        RuntimeManager.PlayOneShot(landingSFX, 1, transform.position);
-        StartCoroutine(cameraScript.ScreenShake(axeSpecial.screenShakeNoHit.x, axeSpecial.screenShakeNoHit.y));
+        RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
+        GlobalEvents.instance.ScreenShake(attackProfile.screenShakeNoHit);
         touchingCollider = colliderScript.GetTouchingObjects();
-        int damage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
-        if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
-        {
-            damage += Mathf.RoundToInt(damage * (float)emblemLibrary.arcaneMastery.value);
-        }
-        int poiseDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
+        int damage = playerAbilities.DetermineAttackDamage(attackProfile);
+        //int poiseDamage = Mathf.RoundToInt(playerData.PhysicalDamage() * axeSpecial.damageMultiplier);
         foreach(Collider collider in touchingCollider)
         {
             if(collider != null)
@@ -49,17 +75,14 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
                 if (collider.gameObject.CompareTag("Enemy"))
                 {
                     EnemyScript enemyScript = collider.gameObject.GetComponent<EnemyScript>();
-                    enemyScript.LoseHealth(damage, poiseDamage, this, () =>
-                    {
-                        enemyScript.StartStagger(axeSpecial.staggerDuration);
-                    });
+                    playerAbilities.DamageEnemy(enemyScript, damage, attackProfile);
                 }
                 else if (collider.gameObject.CompareTag("Player") && false)
                 {
                     PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
                     playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
-                    playerScript.LosePoise(poiseDamage);
-                    playerScript.StartStagger(axeSpecial.staggerDuration);
+                    //playerScript.LosePoise(poiseDamage);
+                    playerScript.StartStagger(attackProfile.staggerDuration);
                 }
             }
         }
@@ -67,24 +90,29 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
 
     public void Ripple()
     {
-        RuntimeManager.PlayOneShot(rippleSFX, 1, transform.position);
+        RuntimeManager.PlayOneShot(lanternSpecialRipple.noHitSoundEvent, lanternSpecialRipple.soundNoHitVolume, transform.position);
         float rotateAngle = 360 / numberOfBoxes;
-        for(int box = 0; box < numberOfBoxes; box++)
+        for (int box = 0; box < numberOfBoxes; box++)
         {
-            RippleBox rippleBox = Instantiate(ripplePrefab).GetComponent<RippleBox>();
-            rippleBox.transform.position = transform.position + new Vector3(startRadius, 0, 0);
-            rippleBox.transform.RotateAround(transform.position, transform.up, rotateAngle * box);
-            rippleBox.rippleSpeed = rippleSpeed;
-            rippleBox.lifeTime = lifeTime;
-            rippleBox.direction = Vector3.Normalize(rippleBox.transform.position - transform.position);
-            WaveBox waveBox = rippleBox.gameObject.GetComponent<WaveBox>();
-            waveBox.damage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
-            if (playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
-            {
-                waveBox.damage += Mathf.RoundToInt(waveBox.damage * (float)emblemLibrary.arcaneMastery.value);
-            }
-            waveBox.poiseDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * axeSpecial.magicDamageMultiplier);
+            Vector3 direction = Utils.RotateDirection(Vector3.right, rotateAngle * box);
+            Vector3 startPos = transform.position + direction.normalized * startRadius;
+            PlayerProjectileStraight.Instantiate(ripplePrefab, startPos, direction, lanternSpecialRipple);
         }
+    }
+
+    public void Zap()
+    {
+        int attackDamage = playerAbilities.DetermineAttackDamage(zapProfile);
+        RuntimeManager.PlayOneShot(zapProfile.noHitSoundEvent, zapProfile.soundNoHitVolume);
+        GlobalEvents.instance.ScreenShake(zapProfile.screenShakeNoHit);
+        List<Vector3> targets = Utils.HitClosestXEnemies(
+            gm.enemies,
+            transform.position,
+            zapProfile.attackRange,
+            zapProfile.boltNum,
+            enemy => playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile)
+        );
+        bolts.BoltsAoeAttackVfx(targets, transform.position);
     }
 
     public void SelfDestruct()

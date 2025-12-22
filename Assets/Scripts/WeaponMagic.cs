@@ -19,7 +19,7 @@ public class WeaponMagic : MonoBehaviour
 
     private void WeaponManager_OnStopWeaponMagic(object sender, System.EventArgs e)
     {
-        int weaponMagicId = weaponManager.WeaponSpriteId(playerData.currentWeapon);
+        int weaponMagicId = weaponManager.WeaponArrayId(playerData.currentWeapon);
         weaponMagics[weaponMagicId].Stop();
         if (offhandWeaponMagics[weaponMagicId] != null)
         {
@@ -29,7 +29,7 @@ public class WeaponMagic : MonoBehaviour
 
     private void WeaponManager_OnStartWeaponMagic(object sender, System.EventArgs e)
     {
-        int weaponMagicId = weaponManager.WeaponSpriteId(playerData.currentWeapon);
+        int weaponMagicId = weaponManager.WeaponArrayId(playerData.currentWeapon);
         weaponMagics[weaponMagicId].Play();
         if (offhandWeaponMagics[weaponMagicId] != null)
         {

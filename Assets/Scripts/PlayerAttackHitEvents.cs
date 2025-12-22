@@ -123,42 +123,13 @@ public class PlayerAttackHitEvents : MonoBehaviour
 
     void AoeZapHitbox(AttackProfiles attackProfile, int attackDamage)
     {
-        List<(EnemyScript, float)> enemiesWithDist = new List<(EnemyScript, float)>();
-        foreach(EnemyScript enemy in gm.enemies)
-        {
-            float dist = Vector3.Distance(enemy.transform.position, transform.parent.position);
-            if (dist <= attackProfile.attackRange)
-            {
-                enemiesWithDist.Add((enemy, dist));
-            }
-        }
-
-        List<Vector3> targets = new List<Vector3>();
-
-        if(enemiesWithDist.Count > 0)
-        {
-            enemiesWithDist.Sort((a, b) => a.Item2.CompareTo(b.Item2));
-            int counter = attackProfile.boltNum;
-            while(counter > 0)
-            {
-                for(int i = 0; i < enemiesWithDist.Count; i++)
-                {
-                    targets.Add(enemiesWithDist[i].Item1.transform.position + Vector3.up);
-                    playerAbilities.DamageEnemy(enemiesWithDist[i].Item1, attackDamage, attackProfile);
-                    counter--;
-                    if (counter <= 0) break;
-                }
-            }
-        }
-        else
-        {
-            for(int i = 0; i < attackProfile.boltNum; i++)
-            {
-                float x = Random.Range(-1f, 1f);
-                float z = Random.Range(-1f, 1f);
-                targets.Add(attackProfile.attackRange / 2 * new Vector3(x, 0, z));
-            }
-        }
+        List<Vector3> targets = Utils.HitClosestXEnemies(
+            gm.enemies, 
+            transform.parent.position, 
+            attackProfile.attackRange, 
+            attackProfile.boltNum, 
+            (enemy) => playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile)
+        );
         playerAbilities.KnifeCombo2Vfx(targets);
     }
 

@@ -166,7 +166,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         arcaneDamage = patchEffects.ArcaneDamageModifiers(arcaneDamage);
 
         int totalDamage = physicalDamage + arcaneDamage;
-        totalDamage = patchEffects.TotalDamageModifiers(totalDamage);
+        totalDamage = patchEffects.TotalDamageModifiers(totalDamage, attackProfile);
         totalDamage = DamageModifiers(totalDamage);
         return totalDamage; 
     }
@@ -361,13 +361,14 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     public void SpecialAttack()
     {
         if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.SPECIAL_ATTACK)) return;
-        if (playerData.mana < specialAttackProfiles[playerData.currentWeapon].manaCost && playerData.currentWeapon != 2) return;
+        AttackProfiles profile = specialAttackProfiles[weaponManager.WeaponArrayId(playerData.currentWeapon)];
+        if (playerData.mana < profile.manaCost && playerData.currentWeapon != 2) return;
 
         if (playerMovement.CanInput() && playerScript.stamina > 0)
         {
             if (playerData.currentWeapon == 1)
             {
-                AxeSpecialAttack();
+                LanternSpecialAttack(profile);
             }
             else
             {
@@ -408,15 +409,17 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         projectile.playerMovement = playerMovement;
     }
 
-    public void AxeSpecialAttack()
+    public void LanternSpecialAttack(AttackProfiles attackProfile)
     {
         if (!lanternFairy.isInLantern) return;
 
-        playerScript.LoseMana(specialAttackProfiles[1].manaCost);
+        playerScript.LoseMana(attackProfile.manaCost);
         TotemAnimationEvents totemAnimEvents = Instantiate(totemPrefab).GetComponentInChildren<TotemAnimationEvents>();
         totemAnimEvents.transform.parent.position = new Vector3(transform.position.x, 0, transform.position.z);
+        totemAnimEvents.playerAbilities = this;
         totemAnimEvents.lanternFairy = lanternFairy;
-        playerEvents.AxeSpecialAttack();
+        totemAnimEvents.attackProfile = attackProfile;
+        playerEvents.LanternSpecialAttack(attackProfile);
     }
 
     public void KnifeCombo2Vfx(List<Vector3> targets)

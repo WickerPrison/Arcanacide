@@ -106,11 +106,6 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
     }
 
-    public void AxeSpecialAttack()
-    {
-        playerAbilities.AxeSpecialAttack();
-    }
-
     public void KnifeHeavy()
     {
         if (electricTrap == null)

@@ -7,9 +7,6 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
 {
     public int speed;
     public PlayerMovement playerMovement;
-    [SerializeField] EventReference enemyImpactSFX;
-    [SerializeField] EventReference impactSFX;
-    [SerializeField] float impactSFXvolume;
     [SerializeField] float lifetime;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
@@ -57,18 +54,16 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
         });
 
         enemyScript.ImpactVFX();
+        RuntimeManager.PlayOneShot(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume, transform.position);
         if (destroyOnCollision)
         {
             KillProjectile();
-        }
-        else
-        {
-            RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         }
     }
 
     public virtual void HitObject(Collider collision)
     {
+        RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
         KillProjectile();
     }
 
@@ -107,7 +102,6 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
 
     public virtual void KillProjectile()
     {
-        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 }

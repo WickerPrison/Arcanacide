@@ -124,7 +124,8 @@ public class WeaponManager : MonoBehaviour
 
     public void ActivateWeaponSprite(int weaponID)
     {
-        int weaponSpriteId = WeaponSpriteId(weaponID);
+        int weaponSpriteId = WeaponArrayId(weaponID);
+        Debug.Log(weaponSpriteId);
         frontWeaponSprites[weaponSpriteId].SetActive(true);
         backWeaponSprites[weaponSpriteId].SetActive(true);
         for(int i = 0; i < 2; i++)
@@ -141,7 +142,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    public int WeaponSpriteId(int weaponID)
+    public int WeaponArrayId(int weaponID)
     {
         WeaponElement element = playerData.equippedElements[weaponID];
         switch((weaponID, element)) 

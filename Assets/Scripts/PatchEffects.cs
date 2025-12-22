@@ -164,7 +164,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
         return arcaneDamage;
     }
 
-    public int TotalDamageModifiers(int totalDamage)
+    public int TotalDamageModifiers(int totalDamage, AttackProfiles attackProfile)
     {
         float extraDamage = 0;
         if (playerData.equippedPatches.Contains(Patches.ARCANE_REMAINS) && arcaneRemainsActive)
@@ -180,6 +180,11 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
         if (playerData.equippedPatches.Contains(Patches.RECKLESS_ATTACK) && playerData.health < playerData.MaxHealth() * recklessAttackHealthMax)
         {
             extraDamage += totalDamage * recklessAttackDamage;
+        }
+
+        if (attackProfile.attackType == AttackType.SPECIAL && playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
+        {
+            extraDamage += totalDamage * (float)emblemLibrary.arcaneMastery.value;
         }
 
         return totalDamage + Mathf.RoundToInt(extraDamage);

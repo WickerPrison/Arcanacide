@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEditor;
 
 public enum UnlockableAbilities
 {
@@ -230,5 +231,8 @@ public class PlayerData : ScriptableObject
         equippedElements[1] = WeaponElement.FIRE;
         equippedElements[2] = WeaponElement.ELECTRICITY;
         equippedElements[3] = WeaponElement.ICE;
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+#endif
     }
 }
