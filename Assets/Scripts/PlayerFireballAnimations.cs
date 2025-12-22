@@ -57,7 +57,7 @@ public class PlayerFireballAnimations : MonoBehaviour
                 break;
             case WeaponElement.ELECTRICITY:
                 Vector3 spawnOrigin = playerMovement.transform.position - direction * 1.5f;
-                for(int i = 0; i < 5; i++)
+                for(int i = 0; i < electricArtilleryProfile.boltNum; i++)
                 {
                     ElectricArtillery.Instantiate(electricArtilleryPrefab, spawnOrigin, direction, this, electricArtilleryProfile, playerAbilities);
                 }
@@ -76,6 +76,7 @@ public class PlayerFireballAnimations : MonoBehaviour
                 fireWave = null;
                 break;
             case WeaponElement.ELECTRICITY:
+                playerScript.LoseStamina(electricArtilleryProfile.staminaCost);
                 onLaunchFireWave?.Invoke(this, EventArgs.Empty);
                 break;
         }

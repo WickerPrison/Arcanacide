@@ -82,10 +82,12 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAbilities.LanternHeavy(attackHit.GetProfile(playerData.equippedElements[1]));
     }
 
-    public void LanternCombo()
+    public void LanternCombo2(AttackHit attackHit)
     {
         if (lanternFairy.isInLantern)
         {
+            AttackProfiles attackProfile = attackHit.GetProfile(playerData.equippedElements[1]);
+            playerScript.LoseStamina(attackProfile.staminaCost);
             doLanternCombo = true;
             playerEvents.LanternCombo();
         }

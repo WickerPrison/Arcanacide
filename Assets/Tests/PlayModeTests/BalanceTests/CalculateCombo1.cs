@@ -23,6 +23,7 @@ public class CalculateCombo1
     bool doneAttacking = false;
     int attacksCounter = 1;
     EnemyScript testDummy;
+    Vector3 defaultDist = new Vector3(1.5f, 0, -1.5f);
 
     [UnitySetUp]
     public IEnumerator Setup()
@@ -83,7 +84,27 @@ public class CalculateCombo1
             hitCounter = 0;
             doneAttacking = false;
             attacksCounter = 1;
-            yield return DoCombo1(BalanceWeaponType.LANTERN, stats[i], health[i]);
+            yield return DoCombo1(BalanceWeaponType.LANTERN, stats[i], health[i], 4f);
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator CalculateElectricLanternCombo1Curve()
+    {
+        balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.ELECTRICLANTERN);
+        int[] stats = { 1, 10, 20 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            playerData.strength = stats[i];
+            playerData.equippedElements[1] = WeaponElement.ELECTRICITY;
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            attacksCounter = 1;
+            yield return DoCombo1(BalanceWeaponType.ELECTRICLANTERN, stats[i], health[i], 4f);
         }
     }
 
@@ -141,11 +162,11 @@ public class CalculateCombo1
         }
     }
 
-    IEnumerator DoCombo1(BalanceWeaponType type, int stat, int health)
+    IEnumerator DoCombo1(BalanceWeaponType type, int stat, int health, float targetDist = 1.5f)
     {
         int reportIndex = BalanceTestUtils.weaponIndexDict[type];
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
-        testDummy.transform.position = new Vector3(1.5f, 0, -1.5f);
+        testDummy.transform.position = new Vector3(1, 0, -1) * targetDist;
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
