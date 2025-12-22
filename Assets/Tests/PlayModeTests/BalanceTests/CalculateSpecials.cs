@@ -22,6 +22,7 @@ public class CalculateSpecials
     int hitCounter;
     bool doneAttacking = false;
     EnemyScript testDummy;
+    EnemyScript testDummy2;
     PlayerAttackHitEvents playerAttackHitEvents;
     BalanceWeaponType currentWeaponType;
 
@@ -123,13 +124,81 @@ public class CalculateSpecials
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, type);
         balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.SPECIAL);
-        Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
+        Debug.Log($"{type} Special DPS with {stat} Stat: {dps}");
+        Debug.Log($"Stamina Per Second: {stamPerSec}");
+        doneAttacking = true;
+        yield return new WaitForSeconds(5);
+        testDummy.Death();
+        testDummy2.Death();
+    }
+
+    [UnityTest]
+    public IEnumerator CalculateLanternSpecialCurve()
+    {
+        playerData.equippedElements[1] = WeaponElement.FIRE;
+        currentWeaponType = BalanceWeaponType.LANTERN;
+        balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.LANTERN);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            doneAttacking = false;
+            yield return DoLanternSpecial(stats[i], health[i]);
+        }
+    }
+
+    IEnumerator DoLanternSpecial(int stat, int health)
+    {
+        testingEvents.onFaerieReturn += TestingEvents_onFaerieReturn;
+        testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy.transform.position = new Vector3(0, 0, 0);
+        testDummy.maxHealth = health;
+        testDummy.health = testDummy.maxHealth;
+
+        testDummy2 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy2.transform.position = new Vector3(4f, 0, -2f);
+        testDummy2.maxHealth = health;
+        testDummy2.health = testDummy2.maxHealth;
+        yield return null;
+        playerData.currentWeapon = 0;
+        weaponManager.SwitchWeapon(1);
+        yield return new WaitForSeconds(2);
+        playerAbilities.SpecialAttack();
+        float seconds = 60;
+        yield return new WaitForSeconds(seconds);
+        float dps = healthCounter / seconds;
+        float stamPerSec = staminaCounter / seconds;
+        float manaPerSec = manaCounter / seconds;
+        balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, BalanceWeaponType.LANTERN);
+        balanceData.SetStamPerSecond(stamPerSec, 1, BalanceAttackType.SPECIAL);
+        balanceData.SetMaxDps(dps, 1, BalanceAttackType.SPECIAL);
+        balanceData.SetHitRate(hitCounter / seconds, 1, BalanceAttackType.SPECIAL);
+        balanceData.SetSpecialManaPerSec(manaPerSec, 1);
+        Debug.Log($"Lantern Special DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);
         testDummy.Death();
     }
 
+    private void TestingEvents_onFaerieReturn(object sender, System.EventArgs e)
+    {
+        staminaCounter += playerData.MaxStamina() - playerScript.stamina;
+        playerScript.GainStamina(1000);
+        healthCounter += testDummy.maxHealth - testDummy.health;
+        testDummy.GainHealth(1000);
+        healthCounter += testDummy2.maxHealth - testDummy2.health;
+        testDummy2.GainHealth(1000);
+        hitCounter++;
+        manaCounter += playerData.maxMana - playerData.mana;
+        playerData.mana = playerData.maxMana;
+        playerAbilities.SpecialAttack();
+    }
 
     [UnityTest]
     public IEnumerator CalculateKnifeSpecialCurve()
