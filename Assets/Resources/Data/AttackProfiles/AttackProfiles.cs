@@ -39,6 +39,7 @@ public class AttackProfiles : ScriptableObject
     public int boltNum;
 
     public int electricChargeBuildup;
+    public float partialChargeBuildup;
 
     public float bonusEffectDuration;
     public float durationDOT;

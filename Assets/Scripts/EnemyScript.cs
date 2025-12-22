@@ -31,6 +31,7 @@ public class EnemyScript : MonoBehaviour
     public int chargeResistance;
     int maxCharge = 10;
     [System.NonSerialized] public int electricCharge;
+    float partialCharge;
 
 
     private void Awake()
@@ -165,6 +166,14 @@ public class EnemyScript : MonoBehaviour
             StartStagger(staggerDuration);
             poise = maxPoise;
         }
+    }
+
+    public void GainElectricCharge(float amount)
+    {
+        partialCharge += amount;
+        int charge = (int)partialCharge;
+        partialCharge = partialCharge - charge;
+        GainElectricCharge(charge);
     }
 
     public void GainElectricCharge(int amount)

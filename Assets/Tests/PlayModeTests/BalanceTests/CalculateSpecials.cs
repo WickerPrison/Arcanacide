@@ -148,11 +148,32 @@ public class CalculateSpecials
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
             doneAttacking = false;
-            yield return DoLanternSpecial(stats[i], health[i]);
+            yield return DoLanternSpecial(stats[i], health[i], 1, BalanceWeaponType.LANTERN);
         }
     }
 
-    IEnumerator DoLanternSpecial(int stat, int health)
+    [UnityTest]
+    public IEnumerator CalculateElectricLanternSpecialCurve()
+    {
+        playerData.equippedElements[1] = WeaponElement.ELECTRICITY;
+        currentWeaponType = BalanceWeaponType.ELECTRICLANTERN;
+        balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.ELECTRICLANTERN);
+        int[] stats = { 1, 10, 20 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            playerData.strength = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            doneAttacking = false;
+            yield return DoLanternSpecial(stats[i], health[i], 5, BalanceWeaponType.ELECTRICLANTERN);
+        }
+    }
+
+    IEnumerator DoLanternSpecial(int stat, int health, int reportIndex, BalanceWeaponType type)
     {
         testingEvents.onFaerieReturn += TestingEvents_onFaerieReturn;
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
@@ -174,12 +195,12 @@ public class CalculateSpecials
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         float manaPerSec = manaCounter / seconds;
-        balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, BalanceWeaponType.LANTERN);
-        balanceData.SetStamPerSecond(stamPerSec, 1, BalanceAttackType.SPECIAL);
-        balanceData.SetMaxDps(dps, 1, BalanceAttackType.SPECIAL);
-        balanceData.SetHitRate(hitCounter / seconds, 1, BalanceAttackType.SPECIAL);
-        balanceData.SetSpecialManaPerSec(manaPerSec, 1);
-        Debug.Log($"Lantern Special DPS with {stat} Stat: {dps}");
+        balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, type);
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetSpecialManaPerSec(manaPerSec, reportIndex);
+        Debug.Log($"{type} Special DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);

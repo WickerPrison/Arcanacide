@@ -111,7 +111,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
             transform.position,
             zapProfile.attackRange,
             zapProfile.boltNum,
-            enemy => playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile)
+            enemy => playerAbilities.DamageEnemy(enemy, attackDamage, zapProfile)
         );
         bolts.BoltsAoeAttackVfx(targets, fairySprite.transform.position);
     }

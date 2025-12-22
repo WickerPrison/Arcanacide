@@ -201,6 +201,11 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
                 enemy.GainElectricCharge(attackProfile.electricChargeBuildup);
             }
 
+            if(attackProfile.partialChargeBuildup > 0)
+            {
+                enemy.GainElectricCharge(attackProfile.partialChargeBuildup);
+            }
+
             if (attackProfile.staggerDuration > 0)
             {
                 enemy.StartStagger(attackProfile.staggerDuration);
