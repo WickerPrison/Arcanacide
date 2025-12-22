@@ -17,11 +17,10 @@ public class ElectricArtillery : PlayerProjectile
         SPAWNED, ARC, HOMING
     }
     ElectricArtilleryState state;
-    bool instantiatedCorrectly = false;
 
-    public static ElectricArtillery Instantiate(GameObject prefab, Vector3 spawnOrigin, Vector3 direction, PlayerFireballAnimations animations, AttackProfiles attackProfile)
+    public static ElectricArtillery Instantiate(GameObject prefab, Vector3 spawnOrigin, Vector3 direction, PlayerFireballAnimations animations, AttackProfiles attackProfile, PlayerAbilities playerAbilities)
     {
-        ElectricArtillery electricArtillery = Instantiate(prefab).GetComponent<ElectricArtillery>();
+        ElectricArtillery electricArtillery = ElectricArtillery.Instantiate(prefab, attackProfile, playerAbilities) as ElectricArtillery;
         float spawnSpread = 1f;
         float xOffset = Random.Range(-spawnSpread, spawnSpread);
         float zOffset = Random.Range(-spawnSpread, spawnSpread);
@@ -37,16 +36,12 @@ public class ElectricArtillery : PlayerProjectile
 
         electricArtillery.animations = animations;
         electricArtillery.ListenForEvent();
-
-        electricArtillery.attackProfile = attackProfile;
-
-        electricArtillery.instantiatedCorrectly = true;
         return electricArtillery;
     }
 
-    private void Start()
+    public override void Start()
     {
-        if (!instantiatedCorrectly) Utils.IncorrectInitialization("ElectricArtillery");
+        base.Start();
         arcData = ArcUtils.CreateArcData(transform.position, targetPoint, timeToHit, arcHeight, thirdPointX);
         if (arcData.speed < speed) arcData.speed = speed;
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();

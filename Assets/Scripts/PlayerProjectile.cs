@@ -10,13 +10,28 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
     [SerializeField] float lifetime;
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [System.NonSerialized] public AttackProfiles attackProfile;
+    AttackProfiles attackProfile;
+    PlayerAbilities playerAbilities;
     public Transform target;
     public float turnAngle;
     [System.NonSerialized] public Vector3 offset = new Vector3(0, 1, 0);
     float addedDOT;
     public bool blockable { get; set; } = true;
+    [System.NonSerialized] public bool instantiatedCorrectly;
 
+    public static PlayerProjectile Instantiate(GameObject prefab, AttackProfiles attackProfile, PlayerAbilities playerAbilities)
+    {
+        PlayerProjectile projectile = Instantiate(prefab).GetComponent<PlayerProjectile>();
+        projectile.attackProfile = attackProfile;
+        projectile.playerAbilities = playerAbilities;
+        projectile.instantiatedCorrectly = true;
+        return projectile;
+    }
+
+    public virtual void Start()
+    {
+        if (!instantiatedCorrectly) Utils.IncorrectInitialization("PlayerProjectile");
+    }
 
     public virtual void OnTriggerEnter(Collider collision)
     {
@@ -34,28 +49,10 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
     {
         EnemyScript enemyScript = collision.gameObject.GetComponent<EnemyScript>();
 
-        int damage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
-        if(attackProfile.attackType == AttackType.SPECIAL && playerData.equippedPatches.Contains(Patches.ARCANE_MASTERY))
-        {
-            damage += Mathf.RoundToInt(damage * (float)emblemLibrary.arcaneMastery.value);
-        }
-        enemyScript.LoseHealth(damage, damage * attackProfile.poiseDamageMultiplier, this, () =>
-        {
-            if (attackProfile.attackType == AttackType.DEFLECT && playerData.equippedPatches.Contains(Patches.BURNING_REFLECTION))
-            {
-                addedDOT = 10;
-            }
-            else addedDOT = 0;
-            enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
-
-            if (attackProfile.electricChargeBuildup > 0)
-            {
-                enemyScript.GainElectricCharge(attackProfile.electricChargeBuildup);
-            }
-        });
+        int damage = playerAbilities.DetermineAttackDamage(attackProfile);
+        playerAbilities.DamageEnemy(enemyScript, damage, attackProfile, this);
 
         enemyScript.ImpactVFX();
-        RuntimeManager.PlayOneShot(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume, transform.position);
         if (destroyOnCollision)
         {
             KillProjectile();

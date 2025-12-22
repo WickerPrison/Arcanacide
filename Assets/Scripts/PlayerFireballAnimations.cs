@@ -18,6 +18,7 @@ public class PlayerFireballAnimations : MonoBehaviour
     PlayerFireball fireball;
     PlayerFireWave fireWave;
     PlayerScript playerScript;
+    PlayerAbilities playerAbilities;
     PlayerTrailManager trailManager;
     OrbitFlames orbitFlames;
     public event EventHandler onLaunchFireWave;
@@ -26,16 +27,16 @@ public class PlayerFireballAnimations : MonoBehaviour
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerScript = playerMovement.gameObject.GetComponent<PlayerScript>();
+        playerAbilities = playerMovement.gameObject.GetComponent<PlayerAbilities>();
         trailManager = playerMovement.gameObject.GetComponent<PlayerTrailManager>();
         orbitFlames = playerMovement.GetComponent<OrbitFlames>();
     }
 
     public void SpawnFireball(AttackHit attackHit)
     {
-        fireball = Instantiate(attackHit.GetPrefab(playerData.equippedElements[1])).GetComponent<PlayerFireball>();
+        fireball = PlayerProjectile.Instantiate(attackHit.GetPrefab(playerData.equippedElements[1]), attackHit.GetProfile(playerData.equippedElements[1]), playerAbilities) as PlayerFireball;
         fireball.fireballAnimations = this;
         fireball.playerMovement = playerMovement;
-        fireball.attackProfile = attackHit.GetProfile(playerData.equippedElements[1]);
     }
 
     public void LaunchFireball(AttackHit attackHit)
@@ -58,7 +59,7 @@ public class PlayerFireballAnimations : MonoBehaviour
                 Vector3 spawnOrigin = playerMovement.transform.position - direction * 1.5f;
                 for(int i = 0; i < 5; i++)
                 {
-                    ElectricArtillery.Instantiate(electricArtilleryPrefab, spawnOrigin, direction, this, electricArtilleryProfile);
+                    ElectricArtillery.Instantiate(electricArtilleryPrefab, spawnOrigin, direction, this, electricArtilleryProfile, playerAbilities);
                 }
                 break;
         }

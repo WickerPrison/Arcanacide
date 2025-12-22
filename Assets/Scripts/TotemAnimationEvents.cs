@@ -97,7 +97,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
         {
             Vector3 direction = Utils.RotateDirection(Vector3.right, rotateAngle * box);
             Vector3 startPos = transform.position + direction.normalized * startRadius;
-            PlayerProjectileStraight.Instantiate(ripplePrefab, startPos, direction, lanternSpecialRipple);
+            PlayerProjectileStraight.Instantiate(ripplePrefab, startPos, direction, lanternSpecialRipple, playerAbilities);
         }
     }
 

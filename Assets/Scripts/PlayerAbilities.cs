@@ -401,8 +401,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
     {
-        PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
-        projectile.attackProfile = attackProfile;
+        PlayerProjectile projectile = PlayerProjectile.Instantiate(projectilePrefab.gameObject, attackProfile, this);
         projectile.transform.position = startingPosition;
         projectile.transform.LookAt(enemy.transform.position + new Vector3(0, 1.1f, 0));
         projectile.target = enemy.transform;

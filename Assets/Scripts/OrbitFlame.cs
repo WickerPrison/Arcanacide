@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class OrbitFlame : PlayerProjectile
 {
-    bool instantiatedCorrectly = false;
     float offsetAngle;
     float radius;
     PlayerScript playerScript;
@@ -14,20 +13,19 @@ public class OrbitFlame : PlayerProjectile
 
     public static OrbitFlame Instantiate(GameObject prefab, float offsetAngle, float radius, PlayerScript playerScript, Action<OrbitFlame> deathCallback, AttackProfiles attackProfile)
     {
-        OrbitFlame flame = Instantiate(prefab).GetComponent<OrbitFlame>();
+        PlayerAbilities playerAbilities = playerScript.GetComponent<PlayerAbilities>();
+        OrbitFlame flame = PlayerProjectile.Instantiate(prefab, attackProfile, playerAbilities) as OrbitFlame;
         flame.offsetAngle = offsetAngle;
         flame.radius = radius;
         flame.playerScript = playerScript;
         flame.deathCallback = deathCallback;
-        flame.attackProfile = attackProfile;
-        flame.instantiatedCorrectly = true;
         return flame;
     }
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        if (!instantiatedCorrectly) Utils.IncorrectInitialization("OrbitFlame");
+        base.Start();
         particles = GetComponentInChildren<ParticleSystem>();
     }
 
