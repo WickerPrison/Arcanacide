@@ -164,7 +164,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
         int arcaneDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
         arcaneDamage = patchEffects.ArcaneDamageModifiers(arcaneDamage);
-
+        Debug.Log($"Physical Damage: {physicalDamage}, Arcane Damage: {arcaneDamage}");
         int totalDamage = physicalDamage + arcaneDamage;
         totalDamage = patchEffects.TotalDamageModifiers(totalDamage, attackProfile);
         totalDamage = DamageModifiers(totalDamage);

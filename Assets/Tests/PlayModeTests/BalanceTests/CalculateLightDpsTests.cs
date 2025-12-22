@@ -81,6 +81,24 @@ public class CalculateLightDpsTests
     }
 
     [UnityTest]
+    public IEnumerator CalculateElectricLanternLightCurve()
+    {
+        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.ELECTRICLANTERN);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            playerData.strength = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoLightCombo(BalanceWeaponType.ELECTRICLANTERN, stats[i], health[i]);
+        }
+    }
+
+    [UnityTest]
     public IEnumerator CalculateKnifeLightCurve()
     {
         balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.KNIFE);
