@@ -46,6 +46,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
     {
         colliderScript = GetComponentInParent<TouchingCollider>();
         animator = GetComponent<Animator>();
+        bolts.BoltsAway();
         switch (attackProfile.element)
         {
             case WeaponElement.FIRE:
@@ -112,7 +113,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
             zapProfile.boltNum,
             enemy => playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile)
         );
-        bolts.BoltsAoeAttackVfx(targets, transform.position);
+        bolts.BoltsAoeAttackVfx(targets, fairySprite.transform.position);
     }
 
     public void SelfDestruct()
