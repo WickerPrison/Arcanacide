@@ -84,7 +84,7 @@ public class CalculateLightDpsTests
     public IEnumerator CalculateElectricLanternLightCurve()
     {
         balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.ELECTRICLANTERN);
-        int[] stats = { 1, 15, 30 };
+        int[] stats = { 1, 10, 20 };
         int[] health = { 120, 250, 400 };
         for (int i = 0; i < stats.Length; i++)
         {
