@@ -29,7 +29,6 @@ public class CalculateHeavyDps
         yield return null;
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         balanceData = Resources.Load<BalanceData>("Data/BalanceData/BalanceData");
-        Debug.Log(balanceData);
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.hasHealthGem = true;
@@ -164,7 +163,9 @@ public class CalculateHeavyDps
     public IEnumerator CalculateLanternHeavyCurve()
     {
         balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.LANTERN);
+        playerData.equippedElements[1] = WeaponElement.FIRE;
         int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
         for (int i = 0; i < stats.Length; i++)
         {
             playerData.arcane = stats[i];
@@ -172,16 +173,35 @@ public class CalculateHeavyDps
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLanternHeavy(1);
+            yield return DoLanternHeavy(health[i], 1, BalanceWeaponType.LANTERN);
         }
     }
 
-    IEnumerator DoLanternHeavy(int reportIndex)
+    [UnityTest]
+    public IEnumerator CalculateElectricLanternHeavyCurve()
+    {
+        balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.ELECTRICLANTERN);
+        playerData.equippedElements[1] = WeaponElement.ELECTRICITY;
+        int[] stats = { 1, 10, 20 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            playerData.strength = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoLanternHeavy(health[i], 5, BalanceWeaponType.ELECTRICLANTERN);
+        }
+    }
+
+    IEnumerator DoLanternHeavy(int health, int reportIndex, BalanceWeaponType type)
     {
         testingEvents.onFaerieReturn += TestingEvents_onAttackFalse;
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(2f, 0, -2f);
-        testDummy.maxHealth *= 100;
+        testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
         playerData.currentWeapon = 3;
@@ -192,11 +212,11 @@ public class CalculateHeavyDps
         yield return new WaitForSeconds(seconds);
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
-        balanceData.SetDps(playerData.arcane, dps, BalanceAttackType.HEAVY, BalanceWeaponType.LANTERN);
+        balanceData.SetDps(playerData.arcane, dps, BalanceAttackType.HEAVY, type);
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.HEAVY);
         balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.HEAVY);
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.HEAVY);
-        Debug.Log($"Lantern Heavy DPS with {playerData.arcane} Stat: {dps}");
+        Debug.Log($"{type} Heavy DPS with {playerData.arcane} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);

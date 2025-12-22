@@ -19,8 +19,8 @@ MonoBehaviour:
   stepWithAttack: 0
   halfConeAngle: 0
   attackRange: 2.5
-  damageMultiplier: 0.6
-  magicDamageMultiplier: 0.6
+  damageMultiplier: 0.9
+  magicDamageMultiplier: 0.9
   poiseDamageMultiplier: 1.5
   staminaCost: 40
   chargeDamage: 0
@@ -39,20 +39,20 @@ MonoBehaviour:
   screenShakeNoHit: {x: 0, y: 0}
   soundOnHitEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  soundOnHitVolume: 0
-  noHitSoundEvent:
-    Guid:
       Data1: -1101567947
       Data2: 1172878106
       Data3: 1646198689
       Data4: -1662717014
     Path: event:/ElectricImpact
-  soundNoHitVolume: 1
+  soundOnHitVolume: 0.5
+  noHitSoundEvent:
+    Guid:
+      Data1: -979328958
+      Data2: 1297364085
+      Data3: 545834413
+      Data4: -1797415994
+    Path: event:/ElectricZap
+  soundNoHitVolume: 0.5
   smearPositions: []
   smearRotations: []
   smearScales: []
