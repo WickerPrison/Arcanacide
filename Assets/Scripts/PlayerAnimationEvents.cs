@@ -17,7 +17,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] ExternalLanternFairy lanternFairy;
     [SerializeField] AttackProfiles lanternComboNoFairy;
     [SerializeField] ClawVFX[] clawVFX;
-    [SerializeField] PlayerStalagmiteHolder stalagmiteHolder;
+    [SerializeField] PlayerStalagmiteHolder lineStalagmites;
+    [SerializeField] PlayerStalagmiteHolder circleStalagmites;
 
     //player scripts
     PlayerScript playerScript;
@@ -61,7 +62,8 @@ public class PlayerAnimationEvents : MonoBehaviour
         weaponManager = GetComponentInParent<WeaponManager>();
         playerAttackHitEvents = GetComponent<PlayerAttackHitEvents>();
         iceBreath = playerScript.gameObject.GetComponentInChildren<IceBreath>();
-        stalagmiteHolder.gameObject.SetActive(true);
+        lineStalagmites.gameObject.SetActive(true);
+        circleStalagmites.gameObject.SetActive(true);
     }
 
     public void SwitchWeaponSprite(int weaponID)
@@ -110,13 +112,22 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void KnifeHeavy()
     {
-        if (electricTrap == null)
+        switch (playerData.equippedElements[2])
         {
-            electricTrap = ElectricTrap.Instantiate(electricTrapPrefab, playerScript, playerAbilities);
+            case WeaponElement.ELECTRICITY:
+                if (electricTrap == null)
+                {
+                    electricTrap = ElectricTrap.Instantiate(electricTrapPrefab, playerScript, playerAbilities);
+                }
+
+                electricTrap.transform.position = transform.parent.position;
+                electricTrap.StartTimer();
+                break;
+            case WeaponElement.ICE:
+                circleStalagmites.TriggerWave();
+                break;
         }
 
-        electricTrap.transform.position = transform.parent.position;
-        electricTrap.StartTimer();
     }
 
     public void KnifeSpecialAttack()
@@ -377,9 +388,9 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerScript.LoseStamina(profile.staminaCost);
     }
 
-    public void Stalagmites()
+    public void LineStalagmites()
     {
-        stalagmiteHolder.TriggerWave();
+        lineStalagmites.TriggerWave();
     }
 
     private void onPlayerStagger(object sender, EventArgs e)

@@ -316,7 +316,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = playerData.currentWeapon != 3;
             if (playerData.currentWeapon == 0 || playerData.currentWeapon == 3) playerAnimation.SetBool("chargeHeavy", true);
-            playerAnimation.PlayAnimation("HeavyAttack");
+            playerAnimation.PlayAnimation("HeavyAttack", 0);
         }
     }
 
