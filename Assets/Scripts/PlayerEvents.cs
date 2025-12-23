@@ -14,7 +14,7 @@ public class PlayerEvents : MonoBehaviour
     public event EventHandler onTakeDamage;
     public event EventHandler onPlayerStagger;
     public event EventHandler onEndPlayerStagger;
-    public event EventHandler onAxeSpecial;
+    public event EventHandler<AttackProfiles> onLanternSpecial;
     public event EventHandler onLanternCombo;
     public event EventHandler<Vector3> onStartFireRain;
     public event EventHandler onEndLanternCombo;
@@ -62,9 +62,9 @@ public class PlayerEvents : MonoBehaviour
         onEndPlayerStagger?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AxeSpecialAttack()
+    public void LanternSpecialAttack(AttackProfiles attackProfile)
     {
-        onAxeSpecial?.Invoke(this, EventArgs.Empty);
+        onLanternSpecial?.Invoke(this, attackProfile);
     }
 
     public void LanternCombo()

@@ -11,7 +11,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] AttackProfiles parryProfile;
     [SerializeField] List<AttackProfiles> specialAttackProfiles;
     [SerializeField] AttackProfiles axeHeavyProfile;
-    [SerializeField] AttackProfiles lanternCombo2Profile;
+    [SerializeField] AttackHit lanternCombo2AttackHit;
     [SerializeField] AttackProfiles lanternCombo2TrailProfile;
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
@@ -20,6 +20,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] Transform[] internalLanternFairies;
     [SerializeField] GameObject fairyProjectilePrefab;
     [SerializeField] GameObject fireRainPrefab;
+    [SerializeField] GameObject skyBoltPrefab;
     [SerializeField] Transform frontSwordTip;
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
@@ -104,7 +105,12 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
         if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(0);
 
-        fireRainDelayWait = new WaitForSeconds(fireRainMaxDelay);
+        fireRainDelayWait = playerData.equippedElements[1] switch
+        {
+            WeaponElement.FIRE => new WaitForSeconds(fireRainMaxDelay),
+            WeaponElement.ELECTRICITY => new WaitForSeconds(3.3f),
+            _ => new WaitForSeconds(3f)
+        };
 
         SetupControls();
     }
@@ -158,9 +164,8 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
         int arcaneDamage = Mathf.RoundToInt(playerData.ArcaneDamage() * attackProfile.magicDamageMultiplier);
         arcaneDamage = patchEffects.ArcaneDamageModifiers(arcaneDamage);
-
         int totalDamage = physicalDamage + arcaneDamage;
-        totalDamage = patchEffects.TotalDamageModifiers(totalDamage);
+        totalDamage = patchEffects.TotalDamageModifiers(totalDamage, attackProfile);
         totalDamage = DamageModifiers(totalDamage);
         return totalDamage; 
     }
@@ -194,6 +199,11 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             if(attackProfile.electricChargeBuildup > 0)
             {
                 enemy.GainElectricCharge(attackProfile.electricChargeBuildup);
+            }
+
+            if(attackProfile.partialChargeBuildup > 0)
+            {
+                enemy.GainElectricCharge(attackProfile.partialChargeBuildup);
             }
 
             if (attackProfile.staggerDuration > 0)
@@ -344,33 +354,25 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         heavyAttackActive = false;
     }
 
-    public void AxeHeavy()
+    public void LanternHeavy(AttackProfiles profile)
     {
-        playerScript.LoseStamina(axeHeavyProfile.staminaCost);
-        FairyProjectile fairyProjectile = Instantiate(fairyProjectilePrefab).GetComponent<FairyProjectile>();
-        if (playerAnimation.facingFront)
-        {
-            fairyProjectile.transform.position = internalLanternFairies[0].transform.position;
-        }
-        else
-        {
-            fairyProjectile.transform.position = internalLanternFairies[1].transform.position;
-        }
-        fairyProjectile.direction = attackPoint.position - transform.position;
-        fairyProjectile.lanternFairy = lanternFairy;
-        fairyProjectile.playerAbilities = this;
+        playerScript.LoseStamina(profile.staminaCost);
+        Vector3 position = playerAnimation.facingFront ? internalLanternFairies[0].transform.position : internalLanternFairies[1].transform.position;
+        Vector3 direction = attackPoint.position - transform.position;
+        FairyProjectile.Instantiate(fairyProjectilePrefab, position, direction, lanternFairy, this, profile);
     }
 
     public void SpecialAttack()
     {
         if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.SPECIAL_ATTACK)) return;
-        if (playerData.mana < specialAttackProfiles[playerData.currentWeapon].manaCost && playerData.currentWeapon != 2) return;
+        AttackProfiles profile = specialAttackProfiles[weaponManager.WeaponArrayId(playerData.currentWeapon)];
+        if (playerData.mana < profile.manaCost && playerData.currentWeapon != 2) return;
 
         if (playerMovement.CanInput() && playerScript.stamina > 0)
         {
             if (playerData.currentWeapon == 1)
             {
-                AxeSpecialAttack();
+                LanternSpecialAttack(profile);
             }
             else
             {
@@ -403,23 +405,24 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     public void FireProjectile(EnemyScript enemy, Vector3 startingPosition, AttackProfiles attackProfile)
     {
-        PlayerProjectile projectile = Instantiate(projectilePrefab).GetComponent<PlayerProjectile>();
-        projectile.attackProfile = attackProfile;
+        PlayerProjectile projectile = PlayerProjectile.Instantiate(projectilePrefab.gameObject, attackProfile, this);
         projectile.transform.position = startingPosition;
         projectile.transform.LookAt(enemy.transform.position + new Vector3(0, 1.1f, 0));
         projectile.target = enemy.transform;
         projectile.playerMovement = playerMovement;
     }
 
-    public void AxeSpecialAttack()
+    public void LanternSpecialAttack(AttackProfiles attackProfile)
     {
         if (!lanternFairy.isInLantern) return;
 
-        playerScript.LoseMana(specialAttackProfiles[1].manaCost);
+        playerScript.LoseMana(attackProfile.manaCost);
         TotemAnimationEvents totemAnimEvents = Instantiate(totemPrefab).GetComponentInChildren<TotemAnimationEvents>();
         totemAnimEvents.transform.parent.position = new Vector3(transform.position.x, 0, transform.position.z);
+        totemAnimEvents.playerAbilities = this;
         totemAnimEvents.lanternFairy = lanternFairy;
-        playerEvents.AxeSpecialAttack();
+        totemAnimEvents.attackProfile = attackProfile;
+        playerEvents.LanternSpecialAttack(attackProfile);
     }
 
     public void KnifeCombo2Vfx(List<Vector3> targets)
@@ -494,11 +497,23 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     private void PlayerEvents_onStartFireRain(object sender, Vector3 origin)
     {
-        for (int i = 0; i < fireRainAmount; i++)
+        switch (playerData.equippedElements[1])
         {
-            FireRain.Instantiate(fireRainPrefab, origin, fireRainMaxDelay, lanternCombo2Profile, lanternCombo2TrailProfile, trailManager, sceneHasNavmesh);
+            case WeaponElement.FIRE:
+                for (int i = 0; i < fireRainAmount; i++)
+                {
+                    FireRain.Instantiate(fireRainPrefab, origin, fireRainMaxDelay, lanternCombo2AttackHit.fireProfile, lanternCombo2TrailProfile, trailManager, sceneHasNavmesh);
+                }
+                StartCoroutine(EndFireRain());
+                break;
+            case WeaponElement.ELECTRICITY:
+                for(int i = 0; i < lanternCombo2AttackHit.electricityProfile.boltNum; i++)
+                {
+                    SkyBolt.Instantiate(skyBoltPrefab, transform.position, lanternCombo2AttackHit.electricityProfile, this);
+                }
+                StartCoroutine(EndFireRain());
+                break;
         }
-        StartCoroutine(EndFireRain());
     }
 
     IEnumerator EndFireRain()

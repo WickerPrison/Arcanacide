@@ -12,21 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
   m_Name: LanternSpecialAttack
   m_EditorClassIdentifier: 
-  hitboxType: 
+  hitbox: 0
   attackType: 2
+  element: 1
   smearSpeed: 0
   stepWithAttack: 0
   halfConeAngle: 0
   attackRange: 0
-  damageMultiplier: 2
-  chargeDamage: 0
-  fullChargeDamage: 0
-  magicDamageMultiplier: 0.4
+  damageMultiplier: 0
+  magicDamageMultiplier: 2.5
   poiseDamageMultiplier: 2
   staminaCost: 0
+  chargeDamage: 0
+  fullChargeDamage: 0
+  maxChargeTime: 0
   manaCost: 45
+  specialValue: 0
   impactVFX: 1
-  blockable: 1
+  blockable: 0
+  boltNum: 0
+  electricChargeBuildup: 0
   bonusEffectDuration: 0
   durationDOT: 0
   staggerDuration: 0.3
@@ -42,12 +47,13 @@ MonoBehaviour:
   soundOnHitVolume: 0
   noHitSoundEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  soundNoHitVolume: 0
+      Data1: 596054096
+      Data2: 1089662140
+      Data3: 1063899299
+      Data4: -513444934
+    Path: event:/BigSmash
+  soundNoHitVolume: 1
   smearPositions: []
   smearRotations: []
   smearScales: []
+  secondClawRot: []

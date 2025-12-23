@@ -18,6 +18,7 @@ public class AttackProfiles : ScriptableObject
 {
     public HitboxType hitbox;
     public AttackType attackType;
+    public WeaponElement element;
 
     public int smearSpeed;
     public float stepWithAttack;
@@ -38,6 +39,7 @@ public class AttackProfiles : ScriptableObject
     public int boltNum;
 
     public int electricChargeBuildup;
+    public float partialChargeBuildup;
 
     public float bonusEffectDuration;
     public float durationDOT;

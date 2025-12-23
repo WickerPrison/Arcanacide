@@ -77,15 +77,17 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAbilities.SwordSpecialAttack(profile);
     }
 
-    public void AxeHeavy()
+    public void LanternHeavy(AttackHit attackHit)
     {
-        playerAbilities.AxeHeavy();
+        playerAbilities.LanternHeavy(attackHit.GetProfile(playerData.equippedElements[1]));
     }
 
-    public void LanternCombo()
+    public void LanternCombo2(AttackHit attackHit)
     {
         if (lanternFairy.isInLantern)
         {
+            AttackProfiles attackProfile = attackHit.GetProfile(playerData.equippedElements[1]);
+            playerScript.LoseStamina(attackProfile.staminaCost);
             doLanternCombo = true;
             playerEvents.LanternCombo();
         }
@@ -104,11 +106,6 @@ public class PlayerAnimationEvents : MonoBehaviour
             Shove();
             playerAttackHitEvents.AttackHit(lanternComboNoFairy);
         }
-    }
-
-    public void AxeSpecialAttack()
-    {
-        playerAbilities.AxeSpecialAttack();
     }
 
     public void KnifeHeavy()

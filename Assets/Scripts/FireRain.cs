@@ -17,19 +17,17 @@ public class FireRain : PlayerProjectile, IKillChildren
     Vector3 direction;
     bool start = false;
     Collider hitBox;
-    bool instantiatedCorrectly = false;
     PlayerTrailManager trailManager;
 
     public static FireRain Instantiate(GameObject prefab, Vector3 origin, float maxDelay, AttackProfiles attackProfile, AttackProfiles trailProfile, PlayerTrailManager trailManager, bool hasNavmesh = true)
     {
-        FireRain fireRain = Instantiate(prefab).GetComponent<FireRain>();
+        PlayerAbilities playerAbilities = trailManager.GetComponent<PlayerAbilities>();
+        FireRain fireRain = PlayerProjectile.Instantiate(prefab, attackProfile, playerAbilities) as FireRain;
         fireRain.origin = origin;
         fireRain.maxDelay = maxDelay;
-        fireRain.attackProfile = attackProfile;
         fireRain.trailProfile = trailProfile;
         fireRain.trailManager = trailManager;
         fireRain.hasNavmesh = hasNavmesh;
-        fireRain.instantiatedCorrectly = true;
         return fireRain;
     }
 
@@ -39,12 +37,9 @@ public class FireRain : PlayerProjectile, IKillChildren
         indicatorCircle.parent = this;
     }
 
-    private void Start()
+    public override void Start()
     {
-        if (!instantiatedCorrectly)
-        {
-            Utils.IncorrectInitialization("FireRain");
-        }
+        base.Start();
         transform.position = origin;
         float randX = UnityEngine.Random.Range(-maxDelay, maxDelay);
         float randZ = UnityEngine.Random.Range(-maxDelay, maxDelay);

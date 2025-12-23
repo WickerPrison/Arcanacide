@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,64 @@ public static class Utils
             Vector3 pos2 = RotateDirection(Vector3.right, t + percent).normalized * radius + center;
             Debug.DrawLine(pos1, pos2, Color.red, duration);
         }
+    }
+
+    public static void CircleHitbox(AttackProfiles attackProfile, int attackDamage, Vector3 center, GameManager gm, PlayerAbilities playerAbilities)
+    {
+        Utils.DrawDebugCircle(12, attackProfile.attackRange, center, 3);
+        foreach (EnemyScript enemy in gm.enemies)
+        {
+            if (Vector3.Distance(enemy.transform.position, center) < attackProfile.attackRange)
+            {
+                playerAbilities.DamageEnemy(enemy, attackDamage, attackProfile);
+            }
+        }
+
+        if (gm.enemiesInRange.Count > 0 && attackProfile.screenShakeOnHit != Vector2.zero)
+        {
+            GlobalEvents.instance.ScreenShake(attackProfile.screenShakeOnHit.x, attackProfile.screenShakeOnHit.y);
+        }
+    }
+
+    public static List<Vector3> HitClosestXEnemies(List<EnemyScript> enemies, Vector3 origin, float range, int count, Action<EnemyScript> callback)
+    {
+        List<(EnemyScript, float)> enemiesWithDist = new List<(EnemyScript, float)>();
+        foreach (EnemyScript enemy in enemies)
+        {
+            float dist = Vector3.Distance(enemy.transform.position, origin);
+            if (dist <= range)
+            {
+                enemiesWithDist.Add((enemy, dist));
+            }
+        }
+
+        List<Vector3> targets = new List<Vector3>();
+
+        if (enemiesWithDist.Count > 0)
+        {
+            enemiesWithDist.Sort((a, b) => a.Item2.CompareTo(b.Item2));
+            int counter = count;
+            while (counter > 0)
+            {
+                for (int i = 0; i < enemiesWithDist.Count; i++)
+                {
+                    targets.Add(enemiesWithDist[i].Item1.transform.position + Vector3.up);
+                    callback(enemiesWithDist[i].Item1);
+                    counter--;
+                    if (counter <= 0) break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < count; i++)
+            {
+                float x = UnityEngine.Random.Range(-1f, 1f);
+                float z = UnityEngine.Random.Range(-1f, 1f);
+                targets.Add(range / 2 * new Vector3(x, 0, z));
+            }
+        }
+        return targets;
     }
 
     public static void IncorrectInitialization(string className)

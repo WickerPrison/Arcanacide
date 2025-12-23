@@ -21,7 +21,8 @@ public class KnifeTests
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.hasHealthGem = true;
-        playerData.unlockedWeapons.Add(2);
+        playerData.UnlockAllWeapons();
+        playerData.equippedElements[2] = WeaponElement.ELECTRICITY;
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
 
         Time.timeScale = 1;

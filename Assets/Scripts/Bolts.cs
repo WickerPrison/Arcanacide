@@ -61,6 +61,23 @@ public class Bolts : MonoBehaviour
         SetPositions(away, away);
     }
 
+    public void BoltsFlash(Vector3 startPoint, Vector3 endPoint)
+    {
+        StartCoroutine(BoltsFlashCoroutine((startPoint, endPoint)));
+    }
+
+    IEnumerator BoltsFlashCoroutine((Vector3, Vector3) points)
+    {
+        SetPositions(points);
+        yield return boltFlash;
+        SetPositions(away, away);
+    }
+
+    public void BoltsAway()
+    {
+        SetPositions(away, away);
+    }
+
     public void SoundOn()
     {
         if (!soundOn)

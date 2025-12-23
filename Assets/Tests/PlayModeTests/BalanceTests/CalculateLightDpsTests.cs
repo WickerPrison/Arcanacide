@@ -27,7 +27,7 @@ public class CalculateLightDpsTests
         SceneManager.LoadScene("Testing");
         yield return null;
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
-        balanceData = Resources.Load<BalanceData>("Data/BalanceData");
+        balanceData = Resources.Load<BalanceData>("Data/BalanceData/BalanceData");
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.hasHealthGem = true;
@@ -77,6 +77,24 @@ public class CalculateLightDpsTests
             hitCounter = 0;
             doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.LANTERN, stats[i], health[i]);
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator CalculateElectricLanternLightCurve()
+    {
+        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.ELECTRICLANTERN);
+        int[] stats = { 1, 10, 20 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            playerData.strength = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoLightCombo(BalanceWeaponType.ELECTRICLANTERN, stats[i], health[i]);
         }
     }
 
@@ -151,9 +169,9 @@ public class CalculateLightDpsTests
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         balanceData.SetDps(stat, dps, BalanceAttackType.LIGHT, type);
-        balanceData.lightStamPerSecond[reportIndex] = stamPerSec;
-        balanceData.lightMaxDps[reportIndex] = dps;
-        balanceData.lightHitRate[reportIndex] = hitCounter / seconds;
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.LIGHT);
+        balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.LIGHT);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.LIGHT);
         Debug.Log($"{type} Light DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;

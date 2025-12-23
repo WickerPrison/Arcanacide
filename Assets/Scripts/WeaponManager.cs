@@ -124,7 +124,7 @@ public class WeaponManager : MonoBehaviour
 
     public void ActivateWeaponSprite(int weaponID)
     {
-        int weaponSpriteId = WeaponSpriteId(weaponID);
+        int weaponSpriteId = WeaponArrayId(weaponID);
         frontWeaponSprites[weaponSpriteId].SetActive(true);
         backWeaponSprites[weaponSpriteId].SetActive(true);
         for(int i = 0; i < 2; i++)
@@ -141,7 +141,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    public int WeaponSpriteId(int weaponID)
+    public int WeaponArrayId(int weaponID)
     {
         WeaponElement element = playerData.equippedElements[weaponID];
         switch((weaponID, element)) 
@@ -151,6 +151,7 @@ public class WeaponManager : MonoBehaviour
             case (2, WeaponElement.ELECTRICITY): return 2;
             case (3, WeaponElement.ICE): return 3;
             case (0, WeaponElement.FIRE): return 4;
+            case (1, WeaponElement.ELECTRICITY): return 5;
             default: return -1;
         }
     }

@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5728310918745809791}
-  - component: {fileID: 8039149585363300848}
-  - component: {fileID: 2135197212424929946}
-  - component: {fileID: 4434136821595664272}
+  - component: {fileID: 2781357740086505218}
   - component: {fileID: 4451661791621857687}
+  - component: {fileID: 4434136821595664272}
   - component: {fileID: 3103028618491256688}
   - component: {fileID: 5295776633977867363}
   m_Layer: 14
@@ -37,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8039149585363300848
+--- !u!114 &2781357740086505218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,58 +45,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 6184953116499468388}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09d160d47f49ec642a560f5a308dad91, type: 3}
+  m_Script: {fileID: 11500000, guid: 61cb1240cf9307d41a4e009ea6dbe0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAudioDistance: 0
-  playerImpactSFX:
+  speed: 5
+  playerMovement: {fileID: 0}
+  enemyImpactSFX:
     Guid:
       Data1: 1601765032
       Data2: 1174263198
       Data3: -1547339624
       Data4: -1287736626
     Path: event:/FireImpact
-  playerImpactVolume: 0.8
   impactSFX:
     Guid:
-      Data1: 117585549
-      Data2: 1144246834
-      Data3: 484785066
-      Data4: 1449475652
-    Path: event:/FireImpact3d
-  impactVolume: 0.8
-  damage: 7
-  poiseDamage: 10
-  sound3D: 0
-  maxDistance: 0
---- !u!114 &2135197212424929946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6184953116499468388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75953cad4730fd949a71b41066a434c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rippleSpeed: 0
-  lifeTime: 0
-  direction: {x: 0, y: 0, z: 0}
---- !u!65 &4434136821595664272
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6184953116499468388}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  impactSFXvolume: 1
+  lifetime: 1.5
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  target: {fileID: 0}
+  turnAngle: 0
 --- !u!199 &4451661791621857687
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -170,6 +142,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!65 &4434136821595664272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6184953116499468388}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &3103028618491256688
 ParticleSystem:
   m_ObjectHideFlags: 0

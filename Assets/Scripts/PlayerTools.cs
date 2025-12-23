@@ -43,5 +43,8 @@ public static class PlayerTools
         playerData.equippedElements[2] = WeaponElement.ELECTRICITY;
         playerData.equippedElements[3] = WeaponElement.ICE;
         playerData.currentWeapon = 0;
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(playerData);
+#endif
     }
 }

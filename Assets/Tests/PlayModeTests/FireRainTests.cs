@@ -18,6 +18,8 @@ public class FireRainTests
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         playerData.ClearData();
+        playerData.UnlockAllWeapons();
+        playerData.equippedElements[1] = WeaponElement.FIRE;
         playerData.hasHealthGem = true;
 
         Time.timeScale = 4;

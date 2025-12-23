@@ -17,8 +17,9 @@ public class PlayerFireball : PlayerProjectile
     FireballState state;
     Vector3 vertOffset = new Vector3(0, 2f, 0);
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         state = FireballState.CHARGING;
         hitCollider = GetComponent<Collider>();
         hitCollider.enabled = false;

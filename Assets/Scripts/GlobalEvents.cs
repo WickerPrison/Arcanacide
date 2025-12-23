@@ -123,6 +123,11 @@ public class GlobalEvents : MonoBehaviour
         onACWallSwitch?.Invoke(this, EventArgs.Empty);
     }
 
+    public void ScreenShake(Vector2 screenShake)
+    {
+        ScreenShake(screenShake.x, screenShake.y);
+    }
+
     public void ScreenShake(float duration, float magnitude)
     {
         onScreenShake?.Invoke(this, (duration, magnitude));
