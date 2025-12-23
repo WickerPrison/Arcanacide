@@ -303,7 +303,10 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void ElectricSmear()
     {
-        electricSmear.Play();
+        if(playerData.equippedElements[2] == WeaponElement.ELECTRICITY)
+        {
+            electricSmear.Play();
+        }
     }
 
     public void KnifeCombo1Vfx()

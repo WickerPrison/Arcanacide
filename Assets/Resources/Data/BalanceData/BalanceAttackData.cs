@@ -12,6 +12,7 @@ public class BalanceAttackData : ScriptableObject
     public AnimationCurve clawsDps;
     public AnimationCurve fireSwordDps;
     public AnimationCurve electricLanternDps;
+    public AnimationCurve iceKnifeDps;
     public float[] maxDps;
     public float[] stamPerSecond;
     public float[] hitRate;
@@ -30,6 +31,7 @@ public class BalanceAttackData : ScriptableObject
                     { BalanceWeaponType.CLAWS, clawsDps },
                     { BalanceWeaponType.FIRESWORD, fireSwordDps },
                     { BalanceWeaponType.ELECTRICLANTERN, electricLanternDps },
+                    { BalanceWeaponType.ICEKNIFE, iceKnifeDps },
                 };
             }
             return _dpsCurveDict;
