@@ -130,6 +130,16 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     }
 
+    public void KnifeCombo2()
+    {
+        switch (playerData.equippedElements[2])
+        {
+            case WeaponElement.ICE:
+                circleStalagmites.TriggerWave();
+                break;
+        }
+    }
+
     public void KnifeSpecialAttack()
     {
         playerAbilities.KnifeSpecialAttack();
