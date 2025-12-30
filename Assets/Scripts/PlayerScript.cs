@@ -37,8 +37,8 @@ public class PlayerScript : MonoBehaviour
 
     //stamina variables
     public float stamina { get; private set; }
-    float maxStaminaDelay = 1f;
-    float staminaDelay;
+    [SerializeField] public float maxStaminaDelay = 1f;
+    [SerializeField] public float staminaDelay;
     float staminaRate = 40;
 
     //stagger variables

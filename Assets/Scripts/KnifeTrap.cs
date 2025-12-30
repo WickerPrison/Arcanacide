@@ -154,6 +154,6 @@ public class KnifeTrap : MonoBehaviour
     {
         transform.position = away;
         sfx.Stop();
-        //if (playerScript.testingEvents != null) playerScript.testingEvents.KnifeTrapDone();
+        if (playerScript.testingEvents != null) playerScript.testingEvents.KnifeTrapDone();
     }
 }

@@ -261,14 +261,9 @@ public class CalculateHeavyDps
 
     IEnumerator DoKnifeHeavy(int stat, int health, int reportIndex, BalanceWeaponType type)
     {
-        if(type == BalanceWeaponType.KNIFE)
-        {
-            testingEvents.onElectricTrapDone += TestingEvents_onAttackFalse;
-        }
-        else
-        {
-            testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
-        }
+        playerScript.maxStaminaDelay = 10000;
+        playerScript.staminaDelay = playerScript.maxStaminaDelay;
+        testingEvents.onKnifeTrapDone += TestingEvents_onAttackFalse;
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(2f, 0, -2f);
         testDummy.maxHealth = health;
