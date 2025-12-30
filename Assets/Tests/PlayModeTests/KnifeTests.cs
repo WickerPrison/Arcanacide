@@ -57,7 +57,7 @@ public class KnifeTests
         playerAbilities.HeavyAttack();
         yield return new WaitForSeconds(2);
         testDummy1.LoseHealthUnblockable(10000, 2);
-        ElectricTrap trap = GameObject.FindObjectOfType<ElectricTrap>();
+        KnifeTrap trap = GameObject.FindObjectOfType<KnifeTrap>();
         yield return new WaitForSeconds(2);
         Assert.AreEqual(0, trap.GetEnemiesInRangeCount());
     }
@@ -74,7 +74,7 @@ public class KnifeTests
         yield return new WaitForSeconds(2);
         playerAbilities.HeavyAttack();
         yield return new WaitForSeconds(5);
-        ElectricTrap trap = GameObject.FindObjectOfType<ElectricTrap>();
+        KnifeTrap trap = GameObject.FindObjectOfType<KnifeTrap>();
         yield return new WaitForSeconds(2);
         Assert.AreEqual(0, trap.GetEnemiesInRangeCount());
     }

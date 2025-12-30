@@ -4,28 +4,27 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ElectricTrap : MonoBehaviour
+public class KnifeTrap : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] EmblemLibrary emblemLibrary;
-    [SerializeField] EventReference electricDamage;
-    PlayerScript playerScript;
+    [System.NonSerialized] public PlayerScript playerScript;
     PlayerAbilities playerAbilities;
     float damage = 0;
     float damagePerSecond;
     float charge;
-    float duration = 3;
     float timer;
-    Vector3 away = Vector3.one * -75;
+    [System.NonSerialized] public Vector3 away = Vector3.one * -75;
     bool canMakeDamageSound = true;
     List<EnemyScript> enemiesInRange = new List<EnemyScript>();
-    StudioEventEmitter sfx;
-    [SerializeField] AttackProfiles attackProfile;
+    [System.NonSerialized] public StudioEventEmitter sfx;
     bool instantiatedCorrectly = false;
+    AttackProfiles attackProfile;
 
-    public static ElectricTrap Instantiate(GameObject prefab, PlayerScript playerScript, PlayerAbilities playerAbilities)
+    public static KnifeTrap Instantiate(GameObject prefab, AttackProfiles attackProfile, PlayerScript playerScript, PlayerAbilities playerAbilities)
     {
-        ElectricTrap electricTrap = Instantiate(prefab).GetComponent<ElectricTrap>();
+        KnifeTrap electricTrap = Instantiate(prefab).GetComponent<KnifeTrap>();
+        electricTrap.attackProfile = attackProfile;
         electricTrap.playerScript = playerScript;
         electricTrap.playerAbilities = playerAbilities;
         electricTrap.instantiatedCorrectly = true;
@@ -39,7 +38,7 @@ public class ElectricTrap : MonoBehaviour
 
     private void Start()
     {
-        if (!instantiatedCorrectly) Utils.IncorrectInitialization("ElectricTrap");
+        if (!instantiatedCorrectly) Utils.IncorrectInitialization("KnifeTrap");
         damagePerSecond = playerAbilities.DetermineAttackDamage(attackProfile);
     }
 
@@ -50,9 +49,7 @@ public class ElectricTrap : MonoBehaviour
             timer -= Time.deltaTime;
             if(timer < 0 )
             {
-                transform.position = away;
-                sfx.Stop();
-                if (playerScript.testingEvents != null) playerScript.testingEvents.ElectricTrapDone();
+                EndTrap();
             }
         }
 
@@ -74,7 +71,8 @@ public class ElectricTrap : MonoBehaviour
 
                 if (canMakeDamageSound)
                 {
-                    RuntimeManager.PlayOneShot(electricDamage, 0.2f, transform.position);
+                    //RuntimeManager.PlayOneShot(electricDamage, 0.2f, transform.position);
+                    RuntimeManager.PlayOneShot(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume, transform.position);
                     StartCoroutine(SFXtimer());
                 }
                 damage = 0;
@@ -118,8 +116,8 @@ public class ElectricTrap : MonoBehaviour
 
     public void StartTimer()
     {
-        timer = duration;
-        sfx.Play();
+        timer = attackProfile.durationDOT;
+        sfx.Play(); 
     }
 
     private void OnEnable()
@@ -150,5 +148,12 @@ public class ElectricTrap : MonoBehaviour
     public int GetEnemiesInRangeCount()
     {
         return enemiesInRange.Count;
+    }
+
+    public virtual void EndTrap()
+    {
+        transform.position = away;
+        sfx.Stop();
+        //if (playerScript.testingEvents != null) playerScript.testingEvents.KnifeTrapDone();
     }
 }

@@ -34,7 +34,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     //other scripts
     Animator frontAnimator;
     IceBreath iceBreath;
-    ElectricTrap electricTrap;
+    KnifeTrap knifeTrap;
     WeaponManager weaponManager;
 
 
@@ -110,24 +110,15 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
     }
 
-    public void KnifeHeavy()
+    public void KnifeHeavy(AttackHit attackHit)
     {
-        switch (playerData.equippedElements[2])
+        if (knifeTrap == null)
         {
-            case WeaponElement.ELECTRICITY:
-                if (electricTrap == null)
-                {
-                    electricTrap = ElectricTrap.Instantiate(electricTrapPrefab, playerScript, playerAbilities);
-                }
-
-                electricTrap.transform.position = transform.parent.position;
-                electricTrap.StartTimer();
-                break;
-            case WeaponElement.ICE:
-                circleStalagmites.TriggerWave();
-                break;
+            knifeTrap = KnifeTrap.Instantiate(attackHit.GetPrefab(playerData.equippedElements[2]), attackHit.GetProfile(playerData.equippedElements[2]), playerScript, playerAbilities);
         }
 
+        knifeTrap.transform.position = transform.parent.position;
+        knifeTrap.StartTimer();
     }
 
     public void KnifeCombo2()
