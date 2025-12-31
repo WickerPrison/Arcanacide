@@ -225,6 +225,7 @@ public class CalculateSpecials
     public IEnumerator CalculateKnifeSpecialCurve()
     {
         currentWeaponType = BalanceWeaponType.KNIFE;
+        playerData.equippedElements[2] = WeaponElement.ELECTRICITY;
         balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.KNIFE);
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
@@ -236,11 +237,31 @@ public class CalculateSpecials
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
             doneAttacking = false;
-            yield return DoKnifeSpecial(health[i]);
+            yield return DoKnifeSpecial(stats[i], health[i], 2, BalanceWeaponType.KNIFE);
         }
     }
 
-    IEnumerator DoKnifeSpecial(int health)
+    [UnityTest]
+    public IEnumerator CalculateIceKnifeSpecialCurve()
+    {
+        currentWeaponType = BalanceWeaponType.ICEKNIFE;
+        playerData.equippedElements[2] = WeaponElement.ICE;
+        balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.ICEKNIFE);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            doneAttacking = false;
+            yield return DoKnifeSpecial(stats[i], health[i], 6, BalanceWeaponType.ICEKNIFE);
+        }
+    }
+
+    IEnumerator DoKnifeSpecial(int stat, int health, int reportIndex, BalanceWeaponType type)
     {
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(2f, 0, -2f);
@@ -265,12 +286,12 @@ public class CalculateSpecials
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
         float manaPerSec = manaCounter / seconds;
-        balanceData.SetDps(playerData.strength, dps, BalanceAttackType.SPECIAL, BalanceWeaponType.KNIFE);
-        balanceData.SetStamPerSecond(stamPerSec, 2, BalanceAttackType.SPECIAL);
-        balanceData.SetMaxDps(dps, 2, BalanceAttackType.SPECIAL);
-        balanceData.SetHitRate(hitCounter / seconds, 2, BalanceAttackType.SPECIAL);
-        balanceData.SetSpecialManaPerSec(manaPerSec, 2);
-        Debug.Log($"Knife Special DPS with {playerData.strength} Stat: {dps}");
+        balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, type);
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetSpecialManaPerSec(manaPerSec, reportIndex);
+        Debug.Log($"{type} Special DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         playerAbilities.EndSpecialAttack();
         doneAttacking = true;

@@ -31,6 +31,12 @@ public class BeamVfx : MonoBehaviour
         aimValue = maxAimValue;
     }
 
+    public void SetMaxAimValue(float value)
+    {
+        maxAimValue = value;
+        aimValue = maxAimValue;
+    }
+
     public RaycastHit BeamHitscan(Vector3 origin, Vector3 target)
     {
         RaycastHit hit;
