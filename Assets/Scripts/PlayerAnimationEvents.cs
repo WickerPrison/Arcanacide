@@ -116,6 +116,10 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             knifeTrap = KnifeTrap.Instantiate(attackHit.GetPrefab(playerData.equippedElements[2]), attackHit.GetProfile(playerData.equippedElements[2]), playerScript, playerAbilities);
         }
+        else
+        {
+            knifeTrap.SetDamage();
+        }
 
         knifeTrap.transform.position = transform.parent.position;
         knifeTrap.StartTimer();

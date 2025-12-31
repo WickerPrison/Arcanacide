@@ -39,6 +39,11 @@ public class KnifeTrap : MonoBehaviour
     private void Start()
     {
         if (!instantiatedCorrectly) Utils.IncorrectInitialization("KnifeTrap");
+        SetDamage();
+    }
+
+    public void SetDamage()
+    {
         damagePerSecond = playerAbilities.DetermineAttackDamage(attackProfile);
     }
 
@@ -57,11 +62,14 @@ public class KnifeTrap : MonoBehaviour
         if(enemiesInRange.Count > 0)
         {
             damage += damagePerSecond * Time.deltaTime;
+            int dealDamage = Mathf.FloorToInt(damage);
+            float leftOver = damage - dealDamage;
+
             if (damage > 1)
             {
                 foreach(EnemyScript enemy in enemiesInRange)
                 {
-                    enemy.LoseHealthUnblockable(Mathf.FloorToInt(damage), 0);
+                    enemy.LoseHealthUnblockable(dealDamage, 0);
 
                     if (playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
                     {
@@ -75,7 +83,7 @@ public class KnifeTrap : MonoBehaviour
                     RuntimeManager.PlayOneShot(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume, transform.position);
                     StartCoroutine(SFXtimer());
                 }
-                damage = 0;
+                damage = leftOver;
             }
 
             charge += attackProfile.electricChargeBuildup * Time.deltaTime;
