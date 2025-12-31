@@ -137,6 +137,9 @@ public class WeaponManager : MonoBehaviour
                 case 3:
                     clawsOffhand[i].SetActive(true);
                     break;
+                case 6:
+                    knifeOffhand[i + 2].SetActive(true);
+                    break;
             }
         }
     }
@@ -152,6 +155,7 @@ public class WeaponManager : MonoBehaviour
             case (3, WeaponElement.ICE): return 3;
             case (0, WeaponElement.FIRE): return 4;
             case (1, WeaponElement.ELECTRICITY): return 5;
+            case (2, WeaponElement.ICE): return 6;
             default: return -1;
         }
     }

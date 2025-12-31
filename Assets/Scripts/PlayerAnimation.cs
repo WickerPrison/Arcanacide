@@ -74,6 +74,7 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //Debug.Log(attacking);
         StaminaUpdate();
 
         //While attacking the player won't change what direction he is facing. Otherwise he faces the mouse
@@ -108,6 +109,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         frontAnimator.Play(animationName);
         backAnimator.Play(animationName);
+    }
+
+    public void PlayAnimation(string animationName, float time, int layer = -1)
+    {
+        frontAnimator.Play(animationName, layer, time);
+        backAnimator.Play(animationName, layer, time);
     }
 
     public void StaminaUpdate()

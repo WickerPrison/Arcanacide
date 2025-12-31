@@ -223,6 +223,7 @@ public class PlayerData : ScriptableObject
 
         unlockedKnives.Clear();
         unlockedKnives.Add(WeaponElement.ELECTRICITY);
+        unlockedKnives.Add(WeaponElement.ICE);
 
         unlockedClaws.Clear();
         unlockedClaws.Add(WeaponElement.CHAOS);

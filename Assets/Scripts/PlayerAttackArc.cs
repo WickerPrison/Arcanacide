@@ -88,7 +88,7 @@ public class PlayerAttackArc : AttackArcGenerator
         Vector3 leftSideDirection = Quaternion.AngleAxis(-angleLeftSide, Vector3.up) * transform.forward;
 
         //Debug.DrawRay(transform.position + baseDirection * vertices[0].magnitude, leftSideDirection.normalized * leftSideDistance, Color.red, 5f);
-        if(Physics.Raycast(transform.position + baseDirection * vertices[0].magnitude, leftSideDirection.normalized, out hit, leftSideDistance, enemiesLayerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(transform.position + baseDirection * vertices[0].magnitude, leftSideDirection.normalized, out hit, leftSideDistance, enemiesLayerMask, QueryTriggerInteraction.Ignore))
         {
             AddToEnemiesInRange(hit);
         }

@@ -5,13 +5,14 @@ using UnityEngine;
 public class KnifeCombo1Vfx : MonoBehaviour
 {
     [SerializeField] bool isFront;
+    [SerializeField] ParticleSystem zapVfx;
+    [SerializeField] ParticleSystem icePoofVfx;
+    [SerializeField] PlayerData playerData;
     PlayerEvents playerEvents;
-    ParticleSystem particles;
 
     private void Awake()
     {
         playerEvents = GetComponentInParent<PlayerEvents>();
-        particles = GetComponent<ParticleSystem>();
     }
 
     private void OnEnable()
@@ -30,6 +31,14 @@ public class KnifeCombo1Vfx : MonoBehaviour
         Vector3 direction = inputs.Item1;
         transform.rotation = Quaternion.LookRotation(direction);
 
-        particles.Play();
+        switch (playerData.equippedElements[2])
+        {
+            case WeaponElement.ELECTRICITY:
+                zapVfx.Play();
+                break;
+            case WeaponElement.ICE:
+                icePoofVfx.Play();
+                break;
+        }
     }
 }

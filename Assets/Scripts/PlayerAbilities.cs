@@ -16,11 +16,13 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] PlayerProjectile projectilePrefab;
     [SerializeField] Bolts bolts;
     [SerializeField] Transform[] boltsOrigin;
+    [SerializeField] Transform[] beamOrigin;
     [SerializeField] ExternalLanternFairy lanternFairy;
     [SerializeField] Transform[] internalLanternFairies;
     [SerializeField] GameObject fairyProjectilePrefab;
     [SerializeField] GameObject fireRainPrefab;
     [SerializeField] GameObject skyBoltPrefab;
+    [SerializeField] GameObject iciclePrefab;
     [SerializeField] Transform frontSwordTip;
     [SerializeField] Transform backSwordTip;
     [SerializeField] GameObject totemPrefab;
@@ -40,6 +42,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     WeaponManager weaponManager;
     PlayerSound playerSound;
     Rigidbody rb;
+    BeamVfx beamVfx;
 
     //managers
     GameManager gm;
@@ -78,7 +81,9 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    bool knifeSpecialAttackOn = false;
+    [System.NonSerialized] public bool knifeSpecialAttackOn = false;
+    bool knifeSpecialPaused = false;
+    WaitForSeconds knifeSpecialPause = new WaitForSeconds(1);
     Vector3 away = Vector3.one * 100;
     float boltdamage = 0;
     float boltCharge = 0;
@@ -100,8 +105,10 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         trailManager = GetComponent<PlayerTrailManager>();
         patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
-        playerSound = GetComponentInChildren<PlayerSound>();;
+        playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
+        beamVfx = GetComponentInChildren<BeamVfx>();
+        beamVfx.SetMaxAimValue(specialAttackProfiles[6].maxChargeTime);
 
         if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(0);
 
@@ -316,7 +323,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             rb.velocity = Vector3.zero;
             playerAnimation.attacking = playerData.currentWeapon != 3;
             if (playerData.currentWeapon == 0 || playerData.currentWeapon == 3) playerAnimation.SetBool("chargeHeavy", true);
-            playerAnimation.PlayAnimation("HeavyAttack");
+            playerAnimation.PlayAnimation("HeavyAttack", 0);
         }
     }
 
@@ -390,6 +397,9 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             knifeSpecialAttackOn = false;
             bolts.SetPositions(away, away);
             bolts.SoundOff();
+            beamVfx.HideBeam();
+            beamVfx.ResetAimValue();
+            knifeSpecialPaused = false;
             playerAnimation.PlayAnimation("EndSpecialAttack");
         }
     }
@@ -438,7 +448,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     void UpdateKnifeSpecialAttack()
     {
-        playerData.mana -= Time.deltaTime * specialAttackProfiles[2].manaCost;
         if (playerData.mana <= 0)
         {
             EndSpecialAttack();
@@ -457,11 +466,26 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             }
         }
 
-        int boltsFrontOrBack = 0;
+        int frontOrBack = 0;
         if (playerAnimation.facingDirection > 1)
         {
-            boltsFrontOrBack = 1;
+            frontOrBack = 1;
         }
+
+        switch (playerData.equippedElements[2])
+        {
+            case WeaponElement.ELECTRICITY:
+                ElectricKnifeSpecial(closestEnemy, frontOrBack);
+                break;
+            case WeaponElement.ICE:
+                IceKnifeSpecial(closestEnemy, frontOrBack);
+                break;
+        }
+    }
+
+    void ElectricKnifeSpecial(EnemyScript closestEnemy, int boltsFrontOrBack)
+    {
+        playerData.mana -= Time.deltaTime * specialAttackProfiles[2].manaCost;
 
         if (closestEnemy != null)
         {
@@ -493,6 +517,50 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             bolts.SetPositions(boltsOrigin[boltsFrontOrBack].position, boltsOrigin[boltsFrontOrBack].position);
             bolts.SoundOn();
         }
+    }
+
+    void IceKnifeSpecial(EnemyScript closestEnemy, int beamFrontOrBack)
+    {
+        if (knifeSpecialPaused) return;
+        if(closestEnemy != null)
+        {
+            RaycastHit hit = beamVfx.BeamHitscan(transform.position, closestEnemy.transform.position);
+            if(hit.collider != null && hit.collider.CompareTag("Enemy"))
+            {
+                Vector3 target = hit.collider.transform.position + Vector3.up * 1.5f;
+                beamVfx.SetPositions(beamOrigin[beamFrontOrBack].position, target);
+                beamVfx.DecrementAimValue(() => IceKnifeSpecialShoot(beamOrigin[beamFrontOrBack].position, target));
+            }
+            else
+            {
+                beamVfx.SetPositions(beamOrigin[beamFrontOrBack].position, hit.point + Vector3.up * 1.5f);
+                beamVfx.ResetAimValue();
+            }
+        }
+        else
+        {
+            beamVfx.ResetAimValue();
+            Vector3 target = attackPoint.position - transform.position;
+            RaycastHit hit = beamVfx.BeamHitscan(beamOrigin[beamFrontOrBack].position, beamOrigin[beamFrontOrBack].position + target * 100);
+            beamVfx.SetPositions(beamOrigin[beamFrontOrBack].position, hit.point);
+        }
+    }
+
+    void IceKnifeSpecialShoot(Vector3 origin, Vector3 target)
+    {
+        beamVfx.HideBeam();
+        playerSound.PlaySoundEffect(specialAttackProfiles[6].noHitSoundEvent, specialAttackProfiles[6].soundNoHitVolume);
+        playerData.mana -= specialAttackProfiles[6].manaCost;
+        Vector3 direction = target - origin;
+        PlayerProjectileStraight.InstantiateIcicle(iciclePrefab, origin, direction.normalized, specialAttackProfiles[6], this);
+        StartCoroutine(IceKnifeSpecialPause());
+    }
+
+    IEnumerator IceKnifeSpecialPause()
+    {
+        knifeSpecialPaused = true;
+        yield return knifeSpecialPause;
+        knifeSpecialPaused = false;
     }
 
     private void PlayerEvents_onStartFireRain(object sender, Vector3 origin)

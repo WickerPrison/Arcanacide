@@ -17,7 +17,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] ExternalLanternFairy lanternFairy;
     [SerializeField] AttackProfiles lanternComboNoFairy;
     [SerializeField] ClawVFX[] clawVFX;
-    [SerializeField] PlayerStalagmiteHolder stalagmiteHolder;
+    [SerializeField] PlayerStalagmiteHolder lineStalagmites;
+    [SerializeField] PlayerStalagmiteHolder circleStalagmites;
 
     //player scripts
     PlayerScript playerScript;
@@ -33,7 +34,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     //other scripts
     Animator frontAnimator;
     IceBreath iceBreath;
-    ElectricTrap electricTrap;
+    KnifeTrap knifeTrap;
     WeaponManager weaponManager;
 
 
@@ -61,7 +62,8 @@ public class PlayerAnimationEvents : MonoBehaviour
         weaponManager = GetComponentInParent<WeaponManager>();
         playerAttackHitEvents = GetComponent<PlayerAttackHitEvents>();
         iceBreath = playerScript.gameObject.GetComponentInChildren<IceBreath>();
-        stalagmiteHolder.gameObject.SetActive(true);
+        lineStalagmites.gameObject.SetActive(true);
+        circleStalagmites.gameObject.SetActive(true);
     }
 
     public void SwitchWeaponSprite(int weaponID)
@@ -108,15 +110,29 @@ public class PlayerAnimationEvents : MonoBehaviour
         }
     }
 
-    public void KnifeHeavy()
+    public void KnifeHeavy(AttackHit attackHit)
     {
-        if (electricTrap == null)
+        if (knifeTrap == null)
         {
-            electricTrap = ElectricTrap.Instantiate(electricTrapPrefab, playerScript, playerAbilities);
+            knifeTrap = KnifeTrap.Instantiate(attackHit.GetPrefab(playerData.equippedElements[2]), attackHit.GetProfile(playerData.equippedElements[2]), playerScript, playerAbilities);
+        }
+        else
+        {
+            knifeTrap.SetDamage();
         }
 
-        electricTrap.transform.position = transform.parent.position;
-        electricTrap.StartTimer();
+        knifeTrap.transform.position = transform.parent.position;
+        knifeTrap.StartTimer();
+    }
+
+    public void KnifeCombo2()
+    {
+        switch (playerData.equippedElements[2])
+        {
+            case WeaponElement.ICE:
+                circleStalagmites.TriggerWave();
+                break;
+        }
     }
 
     public void KnifeSpecialAttack()
@@ -303,7 +319,10 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void ElectricSmear()
     {
-        electricSmear.Play();
+        if(playerData.equippedElements[2] == WeaponElement.ELECTRICITY)
+        {
+            electricSmear.Play();
+        }
     }
 
     public void KnifeCombo1Vfx()
@@ -374,9 +393,9 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerScript.LoseStamina(profile.staminaCost);
     }
 
-    public void Stalagmites()
+    public void LineStalagmites()
     {
-        stalagmiteHolder.TriggerWave();
+        lineStalagmites.TriggerWave();
     }
 
     private void onPlayerStagger(object sender, EventArgs e)

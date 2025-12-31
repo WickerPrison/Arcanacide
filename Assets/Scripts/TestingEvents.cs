@@ -9,7 +9,7 @@ public class TestingEvents : MonoBehaviour
     public event EventHandler onFullyCharged;
     public event EventHandler onStartCharging;
     public event EventHandler onFaerieReturn;
-    public event EventHandler onElectricTrapDone;
+    public event EventHandler onKnifeTrapDone;
     public event EventHandler onIceBossDeathAnimation;
 
     public void AttackFalse()
@@ -32,9 +32,9 @@ public class TestingEvents : MonoBehaviour
         onFaerieReturn?.Invoke(this, EventArgs.Empty);
     }
 
-    public void ElectricTrapDone()
+    public void KnifeTrapDone()
     {
-        onElectricTrapDone?.Invoke(this, EventArgs.Empty);
+        onKnifeTrapDone?.Invoke(this, EventArgs.Empty);
     }
 
     public void IceBossDeathAnimation()

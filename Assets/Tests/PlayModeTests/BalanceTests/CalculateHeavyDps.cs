@@ -227,6 +227,7 @@ public class CalculateHeavyDps
     public IEnumerator CalculateKnifeHeavyCurve()
     {
         balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.KNIFE);
+        playerData.equippedElements[2] = WeaponElement.ELECTRICITY;
         int[] stats = { 1, 15, 30 };
         int[] health = { 120, 250, 400 };
         for (int i = 0; i < stats.Length; i++)
@@ -236,13 +237,33 @@ public class CalculateHeavyDps
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoKnifeHeavy(health[i], 2); ;
+            yield return DoKnifeHeavy(stats[i], health[i], 2, BalanceWeaponType.KNIFE);
         }
     }
 
-    IEnumerator DoKnifeHeavy(int health, int reportIndex)
+    [UnityTest]
+    public IEnumerator CalculateIceKnifeHeavyCurve()
     {
-        testingEvents.onElectricTrapDone += TestingEvents_onAttackFalse;
+        balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.ICEKNIFE);
+        playerData.equippedElements[2] = WeaponElement.ICE;
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoKnifeHeavy(stats[i], health[i], 6, BalanceWeaponType.ICEKNIFE);
+        }
+    }
+
+    IEnumerator DoKnifeHeavy(int stat, int health, int reportIndex, BalanceWeaponType type)
+    {
+        playerScript.maxStaminaDelay = 10000;
+        playerScript.staminaDelay = playerScript.maxStaminaDelay;
+        testingEvents.onKnifeTrapDone += TestingEvents_onAttackFalse;
         testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(2f, 0, -2f);
         testDummy.maxHealth = health;
@@ -257,11 +278,11 @@ public class CalculateHeavyDps
         ResetForNextAttack();
         float dps = healthCounter / seconds;
         float stamPerSec = staminaCounter / seconds;
-        balanceData.SetDps(playerData.strength, dps, BalanceAttackType.HEAVY, BalanceWeaponType.KNIFE);
+        balanceData.SetDps(stat, dps, BalanceAttackType.HEAVY, type);
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.HEAVY);
         balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.HEAVY);
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.HEAVY);
-        Debug.Log($"Knife Heavy DPS with {playerData.strength} Stat: {dps}");
+        Debug.Log($"{type} Heavy DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);
