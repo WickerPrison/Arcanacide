@@ -540,7 +540,9 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         else
         {
             beamVfx.ResetAimValue();
-            beamVfx.HideBeam();
+            Vector3 target = attackPoint.position - transform.position;
+            RaycastHit hit = beamVfx.BeamHitscan(beamOrigin[beamFrontOrBack].position, beamOrigin[beamFrontOrBack].position + target * 100);
+            beamVfx.SetPositions(beamOrigin[beamFrontOrBack].position, hit.point);
         }
     }
 
