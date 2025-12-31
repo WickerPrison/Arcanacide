@@ -6,18 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class IceBeamController : EnemyController
 {
-    LayerMask layerMask;
-    [SerializeField] LineRenderer line;
+    [SerializeField] BeamVfx beamVfx;
     Vector3 offset = new Vector3(0, 1.8f, 0);
-    Gradient gradient;
-    [SerializeField] LevelColor lazerColor;
-    [SerializeField] ColorData colorData;
-    Color blueColor;
-    float alpha = 1;
-    float aimValue;
-    float maxAimValue = 3;
-    float gradientOffset = .4f;
-    Vector3 away = new Vector3(100, 100, 100);
     int strafeLeftOrRight = -1;
     float strafeSpeed = 0.5f;
     Vector3 initialPosition;
@@ -33,18 +23,7 @@ public class IceBeamController : EnemyController
     public override void Start()
     {
         base.Start();
-        blueColor = colorData.GetColor(lazerColor);
-        HideBeam();
-
-        layerMask = LayerMask.GetMask("Default", "Player", "IFrames");
-
-        gradient = new Gradient();
-        GradientColorKey[] colorKey = { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(blueColor, 1.0f) };
-        GradientAlphaKey[] alphaKey = { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) };
-        gradient.SetKeys(colorKey, alphaKey);
-
-        aimValue = maxAimValue;
-
+        beamVfx.HideBeam();
         crystalStartPos = crystal.localPosition.y;
     }
 
@@ -70,54 +49,29 @@ public class IceBeamController : EnemyController
                 ShowBeam();
                 break;
             case EnemyState.DISABLED:
-                HideBeam();
+                beamVfx.HideBeam();
                 break;
         }
     }
 
     void ShowBeam()
     {
-        RaycastHit hit;
-        Physics.Linecast(transform.position, playerScript.transform.position, out hit, layerMask, QueryTriggerInteraction.Ignore);
+        RaycastHit hit = beamVfx.BeamHitscan(transform.position, playerScript.transform.position);
         initialPosition = transform.position + Vector3.up * 1.45f + Vector3.up * crystalFloatPos;
         initialPosition += (playerScript.transform.position - transform.position).normalized * .6f;
-        line.SetPosition(0, initialPosition);
 
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
-            line.SetPosition(1, playerScript.transform.position + offset);
-            aimValue -= Time.deltaTime; 
+            beamVfx.SetPositions(initialPosition, playerScript.transform.position + offset);
+            beamVfx.DecrementAimValue(Shoot);
             strafeLeftOrRight *= -1;
-            if(aimValue < -gradientOffset)
-            {
-                aimValue = maxAimValue;
-                Shoot();
-            }
         }
         else
         {
-            line.SetPosition(1, hit.point + offset);
-            aimValue = maxAimValue;
+            beamVfx.SetPositions(initialPosition, hit.point + offset);
+            beamVfx.ResetAimValue();
             Strafe();
         }
-
-        float aimRatio = aimValue / maxAimValue;
-
-        if(aimRatio < 1 - gradientOffset)
-        {
-            line.startColor = gradient.Evaluate(aimRatio + gradientOffset);
-        }
-        else
-        {
-            line.startColor = blueColor;
-        }
-        line.endColor = gradient.Evaluate(aimRatio);
-    }
-
-    void HideBeam()
-    {
-        line.SetPosition(0, away);
-        line.SetPosition(1, away);
     }
 
     IEnumerator ShotClock()
@@ -141,7 +95,7 @@ public class IceBeamController : EnemyController
             ParticleColorChange particleColorChange = projectile.GetComponent<ParticleColorChange>();
             particleColorChange.colorChange = true;
         }
-        HideBeam();
+        beamVfx.HideBeam();
         StartCoroutine(ShotClock());
     }
 
@@ -171,8 +125,7 @@ public class IceBeamController : EnemyController
 
     public override void StartDying()
     {
-        line.SetPosition(0, away);
-        line.SetPosition(1, away);
+        beamVfx.HideBeam();
         base.StartDying();
     }
 

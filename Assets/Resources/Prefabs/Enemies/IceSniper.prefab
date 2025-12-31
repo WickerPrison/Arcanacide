@@ -124,6 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3632259283690400312}
+  - component: {fileID: 1564920716009387353}
   - component: {fileID: 757851186523156980}
   m_Layer: 6
   m_Name: Beam
@@ -147,6 +148,23 @@ Transform:
   m_Father: {fileID: 4861411563786601193}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1564920716009387353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3087857369617576791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85aa7734865a2eb47898588c3e0c07f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lazerColor: 2
+  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 265
 --- !u!120 &757851186523156980
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -339,11 +357,13 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  enemySound: {fileID: 0}
   maxHealth: 100
   maxPoise: 60
   poiseRegeneration: 5
   invincible: 0
   enemyGUID: 
+  chargeResistance: 0
 --- !u!114 &3603301266689244227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,9 +387,7 @@ MonoBehaviour:
   spellAttackPoiseDamage: 15
   hitDamage: 0
   hitPoiseDamage: 0
-  line: {fileID: 757851186523156980}
-  lazerColor: 2
-  colorData: {fileID: 11400000, guid: d0bef6d22b8721642a01f37526b1185a, type: 2}
+  beamVfx: {fileID: 1564920716009387353}
   crystal: {fileID: 3601945029015279228}
   crystalFloatRate: 0.3
   crystalFloatAmp: 0.2
