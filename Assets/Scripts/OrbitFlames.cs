@@ -65,6 +65,10 @@ public class OrbitFlames : MonoBehaviour
 
     public void SpawnOrbitFlame(int i)
     {
+        if(orbitFlames[i] != null)
+        {
+            Destroy(orbitFlames[i].gameObject);
+        }
         orbitFlames[i] = OrbitFlame.Instantiate(orbitFlamePrefab, i * 120, 2, playerScript, RemoveOrbitFlame, attackProfile);
     }
 

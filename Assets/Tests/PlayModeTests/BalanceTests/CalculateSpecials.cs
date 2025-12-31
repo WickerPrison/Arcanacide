@@ -49,6 +49,7 @@ public class CalculateSpecials
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
         playerAbilities = playerAnimation.GetComponent<PlayerAbilities>();
         playerScript = playerAnimation.GetComponent<PlayerScript>();
+        playerScript.maxManaDelay = 100000;
         playerAttackHitEvents = playerScript.GetComponentInChildren<PlayerAttackHitEvents>();
         playerScript.testingEvents = testingEvents;
         testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
@@ -129,7 +130,6 @@ public class CalculateSpecials
         doneAttacking = true;
         yield return new WaitForSeconds(5);
         testDummy.Death();
-        testDummy2.Death();
     }
 
     [UnityTest]
@@ -204,7 +204,9 @@ public class CalculateSpecials
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);
+        testingEvents.onFaerieReturn -= TestingEvents_onFaerieReturn;
         testDummy.Death();
+        testDummy2.Death();
     }
 
     private void TestingEvents_onFaerieReturn(object sender, System.EventArgs e)
@@ -218,6 +220,7 @@ public class CalculateSpecials
         hitCounter++;
         manaCounter += playerData.maxMana - playerData.mana;
         playerData.mana = playerData.maxMana;
+        Debug.Log(Time.realtimeSinceStartup);
         playerAbilities.SpecialAttack();
     }
 

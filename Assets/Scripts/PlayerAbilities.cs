@@ -81,7 +81,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    bool knifeSpecialAttackOn = false;
+    [System.NonSerialized] public bool knifeSpecialAttackOn = false;
     bool knifeSpecialPaused = false;
     WaitForSeconds knifeSpecialPause = new WaitForSeconds(1);
     Vector3 away = Vector3.one * 100;
@@ -105,7 +105,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         trailManager = GetComponent<PlayerTrailManager>();
         patchEffects = GetComponent<PatchEffects>();
         weaponManager = GetComponent<WeaponManager>();
-        playerSound = GetComponentInChildren<PlayerSound>();;
+        playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
         beamVfx = GetComponentInChildren<BeamVfx>();
         beamVfx.SetMaxAimValue(specialAttackProfiles[6].maxChargeTime);

@@ -223,25 +223,28 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if(manaDelay <= 0)
+        if (!playerAbilities.knifeSpecialAttackOn)
         {
-            if(playerData.mana < playerData.maxMana)
+            if(manaDelay <= 0)
             {
-                float rechargeRateMod = 1;
-                if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
+                if(playerData.mana < playerData.maxMana)
                 {
-                    rechargeRateMod *= magicalAccelerationValue;
+                    float rechargeRateMod = 1;
+                    if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
+                    {
+                        rechargeRateMod *= magicalAccelerationValue;
+                    }
+                    if (patchEffects.deathAuraActive)
+                    {
+                        rechargeRateMod *= 2;
+                    }
+                    playerData.mana += Time.deltaTime * manaRechargeRate * rechargeRateMod;
                 }
-                if (patchEffects.deathAuraActive)
-                {
-                    rechargeRateMod *= 2;
-                }
-                playerData.mana += Time.deltaTime * manaRechargeRate * rechargeRateMod;
             }
-        }
-        else
-        {
-            manaDelay -= Time.deltaTime;
+            else
+            {
+                manaDelay -= Time.deltaTime;
+            }
         }
 
         if(playerData.healCharges < 0)
