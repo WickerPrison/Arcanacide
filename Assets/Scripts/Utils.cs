@@ -35,6 +35,14 @@ public static class Utils
         return newDirection;
     }
 
+    public static Vector3 RotateDirectionVertical(Vector3 oldDirection, float degrees)
+    {
+        Vector3 newDirection = Vector3.zero;
+        newDirection.x = Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.x - Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.y;
+        newDirection.y = Mathf.Sin(degrees * Mathf.Deg2Rad) * oldDirection.x + Mathf.Cos(degrees * Mathf.Deg2Rad) * oldDirection.y;
+        return newDirection;
+    }
+
     public static void DrawDebugCircle(int pointNum, float radius, Vector3 center, float duration = 5)
     {
         float percent = 360 / pointNum;

@@ -175,6 +175,25 @@ public class CalculateCombo2
         }
     }
 
+    [UnityTest]
+    public IEnumerator CalculateChaosClawsCombo2Curve()
+    {
+        balanceData.ClearDps(BalanceAttackType.COMBO2, BalanceWeaponType.CHAOSCLAWS);
+        int[] stats = { 1, 10, 20 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.strength = stats[i];
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            attacksCounter = 1;
+            yield return DoCombo2(BalanceWeaponType.CHAOSCLAWS, stats[i], health[i]);
+        }
+    }
+
     IEnumerator DoCombo2(BalanceWeaponType type, int stat, int health)
     {
         int reportIndex = BalanceTestUtils.weaponIndexDict[type];
