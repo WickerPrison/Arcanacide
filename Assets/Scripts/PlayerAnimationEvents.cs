@@ -140,6 +140,23 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerAbilities.KnifeSpecialAttack();
     }
 
+    public void ClawSpecialAttack(AttackHit attackHit)
+    {
+        switch (playerData.equippedElements[3])
+        {
+            case WeaponElement.ICE:
+                lineStalagmites.TriggerWave();
+                break;
+            case WeaponElement.CHAOS:
+                int count = attackHit.GetProfile(WeaponElement.CHAOS).boltNum;
+                for(int i = 0; i < count; i++)
+                {
+                    PlayerBubbles.Instantiate(attackHit.GetPrefab(WeaponElement.CHAOS), playerAbilities.transform.position, playerAbilities);
+                }
+                break;
+        }
+    }
+
     public void AttackFalse()
     {
         playerAnimation.EndChain();
@@ -391,11 +408,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void LoseStamina(AttackProfiles profile)
     {
         playerScript.LoseStamina(profile.staminaCost);
-    }
-
-    public void LineStalagmites()
-    {
-        lineStalagmites.TriggerWave();
     }
 
     private void onPlayerStagger(object sender, EventArgs e)
