@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
-  m_Name: ClawWaterfowl
+  m_Name: ChaosClawHeavy
   m_EditorClassIdentifier: 
-  hitbox: 2
+  hitbox: 1
   attackType: 1
-  element: 3
+  element: 4
   smearSpeed: 0
-  stepWithAttack: 0
-  halfConeAngle: 0
-  attackRange: 4.5
-  damageMultiplier: 0.6
-  magicDamageMultiplier: 0
-  poiseDamageMultiplier: 0.4
-  staminaCost: 0
-  chargeDamage: 1
+  stepWithAttack: 0.15
+  halfConeAngle: 45
+  attackRange: 2.5
+  damageMultiplier: 0.3
+  magicDamageMultiplier: 0.3
+  poiseDamageMultiplier: 0.8
+  staminaCost: 46
+  chargeDamage: 1.4
   fullChargeDamage: 0
-  maxChargeTime: 0
-  damageVariance: 0
+  maxChargeTime: 1.5
+  damageVariance: 0.7
   manaCost: 0
   specialValue: 0
   impactVFX: 1
@@ -36,8 +36,8 @@ MonoBehaviour:
   partialChargeBuildup: 0
   bonusEffectDuration: 0
   durationDOT: 0
-  staggerDuration: 0.1
-  screenShakeOnHit: {x: 0, y: 0}
+  staggerDuration: 0
+  screenShakeOnHit: {x: 0.15, y: 0.08}
   screenShakeNoHit: {x: 0, y: 0}
   soundOnHitEvent:
     Guid:
@@ -46,7 +46,7 @@ MonoBehaviour:
       Data3: 1309186218
       Data4: 1243437851
     Path: event:/SwordImpact
-  soundOnHitVolume: 0.5
+  soundOnHitVolume: 1
   noHitSoundEvent:
     Guid:
       Data1: -1119663120
@@ -56,6 +56,14 @@ MonoBehaviour:
     Path: event:/SwordSwoosh
   soundNoHitVolume: 1
   smearPositions: []
-  smearRotations: []
+  smearRotations:
+  - {x: -15, y: -10, z: 92}
+  - {x: -15, y: -10, z: 92}
+  - {x: -15, y: -10, z: 92}
+  - {x: -15, y: -10, z: 92}
   smearScales: []
-  secondClawRot: []
+  secondClawRot:
+  - {x: -15, y: 10, z: 90}
+  - {x: -15, y: 10, z: 90}
+  - {x: -15, y: 10, z: 90}
+  - {x: -15, y: 10, z: 90}

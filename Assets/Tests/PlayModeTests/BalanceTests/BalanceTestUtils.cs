@@ -13,6 +13,7 @@ public static class BalanceTestUtils
         { BalanceWeaponType.FIRESWORD, 4 },
         { BalanceWeaponType.ELECTRICLANTERN, 5 },
         { BalanceWeaponType.ICEKNIFE, 6 },
+        { BalanceWeaponType.CHAOSCLAWS, 7 },
     };
 
     public static Dictionary<BalanceWeaponType, WeaponElement> weaponElementDict = new Dictionary<BalanceWeaponType, WeaponElement>
@@ -24,5 +25,6 @@ public static class BalanceTestUtils
         { BalanceWeaponType.FIRESWORD, WeaponElement.FIRE },
         { BalanceWeaponType.ELECTRICLANTERN, WeaponElement.ELECTRICITY },
         { BalanceWeaponType.ICEKNIFE, WeaponElement.ICE },
+        { BalanceWeaponType.CHAOSCLAWS, WeaponElement.CHAOS },
     };
 }

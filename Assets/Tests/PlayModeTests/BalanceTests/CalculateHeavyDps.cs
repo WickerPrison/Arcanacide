@@ -293,6 +293,7 @@ public class CalculateHeavyDps
     public IEnumerator CalculateClawsHeavyCurve()
     {
         balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.CLAWS);
+        playerData.equippedElements[3] = WeaponElement.ICE;
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -309,6 +310,7 @@ public class CalculateHeavyDps
     public IEnumerator CalculateClawsHeavyNoChargeCurve()
     {
         balanceData.ClearDps(BalanceAttackType.HEAVY_NO_CHARGE, BalanceWeaponType.CLAWS);
+        playerData.equippedElements[3] = WeaponElement.ICE;
         int[] stats = { 1, 15, 30 };
         for (int i = 0; i < stats.Length; i++)
         {
@@ -318,6 +320,42 @@ public class CalculateHeavyDps
             hitCounter = 0;
             doneAttacking = false;
             yield return DoClawsHeavy(3, stats[i], BalanceWeaponType.CLAWS, BalanceAttackType.HEAVY_NO_CHARGE);
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator CalculateChaosClawsHeavyCurve()
+    {
+        balanceData.ClearDps(BalanceAttackType.HEAVY, BalanceWeaponType.CHAOSCLAWS);
+        playerData.equippedElements[3] = WeaponElement.CHAOS;
+        int[] stats = { 1, 10, 20 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.strength = stats[i];
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoClawsHeavy(7, stats[i], BalanceWeaponType.CHAOSCLAWS, BalanceAttackType.HEAVY);
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator CalculateChaosClawsHeavyNoChargeCurve()
+    {
+        balanceData.ClearDps(BalanceAttackType.HEAVY_NO_CHARGE, BalanceWeaponType.CHAOSCLAWS);
+        playerData.equippedElements[3] = WeaponElement.CHAOS;
+        int[] stats = { 1, 10, 20 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.strength = stats[i];
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoClawsHeavy(7, stats[i], BalanceWeaponType.CHAOSCLAWS, BalanceAttackType.HEAVY_NO_CHARGE);
         }
     }
 
@@ -358,7 +396,7 @@ public class CalculateHeavyDps
         balanceData.SetStamPerSecond(stamPerSec, reportIndex, attackType);
         balanceData.SetMaxDps(dps, reportIndex, attackType);
         balanceData.SetHitRate(hitCounter / seconds, reportIndex, attackType);
-        Debug.Log($"Sword Heavy DPS with {playerData.strength} Stat: {dps}");
+        Debug.Log($"{type} Heavy DPS with {stat} Stat: {dps}");
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);

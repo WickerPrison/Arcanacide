@@ -329,7 +329,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             if (playerData.currentWeapon == 1 && !lanternFairy.isInLantern) return;
             heavyAttackActive = true;
             rb.velocity = Vector3.zero;
-            playerAnimation.attacking = playerData.currentWeapon != 3;
+            playerAnimation.attacking = true;
             if (playerData.currentWeapon == 0 || playerData.currentWeapon == 3) playerAnimation.SetBool("chargeHeavy", true);
             playerAnimation.PlayAnimation("HeavyAttack", 0);
         }

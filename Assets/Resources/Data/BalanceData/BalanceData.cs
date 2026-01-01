@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum BalanceWeaponType
 {
-    SWORD, LANTERN, KNIFE, CLAWS, FIRESWORD, ELECTRICLANTERN, ICEKNIFE
+    SWORD, LANTERN, KNIFE, CLAWS, FIRESWORD, ELECTRICLANTERN, ICEKNIFE, CHAOSCLAWS
 }
 
 public enum BalanceAttackType

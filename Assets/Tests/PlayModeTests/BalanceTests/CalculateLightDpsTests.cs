@@ -64,6 +64,23 @@ public class CalculateLightDpsTests
     }
 
     [UnityTest]
+    public IEnumerator CalculateFireSwordLightCurve()
+    {
+        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.FIRESWORD);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            yield return DoLightCombo(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
+        }
+    }
+
+    [UnityTest]
     public IEnumerator CalculateLanternLightCurve()
     {
         balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.LANTERN);
@@ -150,19 +167,20 @@ public class CalculateLightDpsTests
     }
 
     [UnityTest]
-    public IEnumerator CalculateFireSwordLightCurve()
+    public IEnumerator CalculateChaosClawsLightCurve()
     {
-        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.FIRESWORD);
-        int[] stats = { 1, 15, 30 };
+        balanceData.ClearDps(BalanceAttackType.LIGHT, BalanceWeaponType.CHAOSCLAWS);
+        int[] stats = { 1, 10, 20 };
         int[] health = { 120, 250, 400 };
         for (int i = 0; i < stats.Length; i++)
         {
+            playerData.strength = stats[i];
             playerData.arcane = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
-            yield return DoLightCombo(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
+            yield return DoLightCombo(BalanceWeaponType.CHAOSCLAWS, stats[i], health[i]);
         }
     }
 
