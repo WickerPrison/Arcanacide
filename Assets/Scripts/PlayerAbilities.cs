@@ -174,6 +174,14 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         int totalDamage = physicalDamage + arcaneDamage;
         totalDamage = patchEffects.TotalDamageModifiers(totalDamage, attackProfile);
         totalDamage = DamageModifiers(totalDamage);
+        Debug.Log($"Before: {totalDamage}");
+        if(attackProfile.damageVariance != 0)
+        {
+            float variance = Random.Range(-attackProfile.damageVariance, attackProfile.damageVariance);
+            variance = totalDamage * variance;
+            totalDamage += Mathf.RoundToInt(variance);
+        }
+        Debug.Log($"After: {totalDamage}");
         return totalDamage; 
     }
 
