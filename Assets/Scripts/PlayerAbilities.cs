@@ -382,7 +382,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.SPECIAL_ATTACK)) return;
         AttackProfiles profile = specialAttackProfiles[weaponManager.WeaponArrayId(playerData.currentWeapon)];
         if (playerData.mana < profile.manaCost && playerData.currentWeapon != 2) return;
-
         if (playerMovement.CanInput() && playerScript.stamina > 0)
         {
             if (playerData.currentWeapon == 1)
@@ -393,7 +392,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             {
                 rb.velocity = Vector3.zero;
                 playerAnimation.attacking = true;
-                playerAnimation.PlayAnimation("SpecialAttack");
+                playerAnimation.PlayAnimation("SpecialAttack", 0);
             }
         }
     }

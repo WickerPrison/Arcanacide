@@ -62,4 +62,9 @@ public class ChargeIndicator : MonoBehaviour
         viewMesh.RecalculateNormals();
         coneRenderer.material = whiteMaterial;
     }
+
+    public void Hide()
+    {
+        coneRenderer.enabled = false;
+    }
 }

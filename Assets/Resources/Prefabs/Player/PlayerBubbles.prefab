@@ -51,13 +51,6 @@ MonoBehaviour:
     m_Bits: 64
   particleSys: {fileID: 9062167886793167247}
   randomRange: 3.5
-  sfx:
-    Guid:
-      Data1: 732274894
-      Data2: 1098832688
-      Data3: 1463058619
-      Data4: 395360419
-    Path: event:/ChaosBubbles
   attackProfile: {fileID: 11400000, guid: ca49d7096021b5c408adbb14e4aae917, type: 2}
 --- !u!1001 &1925834165481341763
 PrefabInstance:
@@ -128,6 +121,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8416532378285927942}
     m_Modifications:
+    - target: {fileID: 1857308648692655960, guid: 062e21af1fd4abe48bfa9cda548682c4, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2755179811363510356, guid: 062e21af1fd4abe48bfa9cda548682c4, type: 3}
       propertyPath: m_Name
       value: Bubbles

@@ -64,6 +64,8 @@ public class PlayerBubbles : MonoBehaviour
         indicator.finalPosition = hit2.point - direction * extensionLength;
         indicator.finalNormal = hit2.normal;
         indicator.indicatorWidth = chargeIndicatorWidth;
+        indicator.ReStart();
+        indicator.Hide();
 
         SetupParticleSystem();
 
@@ -96,7 +98,8 @@ public class PlayerBubbles : MonoBehaviour
 
         EnemyDetection();
         RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume);
-        yield return new WaitForSeconds(.8f);
+        indicator.Hide();
+        yield return new WaitForSeconds(1);
         Destroy(gameObject);
     }
 
