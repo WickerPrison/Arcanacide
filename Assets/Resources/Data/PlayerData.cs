@@ -226,6 +226,7 @@ public class PlayerData : ScriptableObject
         unlockedKnives.Add(WeaponElement.ICE);
 
         unlockedClaws.Clear();
+        unlockedClaws.Add(WeaponElement.ICE);
         unlockedClaws.Add(WeaponElement.CHAOS);
 
         equippedElements[0] = WeaponElement.DEFAULT;
