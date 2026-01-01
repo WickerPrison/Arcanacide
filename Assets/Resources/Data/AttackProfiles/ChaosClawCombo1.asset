@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c1382f0fe9b4440922b76cdd8e799e, type: 3}
+  m_Name: ChaosClawCombo1
+  m_EditorClassIdentifier: 
+  hitbox: 1
+  attackType: 1
+  element: 4
+  smearSpeed: 0
+  stepWithAttack: 0.15
+  halfConeAngle: 45
+  attackRange: 2.5
+  damageMultiplier: 1.3
+  magicDamageMultiplier: 1.3
+  poiseDamageMultiplier: 2
+  staminaCost: 46
+  chargeDamage: 0
+  fullChargeDamage: 0
+  maxChargeTime: 0
+  damageVariance: 0.7
+  manaCost: 0
+  specialValue: 0
+  impactVFX: 1
+  blockable: 1
+  boltNum: 0
+  electricChargeBuildup: 0
+  partialChargeBuildup: 0
+  bonusEffectDuration: 0
+  durationDOT: 0
+  staggerDuration: 0.2
+  screenShakeOnHit: {x: 0.15, y: 0.08}
+  screenShakeNoHit: {x: 0, y: 0}
+  soundOnHitEvent:
+    Guid:
+      Data1: 428314037
+      Data2: 1127108808
+      Data3: 1309186218
+      Data4: 1243437851
+    Path: event:/SwordImpact
+  soundOnHitVolume: 1
+  noHitSoundEvent:
+    Guid:
+      Data1: -1119663120
+      Data2: 1316255712
+      Data3: -94480492
+      Data4: -263120505
+    Path: event:/SwordSwoosh
+  soundNoHitVolume: 1
+  smearPositions: []
+  smearRotations:
+  - {x: -15, y: -10, z: -45}
+  - {x: -15, y: -10, z: -45}
+  - {x: -15, y: -10, z: -45}
+  - {x: -15, y: -10, z: -45}
+  smearScales: []
+  secondClawRot:
+  - {x: -15, y: 10, z: 225}
+  - {x: -15, y: 10, z: 225}
+  - {x: -15, y: 10, z: 225}
+  - {x: -15, y: 10, z: 225}
