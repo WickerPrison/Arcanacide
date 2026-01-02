@@ -133,6 +133,26 @@ public class MinibossV1Tests
     }
 
     [UnityTest]
+    public IEnumerator BladeAttacksStagger()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(2, 0, -2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(0.7f);
+        EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
+        enemyScript.LosePoise(1000);
+        yield return new WaitForSeconds(2);
+        Assert.IsTrue(minibossAbilities.AttackArcIsHidden());
+    }
+
+    [UnityTest]
     public IEnumerator BladeDash()
     {
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -147,6 +167,26 @@ public class MinibossV1Tests
         minibossAbilities.MeleeBlade();
         yield return new WaitForSeconds(5);
         Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator BladeDashStagger()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-6, 0, -6);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(2.2f);
+        EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
+        enemyScript.LosePoise(1000);
+        yield return new WaitForSeconds(2);
+        Assert.IsTrue(minibossAbilities.AttackArcIsHidden());
     }
 
     [UnityTest]

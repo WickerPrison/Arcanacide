@@ -100,6 +100,11 @@ public class AttackArcGenerator : MonoBehaviour
         coneRenderer.enabled = false;
     }
 
+    public bool AttackArcIsHidden()
+    {
+        return !coneRenderer.enabled;
+    }
+
     public void ColorArc()
     {
         coneRenderer.material = colorMaterial;
