@@ -106,7 +106,6 @@ public class Flamethrower : EnemyController
     public override void StartStagger(float staggerDuration)
     {
         base.StartStagger(staggerDuration);
-        attackArc.HideAttackArc();
         SpecialAbilityOff();
     }
 
@@ -132,6 +131,7 @@ public class Flamethrower : EnemyController
         frontFlameVFX.Stop();
         backFlameVFX.Stop();
         //enemySound.Stop();
+        attackArc.HideAttackArc();
         isShooting = false;
     }
 
