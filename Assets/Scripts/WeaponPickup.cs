@@ -25,7 +25,7 @@ public class WeaponPickup : MonoBehaviour
     {
         weaponID = Utils.GetWeaponIndex(weapon);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        if (playerData.unlockedWeapons.Contains(weaponID))
+        if (playerData.unlockedWeapons.Contains(weaponID) && playerData.GetWeaponUnlockList(weaponID).Contains(weaponElement))
         {
             Destroy(gameObject);
         }
@@ -58,6 +58,7 @@ public class WeaponPickup : MonoBehaviour
             if (!playerData.unlockedWeapons.Contains(weaponID))
             {
                 playerData.unlockedWeapons.Add(weaponID);
+                playerData.equippedElements[weaponID] = weaponElement;
             }
             playerData.GetElementList(weaponID).Add(weaponElement);
             playerData.newWeapon = true;

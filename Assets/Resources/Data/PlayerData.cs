@@ -125,6 +125,18 @@ public class PlayerData : ScriptableObject
         }
     }
 
+    public List<WeaponElement> GetWeaponUnlockList(int weapon)
+    {
+        switch (weapon)
+        {
+            case 0: return unlockedSwords;
+            case 1: return unlockedLanterns;
+            case 2: return unlockedKnives;
+            case 3: return unlockedClaws;
+            default: return null;
+        }
+    }
+
     public List<string> GetStringsFromElements(List<WeaponElement> weaponElements)
     {
         return weaponElements.Select(element => elementToString[element]).ToList();
