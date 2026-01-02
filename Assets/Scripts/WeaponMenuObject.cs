@@ -13,7 +13,7 @@ public class WeaponMenuObject : MonoBehaviour
     [SerializeField] Vector3 selectedPosition;
     [SerializeField] TextMeshProUGUI weaponName;
     [SerializeField] string[] weaponNames;
-    [SerializeField] GameObject[] bodies;
+    [SerializeField] WeaponDescriptionBody[] bodies;
     [SerializeField] PlayerData playerData;
     WeaponMenu weaponMenu;
     float ratio;

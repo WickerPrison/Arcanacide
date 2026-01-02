@@ -8,6 +8,7 @@ public class WeaponDescriptionBody : MonoBehaviour
     [SerializeField] List<RectTransform> sections;
     [SerializeField] PlayerData playerData;
     WeaponScroll weaponScroll;
+    Transform[] children;
 
     void Awake()
     {
@@ -34,6 +35,14 @@ public class WeaponDescriptionBody : MonoBehaviour
         {
             Vector3 bodyPosition = new Vector3(i * weaponScroll.bodySpacing - weaponScroll.position * weaponScroll.bodySpacing, 0, 0);
             StartCoroutine(weaponScroll.MoveObject(sections[i], bodyPosition, sections[i].localPosition, weaponScroll.scrollTime));
+        }
+    }
+
+    public void SetActive(bool active)
+    {
+        foreach(Transform child in transform)
+        {
+            child.gameObject.SetActive(active);
         }
     }
 
