@@ -43,6 +43,7 @@ Shader "Unlit/Pustule"
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
                 float3 normal : TEXCOORD1;
+                float3 worldPos : TEXCOORD3;
             };
 
             float4 _Color;
@@ -61,6 +62,7 @@ Shader "Unlit/Pustule"
             {
                 v2f o;
                 o.uv = v.uv;
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.normal = UnityObjectToWorldNormal(v.normals);
                 return o;
@@ -73,7 +75,7 @@ Shader "Unlit/Pustule"
 
            
                 float time = _Time.y + _PerlinTime;
-                float2 perlinUV1 = float2(i.uv.x + time * 1.1 * _PerlinSpeed, i.uv.y + time * _PerlinSpeed);
+                float2 perlinUV1 = float2(i.worldPos.x + time * 1.1 * _PerlinSpeed, i.worldPos.y + time * _PerlinSpeed);
                 float4 perlin1 = 1 - tex2D(_PerlinTex, perlinUV1 / _PerlinSize);
 
                 float2 perlinUV2 = float2(i.uv.y - time * 1.1 * _PerlinSpeed, i.uv.x - time * _PerlinSpeed);

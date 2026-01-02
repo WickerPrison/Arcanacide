@@ -70,6 +70,24 @@ public class CalculateCombo1
     }
 
     [UnityTest]
+    public IEnumerator CalculateFireSwordCombo1Curve()
+    {
+        balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.FIRESWORD);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            doneAttacking = false;
+            attacksCounter = 1;
+            yield return DoCombo1(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
+        }
+    }
+
+    [UnityTest]
     public IEnumerator CalculateLanternCombo1Curve()
     {
         balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.LANTERN);
@@ -163,20 +181,21 @@ public class CalculateCombo1
     }
 
     [UnityTest]
-    public IEnumerator CalculateFireSwordCombo1Curve()
+    public IEnumerator CalculateChaosClawsCombo1Curve()
     {
-        balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.FIRESWORD);
-        int[] stats = { 1, 15, 30 };
+        balanceData.ClearDps(BalanceAttackType.COMBO1, BalanceWeaponType.CHAOSCLAWS);
+        int[] stats = { 1, 10, 20 };
         int[] health = { 120, 250, 400 };
         for (int i = 0; i < stats.Length; i++)
         {
+            playerData.strength = stats[i];
             playerData.arcane = stats[i];
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
             doneAttacking = false;
             attacksCounter = 1;
-            yield return DoCombo1(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
+            yield return DoCombo1(BalanceWeaponType.CHAOSCLAWS, stats[i], health[i]);
         }
     }
 

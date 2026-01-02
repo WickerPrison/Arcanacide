@@ -70,6 +70,8 @@ public class CalculateSpecials
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.SWORD, stats[i], health[i]);
         }
@@ -89,6 +91,8 @@ public class CalculateSpecials
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
         }
@@ -147,6 +151,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoLanternSpecial(stats[i], health[i], 1, BalanceWeaponType.LANTERN);
         }
@@ -168,6 +173,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoLanternSpecial(stats[i], health[i], 5, BalanceWeaponType.ELECTRICLANTERN);
         }
@@ -220,7 +226,6 @@ public class CalculateSpecials
         hitCounter++;
         manaCounter += playerData.maxMana - playerData.mana;
         playerData.mana = playerData.maxMana;
-        Debug.Log(Time.realtimeSinceStartup);
         playerAbilities.SpecialAttack();
     }
 
@@ -239,6 +244,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoKnifeSpecial(stats[i], health[i], 2, BalanceWeaponType.KNIFE);
         }
@@ -259,6 +265,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoKnifeSpecial(stats[i], health[i], 6, BalanceWeaponType.ICEKNIFE);
         }
@@ -302,6 +309,83 @@ public class CalculateSpecials
         testDummy.Death();
     }
 
+    [UnityTest]
+    public IEnumerator CalculateClawSpecialCurve()
+    {
+        currentWeaponType = BalanceWeaponType.CLAWS;
+        playerData.equippedElements[3] = WeaponElement.ICE;
+        currentWeaponType = BalanceWeaponType.CLAWS;
+        balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.CLAWS);
+        int[] stats = { 1, 15, 30 };
+        int[] health = { 120, 250, 400 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.strength = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            manaCounter = 0;
+            doneAttacking = false;
+            yield return DoClawsSpecial(stats[i], health[i], 3, BalanceWeaponType.CLAWS);
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator CalculateChaosClawSpecialCurve()
+    {
+        currentWeaponType = BalanceWeaponType.CHAOSCLAWS;
+        playerData.equippedElements[3] = WeaponElement.CHAOS;
+        currentWeaponType = BalanceWeaponType.CHAOSCLAWS;
+        balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.CHAOSCLAWS);
+        int[] stats = { 1, 10, 20 };
+        int[] health = { 1200, 2500, 4000 };
+        for (int i = 0; i < stats.Length; i++)
+        {
+            playerData.strength = stats[i];
+            playerData.arcane = stats[i];
+            staminaCounter = 0;
+            healthCounter = 0;
+            hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            manaCounter = 0;
+            doneAttacking = false;
+            yield return DoClawsSpecial(stats[i], health[i], 7, BalanceWeaponType.CHAOSCLAWS);
+        }
+    }
+
+    IEnumerator DoClawsSpecial(int stat, int health, int reportIndex, BalanceWeaponType type)
+    {
+        testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
+        testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy.transform.position = new Vector3(4.5f, 0, -3.5f);
+        testDummy.maxHealth = health;
+        testDummy.health = testDummy.maxHealth;
+
+        yield return null;
+        playerData.currentWeapon = 0;
+        weaponManager.SwitchWeapon(3);
+        yield return new WaitForSeconds(2);
+        playerAbilities.SpecialAttack();
+        float seconds = 60;
+        yield return new WaitForSeconds(seconds);
+        float dps = healthCounter / seconds;
+        float stamPerSec = staminaCounter / seconds;
+        float manaPerSec = manaCounter / seconds;
+        balanceData.SetDps(stat, dps, BalanceAttackType.SPECIAL, type);
+        balanceData.SetStamPerSecond(stamPerSec, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetMaxDps(dps, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetHitRate(hitCounter / seconds, reportIndex, BalanceAttackType.SPECIAL);
+        balanceData.SetSpecialManaPerSec(manaPerSec, reportIndex);
+        Debug.Log($"{type} Special DPS with {stat} Stat: {dps}");
+        Debug.Log($"Stamina Per Second: {stamPerSec}");
+        doneAttacking = true;
+        yield return new WaitForSeconds(5);
+        testingEvents.onFaerieReturn -= TestingEvents_onAttackFalse;
+        testDummy.Death();
+    }
+
+
     private void TestingEvents_onAttackFalse(object sender, System.EventArgs e)
     {
         ResetForNextAttack();
@@ -325,6 +409,12 @@ public class CalculateSpecials
                 case BalanceWeaponType.FIRESWORD:
                     playerAbilities.Attack();
                     playerData.swordSpecialTimer = 100;
+                    break;
+                case BalanceWeaponType.CLAWS:
+                case BalanceWeaponType.CHAOSCLAWS:
+                    manaCounter += playerData.maxMana - playerData.mana;
+                    playerData.mana = playerData.maxMana;
+                    playerAbilities.SpecialAttack();
                     break;
 
             }

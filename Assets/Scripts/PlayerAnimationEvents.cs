@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+using FMODUnity;
 
 public class PlayerAnimationEvents : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] ClawVFX[] clawVFX;
     [SerializeField] PlayerStalagmiteHolder lineStalagmites;
     [SerializeField] PlayerStalagmiteHolder circleStalagmites;
+    [SerializeField] Transform[] breathOrigin;
 
     //player scripts
     PlayerScript playerScript;
@@ -138,6 +140,23 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void KnifeSpecialAttack()
     {
         playerAbilities.KnifeSpecialAttack();
+    }
+
+    public void ClawSpecialAttack(AttackHit attackHit)
+    {
+        switch (playerData.equippedElements[3])
+        {
+            case WeaponElement.ICE:
+                lineStalagmites.TriggerWave();
+                break;
+            case WeaponElement.CHAOS:
+                int count = attackHit.GetProfile(WeaponElement.CHAOS).boltNum;
+                for(int i = 0; i < count; i++)
+                {
+                    PlayerBubbles.Instantiate(attackHit.GetPrefab(WeaponElement.CHAOS), playerAbilities.transform.position, playerAbilities);
+                }
+                break;
+        }
     }
 
     public void AttackFalse()
@@ -331,6 +350,32 @@ public class PlayerAnimationEvents : MonoBehaviour
         playerEvents.KnifeCombo1Vfx(direction, playerAnimation.facingFront);
     }
 
+    public void ClawCombo2(AttackHit attackHit)
+    {
+        AttackProfiles attackProfile = attackHit.GetProfile(playerData.equippedElements[3]);
+        switch (attackProfile.element)
+        {
+            case WeaponElement.ICE:
+                IceBreath();
+                break;
+            case WeaponElement.CHAOS:
+                playerScript.LoseStamina(attackProfile.staminaCost);
+                int index = playerAnimation.facingDirection > 1 ? 1 : 0;
+                Vector3 position = breathOrigin[index].position;
+                int count = UnityEngine.Random.Range(1, 12);
+                for(int i = 0; i < count; i++)
+                {
+                    Vector3 direction = playerMovement.attackPoint.position - playerMovement.transform.position;
+                    float angle = UnityEngine.Random.Range(-attackProfile.halfConeAngle, attackProfile.halfConeAngle);
+                    direction = Utils.RotateDirection(direction, angle);
+                    direction.y = UnityEngine.Random.Range(-0.2f, 0.2f);
+                    PlayerProjectileStraight.Instantiate(attackHit.GetPrefab(WeaponElement.CHAOS), position, direction.normalized, attackProfile, playerAbilities);
+                    RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
+                }
+                break;
+        }
+    }
+
     public void IceBreath()
     {
         playerEvents.IceBreath();
@@ -391,11 +436,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void LoseStamina(AttackProfiles profile)
     {
         playerScript.LoseStamina(profile.staminaCost);
-    }
-
-    public void LineStalagmites()
-    {
-        lineStalagmites.TriggerWave();
     }
 
     private void onPlayerStagger(object sender, EventArgs e)

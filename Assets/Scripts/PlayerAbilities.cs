@@ -174,6 +174,12 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         int totalDamage = physicalDamage + arcaneDamage;
         totalDamage = patchEffects.TotalDamageModifiers(totalDamage, attackProfile);
         totalDamage = DamageModifiers(totalDamage);
+        if(attackProfile.damageVariance != 0)
+        {
+            float variance = Random.Range(-attackProfile.damageVariance, attackProfile.damageVariance);
+            variance = totalDamage * variance;
+            totalDamage += Mathf.RoundToInt(variance);
+        }
         return totalDamage; 
     }
 
@@ -321,7 +327,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             if (playerData.currentWeapon == 1 && !lanternFairy.isInLantern) return;
             heavyAttackActive = true;
             rb.velocity = Vector3.zero;
-            playerAnimation.attacking = playerData.currentWeapon != 3;
+            playerAnimation.attacking = true;
             if (playerData.currentWeapon == 0 || playerData.currentWeapon == 3) playerAnimation.SetBool("chargeHeavy", true);
             playerAnimation.PlayAnimation("HeavyAttack", 0);
         }
@@ -374,7 +380,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.SPECIAL_ATTACK)) return;
         AttackProfiles profile = specialAttackProfiles[weaponManager.WeaponArrayId(playerData.currentWeapon)];
         if (playerData.mana < profile.manaCost && playerData.currentWeapon != 2) return;
-
         if (playerMovement.CanInput() && playerScript.stamina > 0)
         {
             if (playerData.currentWeapon == 1)
@@ -385,7 +390,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             {
                 rb.velocity = Vector3.zero;
                 playerAnimation.attacking = true;
-                playerAnimation.PlayAnimation("SpecialAttack");
+                playerAnimation.PlayAnimation("SpecialAttack", 0);
             }
         }
     }
