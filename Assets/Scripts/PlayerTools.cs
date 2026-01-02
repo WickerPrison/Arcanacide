@@ -6,6 +6,7 @@ using UnityEngine;
 
 public static class PlayerTools
 {
+#if UNITY_EDITOR
     static PlayerData _playerData;
     static PlayerData playerData
     {
@@ -43,8 +44,7 @@ public static class PlayerTools
         playerData.equippedElements[2] = WeaponElement.ELECTRICITY;
         playerData.equippedElements[3] = WeaponElement.ICE;
         playerData.currentWeapon = 0;
-#if UNITY_EDITOR
         EditorUtility.SetDirty(playerData);
-#endif
     }
+#endif
 }
