@@ -727,4 +727,9 @@ public class MinibossAbilities : MonoBehaviour
         attackArc.HideAttackArc();
         StopAllCoroutines();
     }
+
+    public bool AttackArcIsHidden()
+    {
+        return attackArc.AttackArcIsHidden();
+    }
 }
