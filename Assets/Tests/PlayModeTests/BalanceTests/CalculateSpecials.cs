@@ -70,6 +70,8 @@ public class CalculateSpecials
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.SWORD, stats[i], health[i]);
         }
@@ -89,6 +91,8 @@ public class CalculateSpecials
             staminaCounter = 0;
             healthCounter = 0;
             hitCounter = 0;
+            playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoLightCombo(BalanceWeaponType.FIRESWORD, stats[i], health[i]);
         }
@@ -147,6 +151,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoLanternSpecial(stats[i], health[i], 1, BalanceWeaponType.LANTERN);
         }
@@ -168,6 +173,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoLanternSpecial(stats[i], health[i], 5, BalanceWeaponType.ELECTRICLANTERN);
         }
@@ -238,6 +244,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoKnifeSpecial(stats[i], health[i], 2, BalanceWeaponType.KNIFE);
         }
@@ -258,6 +265,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoKnifeSpecial(stats[i], health[i], 6, BalanceWeaponType.ICEKNIFE);
         }
@@ -317,6 +325,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoClawsSpecial(stats[i], health[i], 3, BalanceWeaponType.CLAWS);
         }
@@ -330,7 +339,7 @@ public class CalculateSpecials
         currentWeaponType = BalanceWeaponType.CHAOSCLAWS;
         balanceData.ClearDps(BalanceAttackType.SPECIAL, BalanceWeaponType.CHAOSCLAWS);
         int[] stats = { 1, 10, 20 };
-        int[] health = { 120, 250, 400 };
+        int[] health = { 1200, 2500, 4000 };
         for (int i = 0; i < stats.Length; i++)
         {
             playerData.strength = stats[i];
@@ -339,6 +348,7 @@ public class CalculateSpecials
             healthCounter = 0;
             hitCounter = 0;
             playerData.mana = playerData.maxMana;
+            manaCounter = 0;
             doneAttacking = false;
             yield return DoClawsSpecial(stats[i], health[i], 7, BalanceWeaponType.CHAOSCLAWS);
         }

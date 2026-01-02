@@ -359,6 +359,7 @@ public class PlayerAnimationEvents : MonoBehaviour
                 IceBreath();
                 break;
             case WeaponElement.CHAOS:
+                playerScript.LoseStamina(attackProfile.staminaCost);
                 int index = playerAnimation.facingDirection > 1 ? 1 : 0;
                 Vector3 position = breathOrigin[index].position;
                 int count = UnityEngine.Random.Range(1, 12);
