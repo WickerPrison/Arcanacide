@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class EmblemMenu : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EmblemMenu : MonoBehaviour
     [SerializeField] GameObject equipEmblemPrefab;
     [SerializeField] Transform canvas;
     [SerializeField] GameObject noEmblemsMessage;
+    [SerializeField] TextMeshProUGUI patchCount;
     public Transform content;
     [SerializeField] ScrollRect scrollRect;
     public GameObject leaveButton;
@@ -38,6 +40,7 @@ public class EmblemMenu : MonoBehaviour
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
         EventSystem.current.SetSelectedGameObject(null);
         SpawnEmblems();
+        UpdatePatchCount();
         if(playerData.patches.Count > 0)
         {
             EventSystem.current.SetSelectedGameObject(buttons[0]);
@@ -131,6 +134,11 @@ public class EmblemMenu : MonoBehaviour
         {
             scrollRect.verticalNormalizedPosition = 0;
         }
+    }
+
+    public void UpdatePatchCount()
+    {
+        patchCount.text = $"{playerData.equippedPatches.Count} / {playerData.maxPatches}";
     }
 
     private void OnEnable()

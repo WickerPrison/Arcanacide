@@ -66,6 +66,7 @@ public class EquipEmblem : MonoBehaviour
     void EmblemEquip()
     {
         playerData.equippedPatches.Add(patchName);
+        emblemMenu.UpdatePatchCount();
         StopAllCoroutines();
         box.transform.localPosition = boxPosition;
         StartCoroutine(ScaleAnimation(check.transform.localScale, maxCheckSize));
@@ -74,6 +75,7 @@ public class EquipEmblem : MonoBehaviour
     void EmblemUnequip()
     {
         playerData.equippedPatches.Remove(patchName);
+        emblemMenu.UpdatePatchCount();
         StopAllCoroutines();
         box.transform.localPosition = boxPosition;
         StartCoroutine(ScaleAnimation(check.transform.localScale, Vector3.zero));

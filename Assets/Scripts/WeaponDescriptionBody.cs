@@ -37,6 +37,14 @@ public class WeaponDescriptionBody : MonoBehaviour
         }
     }
 
+    public void SetActive(bool active)
+    {
+        foreach(Transform child in transform)
+        {
+            child.gameObject.SetActive(active);
+        }
+    }
+
     private void OnEnable()
     {
         weaponScroll.onScroll += WeaponScroll_onScroll;
