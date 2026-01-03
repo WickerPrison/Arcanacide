@@ -20,7 +20,7 @@ public class WeaponScroll : MonoBehaviour
     [System.NonSerialized] public int position = 0;
     float ratio;
     float smallerScale = 0.7f;
-    [System.NonSerialized] public float scrollTime = 0.5f;
+    [System.NonSerialized] public float scrollTime = 0.2f;
     int maxPosition = 3;
     public event EventHandler onScroll;
 

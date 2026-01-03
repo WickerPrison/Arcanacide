@@ -11,7 +11,7 @@ public class WeaponMenuDots : MonoBehaviour
     [SerializeField] MapData mapData;
     Vector3 bigScale = new Vector3(0.14f, 0.14f, 0.14f);
     Vector3 smallScale = new Vector3(0.08f, 0.08f, 0.08f);
-    float transitionTime = 0.25f;
+    float transitionTime = 0.2f;
 
     void Awake()
     {
@@ -23,7 +23,7 @@ public class WeaponMenuDots : MonoBehaviour
         for (int i = 0; i < dots.Count; i++)
         {
             int diff = i - weaponScroll.position;
-            dots[i].rectTransform.localPosition = SetXPos(dots[i].rectTransform.localPosition, diff * dotSpacing);
+            //dots[i].rectTransform.localPosition = SetXPos(dots[i].rectTransform.localPosition, diff * dotSpacing);
             if (diff == 0)
             {
                 dots[i].rectTransform.localScale = bigScale;
@@ -45,7 +45,7 @@ public class WeaponMenuDots : MonoBehaviour
             int diff = i - weaponScroll.position;
             Vector3 dotPosition = SetXPos(dots[i].rectTransform.localPosition, diff * dotSpacing);
 
-            StartCoroutine(MoveDot(dots[i], dotPosition, diff == 0));
+            StartCoroutine(MoveDot(dots[i], dots[i].rectTransform.localPosition, diff == 0));
         }
     }
 
@@ -57,6 +57,10 @@ public class WeaponMenuDots : MonoBehaviour
         Vector3 startScale = dot.rectTransform.localScale;
         Vector3 endScale = isSelected ? bigScale : smallScale;
         dot.color = Color.white;
+        if (isSelected)
+        {
+            dot.color = mapData.floorColor;
+        }
         while (timer > 0)
         {
             timer -= Time.unscaledDeltaTime;
@@ -64,10 +68,6 @@ public class WeaponMenuDots : MonoBehaviour
             dot.rectTransform.localPosition = Vector3.Lerp(destination, startPos, ratio);
             dot.rectTransform.localScale = Vector3.Lerp(endScale, startScale, ratio);
             yield return new WaitForEndOfFrame();
-        }
-        if (isSelected)
-        {
-            dot.color = mapData.floorColor;
         }
         dot.rectTransform.localPosition = destination;
     }

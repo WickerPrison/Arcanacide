@@ -41,7 +41,7 @@ public class WeaponMenu : MonoBehaviour
     float vibrateAmp = 5;
     float vibrateFreq = 40;
     float timer;
-    [System.NonSerialized] public float transitionTime = 0.5f;
+    [System.NonSerialized] public float transitionTime = 0.35f;
     float ratio;
     bool movingIcon = false;
 
