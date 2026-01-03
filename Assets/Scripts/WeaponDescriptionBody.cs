@@ -8,7 +8,6 @@ public class WeaponDescriptionBody : MonoBehaviour
     [SerializeField] List<RectTransform> sections;
     [SerializeField] PlayerData playerData;
     WeaponScroll weaponScroll;
-    Transform[] children;
 
     void Awake()
     {
