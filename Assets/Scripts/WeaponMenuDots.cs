@@ -10,7 +10,7 @@ public class WeaponMenuDots : MonoBehaviour
     [SerializeField] float dotSpacing;
     [SerializeField] MapData mapData;
     Vector3 bigScale = new Vector3(0.14f, 0.14f, 0.14f);
-    Vector3 smallScale = new Vector3(0.1f, 0.1f, 0.1f);
+    Vector3 smallScale = new Vector3(0.08f, 0.08f, 0.08f);
     float transitionTime = 0.25f;
 
     void Awake()
