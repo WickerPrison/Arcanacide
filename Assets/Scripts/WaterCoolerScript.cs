@@ -61,7 +61,7 @@ public class WaterCoolerScript : MonoBehaviour
     {
         if(playerDistance <= interactDistance && !hasBeenUsed)
         {
-            playerData.maxMana += 25;
+            playerData.maxMana += 15;
             hasBeenUsed = true;
             mapData.usedCoolers.Add(coolerID);
             hud.MaxManaIncreased();

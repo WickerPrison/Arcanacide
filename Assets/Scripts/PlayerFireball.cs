@@ -86,6 +86,7 @@ public class PlayerFireball : PlayerProjectile
 
     IEnumerator KillCoroutine()
     {
+        hitCollider.enabled = false;
         yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }

@@ -83,7 +83,7 @@ public class IceHammerController : EnemyController
 
     public void HammerSmashImpact()
     {
-        bool playerInRange = Vector3.Distance(playerScript.transform.position, facePlayer.attackPoint.position) <= radius;
+        bool playerInRange = Vector3.Distance(playerScript.transform.position, jumpIndicator.transform.position) <= radius;
         if (playerInRange)
         {
             playerScript.HitPlayer(() =>
@@ -103,7 +103,7 @@ public class IceHammerController : EnemyController
 
     public void JumpSmashImpact()
     {
-        bool playerInRange = Vector3.Distance(playerScript.transform.position, facePlayer.attackPoint.position) <= radius;
+        bool playerInRange = Vector3.Distance(playerScript.transform.position, jumpIndicator.transform.position) <= radius;
         if (playerInRange)
         {
             playerScript.HitPlayer(() =>
