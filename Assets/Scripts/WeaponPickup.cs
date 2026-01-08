@@ -10,6 +10,7 @@ public class WeaponPickup : MonoBehaviour
     [SerializeField] PlayerWeapon weapon;
     [SerializeField] WeaponElement weaponElement;
     [SerializeField] float interactDistance = 2;
+    GameManager gm;
     int weaponID;
     Transform player;
     InputManager im;
@@ -19,6 +20,7 @@ public class WeaponPickup : MonoBehaviour
     private void Awake()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
+        gm = im.GetComponent<GameManager>();
     }
 
     void Start()
@@ -36,7 +38,7 @@ public class WeaponPickup : MonoBehaviour
     {
         playerDistance = Vector3.Distance(transform.position, player.position);
 
-        if (playerDistance <= interactDistance)
+        if (playerDistance <= interactDistance && gm.awareEnemies <= 0)
         {
             message.SetActive(true);
         }
@@ -53,7 +55,7 @@ public class WeaponPickup : MonoBehaviour
 
     public void PerformPickup()
     {
-        if (playerDistance <= interactDistance)
+        if (playerDistance <= interactDistance && gm.awareEnemies <= 0)
         {
             if (!playerData.unlockedWeapons.Contains(weaponID))
             {
