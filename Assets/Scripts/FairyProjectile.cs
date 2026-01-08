@@ -22,10 +22,10 @@ public class FairyProjectile : MonoBehaviour
     bool selfDestructed = false;
     bool instantiatedCorrectly = false;
 
-    public static FairyProjectile Instantiate(GameObject prefab, Vector3 position, Vector3 direction, ExternalLanternFairy lanternFairy, PlayerAbilities playerAbilities, AttackProfiles attackProfile)
+    public static FairyProjectile Instantiate(GameObject prefab, Vector3 direction, ExternalLanternFairy lanternFairy, PlayerAbilities playerAbilities, AttackProfiles attackProfile)
     {
         FairyProjectile fairyProjectile = Instantiate(prefab).GetComponent<FairyProjectile>();
-        fairyProjectile.transform.position = position;
+        fairyProjectile.transform.position = lanternFairy.GetInternalLanternPosition();
         fairyProjectile.direction = direction;
         fairyProjectile.lanternFairy = lanternFairy;
         fairyProjectile.playerAbilities = playerAbilities;

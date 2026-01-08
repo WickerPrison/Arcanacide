@@ -18,7 +18,6 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     [SerializeField] Transform[] boltsOrigin;
     [SerializeField] Transform[] beamOrigin;
     [SerializeField] ExternalLanternFairy lanternFairy;
-    [SerializeField] Transform[] internalLanternFairies;
     [SerializeField] GameObject fairyProjectilePrefab;
     [SerializeField] GameObject fireRainPrefab;
     [SerializeField] GameObject skyBoltPrefab;
@@ -370,9 +369,8 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     public void LanternHeavy(AttackProfiles profile)
     {
         playerScript.LoseStamina(profile.staminaCost);
-        Vector3 position = playerAnimation.facingFront ? internalLanternFairies[0].transform.position : internalLanternFairies[1].transform.position;
         Vector3 direction = attackPoint.position - transform.position;
-        FairyProjectile.Instantiate(fairyProjectilePrefab, position, direction, lanternFairy, this, profile);
+        FairyProjectile.Instantiate(fairyProjectilePrefab, direction, lanternFairy, this, profile);
     }
 
     public void SpecialAttack()

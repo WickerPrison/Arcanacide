@@ -6,6 +6,7 @@ public class ExternalLanternFairy : MonoBehaviour
 {
     [SerializeField] SpriteRenderer[] lanternFairies;
     [SerializeField] Transform attackPoint;
+    [SerializeField] PlayerData playerData;
     Transform movePoint;
     PlayerEvents playerEvents;
     PlayerAnimation playerAnimation;
@@ -42,14 +43,7 @@ public class ExternalLanternFairy : MonoBehaviour
     {
         if (returning)
         {
-            if (playerAnimation.facingFront)
-            {
-                movePoint.position = lanternFairies[0].transform.position;
-            }
-            else
-            {
-                movePoint.position = lanternFairies[1].transform.position;
-            }
+            movePoint.position = GetInternalLanternPosition();
         }
 
 
@@ -86,15 +80,7 @@ public class ExternalLanternFairy : MonoBehaviour
     private void StartLanternSpecial(object sender, AttackProfiles attackProfile)
     {
         isDoingSpecial = true;
-        if (playerAnimation.facingFront)
-        {
-            transform.position = lanternFairies[0].transform.position;
-        }
-        else
-        {
-            transform.position = lanternFairies[1].transform.position;
-        }
-
+        transform.position = GetInternalLanternPosition();
         spriteRenderer.enabled = true;
         trail.Play();
         ToggleSprites(false);
@@ -105,15 +91,7 @@ public class ExternalLanternFairy : MonoBehaviour
     private void StartLanternCombo(object sender, System.EventArgs e)
     {
         comboState = ComboState.START;
-        if (playerAnimation.facingFront)
-        {
-            transform.position = lanternFairies[0].transform.position;
-        }
-        else
-        {
-            transform.position = lanternFairies[1].transform.position;
-        }
-
+        transform.position = GetInternalLanternPosition();
         spriteRenderer.enabled = true;
         trail.Play();
         ToggleSprites(false);
@@ -123,16 +101,7 @@ public class ExternalLanternFairy : MonoBehaviour
     public void EndLanternCombo()
     {
         comboState = ComboState.OFF;
-        Vector3 destination;
-        if (playerAnimation.facingFront)
-        {
-            destination = lanternFairies[0].transform.position;
-        }
-        else
-        {
-            destination = lanternFairies[1].transform.position;
-        }
-        Return(destination);
+        Return(GetInternalLanternPosition());
     }
 
     public void Return(Vector3 position)
@@ -156,16 +125,18 @@ public class ExternalLanternFairy : MonoBehaviour
     {
         if (isInLantern || isDoingSpecial || comboState != ComboState.OFF) return;
 
-        Vector3 destination;
-        if (playerAnimation.facingFront)
+        Return(GetInternalLanternPosition());
+    }
+
+    public Vector3 GetInternalLanternPosition()
+    {
+        return (playerAnimation.facingFront, playerData.equippedElements[1]) switch
         {
-            destination = lanternFairies[0].transform.position;
-        }
-        else
-        {
-            destination = lanternFairies[1].transform.position;
-        }
-        Return(destination);
+            (true, WeaponElement.FIRE) => lanternFairies[0].transform.position,
+            (false, WeaponElement.FIRE) => lanternFairies[1].transform.position,
+            (true, WeaponElement.ELECTRICITY) => lanternFairies[2].transform.position,
+            (false, WeaponElement.ELECTRICITY) => lanternFairies[3].transform.position,
+        };
     }
 
     private void OnEnable()
