@@ -54,6 +54,21 @@ public class IceBossTests
     }
 
     [UnityTest]
+    public IEnumerator RingBlast()
+    {
+        SpawnFrank();
+        hud.EnableBossHealthbar(enemyScript.GetComponent<EnemyEvents>());
+        yield return null;
+        dialogue.CloseDialogue();
+        yield return null;
+        yield return BossTransition(3);
+        bossController.StartRingBlast();
+        bossController.attackTime = 1000;
+        yield return new WaitForSeconds(3);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
     public IEnumerator Death()
     {
         SpawnFrank();

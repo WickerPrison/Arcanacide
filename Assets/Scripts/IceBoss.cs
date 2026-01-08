@@ -183,8 +183,7 @@ public class IceBoss : EnemyController, IEndDialogue
                         backAnimator.Play("Stomp");
                         break;
                     case 3:
-                        frontAnimator.Play("RingBlast");
-                        backAnimator.Play("RingBlast");
+                        StartRingBlast();
                         break;
                 }
             }
@@ -219,6 +218,12 @@ public class IceBoss : EnemyController, IEndDialogue
         {
             playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
         }
+    }
+
+    public void StartRingBlast()
+    {
+        frontAnimator.Play("RingBlast");
+        backAnimator.Play("RingBlast");
     }
 
     public void RingBlast(float lowerBound, float upperBound)
