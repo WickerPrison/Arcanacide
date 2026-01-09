@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public enum UnlockableAbilities
 {
@@ -13,8 +14,9 @@ public enum UnlockableAbilities
 public class PlayerData : ScriptableObject
 {
     public string saveFile;
-    public string date;
-    public string time;
+    public DateTime timeOfLastSave;
+    public DateTime playtimeStartPoint;
+    public double playtime;
 
     public int health;
     public bool hasHealthGem;

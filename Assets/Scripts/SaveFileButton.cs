@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
+using System;
 
 public class SaveFileButton : MonoBehaviour
 {
@@ -35,8 +36,17 @@ public class SaveFileButton : MonoBehaviour
         }
         else
         {
-            dateText.text = data.date;
-            timeText.text = data.time;
+            if(data.timeOfLastSave == null)
+            {
+                dateText.text = "Date cannot be displayed due to old save file format.";
+                timeText.text = "Gameplay will not be affected.";
+            }
+            else
+            {
+                dateText.text = $"Last Played: {DateTime.Parse(data.timeOfLastSave).GetDateTimeFormats('d')[0]} {DateTime.Parse(data.timeOfLastSave).GetDateTimeFormats('t')[0]}";
+                TimeSpan playtime = TimeSpan.FromSeconds(data.playtime);
+                timeText.text = $"Total Playtime: {(int)playtime.TotalHours}:{playtime.Minutes:00}:{playtime.Seconds:00}";
+            }
         }
         text.text = textString;
     }
