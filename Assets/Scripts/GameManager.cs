@@ -269,6 +269,9 @@ public class GameManager : MonoBehaviour
     public void StartAtFloor2()
     {
         playerData.saveFile = saveFileString + "4";
+        playerData.timeOfLastSave = DateTime.Now;
+        playerData.playtimeStartPoint = DateTime.Now;
+        playerData.playtime = TimeSpan.Zero.TotalSeconds;
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 2;
         playerData.healCharges = 2;
@@ -287,7 +290,7 @@ public class GameManager : MonoBehaviour
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
         playerData.hasWayfaerie = false;
-        playerData.money = 500;
+        playerData.money = 800;
         playerData.lostMoney = 0;
         playerData.strength = 1;
         playerData.dexterity = 1;
@@ -360,6 +363,9 @@ public class GameManager : MonoBehaviour
     public void StartAtFloor3()
     {
         playerData.saveFile = saveFileString + "4";
+        playerData.timeOfLastSave = DateTime.Now;
+        playerData.playtimeStartPoint = DateTime.Now;
+        playerData.playtime = TimeSpan.Zero.TotalSeconds;
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 3;
         playerData.healCharges = 3;
@@ -458,6 +464,9 @@ public class GameManager : MonoBehaviour
     public void StartAtFloor4()
     {
         playerData.saveFile = saveFileString + "4";
+        playerData.timeOfLastSave = DateTime.Now;
+        playerData.playtimeStartPoint = DateTime.Now;
+        playerData.playtime = TimeSpan.Zero.TotalSeconds;
         playerData.hasHealthGem = true;
         playerData.maxHealCharges = 4;
         playerData.healCharges = 4;

@@ -128,7 +128,7 @@ public class EmblemLibrary : ScriptableObject
     "Regain all Stamina after a Perfect Dodge");
 
     [System.NonSerialized] public Patch rendingBlows = new Patch("Rending Blows",
-    "Heavy Attacks inflict Arcane damage over time", 5);
+    "Heavy Attacks inflict damage over time", 5f);
 
     [System.NonSerialized] public Patch maximumRefund = new Patch("Maximum Refund",
     "Your Refund Stone can be used an extra time without breaking");

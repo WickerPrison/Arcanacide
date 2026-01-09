@@ -24,6 +24,9 @@ public class EnemyScript : MonoBehaviour
     float staggerDuration = 2;
     [System.NonSerialized] public float DOT = 0;
     float damageDOT = 0;
+    float dotDps;
+    float dotCooldown = 0f;
+    float dotMaxCooldown = 0.3f;
     public bool invincible = false;
     [System.NonSerialized] public bool dying = false;
     public string enemyGUID = "";
@@ -56,6 +59,7 @@ public class EnemyScript : MonoBehaviour
         gm.enemies.Add(this);
         nonStaggerableStates.Add(EnemyState.ATTACKING);
         nonStaggerableStates.Add(EnemyState.DYING);
+        dotDps = 2 + maxHealth * 0.02f;
     }
 
     // Update is called once per frame
@@ -77,18 +81,25 @@ public class EnemyScript : MonoBehaviour
         if(DOT > 0 && enemyController.state != EnemyState.DYING)
         {
             DOT -= Time.deltaTime;
-            damageDOT += Time.deltaTime * (playerData.arcane / 2 + 2);
-            if(damageDOT >= 1)
-            {
-                LoseHealthUnblockable(1, 0); ;
-                damageDOT -= 1;
-            }
-
-            if(DOT <= 0)
+            if (DOT <= 0)
             {
                 DOT = 0;
                 enemyEvents.StopDOT();
             }
+
+            damageDOT += Time.deltaTime * dotDps;
+
+            if (dotCooldown > 0 || damageDOT < 1)
+            {
+                dotCooldown -= Time.deltaTime;
+                return;
+            }
+            dotCooldown = dotMaxCooldown;
+
+            int dealDamage = Mathf.FloorToInt(damageDOT);
+            LoseHealthUnblockable(dealDamage, 0);
+
+            damageDOT = damageDOT - dealDamage;
         }
     }
 

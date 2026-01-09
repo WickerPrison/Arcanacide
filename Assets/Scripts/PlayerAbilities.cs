@@ -203,6 +203,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
             if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
             {
+                Debug.Log(emblemLibrary.rendingBlows.value);
                 enemy.GainDOT((float)emblemLibrary.rendingBlows.value);
             }
 
