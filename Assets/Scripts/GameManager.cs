@@ -101,9 +101,9 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        DateTime dateTime = DateTime.Now;
-        playerData.date = dateTime.GetDateTimeFormats('d')[0];
-        playerData.time = dateTime.GetDateTimeFormats('t')[0];
+        playerData.playtime += (DateTime.Now - playerData.playtimeStartPoint).TotalSeconds;
+        playerData.timeOfLastSave = DateTime.Now;
+        playerData.playtimeStartPoint = DateTime.Now;
         SaveSystem.SaveGame(playerData.saveFile, playerData, mapData, dialogueData, emblemLibrary);
         SaveSystem.SaveSettings(settingsData);
     }
@@ -115,6 +115,9 @@ public class GameManager : MonoBehaviour
         if(data != null)
         {
             playerData.saveFile = data.saveFile;
+            playerData.timeOfLastSave = DateTime.Parse(data.timeOfLastSave);
+            playerData.playtimeStartPoint = DateTime.Now;
+            playerData.playtime = data.playtime;
             playerData.hasHealthGem = data.hasHealthGem;
             playerData.maxHealCharges = data.maxHealCharges;
             playerData.healCharges = data.healCharges;
@@ -216,6 +219,9 @@ public class GameManager : MonoBehaviour
     public void NewGame(int saveFileId)
     {
         playerData.saveFile = saveFileString + saveFileId.ToString();
+        playerData.timeOfLastSave = DateTime.Now;
+        playerData.playtimeStartPoint = DateTime.Now;
+        playerData.playtime = TimeSpan.Zero.TotalSeconds;
         playerData.tutorials = tutorialManager.allTutorials;
         playerData.ClearData();
 

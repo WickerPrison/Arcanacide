@@ -7,8 +7,8 @@ using UnityEngine;
 public class SaveData
 {
     public string saveFile;
-    public string date;
-    public string time;
+    public string timeOfLastSave;
+    public double playtime;
     public int maxHealth;
     public float maxStamina;
     public int attackPower;
@@ -88,8 +88,8 @@ public class SaveData
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, EmblemLibrary emblemLibrary)
     {
         saveFile = playerData.saveFile;
-        date = playerData.date;
-        time = playerData.time;
+        timeOfLastSave = playerData.timeOfLastSave.ToString();
+        playtime = playerData.playtime;
         hasHealthGem = playerData.hasHealthGem;
         maxHealCharges = playerData.maxHealCharges;
         healCharges = playerData.healCharges;
