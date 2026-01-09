@@ -59,7 +59,7 @@ public class EnemyScript : MonoBehaviour
         gm.enemies.Add(this);
         nonStaggerableStates.Add(EnemyState.ATTACKING);
         nonStaggerableStates.Add(EnemyState.DYING);
-        dotDps = 2 + maxHealth * 0.02f;
+        dotDps = 3 + maxHealth * 0.005f;
     }
 
     // Update is called once per frame
