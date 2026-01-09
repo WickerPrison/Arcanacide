@@ -43,6 +43,12 @@ public class WeaponManager : MonoBehaviour
         SetWeapon(playerData.currentWeapon);
     }
 
+
+    private void Update()
+    {
+        Debug.Log(backWeaponSprites[1].activeSelf);
+    }
+
     public void AddWeaponMagicSource()
     {
         weaponMagicSources++;
