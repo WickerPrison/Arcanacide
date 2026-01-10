@@ -75,7 +75,6 @@ public class LightningOrbController : EnemyController
         {
             ParticleColorChange particleColorChange = explosion.GetComponent<ParticleColorChange>();
             particleColorChange.colorChange = true;
-            Debug.Log("Color change");
         }
 
         explosion.transform.position = transform.position + Vector3.up * 1.5f;

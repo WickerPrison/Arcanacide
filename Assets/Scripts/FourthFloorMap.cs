@@ -15,10 +15,6 @@ public class FourthFloorMap : MonoBehaviour
     void Start()
     {
         material.SetColor("_NewColor", mapData.floorColor);
-
-        SelectMap();
-
-        StartCoroutine(GlitchEffect());
     }
 
     IEnumerator GlitchEffect()
@@ -68,5 +64,12 @@ public class FourthFloorMap : MonoBehaviour
         }
         recent = randMap;
         maps[randMap].SetActive(true);
+    }
+
+    private void OnEnable()
+    {
+        material.SetFloat("_Amount", 0);
+        SelectMap();
+        StartCoroutine(GlitchEffect());
     }
 }
