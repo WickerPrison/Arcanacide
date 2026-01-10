@@ -495,7 +495,7 @@ public class GameManager : MonoBehaviour
         playerData.tutorials.Clear();
         playerData.evidenceFound.Clear();
         playerData.hasWayfaerie = false;
-        playerData.money = 15000;
+        playerData.money = 21000;
         playerData.lostMoney = 0;
         playerData.strength = 1;
         playerData.dexterity = 1;

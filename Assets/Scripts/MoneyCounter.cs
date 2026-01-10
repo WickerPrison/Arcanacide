@@ -9,7 +9,7 @@ public class MoneyCounter : MonoBehaviour
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] TextMeshProUGUI moneyChange;
     float updateVal;
-    int displayVal;
+    [System.NonSerialized] public int displayVal;
     float speed = 25;
     WaitForSeconds delay = new WaitForSeconds(1f);
     WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
@@ -22,50 +22,30 @@ public class MoneyCounter : MonoBehaviour
         text.text = displayVal.ToString();
     }
 
-    private void Update()
-    {
-        if (displayVal == playerData.money) return;
-
-        if(displayVal < playerData.money)
-        {
-            updateVal += Time.deltaTime * speed;
-            if(updateVal >= 1)
-            {
-                displayVal += Mathf.FloorToInt(updateVal);
-                updateVal = 0;
-                if(displayVal > playerData.money)
-                {
-                    displayVal = playerData.money;
-                }
-            }
-        }
-        else if (displayVal > playerData.money)
-        {
-            updateVal += Time.deltaTime * speed;
-            if (updateVal >= 1)
-            {
-                displayVal -= Mathf.FloorToInt(updateVal);
-                updateVal = 0;
-                if (displayVal < playerData.money)
-                {
-                    displayVal = playerData.money;
-                }
-            }
-        }
-
-        text.text = displayVal.ToString();
-    }
-
     private void OnPlayerMoneyChange(GlobalEvents sender, int amount)
     {
-        int difference = Mathf.Abs(displayVal - (playerData.money + amount));
-        if (difference > 50)
-        {
-            speed = difference / 2;
-        }
-        else speed = 25;
+        int finalVal = playerData.money + amount;
+        int difference = Mathf.Abs(displayVal - finalVal);
+        float time = difference / speed;
         StopAllCoroutines();
+        StartCoroutine(UpdateDisplay(time, finalVal));
         StartCoroutine(MoneyChange(amount));
+    }
+
+    IEnumerator UpdateDisplay(float time, int finalVal)
+    {
+        if (time > 2) time = 2;
+        float timer = time;
+        int initialVal = displayVal;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            displayVal = (int)Mathf.Lerp(finalVal, initialVal, timer / time);
+            text.text = displayVal.ToString();
+            yield return endOfFrame;
+        }
+        displayVal = finalVal;
+        text.text = displayVal.ToString();
     }
 
     IEnumerator MoneyChange(int amount)
