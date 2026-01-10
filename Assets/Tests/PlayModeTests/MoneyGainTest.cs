@@ -26,6 +26,15 @@ public class MoneyGainTest
     }
 
     [UnityTest]
+    public IEnumerator GainZero()
+    {
+        int amount = 0;
+        GlobalEvents.instance.MoneyChange(amount);
+        yield return new WaitForSeconds(2.1f);
+        Assert.AreEqual(moneyCounter.displayVal, amount);
+    }
+
+    [UnityTest]
     public IEnumerator SmallValue()
     {
         int amount = 27;

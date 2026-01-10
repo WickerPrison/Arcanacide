@@ -9,16 +9,16 @@ public class ChaosBossTests
 {
     PlayerData playerData;
     MapData mapData;
-    GameObject bossPrefab;
     ChaosBossController bossController;
     EnemyScript enemyScript;
     Dialogue dialogue;
     HUD hud;
+    AssistantController assistantController;
 
     [UnitySetUp]
     public IEnumerator Setup()
     {
-        SceneManager.LoadScene("Testing");
+        SceneManager.LoadScene("FinalBossTests");
         yield return null;
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
@@ -26,13 +26,13 @@ public class ChaosBossTests
         playerData.hasHealthGem = true;
         playerData.vitality = 30;
         playerData.health = playerData.MaxHealth();
-        mapData = Resources.Load<MapData>("Data/MapData");
-        bossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/ChaosBoss");
 
-        enemyScript = GameObject.Instantiate(bossPrefab).GetComponent<EnemyScript>();
-        bossController = enemyScript.GetComponent<ChaosBossController>();
+        bossController = GameObject.FindObjectOfType<ChaosBossController>();
+        enemyScript = bossController.GetComponent<EnemyScript>();
         dialogue = enemyScript.GetComponentInChildren<DialogueTriggerRoomEntrance>().GetComponent<Dialogue>();
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
+
+
         yield return null;
         Time.timeScale = 1f;
     }
@@ -40,14 +40,27 @@ public class ChaosBossTests
     [UnityTest]
     public IEnumerator Death()
     {
+        enemyScript.transform.position = new Vector3(6f, 0, 4f);
         yield return null;
         dialogue.CloseDialogue();
-        Debug.Log(dialogue.GetType());
         bossController.attackTime = 60;
+        yield return new WaitForSeconds(0.3f);
         enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 2);
         yield return new WaitForSeconds(2);
         enemyScript.GetComponent<Dialogue>().CloseDialogue();
         yield return new WaitForSeconds(1.9f);
-        Debug.Log(bossController);
+    }
+
+    [UnityTest]
+    public IEnumerator KnightsAttack()
+    {
+        enemyScript.transform.position = new Vector3(6f, 0, 3f);
+        yield return null;
+        dialogue.CloseDialogue();
+        bossController.attackTime = 60;
+        yield return new WaitForSeconds(0.3f);
+        bossController.StartKnightsAttack();
+        yield return new WaitForSeconds(3);
+        Assert.Less(playerData.health, playerData.MaxHealth());
     }
 }

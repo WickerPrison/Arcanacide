@@ -98,6 +98,34 @@ public class MinibossV2Tests
     }
 
     [UnityTest]
+    public IEnumerator TeslaHarpoonsThenDeath()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 12);
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        minibossAbilities.StartTeslaHarpoon();
+        MinibossV2Controller minibossController = minibossAbilities.GetComponent<MinibossV2Controller>();
+        minibossController.attackTime = 70;
+        yield return new WaitForSeconds(10);
+        HarpoonManager harpoonManager = minibossAbilities.GetComponent<HarpoonManager>();
+        List<TeslaHarpoon> harpoons = harpoonManager.harpoons;
+        EnemyScript enemyScript = minibossController.GetComponent<EnemyScript>();
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 1);
+        yield return new WaitForSeconds(3); Dialogue dialogue = minibossAbilities.GetComponentInChildren<Dialogue>();
+        for (int i = 0; i < 3; i++)
+        {
+            dialogue.NextLine();
+            yield return new WaitForSeconds(1);
+        }
+        yield return new WaitForSeconds(5);
+        TeslaHarpoonEnemyScript harpoonSript = harpoons[0].GetComponent<TeslaHarpoonEnemyScript>();
+        harpoonSript.LoseHealthUnblockable(500, 1);
+        yield return new WaitForSeconds(3);
+    }
+
+    [UnityTest]
     public IEnumerator HarpoonsCount()
     {
         HarpoonManager harpoonManager = new GameObject("harpoonManager").AddComponent<HarpoonManager>();

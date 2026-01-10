@@ -226,6 +226,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
     public override void StartDying()
     {
         state = EnemyState.DYING;
+        navAgent.enabled = false;
         enemyScript.invincible = true;
         enemyScript.health = 1;
         bossEvents.FreezeAssistant();
