@@ -87,4 +87,24 @@ public class MoneyGainTest
         yield return new WaitForSeconds(2.1f);
         Assert.AreEqual(moneyCounter.displayVal, amount0 + amount1 + amount2 + amount3);
     }
+
+    [UnityTest]
+    public IEnumerator RapidSpending()
+    {
+        GlobalEvents.instance.MoneyChange(1000);
+        yield return new WaitForSeconds(2.1f);
+        int amount0 = -15;
+        int amount1 = -60;
+        int amount2 = -507;
+        int amount3 = -234;
+        GlobalEvents.instance.MoneyChange(amount0);
+        yield return null;
+        GlobalEvents.instance.MoneyChange(amount1);
+        yield return null;
+        GlobalEvents.instance.MoneyChange(amount2);
+        yield return null;
+        GlobalEvents.instance.MoneyChange(amount3);
+        yield return new WaitForSeconds(2.1f);
+        Assert.AreEqual(moneyCounter.displayVal, 1000 + amount0 + amount1 + amount2 + amount3);
+    }
 }

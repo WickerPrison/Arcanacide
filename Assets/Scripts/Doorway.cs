@@ -28,6 +28,7 @@ public class Doorway : MonoBehaviour
     [SerializeField] SpriteRenderer fogWallRenderer;
     [SerializeField] EventReference doorSFX;
     [SerializeField] GameObject blockDoorsObject;
+    public GameObject unlockMessagePrefab;
     IBlockDoors blockDoors;
     bool doorBlocked;
     public event System.EventHandler OnOpenDoor;

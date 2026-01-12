@@ -23,6 +23,7 @@ public class OpenOneWayDoor : MonoBehaviour
         if (playerDistance <= 2 && doorwayScript.doorOpen && !mapData.unlockedDoors.Contains(lockedDoorID))
         {
             mapData.unlockedDoors.Add(lockedDoorID);
+            DoorUnlockedMessage.Instantiate(doorwayScript.unlockMessagePrefab, lockedDoorID);
         }
     }
 }
