@@ -17,7 +17,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler onWhistleblowerKilled;
     public event EventHandler onGemUsed;
     public event EventHandler onTestButton;
-    public event Action<GlobalEvents, int> onPlayerMoneyChange;
+    public event Action<GlobalEvents, (int, int)> onPlayerMoneyChange;
     public event Action<GlobalEvents, float> onLoseStamina;
     public event Action<GlobalEvents, float> onGainStamina;
     public event Action<GlobalEvents, int> onPlayerLoseHealth;
@@ -78,9 +78,9 @@ public class GlobalEvents : MonoBehaviour
         onGemUsed?.Invoke(this, EventArgs.Empty);
     }
 
-    public void MoneyChange(int amount)
+    public void MoneyChange(int oldValue, int change)
     {
-        onPlayerMoneyChange?.Invoke(this, amount);
+        onPlayerMoneyChange?.Invoke(this, (oldValue, change));
     }
 
     public void LoseStamina(float stamina)

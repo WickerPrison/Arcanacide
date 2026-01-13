@@ -23,7 +23,7 @@ public class ShopButton : MonoBehaviour
         if (!playerData.patches.Contains(patchName) && playerData.money >= cost)
         {
             playerData.patches.Add(patchName);
-            GlobalEvents.instance.MoneyChange(-cost);
+            GlobalEvents.instance.MoneyChange(playerData.money, -cost);
         }
     }
 

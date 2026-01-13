@@ -22,15 +22,16 @@ public class MoneyCounter : MonoBehaviour
         text.text = displayVal.ToString();
     }
 
-    private void OnPlayerMoneyChange(GlobalEvents sender, int amount)
+    private void OnPlayerMoneyChange(GlobalEvents sender, (int oldValue, int change) amount)
     {
-        if (amount == 0) return;
-        int finalVal = playerData.money + amount;
+        if (amount.change == 0) return;
+        Debug.Log(playerData.money);
+        int finalVal = amount.oldValue + amount.change;
         int difference = Mathf.Abs(displayVal - finalVal);
         float time = difference / speed;
         StopAllCoroutines();
         StartCoroutine(UpdateDisplay(time, finalVal));
-        StartCoroutine(MoneyChange(amount));
+        StartCoroutine(MoneyChange(amount.change));
     }
 
     IEnumerator UpdateDisplay(float time, int finalVal)

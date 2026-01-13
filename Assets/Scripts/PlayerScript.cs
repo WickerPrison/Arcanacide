@@ -323,9 +323,9 @@ public class PlayerScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    private void OnPlayerMoneyChange(GlobalEvents sender, int amount)
+    private void OnPlayerMoneyChange(GlobalEvents sender, (int oldValue, int change) amount)
     {
-        playerData.money += amount;
+        playerData.money += amount.change;
     }
 
     private void OnEnable()

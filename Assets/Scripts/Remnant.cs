@@ -49,7 +49,7 @@ public class Remnant : MonoBehaviour
     {
         if(playerDistance <= interactDistance && im.controls.Gameplay.enabled)
         {
-            GlobalEvents.instance.MoneyChange(playerData.lostMoney);
+            GlobalEvents.instance.MoneyChange(playerData.money, playerData.lostMoney);
             playerData.lostMoney = 0;
             mapData.deathRoom = "none";
             if (playerData.equippedPatches.Contains(Patches.ARCANE_REMAINS))

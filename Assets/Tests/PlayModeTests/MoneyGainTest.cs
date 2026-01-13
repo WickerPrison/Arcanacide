@@ -29,7 +29,7 @@ public class MoneyGainTest
     public IEnumerator GainZero()
     {
         int amount = 0;
-        GlobalEvents.instance.MoneyChange(amount);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount);
         yield return new WaitForSeconds(2.1f);
         Assert.AreEqual(moneyCounter.displayVal, amount);
     }
@@ -38,7 +38,7 @@ public class MoneyGainTest
     public IEnumerator SmallValue()
     {
         int amount = 27;
-        GlobalEvents.instance.MoneyChange(amount);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount);
         yield return new WaitForSeconds(2.1f);
         Assert.AreEqual(moneyCounter.displayVal, amount);
     }
@@ -47,7 +47,7 @@ public class MoneyGainTest
     public IEnumerator MediumValue()
     {
         int amount = 500;
-        GlobalEvents.instance.MoneyChange(amount);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount);
         yield return new WaitForSeconds(2.1f);
         Assert.AreEqual(moneyCounter.displayVal, amount);
     }
@@ -56,7 +56,7 @@ public class MoneyGainTest
     public IEnumerator LargeValue()
     {
         int amount = 3000;
-        GlobalEvents.instance.MoneyChange(amount);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount);
         yield return new WaitForSeconds(2.1f);
         Assert.AreEqual(moneyCounter.displayVal, amount);
     }
@@ -65,7 +65,7 @@ public class MoneyGainTest
     public IEnumerator HugeValue()
     {
         int amount = 50000;
-        GlobalEvents.instance.MoneyChange(amount);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount);
         yield return new WaitForSeconds(2.1f);
         Assert.AreEqual(moneyCounter.displayVal, amount);
     }
@@ -77,13 +77,13 @@ public class MoneyGainTest
         int amount1 = 50000;
         int amount2 = -507;
         int amount3 = 234;
-        GlobalEvents.instance.MoneyChange(amount0);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount0);
         yield return new WaitForSeconds(1f);
-        GlobalEvents.instance.MoneyChange(amount1);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount1);
         yield return new WaitForSeconds(0.5f);
-        GlobalEvents.instance.MoneyChange(amount2);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount2);
         yield return new WaitForSeconds(1.1f);
-        GlobalEvents.instance.MoneyChange(amount3);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount3);
         yield return new WaitForSeconds(2.1f);
         Assert.AreEqual(moneyCounter.displayVal, amount0 + amount1 + amount2 + amount3);
     }
@@ -91,19 +91,19 @@ public class MoneyGainTest
     [UnityTest]
     public IEnumerator RapidSpending()
     {
-        GlobalEvents.instance.MoneyChange(1000);
+        GlobalEvents.instance.MoneyChange(playerData.money, 1000);
         yield return new WaitForSeconds(2.1f);
         int amount0 = -15;
         int amount1 = -60;
         int amount2 = -507;
         int amount3 = -234;
-        GlobalEvents.instance.MoneyChange(amount0);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount0);
         yield return null;
-        GlobalEvents.instance.MoneyChange(amount1);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount1);
         yield return null;
-        GlobalEvents.instance.MoneyChange(amount2);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount2);
         yield return null;
-        GlobalEvents.instance.MoneyChange(amount3);
+        GlobalEvents.instance.MoneyChange(playerData.money, amount3);
         yield return new WaitForSeconds(2.1f);
         Assert.AreEqual(moneyCounter.displayVal, 1000 + amount0 + amount1 + amount2 + amount3);
     }

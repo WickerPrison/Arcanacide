@@ -222,11 +222,11 @@ public class EnemyScript : MonoBehaviour
 
         if (playerData.equippedPatches.Contains(Patches.PAY_RAISE))
         {
-            GlobalEvents.instance.MoneyChange(Mathf.RoundToInt(reward * (float)emblemLibrary.patchDictionary[Patches.PAY_RAISE].value));
+            GlobalEvents.instance.MoneyChange(playerData.money, Mathf.RoundToInt(reward * (float)emblemLibrary.patchDictionary[Patches.PAY_RAISE].value));
         }
         else
         {
-            GlobalEvents.instance.MoneyChange(reward);
+            GlobalEvents.instance.MoneyChange(playerData.money, reward);
         }
         gm.enemies.Remove(this);
         gm.enemiesInRange.Remove(this);
