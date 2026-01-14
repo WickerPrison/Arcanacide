@@ -41,10 +41,12 @@ public class Respec : MonoBehaviour
         im.Gameplay();
 
         int level = playerData.GetLevel();
-        for(int i = level - 1; i > 0; i--)
+        int amount = 0;
+        for (int i = level - 1; i > 0; i--)
         {
-            playerData.money += Mathf.RoundToInt(4 + Mathf.Pow(i, 2));
+            amount += Mathf.RoundToInt(4 + Mathf.Pow(i, 2));
         }
+        GlobalEvents.instance.MoneyChange(playerData.money, amount);
 
         playerData.strength = 1;
         playerData.dexterity = 1;
