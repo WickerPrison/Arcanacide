@@ -10,6 +10,7 @@ public enum BuildModes
 [CreateAssetMenu]
 public class BuildMode : ScriptableObject
 {
+    public string versionNumber;
     public BuildModes buildMode;
     public string[] excludePathsForDemo;
     public float testTimeScale;

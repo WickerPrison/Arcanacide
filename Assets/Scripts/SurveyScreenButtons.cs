@@ -6,6 +6,7 @@ public class SurveyScreenButtons : MonoBehaviour
 {
     [SerializeField] GameObject buttonAudioPrefab;
     [SerializeField] SoundManager sm;
+    [SerializeField] BuildMode buildMode;
 
     public void NoSurvey()
     {
@@ -16,7 +17,7 @@ public class SurveyScreenButtons : MonoBehaviour
     public void GoToSurvey()
     {
         sm.ButtonSound();
-        Application.OpenURL("https://forms.gle/DH89JpViSvfW55Yn8");
+        Application.OpenURL($"https://docs.google.com/forms/d/e/1FAIpQLSd9OFB_8rb6sr38Rgm3saaua8fbQS1s8fT2ZeOoqbA_Sv9Svw/viewform?usp=pp_url&entry.1945729572={buildMode.versionNumber}");
         Application.Quit();
     }
 }

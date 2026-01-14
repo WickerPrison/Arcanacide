@@ -8,6 +8,7 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] GameManager gm;
     [SerializeField] PlayerData playerData;
     [SerializeField] MenuData menuData;
+    [SerializeField] BuildMode buildMode;
     [SerializeField] GameObject optionsMenuPrefab;
     [SerializeField] GameObject firstButton;
     SoundManager sm;
@@ -68,7 +69,14 @@ public class MainMenuButtons : MonoBehaviour
     public void QuitGame()
     {
         ButtonSound();
-        SceneManager.LoadScene("SurveyScreen");
+        if(buildMode.buildMode == BuildModes.FULLGAME)
+        {
+            SceneManager.LoadScene("SurveyScreen");
+        }
+        else
+        {
+            Application.Quit();
+        }
     }
 
     void ButtonSound()
