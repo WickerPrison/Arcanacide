@@ -30,6 +30,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler<int> onAwareEnemiesChange;
     public event EventHandler<int> onChangeWeapon;
     public event EventHandler<int> onPlayerDealDamage;
+    public event EventHandler onPlayerStatsChange;
 
 
     private void Awake()
@@ -146,5 +147,10 @@ public class GlobalEvents : MonoBehaviour
     public void PlayerDealDamage(int damage)
     {
         onPlayerDealDamage?.Invoke(this, damage);
+    }
+
+    public void PlayerStatsChange()
+    {
+        onPlayerStatsChange?.Invoke(this, EventArgs.Empty);
     }
 }

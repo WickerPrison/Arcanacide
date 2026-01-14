@@ -52,7 +52,8 @@ public class Respec : MonoBehaviour
         playerData.arcane = 1;
 
         if(playerData.health > playerData.MaxHealth()) playerData.health = playerData.MaxHealth();
-        playerScript.GainStamina(playerData.MaxStamina());             
+        playerScript.GainStamina(playerData.MaxStamina());
+        GlobalEvents.instance.PlayerStatsChange();
 
         Destroy (gameObject);
     }

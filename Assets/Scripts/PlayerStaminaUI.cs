@@ -21,6 +21,11 @@ public class PlayerStaminaUI : MonoBehaviour
 
     private void Start()
     {
+        ResetStaminiaBar();
+    }
+
+    void ResetStaminiaBar()
+    {
         float borderScale = Mathf.Ceil(playerData.MaxStamina() / 2.0175f) * spacing + 25.6f;
         border.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale);
         background.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale - 10);
@@ -82,15 +87,22 @@ public class PlayerStaminaUI : MonoBehaviour
         buffer = false;
     }
 
+    private void Global_onPlayerStatsChange(object sender, System.EventArgs e)
+    {
+        ResetStaminiaBar();
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onLoseStamina += OnLoseStamina;
         GlobalEvents.instance.onGainStamina += OnGainStamina;
+        GlobalEvents.instance.onPlayerStatsChange += Global_onPlayerStatsChange;
     }
 
     private void OnDisable()
     {
         GlobalEvents.instance.onLoseStamina -= OnLoseStamina;
         GlobalEvents.instance.onGainStamina -= OnGainStamina;
+        GlobalEvents.instance.onPlayerStatsChange -= Global_onPlayerStatsChange;
     }
 }

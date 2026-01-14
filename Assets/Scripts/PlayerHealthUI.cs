@@ -24,6 +24,11 @@ public class PlayerHealthUI : MonoBehaviour
 
     private void Start()
     {
+        ResetHealthbar();
+    }
+
+    void ResetHealthbar()
+    {
         float borderScale = playerData.MaxHealth() * oneHPWidth - maskDiff;
         border.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale);
         background.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, borderScale);
@@ -78,6 +83,11 @@ public class PlayerHealthUI : MonoBehaviour
         buffer = false;
     }
 
+    private void Global_onPlayerStatsChange(object sender, System.EventArgs e)
+    {
+        ResetHealthbar();
+    }
+
     private void OnPlayerDeath(object sender, System.EventArgs e)
     {
         StopAllCoroutines();
@@ -88,6 +98,7 @@ public class PlayerHealthUI : MonoBehaviour
         GlobalEvents.instance.onPlayerGainHealth += Instance_onPlayerGainHealth;
         GlobalEvents.instance.onPlayerLoseHealth += OnPlayerLoseHealth;
         GlobalEvents.instance.onPlayerDeath += OnPlayerDeath;
+        GlobalEvents.instance.onPlayerStatsChange += Global_onPlayerStatsChange;
     }
 
     private void OnDisable()
@@ -95,5 +106,6 @@ public class PlayerHealthUI : MonoBehaviour
         GlobalEvents.instance.onPlayerGainHealth -= Instance_onPlayerGainHealth;
         GlobalEvents.instance.onPlayerLoseHealth -= OnPlayerLoseHealth;
         GlobalEvents.instance.onPlayerDeath -= OnPlayerDeath;
+        GlobalEvents.instance.onPlayerStatsChange -= Global_onPlayerStatsChange;
     }
 }
