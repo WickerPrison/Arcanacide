@@ -25,7 +25,6 @@ public class MoneyCounter : MonoBehaviour
     private void OnPlayerMoneyChange(GlobalEvents sender, (int oldValue, int change) amount)
     {
         if (amount.change == 0) return;
-        Debug.Log(playerData.money);
         int finalVal = amount.oldValue + amount.change;
         int difference = Mathf.Abs(displayVal - finalVal);
         float time = difference / speed;

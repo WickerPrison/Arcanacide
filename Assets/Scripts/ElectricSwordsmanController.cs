@@ -86,7 +86,6 @@ public class ElectricSwordsmanController : EnemyController
         if (colorChange)
         {
             ParticleColorChange particleColorChange = projectile.GetComponent<ParticleColorChange>();
-            Debug.Log(particleColorChange);
             particleColorChange.colorChange = colorChange;
         }
     }
