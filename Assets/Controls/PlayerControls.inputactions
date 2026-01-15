@@ -148,6 +148,33 @@
                     "processors": "",
                     "interactions": "Hold,Tap",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LockOn",
+                    "type": "Button",
+                    "id": "a5a2b541-26ab-42ab-8fd8-15656fb28974",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwapTargetRight",
+                    "type": "Button",
+                    "id": "069632f6-df22-4d64-adc8-6c659ed9c9b1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwapTargetLeft",
+                    "type": "Button",
+                    "id": "37782a1f-0c25-48dd-97db-bd229ad85f36",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -522,6 +549,72 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "611cfeef-9efe-4212-bffc-27be5ef21926",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "LockOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "16a02938-5e9b-4df7-845a-3b79ae5d7824",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "LockOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1743324-c89d-484b-8aab-41e15e0bc6e5",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "SwapTargetRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "095f4426-978e-4610-b296-8f09c9650083",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SwapTargetRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "971548af-1487-4afa-af74-189b200b6c74",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "SwapTargetLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf1fa40b-076f-43d1-b172-45ca4dfbb436",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SwapTargetLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

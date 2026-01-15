@@ -170,6 +170,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold,Tap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5a2b541-26ab-42ab-8fd8-15656fb28974"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapTargetRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""069632f6-df22-4d64-adc8-6c659ed9c9b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapTargetLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""37782a1f-0c25-48dd-97db-bd229ad85f36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -544,6 +571,72 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Map"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""611cfeef-9efe-4212-bffc-27be5ef21926"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16a02938-5e9b-4df7-845a-3b79ae5d7824"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1743324-c89d-484b-8aab-41e15e0bc6e5"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SwapTargetRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""095f4426-978e-4610-b296-8f09c9650083"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwapTargetRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""971548af-1487-4afa-af74-189b200b6c74"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SwapTargetLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf1fa40b-076f-43d1-b172-45ca4dfbb436"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwapTargetLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1058,6 +1151,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Knife = m_Gameplay.FindAction("Knife", throwIfNotFound: true);
         m_Gameplay_TestButton = m_Gameplay.FindAction("TestButton", throwIfNotFound: true);
         m_Gameplay_Map = m_Gameplay.FindAction("Map", throwIfNotFound: true);
+        m_Gameplay_LockOn = m_Gameplay.FindAction("LockOn", throwIfNotFound: true);
+        m_Gameplay_SwapTargetRight = m_Gameplay.FindAction("SwapTargetRight", throwIfNotFound: true);
+        m_Gameplay_SwapTargetLeft = m_Gameplay.FindAction("SwapTargetLeft", throwIfNotFound: true);
         // Tutorial
         m_Tutorial = asset.FindActionMap("Tutorial", throwIfNotFound: true);
         m_Tutorial_TutorialSelect = m_Tutorial.FindAction("TutorialSelect", throwIfNotFound: true);
@@ -1152,6 +1248,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Knife;
     private readonly InputAction m_Gameplay_TestButton;
     private readonly InputAction m_Gameplay_Map;
+    private readonly InputAction m_Gameplay_LockOn;
+    private readonly InputAction m_Gameplay_SwapTargetRight;
+    private readonly InputAction m_Gameplay_SwapTargetLeft;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -1172,6 +1271,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Knife => m_Wrapper.m_Gameplay_Knife;
         public InputAction @TestButton => m_Wrapper.m_Gameplay_TestButton;
         public InputAction @Map => m_Wrapper.m_Gameplay_Map;
+        public InputAction @LockOn => m_Wrapper.m_Gameplay_LockOn;
+        public InputAction @SwapTargetRight => m_Wrapper.m_Gameplay_SwapTargetRight;
+        public InputAction @SwapTargetLeft => m_Wrapper.m_Gameplay_SwapTargetLeft;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1229,6 +1331,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Map.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMap;
                 @Map.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMap;
                 @Map.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMap;
+                @LockOn.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLockOn;
+                @LockOn.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLockOn;
+                @LockOn.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLockOn;
+                @SwapTargetRight.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwapTargetRight;
+                @SwapTargetRight.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwapTargetRight;
+                @SwapTargetRight.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwapTargetRight;
+                @SwapTargetLeft.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwapTargetLeft;
+                @SwapTargetLeft.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwapTargetLeft;
+                @SwapTargetLeft.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwapTargetLeft;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -1281,6 +1392,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Map.started += instance.OnMap;
                 @Map.performed += instance.OnMap;
                 @Map.canceled += instance.OnMap;
+                @LockOn.started += instance.OnLockOn;
+                @LockOn.performed += instance.OnLockOn;
+                @LockOn.canceled += instance.OnLockOn;
+                @SwapTargetRight.started += instance.OnSwapTargetRight;
+                @SwapTargetRight.performed += instance.OnSwapTargetRight;
+                @SwapTargetRight.canceled += instance.OnSwapTargetRight;
+                @SwapTargetLeft.started += instance.OnSwapTargetLeft;
+                @SwapTargetLeft.performed += instance.OnSwapTargetLeft;
+                @SwapTargetLeft.canceled += instance.OnSwapTargetLeft;
             }
         }
     }
@@ -1500,6 +1620,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnKnife(InputAction.CallbackContext context);
         void OnTestButton(InputAction.CallbackContext context);
         void OnMap(InputAction.CallbackContext context);
+        void OnLockOn(InputAction.CallbackContext context);
+        void OnSwapTargetRight(InputAction.CallbackContext context);
+        void OnSwapTargetLeft(InputAction.CallbackContext context);
     }
     public interface ITutorialActions
     {
