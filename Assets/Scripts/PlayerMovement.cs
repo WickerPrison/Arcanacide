@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerScript playerScript;
     PlayerSound playerSound;
     [System.NonSerialized] public Rigidbody rb;
+    LockOn lockOn;
 
 
     //walk varibles
@@ -43,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
     //facing direction variables
     Vector3 mouseDirection;
     [System.NonSerialized] public Vector2 rightStickValue;
-    float lockOnDistance = 10;
     [System.NonSerialized] public Vector2 lookDir;
     [System.NonSerialized] public GameObject pauseMenu;
     Vector3 attackPointPos;
@@ -73,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         playerScript = GetComponent<PlayerScript>();
         playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
+        lockOn = GetComponent<LockOn>();
         usingGamepad = Gamepad.current != null;
         rightStickValue = Vector2.zero;
     }
@@ -157,6 +158,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (!CanInput() && !canWalk) return;
 
+        if(lockOn.target != null)
+        {
+            Vector3 lockOnDirection = lockOn.target.transform.position - transform.position;
+            lookDir = new Vector2(lockOnDirection.x, lockOnDirection.z);
+            SetLookDirection(lookDir);
+            return;
+        }
+
         if (Gamepad.current == null)
         {
             mouseDirection = playerAnimation.mousePosition - playerAnimation.playerScreenPosition;
@@ -169,14 +178,17 @@ public class PlayerMovement : MonoBehaviour
             {
                 lookDir = playerData.moveDir;
             }
-            LockOn();
             if (rightStickValue.magnitude > 0)
             {
                 lookDir = rightStickValue.normalized;
             }
-            Vector3 lookDirection = new Vector3(lookDir.x, 0, lookDir.y);
-            SetLookDirection(lookDirection);
+            SetLookDirection(lookDir);
         }
+    }
+
+    public void SetLookDirection(Vector2 lookDir)
+    {
+        SetLookDirection(new Vector3(lookDir.x, 0, lookDir.y));
     }
 
     public void SetLookDirection(Vector3 lookDir)
@@ -199,34 +211,34 @@ public class PlayerMovement : MonoBehaviour
         lockAttackPoint = false;
     }
 
-    public void LockOn()
-    {
-        if (gm.enemies.Count < 1)
-        {
-            return;
-        }
-        Transform lockOnTarget = GetLockOnTarget();
-        if (lockOnTarget != null)
-        {
-            Vector3 lockOnDirection = lockOnTarget.position - transform.position;
-            lookDir = new Vector2(lockOnDirection.x, lockOnDirection.z);
-        }
-    }
+    //public void LockOn()
+    //{
+    //    if (gm.enemies.Count < 1)
+    //    {
+    //        return;
+    //    }
+    //    Transform lockOnTarget = GetLockOnTarget();
+    //    if (lockOnTarget != null)
+    //    {
+    //        Vector3 lockOnDirection = lockOnTarget.position - transform.position;
+    //        lookDir = new Vector2(lockOnDirection.x, lockOnDirection.z);
+    //    }
+    //}
 
-    public Transform GetLockOnTarget()
-    {
-        Transform lockOnTarget = null;
-        float currentDistance = lockOnDistance;
-        for (int enemy = 0; enemy < gm.enemies.Count; enemy++)
-        {
-            if (Vector3.Distance(transform.position, gm.enemies[enemy].transform.position) < currentDistance && !gm.enemies[enemy].dying)
-            {
-                lockOnTarget = gm.enemies[enemy].transform;
-                currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
-            }
-        }
-        return lockOnTarget;
-    }
+    //public Transform GetLockOnTarget()
+    //{
+    //    Transform lockOnTarget = null;
+    //    float currentDistance = lockOnDistance;
+    //    for (int enemy = 0; enemy < gm.enemies.Count; enemy++)
+    //    {
+    //        if (Vector3.Distance(transform.position, gm.enemies[enemy].transform.position) < currentDistance && !gm.enemies[enemy].dying)
+    //        {
+    //            lockOnTarget = gm.enemies[enemy].transform;
+    //            currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
+    //        }
+    //    }
+    //    return lockOnTarget;
+    //}
 
     public void PauseMenu()
     {

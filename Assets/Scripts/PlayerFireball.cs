@@ -16,6 +16,7 @@ public class PlayerFireball : PlayerProjectile
     }
     FireballState state;
     Vector3 vertOffset = new Vector3(0, 2f, 0);
+    LockOn lockOn;
 
     public override void Start()
     {
@@ -25,6 +26,7 @@ public class PlayerFireball : PlayerProjectile
         hitCollider.enabled = false;
         transform.position = GetChargingPosition();
         vfx.Play();
+        lockOn = playerMovement.GetComponent<LockOn>();
     }
 
     public override void Update()
@@ -63,8 +65,7 @@ public class PlayerFireball : PlayerProjectile
 
     Transform GetTarget()
     {
-        Transform lockOnTarget = playerMovement.GetLockOnTarget();
-        if (target != null) return lockOnTarget;
+        if (lockOn.target != null) return lockOn.target.transform;
         dummyTarget = new GameObject("Dummy Target");
         Vector3 lookDirection = Vector3.Normalize(playerMovement.attackPoint.position - playerMovement.transform.position);
         dummyTarget.transform.position = playerMovement.transform.position + lookDirection.normalized * 10;
