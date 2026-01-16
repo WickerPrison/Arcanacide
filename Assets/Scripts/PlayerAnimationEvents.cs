@@ -192,8 +192,6 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             //playerSound.PlaySoundEffectFromList(11, 0.5f);
             playerEvents.EndMirrorCloak();
-            playerAbilities.shield = true;
-            playerAbilities.parry = true;
         }
         playerEvents.DashStart();
     }
@@ -210,8 +208,6 @@ public class PlayerAnimationEvents : MonoBehaviour
 
         if (playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK) && patchEffects.mirrorCloakTimer <= 0)
         {
-            playerAbilities.shield = false;
-            playerAbilities.parry = false;
             patchEffects.mirrorCloakTimer = patchEffects.mirrorCloakMaxTime;
         }
         playerEvents.DashEnd();
