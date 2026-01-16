@@ -158,7 +158,7 @@ public class EmblemLibrary : ScriptableObject
     "Every 5 seconds your dodge will also deflect spells");
 
     [System.NonSerialized] public Patch spellsword = new Patch("Spellsword",
-    "Your attacks deal extra Physical damage but consume Mana", 15);
+    "Your attacks deal extra Physical damage but consume Mana", (mana:15f, damage:0.5f));
 
     [System.NonSerialized] public Patch deathAura = new Patch("Death Aura",
     "You regain Mana faster when near your Remnant. Collecting your Remnant restores you to full Mana");
