@@ -190,6 +190,7 @@ public class ElementalistController : EnemyController
     public override void StartStagger(float staggerDuration)
     {
         attackArc.HideAttackArc();
+        if (chaosHeadCoroutine != null) StopCoroutine(chaosHeadCoroutine);
         base.StartStagger(staggerDuration);
     }
 
