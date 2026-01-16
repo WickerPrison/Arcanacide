@@ -51,7 +51,25 @@ public class ElementalistTests
         
         EnemyScript enemyScript = elementalist.GetComponent<EnemyScript>();
         enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 2);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
+        Assert.AreEqual(playerData.MaxHealth(), playerData.health);
+    }
+
+    [UnityTest]
+    public IEnumerator ChaosHeadStagger()
+    {
+        ElementalistController elementalist = GameObject.Instantiate(elementalistPrefab).GetComponent<ElementalistController>();
+        elementalist.transform.position = new Vector3(2.5f, 0, 2.5f);
+        elementalist.state = EnemyState.IDLE;
+        elementalist.attackTime = 1000;
+        yield return null;
+        elementalist.PlayAnimation("ChaosHead");
+
+        yield return new WaitForSeconds(1f);
+
+        EnemyScript enemyScript = elementalist.GetComponent<EnemyScript>();
+        enemyScript.LoseHealthUnblockable(1, 2000);
+        yield return new WaitForSeconds(3);
         Assert.AreEqual(playerData.MaxHealth(), playerData.health);
     }
 

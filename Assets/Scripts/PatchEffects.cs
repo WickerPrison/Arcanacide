@@ -29,7 +29,6 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     //damage multipliers
     float arcaneRemainsDamage = 0.5f;
     float confidentKillerDamage = 0.4f;
-    float spellswordDamage = 0.5f;
     float recklessAttackDamage = 0.6f;
 
     //patch related variables
@@ -150,10 +149,11 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
             extraDamage += physicalDamage * (float)emblemLibrary.patchDictionary[Patches.CLOSE_CALL].value;
         }
 
-        if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > (float)emblemLibrary.spellsword.value)
+        (float mana, float damage) spellsword = ((float, float))emblemLibrary.spellsword.value;
+        if (playerData.equippedPatches.Contains(Patches.SPELLSWORD) && playerData.mana > spellsword.mana)
         {
-            extraDamage += physicalDamage * spellswordDamage;
-            playerScript.LoseMana((float)emblemLibrary.spellsword.value);
+            extraDamage += physicalDamage * spellsword.damage;
+            playerScript.LoseMana(spellsword.mana);
         }
 
         return physicalDamage + Mathf.RoundToInt(extraDamage);

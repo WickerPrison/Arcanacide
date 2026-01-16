@@ -274,6 +274,32 @@ public class PatchesTests
     }
 
     [UnityTest]
+    public IEnumerator Spellsword()
+    {
+        EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy.transform.position = new Vector3(1.5f, 0, 1.5f);
+        yield return null;
+
+        playerAbilities.Attack();
+
+        yield return new WaitForSeconds(3);
+        Assert.Less(testDummy.health, testDummy.maxHealth);
+        Assert.AreEqual(playerData.maxMana, playerData.mana);
+        int initialDiff = testDummy.maxHealth - testDummy.health;
+        testDummy.GainHealth(initialDiff);
+
+        playerData.equippedPatches.Add(Patches.SPELLSWORD);
+
+        playerAbilities.Attack();
+        yield return new WaitForSeconds(3);
+        Assert.Less(testDummy.health, testDummy.maxHealth);
+        Assert.Less(playerData.mana, playerData.maxMana);
+        int finalDiff = testDummy.maxHealth - testDummy.health;
+
+        Assert.Less(initialDiff, finalDiff);
+    }
+
+    [UnityTest]
     public IEnumerator VampiricStrikes()
     {
         playerData.equippedPatches.Add(Patches.VAMPIRIC_STRIKES);

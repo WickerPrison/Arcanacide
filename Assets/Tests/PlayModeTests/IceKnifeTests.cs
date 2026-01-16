@@ -24,6 +24,8 @@ public class IceKnifeTests
         playerData.UnlockAllWeapons();
         playerData.equippedElements[2] = WeaponElement.ICE;
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
+        playerData.maxMana = 50;
+        playerData.mana = playerData.maxMana;
 
         Time.timeScale = 1;
     }
@@ -41,6 +43,7 @@ public class IceKnifeTests
         playerAbilities.SpecialAttack();
         yield return new WaitForSeconds(4);
         Assert.Less(testDummy1.health, testDummy1.maxHealth);
+        //Debug.Log($"mana: {playerData.mana}, max mana: {playerData.maxMana}");
         Assert.Less(playerData.mana, playerData.maxMana);
     }
 }
