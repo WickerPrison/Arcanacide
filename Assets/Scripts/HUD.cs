@@ -58,7 +58,7 @@ public class HUD : MonoBehaviour
     }
 
     void UpdateManaBar()
-    {   
+    {
         float manaRatio = (float)playerData.mana / (float)playerData.maxMana;
         if (manaRatio >= 0)
         {

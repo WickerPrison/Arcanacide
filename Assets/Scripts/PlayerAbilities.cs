@@ -488,7 +488,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     void ElectricKnifeSpecial(EnemyScript closestEnemy, int boltsFrontOrBack)
     {
-        playerData.mana -= Time.deltaTime * specialAttackProfiles[2].manaCost;
+        playerScript.LoseMana(Time.deltaTime * specialAttackProfiles[2].manaCost);
 
         if (closestEnemy != null)
         {
@@ -553,7 +553,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     {
         beamVfx.HideBeam();
         playerSound.PlaySoundEffect(specialAttackProfiles[6].noHitSoundEvent, specialAttackProfiles[6].soundNoHitVolume);
-        playerData.mana -= specialAttackProfiles[6].manaCost;
+        playerScript.LoseMana(specialAttackProfiles[6].manaCost);
         Vector3 direction = target - origin;
         PlayerProjectileStraight.InstantiateIcicle(iciclePrefab, origin, direction.normalized, specialAttackProfiles[6], this);
         StartCoroutine(IceKnifeSpecialPause());
