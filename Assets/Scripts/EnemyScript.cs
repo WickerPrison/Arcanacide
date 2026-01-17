@@ -24,7 +24,7 @@ public class EnemyScript : MonoBehaviour
     float staggerDuration = 2;
     [System.NonSerialized] public float DOT = 0;
     float damageDOT = 0;
-    float dotDps;
+    [System.NonSerialized] public float dotDps;
     float dotCooldown = 0f;
     float dotMaxCooldown = 0.3f;
     public bool invincible = false;
@@ -117,6 +117,11 @@ public class EnemyScript : MonoBehaviour
             return;
         }
         if (enemyController.state == EnemyState.DYING) return;
+
+        if (DOT > 0 && playerData.equippedPatches.Contains(Patches.OPPORTUNE_STRIKE))
+        {
+            damage += Mathf.RoundToInt(damage * (float)emblemLibrary.opportuneStrike.value);
+        }
 
         health -= damage;
         enemyEvents.TakeDamage();

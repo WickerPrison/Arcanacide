@@ -55,18 +55,6 @@ public class PlayerScript : MonoBehaviour
     float manaDelay;
     [System.NonSerialized] public float maxManaDelay = 2;
     [System.NonSerialized] public float manaRechargeRate = 4;
-    float _magicalAccelerationValue;
-    float magicalAccelerationValue
-    {
-        get
-        {
-            if(_magicalAccelerationValue == 0)
-            {
-                _magicalAccelerationValue = (float)emblemLibrary.patchDictionary[Patches.MAGICAL_ACCELERATION].value;
-            }
-            return _magicalAccelerationValue;
-        }
-    }
 
     private void Awake()
     {
@@ -118,7 +106,7 @@ public class PlayerScript : MonoBehaviour
         {
             playerSound.PlaySoundEffect(PlayerSFX.SHIELD, 1);
             if (!playerAbilities.parry || attackingEnemy == null) return;
-            playerAbilities.BlockOrParry(attackType, attackingEnemy);
+            playerAbilities.Parry(attackType, attackingEnemy);
         }
     }
 
@@ -195,11 +183,11 @@ public class PlayerScript : MonoBehaviour
         manaDelay = maxManaDelay;
         if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
         {
-            manaDelay = maxManaDelay / magicalAccelerationValue;
+            manaDelay -= manaDelay * (((float delay, float charge))emblemLibrary.magicalAcceleration.value).delay;
         }
         if (patchEffects.deathAuraActive)
         {
-            manaDelay = maxManaDelay / 2;
+            manaDelay -= manaDelay * (((float delay, float charge))emblemLibrary.deathAura.value).delay;
         }
     }
 
@@ -229,16 +217,16 @@ public class PlayerScript : MonoBehaviour
             {
                 if(playerData.mana < playerData.maxMana)
                 {
-                    float rechargeRateMod = 1;
+                    float rechargeRate = manaRechargeRate;
                     if (playerData.equippedPatches.Contains(Patches.MAGICAL_ACCELERATION))
                     {
-                        rechargeRateMod *= magicalAccelerationValue;
+                        rechargeRate += manaRechargeRate * (((float delay, float charge))emblemLibrary.magicalAcceleration.value).charge;
                     }
                     if (patchEffects.deathAuraActive)
                     {
-                        rechargeRateMod *= 2;
+                        rechargeRate += manaRechargeRate * (((float delay, float charge))emblemLibrary.deathAura.value).charge;
                     }
-                    playerData.mana += Time.deltaTime * manaRechargeRate * rechargeRateMod;
+                    playerData.mana += Time.deltaTime * rechargeRate;
                 }
             }
             else

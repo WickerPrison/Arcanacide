@@ -196,14 +196,14 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
                 playerSound.PlaySoundEffect(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume);
             }
 
-            if (enemy.DOT > 0 && playerData.equippedPatches.Contains(Patches.OPPORTUNE_STRIKE))
-            {
-                damage = Mathf.RoundToInt(damage * 1.2f);
-            }
-
             if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
             {
                 enemy.GainDOT((float)emblemLibrary.rendingBlows.value);
+            }
+
+            if(attackProfile.attackType == AttackType.DEFLECT && playerData.equippedPatches.Contains(Patches.BURNING_REFLECTION))
+            {
+                enemy.GainDOT((float)emblemLibrary.burningReflection.value);
             }
 
             enemy.GainDOT(attackProfile.durationDOT);
@@ -257,7 +257,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    public void BlockOrParry(EnemyAttackType attackType, EnemyScript attackingEnemy)
+    public void Parry(EnemyAttackType attackType, EnemyScript attackingEnemy)
     {
         switch (attackType)
         {
