@@ -208,7 +208,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
         if (playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK) && patchEffects.mirrorCloakTimer <= 0)
         {
-            patchEffects.mirrorCloakTimer = patchEffects.mirrorCloakMaxTime;
+            patchEffects.mirrorCloakTimer = (float)emblemLibrary.mirrorCloak.value;
         }
         playerEvents.DashEnd();
     }

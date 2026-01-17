@@ -79,7 +79,7 @@ public class PlayerHealth : MonoBehaviour
         if (patchEffects.barrier)
         {
             patchEffects.barrier = false;
-            patchEffects.barrierTimer = patchEffects.maxBarrierTimer;
+            patchEffects.barrierTimer = (float)emblemLibrary.protectiveBarrier.value;
             return;
         }
 
@@ -104,7 +104,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (attackingEnemy != null && playerData.equippedPatches.Contains(Patches.BURNING_CLOAK))
         {
-            attackingEnemy.GainDOT(5);
+            attackingEnemy.GainDOT((float)emblemLibrary.burningCloak.value);
         }
 
         if (fullHealth && playerData.equippedPatches.Contains(Patches.CONFIDENT_KILLER))

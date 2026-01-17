@@ -19,12 +19,12 @@ public class EnemyScript : MonoBehaviour
     public EnemySound enemySound;
     GameManager gm;
     public int maxHealth;
-    [SerializeField] float maxPoise;
+    public float maxPoise;
     [SerializeField] float poiseRegeneration;
     float staggerDuration = 2;
     [System.NonSerialized] public float DOT = 0;
     float damageDOT = 0;
-    float dotDps;
+    [System.NonSerialized] public float dotDps;
     float dotCooldown = 0f;
     float dotMaxCooldown = 0.3f;
     public bool invincible = false;
@@ -118,6 +118,11 @@ public class EnemyScript : MonoBehaviour
         }
         if (enemyController.state == EnemyState.DYING) return;
 
+        if (DOT > 0 && playerData.equippedPatches.Contains(Patches.OPPORTUNE_STRIKE))
+        {
+            damage += Mathf.RoundToInt(damage * (float)emblemLibrary.opportuneStrike.value);
+        }
+
         health -= damage;
         enemyEvents.TakeDamage();
         if (health < 0)
@@ -168,7 +173,7 @@ public class EnemyScript : MonoBehaviour
 
         if (playerData.equippedPatches.Contains(Patches.HEAVY_BLOWS))
         {
-            poiseDamage *= 1.5f;
+            poiseDamage *= (float)emblemLibrary.heavyBlows.value;
         }
         poise -= poiseDamage;
 

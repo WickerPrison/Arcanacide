@@ -95,10 +95,10 @@ public class EmblemLibrary : ScriptableObject
     public List<Patches> thirdFloorPatches;
 
     [System.NonSerialized] public Patch magicalAcceleration = new Patch("Magical Acceleration",
-        "Mana recharges faster", 2f);
+        "Mana recharges faster", (delay: 0.5f, charge: 1f));
 
     [System.NonSerialized] public Patch heavyBlows = new Patch("Heavy Blows",
-        "Attacks stagger enemies faster");
+        "Attacks stagger enemies faster", 1.5f);
 
     [System.NonSerialized] public Patch vampiricStrikes = new Patch("Vampiric Strikes",
         "Refund health whenever you kill an enemy", 0.125f);
@@ -110,19 +110,19 @@ public class EmblemLibrary : ScriptableObject
         "Earn more money each time you kill an enemy", 1.25f);
 
     [System.NonSerialized] public Patch shellCompany = new Patch("Shell Company",
-        "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking", (1.2f, 0.5f)); //(dodge, block)
+        "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking", (dodge: 1.2f, block:0.5f));
 
     [System.NonSerialized] public Patch closeCall = new Patch("Close Call",
        "Increase all Physical damage for a short time after a Perfect Dodge", 0.2f);
 
     [System.NonSerialized] public Patch arcaneRemains = new Patch("Arcane Remains",
-        "Increase damage of all attacks when near your Remnant. Collecting your Remnant restores you to full health");
+        "Increase damage of all attacks when near your Remnant. Collecting your Remnant restores you to full health", 0.5f);
 
     [System.NonSerialized] public Patch arcaneStep = new Patch("Arcane Step",
     "You can dodge through enemies. Leave a trail of Arcane damage when you dodge");
 
     [System.NonSerialized] public Patch confidentKiller = new Patch("Confident Killer",
-    "Increase the damage of all attacks when you have full health");
+    "Increase the damage of all attacks when you have full health", 0.4f);
 
     [System.NonSerialized] public Patch adrenalineRush = new Patch("Adrenaline Rush",
     "Regain all Stamina after a Perfect Dodge");
@@ -134,7 +134,7 @@ public class EmblemLibrary : ScriptableObject
     "Your Refund Stone can be used an extra time without breaking");
 
     [System.NonSerialized] public Patch protectiveBarrier = new Patch("Protective Barrier",
-    "Every 10 seconds gain a protective barrier that blocks one instance of damage");
+    "Every 10 seconds gain a protective barrier that blocks one instance of damage", 10f);
 
     [System.NonSerialized] public Patch explosiveHealing = new Patch("Explosive Healing",
     "Deal Arcane damage to nearby enemies whenever you use your Refund Stone");
@@ -146,28 +146,28 @@ public class EmblemLibrary : ScriptableObject
     "If you are reduced to 0 health, lose Mana instead of dying");
 
     [System.NonSerialized] public Patch burningReflection = new Patch("Burning Reflection",
-    "Deflecting spells inflicts Arcane damage over time");
+    "Deflecting spells inflicts Arcane damage over time", 9f);
 
     [System.NonSerialized] public Patch opportuneStrike = new Patch("Opportune Strike",
-    "Attacking an enemy inflicted with damage over time deals extra damage");
+    "Attacking an enemy inflicted with damage over time deals extra damage", 0.2f);
 
     [System.NonSerialized] public Patch burningCloak = new Patch("Burning Cloak",
-    "Inflict damage over time to any enemy that deals damage to you");
+    "Inflict damage over time to any enemy that deals damage to you", 5f);
 
     [System.NonSerialized] public Patch mirrorCloak = new Patch("Mirror Cloak",
-    "Every 5 seconds your dodge will also deflect spells");
+    "Every 5 seconds your dodge will also deflect spells", 5f);
 
     [System.NonSerialized] public Patch spellsword = new Patch("Spellsword",
     "Your attacks deal extra Physical damage but consume Mana", (mana:15f, damage:0.5f));
 
     [System.NonSerialized] public Patch deathAura = new Patch("Death Aura",
-    "You regain Mana faster when near your Remnant. Collecting your Remnant restores you to full Mana");
+    "You regain Mana faster when near your Remnant. Collecting your Remnant restores you to full Mana", (delay: 0.5f, charge: 1f));
 
     [System.NonSerialized] public Patch arcaneMastery = new Patch("Arcane Mastery",
     "Your Special Attacks do extra damage", 0.3f);
 
     [System.NonSerialized] public Patch recklessAttack = new Patch("Reckless Attack",
-    "Increase the damage of all attacks when you are low on health");
+    "Increase the damage of all attacks when you are low on health", (threshold: 0.3f, damage: 0.6f));
 
     public List<Patches> GetPatchesFromStrings(List<string> patches)
     {

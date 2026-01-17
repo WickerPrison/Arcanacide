@@ -27,8 +27,6 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     GameManager gm;
 
     //damage multipliers
-    float arcaneRemainsDamage = 0.5f;
-    float confidentKillerDamage = 0.4f;
     float recklessAttackDamage = 0.6f;
 
     //patch related variables
@@ -41,11 +39,9 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     [System.NonSerialized] public float closeCallTimer;
 
     [System.NonSerialized] public float mirrorCloakTimer;
-    [System.NonSerialized] public float mirrorCloakMaxTime = 5;
 
     [System.NonSerialized] public bool barrier = false;
     [System.NonSerialized] public float barrierTimer;
-    [System.NonSerialized] public float maxBarrierTimer = 10f;
 
     int explosiveHealingDamage;
     float explosiveHealingRange = 5;
@@ -137,7 +133,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
         if (playerData.equippedPatches.Contains(Patches.MIRROR_CLOAK) && mirrorCloakTimer <= 0 && attackingEnemy != null)
         {
             playerSound.PlaySoundEffect(PlayerSFX.SHIELD, 1);
-            playerAbilities.BlockOrParry(enemyAttackType, attackingEnemy);
+            playerAbilities.Parry(enemyAttackType, attackingEnemy);
         }
     }
 
@@ -169,12 +165,12 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
         float extraDamage = 0;
         if (playerData.equippedPatches.Contains(Patches.ARCANE_REMAINS) && arcaneRemainsActive)
         {
-            extraDamage += totalDamage * arcaneRemainsDamage;
+            extraDamage += totalDamage * (float)emblemLibrary.arcaneRemains.value;
         }
 
         if (playerData.equippedPatches.Contains(Patches.CONFIDENT_KILLER) && playerData.health == playerData.MaxHealth())
         {
-            extraDamage += totalDamage * confidentKillerDamage;
+            extraDamage += totalDamage * (float)emblemLibrary.confidentKiller.value;
         }
 
         if (playerData.equippedPatches.Contains(Patches.RECKLESS_ATTACK) && playerData.health < playerData.MaxHealth() * recklessAttackHealthMax)
