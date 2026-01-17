@@ -27,8 +27,6 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
     GameManager gm;
 
     //damage multipliers
-    float arcaneRemainsDamage = 0.5f;
-    float confidentKillerDamage = 0.4f;
     float recklessAttackDamage = 0.6f;
 
     //patch related variables
@@ -169,12 +167,12 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
         float extraDamage = 0;
         if (playerData.equippedPatches.Contains(Patches.ARCANE_REMAINS) && arcaneRemainsActive)
         {
-            extraDamage += totalDamage * arcaneRemainsDamage;
+            extraDamage += totalDamage * (float)emblemLibrary.arcaneRemains.value;
         }
 
         if (playerData.equippedPatches.Contains(Patches.CONFIDENT_KILLER) && playerData.health == playerData.MaxHealth())
         {
-            extraDamage += totalDamage * confidentKillerDamage;
+            extraDamage += totalDamage * (float)emblemLibrary.confidentKiller.value;
         }
 
         if (playerData.equippedPatches.Contains(Patches.RECKLESS_ATTACK) && playerData.health < playerData.MaxHealth() * recklessAttackHealthMax)

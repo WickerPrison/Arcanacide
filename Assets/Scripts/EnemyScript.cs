@@ -19,7 +19,7 @@ public class EnemyScript : MonoBehaviour
     public EnemySound enemySound;
     GameManager gm;
     public int maxHealth;
-    [SerializeField] float maxPoise;
+    public float maxPoise;
     [SerializeField] float poiseRegeneration;
     float staggerDuration = 2;
     [System.NonSerialized] public float DOT = 0;
@@ -168,7 +168,7 @@ public class EnemyScript : MonoBehaviour
 
         if (playerData.equippedPatches.Contains(Patches.HEAVY_BLOWS))
         {
-            poiseDamage *= 1.5f;
+            poiseDamage *= (float)emblemLibrary.heavyBlows.value;
         }
         poise -= poiseDamage;
 

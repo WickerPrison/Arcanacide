@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start()
-    {;
+    {
         if (SceneManager.GetActiveScene().name == mapData.deathRoom)
         {
             GameObject moneyDrop;

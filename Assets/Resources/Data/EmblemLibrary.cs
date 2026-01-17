@@ -98,7 +98,7 @@ public class EmblemLibrary : ScriptableObject
         "Mana recharges faster", 2f);
 
     [System.NonSerialized] public Patch heavyBlows = new Patch("Heavy Blows",
-        "Attacks stagger enemies faster");
+        "Attacks stagger enemies faster", 1.5f);
 
     [System.NonSerialized] public Patch vampiricStrikes = new Patch("Vampiric Strikes",
         "Refund health whenever you kill an enemy", 0.125f);
@@ -110,19 +110,19 @@ public class EmblemLibrary : ScriptableObject
         "Earn more money each time you kill an enemy", 1.25f);
 
     [System.NonSerialized] public Patch shellCompany = new Patch("Shell Company",
-        "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking", (1.2f, 0.5f)); //(dodge, block)
+        "Increase the Stamina cost of Dodging, but decrease the Mana cost of Blocking", (dodge: 1.2f, block:0.5f));
 
     [System.NonSerialized] public Patch closeCall = new Patch("Close Call",
        "Increase all Physical damage for a short time after a Perfect Dodge", 0.2f);
 
     [System.NonSerialized] public Patch arcaneRemains = new Patch("Arcane Remains",
-        "Increase damage of all attacks when near your Remnant. Collecting your Remnant restores you to full health");
+        "Increase damage of all attacks when near your Remnant. Collecting your Remnant restores you to full health", 0.5f);
 
     [System.NonSerialized] public Patch arcaneStep = new Patch("Arcane Step",
     "You can dodge through enemies. Leave a trail of Arcane damage when you dodge");
 
     [System.NonSerialized] public Patch confidentKiller = new Patch("Confident Killer",
-    "Increase the damage of all attacks when you have full health");
+    "Increase the damage of all attacks when you have full health", 0.4f);
 
     [System.NonSerialized] public Patch adrenalineRush = new Patch("Adrenaline Rush",
     "Regain all Stamina after a Perfect Dodge");

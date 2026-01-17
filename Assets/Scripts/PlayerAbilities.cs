@@ -141,7 +141,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         {
             if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
             {
-                playerScript.LoseMana(Time.deltaTime * blockManaCost * (((float, float))emblemLibrary.shellCompany.value).Item2);
+                playerScript.LoseMana(Time.deltaTime * blockManaCost * (((float dodge, float block))emblemLibrary.shellCompany.value).block);
             }
             else
             {

@@ -9,6 +9,7 @@ public class PatchesTests
 {
     GameObject testDummyPrefab;
     GameObject elementalistPrfab;
+    GameObject remnantPrefab;
     PlayerData playerData;
     EmblemLibrary emblemLibrary;
     PlayerScript playerScript;
@@ -16,6 +17,8 @@ public class PatchesTests
     PatchEffects patchEffects;
     PlayerAbilities playerAbilities;
     PlayerAnimation playerAnimation;
+    PlayerHealth playerHealth;
+    WeaponManager weaponManager;
 
     [UnitySetUp]
     public IEnumerator Setup()
@@ -23,10 +26,13 @@ public class PatchesTests
         SceneManager.LoadScene("Testing");
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
+        playerData.tutorials.Clear();
+        playerData.UnlockAllWeapons();
         playerData.hasHealthGem = true;
         emblemLibrary = Resources.Load<EmblemLibrary>("Data/EmblemLibrary");
         elementalistPrfab = Resources.Load<GameObject>("Prefabs/Enemies/Elementalist");
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
+        remnantPrefab = Resources.Load<GameObject>("Prefabs/Player/Remnant");
 
         yield return null;
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -34,6 +40,8 @@ public class PatchesTests
         patchEffects = playerScript.gameObject.GetComponent<PatchEffects>();
         playerAbilities = playerScript.gameObject.GetComponent<PlayerAbilities>();
         playerAnimation = playerScript.GetComponent<PlayerAnimation>();
+        playerHealth = playerScript.GetComponent<PlayerHealth>();
+        weaponManager = playerScript.GetComponent<WeaponManager>();
         Time.timeScale = 1;
     }
 
@@ -41,6 +49,63 @@ public class PatchesTests
     public void Teardown()
     {
         playerData.equippedPatches.Clear();
+    }
+
+    [UnityTest]
+    public IEnumerator AdrenalineRush()
+    {
+        playerData.equippedPatches.Add(Patches.ADRENALINE_RUSH);
+        playerScript.LoseStamina(50);
+        yield return new WaitForSeconds(0.2f);
+
+        Assert.Less(playerScript.stamina, playerData.MaxStamina());
+        playerScript.PerfectDodge(EnemyAttackType.MELEE);
+        Assert.AreEqual(playerScript.stamina, playerData.MaxStamina());
+    }
+
+    [UnityTest]
+    public IEnumerator ArcaneRemainsDamage()
+    {
+        EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy.transform.position = new Vector3(-1.5f, 0, -1.5f);
+        yield return null;
+
+        playerAbilities.Attack();
+        yield return new WaitForSeconds(1.5f);
+        Assert.Less(testDummy.health, testDummy.maxHealth);
+        int initialDiff = testDummy.maxHealth - testDummy.health;
+        testDummy.GainHealth(initialDiff);
+
+        playerData.equippedPatches.Add(Patches.ARCANE_REMAINS);
+        Remnant remnant = GameObject.Instantiate(remnantPrefab).GetComponent<Remnant>();
+        remnant.transform.position = new Vector3(1, 0, 1);
+        yield return null;
+
+        playerAbilities.Attack();
+        yield return new WaitForSeconds(1.5f);
+        Assert.Less(testDummy.health, testDummy.maxHealth);
+        int finalDiff = testDummy.maxHealth - testDummy.health;
+
+        Assert.Greater(finalDiff, initialDiff);
+        int expectedDamage = initialDiff + Mathf.RoundToInt(initialDiff * (float)emblemLibrary.arcaneRemains.value);
+        bool correctDamageDiff = TestUtils.RoughEquals(expectedDamage, finalDiff);
+        Assert.True(correctDamageDiff);
+    }
+
+    [UnityTest]
+    public IEnumerator ArcaneRemainsHeal()
+    {
+        playerData.equippedPatches.Add(Patches.ARCANE_REMAINS);
+        Remnant remnant = GameObject.Instantiate(remnantPrefab).GetComponent<Remnant>();
+        remnant.transform.position = new Vector3(1, 0, 1);
+        yield return null;
+
+        playerScript.LoseHealth(50, EnemyAttackType.NONPARRIABLE, null);
+        yield return new WaitForSeconds(2);
+        remnant.PickUpRemnant();
+
+        yield return new WaitForSeconds(1);
+        Assert.AreEqual(playerData.MaxHealth(), playerData.health);
     }
 
     [UnityTest]
@@ -108,6 +173,57 @@ public class PatchesTests
         yield return new WaitForSeconds(2f);
         playerScript.PerfectDodge(EnemyAttackType.MELEE);
         Assert.AreEqual(1, weaponManager.weaponMagicSources);
+    }
+
+    [UnityTest]
+    public IEnumerator ConfidentKiller()
+    {
+        playerData.equippedPatches.Add(Patches.CONFIDENT_KILLER);
+        EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy.transform.position = new Vector3(-1.5f, 0, -1.5f);
+        yield return null;
+        playerScript.LoseHealth(50, EnemyAttackType.NONPARRIABLE, null);
+        yield return new WaitForSeconds(0.5f);
+
+        playerAbilities.Attack();
+        yield return new WaitForSeconds(1.5f);
+        Assert.Less(testDummy.health, testDummy.maxHealth);
+        int initialDiff = testDummy.maxHealth - testDummy.health;
+        testDummy.GainHealth(initialDiff);
+
+        playerHealth.MaxHeal();
+        yield return new WaitForSeconds(1f);
+
+        playerAbilities.Attack();
+        yield return new WaitForSeconds(1.5f);
+        Assert.Less(testDummy.health, testDummy.maxHealth);
+        int finalDiff = testDummy.maxHealth - testDummy.health;
+
+        Assert.Greater(finalDiff, initialDiff);
+        int expectedDamage = initialDiff + Mathf.RoundToInt(initialDiff * (float)emblemLibrary.confidentKiller.value);
+        bool correctDamageDiff = TestUtils.RoughEquals(expectedDamage, finalDiff);
+        Assert.True(correctDamageDiff);
+    }
+
+    [UnityTest]
+    public IEnumerator HeavyBlows()
+    {
+        EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy.transform.position = new Vector3(1.5f, 0, -1.5f);
+        yield return null;
+
+        playerAbilities.Attack();
+        yield return new WaitForSeconds(1.5f);
+        Assert.Less(testDummy.poise, testDummy.maxPoise);
+        float initialDiff = testDummy.maxPoise - testDummy.poise;
+        testDummy.poise = testDummy.maxPoise;
+       
+        playerData.equippedPatches.Add(Patches.HEAVY_BLOWS);
+        playerAbilities.Attack();
+        yield return new WaitForSeconds(1.5f);
+        Assert.Less(testDummy.poise, testDummy.maxPoise);
+        float finalDiff = testDummy.maxPoise - testDummy.poise;
+        Assert.Greater(finalDiff, initialDiff);
     }
 
     [UnityTest]
@@ -235,6 +351,22 @@ public class PatchesTests
     }
 
     [UnityTest]
+    public IEnumerator RendingBlows()
+    {
+        playerData.equippedPatches.Add(Patches.RENDING_BLOWS);
+        EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
+        testDummy.transform.position = new Vector3(-1.5f, 0, -1.5f);
+        yield return null;
+
+        weaponManager.SwitchWeapon(1);
+        yield return new WaitForSeconds(2);
+
+        playerAbilities.HeavyAttack();
+        yield return new WaitForSeconds(1.5f);
+        Assert.Greater(testDummy.DOT, 0);
+    }
+
+    [UnityTest]
     public IEnumerator ShellCompanyMana()
     {
         PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -248,7 +380,7 @@ public class PatchesTests
 
         yield return new WaitForSeconds(1);
 
-        float expected = playerData.maxMana - playerAbilities.blockManaCost * (((float, float))emblemLibrary.shellCompany.value).Item2;
+        float expected = playerData.maxMana - playerAbilities.blockManaCost * (((float dodge, float block))emblemLibrary.shellCompany.value).block;
         float difference = Mathf.Abs(expected - playerData.mana);
 
         Assert.Less(difference, 2);
@@ -266,7 +398,7 @@ public class PatchesTests
         playerMovement.moveDirection = Vector3.right;
         playerMovement.Dodge();
 
-        float correctStaminaVal = playerData.MaxStamina() - playerMovement.dashStaminaCost * (((float, float))emblemLibrary.shellCompany.value).Item1;
+        float correctStaminaVal = playerData.MaxStamina() - playerMovement.dashStaminaCost * (((float dodge, float block))emblemLibrary.shellCompany.value).dodge;
 
         Assert.AreEqual(correctStaminaVal, playerScript.stamina);
 

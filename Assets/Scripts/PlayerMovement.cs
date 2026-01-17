@@ -135,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
             {
-                staminaCost *= (((float, float))emblemLibrary.shellCompany.value).Item1;
+                staminaCost *= (((float dodge, float block))emblemLibrary.shellCompany.value).dodge;
             }
 
             playerScript.LoseStamina(staminaCost);
