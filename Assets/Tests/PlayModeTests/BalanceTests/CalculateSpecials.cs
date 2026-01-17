@@ -37,6 +37,7 @@ public class CalculateSpecials
         lightData = Resources.Load<BalanceAttackData>("Data/BalanceData/LightData");
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
+        //playerData.equippedPatches.Add(Patches.ARCANE_MASTERY);
         playerData.maxMana = 500;
         playerData.mana = playerData.maxMana;
         playerData.hasHealthGem = true;

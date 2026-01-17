@@ -141,7 +141,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         {
             if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
             {
-                playerScript.LoseMana(Time.deltaTime * blockManaCost * (((float, float))emblemLibrary.shellCompany.value).Item2);
+                playerScript.LoseMana(Time.deltaTime * blockManaCost * (((float dodge, float block))emblemLibrary.shellCompany.value).block);
             }
             else
             {
@@ -196,14 +196,14 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
                 playerSound.PlaySoundEffect(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume);
             }
 
-            if (enemy.DOT > 0 && playerData.equippedPatches.Contains(Patches.OPPORTUNE_STRIKE))
-            {
-                damage = Mathf.RoundToInt(damage * 1.2f);
-            }
-
             if (attackProfile.attackType == AttackType.HEAVY && playerData.equippedPatches.Contains(Patches.RENDING_BLOWS))
             {
                 enemy.GainDOT((float)emblemLibrary.rendingBlows.value);
+            }
+
+            if(attackProfile.attackType == AttackType.DEFLECT && playerData.equippedPatches.Contains(Patches.BURNING_REFLECTION))
+            {
+                enemy.GainDOT((float)emblemLibrary.burningReflection.value);
             }
 
             enemy.GainDOT(attackProfile.durationDOT);
@@ -257,7 +257,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
-    public void BlockOrParry(EnemyAttackType attackType, EnemyScript attackingEnemy)
+    public void Parry(EnemyAttackType attackType, EnemyScript attackingEnemy)
     {
         switch (attackType)
         {
@@ -488,7 +488,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     void ElectricKnifeSpecial(EnemyScript closestEnemy, int boltsFrontOrBack)
     {
-        playerData.mana -= Time.deltaTime * specialAttackProfiles[2].manaCost;
+        playerScript.LoseMana(Time.deltaTime * specialAttackProfiles[2].manaCost);
 
         if (closestEnemy != null)
         {
@@ -553,7 +553,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     {
         beamVfx.HideBeam();
         playerSound.PlaySoundEffect(specialAttackProfiles[6].noHitSoundEvent, specialAttackProfiles[6].soundNoHitVolume);
-        playerData.mana -= specialAttackProfiles[6].manaCost;
+        playerScript.LoseMana(specialAttackProfiles[6].manaCost);
         Vector3 direction = target - origin;
         PlayerProjectileStraight.InstantiateIcicle(iciclePrefab, origin, direction.normalized, specialAttackProfiles[6], this);
         StartCoroutine(IceKnifeSpecialPause());

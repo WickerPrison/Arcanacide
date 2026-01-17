@@ -45,9 +45,14 @@ public class Remnant : MonoBehaviour
         }
     }
 
-    void PickUpRemnant(InputAction.CallbackContext obj)
+    void PickUpRemnantEvent(InputAction.CallbackContext obj)
     {
-        if(playerDistance <= interactDistance && im.controls.Gameplay.enabled)
+        PickUpRemnant();
+    }
+
+    public void PickUpRemnant()
+    {
+        if (playerDistance <= interactDistance && im.controls.Gameplay.enabled)
         {
             GlobalEvents.instance.MoneyChange(playerData.money, playerData.lostMoney);
             playerData.lostMoney = 0;
@@ -113,11 +118,11 @@ public class Remnant : MonoBehaviour
 
     private void OnEnable()
     {
-        im.controls.Gameplay.Interact.performed += PickUpRemnant;
+        im.controls.Gameplay.Interact.performed += PickUpRemnantEvent;
     }
 
     private void OnDisable()
     {
-        im.controls.Gameplay.Interact.performed -= PickUpRemnant;
+        im.controls.Gameplay.Interact.performed -= PickUpRemnantEvent;
     }
 }
