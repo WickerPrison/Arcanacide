@@ -176,6 +176,13 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  electricChargeShock:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   otherSounds:
   - {fileID: 0}
   otherSFX: []
@@ -355,11 +362,13 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  enemySound: {fileID: 0}
   maxHealth: 75
   maxPoise: 1000
   poiseRegeneration: 1000
   invincible: 0
   enemyGUID: 
+  chargeResistance: 0
 --- !u!114 &5748967463378149190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,6 +755,18 @@ PrefabInstance:
     - target: {fileID: 1888048683395919507, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.092
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.062
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.301
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2940079905156645873, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: m_LocalPosition.x

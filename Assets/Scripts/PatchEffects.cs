@@ -247,7 +247,7 @@ public class PatchEffects : MonoBehaviour, IDamageEnemy
         }
     }
 
-    private void onEnemyKilled(object sender, System.EventArgs e)
+    private void onEnemyKilled(object sender, EnemyScript enemyScript)
     {
         if (playerData.equippedPatches.Contains(Patches.VAMPIRIC_STRIKES))
         {

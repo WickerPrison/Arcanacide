@@ -33,6 +33,7 @@ public class LockOn : MonoBehaviour
         else
         {
             target = null;
+            GlobalEvents.instance.LockOnTarget(null);
         }
     }
 
@@ -49,10 +50,17 @@ public class LockOn : MonoBehaviour
             }
         }
         target = currentTarget;
+        GlobalEvents.instance.LockOnTarget(target);
     }
 
     public void SwapTarget(bool right)
     {
+        if (gm.enemies.Count == 0)
+        {
+            target = null;
+            GlobalEvents.instance.LockOnTarget(null);
+            return;
+        }
         List<(float screenPos, EnemyScript enemy)> screenEnemies = GetEnemyScreenList();
         int index = screenEnemies.FindIndex(enemy => enemy.enemy == target);
         if (right)
@@ -65,6 +73,7 @@ public class LockOn : MonoBehaviour
             int targetIndex = index > 0 ? index - 1 : screenEnemies.Count - 1;
             target = screenEnemies[targetIndex].enemy;
         }
+        GlobalEvents.instance.LockOnTarget(target);
     }
 
     List<(float, EnemyScript)> GetEnemyScreenList()
@@ -77,5 +86,23 @@ public class LockOn : MonoBehaviour
     {
         Vector3 screenPos = mainCamera.WorldToScreenPoint(enemy.transform.position);
         return (screenPos.x, enemy);
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onEnemyKilled += Global_onEnemyKilled;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onEnemyKilled -= Global_onEnemyKilled;
+    }
+
+    private void Global_onEnemyKilled(object sender, EnemyScript enemyScript)
+    {
+        if(enemyScript == target)
+        {
+            SwapTarget(true);
+        }
     }
 }

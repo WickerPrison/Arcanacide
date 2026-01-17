@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         tutorialManager = gameObject.GetComponent<TutorialManager>();
     }
 
-    private void onEnemyKilled(object sender, System.EventArgs e)
+    private void onEnemyKilled(object sender, EnemyScript enemyScript)
     {
         playerData.killedEnemiesNum++;
         switch (playerData.killedEnemiesNum)

@@ -15,8 +15,10 @@ public class EnemyBodyVFX : MonoBehaviour
     [SerializeField] ParticleSystem dot;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] ParticleSystem shockVFX;
+    [SerializeField] SpriteRenderer lockOnIcon;
     EnemyEvents enemyEvents;
     EnemyController enemyController;
+    EnemyScript enemyScript;
 
     private void Awake()
     {
@@ -26,6 +28,8 @@ public class EnemyBodyVFX : MonoBehaviour
     private void Start()
     {
         enemyController = GetComponentInParent<EnemyController>();
+        enemyScript = GetComponentInParent<EnemyScript>();
+        lockOnIcon.enabled = false;
     }
 
     private void Update()
@@ -93,6 +97,18 @@ public class EnemyBodyVFX : MonoBehaviour
         shockVFX.Play();
     }
 
+    private void Global_onLockOnTarget(object sender, EnemyScript target)
+    {
+        if(target != null && target == enemyScript)
+        {
+            lockOnIcon.enabled = true;
+        }
+        else
+        {
+            lockOnIcon.enabled = false;
+        }
+    }
+
     private void OnEnable()
     {
         enemyEvents.OnTakeDamage += OnTakeDamage;
@@ -100,6 +116,7 @@ public class EnemyBodyVFX : MonoBehaviour
         enemyEvents.OnStartDOT += OnStartDOT;
         enemyEvents.OnStopDOT += OnStopDOT;
         enemyEvents.onGetShocked += EnemyEvents_onGetShocked;
+        GlobalEvents.instance.onLockOnTarget += Global_onLockOnTarget;
     }
 
     private void OnDisable()
@@ -109,5 +126,6 @@ public class EnemyBodyVFX : MonoBehaviour
         enemyEvents.OnStartDOT -= OnStartDOT;
         enemyEvents.OnStopDOT -= OnStopDOT;
         enemyEvents.onGetShocked -= EnemyEvents_onGetShocked;
+        GlobalEvents.instance.onLockOnTarget -= Global_onLockOnTarget;
     }
 }
