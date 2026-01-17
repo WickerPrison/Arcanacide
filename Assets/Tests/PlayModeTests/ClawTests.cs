@@ -11,6 +11,7 @@ public class ClawTests
     GameObject testDummyPrefab;
     PlayerAnimation playerAnimation;
     PlayerAbilities playerAbilities;
+    LockOn lockOn;
     WeaponManager weaponManager;
 
     [SetUp]
@@ -22,6 +23,7 @@ public class ClawTests
         playerData.ClearData();
         playerData.hasHealthGem = true;
         playerData.unlockedWeapons.Add(3);
+        playerData.equippedElements[3] = WeaponElement.CHAOS;
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
 
         Time.timeScale = 1;
@@ -31,10 +33,12 @@ public class ClawTests
     public IEnumerator Combo2()
     {
         playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
+        lockOn = playerAnimation.GetComponent<LockOn>();
         weaponManager = playerAnimation.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(5f, 0, -5f);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(3);
         yield return new WaitForSeconds(2);
         playerAnimation.PlayAnimation("Combo2");
@@ -46,12 +50,14 @@ public class ClawTests
     public IEnumerator Heavy()
     {
         playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
+        lockOn = playerAnimation.GetComponent<LockOn>();
         weaponManager = playerAnimation.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(2f, 0, -2f);
         testDummy1.maxHealth *= 10;
         testDummy1.health = testDummy1.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(3);
         yield return new WaitForSeconds(2);
         playerAnimation.PlayAnimation("HeavyAttack");

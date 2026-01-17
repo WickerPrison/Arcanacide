@@ -40,6 +40,7 @@ public class PlayerTrailTests
         playerData.equippedPatches.Add(Patches.ARCANE_STEP);
         WeaponManager weaponManager = playerScript.GetComponent<WeaponManager>();
         playerData.currentWeapon = 0;
+        playerData.equippedElements[1] = WeaponElement.FIRE;
         weaponManager.SwitchWeapon(1);
         yield return new WaitForSeconds(2);
         PatchEffects patchEffects = playerScript.gameObject.GetComponent<PatchEffects>();
@@ -89,6 +90,7 @@ public class PlayerTrailTests
         playerData.equippedPatches.Add(Patches.ARCANE_STEP);
         WeaponManager weaponManager = playerScript.GetComponent<WeaponManager>();
         playerData.currentWeapon = 0;
+        playerData.equippedElements[1] = WeaponElement.FIRE;
         weaponManager.SwitchWeapon(1);
         yield return new WaitForSeconds(2);
         PatchEffects patchEffects = playerScript.gameObject.GetComponent<PatchEffects>();

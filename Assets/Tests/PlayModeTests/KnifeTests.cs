@@ -12,9 +12,10 @@ public class KnifeTests
     PlayerAnimation playerAnimation;
     PlayerAbilities playerAbilities;
     WeaponManager weaponManager;
+    LockOn lockOn;
 
-    [SetUp]
-    public void Setup()
+    [UnitySetUp]
+    public IEnumerator Setup()
     {
         SceneManager.LoadScene("Testing");
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
@@ -25,17 +26,22 @@ public class KnifeTests
         playerData.equippedElements[2] = WeaponElement.ELECTRICITY;
         playerData.unlockedAbilities.Add(UnlockableAbilities.SPECIAL_ATTACK);
 
+        yield return null;
+        playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
+        weaponManager = playerAbilities.GetComponent<WeaponManager>();
+        playerAnimation = playerAbilities.GetComponent<PlayerAnimation>();
+        lockOn = playerAbilities.GetComponent<LockOn>();
+
         Time.timeScale = 1;
     }
 
     [UnityTest]
     public IEnumerator Heavy()
     {
-        playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
-        weaponManager = playerAbilities.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(1.5f, 0, -1.5f);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAbilities.HeavyAttack();
@@ -47,11 +53,10 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator HeavyEnemyDeath()
     {
-        playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
-        weaponManager = playerAbilities.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(1.5f, 0, -1.5f);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAbilities.HeavyAttack();
@@ -65,11 +70,10 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator HeavyTimeoutEnemyCount()
     {
-        playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
-        weaponManager = playerAbilities.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(1.5f, 0, -1.5f);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAbilities.HeavyAttack();
@@ -82,11 +86,10 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator SpecialAttack()
     {
-        playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
-        weaponManager = playerAbilities.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(4f, 0, -1.5f);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAbilities.SpecialAttack();
@@ -98,11 +101,10 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator Combo1()
     {
-        playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
-        weaponManager = playerAnimation.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(3.5f, 0, -3.5f);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAnimation.PlayAnimation("Combo1");
@@ -114,8 +116,6 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator Combo2With4Enemies()
     {
-        playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
-        weaponManager = playerAnimation.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(4, 0, 4);
         EnemyScript testDummy2 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
@@ -125,6 +125,7 @@ public class KnifeTests
         EnemyScript testDummy4 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy4.transform.position = new Vector3(2, 0, -4);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAnimation.PlayAnimation("Combo2");
@@ -138,8 +139,6 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator Combo2With3Enemies()
     {
-        playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
-        weaponManager = playerAnimation.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(4, 0, 4);
         EnemyScript testDummy2 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
@@ -147,6 +146,7 @@ public class KnifeTests
         EnemyScript testDummy3 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy3.transform.position = new Vector3(-3, 0, -2);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAnimation.PlayAnimation("Combo2");
@@ -159,13 +159,12 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator Combo2With2Enemies()
     {
-        playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
-        weaponManager = playerAnimation.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(-3, 0, -2);
         EnemyScript testDummy2 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy2.transform.position = new Vector3(-2, 0, 4);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAnimation.PlayAnimation("Combo2");
@@ -177,11 +176,10 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator Combo2With1Enemy()
     {
-        playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
-        weaponManager = playerAnimation.GetComponent<WeaponManager>();
         EnemyScript testDummy1 = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy1.transform.position = new Vector3(-3, 0, -2);
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAnimation.PlayAnimation("Combo2");
@@ -192,9 +190,8 @@ public class KnifeTests
     [UnityTest]
     public IEnumerator Combo2With0Enemies()
     {
-        playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
-        weaponManager = playerAnimation.GetComponent<WeaponManager>();
         yield return null;
+        lockOn.ToggleLockOn();
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
         playerAnimation.PlayAnimation("Combo2");
