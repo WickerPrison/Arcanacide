@@ -16,10 +16,9 @@ public class SettingsMenu : MonoBehaviour
     public PlayerControls controls;
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
     [SerializeField] SettingsData settingsData;
-    TextMeshProUGUI direcitonalArrowText;
     [SerializeField] ToggleUI arrowToggle;
-    TextMeshProUGUI fullscreenText;
     [SerializeField] ToggleUI fullscreenToggle;
+    [SerializeField] ToggleUI vsyncToggle;
     [SerializeField] Image background;
     [System.NonSerialized] public GameObject firstMainMenuButton;
 
@@ -36,36 +35,17 @@ public class SettingsMenu : MonoBehaviour
         gm.LoadSettings();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);     
-        direcitonalArrowText = arrowToggle.GetComponentInChildren<TextMeshProUGUI>();
         arrowToggle.SetToggleInstant(settingsData.showArrow);
-        fullscreenText = fullscreenToggle.GetComponentInChildren<TextMeshProUGUI>();
         fullscreenToggle.SetToggleInstant(settingsData.fullscreenMode);
+        vsyncToggle.SetToggleInstant(settingsData.GetVsync());
         UpdateMenu();
     }
 
     void UpdateMenu()
     {
-        if (settingsData.showArrow)
-        {
-            arrowToggle.ToggleSwitch(true);
-            direcitonalArrowText.text = "On";
-        }
-        else
-        {
-            arrowToggle.ToggleSwitch(false);
-            direcitonalArrowText.text = "Off";
-        }
-
-        if (settingsData.fullscreenMode)
-        {
-            fullscreenToggle.ToggleSwitch(true);
-            fullscreenText.text = "On";
-        }
-        else
-        {
-            fullscreenToggle.ToggleSwitch(false);
-            fullscreenText.text = "Off";
-        }
+        arrowToggle.ToggleSwitch(settingsData.showArrow);
+        fullscreenToggle.ToggleSwitch(settingsData.fullscreenMode);
+        vsyncToggle.ToggleSwitch(settingsData.GetVsync());
 
         SaveSystem.SaveSettings(settingsData);
         GlobalEvents.instance.OnChangedSetting();
@@ -94,6 +74,12 @@ public class SettingsMenu : MonoBehaviour
             Resolution currentResolution = Screen.currentResolution;
             Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
         }
+        UpdateMenu();
+    }
+
+    public void ToggleVsync()
+    {
+        settingsData.SetVsync(!settingsData.GetVsync());
         UpdateMenu();
     }
 

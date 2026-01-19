@@ -33,6 +33,8 @@ public class SettingsData : ScriptableObject
 
     public bool fullscreenMode;
 
+    bool vsync;
+
     private enum ControllerType
     {
         KBM, XBOX, PLAYSTATION, OTHER, NONE
@@ -103,6 +105,17 @@ public class SettingsData : ScriptableObject
                 musicVol = normalizedVolume;
                 break;
         }
+    }
+
+    public void SetVsync(bool vsyncValue)
+    {
+        vsync = vsyncValue;
+        QualitySettings.vSyncCount = vsyncValue ? 1 : 0;
+    }
+
+    public bool GetVsync()
+    {
+        return vsync;
     }
 
     public void CreateBindingDictionary(string[] keys, string[] values)

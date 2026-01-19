@@ -44,15 +44,26 @@ public class GameManager : MonoBehaviour
     static void SetFullscreenMode()
     {
         SettingsSaveData data = SaveSystem.LoadSettings();
-        if (data == null || data.fullscreenMode)
+        if (data == null)
         {
             Screen.fullScreen = true;
             Resolution currentResolution = Screen.currentResolution;
             Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
+            QualitySettings.vSyncCount = 1;
         }
         else
         {
-            Screen.fullScreen = false;
+            QualitySettings.vSyncCount = data.vsync ? 1 : 0;
+            if (data.fullscreenMode)
+            {
+                Screen.fullScreen = true;
+                Resolution currentResolution = Screen.currentResolution;
+                Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
+            }
+            else
+            {
+                Screen.fullScreen = false;
+            }
         }
     }
 
@@ -204,6 +215,7 @@ public class GameManager : MonoBehaviour
             settingsData.SetVolume(VolumeChannel.SFX, settingsSaveData.sfxVol);
             settingsData.SetVolume(VolumeChannel.MUSIC, settingsSaveData.musicVol);
             settingsData.fullscreenMode = settingsSaveData.fullscreenMode;
+            settingsData.SetVsync(settingsSaveData.vsync);
         }
         else
         {
@@ -212,6 +224,7 @@ public class GameManager : MonoBehaviour
             settingsData.SetVolume(VolumeChannel.MASTER, 1);
             settingsData.SetVolume(VolumeChannel.SFX, 1);
             settingsData.SetVolume(VolumeChannel.MUSIC, 1);
+            settingsData.SetVsync(true);
             SaveSystem.SaveSettings(settingsData);
         }
     }
