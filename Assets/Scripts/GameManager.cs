@@ -216,6 +216,7 @@ public class GameManager : MonoBehaviour
             settingsData.SetVolume(VolumeChannel.MUSIC, settingsSaveData.musicVol);
             settingsData.fullscreenMode = settingsSaveData.fullscreenMode;
             settingsData.SetVsync(settingsSaveData.vsync);
+            settingsData.frameRateLimit = settingsSaveData.frameRateLimit;
         }
         else
         {
@@ -225,6 +226,7 @@ public class GameManager : MonoBehaviour
             settingsData.SetVolume(VolumeChannel.SFX, 1);
             settingsData.SetVolume(VolumeChannel.MUSIC, 1);
             settingsData.SetVsync(true);
+            settingsData.frameRateLimit = 0;
             SaveSystem.SaveSettings(settingsData);
         }
     }

@@ -34,6 +34,22 @@ public class SettingsData : ScriptableObject
     public bool fullscreenMode;
 
     bool vsync;
+    int _frameRateLimit;
+    public int frameRateLimit
+    {
+        get { return _frameRateLimit; }
+        set
+        {
+            switch (value)
+            {
+                case 0: Application.targetFrameRate = -1; break;
+                case 1: Application.targetFrameRate = 30; break;
+                case 2: Application.targetFrameRate = 60; break;
+                case 3: Application.targetFrameRate = 120; break;
+            }
+            _frameRateLimit = value;
+        }
+    }
 
     private enum ControllerType
     {
