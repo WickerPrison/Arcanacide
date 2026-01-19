@@ -9,7 +9,6 @@ public class LockOn : MonoBehaviour
     InputManager im;
     bool lockOn = false;
     public EnemyScript target { get; private set; }
-    float lockOnDistance = 10;
     Camera mainCamera;
 
     // Start is called before the first frame update
@@ -39,7 +38,13 @@ public class LockOn : MonoBehaviour
 
     void TargetClosestEnemy()
     {
-        float currentDistance = lockOnDistance;
+        target = GetClosestEnemy();
+        GlobalEvents.instance.LockOnTarget(target);
+    }
+
+    EnemyScript GetClosestEnemy(float distance = 10)
+    {
+        float currentDistance = distance;
         EnemyScript currentTarget = null;
         for (int enemy = 0; enemy < gm.enemies.Count; enemy++)
         {
@@ -49,8 +54,7 @@ public class LockOn : MonoBehaviour
                 currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
             }
         }
-        target = currentTarget;
-        GlobalEvents.instance.LockOnTarget(target);
+        return currentTarget;
     }
 
     public void SwapTarget(bool right)
@@ -86,6 +90,13 @@ public class LockOn : MonoBehaviour
     {
         Vector3 screenPos = mainCamera.WorldToScreenPoint(enemy.transform.position);
         return (screenPos.x, enemy);
+    }
+
+    public EnemyScript GetAbilityTarget(float distance = 10)
+    {
+        if (target != null) return target;
+
+        return GetClosestEnemy(distance);
     }
 
     private void OnEnable()
