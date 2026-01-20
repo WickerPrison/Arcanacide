@@ -237,7 +237,7 @@ public class EnemyScript : MonoBehaviour
         gm.enemiesInRange.Remove(this);
         gm.awareEnemies -= 1;
 
-        GlobalEvents.instance.EnemyKilled();
+        GlobalEvents.instance.EnemyKilled(this);
 
         enemyEvents.Death();
 

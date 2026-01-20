@@ -138,18 +138,11 @@ public class KnifeTrap : MonoBehaviour
         GlobalEvents.instance.onEnemyKilled -= onEnmyKilled;
     }
 
-    private void onEnmyKilled(object sender, System.EventArgs e)
+    private void onEnmyKilled(object sender, EnemyScript enemyScript)
     {
-        StartCoroutine(CheckForColliders());
-    }
-
-    IEnumerator CheckForColliders()
-    {
-        yield return new WaitForEndOfFrame();
-        
-        for (int i = enemiesInRange.Count - 1; i >= 0; i--)
+        if (enemiesInRange.Contains(enemyScript))
         {
-            if (enemiesInRange[i] == null) enemiesInRange.RemoveAt(i);
+            enemiesInRange.Remove(enemyScript);
         }
     }
 

@@ -22,7 +22,7 @@ public class FairyProjectile : MonoBehaviour
     bool selfDestructed = false;
     bool instantiatedCorrectly = false;
 
-    public static FairyProjectile Instantiate(GameObject prefab, Vector3 direction, ExternalLanternFairy lanternFairy, PlayerAbilities playerAbilities, AttackProfiles attackProfile)
+    public static FairyProjectile Instantiate(GameObject prefab, Vector3 direction, ExternalLanternFairy lanternFairy, PlayerAbilities playerAbilities, AttackProfiles attackProfile, EnemyScript target)
     {
         FairyProjectile fairyProjectile = Instantiate(prefab).GetComponent<FairyProjectile>();
         fairyProjectile.transform.position = lanternFairy.GetInternalLanternPosition();
@@ -30,6 +30,7 @@ public class FairyProjectile : MonoBehaviour
         fairyProjectile.lanternFairy = lanternFairy;
         fairyProjectile.playerAbilities = playerAbilities;
         fairyProjectile.attackProfile = attackProfile;
+        fairyProjectile.target = target != null ? target.transform : null;
         fairyProjectile.instantiatedCorrectly = true;
         return fairyProjectile;
     }
@@ -45,17 +46,6 @@ public class FairyProjectile : MonoBehaviour
         initialPos = playerAbilities.transform.position;
 
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        float closestDistance = 100;
-        target = null;
-        foreach(EnemyScript enemy in gm.enemies)
-        {
-            float distance = Vector3.Distance(initialPos, enemy.transform.position);
-            if(distance < closestDistance)
-            {
-                closestDistance = distance;
-                target = enemy.transform;
-            }
-        }
     }
 
     private void Update()

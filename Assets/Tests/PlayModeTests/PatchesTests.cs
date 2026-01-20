@@ -20,6 +20,7 @@ public class PatchesTests
     PlayerAnimation playerAnimation;
     PlayerHealth playerHealth;
     WeaponManager weaponManager;
+    LockOn lockOn;
 
     [UnitySetUp]
     public IEnumerator Setup()
@@ -44,6 +45,7 @@ public class PatchesTests
         playerAnimation = playerScript.GetComponent<PlayerAnimation>();
         playerHealth = playerScript.GetComponent<PlayerHealth>();
         weaponManager = playerScript.GetComponent<WeaponManager>();
+        lockOn = playerScript.GetComponent<LockOn>();
         Time.timeScale = 1;
     }
 
@@ -82,6 +84,8 @@ public class PatchesTests
     {
         EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(-1.5f, 0, -1.5f);
+        yield return null;
+        lockOn.ToggleLockOn();
         yield return null;
 
         playerAbilities.Attack();
@@ -222,6 +226,7 @@ public class PatchesTests
         EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(-1.5f, 0, -1.5f);
         yield return null;
+        lockOn.ToggleLockOn();
         playerScript.LoseHealth(50, EnemyAttackType.NONPARRIABLE, null);
         yield return new WaitForSeconds(0.5f);
 
@@ -313,6 +318,8 @@ public class PatchesTests
     {
         EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(1.5f, 0, -1.5f);
+        yield return null;
+        lockOn.ToggleLockOn();
         yield return null;
 
         playerAbilities.Attack();
@@ -445,6 +452,8 @@ public class PatchesTests
         EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(-1.5f, 0, -1.5f);
         yield return null;
+        lockOn.ToggleLockOn();
+        yield return null;
         testDummy.dotDps = 0;
 
         playerAbilities.Attack();
@@ -530,6 +539,8 @@ public class PatchesTests
         EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(-1.5f, 0, -1.5f);
         yield return null;
+        lockOn.ToggleLockOn();
+        yield return null;
 
         playerAbilities.Attack();
         yield return new WaitForSeconds(1.5f);
@@ -555,7 +566,8 @@ public class PatchesTests
         EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(-1.5f, 0, -1.5f);
         yield return null;
-
+        lockOn.ToggleLockOn();
+        playerData.equippedElements[1] = WeaponElement.FIRE;
         weaponManager.SwitchWeapon(1);
         yield return new WaitForSeconds(2);
 
@@ -608,6 +620,8 @@ public class PatchesTests
     {
         EnemyScript testDummy = GameObject.Instantiate(testDummyPrefab).GetComponent<EnemyScript>();
         testDummy.transform.position = new Vector3(1.5f, 0, 1.5f);
+        yield return null;
+        lockOn.ToggleLockOn();
         yield return null;
 
         playerAbilities.Attack();

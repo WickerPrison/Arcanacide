@@ -407,7 +407,7 @@ public class IceBoss : EnemyController, IEndDialogue
         gm.enemiesInRange.Remove(enemyScript);
         gm.awareEnemies -= 1;
 
-        GlobalEvents.instance.EnemyKilled();
+        GlobalEvents.instance.EnemyKilled(enemyScript);
 
         mapData.iceBossKilled = true;
         gm.awareEnemies -= 1;

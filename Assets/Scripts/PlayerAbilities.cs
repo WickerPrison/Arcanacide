@@ -42,6 +42,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     PlayerSound playerSound;
     Rigidbody rb;
     BeamVfx beamVfx;
+    LockOn lockOn;
 
     //managers
     GameManager gm;
@@ -108,6 +109,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         rb = GetComponent<Rigidbody>();
         beamVfx = GetComponentInChildren<BeamVfx>();
         beamVfx.SetMaxAimValue(specialAttackProfiles[6].maxChargeTime);
+        lockOn = GetComponent<LockOn>();
 
         if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(0);
 
@@ -370,7 +372,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     {
         playerScript.LoseStamina(profile.staminaCost);
         Vector3 direction = attackPoint.position - transform.position;
-        FairyProjectile.Instantiate(fairyProjectilePrefab, direction, lanternFairy, this, profile);
+        FairyProjectile.Instantiate(fairyProjectilePrefab, direction, lanternFairy, this, profile, lockOn.GetAbilityTarget(100));
     }
 
     public void SpecialAttack()
@@ -457,17 +459,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             return;
         }
 
-        EnemyScript closestEnemy = null;
-        float distance = 10;
-        foreach (EnemyScript enemy in gm.enemies)
-        {
-            float enemyDistance = Vector3.Distance(enemy.transform.position, transform.position);
-            if (enemyDistance < distance)
-            {
-                distance = enemyDistance;
-                closestEnemy = enemy;
-            }
-        }
+        EnemyScript target = lockOn.GetAbilityTarget(10);
 
         int frontOrBack = 0;
         if (playerAnimation.facingDirection > 1)
@@ -478,10 +470,10 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         switch (playerData.equippedElements[2])
         {
             case WeaponElement.ELECTRICITY:
-                ElectricKnifeSpecial(closestEnemy, frontOrBack);
+                ElectricKnifeSpecial(target, frontOrBack);
                 break;
             case WeaponElement.ICE:
-                IceKnifeSpecial(closestEnemy, frontOrBack);
+                IceKnifeSpecial(target, frontOrBack);
                 break;
         }
     }

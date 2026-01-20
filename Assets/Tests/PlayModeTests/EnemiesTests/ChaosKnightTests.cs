@@ -27,11 +27,14 @@ public class ChaosKnightTests
     public IEnumerator MeleeBlock()
     {
         PlayerAbilities playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
+        LockOn lockOn = playerAbilities.GetComponent<LockOn>();
         ChaosKnightController knight = GameObject.Instantiate(knightPrefab).GetComponent<ChaosKnightController>();
         knight.attackTime = 100;
         EnemyScript enemyScript = knight.GetComponent<EnemyScript>();
         knight.transform.position = new Vector3(2f, 0, 2f);
         yield return new WaitForSeconds(0.75f);
+        lockOn.ToggleLockOn();
+        yield return null;
 
         playerAbilities.Attack();
         yield return new WaitForSeconds(2f);
@@ -43,14 +46,17 @@ public class ChaosKnightTests
     {
         PlayerAbilities playerAbilities = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAbilities>();
         WeaponManager weaponManager = playerAbilities.GetComponent<WeaponManager>();
+        LockOn lockOn = playerAbilities.GetComponent<LockOn>();
         ChaosKnightController knight = GameObject.Instantiate(knightPrefab).GetComponent<ChaosKnightController>();
         knight.attackTime = 100;
         EnemyScript enemyScript = knight.GetComponent<EnemyScript>();
         knight.transform.position = new Vector3(3f, 0, 3f);
         playerData.unlockedWeapons.Add(1);
+        playerData.equippedElements[1] = WeaponElement.FIRE;
         weaponManager.SwitchWeapon(1);
         yield return new WaitForSeconds(2f);
 
+        lockOn.ToggleLockOn();
         playerAbilities.Attack();
         yield return new WaitForSeconds(2f);
         Assert.AreEqual(enemyScript.health, enemyScript.maxHealth);

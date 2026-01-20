@@ -16,6 +16,7 @@ public class CalculateSpecials
     WeaponManager weaponManager;
     TestingEvents testingEvents;
     PlayerScript playerScript;
+    LockOn lockOn;
     float staminaCounter;
     int healthCounter;
     float manaCounter;
@@ -50,6 +51,7 @@ public class CalculateSpecials
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
         playerAbilities = playerAnimation.GetComponent<PlayerAbilities>();
         playerScript = playerAnimation.GetComponent<PlayerScript>();
+        lockOn = playerAnimation.GetComponent<LockOn>();
         playerScript.maxManaDelay = 100000;
         playerAttackHitEvents = playerScript.GetComponentInChildren<PlayerAttackHitEvents>();
         playerScript.testingEvents = testingEvents;
@@ -107,6 +109,7 @@ public class CalculateSpecials
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         int weaponIndex = reportIndex > 3 ? reportIndex - 4 : reportIndex;
         playerData.currentWeapon = weaponIndex == 0 ? 1 : 0;
         playerData.equippedElements[weaponIndex] = BalanceTestUtils.weaponElementDict[type];
@@ -193,6 +196,7 @@ public class CalculateSpecials
         testDummy2.maxHealth = health;
         testDummy2.health = testDummy2.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         playerData.currentWeapon = 0;
         weaponManager.SwitchWeapon(1);
         yield return new WaitForSeconds(2);
@@ -279,6 +283,7 @@ public class CalculateSpecials
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         playerData.currentWeapon = 1;
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
@@ -364,6 +369,7 @@ public class CalculateSpecials
         testDummy.health = testDummy.maxHealth;
 
         yield return null;
+        lockOn.ToggleLockOn();
         playerData.currentWeapon = 0;
         weaponManager.SwitchWeapon(3);
         yield return new WaitForSeconds(2);

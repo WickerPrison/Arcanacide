@@ -15,6 +15,7 @@ public class CalculateHeavyDps
     WeaponManager weaponManager;
     TestingEvents testingEvents;
     PlayerScript playerScript;
+    LockOn lockOn;
     float staminaCounter;
     int healthCounter;
     int hitCounter;
@@ -42,6 +43,7 @@ public class CalculateHeavyDps
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
         playerAbilities = playerAnimation.GetComponent<PlayerAbilities>();
         playerScript = playerAnimation.GetComponent<PlayerScript>();
+        lockOn = playerAnimation.GetComponent<LockOn>();
         playerAttackHitEvents = playerScript.GetComponentInChildren<PlayerAttackHitEvents>();
         playerScript.testingEvents = testingEvents;
         weaponManager = playerAnimation.GetComponent<WeaponManager>();
@@ -135,6 +137,7 @@ public class CalculateHeavyDps
         testDummy.maxHealth *= 100;
         testDummy.health = testDummy.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         playerData.currentWeapon = 3;
         weaponManager.SwitchWeapon(0);
         yield return new WaitForSeconds(2);
@@ -204,6 +207,7 @@ public class CalculateHeavyDps
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         playerData.currentWeapon = 3;
         weaponManager.SwitchWeapon(1);
         yield return new WaitForSeconds(2);
@@ -269,6 +273,7 @@ public class CalculateHeavyDps
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         playerData.currentWeapon = 3;
         weaponManager.SwitchWeapon(2);
         yield return new WaitForSeconds(2);
@@ -379,6 +384,7 @@ public class CalculateHeavyDps
         testDummy.maxHealth *= 100;
         testDummy.health = testDummy.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         playerData.currentWeapon = 1;
         weaponManager.SwitchWeapon(3);
         yield return new WaitForSeconds(2);

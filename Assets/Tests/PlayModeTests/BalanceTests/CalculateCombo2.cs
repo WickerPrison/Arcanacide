@@ -15,6 +15,7 @@ public class CalculateCombo2
     WeaponManager weaponManager;
     TestingEvents testingEvents;
     PlayerScript playerScript;
+    LockOn lockOn;
     float staminaCounter;
     int healthCounter;
     int hitCounter;
@@ -41,6 +42,7 @@ public class CalculateCombo2
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
         playerAbilities = playerAnimation.GetComponent<PlayerAbilities>();
         playerScript = playerAnimation.GetComponent<PlayerScript>();
+        lockOn = playerAnimation.GetComponent<LockOn>();
         PlayerAnimationEvents playerAnimationEvents = playerAnimation.GetComponentInChildren<PlayerAnimationEvents>();
         playerScript.testingEvents = testingEvents;
         testingEvents.onAttackFalse += TestingEvents_onAttackFalse;
@@ -202,6 +204,7 @@ public class CalculateCombo2
         testDummy.maxHealth = health;
         testDummy.health = testDummy.maxHealth;
         yield return null;
+        lockOn.ToggleLockOn();
         int weaponIndex = reportIndex > 3 ? reportIndex - 4 : reportIndex;
         playerData.currentWeapon = weaponIndex == 0 ? 1 : 0;
         playerData.equippedElements[weaponIndex] = BalanceTestUtils.weaponElementDict[type];

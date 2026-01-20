@@ -11,7 +11,7 @@ public class GlobalEvents : MonoBehaviour
 
     public event EventHandler onChangedSetting;
     public event EventHandler onPlayerDeath;
-    public event EventHandler onEnemyKilled;
+    public event EventHandler<EnemyScript> onEnemyKilled;
     public event EventHandler onBossKilled;
     public event EventHandler onMinibossKilled;
     public event EventHandler onWhistleblowerKilled;
@@ -31,6 +31,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler<int> onChangeWeapon;
     public event EventHandler<int> onPlayerDealDamage;
     public event EventHandler onPlayerStatsChange;
+    public event EventHandler<EnemyScript> onLockOnTarget;
 
 
     private void Awake()
@@ -54,9 +55,9 @@ public class GlobalEvents : MonoBehaviour
         onPlayerDeath?.Invoke(this, EventArgs.Empty);
     }
 
-    public void EnemyKilled()
+    public void EnemyKilled(EnemyScript enemyScript)
     {
-        onEnemyKilled?.Invoke(this, EventArgs.Empty);
+        onEnemyKilled?.Invoke(this, enemyScript);
     }
 
     public void BossKilled()
@@ -152,5 +153,10 @@ public class GlobalEvents : MonoBehaviour
     public void PlayerStatsChange()
     {
         onPlayerStatsChange?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void LockOnTarget(EnemyScript target)
+    {
+        onLockOnTarget?.Invoke(this, target);
     }
 }
