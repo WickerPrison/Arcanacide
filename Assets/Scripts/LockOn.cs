@@ -59,6 +59,7 @@ public class LockOn : MonoBehaviour
 
     public void SwapTarget(bool right)
     {
+        if (target == null) return;
         if (gm.enemies.Count == 0)
         {
             target = null;
