@@ -16,17 +16,20 @@ public class SettingsMenu : MonoBehaviour
     public PlayerControls controls;
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
     [SerializeField] SettingsData settingsData;
-    TextMeshProUGUI direcitonalArrowText;
     [SerializeField] ToggleUI arrowToggle;
-    TextMeshProUGUI fullscreenText;
     [SerializeField] ToggleUI fullscreenToggle;
+    [SerializeField] ToggleUI vsyncToggle;
+    [SerializeField] OptionSetUi frameRateUI;
     [SerializeField] Image background;
     [System.NonSerialized] public GameObject firstMainMenuButton;
+    bool canScrollSideways = true;
 
     private void Awake()
     {
         controls = new PlayerControls();
         controls.Menu.Back.started += ctx => LeaveMenu();
+        controls.Menu.ControllerDirection.performed += ctx => OptionSelectInput(ctx.ReadValue<Vector2>().x);
+        controls.Menu.ControllerDirection.canceled += ctx => canScrollSideways = true;
     }
 
     private void Start()
@@ -36,36 +39,19 @@ public class SettingsMenu : MonoBehaviour
         gm.LoadSettings();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);     
-        direcitonalArrowText = arrowToggle.GetComponentInChildren<TextMeshProUGUI>();
         arrowToggle.SetToggleInstant(settingsData.showArrow);
-        fullscreenText = fullscreenToggle.GetComponentInChildren<TextMeshProUGUI>();
         fullscreenToggle.SetToggleInstant(settingsData.fullscreenMode);
+        vsyncToggle.SetToggleInstant(settingsData.GetVsync());
+        frameRateUI.ImmediateSelectOption(settingsData.frameRateLimit);
         UpdateMenu();
     }
 
     void UpdateMenu()
     {
-        if (settingsData.showArrow)
-        {
-            arrowToggle.ToggleSwitch(true);
-            direcitonalArrowText.text = "On";
-        }
-        else
-        {
-            arrowToggle.ToggleSwitch(false);
-            direcitonalArrowText.text = "Off";
-        }
-
-        if (settingsData.fullscreenMode)
-        {
-            fullscreenToggle.ToggleSwitch(true);
-            fullscreenText.text = "On";
-        }
-        else
-        {
-            fullscreenToggle.ToggleSwitch(false);
-            fullscreenText.text = "Off";
-        }
+        arrowToggle.ToggleSwitch(settingsData.showArrow);
+        fullscreenToggle.ToggleSwitch(settingsData.fullscreenMode);
+        vsyncToggle.ToggleSwitch(settingsData.GetVsync());
+        frameRateUI.SelectOption(settingsData.frameRateLimit);
 
         SaveSystem.SaveSettings(settingsData);
         GlobalEvents.instance.OnChangedSetting();
@@ -95,6 +81,43 @@ public class SettingsMenu : MonoBehaviour
             Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
         }
         UpdateMenu();
+    }
+
+    public void ToggleVsync()
+    {
+        settingsData.SetVsync(!settingsData.GetVsync());
+        UpdateMenu();
+    }
+
+    void OptionSelectInput(float input)
+    {
+        if (!frameRateUI.selected) return;
+        if (Mathf.Abs(input) < 0.5f) canScrollSideways = true;
+
+        if (!canScrollSideways) return;
+
+        if (input > 0.9f)
+        {
+            FrameRateRight();
+            canScrollSideways = false;
+        }
+        else if(input < -0.9f)
+        {
+            FrameRateLeft();
+            canScrollSideways = false;
+        }
+    }
+
+    public void FrameRateLeft()
+    {
+        settingsData.frameRateLimit = settingsData.frameRateLimit - 1 >= 0 ? settingsData.frameRateLimit - 1 : 3;
+        frameRateUI.SelectOption(settingsData.frameRateLimit);
+    }
+
+    public void FrameRateRight()
+    {
+        settingsData.frameRateLimit = settingsData.frameRateLimit + 1 <= 3 ? settingsData.frameRateLimit + 1 : 0;
+        frameRateUI.SelectOption(settingsData.frameRateLimit);
     }
 
     public void LeaveMenu()

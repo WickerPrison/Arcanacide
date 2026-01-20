@@ -14,6 +14,8 @@ public class SettingsSaveData
     public float sfxVol;
     public float musicVol;
     public bool fullscreenMode = true;
+    public bool vsync = true;
+    public int frameRateLimit = 0;
 
     public SettingsSaveData(SettingsData settingsData)
     {
@@ -24,5 +26,7 @@ public class SettingsSaveData
         sfxVol = settingsData.sfxVol;
         musicVol = settingsData.musicVol;
         fullscreenMode = settingsData.fullscreenMode;
+        vsync = settingsData.GetVsync();
+        frameRateLimit = settingsData.frameRateLimit;
     }
 }
