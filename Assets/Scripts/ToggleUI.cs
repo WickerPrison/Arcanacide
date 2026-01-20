@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class ToggleUI : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
@@ -12,6 +13,7 @@ public class ToggleUI : MonoBehaviour, ISelectHandler, IDeselectHandler
     float switchTime = 0.1f;
     [SerializeField] Image inner;
     [SerializeField] Image outer;
+    [SerializeField] TextMeshProUGUI text;
 
     public void SetToggleInstant(bool turnOn)
     {
@@ -19,17 +21,19 @@ public class ToggleUI : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             transform.localPosition = onPos;
             bar.transform.localScale = new Vector3(1, bar.transform.localScale.y, bar.transform.localScale.z);
+            text.text = "On";
         }
         else
         {
             transform.localPosition = offPos;
             bar.transform.localScale = new Vector3(0, bar.transform.localScale.y, bar.transform.localScale.z);
+            text.text = "Off";
         }
     }
 
     public void ToggleSwitch(bool turnOn)
     {
-
+        text.text = turnOn ? "On" : "Off";
         StartCoroutine(SwitchAnimation(turnOn));
     }
 
