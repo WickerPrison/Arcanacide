@@ -57,6 +57,12 @@ public class LockOn : MonoBehaviour
         return currentTarget;
     }
 
+    public void TargetEnemy(EnemyScript enemyScript)
+    {
+        target = enemyScript;
+        GlobalEvents.instance.LockOnTarget(target);
+    }
+
     public void SwapTarget(bool right)
     {
         if (target == null) return;
