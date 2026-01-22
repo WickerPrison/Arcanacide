@@ -114,7 +114,7 @@ public class LockOn : MonoBehaviour
     {
         if(enemyScript == target)
         {
-            SwapTarget(true);
+            TargetClosestEnemy();
         }
     }
 }
