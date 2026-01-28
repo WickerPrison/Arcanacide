@@ -33,7 +33,7 @@ public class SettingsData : ScriptableObject
 
     public bool fullscreenMode;
 
-    bool vsync;
+    public bool vsync;
     int _frameRateLimit;
     public int frameRateLimit
     {

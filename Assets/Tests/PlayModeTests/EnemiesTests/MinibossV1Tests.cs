@@ -270,4 +270,35 @@ public class MinibossV1Tests
         yield return new WaitForSeconds(3);
         Assert.IsTrue(minibossAbilities == null);
     }
+
+    [UnityTest]
+    public IEnumerator TakeDamage()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        PlayerAbilities playerAbilities = playerScript.GetComponent<PlayerAbilities>();
+        LockOn lockOn = playerScript.GetComponent<LockOn>();
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-1f, 0, -1f);
+        EnemyScript enemyScript = minibossAbilities.GetComponent<EnemyScript>();
+        MinibossV1Controller minibossController = minibossAbilities.GetComponent<MinibossV1Controller>();
+        minibossController.attackTime = 1000;
+        yield return null;
+        lockOn.ToggleLockOn();
+        lockOn.ToggleLockOn();
+
+        yield return null;
+
+        playerAbilities.Attack();
+
+        yield return new WaitForSeconds(2);
+
+        minibossAbilities.transform.position = new Vector3(1f, 0, 1f);
+
+        yield return null;
+
+        playerAbilities.Attack();
+
+        yield return new WaitForSeconds(2);
+        
+    }
 }

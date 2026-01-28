@@ -25,6 +25,7 @@ public class LockOn : MonoBehaviour
     public void ToggleLockOn()
     {
         lockOn = !lockOn;
+        Debug.Log(lockOn);
         if (lockOn)
         {
             TargetClosestEnemy();
@@ -59,6 +60,7 @@ public class LockOn : MonoBehaviour
 
     public void TargetEnemy(EnemyScript enemyScript)
     {
+        lockOn = true; 
         target = enemyScript;
         GlobalEvents.instance.LockOnTarget(target);
     }
