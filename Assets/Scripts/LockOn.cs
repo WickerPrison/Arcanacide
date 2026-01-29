@@ -25,7 +25,6 @@ public class LockOn : MonoBehaviour
     public void ToggleLockOn()
     {
         lockOn = !lockOn;
-        Debug.Log(lockOn);
         if (lockOn)
         {
             TargetClosestEnemy();
@@ -55,6 +54,7 @@ public class LockOn : MonoBehaviour
                 currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
             }
         }
+        if (currentTarget == null) lockOn = false;
         return currentTarget;
     }
 
