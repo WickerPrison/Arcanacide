@@ -72,10 +72,7 @@ public class EnemyScript : MonoBehaviour
 
         if(health <= 0 && enemyController.state != EnemyState.DYING)
         {
-            dying = true;
-            enemyController.state = EnemyState.DYING;
-            enemyEvents.StopDOT();
-            enemyController.StartDying();
+            StartDying();
         }
 
         if(DOT > 0 && enemyController.state != EnemyState.DYING)
@@ -218,9 +215,13 @@ public class EnemyScript : MonoBehaviour
     }
 
 
-    public void Death()
+    private void StartDying()
     {
-        if(enemyGUID != "")
+        dying = true;
+        enemyController.state = EnemyState.DYING;
+        enemyEvents.StopDOT();
+
+        if (enemyGUID != "")
         {
             mapData.deadEnemies.Add(enemyGUID);
         }
@@ -239,8 +240,12 @@ public class EnemyScript : MonoBehaviour
 
         GlobalEvents.instance.EnemyKilled(this);
 
-        enemyEvents.Death();
+        enemyController.StartDying();
+    }
 
+    public void Death()
+    {
+        enemyEvents.Death();
         Destroy(gameObject);
     }
 
