@@ -60,6 +60,10 @@ public class LightningOrbController : EnemyController
         lightning.Stop();
         state = EnemyState.SPECIAL;
         yield return new WaitForSeconds(selfDestructTime);
+        enemyScript.MarkIdAsDead();
+        enemyScript.GiveReward();
+        enemyScript.RemoveFromGm();
+        GlobalEvents.instance.EnemyKilled(enemyScript);
         SelfDestruct();
     }
 

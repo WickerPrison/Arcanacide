@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
     public enum EnemyState
     {
         UNAWARE, IDLE, ATTACKING, STAGGERED, DYING, SPECIAL, DISABLED
@@ -40,7 +41,7 @@ public class EnemyController : MonoBehaviour
     public float hitPoiseDamage;
     [System.NonSerialized] public bool facingFront;
     float staggerTimer = 0;
-    LayerMask sightBlocker; 
+    LayerMask sightBlocker;
 
     [System.NonSerialized] public bool canHitPlayer = false;
 
@@ -65,7 +66,7 @@ public class EnemyController : MonoBehaviour
         playerAbilities = player.GetComponent<PlayerAbilities>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         navAgent = GetComponent<NavMeshAgent>();
-        startDelay = Random.Range(0.4f, 1);
+        startDelay = UnityEngine.Random.Range(0.4f, 1);
     }
 
     // Update is called once per frame
@@ -182,6 +183,11 @@ public class EnemyController : MonoBehaviour
     public virtual void AdditionalAttackEffects()
     {
 
+    }
+
+    public virtual void HealthToZero()
+    {
+        enemyScript.StartDying();
     }
 
     public virtual void StartDying()
