@@ -123,10 +123,10 @@ public class SettingsData : ScriptableObject
         }
     }
 
-    public void SetVsync(bool vsyncValue)
+    public void SetVsync(bool noVsync)
     {
-        vsync = vsyncValue;
-        QualitySettings.vSyncCount = vsyncValue ? 1 : 0;
+        vsync = !noVsync;
+        QualitySettings.vSyncCount = noVsync ? 0 : 1;
     }
 
     public bool GetVsync()

@@ -14,7 +14,8 @@ public class SettingsSaveData
     public float sfxVol;
     public float musicVol;
     public bool fullscreenMode = true;
-    public bool vsync = true;
+    // I do noVsync here because setting the default value to true doesn't work and it will always use the bool default of false
+    public bool noVsync = false;
     public int frameRateLimit = 0;
 
     public SettingsSaveData(SettingsData settingsData)
@@ -26,7 +27,7 @@ public class SettingsSaveData
         sfxVol = settingsData.sfxVol;
         musicVol = settingsData.musicVol;
         fullscreenMode = settingsData.fullscreenMode;
-        vsync = settingsData.GetVsync();
+        noVsync = !settingsData.GetVsync();
         frameRateLimit = settingsData.frameRateLimit;
     }
 }

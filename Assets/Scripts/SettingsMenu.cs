@@ -85,7 +85,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void ToggleVsync()
     {
-        settingsData.SetVsync(!settingsData.GetVsync());
+        settingsData.SetVsync(settingsData.GetVsync());
         UpdateMenu();
     }
 
