@@ -72,10 +72,7 @@ public class EnemyScript : MonoBehaviour
 
         if(health <= 0 && enemyController.state != EnemyState.DYING)
         {
-            dying = true;
-            enemyController.state = EnemyState.DYING;
-            enemyEvents.StopDOT();
-            enemyController.StartDying();
+            enemyController.HealthToZero();
         }
 
         if(DOT > 0 && enemyController.state != EnemyState.DYING)
@@ -218,13 +215,31 @@ public class EnemyScript : MonoBehaviour
     }
 
 
-    public void Death()
+    public void StartDying()
     {
-        if(enemyGUID != "")
+        dying = true;
+        enemyController.state = EnemyState.DYING;
+        enemyEvents.StopDOT();
+
+        MarkIdAsDead();
+        GiveReward();
+        RemoveFromGm();
+
+        GlobalEvents.instance.EnemyKilled(this);
+
+        enemyController.StartDying();
+    }
+
+    public void MarkIdAsDead()
+    {
+        if (enemyGUID != "")
         {
             mapData.deadEnemies.Add(enemyGUID);
         }
+    }
 
+    public void GiveReward()
+    {
         if (playerData.equippedPatches.Contains(Patches.PAY_RAISE))
         {
             GlobalEvents.instance.MoneyChange(playerData.money, Mathf.RoundToInt(reward * (float)emblemLibrary.patchDictionary[Patches.PAY_RAISE].value));
@@ -233,14 +248,18 @@ public class EnemyScript : MonoBehaviour
         {
             GlobalEvents.instance.MoneyChange(playerData.money, reward);
         }
+    }
+
+    public void RemoveFromGm()
+    {
         gm.enemies.Remove(this);
         gm.enemiesInRange.Remove(this);
         gm.awareEnemies -= 1;
+    }
 
-        GlobalEvents.instance.EnemyKilled();
-
+    public void Death()
+    {
         enemyEvents.Death();
-
         Destroy(gameObject);
     }
 

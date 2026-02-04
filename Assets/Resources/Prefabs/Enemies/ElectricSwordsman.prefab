@@ -1089,6 +1089,7 @@ MonoBehaviour:
   hitDamage: 20
   hitPoiseDamage: 20
   rings: {fileID: 2076900721683661243}
+  colorChange: 0
 --- !u!114 &2546945707517678028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1106,11 +1107,13 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  enemySound: {fileID: 0}
   maxHealth: 130
   maxPoise: 70
   poiseRegeneration: 5
   invincible: 0
   enemyGUID: 
+  chargeResistance: 0
 --- !u!136 &2546945707517678027
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1191,6 +1194,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 7969050972460322302}
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &7151660279531034344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1204,6 +1210,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
+  colorChange: 0
+  colorChangeThreshold: 0.1
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
+  newFloorColor: 0
+  colorData: {fileID: 0}
 --- !u!114 &6608039150850087706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4095,6 +4106,18 @@ PrefabInstance:
     - target: {fileID: 1888048683395919507, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.498
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2940079905156645873, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: m_LocalPosition.x

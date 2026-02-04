@@ -12,6 +12,7 @@ public class IceBossTests
     GameObject frankPrefab;
     IceBoss bossController;
     EnemyScript enemyScript;
+    LockOn lockOn;
     Dialogue dialogue;
     HUD hud;
     TestingEvents testingEvents;
@@ -33,6 +34,9 @@ public class IceBossTests
         hud = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<HUD>();
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
         Time.timeScale = 1f;
+
+        lockOn = GameObject.FindGameObjectWithTag("Player").GetComponent<LockOn>();
+        yield return null;
     }
 
     void SpawnFrank()
@@ -74,11 +78,15 @@ public class IceBossTests
         SpawnFrank();
         hud.EnableBossHealthbar(enemyScript.GetComponent<EnemyEvents>());
         yield return null;
+        lockOn.ToggleLockOn();
+        lockOn.ToggleLockOn();
         dialogue.CloseDialogue();
         yield return null;
+        Assert.AreEqual(enemyScript, lockOn.target);
         yield return BossTransition(3);
         enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 2);
         yield return new WaitForSeconds(2);
+        Assert.AreEqual(enemyScript, lockOn.target);
         enemyScript.GetComponent<Dialogue>().CloseDialogue();
         bossController.attackTime = 60;
         yield return new WaitForSeconds(35);

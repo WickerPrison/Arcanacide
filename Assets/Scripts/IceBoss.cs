@@ -386,6 +386,14 @@ public class IceBoss : EnemyController, IEndDialogue
         backAnimator.Play("Death");
     }
 
+    public override void HealthToZero()
+    {
+        enemyScript.dying = true;
+        state = EnemyState.DYING;
+        enemyEvents.StopDOT();
+        StartDying();
+    }
+
     public override void Death()
     {
         HideIndicators();
@@ -395,22 +403,12 @@ public class IceBoss : EnemyController, IEndDialogue
 
         playerData.killedEnemiesNum += 1;
 
-        if (playerData.equippedPatches.Contains(Patches.PAY_RAISE))
-        {
-            playerData.money += Mathf.RoundToInt(enemyScript.reward * (float)emblemLibrary.patchDictionary[Patches.PAY_RAISE].value);
-        }
-        else
-        {
-            playerData.money += enemyScript.reward;
-        }
-        gm.enemies.Remove(enemyScript);
-        gm.enemiesInRange.Remove(enemyScript);
-        gm.awareEnemies -= 1;
-
-        GlobalEvents.instance.EnemyKilled();
+        enemyScript.MarkIdAsDead();
+        enemyScript.GiveReward();
+        enemyScript.RemoveFromGm();
+        GlobalEvents.instance.EnemyKilled(enemyScript);
 
         mapData.iceBossKilled = true;
-        gm.awareEnemies -= 1;
         GlobalEvents.instance.BossKilled();
     }
 

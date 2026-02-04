@@ -45,6 +45,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public int facingDirection;
     PlayerEvents playerEvents;
+    LockOn lockOn;
 
     private void Awake()
     {
@@ -60,8 +61,13 @@ public class PlayerAnimation : MonoBehaviour
         frontOffset = frontAnimator.transform.localPosition.x;
         backOffset = backAnimator.transform.localPosition.x;
         smear = GetComponentInChildren<Smear>();
+        lockOn = GetComponent<LockOn>();
 
-        if (Gamepad.current == null)
+        if(lockOn.target != null)
+        {
+            FaceLockOn();
+        }
+        else if (Gamepad.current == null)
         {
             FaceMouse();
         }
@@ -80,7 +86,11 @@ public class PlayerAnimation : MonoBehaviour
         //While attacking the player won't change what direction he is facing. Otherwise he faces the mouse
         if (playerController.CanInput() || playerController.canWalk)
         {
-            if(Gamepad.current == null)
+            if(lockOn.target != null)
+            {
+                FaceLockOn();
+            }
+            else if(Gamepad.current == null)
             {
                 FaceMouse();
             }
@@ -193,6 +203,26 @@ public class PlayerAnimation : MonoBehaviour
     public float EndClawHeavy()
     {
         return attackHitEvents.EndCharge(clawHeavyProfile.maxChargeTime);
+    }
+
+    void FaceLockOn()
+    {
+        Vector3 direction = Vector3.Normalize(lockOn.target.transform.position - transform.position);
+        switch (direction.x, direction.z)
+        {
+            case ( >= 0, <= 0):
+                FrontRight();
+                break;
+            case ( >= 0, > 0):
+                BackRight();
+                break;
+            case ( < 0, <= 0):
+                FrontLeft();
+                break;
+            case ( < 0, > 0):
+                BackLeft();
+                break;
+        }
     }
 
     void FaceJoystick()

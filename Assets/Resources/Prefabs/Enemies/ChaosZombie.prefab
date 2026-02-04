@@ -1580,6 +1580,13 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  electricChargeShock:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   otherSounds: []
   otherSFX: []
 --- !u!1 &2418130778612231059
@@ -3185,14 +3192,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4658318973563961348}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0.498, y: 0.003, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5382090610406635820}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!1 &4716898188354150838
 GameObject:
   m_ObjectHideFlags: 0
@@ -4692,11 +4699,13 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
   phoneData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
   emblemLibrary: {fileID: 11400000, guid: 234b227f89e82e94893c433dabfb8396, type: 2}
+  enemySound: {fileID: 0}
   maxHealth: 100
   maxPoise: 100
   poiseRegeneration: 5
   invincible: 0
   enemyGUID: 
+  chargeResistance: 0
 --- !u!136 &7469990632119501790
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4777,6 +4786,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
+  colorChange: 0
+  colorChangeThreshold: 0.1
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
+  newFloorColor: 0
+  colorData: {fileID: 0}
 --- !u!114 &6069692813798394868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5884,11 +5898,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 473219017523113758, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.426
+      value: 0.376
       objectReference: {fileID: 0}
     - target: {fileID: 473219017523113758, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.035
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 567605592078665986, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: backPoint
@@ -5957,6 +5971,18 @@ PrefabInstance:
     - target: {fileID: 1888048683395919507, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.028
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429905918402533361, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2940079905156645873, guid: f834ac0d682e2d94e8df5e848ba844c8, type: 3}
       propertyPath: m_LocalPosition.x
