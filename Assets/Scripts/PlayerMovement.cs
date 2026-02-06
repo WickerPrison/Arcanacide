@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Dodge()
+    public void Dodge(bool canInputBuffer = true)
     {
         if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
         {
@@ -144,6 +144,25 @@ public class PlayerMovement : MonoBehaviour
             gameObject.layer = 8;
             playerAnimation.PlayAnimation("Dash");
             playerSound.PlaySoundEffect(PlayerSFX.DODGE, 0.5f);
+        }
+        else
+        {
+            StartCoroutine(DodgeInputBuffer(moveDirection));
+        }
+    }
+
+    IEnumerator DodgeInputBuffer(Vector3 direction)
+    {
+        float timer = 0.2f;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            if(CanInput() && playerScript.stamina > 0 && direction.magnitude > 0)
+            {
+                timer = 0;
+                Dodge(false);
+            }
+            yield return null;
         }
     }
 
