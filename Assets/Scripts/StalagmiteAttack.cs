@@ -140,7 +140,7 @@ public class StalagmiteAttack : MonoBehaviour
             playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, enemyOfOrigin);
             playerScript.LosePoise(poiseDamage);
             playerScript.StartStagger(0.2f);
-            RuntimeManager.PlayOneShot(iceImpact, 1f);
+            FmodUtils.PlayOneShot(iceImpact, 1f);
             hitbox.enabled = false;
         }, () =>
         {

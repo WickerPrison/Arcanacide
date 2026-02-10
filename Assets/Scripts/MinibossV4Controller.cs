@@ -15,9 +15,8 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
         if (mapData.miniboss4Killed)
         {
             enemyEvents.HideBossHealthbar();
-            //musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
-            Destroy(gameObject);
+            //Is actually destroyed in MinibossLateScript
         }
         else
         {
@@ -137,6 +136,7 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
         else
         {
             state = EnemyState.IDLE;
+            GlobalEvents.instance.MinibossEndDialogue();
         }
     }
 

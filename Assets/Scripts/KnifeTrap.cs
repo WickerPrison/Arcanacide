@@ -80,7 +80,7 @@ public class KnifeTrap : MonoBehaviour
                 if (canMakeDamageSound)
                 {
                     //RuntimeManager.PlayOneShot(electricDamage, 0.2f, transform.position);
-                    RuntimeManager.PlayOneShot(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume, transform.position);
+                    FmodUtils.PlayOneShot(attackProfile.soundOnHitEvent, attackProfile.soundOnHitVolume, transform.position);
                     StartCoroutine(SFXtimer());
                 }
                 damage = leftOver;

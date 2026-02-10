@@ -74,6 +74,7 @@ public class MusicManager : MonoBehaviour
 
     private void onPlayerDeath(object sender, System.EventArgs e)
     {
+        musicPlayer.ChangeOptBossState(OptBossState.DEATH);
         musicPlayer.ChangeState(MusicState.DEATH);
     }
 
@@ -82,23 +83,31 @@ public class MusicManager : MonoBehaviour
         musicPlayer.ChangeState(MusicState.BOSSVICTORY);
     }
 
-    private void Global_onWhistleblowerKilled(object sender, System.EventArgs e)
+    private void Global_onMinibossKilled(object sender, System.EventArgs e)
     {
-        musicPlayer.ChangeState(MusicState.BOSSVICTORY);
+        musicPlayer.ChangeOptBossState(OptBossState.VICTORY);
+    }
+
+    private void Global_onMinibossEndDialogue(object sender, System.EventArgs e)
+    {
+        musicPlayer.ChangeOptBossState(OptBossState.COMBAT);
     }
 
     private void OnEnable()
     {
         GlobalEvents.instance.onBossKilled += onBossKilled;
         GlobalEvents.instance.onPlayerDeath += onPlayerDeath;
-        GlobalEvents.instance.onWhistleblowerKilled += Global_onWhistleblowerKilled;
+        GlobalEvents.instance.onMinibossKilled += Global_onMinibossKilled;
+        GlobalEvents.instance.onMinibossEndDialogue += Global_onMinibossEndDialogue;
     }
+
 
     private void OnDisable()
     {
         GlobalEvents.instance.onBossKilled -= onBossKilled;
         GlobalEvents.instance.onPlayerDeath -= onPlayerDeath;
-        GlobalEvents.instance.onWhistleblowerKilled -= Global_onWhistleblowerKilled;
+        GlobalEvents.instance.onMinibossKilled -= Global_onMinibossKilled;
+        GlobalEvents.instance.onMinibossEndDialogue -= Global_onMinibossEndDialogue;
     }
 
 }

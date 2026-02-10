@@ -86,7 +86,7 @@ public class LightningOrbController : EnemyController
         {
             if(playerScript.gameObject.layer == 3)
             {
-                RuntimeManager.PlayOneShot(impactSFX, 2);
+                FmodUtils.PlayOneShot(impactSFX, 2);
                 playerScript.StartStagger(0.1f);
                 playerScript.LoseHealth(spellAttackDamage, EnemyAttackType.NONPARRIABLE, null);
                 playerScript.LosePoise(spellAttackPoiseDamage);

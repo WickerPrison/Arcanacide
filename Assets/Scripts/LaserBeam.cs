@@ -48,7 +48,7 @@ public class LaserBeam : MonoBehaviour
         PlayerScript playerScript = other.gameObject.GetComponent<PlayerScript>();
         playerScript.LoseHealth(beamDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(beamPoiseDamage);
-        RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
+        FmodUtils.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
         damageDelay = maxDamageDelay;
     }
 

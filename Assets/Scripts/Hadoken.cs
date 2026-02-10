@@ -19,7 +19,7 @@ public class Hadoken : Projectile
 
     void Explode()
     {
-        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+        FmodUtils.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         for (int i = 0; i < projectileNum; i++)
         {
             Projectile projectile = Instantiate(smallerProjectilePrefab).GetComponent<Projectile>();

@@ -82,7 +82,7 @@ public class LightningRings : MonoBehaviour, IHaveLightningRings
                 {
                     playerScript.LoseHealth(electricSwordsman.spellAttackDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
                     playerScript.LosePoise(electricSwordsman.spellAttackPoiseDamage);
-                    RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
+                    FmodUtils.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
                     StartCoroutine(HitDelay());
                 }
                 else if (playerScript.gameObject.layer == 8)

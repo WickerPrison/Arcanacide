@@ -18,37 +18,37 @@ public class EnemySound : MonoBehaviour
 
     public void Footstep()
     {
-        RuntimeManager.PlayOneShot(footstep, 0.25f);
+        FmodUtils.PlayOneShot(footstep, 0.25f);
     }
 
     public void SwordSwoosh()
     {
-        RuntimeManager.PlayOneShot(swordSwoosh, 1);
+        FmodUtils.PlayOneShot(swordSwoosh, 1);
     }
 
     public void SwordImpact()
     {
-        RuntimeManager.PlayOneShot(swordImpact, 1);
+        FmodUtils.PlayOneShot(swordImpact, 1);
     }
 
     public void BlockAttack()
     {
-        RuntimeManager.PlayOneShot(blockAttack, 1);
+        FmodUtils.PlayOneShot(blockAttack, 1);
     }
 
     public void EnemySpell()
     {
-        RuntimeManager.PlayOneShot(enemySpell, 1);
+        FmodUtils.PlayOneShot(enemySpell, 1);
     }
 
     public void ElectricShock()
     {
-        RuntimeManager.PlayOneShot(electricChargeShock, 0.5f);
+        FmodUtils.PlayOneShot(electricChargeShock, 0.5f);
     }
 
     public void OtherSounds(int indexNumber, float volume)
     {
-        RuntimeManager.PlayOneShot(otherSFX[indexNumber], volume, transform.position);
+        FmodUtils.PlayOneShot(otherSFX[indexNumber], volume, transform.position);
     }
 
     public void Play(EventReference fmodEvent, float volume) 

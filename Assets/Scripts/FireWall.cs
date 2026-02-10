@@ -64,7 +64,7 @@ public class FireWall : MonoBehaviour
             {
                 playerScript = collision.gameObject.GetComponent<PlayerScript>();
             }
-            RuntimeManager.PlayOneShot(playerImpactSFX, 1, transform.position);
+            FmodUtils.PlayOneShot(playerImpactSFX, 1, transform.position);
             playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
             playerScript.StartStagger(0.5f);
         }

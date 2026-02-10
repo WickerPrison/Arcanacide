@@ -11,7 +11,12 @@ public enum Music
 
 public enum MusicState
 {
-    MAINLOOP, BOSSDIALOGUE, BOSSMUSIC, BOSSVICTORY, DEATH, OUTRO, MAINMENU
+    MAINLOOP, BOSSDIALOGUE, BOSSMUSIC, BOSSVICTORY, DEATH, OPT_BOSS, OUTRO, MAINMENU
+}
+
+public enum OptBossState
+{
+    DIALOGUE, COMBAT, VICTORY, DEATH
 }
 
 public class MusicPlayer : MonoBehaviour
@@ -22,6 +27,7 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField] SettingsData settingsData;
     Dictionary<Music, EventReference> playlistDict;
     Dictionary<MusicState, string> stateLabelDict;
+    Dictionary<OptBossState, string> optBossStateDict;
     Dictionary<Music, string> parameterNameDict;
     EventInstance musicInstance;
 
@@ -58,15 +64,30 @@ public class MusicPlayer : MonoBehaviour
             {MusicState.BOSSMUSIC, "BOSS MUSIC" },
             {MusicState.BOSSVICTORY, "BOSS VICTORY" },
             {MusicState.DEATH, "DEATH" },
+            {MusicState.OPT_BOSS, "OPT BOSS" },
             {MusicState.OUTRO, "OUTRO" },
             {MusicState.MAINMENU, "MAIN MENU" }
         };
+
+        optBossStateDict = new Dictionary<OptBossState, string>()
+        {
+            { OptBossState.DIALOGUE, "DIALOGUE" },
+            { OptBossState.COMBAT, "COMBAT" },
+            { OptBossState.DEATH, "DEATH" },
+            { OptBossState.VICTORY, "VICTORY" },
+        };
+
         DontDestroyOnLoad(gameObject);
     }
 
     public void ChangeState(MusicState newState)
     {
         musicInstance.setParameterByNameWithLabel(parameterNameDict[currentTrack], stateLabelDict[newState]);
+    }
+
+    public void ChangeOptBossState(OptBossState state)
+    {
+        musicInstance.setParameterByNameWithLabel("OB MUSICSTATE", optBossStateDict[state]);
     }
 
     public void PlayMusic(Music musicOption)

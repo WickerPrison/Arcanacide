@@ -130,7 +130,7 @@ public class RestMenuButtons : MonoBehaviour
 
     void Rest()
     {
-        RuntimeManager.PlayOneShot(healSFX, 0.4f);   
+        FmodUtils.PlayOneShot(healSFX, 0.4f);   
         playerData.lastSwordSite = altarNumber;
         mapData.doorNumber = 0;
         mapData.deadEnemies.Clear();

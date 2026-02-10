@@ -28,11 +28,11 @@ public class PlayerSound : MonoBehaviour
 
     public void PlaySoundEffect(EventReference fmodEvent, float volume)
     {
-        RuntimeManager.PlayOneShot(fmodEvent, volume);
+        FmodUtils.PlayOneShot(fmodEvent, volume);
     }
 
     public void PlaySoundEffect(PlayerSFX playerSFX, float volume)
     {
-        RuntimeManager.PlayOneShot(fmodSoundEffects[playerSFXDict[playerSFX]], volume, transform.position);
+        FmodUtils.PlayOneShot(fmodSoundEffects[playerSFXDict[playerSFX]], volume, transform.position);
     }
 }

@@ -45,7 +45,7 @@ public class PustuleScript : ArcProjectile
                 if (nearbyObject.CompareTag("Player"))
                 {
                     nearbyObject.GetComponent<PlayerScript>().LoseHealth(pulseDamage, EnemyAttackType.NONPARRIABLE, null);
-                    RuntimeManager.PlayOneShot(pulseDamageSFX, pulseDamageVolume);
+                    FmodUtils.PlayOneShot(pulseDamageSFX, pulseDamageVolume);
                 }
                 else if (nearbyObject.CompareTag("Enemy"))
                 {
@@ -80,7 +80,7 @@ public class PustuleScript : ArcProjectile
             PlayerScript playerScript = other.GetComponent<PlayerScript>();
             playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyScript);
             playerScript.LosePoise(poiseDamage);
-            RuntimeManager.PlayOneShot(impactSound, impactVolume);
+            FmodUtils.PlayOneShot(impactSound, impactVolume);
             Destroy(gameObject);
         }
     }

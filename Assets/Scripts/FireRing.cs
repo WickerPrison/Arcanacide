@@ -11,7 +11,7 @@ public class FireRing : MonoBehaviour
 
     public void Explode()
     {
-        RuntimeManager.PlayOneShot(fireRingSFX, 1);
+        FmodUtils.PlayOneShot(fireRingSFX, 1);
         fireRingBack.Play();
         fireRingFront.Play();
     }

@@ -71,7 +71,7 @@ public class ArcProjectile : MonoBehaviour
         List<Collider> objects = touchingCircle.GetTouchingObjects();
         if (objects.Contains(playerCollider) && player.gameObject.layer == 3)
         {
-            RuntimeManager.PlayOneShot(impactSound, impactVolume);
+            FmodUtils.PlayOneShot(impactSound, impactVolume);
             player.StartStagger(staggerDuration);
             player.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
             player.LosePoise(poiseDamage);

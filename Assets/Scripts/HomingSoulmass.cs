@@ -124,7 +124,7 @@ public class HomingSoulmass : MonoBehaviour
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
         playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
-        RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
+        FmodUtils.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 
@@ -139,7 +139,7 @@ public class HomingSoulmass : MonoBehaviour
     {
         if(state == HomingSoulmassState.PROJECTILE)
         {
-            RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+            FmodUtils.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
             Destroy(gameObject);
         }
     }

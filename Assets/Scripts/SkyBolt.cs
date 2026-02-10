@@ -59,8 +59,8 @@ public class SkyBolt : MonoBehaviour
 
     void Hit()
     {
-        RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
-        RuntimeManager.PlayOneShot(bigBoom, 0.5f, transform.position);
+        FmodUtils.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
+        FmodUtils.PlayOneShot(bigBoom, 0.5f, transform.position);
         if (attackProfile.screenShakeNoHit != Vector2.zero)
         {
             GlobalEvents.instance.ScreenShake(attackProfile.screenShakeNoHit.x, attackProfile.screenShakeNoHit.y);

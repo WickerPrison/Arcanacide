@@ -6,7 +6,6 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
 {
     MinibossAbilities abilities;
     [SerializeField] MapData mapData;
-    
 
     public override void Start()
     {
@@ -16,9 +15,8 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
         if (mapData.miniboss1Killed)
         {
             enemyEvents.HideBossHealthbar();
-            //musicManager.ChangeMusicState(MusicState.MAINLOOP);
             gm.enemies.Remove(enemyScript);
-            Destroy(gameObject);
+            //Is actually destroyed in MinibossLateScript
         }
         else
         {
@@ -119,6 +117,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
         {
             state = EnemyState.IDLE;
             abilities.ChestLaser(2);
+            GlobalEvents.instance.MinibossEndDialogue();
         }
     }
 
