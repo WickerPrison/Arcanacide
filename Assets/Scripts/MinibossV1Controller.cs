@@ -119,6 +119,7 @@ public class MinibossV1Controller : EnemyController, IEndDialogue
         {
             state = EnemyState.IDLE;
             abilities.ChestLaser(2);
+            GlobalEvents.instance.MinibossEndDialogue();
         }
     }
 

@@ -87,11 +87,17 @@ public class MusicManager : MonoBehaviour
         musicPlayer.ChangeState(MusicState.BOSSVICTORY);
     }
 
+    private void Global_onMinibossEndDialogue(object sender, System.EventArgs e)
+    {
+        musicPlayer.ChangeOptBossState(OptBossState.COMBAT);
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onBossKilled += onBossKilled;
         GlobalEvents.instance.onPlayerDeath += onPlayerDeath;
         GlobalEvents.instance.onWhistleblowerKilled += Global_onWhistleblowerKilled;
+        GlobalEvents.instance.onMinibossEndDialogue += Global_onMinibossEndDialogue;
     }
 
     private void OnDisable()
@@ -99,6 +105,7 @@ public class MusicManager : MonoBehaviour
         GlobalEvents.instance.onBossKilled -= onBossKilled;
         GlobalEvents.instance.onPlayerDeath -= onPlayerDeath;
         GlobalEvents.instance.onWhistleblowerKilled -= Global_onWhistleblowerKilled;
+        GlobalEvents.instance.onMinibossEndDialogue -= Global_onMinibossEndDialogue;
     }
 
 }
