@@ -28,7 +28,7 @@ public class TeslaHarpoonProjectile : MonoBehaviour
         transform.position -= Vector3.up * speed * Time.fixedDeltaTime;
         if(transform.position.y <= 0)
         {
-            RuntimeManager.PlayOneShot(impactSFX, impactSFXVolume, transform.position);
+            FmodUtils.PlayOneShot(impactSFX, impactSFXVolume, transform.position);
             Collision();
             TeslaHarpoon harpoon = Instantiate(teslaHarpoonPrefab).GetComponent<TeslaHarpoon>();
             harpoon.transform.position = new Vector3(transform.position.x, 0, transform.position.z);

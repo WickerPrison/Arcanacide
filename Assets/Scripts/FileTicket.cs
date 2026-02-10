@@ -94,7 +94,7 @@ public class FileTicket : MonoBehaviour, IBlockDoors
     {
         if(playerDistance <= interactDistance && ticketState == TicketState.FILABLE)
         {
-            RuntimeManager.PlayOneShot(sfx, 2);
+            FmodUtils.PlayOneShot(sfx, 2);
             ticketState = TicketState.FILED;
             mapData.ticketFiled = true;
             screenText.text = screenText2;

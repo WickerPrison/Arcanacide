@@ -79,7 +79,7 @@ public class FairyProjectile : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         PlayExplosion(attackProfile.element);
         int damage = playerAbilities.DetermineAttackDamage(attackProfile);
-        RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
+        FmodUtils.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
         Vector3 groundPosition = new Vector3(transform.position.x, 0, transform.position.z);
         foreach(EnemyScript enemy in gm.enemies)
         {

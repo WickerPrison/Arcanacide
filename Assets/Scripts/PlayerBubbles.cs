@@ -97,7 +97,7 @@ public class PlayerBubbles : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         EnemyDetection();
-        RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume);
+        FmodUtils.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume);
         indicator.Hide();
         yield return new WaitForSeconds(1);
         Destroy(gameObject);

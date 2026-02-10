@@ -10,7 +10,7 @@ public class NPCAnimationEvents : MonoBehaviour
 
     public void SoundEffect(float volume)
     {
-        RuntimeManager.PlayOneShot(fmodEvent, volume, transform.position);
+        FmodUtils.PlayOneShot(fmodEvent, volume, transform.position);
     }
 
     public void VideoEffects()

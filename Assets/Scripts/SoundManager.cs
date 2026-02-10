@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour
 
     public void DeathSoundEffect()
     {
-        RuntimeManager.PlayOneShot(death, 1f);
+        FmodUtils.PlayOneShot(death, 1f);
     }
 
     public void ButtonSound()

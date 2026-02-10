@@ -21,6 +21,6 @@ public class EnemySlashProjectile : Projectile
         playerScript = collision.gameObject.GetComponent<PlayerScript>();
         playerScript.LoseHealth(spellDamage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
         playerScript.LosePoise(poiseDamage);
-        RuntimeManager.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
+        FmodUtils.PlayOneShot(playerImpactSFX, impactSFXvolume, transform.position);
     }
 }

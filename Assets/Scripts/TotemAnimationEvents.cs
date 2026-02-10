@@ -64,7 +64,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
     public void Landing()
     {
         landingVFX.Play();
-        RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
+        FmodUtils.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
         GlobalEvents.instance.ScreenShake(attackProfile.screenShakeNoHit);
         touchingCollider = colliderScript.GetTouchingObjects();
         int damage = playerAbilities.DetermineAttackDamage(attackProfile);
@@ -91,7 +91,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
 
     public void Ripple()
     {
-        RuntimeManager.PlayOneShot(lanternSpecialRipple.noHitSoundEvent, lanternSpecialRipple.soundNoHitVolume, transform.position);
+        FmodUtils.PlayOneShot(lanternSpecialRipple.noHitSoundEvent, lanternSpecialRipple.soundNoHitVolume, transform.position);
         float rotateAngle = 360 / numberOfBoxes;
         for (int box = 0; box < numberOfBoxes; box++)
         {
@@ -104,7 +104,7 @@ public class TotemAnimationEvents : MonoBehaviour, IDamageEnemy
     public void Zap()
     {
         int attackDamage = playerAbilities.DetermineAttackDamage(zapProfile);
-        RuntimeManager.PlayOneShot(zapProfile.noHitSoundEvent, zapProfile.soundNoHitVolume);
+        FmodUtils.PlayOneShot(zapProfile.noHitSoundEvent, zapProfile.soundNoHitVolume);
         GlobalEvents.instance.ScreenShake(zapProfile.screenShakeNoHit);
         List<Vector3> targets = Utils.HitClosestXEnemies(
             gm.enemies,

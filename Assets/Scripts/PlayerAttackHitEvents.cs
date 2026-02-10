@@ -67,7 +67,7 @@ public class PlayerAttackHitEvents : MonoBehaviour
 
         if (!attackProfile.noHitSoundEvent.IsNull)
         {
-            RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume);
+            FmodUtils.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume);
         }
         playerAnimation.parryWindow = false;
         playerScript.LoseStamina(attackProfile.staminaCost);

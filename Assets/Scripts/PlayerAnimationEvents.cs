@@ -366,7 +366,7 @@ public class PlayerAnimationEvents : MonoBehaviour
                     direction = Utils.RotateDirection(direction, angle);
                     direction.y = UnityEngine.Random.Range(-0.2f, 0.2f);
                     PlayerProjectileStraight.Instantiate(attackHit.GetPrefab(WeaponElement.CHAOS), position, direction.normalized, attackProfile, playerAbilities);
-                    RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
+                    FmodUtils.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
                 }
                 break;
         }

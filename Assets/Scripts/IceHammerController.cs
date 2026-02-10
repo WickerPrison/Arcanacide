@@ -90,14 +90,14 @@ public class IceHammerController : EnemyController
             {
                 playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
                 playerScript.LosePoise(hitPoiseDamage);
-                RuntimeManager.PlayOneShot(iceImpact, 1f);
+                FmodUtils.PlayOneShot(iceImpact, 1f);
             }, () =>
             {
                 playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
             });
         }
         GlobalEvents.instance.ScreenShake(0.15f, 0.3f);
-        RuntimeManager.PlayOneShot(smashSound, 1f);
+        FmodUtils.PlayOneShot(smashSound, 1f);
         enemyEvents.TriggerVfx("HammerSmash");
     }
 
@@ -110,14 +110,14 @@ public class IceHammerController : EnemyController
             {
                 playerScript.LoseHealth(hitDamage, EnemyAttackType.MELEE, enemyScript);
                 playerScript.LosePoise(hitPoiseDamage);
-                RuntimeManager.PlayOneShot(iceImpact, 1f);
+                FmodUtils.PlayOneShot(iceImpact, 1f);
             }, () =>
             {
                 playerScript.PerfectDodge(EnemyAttackType.MELEE, enemyScript);
             });
         }
         GlobalEvents.instance.ScreenShake(0.15f, 0.3f);
-        RuntimeManager.PlayOneShot(smashSound, 1f);
+        FmodUtils.PlayOneShot(smashSound, 1f);
         enemyEvents.TriggerVfx("JumpSmash");
     }
 
@@ -179,7 +179,7 @@ public class IceHammerController : EnemyController
     {
         lineStalagmites.TriggerWave();
         GlobalEvents.instance.ScreenShake(0.2f, 0.1f);
-        RuntimeManager.PlayOneShot(smashSound, 0.5f);
+        FmodUtils.PlayOneShot(smashSound, 0.5f);
     }
 
     public void ButtSlam()
@@ -187,7 +187,7 @@ public class IceHammerController : EnemyController
         circleStalagmites.transform.localPosition = Vector3.zero;
         circleStalagmites.TriggerWave();
         GlobalEvents.instance.ScreenShake(0.2f, 0.3f);
-        RuntimeManager.PlayOneShot(smashSound, 1);
+        FmodUtils.PlayOneShot(smashSound, 1);
     }
 
     public void HammerIcicles()
@@ -196,7 +196,7 @@ public class IceHammerController : EnemyController
         circleStalagmites.transform.position = new Vector3(targetPos.x, 0, targetPos.z);
         circleStalagmites.TriggerWave();
         GlobalEvents.instance.ScreenShake(0.2f, 0.3f);
-        RuntimeManager.PlayOneShot(smashSound, 1);
+        FmodUtils.PlayOneShot(smashSound, 1);
     }
 
     public override void AttackHit(int smearSpeed)

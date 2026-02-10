@@ -61,7 +61,7 @@ public class PlayerProjectile : MonoBehaviour, IDamageEnemy
 
     public virtual void HitObject(Collider collision)
     {
-        RuntimeManager.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
+        FmodUtils.PlayOneShot(attackProfile.noHitSoundEvent, attackProfile.soundNoHitVolume, transform.position);
         KillProjectile();
     }
 

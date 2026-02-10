@@ -68,7 +68,7 @@ public class WaveBox : MonoBehaviour
         }
         else
         {
-            RuntimeManager.PlayOneShot(sound, volume, transform.position);
+            FmodUtils.PlayOneShot(sound, volume, transform.position);
         }
     }
 }

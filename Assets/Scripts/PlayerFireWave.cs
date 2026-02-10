@@ -103,13 +103,13 @@ public class PlayerFireWave : MonoBehaviour, IDamageEnemy
             }
             else addedDOT = 0;
             enemyScript.GainDOT(attackProfile.durationDOT + addedDOT);
-            RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+            FmodUtils.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         });
     }
 
     void HitObject(Collider collision)
     {
-        RuntimeManager.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
+        FmodUtils.PlayOneShot(impactSFX, impactSFXvolume, transform.position);
         Destroy(gameObject);
     }
 }

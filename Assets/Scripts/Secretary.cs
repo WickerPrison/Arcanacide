@@ -60,7 +60,7 @@ public class Secretary : MonoBehaviour
             case 0:
                 tracker += 1;
                 dialogue.SetText(dialogue2);
-                RuntimeManager.PlayOneShot(sfx, 2);
+                FmodUtils.PlayOneShot(sfx, 2);
                 break;
             case 1:
                 tracker += 1;
