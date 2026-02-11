@@ -43,6 +43,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     Rigidbody rb;
     BeamVfx beamVfx;
     LockOn lockOn;
+    InputBuffer inputBuffer;
 
     //managers
     GameManager gm;
@@ -110,6 +111,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         beamVfx = GetComponentInChildren<BeamVfx>();
         beamVfx.SetMaxAimValue(specialAttackProfiles[6].maxChargeTime);
         lockOn = GetComponent<LockOn>();
+        inputBuffer = GetComponent<InputBuffer>();
 
         if (playerData.swordSpecialTimer > 0) weaponManager.AddSpecificWeaponSource(0);
 
@@ -247,16 +249,21 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         return attackPower + Mathf.RoundToInt(extraDamage);
     }
 
+    bool CanStartShield()
+    {
+        return playerMovement.CanInput() && playerData.mana > 0;
+    }
+
     public void Shield()
     {
-        if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.BLOCK) || !playerMovement.CanInput()) return;
-        
-        if (playerData.mana > 0)
+        if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.BLOCK)) return;
+
+        inputBuffer.Buffer(CanStartShield, () =>
         {
             rb.velocity = Vector3.zero;
             playerAnimation.PlayAnimation("Block");
             playerAnimation.continueBlocking = true;
-        }
+        });
     }
 
     public void Parry(EnemyAttackType attackType, EnemyScript attackingEnemy)
@@ -289,6 +296,11 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         }
     }
 
+    bool CanAttack()
+    {
+        return playerMovement.CanInput() && playerScript.stamina > 0;
+    }
+
     public void Attack()
     {
         if (shield && !parry)
@@ -301,11 +313,14 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         {
             playerAnimation.ChainAttacks();
         }
-        else if (playerMovement.CanInput() && playerScript.stamina > 0)
+        else
         {
-            rb.velocity = Vector3.zero;
-            playerAnimation.attacking = true;
-            playerAnimation.PlayAnimation("Attack");
+            inputBuffer.Buffer(CanAttack, () =>
+            {
+                rb.velocity = Vector3.zero;
+                playerAnimation.attacking = true;
+                playerAnimation.PlayAnimation("Attack");
+            });
         }
     }
 
@@ -323,14 +338,17 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         {
             playerAnimation.Combo();
         }
-        else if (playerMovement.CanInput() && playerScript.stamina > 0)
+        else
         {
-            if (playerData.currentWeapon == 1 && !lanternFairy.isInLantern) return;
-            heavyAttackActive = true;
-            rb.velocity = Vector3.zero;
-            playerAnimation.attacking = true;
-            if (playerData.currentWeapon == 0 || playerData.currentWeapon == 3) playerAnimation.SetBool("chargeHeavy", true);
-            playerAnimation.PlayAnimation("HeavyAttack", 0);
+            inputBuffer.Buffer(CanAttack, () =>
+            {
+                if (playerData.currentWeapon == 1 && !lanternFairy.isInLantern) return;
+                heavyAttackActive = true;
+                rb.velocity = Vector3.zero;
+                playerAnimation.attacking = true;
+                if (playerData.currentWeapon == 0 || playerData.currentWeapon == 3) playerAnimation.SetBool("chargeHeavy", true);
+                playerAnimation.PlayAnimation("HeavyAttack", 0);
+            });
         }
     }
 
@@ -375,12 +393,18 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         FairyProjectile.Instantiate(fairyProjectilePrefab, direction, lanternFairy, this, profile, lockOn.GetAbilityTarget(100));
     }
 
+    bool CanSpecialAttack(AttackProfiles profile)
+    {
+        if (playerData.mana < profile.manaCost && playerData.currentWeapon != 2) return false;
+        return CanAttack();
+    }
+
     public void SpecialAttack()
     {
         if (!playerData.unlockedAbilities.Contains(UnlockableAbilities.SPECIAL_ATTACK)) return;
         AttackProfiles profile = specialAttackProfiles[weaponManager.WeaponArrayId(playerData.currentWeapon)];
-        if (playerData.mana < profile.manaCost && playerData.currentWeapon != 2) return;
-        if (playerMovement.CanInput() && playerScript.stamina > 0)
+
+        inputBuffer.Buffer(() => CanSpecialAttack(profile), () =>
         {
             if (playerData.currentWeapon == 1)
             {
@@ -392,12 +416,17 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
                 playerAnimation.attacking = true;
                 playerAnimation.PlayAnimation("SpecialAttack", 0);
             }
-        }
+        });
+    }
+
+    bool CanEndSpecialAttack()
+    {
+        return playerData.currentWeapon == 2 && knifeSpecialAttackOn;
     }
 
     public void EndSpecialAttack()
     {
-        if (playerData.currentWeapon == 2 && knifeSpecialAttackOn)
+        inputBuffer.Buffer(CanEndSpecialAttack, () =>
         {
             knifeSpecialAttackOn = false;
             bolts.SetPositions(away, away);
@@ -406,7 +435,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
             beamVfx.ResetAimValue();
             knifeSpecialPaused = false;
             playerAnimation.PlayAnimation("EndSpecialAttack");
-        }
+        });
     }
 
     public void SwordSpecialAttack(AttackProfiles attackProfile)
@@ -585,6 +614,17 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         lanternFairy.EndLanternCombo();
     }
 
+    bool CanHeal()
+    {
+        return playerMovement.CanInput() && playerData.healCharges >= 0;
+    }
+
+    void Heal()
+    {
+        if (!playerData.hasHealthGem) return;
+        inputBuffer.Buffer(CanHeal, playerAnimation.HealAnimation);
+    }
+
     private void onPlayerStagger(object sender, System.EventArgs e)
     {
         heavyAttackActive = false;
@@ -621,7 +661,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         im.controls.Gameplay.SpecialAttack.canceled += ctx => EndSpecialAttack();
         im.controls.Gameplay.Shield.performed += ctx => Shield();
         im.controls.Gameplay.Shield.canceled += ctx => playerAnimation.continueBlocking = false;
-        im.controls.Gameplay.Heal.performed += ctx => playerAnimation.HealAnimation();
+        im.controls.Gameplay.Heal.performed += ctx => Heal();
     }
 
     private void OnEnable()

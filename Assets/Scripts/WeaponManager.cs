@@ -23,6 +23,7 @@ public class WeaponManager : MonoBehaviour
     int[] specificWeaponMagicSources = new int[4];
     public event EventHandler OnStartWeaponMagic;
     public event EventHandler OnStopWeaponMagic;
+    InputBuffer inputBuffer;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
+        inputBuffer = GetComponent<InputBuffer>();
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
 
         im.controls.Gameplay.Sword.performed += ctx => SwitchWeapon(0);
@@ -75,25 +77,28 @@ public class WeaponManager : MonoBehaviour
 
     public void SwitchWeapon(int nextWeapon)
     {
-        if (!playerController.CanInput() || !playerData.unlockedWeapons.Contains(nextWeapon) || playerData.currentWeapon == nextWeapon)
+        if (!playerData.unlockedWeapons.Contains(nextWeapon) || playerData.currentWeapon == nextWeapon)
         {
             return;
         }
 
-        playerData.currentWeapon = nextWeapon;
-        frontAnimator.runtimeAnimatorController = frontAnimatorControllers[nextWeapon];
-        backAnimator.runtimeAnimatorController = backAnimatorControllers[nextWeapon];
-        ClearSprites();
-        frontAnimator.SetLayerWeight(1, 1);
-        backAnimator.SetLayerWeight(1, 1);
-        frontAnimator.Play("SwitchWeapon");
-        backAnimator.Play("SwitchWeapon");
-
-
-        if(weaponMagicSources + specificWeaponMagicSources[nextWeapon] > 0)
+        inputBuffer.Buffer(playerController.CanInput, () =>
         {
-            OnStartWeaponMagic?.Invoke(this, EventArgs.Empty);
-        }
+            playerData.currentWeapon = nextWeapon;
+            frontAnimator.runtimeAnimatorController = frontAnimatorControllers[nextWeapon];
+            backAnimator.runtimeAnimatorController = backAnimatorControllers[nextWeapon];
+            ClearSprites();
+            frontAnimator.SetLayerWeight(1, 1);
+            backAnimator.SetLayerWeight(1, 1);
+            frontAnimator.Play("SwitchWeapon");
+            backAnimator.Play("SwitchWeapon");
+
+
+            if(weaponMagicSources + specificWeaponMagicSources[nextWeapon] > 0)
+            {
+                OnStartWeaponMagic?.Invoke(this, EventArgs.Empty);
+            }
+        });
     }
 
     public void CheckWeaponMagic()
