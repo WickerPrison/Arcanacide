@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     PlayerSound playerSound;
     [System.NonSerialized] public Rigidbody rb;
     LockOn lockOn;
+    InputBuffer inputBuffer;
+    PlayerAbilities playerAbilities;
 
 
     //walk varibles
@@ -74,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
         playerSound = GetComponentInChildren<PlayerSound>();
         rb = GetComponent<Rigidbody>();
         lockOn = GetComponent<LockOn>();
+        inputBuffer = GetComponent<InputBuffer>();
+        playerAbilities = GetComponent<PlayerAbilities>();
         usingGamepad = Gamepad.current != null;
         rightStickValue = Vector2.zero;
     }
@@ -122,29 +126,36 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    bool CanDodge()
+    {
+        return CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0;
+    }
+
+    void PerformDodge()
+    {
+        //The player dashes in whatever direction they were already moving
+        float staminaCost = dashStaminaCost;
+        dashDirection = moveDirection.normalized;
+        if (playerData.equippedPatches.Contains(Patches.QUICKSTEP))
+        {
+            staminaCost *= (float)emblemLibrary.quickstep.value;
+        }
+
+        if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
+        {
+            staminaCost *= (((float dodge, float block))emblemLibrary.shellCompany.value).dodge;
+        }
+
+        playerScript.LoseStamina(staminaCost);
+        isDashing = true;
+        gameObject.layer = 8;
+        playerAnimation.PlayAnimation("Dash");
+        playerSound.PlaySoundEffect(PlayerSFX.DODGE, 0.5f);
+    }
+
     public void Dodge()
     {
-        if (CanInput() && playerScript.stamina > 0 && moveDirection.magnitude > 0)
-        {
-            //The player dashes in whatever direction they were already moving
-            float staminaCost = dashStaminaCost;
-            dashDirection = moveDirection.normalized;
-            if (playerData.equippedPatches.Contains(Patches.QUICKSTEP))
-            {
-                staminaCost *= (float)emblemLibrary.quickstep.value;
-            }
-
-            if (playerData.equippedPatches.Contains(Patches.SHELL_COMPANY))
-            {
-                staminaCost *= (((float dodge, float block))emblemLibrary.shellCompany.value).dodge;
-            }
-
-            playerScript.LoseStamina(staminaCost);
-            isDashing = true;
-            gameObject.layer = 8;
-            playerAnimation.PlayAnimation("Dash");
-            playerSound.PlaySoundEffect(PlayerSFX.DODGE, 0.5f);
-        }
+        inputBuffer.Buffer(CanDodge, PerformDodge);
     }
 
     //The attack point is used to determine if an attack hits. It always stays between the player and the mouse
@@ -275,6 +286,10 @@ public class PlayerMovement : MonoBehaviour
             return false;
         }
         if (playerScript.isStaggered)
+        {
+            return false;
+        }
+        if (playerAbilities.knifeSpecialAttackOn)
         {
             return false;
         }
