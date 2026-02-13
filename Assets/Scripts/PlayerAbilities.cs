@@ -619,7 +619,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         return playerMovement.CanInput() && playerData.healCharges >= 0;
     }
 
-    void Heal()
+    public void Heal()
     {
         if (!playerData.hasHealthGem) return;
         inputBuffer.Buffer(CanHeal, playerAnimation.HealAnimation);

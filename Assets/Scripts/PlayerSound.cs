@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum PlayerSFX
 {
-    FOOTSTEP, DODGE, HEAL, SHIELD, BIGSMASH, RING
+    FOOTSTEP, DODGE, HEAL, SHIELD, BIGSMASH, RING, NO_STAMINA
 }
 
 public class PlayerSound : MonoBehaviour
@@ -22,7 +22,8 @@ public class PlayerSound : MonoBehaviour
             {PlayerSFX.HEAL, 2 },
             {PlayerSFX.SHIELD, 3 },
             {PlayerSFX.BIGSMASH, 4 },
-            {PlayerSFX.RING, 5 }
+            {PlayerSFX.RING, 5 },
+            {PlayerSFX.NO_STAMINA, 6 }
         };
     }
 

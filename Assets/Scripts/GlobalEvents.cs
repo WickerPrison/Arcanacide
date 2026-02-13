@@ -21,6 +21,8 @@ public class GlobalEvents : MonoBehaviour
     public event Action<GlobalEvents, (int, int)> onPlayerMoneyChange;
     public event Action<GlobalEvents, float> onLoseStamina;
     public event Action<GlobalEvents, float> onGainStamina;
+    public event EventHandler onNoStamina;
+    public event EventHandler onHasStamina;
     public event Action<GlobalEvents, int> onPlayerLoseHealth;
     public event Action<GlobalEvents, int> onPlayerGainHealth;
     public event EventHandler<int> onPickupGemShard;
@@ -99,6 +101,16 @@ public class GlobalEvents : MonoBehaviour
     public void GainStamina(float stamina)
     {
         onGainStamina?.Invoke(this, stamina);
+    }
+
+    public void NoStamina()
+    {
+        onNoStamina?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void HasStamina()
+    {
+        onHasStamina?.Invoke(this, EventArgs.Empty);
     }
 
     public void PlayerLoseHealth(int health)

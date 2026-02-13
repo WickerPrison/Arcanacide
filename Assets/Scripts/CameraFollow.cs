@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
+
 
 public class CameraFollow : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] TMP_SpriteAsset[] tmpColorChangeMaterial;
     [SerializeField] PlayerData playerData;
     [SerializeField] MapData mapData;
+    PostProcessVolume volume;
+    Vignette vignette;
+    [SerializeField] float vignetteDuration;
+    [SerializeField] float vignetteIntensity;
 
     //This script makes the camera follow the player. Some delay is added to prevent jerking the camera when the player dashes.
 
@@ -37,6 +43,9 @@ public class CameraFollow : MonoBehaviour
         //break the parent/child relationship of the camera and the movePoint so they can move independently
         movePoint.transform.parent = null;
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        volume = GetComponent<PostProcessVolume>();
+        volume.profile.TryGetSettings(out vignette);
+        vignette.intensity.overrideState = true;
     }
 
     // Update is called once per frame
@@ -70,18 +79,72 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
+    public IEnumerator NoStamina()
+    {
+        //float timer = vignetteDuration;
+        //while(timer > 0)
+        //{
+        //    timer -= Time.deltaTime;
+
+        //    vignette.intensity.value = vignetteCurve.Evaluate(1 - timer / vignetteDuration) * vignetteIntensity;
+
+        //    yield return null;
+        //}
+
+        float timer = 0.2f;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            vignette.intensity.value = Mathf.Lerp(0, vignetteIntensity, 1 - timer / 0.2f);
+
+            yield return null;
+        }
+
+        vignette.intensity.value = vignetteIntensity;
+    }
+
+    public IEnumerator HasStamina()
+    {
+        float timer = 0.2f;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            vignette.intensity.value = Mathf.Lerp(vignetteIntensity, 0, 1 - timer / 0.2f);
+
+            yield return null;
+        }
+        vignette.intensity.value = 0;
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onScreenShake += Global_onScreenShake;
+        GlobalEvents.instance.onNoStamina += Global_onNoStamina;
+        GlobalEvents.instance.onHasStamina += Global_onHasStamina;
     }
+
 
     private void OnDisable()
     {
         GlobalEvents.instance.onScreenShake -= Global_onScreenShake;
+        GlobalEvents.instance.onNoStamina -= Global_onNoStamina;
+        GlobalEvents.instance.onHasStamina -= Global_onHasStamina;
     }
 
     private void Global_onScreenShake(object sender, (float, float) durationMagnitude)
     {
         StartCoroutine(ScreenShake(durationMagnitude.Item1, durationMagnitude.Item2));
+    }
+
+    private void Global_onNoStamina(object sender, System.EventArgs e)
+    {
+        StartCoroutine(NoStamina());
+    }
+
+    private void Global_onHasStamina(object sender, System.EventArgs e)
+    {
+        StartCoroutine(HasStamina());
     }
 }
