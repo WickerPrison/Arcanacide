@@ -52,6 +52,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
     //other variables
     WaitForSeconds parryWindow = new WaitForSeconds(0.2f);
     [System.NonSerialized] public bool parry;
+    bool successfulParry = false;
     [System.NonSerialized] public bool shield;
     float parryCost = 20;
     [System.NonSerialized] public int blockManaCost = 15;
@@ -272,11 +273,13 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         {
             case EnemyAttackType.PROJECTILE:
                 playerSound.PlaySoundEffect(PlayerSFX.RING, 0.5f);
+                successfulParry = true;
                 FireProjectile(attackingEnemy, new Vector3(transform.position.x, 1.1f, transform.position.z), parryProfile);
                 break;
             case EnemyAttackType.MELEE:
                 playerEvents.MeleeParry();
                 playerSound.PlaySoundEffect(PlayerSFX.RING, 0.5f);
+                successfulParry = true;
                 attackingEnemy.LosePoise((playerData.ArcaneDamage() + playerData.PhysicalDamage()) * parryProfile.poiseDamageMultiplier);
                 attackingEnemy.ImpactVFX();
                 break;
@@ -326,10 +329,11 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
 
     IEnumerator Parry()
     {
-        playerScript.LoseMana(parryCost);
         parry = true;
+        successfulParry = false;
         yield return parryWindow;
         parry = false;
+        if(!successfulParry) playerScript.LoseMana(parryCost);
     }
 
     public void HeavyAttack()
