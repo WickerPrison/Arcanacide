@@ -116,4 +116,5 @@ public class PlayerEvents : MonoBehaviour
     {
         onIceBreath?.Invoke(this, EventArgs.Empty);
     }
+
 }

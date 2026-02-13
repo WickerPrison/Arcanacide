@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using FMODUnity;
+using FMOD.Studio;
 
 public enum EnemyAttackType
 {
@@ -56,6 +58,9 @@ public class PlayerScript : MonoBehaviour
     [System.NonSerialized] public float maxManaDelay = 2;
     [System.NonSerialized] public float manaRechargeRate = 4;
 
+    [SerializeField] EventReference noStamina;
+    EventInstance snapshotInstance;
+
     private void Awake()
     {
         playerEvents = GetComponent<PlayerEvents>();
@@ -75,13 +80,14 @@ public class PlayerScript : MonoBehaviour
         playerSound = GetComponentInChildren<PlayerSound>();
 
         GlobalEvents.instance.onTestButton += Instance_onTestButton;
+
+        snapshotInstance = RuntimeManager.CreateInstance(noStamina);
     }
 
     private void Instance_onTestButton(object sender, System.EventArgs e)
     {
-        if (Time.timeScale == 1) Time.timeScale = 0;
-        else Time.timeScale = 1;
-        //LoseHealth(25, EnemyAttackType.NONPARRIABLE, null);
+        snapshotInstance.start();
+        snapshotInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void HitPlayer(Action onHit, Action onDodge)
@@ -156,6 +162,11 @@ public class PlayerScript : MonoBehaviour
         if(stamina < 0)
         {
             stamina = 0;
+            GlobalEvents.instance.NoStamina();
+            //playerEvents.NoStamina();
+            //playerSound.PlaySoundEffect(PlayerSFX.NO_STAMINA, 2);
+            //snapshotInstance.start();
+            //snapshotInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
         GlobalEvents.instance.LoseStamina(stamina);
         playerAnimation.StaminaUpdate();
@@ -164,6 +175,11 @@ public class PlayerScript : MonoBehaviour
 
     public void GainStamina(float amount)
     {
+        if(stamina <= 0)
+        {
+            GlobalEvents.instance.HasStamina();
+        }
+
         stamina += amount;
         if(stamina > playerData.MaxStamina())
         {
