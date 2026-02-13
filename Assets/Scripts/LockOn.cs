@@ -5,11 +5,13 @@ using System.Linq;
 
 public class LockOn : MonoBehaviour
 {
+    [SerializeField] SettingsData settingsData;
     GameManager gm;
     InputManager im;
     bool lockOn = false;
     public EnemyScript target { get; private set; }
     Camera mainCamera;
+    PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,23 @@ public class LockOn : MonoBehaviour
         im.controls.Gameplay.SwapTargetRight.performed += ctx => SwapTarget(true);
         im.controls.Gameplay.SwapTargetLeft.performed += ctx => SwapTarget(false);
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+        playerMovement = GetComponent<PlayerMovement>();
+        InitialFace();
+    }
+
+    void InitialFace()
+    {
+        EnemyScript closestEnemy = GetClosestEnemy(100);
+        if (closestEnemy == null) return;
+        if (settingsData.autoLock)
+        {
+            TargetEnemy(closestEnemy);
+        }
+        else
+        {
+            playerMovement.InitialFacePlayer(closestEnemy.transform.position);
+        }
     }
 
     public void ToggleLockOn()

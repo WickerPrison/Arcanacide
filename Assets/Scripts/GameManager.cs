@@ -211,6 +211,7 @@ public class GameManager : MonoBehaviour
         {
             settingsData.CreateBindingDictionary(settingsSaveData.bindingDictionaryKeys, settingsSaveData.bindingDictionaryValues);
             settingsData.showArrow = settingsSaveData.showArrow;
+            settingsData.autoLock = settingsSaveData.autoLock;
             settingsData.SetVolume(VolumeChannel.MASTER, settingsSaveData.masterVol);
             settingsData.SetVolume(VolumeChannel.SFX, settingsSaveData.sfxVol);
             settingsData.SetVolume(VolumeChannel.MUSIC, settingsSaveData.musicVol);
@@ -222,6 +223,7 @@ public class GameManager : MonoBehaviour
         {
             settingsData.bindings.Clear();
             settingsData.showArrow = true;
+            settingsData.autoLock = true;
             settingsData.SetVolume(VolumeChannel.MASTER, 1);
             settingsData.SetVolume(VolumeChannel.SFX, 1);
             settingsData.SetVolume(VolumeChannel.MUSIC, 1);
