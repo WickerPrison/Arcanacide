@@ -163,10 +163,7 @@ public class PlayerScript : MonoBehaviour
         {
             stamina = 0;
             GlobalEvents.instance.NoStamina();
-            //playerEvents.NoStamina();
-            //playerSound.PlaySoundEffect(PlayerSFX.NO_STAMINA, 2);
-            //snapshotInstance.start();
-            //snapshotInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            snapshotInstance.start();
         }
         GlobalEvents.instance.LoseStamina(stamina);
         playerAnimation.StaminaUpdate();
@@ -178,6 +175,7 @@ public class PlayerScript : MonoBehaviour
         if(stamina <= 0)
         {
             GlobalEvents.instance.HasStamina();
+            snapshotInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
 
         stamina += amount;
