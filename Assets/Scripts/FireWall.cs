@@ -11,8 +11,8 @@ public class FireWall : MonoBehaviour
     [SerializeField] EventReference playerImpactSFX;
     [SerializeField] FireSuppressionSwitch fireSuppressionSwitch;
     [SerializeField] Color redColor;
-    [SerializeField] SpriteRenderer grate;
-    [SerializeField] ParticleSystem particles;
+    [SerializeField] SpriteRenderer[] grates;
+    [SerializeField] ParticleSystem[] particles;
     [SerializeField] MapData mapData;
     Collider wallCollider;
     PlayerScript playerScript;
@@ -26,8 +26,14 @@ public class FireWall : MonoBehaviour
 
     private void onFixed(object sender, System.EventArgs e)
     {
-        grate.color = Color.white;
-        particles.Stop();
+        foreach(SpriteRenderer grate in grates)
+        {
+            grate.color = Color.white;
+        }
+        foreach(ParticleSystem fire in particles)
+        {
+            fire.Stop();
+        }
         wallCollider.enabled = false;
         fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         fmodInstance.release();
@@ -38,8 +44,14 @@ public class FireWall : MonoBehaviour
         wallCollider = GetComponent<Collider>();
         if(mapData.fireSuppressionState != FireSuppressionState.FIXED)
         {
-            grate.color = redColor;
-            particles.Play();
+            foreach(SpriteRenderer grate in grates)
+            {
+                grate.color = redColor;
+            }
+            foreach (ParticleSystem fire in particles)
+            {
+                fire.Play();
+            }
             wallCollider.enabled = true;
             fmodInstance = RuntimeManager.CreateInstance(fmodEvent);
             //fmodInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
@@ -49,9 +61,15 @@ public class FireWall : MonoBehaviour
         }
         else
         {
-            grate.color = Color.white;
-            particles.Stop();
-            particles.Clear();
+            foreach(SpriteRenderer grate in grates)
+            {
+                grate.color = Color.white;
+            }
+            foreach (ParticleSystem fire in particles)
+            {
+                fire.Stop();
+                fire.Clear();
+            }
             wallCollider.enabled = false;
         }
     }
