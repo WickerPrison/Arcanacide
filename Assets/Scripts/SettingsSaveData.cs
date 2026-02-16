@@ -10,6 +10,7 @@ public class SettingsSaveData
     public string[] bindingDictionaryKeys;
     public string[] bindingDictionaryValues;
     public bool showArrow = true;
+    public bool autoLock = true;
     public float masterVol;
     public float sfxVol;
     public float musicVol;
@@ -23,6 +24,7 @@ public class SettingsSaveData
         bindingDictionaryKeys = settingsData.bindings.Keys.ToArray();
         bindingDictionaryValues = settingsData.bindings.Values.ToArray();
         showArrow = settingsData.showArrow;
+        autoLock = settingsData.autoLock;
         masterVol = settingsData.masterVol;
         sfxVol = settingsData.sfxVol;
         musicVol = settingsData.musicVol;

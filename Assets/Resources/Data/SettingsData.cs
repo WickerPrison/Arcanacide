@@ -26,6 +26,7 @@ public class SettingsData : ScriptableObject
     public List<TMP_SpriteAsset> buttonIconTMProSprites = new List<TMP_SpriteAsset>();
 
     public bool showArrow;
+    public bool autoLock;
 
     public float masterVol;
     public float sfxVol;

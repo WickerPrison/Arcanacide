@@ -197,6 +197,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void InitialFacePlayer(Vector3 lookTarget)
+    {
+        lookDir = Vector3.Normalize(lookTarget - transform.position);
+        SetLookDirection(lookDir);
+    }
+
     public void SetLookDirection(Vector2 lookDir)
     {
         SetLookDirection(new Vector3(lookDir.x, 0, lookDir.y));

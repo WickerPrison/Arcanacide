@@ -17,6 +17,7 @@ public class SettingsMenu : MonoBehaviour
     [System.NonSerialized] public PauseMenuButtons pauseMenu;
     [SerializeField] SettingsData settingsData;
     [SerializeField] ToggleUI arrowToggle;
+    [SerializeField] ToggleUI lockOnToggle;
     [SerializeField] ToggleUI fullscreenToggle;
     [SerializeField] ToggleUI vsyncToggle;
     [SerializeField] OptionSetUi frameRateUI;
@@ -40,6 +41,7 @@ public class SettingsMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstButton);     
         arrowToggle.SetToggleInstant(settingsData.showArrow);
+        lockOnToggle.SetToggleInstant(settingsData.autoLock);
         fullscreenToggle.SetToggleInstant(settingsData.fullscreenMode);
         vsyncToggle.SetToggleInstant(settingsData.GetVsync());
         frameRateUI.ImmediateSelectOption(settingsData.frameRateLimit);
@@ -49,6 +51,7 @@ public class SettingsMenu : MonoBehaviour
     void UpdateMenu()
     {
         arrowToggle.ToggleSwitch(settingsData.showArrow);
+        lockOnToggle.ToggleSwitch(settingsData.autoLock);
         fullscreenToggle.ToggleSwitch(settingsData.fullscreenMode);
         vsyncToggle.ToggleSwitch(settingsData.GetVsync());
         frameRateUI.SelectOption(settingsData.frameRateLimit);
@@ -68,6 +71,12 @@ public class SettingsMenu : MonoBehaviour
     public void ToggleDirectionalArrow()
     {
         settingsData.showArrow = !settingsData.showArrow;
+        UpdateMenu();
+    }
+
+    public void ToggleAutoLock()
+    {
+        settingsData.autoLock = !settingsData.autoLock;
         UpdateMenu();
     }
 
