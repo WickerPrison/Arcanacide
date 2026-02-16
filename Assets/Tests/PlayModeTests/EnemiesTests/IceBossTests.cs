@@ -79,7 +79,6 @@ public class IceBossTests
         hud.EnableBossHealthbar(enemyScript.GetComponent<EnemyEvents>());
         yield return null;
         lockOn.ToggleLockOn();
-        lockOn.ToggleLockOn();
         dialogue.CloseDialogue();
         yield return null;
         Assert.AreEqual(enemyScript, lockOn.target);

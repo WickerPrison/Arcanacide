@@ -137,6 +137,7 @@ public class CalculateSpecials
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);
+        testDummy.RemoveFromGm();
         testDummy.Death();
     }
 
@@ -216,7 +217,9 @@ public class CalculateSpecials
         doneAttacking = true;
         yield return new WaitForSeconds(5);
         testingEvents.onFaerieReturn -= TestingEvents_onFaerieReturn;
+        testDummy.RemoveFromGm();
         testDummy.Death();
+        testDummy2.RemoveFromGm();
         testDummy2.Death();
     }
 
@@ -312,6 +315,7 @@ public class CalculateSpecials
         playerAbilities.EndSpecialAttack();
         doneAttacking = true;
         yield return new WaitForSeconds(5);
+        testDummy.RemoveFromGm();
         testDummy.Death();
     }
 
@@ -389,6 +393,7 @@ public class CalculateSpecials
         doneAttacking = true;
         yield return new WaitForSeconds(5);
         testingEvents.onFaerieReturn -= TestingEvents_onAttackFalse;
+        testDummy.RemoveFromGm();
         testDummy.Death();
     }
 

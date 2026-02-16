@@ -223,6 +223,7 @@ public class CalculateCombo2
         Debug.Log($"Stamina Per Second: {stamPerSec}");
         doneAttacking = true;
         yield return new WaitForSeconds(5);
+        testDummy.RemoveFromGm();
         testDummy.Death();
     }
 
