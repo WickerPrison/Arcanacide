@@ -77,18 +77,22 @@ public class ITWorker : MonoBehaviour
 
     int GetConversationIndex()
     {
-        if(mapData.fireSuppressionState == FireSuppressionState.FIXED)
+        (FireSuppressionState, bool) values = (mapData.fireSuppressionState, dialogueData.conversationsHad.Contains(firstDialogueName));
+        int conversationIndex = values switch
         {
-            return 2;
-        }
+            (FireSuppressionState.ON, false) => 0,
+            (FireSuppressionState.ON, true) => 1,
+            (FireSuppressionState.FIXED, false) => 10,
+            (FireSuppressionState.FIXED, true) => 2,
+            _ => -1
+        };
 
-        if (!dialogueData.conversationsHad.Contains(firstDialogueName))
+        if(conversationIndex == 0 || conversationIndex == 10)
         {
             dialogueData.conversationsHad.Add(firstDialogueName);
-            return 0;
         }
 
-        return 1;
+        return conversationIndex;
     }
 
     void EndConversation(int index)
