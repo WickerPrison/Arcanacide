@@ -86,8 +86,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Instance_onTestButton(object sender, System.EventArgs e)
     {
-        snapshotInstance.start();
-        snapshotInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
     }
 
     public void HitPlayer(Action onHit, Action onDodge)

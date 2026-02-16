@@ -81,16 +81,6 @@ public class CameraFollow : MonoBehaviour
 
     public IEnumerator NoStamina()
     {
-        //float timer = vignetteDuration;
-        //while(timer > 0)
-        //{
-        //    timer -= Time.deltaTime;
-
-        //    vignette.intensity.value = vignetteCurve.Evaluate(1 - timer / vignetteDuration) * vignetteIntensity;
-
-        //    yield return null;
-        //}
-
         float timer = 0.2f;
         while(timer > 0)
         {
@@ -140,7 +130,10 @@ public class CameraFollow : MonoBehaviour
 
     private void Global_onNoStamina(object sender, System.EventArgs e)
     {
-        StartCoroutine(NoStamina());
+        if(vignette.intensity.value <= 0.1f)
+        {
+            StartCoroutine(NoStamina());
+        }
     }
 
     private void Global_onHasStamina(object sender, System.EventArgs e)

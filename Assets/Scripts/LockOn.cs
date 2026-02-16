@@ -29,8 +29,13 @@ public class LockOn : MonoBehaviour
 
     void InitialFace()
     {
-        EnemyScript closestEnemy = GetClosestEnemy(100);
-        if (closestEnemy == null) return;
+        EnemyScript closestEnemy = GetClosestEnemy(15);
+        if (closestEnemy == null)
+        {
+            playerMovement.InitialFacePlayer(Vector3.zero);
+            return;
+        }
+
         if (settingsData.autoLock)
         {
             TargetEnemy(closestEnemy);
