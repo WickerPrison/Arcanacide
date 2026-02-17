@@ -32,8 +32,8 @@ public class WeaponScroll : MonoBehaviour
     private void Start()
     {
         im = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
-        im.controls.Menu.MenuRight.performed += ctx => Scroll(1);
-        im.controls.Menu.MenuLeft.performed += ctx => Scroll(-1);
+        im.controls.Menu.MenuRight.performed += ctx => ScrollRight();
+        im.controls.Menu.MenuLeft.performed += ctx => ScrollLeft();
 
 
         if (Gamepad.current == null)
@@ -91,6 +91,16 @@ public class WeaponScroll : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         objectTransform.localScale = finalScale;
+    }
+
+    public void ScrollLeft()
+    {
+        Scroll(-1);
+    }
+
+    public void ScrollRight()
+    {
+        Scroll(1);
     }
 
     void Scroll(int direction)
