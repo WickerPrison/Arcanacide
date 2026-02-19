@@ -68,7 +68,7 @@ public class BugReporter : MonoBehaviour
 
     public void CloseBugReport()
     {
-        EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
+        EventSystem.current.SetSelectedGameObject(pauseMenu.mostRecentButton);
         pauseMenu.controls.Enable();
         Cursor.visible = false;
         Destroy(gameObject);

@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class PauseMenuButtons : MonoBehaviour
 {
     public GameObject resumeButton;
+    [System.NonSerialized] public GameObject mostRecentButton;
     PlayerMovement playerMovement;
     SoundManager sm;
     MusicManager musicManager;
@@ -53,6 +54,7 @@ public class PauseMenuButtons : MonoBehaviour
     public void OpenTextMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         textMenu = Instantiate(textMenuPrefab);
         textMenu.GetComponent<TextingMenu>().pauseMenuScript = this;
         controls.Disable();
@@ -61,6 +63,7 @@ public class PauseMenuButtons : MonoBehaviour
     public void OpenWeaponMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         weaponMenu = Instantiate(weaponMenuPrefab);
         weaponMenu.GetComponent<WeaponMenu>().pauseMenu = this;
         controls.Disable();
@@ -69,6 +72,7 @@ public class PauseMenuButtons : MonoBehaviour
     public void OpenSettingsMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         settingsMenu = Instantiate(settingsMenuPrefab);
         settingsMenu.GetComponent<SettingsMenu>().pauseMenu = this;
         controls.Disable();
@@ -77,6 +81,7 @@ public class PauseMenuButtons : MonoBehaviour
     public void OpenBugReport()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         bugReporter = Instantiate(bugReporterPrefab);
         bugReporter.GetComponent<BugReporter>().pauseMenu = this;
         controls.Disable();

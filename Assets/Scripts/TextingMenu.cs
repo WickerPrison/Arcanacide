@@ -77,7 +77,7 @@ public class TextingMenu : MonoBehaviour
     {
         sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
+        EventSystem.current.SetSelectedGameObject(restMenuScript.mostRecentButton);
         restMenuScript.controls.Enable();
         Destroy(gameObject);
     }
@@ -86,7 +86,7 @@ public class TextingMenu : MonoBehaviour
     {
         sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(pauseMenuScript.resumeButton);
+        EventSystem.current.SetSelectedGameObject(pauseMenuScript.mostRecentButton);
         pauseMenuScript.controls.Enable();
         Destroy(gameObject);
     }

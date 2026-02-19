@@ -20,6 +20,7 @@ public class RestMenuButtons : MonoBehaviour
     [SerializeField] DialogueData dialogueData;
     public Vector3 mapPlayerFacePosition;
     public GameObject firstButton;
+    [System.NonSerialized] public GameObject mostRecentButton;
     GameObject emblemMenu;
     GameObject levelUpMenu;
     GameObject gemMenu;
@@ -69,6 +70,7 @@ public class RestMenuButtons : MonoBehaviour
     public void OpenEmblemMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         emblemMenu = Instantiate(emblemMenuPrefab);
         EmblemMenu emblemMenuScript = emblemMenu.GetComponent<EmblemMenu>();
         emblemMenuScript.altarNumber = altarNumber;
@@ -80,6 +82,7 @@ public class RestMenuButtons : MonoBehaviour
     public void OpenLevelUpMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         levelUpMenu = Instantiate(levelUpMenuPrefab);
         levelUpMenu.GetComponent<LevelUpMenu>().restMenuScript = this;
         controls.Disable();
@@ -88,6 +91,7 @@ public class RestMenuButtons : MonoBehaviour
     public void OpenGemMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         Instantiate(gemMenuPrefab).GetComponent<HealingGemMenu>().restMenuScript = this;
         controls.Disable();
     }
@@ -95,6 +99,7 @@ public class RestMenuButtons : MonoBehaviour
     public void OpenTextMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         textMenu = Instantiate(textMenuPrefab);
         textMenu.GetComponent<TextingMenu>().restMenuScript = this;
         controls.Disable();
@@ -103,6 +108,7 @@ public class RestMenuButtons : MonoBehaviour
     public void OpenWeaponMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         weaponMenu = Instantiate(weaponMenuPrefab);
         weaponMenu.GetComponent<WeaponMenu>().restMenu = this;
         weaponNew.SetActive(false);
@@ -113,6 +119,7 @@ public class RestMenuButtons : MonoBehaviour
     public void OpenMapMenu()
     {
         sm.ButtonSound();
+        mostRecentButton = EventSystem.current.currentSelectedGameObject;
         mapMenu = Instantiate(mapMenuPrefab);
         MapMenu mapMenuScript = mapMenu.GetComponent<MapMenu>();
         mapMenuScript.restMenuScript = this;

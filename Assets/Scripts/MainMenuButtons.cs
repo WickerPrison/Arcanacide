@@ -11,6 +11,7 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] BuildMode buildMode;
     [SerializeField] GameObject optionsMenuPrefab;
     [SerializeField] GameObject firstButton;
+    [SerializeField] GameObject optionsButton;
     SoundManager sm;
 
     private void Start()
@@ -39,7 +40,7 @@ public class MainMenuButtons : MonoBehaviour
     {
         SettingsMenu settingsMenu = Instantiate(optionsMenuPrefab).GetComponent<SettingsMenu>();
         settingsMenu.ActivateBackground();
-        settingsMenu.firstMainMenuButton = firstButton;
+        settingsMenu.mainMenuButton = optionsButton;
     }
 
     public void TestFloor2()
