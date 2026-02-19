@@ -20,6 +20,7 @@ public class RebindButton : MonoBehaviour
     [SerializeField] Image rebindSprite;
     [SerializeField] SettingsData settingsData;
     RebindControlsMenu menu;
+    Button button;
     InputManager im;
     Color transparent = new Color(1, 1, 1, 0);
 
@@ -33,6 +34,7 @@ public class RebindButton : MonoBehaviour
 
     private void Start()
     {
+        button = GetComponent<Button>();
         im = menu.im;
         if(inputActionReference != null)
         {
@@ -142,6 +144,14 @@ public class RebindButton : MonoBehaviour
     {
         initialString = initialString.Replace("Hold or Tap ", "");
         return initialString;
+    }
+
+    public void SelectOnMouseOver()
+    {
+        if (Gamepad.current == null)
+        {
+            button.Select();
+        }
     }
 
     private void OnEnable()
