@@ -28,6 +28,8 @@ public class LevelUpMenu : MonoBehaviour
     PlayerControls controls;
     SoundManager sm;
     Dictionary<string, LevelUpButton> buttonDict;
+    Dictionary<int, string> intToStringDict;
+    string selectedAttribute;
 
     float transitionTime = 0.1f;
     float descriptionTransitionTime = 0.1f;
@@ -42,6 +44,13 @@ public class LevelUpMenu : MonoBehaviour
 
     private void Start()
     {
+        intToStringDict = new Dictionary<int, string>()
+        {
+            { 0, "Strength" },
+            { 1, "Arcane" },
+            { 2, "Vitality" },
+            { 3, "Dexterity" }
+        };
         descriptScaleMax = childDescription.localScale;
         descriptScaleMin = new Vector3(descriptScaleMax.x, 0, descriptScaleMax.z);
         sm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SoundManager>();
@@ -61,7 +70,9 @@ public class LevelUpMenu : MonoBehaviour
     public void SelectItem(Transform item)
     {
         listItems.Remove(description);
-        listItems.Insert( listItems.IndexOf(item) + 1, description);
+        int index = listItems.IndexOf(item);
+        selectedAttribute = intToStringDict[index];
+        listItems.Insert( index + 1, description);
         StopAllCoroutines();
         StartCoroutine(MoveItems());
     }
@@ -130,6 +141,11 @@ public class LevelUpMenu : MonoBehaviour
         }
     }
 
+    public void IncreaseSelectedStat()
+    {
+        IncreaseStat(selectedAttribute);
+    }
+
     public void IncreaseStat(string attribute)
     {
         sm.ButtonSound();
@@ -178,7 +194,7 @@ public class LevelUpMenu : MonoBehaviour
         */
         sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
+        EventSystem.current.SetSelectedGameObject(restMenuScript.mostRecentButton);
         restMenuScript.controls.Enable();
         Destroy(gameObject);
     }

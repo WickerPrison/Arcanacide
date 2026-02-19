@@ -245,12 +245,12 @@ public class WeaponMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         if(pauseMenu != null)
         {
-            EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
+            EventSystem.current.SetSelectedGameObject(pauseMenu.mostRecentButton);
             pauseMenu.controls.Enable();
         }
         else
         {
-            EventSystem.current.SetSelectedGameObject(restMenu.firstButton);
+            EventSystem.current.SetSelectedGameObject(restMenu.mostRecentButton);
             restMenu.controls.Enable();
         }
         Destroy(gameObject);

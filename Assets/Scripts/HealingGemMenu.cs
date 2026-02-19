@@ -66,7 +66,7 @@ public class HealingGemMenu : MonoBehaviour
     {
         sm.ButtonSound();
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(restMenuScript.firstButton);
+        EventSystem.current.SetSelectedGameObject(restMenuScript.mostRecentButton);
         restMenuScript.controls.Enable();
         Destroy(gameObject);
     }

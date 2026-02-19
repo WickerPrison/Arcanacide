@@ -22,7 +22,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] ToggleUI vsyncToggle;
     [SerializeField] OptionSetUi frameRateUI;
     [SerializeField] Image background;
-    [System.NonSerialized] public GameObject firstMainMenuButton;
+    [System.NonSerialized] public GameObject mainMenuButton;
     bool canScrollSideways = true;
 
     private void Awake()
@@ -136,14 +136,14 @@ public class SettingsMenu : MonoBehaviour
         {
             sm.ButtonSound();
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
+            EventSystem.current.SetSelectedGameObject(pauseMenu.mostRecentButton);
             pauseMenu.controls.Enable();
         }
         else
         {
             sm.ButtonSound();
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(firstMainMenuButton);
+            EventSystem.current.SetSelectedGameObject(mainMenuButton);
         }
 
         Destroy(gameObject);
