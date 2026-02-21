@@ -38,7 +38,7 @@ public class MinibossV3Tests
         boltsPrefab = Resources.Load<GameObject>("Prefabs/Enemies/EnemyAttacks/Bolts");
         fleePointPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/FleePoint");
         minibossStalagmitesPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossStalagmites");
-        Time.timeScale = 1f;
+        Time.timeScale = 1;
     }
 
     [UnityTest]
