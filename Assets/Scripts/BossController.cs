@@ -26,10 +26,6 @@ public class BossController : EnemyController, IEndDialogue
     float runAwayTime;
     float runAwayMaxTime = 1f;
     float runAwaySpeed = 8f;
-    float fireBallCD;
-    float fireBallMaxCD = 5;
-    float attackCD;
-    float attackMaxCD = 2;
     float fireTrailMaxTime = 0.2f;
     float fireTrailTime;
     float bonfireMaxCD = 15;
@@ -103,7 +99,7 @@ public class BossController : EnemyController, IEndDialogue
             navAgent.SetDestination(playerScript.transform.position);
         }
 
-        if (state == EnemyState.IDLE && playerDistance < attackRange)
+        if (state == EnemyState.IDLE)
         {
             if (navAgent.enabled)
             {
@@ -113,7 +109,7 @@ public class BossController : EnemyController, IEndDialogue
                 }
             }
 
-            if (attackCD <= 0)
+            if (attackTime <= 0)
             {
                 if (playerDistance < tooClose)
                 {
@@ -136,7 +132,7 @@ public class BossController : EnemyController, IEndDialogue
                     backAnimator.Play("Bonfires");
                     bonfireCD = bonfireMaxCD;
                 }
-                else if (fireBallCD <= 0)
+                else if(playerDistance <= attackRange)
                 {
                     state = EnemyState.ATTACKING;
                     int num = Random.Range(1, phaseCounter);
@@ -155,10 +151,11 @@ public class BossController : EnemyController, IEndDialogue
                         frontAnimator.Play("GroundFire");
                         backAnimator.Play("GroundFire");
                     }
-                    fireBallCD = fireBallMaxCD;
+                    attackTime = attackMaxTime;
                 }
-                attackCD = attackMaxCD;
             }
+
+            attackTime -= Time.deltaTime;
         }
         else if(state == EnemyState.SPECIAL)
         {
@@ -179,17 +176,7 @@ public class BossController : EnemyController, IEndDialogue
             RunAway();
         }
 
-        if (!pauseTimer && attackCD > 0)
-        {
-            attackCD -= Time.deltaTime;
-        }
-
-        if(fireBallCD > 0)
-        {
-            fireBallCD -= Time.deltaTime;
-        }
-
-        if(bonfireCD > 0)
+        if (bonfireCD > 0)
         {
             bonfireCD -= Time.deltaTime;
         }
@@ -226,7 +213,7 @@ public class BossController : EnemyController, IEndDialogue
         {
             canStagger = false;
             bossDialogue.EndLookUpDialogue();
-            StartStagger(3);
+            StartStagger(2);
         }
     }
 
