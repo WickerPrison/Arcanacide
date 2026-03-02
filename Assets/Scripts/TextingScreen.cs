@@ -160,7 +160,7 @@ public class TextingScreen : MonoBehaviour
 
     void SpawnTextBox(List<string> currentConversation, int lineIndex)
     {
-        RuntimeManager.PlayOneShot(textingSFX);
+        FmodUtils.PlayOneShot(textingSFX, 0.5f);
         GameObject textBox = Instantiate(textBoxPrefab);
         textBox.transform.SetParent(content, false);
         TextBox textBoxScript = textBox.GetComponentInChildren<TextBox>();
