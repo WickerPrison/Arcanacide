@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5075726111561290587}
   - component: {fileID: 8736452697236013708}
   - component: {fileID: 906774313460583990}
+  - component: {fileID: -3286487745678396039}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -70,6 +71,7 @@ MonoBehaviour:
   - ChaosHub2
   - ElectricHub2
   - ChaosHub3
+  playerStats: {fileID: 11400000, guid: 4f83a3e1bca6c8e429c3cc3ee06fa0e1, type: 2}
   enemies: []
 --- !u!114 &479534431586172430
 MonoBehaviour:
@@ -205,6 +207,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1735409704dd0f448e3602de222b721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3286487745678396039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298750023833986125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafad90bbf26ee34d9991510fe8a094b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: bceaafd09c265c04c90efead3d6577fe, type: 2}
+  dialogueData: {fileID: 11400000, guid: 88c7b40eb986efd41be02a6b6644f0e7, type: 2}
+  playerStats: {fileID: 11400000, guid: 4f83a3e1bca6c8e429c3cc3ee06fa0e1, type: 2}
 --- !u!1 &7165992904461564942
 GameObject:
   m_ObjectHideFlags: 0

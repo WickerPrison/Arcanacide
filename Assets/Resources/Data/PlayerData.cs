@@ -44,10 +44,6 @@ public class PlayerData : ScriptableObject
     public float maxMana = 50;
     public float mana;
 
-    public int deathNum;
-    public int killedEnemiesNum;
-    public int killedEnemiesAtGetShield;
-
     public Vector2 moveDir;
 
     public List<int> unlockedWeapons;
@@ -203,9 +199,6 @@ public class PlayerData : ScriptableObject
         health = MaxHealth();
         maxMana = 50;
         mana = maxMana;
-        deathNum = 0;
-        killedEnemiesNum = 0;
-        killedEnemiesAtGetShield = 0;
         unlockedWeapons.Clear();
         unlockedWeapons.Add(0);
         unlockedSwords.Clear();

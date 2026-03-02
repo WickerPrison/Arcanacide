@@ -400,9 +400,6 @@ public class IceBoss : EnemyController, IEndDialogue
         mapData.iceBossPosition = transform.position;
         mapData.iceBossDirection = animationEvents.facePlayerSlow.faceDirectionID;
 
-
-        playerData.killedEnemiesNum += 1;
-
         enemyScript.MarkIdAsDead();
         enemyScript.GiveReward();
         enemyScript.RemoveFromGm();

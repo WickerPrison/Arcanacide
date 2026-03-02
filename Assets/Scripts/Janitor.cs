@@ -119,12 +119,12 @@ public class Janitor : MonoBehaviour
         playerData.unlockedAbilities.Add(ability);
         tutorialManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TutorialManager>();
 
-        if(ability == UnlockableAbilities.BLOCK)
+        if (ability == UnlockableAbilities.BLOCK)
         {
-            playerData.killedEnemiesAtGetShield = playerData.killedEnemiesNum;
+            GlobalEvents.instance.GainBlock();
         }
 
-        if(ability == UnlockableAbilities.MORE_PATCHES_1 || ability == UnlockableAbilities.MORE_PATCHES_2)
+        if (ability == UnlockableAbilities.MORE_PATCHES_1 || ability == UnlockableAbilities.MORE_PATCHES_2)
         {
             playerData.maxPatches++;
             tutorialManager.MorePatchesTutorial();

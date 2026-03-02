@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 using FMODUnity;
 using FMOD.Studio;
+using Steamworks;
 
 public enum EnemyAttackType
 {
@@ -86,7 +87,17 @@ public class PlayerScript : MonoBehaviour
 
     private void Instance_onTestButton(object sender, System.EventArgs e)
     {
+        //bool result = SteamUserStats.SetAchievement("Test Achievement");
+        //Debug.Log(result);
+        //if (result)
+        //{
+        //    SteamUserStats.StoreStats();
+        //}
 
+        //SteamUserStats.GetStat("test", out int currentVal);
+        //Debug.Log(currentVal);
+        //SteamUserStats.SetStat("test", currentVal + 1);
+        //SteamUserStats.StoreStats();
     }
 
     public void HitPlayer(Action onHit, Action onDodge)
@@ -276,14 +287,6 @@ public class PlayerScript : MonoBehaviour
 
     public void Death()
     {
-        playerData.deathNum += 1;
-        switch (playerData.deathNum)
-        {
-            case 1:
-                dialogueData.directorQueue.Add(1);
-                break;
-        }
-
         playerHealth.MaxHeal();
         playerData.healCharges = playerData.maxHealCharges;
         playerData.mana = playerData.maxMana;

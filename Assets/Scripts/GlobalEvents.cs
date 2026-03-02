@@ -35,6 +35,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler<int> onPlayerDealDamage;
     public event EventHandler onPlayerStatsChange;
     public event EventHandler<EnemyScript> onLockOnTarget;
+    public event EventHandler onGainBlock;
 
 
     private void Awake()
@@ -176,5 +177,10 @@ public class GlobalEvents : MonoBehaviour
     public void LockOnTarget(EnemyScript target)
     {
         onLockOnTarget?.Invoke(this, target);
+    }
+
+    public void GainBlock()
+    {
+        onGainBlock?.Invoke(this, EventArgs.Empty);
     }
 }

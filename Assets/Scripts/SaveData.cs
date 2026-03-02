@@ -36,8 +36,6 @@ public class SaveData
     public float maxMana;
     public float mana;
     public int deathNum;
-    public int killedEnemiesNum;
-    public int killedEnemiesAtGetShield;
     public List<int> unlockedWeapons;
     public List<string> unlockedSwords;
     public List<string> unlockedLanterns;
@@ -85,7 +83,11 @@ public class SaveData
     public int[] patchworkGaryConversations;
     public int[] whistleblowerConversations;
 
-    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, EmblemLibrary emblemLibrary)
+    public int killedEnemies;
+    public int killedEnemiesAtGainBlock;
+    public int totalDeaths;
+
+    public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, PlayerStats playerStats, EmblemLibrary emblemLibrary)
     {
         saveFile = playerData.saveFile;
         timeOfLastSave = playerData.timeOfLastSave.ToString();
@@ -111,9 +113,6 @@ public class SaveData
         dedication = playerData.arcane;
         maxMana = playerData.maxMana;
         mana = playerData.mana;
-        deathNum = playerData.deathNum;
-        killedEnemiesNum = playerData.killedEnemiesNum;
-        killedEnemiesAtGetShield = playerData.killedEnemiesAtGetShield;
         unlockedWeapons = playerData.unlockedWeapons;
         unlockedSwords = playerData.GetStringsFromElements(playerData.unlockedSwords);
         unlockedLanterns = playerData.GetStringsFromElements(playerData.unlockedLanterns);
@@ -168,5 +167,9 @@ public class SaveData
         QuestionMarksPreviousConversations = dialogueData.unknownNumberPreviousConversations.ToArray();
         patchworkGaryConversations = dialogueData.patchworkGaryConversations.ToArray();
         whistleblowerConversations = dialogueData.whistleBlowerConversations.ToArray();
+
+        killedEnemies = playerStats.killedEnemies;
+        killedEnemiesAtGainBlock = playerStats.killedEnemiesAtGainBlock;
+        totalDeaths = playerStats.totalDeaths;
     }
 }

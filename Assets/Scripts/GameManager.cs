@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] SettingsData settingsData;
     [SerializeField] GameObject moneyDropPrefab;
     [SerializeField] string[] sceneNames;
+    [SerializeField] PlayerStats playerStats;
     TutorialManager tutorialManager;
     public List<EnemyScript> enemies = new List<EnemyScript>();
     [System.NonSerialized] public List<EnemyScript> enemiesInRange = new List<EnemyScript>();
@@ -78,36 +79,6 @@ public class GameManager : MonoBehaviour
         tutorialManager = gameObject.GetComponent<TutorialManager>();
     }
 
-    private void onEnemyKilled(object sender, EnemyScript enemyScript)
-    {
-        playerData.killedEnemiesNum++;
-        switch (playerData.killedEnemiesNum)
-        {
-            case 5:
-                dialogueData.smackGPTQueue.Add(1);
-                break;
-            case 15:
-                dialogueData.smackGPTQueue.Add(2);
-                break;
-        }
-
-        if(playerData.unlockedAbilities.Contains(UnlockableAbilities.BLOCK) && playerData.killedEnemiesNum - playerData.killedEnemiesAtGetShield == 11)
-        {
-            dialogueData.smackGPTQueue.Add(3);
-        }
-    }
-
-    private void OnEnable()
-    {
-        GlobalEvents.instance.onEnemyKilled += onEnemyKilled;
-    }
-
-    private void OnDisable()
-    {
-        GlobalEvents.instance.onEnemyKilled -= onEnemyKilled;
-    }
-
-
     public string GetSceneName(int swordSiteNumber) => sceneNames[swordSiteNumber];
 
     public void SaveGame()
@@ -115,7 +86,7 @@ public class GameManager : MonoBehaviour
         playerData.playtime += (DateTime.Now - playerData.playtimeStartPoint).TotalSeconds;
         playerData.timeOfLastSave = DateTime.Now;
         playerData.playtimeStartPoint = DateTime.Now;
-        SaveSystem.SaveGame(playerData.saveFile, playerData, mapData, dialogueData, emblemLibrary);
+        SaveSystem.SaveGame(playerData.saveFile, playerData, mapData, dialogueData, playerStats, emblemLibrary);
         SaveSystem.SaveSettings(settingsData);
     }
 
@@ -151,9 +122,6 @@ public class GameManager : MonoBehaviour
             playerData.health = playerData.MaxHealth();
             playerData.maxMana = data.maxMana;
             playerData.mana = data.mana;
-            playerData.deathNum = data.deathNum;
-            playerData.killedEnemiesNum = data.killedEnemiesNum;
-            playerData.killedEnemiesAtGetShield = data.killedEnemiesAtGetShield;
             playerData.unlockedWeapons = data.unlockedWeapons;
             playerData.unlockedSwords = playerData.GetElementsFromStrings(data.unlockedSwords);
             playerData.unlockedLanterns = playerData.GetElementsFromStrings(data.unlockedLanterns);
@@ -201,6 +169,10 @@ public class GameManager : MonoBehaviour
             dialogueData.unknownNumberPreviousConversations = data.QuestionMarksPreviousConversations.ToList();
             dialogueData.patchworkGaryConversations = data.patchworkGaryConversations.ToList();
             dialogueData.whistleBlowerConversations = data.whistleblowerConversations.ToList();
+
+            playerStats.killedEnemies = data.killedEnemies;
+            playerStats.killedEnemiesAtGainBlock = data.killedEnemiesAtGainBlock;
+            playerStats.totalDeaths = data.totalDeaths;
         }
     }
 
@@ -281,6 +253,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
+
+        playerStats.ClearData();
     }
 
     public void StartAtFloor2()
@@ -316,9 +290,6 @@ public class GameManager : MonoBehaviour
         playerData.health = playerData.MaxHealth();
         playerData.maxMana = 75;
         playerData.mana = playerData.maxMana;
-        playerData.deathNum = 0;
-        playerData.killedEnemiesNum = 0;
-        playerData.killedEnemiesAtGetShield = 0;
         playerData.unlockedWeapons.Clear();
         playerData.unlockedWeapons.Add(0);
         playerData.unlockedWeapons.Add(1);
@@ -375,6 +346,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
+
+        playerStats.ClearData();
     }
 
     public void StartAtFloor3()
@@ -415,9 +388,6 @@ public class GameManager : MonoBehaviour
         playerData.health = playerData.MaxHealth();
         playerData.maxMana = 50;
         playerData.mana = playerData.maxMana;
-        playerData.deathNum = 0;
-        playerData.killedEnemiesNum = 0;
-        playerData.killedEnemiesAtGetShield = 0;
         playerData.unlockedWeapons.Clear();
         playerData.unlockedWeapons.Add(0);
         playerData.unlockedWeapons.Add(1);
@@ -476,6 +446,8 @@ public class GameManager : MonoBehaviour
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
+
+        playerStats.ClearData();
     }
 
     public void StartAtFloor4()
@@ -521,9 +493,6 @@ public class GameManager : MonoBehaviour
         playerData.health = playerData.MaxHealth();
         playerData.maxMana = 50;
         playerData.mana = playerData.maxMana;
-        playerData.deathNum = 0;
-        playerData.killedEnemiesNum = 0;
-        playerData.killedEnemiesAtGetShield = 0;
         playerData.unlockedWeapons.Clear();
         playerData.unlockedWeapons.Add(0);
         playerData.unlockedWeapons.Add(1);
@@ -585,5 +554,7 @@ public class GameManager : MonoBehaviour
         dialogueData.directorQueue.Add(0);
         dialogueData.patchworkGaryConversations.Clear();
         dialogueData.whistleBlowerConversations.Clear();
+
+        playerStats.ClearData();
     }
 }

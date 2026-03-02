@@ -1,0 +1,60 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class StatsManager : MonoBehaviour
+{
+    [SerializeField] PlayerData playerData;
+    [SerializeField] DialogueData dialogueData;
+    [SerializeField] PlayerStats playerStats;
+
+    private void onEnemyKilled(object sender, EnemyScript enemyScript)
+    {
+        playerStats.killedEnemies++;
+        switch (playerStats.killedEnemies)
+        {
+            case 5:
+                dialogueData.smackGPTQueue.Add(1);
+                break;
+            case 15:
+                dialogueData.smackGPTQueue.Add(2);
+                break;
+        }
+
+        if (playerData.unlockedAbilities.Contains(UnlockableAbilities.BLOCK) && playerStats.killedEnemies - playerStats.killedEnemiesAtGainBlock == 6)
+        {
+            dialogueData.smackGPTQueue.Add(3);
+        }
+    }
+
+    private void Global_onGainBlock(object sender, EventArgs e)
+    {
+        playerStats.killedEnemiesAtGainBlock = playerStats.killedEnemies;
+    }
+
+    private void Global_onPlayerDeath(object sender, EventArgs e)
+    {
+        playerStats.totalDeaths++;
+        switch (playerStats.totalDeaths)
+        {
+            case 1:
+                dialogueData.directorQueue.Add(1);
+                break;
+        }
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onEnemyKilled += onEnemyKilled;
+        GlobalEvents.instance.onGainBlock += Global_onGainBlock;
+        GlobalEvents.instance.onPlayerDeath += Global_onPlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onEnemyKilled -= onEnemyKilled;
+        GlobalEvents.instance.onGainBlock -= Global_onGainBlock;
+        GlobalEvents.instance.onPlayerDeath -= Global_onPlayerDeath;
+    }
+}
