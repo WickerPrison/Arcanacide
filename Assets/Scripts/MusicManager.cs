@@ -72,7 +72,7 @@ public class MusicManager : MonoBehaviour
         musicPlayer.UpdateBossHealth(healthPercent);
     }
 
-    private void onPlayerDeath(object sender, System.EventArgs e)
+    private void onPlayerDeath(object sender, EnemyScript killedBy)
     {
         musicPlayer.ChangeOptBossState(OptBossState.DEATH);
         musicPlayer.ChangeState(MusicState.DEATH);

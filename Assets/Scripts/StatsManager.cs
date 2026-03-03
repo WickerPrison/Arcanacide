@@ -26,6 +26,16 @@ public class StatsManager : MonoBehaviour
         {
             dialogueData.smackGPTQueue.Add(3);
         }
+
+        if(enemyScript.enemyType != EnemyType.UNDECLARED)
+        {
+            switch (enemyScript.enemyType)
+            {
+                case EnemyType.FIRE_BOSS:
+                    dialogueData.smackGPTQueue.Remove(4);
+                    break;
+            }
+        }
     }
 
     private void Global_onGainBlock(object sender, EventArgs e)
@@ -33,7 +43,7 @@ public class StatsManager : MonoBehaviour
         playerStats.killedEnemiesAtGainBlock = playerStats.killedEnemies;
     }
 
-    private void Global_onPlayerDeath(object sender, EventArgs e)
+    private void Global_onPlayerDeath(object sender, EnemyScript killedBy)
     {
         playerStats.totalDeaths++;
         switch (playerStats.totalDeaths)
@@ -41,6 +51,17 @@ public class StatsManager : MonoBehaviour
             case 1:
                 dialogueData.directorQueue.Add(1);
                 break;
+        }
+
+        if(killedBy != null && killedBy.enemyType != EnemyType.UNDECLARED)
+        {
+            int count = playerStats.IncrementDeathsToEnemy(killedBy.enemyType);
+            switch((killedBy.enemyType, count))
+            {
+                case (EnemyType.FIRE_BOSS, 5):
+                    dialogueData.smackGPTQueue.Add(4);
+                    break;
+            }
         }
     }
 

@@ -139,8 +139,7 @@ public class BossController : EnemyController, IEndDialogue
                     int num = Random.Range(1, phaseCounter);
                     if (num == 1)
                     {
-                        frontAnimator.Play("FireBalls");
-                        backAnimator.Play("FireBalls");
+                        FireBalls();
                     }
                     if (num == 2)
                     {
@@ -191,6 +190,12 @@ public class BossController : EnemyController, IEndDialogue
         {
             fireTrailTime -= Time.deltaTime;
         }
+    }
+
+    public void FireBalls()
+    {
+        frontAnimator.Play("FireBalls");
+        backAnimator.Play("FireBalls");
     }
 
     void UpAndDown()

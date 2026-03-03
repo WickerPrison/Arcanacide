@@ -17,7 +17,7 @@ public class PlayerData : ScriptableObject
     public DateTime timeOfLastSave;
     public DateTime playtimeStartPoint;
     public double playtime;
-
+    
     public int health;
     public bool hasHealthGem;
     public int maxHealCharges;

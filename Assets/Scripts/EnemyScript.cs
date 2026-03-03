@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    //this script controls the automatic workings of the enemy like health 
-
+    public EnemyType enemyType;
     [System.NonSerialized] public int health;
     [System.NonSerialized] public float poise;
     public int reward;

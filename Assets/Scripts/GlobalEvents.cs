@@ -10,7 +10,7 @@ public class GlobalEvents : MonoBehaviour
     InputManager im;
 
     public event EventHandler onChangedSetting;
-    public event EventHandler onPlayerDeath;
+    public event EventHandler<EnemyScript> onPlayerDeath;
     public event EventHandler<EnemyScript> onEnemyKilled;
     public event EventHandler onBossKilled;
     public event EventHandler onMinibossEndDialogue;
@@ -54,9 +54,9 @@ public class GlobalEvents : MonoBehaviour
         onChangedSetting?.Invoke(this, EventArgs.Empty);
     }
 
-    public void OnPlayerDeath()
+    public void OnPlayerDeath(EnemyScript killedBy)
     {
-        onPlayerDeath?.Invoke(this, EventArgs.Empty);
+        onPlayerDeath?.Invoke(this, killedBy);
     }
 
     public void EnemyKilled(EnemyScript enemyScript)

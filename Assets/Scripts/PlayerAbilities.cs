@@ -649,7 +649,7 @@ public class PlayerAbilities : MonoBehaviour, IDamageEnemy
         backstepActive = false;
     }
 
-    private void OnPlayerDeath(object sender, System.EventArgs e)
+    private void OnPlayerDeath(object sender, EnemyScript killedBy)
     {
         playerData.swordSpecialTimer = 0;
     }
