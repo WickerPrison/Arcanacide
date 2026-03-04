@@ -34,7 +34,7 @@ public class FireBossTests
         dialogueData.smackGPTQueue.Clear();
         dialogueData.smackGPTPreviousConversations.Clear();
         bossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Boss");
-        Time.timeScale = 1f;
+        Time.timeScale = 4f;
     }
 
     void SpawnBoss()
@@ -68,10 +68,10 @@ public class FireBossTests
         dialogue.CloseDialogue();
         Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.FIRE_BOSS));
         Assert.IsFalse(dialogueData.smackGPTQueue.Contains(4));
-        playerStats.deathsToEnemies.Add(EnemyType.FIRE_BOSS, 4);
+        playerStats.deathsToEnemies.Add(EnemyType.FIRE_BOSS, 6);
         bossController.FireBalls();
         yield return new WaitForSeconds(3f);
-        Assert.AreEqual(5, playerStats.deathsToEnemies[EnemyType.FIRE_BOSS]);
+        Assert.AreEqual(7, playerStats.deathsToEnemies[EnemyType.FIRE_BOSS]);
         Assert.IsTrue(dialogueData.smackGPTQueue.Contains(4));
     }
 

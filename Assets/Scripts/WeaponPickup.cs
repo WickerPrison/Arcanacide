@@ -57,12 +57,17 @@ public class WeaponPickup : MonoBehaviour
     {
         if (playerDistance <= interactDistance && gm.awareEnemies <= 0)
         {
+            playerData.GetElementList(weaponID).Add(weaponElement);
+            GlobalEvents.instance.GainWeapon();
             if (!playerData.unlockedWeapons.Contains(weaponID))
             {
                 playerData.unlockedWeapons.Add(weaponID);
                 playerData.equippedElements[weaponID] = weaponElement;
             }
-            playerData.GetElementList(weaponID).Add(weaponElement);
+            else
+            {
+                GlobalEvents.instance.GainWeaponOfSameType(weaponID);
+            }
             playerData.newWeapon = true;
             TriggerTutorial();
             Destroy(gameObject);

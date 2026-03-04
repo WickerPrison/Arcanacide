@@ -38,6 +38,9 @@ public class StatsManager : MonoBehaviour
                 case EnemyType.ELECTRIC_BOSS:
                     dialogueData.smackGPTQueue.Remove(5);
                     break;
+                case EnemyType.ICE_BOSS:
+                    dialogueData.smackGPTQueue.Remove(6);
+                    break;
             }
         }
     }
@@ -62,17 +65,34 @@ public class StatsManager : MonoBehaviour
             int count = playerStats.IncrementDeathsToEnemy(killedBy.enemyType);
             switch((killedBy.enemyType, count))
             {
-                case (EnemyType.FIRE_BOSS, 5):
+                case (EnemyType.FIRE_BOSS, 7):
                     dialogueData.smackGPTQueue.Add(4);
                     break;
-                case (EnemyType.ELECTRIC_BOSS, 5):
+                case (EnemyType.ELECTRIC_BOSS, 7):
                     if(mapData.carolsDeadFriends.Count < 3)
                     {
                         dialogueData.smackGPTQueue.Add(5);
                     }
                     break;
+                case (EnemyType.ICE_BOSS, 7):
+                    dialogueData.smackGPTQueue.Add(6);
+                    break;
             }
         }
+    }
+
+    private void Global_onGainWeapon(object sender, EventArgs e)
+    {
+        int unlockedWeaponsCount = playerData.unlockedSwords.Count + playerData.unlockedLanterns.Count + playerData.unlockedKnives.Count + playerData.unlockedClaws.Count;
+        playerStats.UnlockedWeapons(unlockedWeaponsCount);
+        if (!dialogueData.smackGPTPreviousConversations.Contains(7)) dialogueData.smackGPTQueue.Add(7);
+    }
+
+    private void Global_onGainWeaponOfSameType(object sender, int weaponId)
+    {
+        if (dialogueData.smackGPTPreviousConversations.Contains(8)) return;
+        if(playerData.GetWeaponUnlockList(weaponId).Count < 2) return;
+        dialogueData.smackGPTQueue.Add(8);
     }
 
     private void OnEnable()
@@ -80,6 +100,8 @@ public class StatsManager : MonoBehaviour
         GlobalEvents.instance.onEnemyKilled += onEnemyKilled;
         GlobalEvents.instance.onGainBlock += Global_onGainBlock;
         GlobalEvents.instance.onPlayerDeath += Global_onPlayerDeath;
+        GlobalEvents.instance.onGainWeapon += Global_onGainWeapon;
+        GlobalEvents.instance.onGainWeaponOfSameType += Global_onGainWeaponOfSameType;
     }
 
     private void OnDisable()
@@ -87,5 +109,7 @@ public class StatsManager : MonoBehaviour
         GlobalEvents.instance.onEnemyKilled -= onEnemyKilled;
         GlobalEvents.instance.onGainBlock -= Global_onGainBlock;
         GlobalEvents.instance.onPlayerDeath -= Global_onPlayerDeath;
+        GlobalEvents.instance.onGainWeapon -= Global_onGainWeapon;
+        GlobalEvents.instance.onGainWeaponOfSameType -= Global_onGainWeaponOfSameType;
     }
 }

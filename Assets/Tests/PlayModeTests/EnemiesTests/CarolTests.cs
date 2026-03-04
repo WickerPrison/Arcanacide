@@ -184,10 +184,10 @@ public class CarolTests
         dialogue.CloseDialogue();
         Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.ELECTRIC_BOSS));
         Assert.IsFalse(dialogueData.smackGPTQueue.Contains(5));
-        playerStats.deathsToEnemies.Add(EnemyType.ELECTRIC_BOSS, 4);
+        playerStats.deathsToEnemies.Add(EnemyType.ELECTRIC_BOSS, 6);
         bossController.Attack();
         yield return new WaitForSeconds(3f);
-        Assert.AreEqual(5, playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS]);
+        Assert.AreEqual(7, playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS]);
         Assert.IsTrue(dialogueData.smackGPTQueue.Contains(5));
     }
 
@@ -203,10 +203,10 @@ public class CarolTests
         dialogue.CloseDialogue();
         Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.ELECTRIC_BOSS));
         Assert.IsFalse(dialogueData.smackGPTQueue.Contains(5));
-        playerStats.deathsToEnemies.Add(EnemyType.ELECTRIC_BOSS, 4);
+        playerStats.deathsToEnemies.Add(EnemyType.ELECTRIC_BOSS, 6);
         bossController.Attack();
         yield return new WaitForSeconds(3f);
-        Assert.AreEqual(5, playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS]);
+        Assert.AreEqual(7, playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS]);
         Assert.IsFalse(dialogueData.smackGPTQueue.Contains(5));
     }
 

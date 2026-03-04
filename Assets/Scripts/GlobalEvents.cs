@@ -36,6 +36,8 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler onPlayerStatsChange;
     public event EventHandler<EnemyScript> onLockOnTarget;
     public event EventHandler onGainBlock;
+    public event EventHandler onGainWeapon;
+    public event EventHandler<int> onGainWeaponOfSameType;
 
 
     private void Awake()
@@ -182,5 +184,15 @@ public class GlobalEvents : MonoBehaviour
     public void GainBlock()
     {
         onGainBlock?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void GainWeapon()
+    {
+        onGainWeapon?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void GainWeaponOfSameType(int weaponId)
+    {
+        onGainWeaponOfSameType?.Invoke(this, weaponId);
     }
 }

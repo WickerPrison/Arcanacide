@@ -12,6 +12,7 @@ public class PlayerStats : ScriptableObject
     public Dictionary<EnemyType, int> deathsToEnemies = new Dictionary<EnemyType, int>();
     [SerializeField] List<EnemyType> deathsToEnemiesKeys;
     [SerializeField] List<int> deathsToEnemiesValues;
+    public int weaponsUnlocked;
 
     public int IncrementDeathsToEnemy(EnemyType type)
     {
@@ -26,6 +27,11 @@ public class PlayerStats : ScriptableObject
         deathsToEnemiesKeys = deathsToEnemies.Keys.ToList();
         deathsToEnemiesValues = deathsToEnemies.Values.ToList();
         return deathsToEnemies[type];
+    }
+
+    public void UnlockedWeapons(int count)
+    {
+        weaponsUnlocked = count;
     }
 
     public void ClearData()

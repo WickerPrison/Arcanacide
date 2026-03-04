@@ -7,4 +7,5 @@ public enum EnemyType
     UNDECLARED,
     FIRE_BOSS,
     ELECTRIC_BOSS,
+    ICE_BOSS,
 }

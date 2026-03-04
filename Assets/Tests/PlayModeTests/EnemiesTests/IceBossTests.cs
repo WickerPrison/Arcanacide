@@ -9,6 +9,8 @@ public class IceBossTests
 {
     PlayerData playerData;
     MapData mapData;
+    PlayerStats playerStats;
+    DialogueData dialogueData;
     GameObject frankPrefab;
     IceBoss bossController;
     EnemyScript enemyScript;
@@ -30,10 +32,15 @@ public class IceBossTests
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.iceBossKilled = false;
+        playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
+        playerStats.ClearData();
+        dialogueData = Resources.Load<DialogueData>("Data/DialogueData");
+        dialogueData.smackGPTQueue.Clear();
+        dialogueData.smackGPTPreviousConversations.Clear();
         frankPrefab = Resources.Load<GameObject>("Prefabs/Enemies/IceBoss");
         hud = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<HUD>();
         testingEvents = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TestingEvents>();
-        Time.timeScale = 1f;
+        Time.timeScale = 4f;
 
         lockOn = GameObject.FindGameObjectWithTag("Player").GetComponent<LockOn>();
         yield return null;
@@ -90,5 +97,52 @@ public class IceBossTests
         bossController.attackTime = 60;
         yield return new WaitForSeconds(35);
         Assert.IsTrue(mapData.iceBossKilled);
+    }
+
+    [UnityTest]
+    public IEnumerator TrackPlayerKills()
+    {
+        SpawnFrank();
+        playerData.health = 1;
+        yield return null;
+        dialogue.CloseDialogue();
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.ICE_BOSS));
+        bossController.BreathAttack();
+        yield return new WaitForSeconds(3f);
+        Assert.AreEqual(1, playerStats.deathsToEnemies[EnemyType.ICE_BOSS]);
+    }
+
+    [UnityTest]
+    public IEnumerator AddSmackGPTHint()
+    {
+        SpawnFrank();
+        playerData.health = 1;
+        yield return null;
+        dialogue.CloseDialogue();
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.ICE_BOSS));
+        Assert.IsFalse(dialogueData.smackGPTQueue.Contains(6));
+        playerStats.deathsToEnemies.Add(EnemyType.ICE_BOSS, 6);
+        bossController.BreathAttack();
+        yield return new WaitForSeconds(3f);
+        Assert.AreEqual(7, playerStats.deathsToEnemies[EnemyType.ICE_BOSS]);
+        Assert.IsTrue(dialogueData.smackGPTQueue.Contains(6));
+    }
+
+    [UnityTest]
+    public IEnumerator RemoveSmackGPTIfUnread()
+    {
+        SpawnFrank();
+        playerData.health = 1;
+        yield return null;
+        dialogue.CloseDialogue();
+        dialogueData.smackGPTQueue.Add(6);
+        Assert.IsTrue(dialogueData.smackGPTQueue.Contains(6));
+        yield return BossTransition(3);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 2);
+        yield return new WaitForSeconds(2);
+        enemyScript.GetComponent<Dialogue>().CloseDialogue();
+        bossController.attackTime = 60;
+        yield return new WaitForSeconds(35);
+        Assert.IsFalse(dialogueData.smackGPTQueue.Contains(6));
     }
 }
