@@ -171,8 +171,7 @@ public class IceBoss : EnemyController, IEndDialogue
                 switch (randInt)
                 {
                     case 0:
-                        frontAnimator.Play("BreathAttack");
-                        backAnimator.Play("BreathAttack");
+                        BreathAttack();
                         break;
                     case 1:
                         frontAnimator.Play("Smash");
@@ -193,6 +192,12 @@ public class IceBoss : EnemyController, IEndDialogue
         {
            attackTime -= Time.deltaTime;
         }
+    }
+
+    public void BreathAttack()
+    {
+        frontAnimator.Play("BreathAttack");
+        backAnimator.Play("BreathAttack");
     }
 
     public void Smash()
@@ -399,9 +404,6 @@ public class IceBoss : EnemyController, IEndDialogue
         HideIndicators();
         mapData.iceBossPosition = transform.position;
         mapData.iceBossDirection = animationEvents.facePlayerSlow.faceDirectionID;
-
-
-        playerData.killedEnemiesNum += 1;
 
         enemyScript.MarkIdAsDead();
         enemyScript.GiveReward();

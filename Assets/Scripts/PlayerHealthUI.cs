@@ -88,7 +88,7 @@ public class PlayerHealthUI : MonoBehaviour
         ResetHealthbar();
     }
 
-    private void OnPlayerDeath(object sender, System.EventArgs e)
+    private void OnPlayerDeath(object sender, EnemyScript killedBy)
     {
         StopAllCoroutines();
     }

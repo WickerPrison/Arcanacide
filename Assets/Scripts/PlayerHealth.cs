@@ -76,6 +76,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void LoseHealth(int damage, EnemyAttackType attackType, EnemyScript attackingEnemy)
     {
+        if (playerData.health <= 0) return;
+
         if (patchEffects.barrier)
         {
             patchEffects.barrier = false;
@@ -120,7 +122,7 @@ public class PlayerHealth : MonoBehaviour
         {
             im.DisableAll();
             playerMovement.preventInput = true;
-            GlobalEvents.instance.OnPlayerDeath();
+            GlobalEvents.instance.OnPlayerDeath(attackingEnemy);
             YouDied youDied = GameObject.FindGameObjectWithTag("MainCanvas").GetComponentInChildren<YouDied>();
             youDied.playerScript = playerScript;
             youDied.ShowMessage();

@@ -14,6 +14,7 @@ public class BossController : EnemyController, IEndDialogue
     [SerializeField] GameObject groundFirePrefab;
     [SerializeField] Transform frontAttackPoint;
     [SerializeField] Transform backAttackPoint;
+    [SerializeField] DialogueData dialogueData;
     BossDialogue bossDialogue;
     FacePlayer facePlayer;
     FireRing fireRing;
@@ -138,8 +139,7 @@ public class BossController : EnemyController, IEndDialogue
                     int num = Random.Range(1, phaseCounter);
                     if (num == 1)
                     {
-                        frontAnimator.Play("FireBalls");
-                        backAnimator.Play("FireBalls");
+                        FireBalls();
                     }
                     if (num == 2)
                     {
@@ -190,6 +190,12 @@ public class BossController : EnemyController, IEndDialogue
         {
             fireTrailTime -= Time.deltaTime;
         }
+    }
+
+    public void FireBalls()
+    {
+        frontAnimator.Play("FireBalls");
+        backAnimator.Play("FireBalls");
     }
 
     void UpAndDown()
@@ -380,6 +386,7 @@ public class BossController : EnemyController, IEndDialogue
         im.Gameplay();
         bossDialogue.EndLookUpDialogue();
         mapData.fireBossKilled = true;
+        dialogueData.directorQueue.Add(4);
         gm.awareEnemies -= 1;
         GlobalEvents.instance.BossKilled();
     }

@@ -20,10 +20,12 @@ public class BossIceBreath : MonoBehaviour
     bool hitPlayer;
     float damage = 20;
     float damageCounter;
+    EnemyScript enemyScript;
 
     private void Awake()
     {
         enemyEvents = GetComponentInParent<EnemyEvents>();
+        enemyScript = enemyEvents.GetComponent<EnemyScript>();
     }
 
     // Start is called before the first frame update
@@ -55,7 +57,7 @@ public class BossIceBreath : MonoBehaviour
             damageCounter += damage * Time.deltaTime;
             if(damageCounter > 1)
             {
-                playerScript.LoseHealth(Mathf.RoundToInt(damageCounter), EnemyAttackType.NONPARRIABLE, null);
+                playerScript.LoseHealth(Mathf.RoundToInt(damageCounter), EnemyAttackType.NONPARRIABLE, enemyScript);
                 playerScript.LoseStamina(damageCounter * 3);
                 damageCounter = 0;
             }
