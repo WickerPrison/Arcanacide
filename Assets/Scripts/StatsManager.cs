@@ -6,6 +6,7 @@ using UnityEngine;
 public class StatsManager : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
+    [SerializeField] MapData mapData;
     [SerializeField] DialogueData dialogueData;
     [SerializeField] PlayerStats playerStats;
 
@@ -34,6 +35,9 @@ public class StatsManager : MonoBehaviour
                 case EnemyType.FIRE_BOSS:
                     dialogueData.smackGPTQueue.Remove(4);
                     break;
+                case EnemyType.ELECTRIC_BOSS:
+                    dialogueData.smackGPTQueue.Remove(5);
+                    break;
             }
         }
     }
@@ -60,6 +64,12 @@ public class StatsManager : MonoBehaviour
             {
                 case (EnemyType.FIRE_BOSS, 5):
                     dialogueData.smackGPTQueue.Add(4);
+                    break;
+                case (EnemyType.ELECTRIC_BOSS, 5):
+                    if(mapData.carolsDeadFriends.Count < 3)
+                    {
+                        dialogueData.smackGPTQueue.Add(5);
+                    }
                     break;
             }
         }

@@ -10,6 +10,8 @@ public class CarolTests
 {
     PlayerData playerData;
     MapData mapData;
+    PlayerStats playerStats;
+    DialogueData dialogueData;
     GameObject carolPrefab;
     GameObject filingCabinetPrefab;
     ElectricBossController bossController;
@@ -28,6 +30,11 @@ public class CarolTests
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.electricBossKilled = false;
         mapData.carolsDeadFriends.Clear();
+        playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
+        playerStats.ClearData();
+        dialogueData = Resources.Load<DialogueData>("Data/DialogueData");
+        dialogueData.smackGPTQueue.Clear();
+        dialogueData.smackGPTPreviousConversations.Clear();
         carolPrefab = Resources.Load<GameObject>("Prefabs/Enemies/ElectricBoss");
         filingCabinetPrefab = Resources.Load<GameObject>("Prefabs/Layout/FilingCabinet");
         Time.timeScale = 4f;
@@ -153,5 +160,69 @@ public class CarolTests
         float expectedDamage = bossController.chargeDamage * 1.666666f + bossController.chargeBurstDamage * 1.6666666f;
         float expectedHealth = playerData.MaxHealth() - expectedDamage;
         Assert.LessOrEqual(Mathf.Abs(playerData.health - expectedHealth), 2);
+    }
+
+    [UnityTest]
+    public IEnumerator TrackPlayerKills()
+    {
+        SpawnCarol();
+        playerData.health = 1;
+        yield return null;
+        dialogue.CloseDialogue();
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.ELECTRIC_BOSS));
+        bossController.Attack();
+        yield return new WaitForSeconds(3f);
+        Assert.AreEqual(1, playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS]);
+    }
+
+    [UnityTest]
+    public IEnumerator AddSmackGPTHint()
+    {
+        SpawnCarol();
+        playerData.health = 1;
+        yield return null;
+        dialogue.CloseDialogue();
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.ELECTRIC_BOSS));
+        Assert.IsFalse(dialogueData.smackGPTQueue.Contains(5));
+        playerStats.deathsToEnemies.Add(EnemyType.ELECTRIC_BOSS, 4);
+        bossController.Attack();
+        yield return new WaitForSeconds(3f);
+        Assert.AreEqual(5, playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS]);
+        Assert.IsTrue(dialogueData.smackGPTQueue.Contains(5));
+    }
+
+    [UnityTest]
+    public IEnumerator DontAddHintIfFriendsDead()
+    {
+        mapData.carolsDeadFriends.Add("Jeff");
+        mapData.carolsDeadFriends.Add("Jeff");
+        mapData.carolsDeadFriends.Add("Jeff");
+        SpawnCarol();
+        playerData.health = 1;
+        yield return null;
+        dialogue.CloseDialogue();
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.ELECTRIC_BOSS));
+        Assert.IsFalse(dialogueData.smackGPTQueue.Contains(5));
+        playerStats.deathsToEnemies.Add(EnemyType.ELECTRIC_BOSS, 4);
+        bossController.Attack();
+        yield return new WaitForSeconds(3f);
+        Assert.AreEqual(5, playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS]);
+        Assert.IsFalse(dialogueData.smackGPTQueue.Contains(5));
+    }
+
+    [UnityTest]
+    public IEnumerator RemoveSmackGPTIfUnread()
+    {
+        SpawnCarol();
+        bossController.attackTime = 1000;
+        playerData.health = 1;
+        yield return null;
+        dialogue.CloseDialogue();
+        dialogueData.smackGPTQueue.Add(5);
+        Assert.IsTrue(dialogueData.smackGPTQueue.Contains(5));
+        enemyScript.LoseHealthUnblockable(1500, 1);
+        Debug.Log(enemyScript.health);
+        yield return new WaitForSeconds(3f);
+        Assert.IsFalse(dialogueData.smackGPTQueue.Contains(5));
     }
 }

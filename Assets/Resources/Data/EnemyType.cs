@@ -5,5 +5,6 @@ using UnityEngine;
 public enum EnemyType
 {
     UNDECLARED,
-    FIRE_BOSS
+    FIRE_BOSS,
+    ELECTRIC_BOSS,
 }
