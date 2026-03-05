@@ -6,7 +6,7 @@ using UnityEngine.AI;
 [System.Serializable]
 public class BossController : EnemyController, IEndDialogue
 {
-    [SerializeField] Transform exitDoor;
+    public Transform exitDoor;
     [SerializeField] MapData mapData;
     [SerializeField] GameObject fireTrailPrefab;
     [SerializeField] GameObject bonfirePrefab;
@@ -148,8 +148,7 @@ public class BossController : EnemyController, IEndDialogue
                     }
                     if(num == 3)
                     {
-                        frontAnimator.Play("GroundFire");
-                        backAnimator.Play("GroundFire");
+                        StartGroundFire();
                     }
                     attackTime = attackMaxTime;
                 }
@@ -196,6 +195,12 @@ public class BossController : EnemyController, IEndDialogue
     {
         frontAnimator.Play("FireBalls");
         backAnimator.Play("FireBalls");
+    }
+
+    public void StartGroundFire()
+    {
+        frontAnimator.Play("GroundFire");
+        backAnimator.Play("GroundFire");
     }
 
     void UpAndDown()
