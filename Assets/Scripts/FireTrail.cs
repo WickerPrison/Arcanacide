@@ -14,6 +14,7 @@ public class FireTrail : MonoBehaviour
     public float duration = 5;
     public float damagePerSecond = 5;
     float damage;
+    bool disableBecauseBoss = false;
 
 
     private void Start()
@@ -27,6 +28,7 @@ public class FireTrail : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (disableBecauseBoss) return;
         if (other.gameObject.CompareTag("Player") && other.gameObject.layer == 3)
         {
             if (GetPlayerAbilities(other).shield)
@@ -70,8 +72,19 @@ public class FireTrail : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void Global_onBossKilled(object sender, System.EventArgs e)
+    {
+        disableBecauseBoss = true;
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onBossKilled += Global_onBossKilled;
+    }
+
     private void OnDisable()
     {
+        GlobalEvents.instance.onBossKilled -= Global_onBossKilled;
         fmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         fmodInstance.release();        
     }

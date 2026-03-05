@@ -15,6 +15,7 @@ public class FireBossTests
     BossController bossController;
     EnemyScript enemyScript;
     Dialogue dialogue;
+    Dialogue endDialogue;
 
     [SetUp]
     public void Setup()
@@ -34,7 +35,7 @@ public class FireBossTests
         dialogueData.smackGPTQueue.Clear();
         dialogueData.smackGPTPreviousConversations.Clear();
         bossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Boss");
-        Time.timeScale = 4f;
+        Time.timeScale = 1f;
     }
 
     void SpawnBoss()
@@ -42,9 +43,48 @@ public class FireBossTests
         enemyScript = GameObject.Instantiate(bossPrefab).GetComponent<EnemyScript>();
         bossController = enemyScript.GetComponent<BossController>();
         dialogue = enemyScript.GetComponentInChildren<DialogueTriggerRoomEntrance>().GetComponent<Dialogue>();
+        endDialogue = enemyScript.GetComponentInChildren<BossAnimationEvents>().GetComponent<Dialogue>();
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
+        GameObject exitDoor = new GameObject();
+        bossController.exitDoor = exitDoor.transform;
+        exitDoor.transform.position = new Vector3(-7f, 0, -8f);
     }
 
+    [UnityTest]
+    public IEnumerator GroundFireAfterDeath()
+    {
+        SpawnBoss();
+        bossController.attackTime = 100f;
+        yield return null;
+        dialogue.CloseDialogue();
+        bossController.StartGroundFire();
+        yield return new WaitForSeconds(3f);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 1);
+        int startHealth = playerData.health;
+        yield return new WaitForSeconds(2f);
+        Assert.LessOrEqual(Mathf.Abs(startHealth - playerData.health), 5);
+        endDialogue.CloseDialogue();
+        yield return new WaitForSeconds(2f);
+        Assert.LessOrEqual(Mathf.Abs(startHealth - playerData.health), 5);
+    }
+
+    [UnityTest]
+    public IEnumerator FireTrailAfterDeath()
+    {
+        SpawnBoss();
+        playerData.equippedPatches.Add(Patches.ARCANE_STEP);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PatchEffects>().ArcaneStepDodgeThrough();
+        bossController.attackTime = 100f;
+        yield return null;
+        dialogue.CloseDialogue();
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 1);
+        int startHealth = playerData.health;
+        yield return new WaitForSeconds(2f);
+        Assert.LessOrEqual(Mathf.Abs(startHealth - playerData.health), 5);
+        endDialogue.CloseDialogue();
+        yield return new WaitForSeconds(6f);
+        Assert.LessOrEqual(Mathf.Abs(startHealth - playerData.health), 5);
+    }
 
     [UnityTest]
     public IEnumerator TrackPlayerKills()
