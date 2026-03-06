@@ -391,6 +391,7 @@ public class BossController : EnemyController, IEndDialogue
         im.Gameplay();
         bossDialogue.EndLookUpDialogue();
         mapData.fireBossKilled = true;
+        SteamAchievements.UnlockAchievement(Achievement.KILL_DAVE);
         dialogueData.directorQueue.Add(4);
         gm.awareEnemies -= 1;
         GlobalEvents.instance.BossKilled();

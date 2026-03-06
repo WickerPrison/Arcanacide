@@ -71,6 +71,7 @@ public class Frei : MonoBehaviour
             dialogueData.directorQueue.Add(3);
             inDialogue = false;
             im.Gameplay();
+            SteamAchievements.UnlockAchievement(Achievement.AGENT_FREI);
             Destroy(gameObject);
         }
         else

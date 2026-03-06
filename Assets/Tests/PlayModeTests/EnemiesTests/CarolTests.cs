@@ -225,4 +225,16 @@ public class CarolTests
         yield return new WaitForSeconds(3f);
         Assert.IsFalse(dialogueData.smackGPTQueue.Contains(5));
     }
+
+    [UnityTest]
+    public IEnumerator Death()
+    {
+        SpawnCarol();
+        enemyScript.transform.position = new Vector3(2f, 0, 2f);
+        yield return null;
+        dialogue.CloseDialogue();
+        yield return null;
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 1);
+        yield return new WaitForSeconds(3f);
+    }
 }

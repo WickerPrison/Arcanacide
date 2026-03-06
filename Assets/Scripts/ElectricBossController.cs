@@ -428,6 +428,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         base.Death();
 
         mapData.electricBossKilled = true;
+        SteamAchievements.UnlockAchievement(Achievement.KILL_CAROL);
         gm.awareEnemies -= 1;
         GlobalEvents.instance.BossKilled();
     }

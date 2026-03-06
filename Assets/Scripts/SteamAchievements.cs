@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
 
+//These are all the steam achievements that are not triggered based on a stat
+public enum Achievement
+{
+    KILL_DAVE, KILL_CAROL, KILL_FRANK, KILL_CEO, KILL_V1, KILL_V2, KILL_V3, KILL_V4, AGENT_FREI, KILL_IT_WORKER
+}
+
 public static class SteamAchievements
 {
     static Dictionary<EnemyType, string> enemyTypeToApiKey = new Dictionary<EnemyType, string>()
@@ -22,6 +28,20 @@ public static class SteamAchievements
         { EvidenceFloor.FIRST, "evidence1" }, 
         { EvidenceFloor.SECOND, "evidence2" }, 
         { EvidenceFloor.THIRD, "evidence3" }, 
+    };
+
+    static Dictionary<Achievement, string> achievementToApiKey = new Dictionary<Achievement, string>()
+    {
+        { Achievement.KILL_DAVE, "killDave" },
+        { Achievement.KILL_CAROL, "killCarol" },
+        { Achievement.KILL_FRANK, "killFrank" },
+        { Achievement.KILL_CEO, "killCEO" },
+        { Achievement.KILL_V1, "minibossV1" },
+        { Achievement.KILL_V2, "minibossV2" },
+        { Achievement.KILL_V3, "minibossV3" },
+        { Achievement.KILL_V4, "minibossV4" },
+        { Achievement.AGENT_FREI, "agentFrei" },
+        { Achievement.KILL_IT_WORKER, "KillItWorker" },
     };
 
     public static void UpdateDeaths(int value)
@@ -61,5 +81,14 @@ public static class SteamAchievements
         SteamUserStats.StoreStats();
         SteamUserStats.GetStat(apiKey, out int stat);
         Debug.Log($"Steam stat for {apiKey} is {stat}");
+    }
+
+    public static void UnlockAchievement(Achievement achievement)
+    {
+        if (!SteamManager.Initialized) return;
+        SteamUserStats.SetAchievement(achievementToApiKey[achievement]);
+        SteamUserStats.StoreStats();
+        SteamUserStats.GetAchievement(achievementToApiKey[achievement], out bool achieved);
+        Debug.Log($"Steam achievement {achievement} achieved: {achieved}");
     }
 }

@@ -21,5 +21,6 @@ public class ITWorkerFinalConfrontation : MonoBehaviour
     private void EnemyEvents_OnDeath(object sender, System.EventArgs e)
     {
         mapData.itWorkerQuestComplete = true;
+        SteamAchievements.UnlockAchievement(Achievement.KILL_IT_WORKER);
     }
 }

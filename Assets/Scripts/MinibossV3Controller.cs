@@ -149,6 +149,7 @@ public class MinibossV3Controller : EnemyController, IEndDialogue
     {
         base.Death();
         mapData.miniboss3Killed = true;
+        SteamAchievements.UnlockAchievement(Achievement.KILL_V3);
         GlobalEvents.instance.MiniBossKilled();
     }
 }

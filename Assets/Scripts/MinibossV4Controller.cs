@@ -163,6 +163,7 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
     {
         base.Death();
         mapData.miniboss4Killed = true;
+        SteamAchievements.UnlockAchievement(Achievement.KILL_V4);
         GlobalEvents.instance.MiniBossKilled();
         GlobalEvents.instance.WhistleblowerKilled();
     }
