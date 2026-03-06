@@ -411,6 +411,7 @@ public class IceBoss : EnemyController, IEndDialogue
         GlobalEvents.instance.EnemyKilled(enemyScript);
 
         mapData.iceBossKilled = true;
+        SteamAchievements.UnlockAchievement(Achievement.KILL_FRANK);
         GlobalEvents.instance.BossKilled();
     }
 

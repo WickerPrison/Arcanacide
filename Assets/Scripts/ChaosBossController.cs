@@ -231,6 +231,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         enemyScript.health = 1;
         bossEvents.FreezeAssistant();
         GlobalEvents.instance.BossKilled();
+        SteamAchievements.UnlockAchievement(Achievement.KILL_CEO);
         GetComponent<FinalDialogue>().StartConversation();
         frontAnimator.Play("StartDying");
         backAnimator.Play("StartDying");   

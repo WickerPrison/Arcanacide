@@ -86,6 +86,17 @@ public class SaveData
     public int killedEnemies;
     public int killedEnemiesAtGainBlock;
     public int totalDeaths;
+    public int deathsToFireBoss;
+    public int deathsToCarol;
+    public int deathsToFrank;
+    public int deathsToCeo;
+    public int deathsToV1;
+    public int deathsToV2;
+    public int deathsToV3;
+    public int deathsToV4;
+    public int firstFloorEvidence;
+    public int secondFloorEvidence;
+    public int thirdFloorEvidence;
 
     public SaveData (PlayerData playerData, MapData mapData, DialogueData dialogueData, PlayerStats playerStats, EmblemLibrary emblemLibrary)
     {
@@ -171,5 +182,16 @@ public class SaveData
         killedEnemies = playerStats.killedEnemies;
         killedEnemiesAtGainBlock = playerStats.killedEnemiesAtGainBlock;
         totalDeaths = playerStats.totalDeaths;
+        deathsToFireBoss = playerStats.deathsToEnemies[EnemyType.FIRE_BOSS];
+        deathsToCarol = playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS];
+        deathsToFrank = playerStats.deathsToEnemies[EnemyType.ICE_BOSS];
+        deathsToCeo = playerStats.deathsToEnemies[EnemyType.CHAOS_BOSS];
+        deathsToV1 = playerStats.deathsToEnemies[EnemyType.MINIBOSS_V1];
+        deathsToV2 = playerStats.deathsToEnemies[EnemyType.MINIBOSS_V2];
+        deathsToV3 = playerStats.deathsToEnemies[EnemyType.MINIBOSS_V3];
+        deathsToV4 = playerStats.deathsToEnemies[EnemyType.MINIBOSS_V4];
+        firstFloorEvidence = playerStats.firstFloorEvidence;
+        secondFloorEvidence = playerStats.secondFloorEvidence;
+        thirdFloorEvidence = playerStats.thirdFloorEvidence;
     }
 }

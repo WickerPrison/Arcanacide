@@ -38,6 +38,8 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler onGainBlock;
     public event EventHandler onGainWeapon;
     public event EventHandler<int> onGainWeaponOfSameType;
+    public event EventHandler<EvidenceFloor> onCollectEvidence;
+    public event EventHandler onEmpowerRefundShard;
 
 
     private void Awake()
@@ -194,5 +196,15 @@ public class GlobalEvents : MonoBehaviour
     public void GainWeaponOfSameType(int weaponId)
     {
         onGainWeaponOfSameType?.Invoke(this, weaponId);
+    }
+
+    public void CollectEvidence(EvidenceFloor evidenceFloor)
+    {
+        onCollectEvidence?.Invoke(this, evidenceFloor);
+    }
+
+    public void EmpowerRefundShard()
+    {
+        onEmpowerRefundShard?.Invoke(this, EventArgs.Empty);
     }
 }

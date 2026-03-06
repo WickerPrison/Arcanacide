@@ -173,6 +173,17 @@ public class GameManager : MonoBehaviour
             playerStats.killedEnemies = data.killedEnemies;
             playerStats.killedEnemiesAtGainBlock = data.killedEnemiesAtGainBlock;
             playerStats.totalDeaths = data.totalDeaths;
+            playerStats.deathsToEnemies[EnemyType.FIRE_BOSS] = data.deathsToFireBoss;
+            playerStats.deathsToEnemies[EnemyType.ELECTRIC_BOSS] = data.deathsToCarol;
+            playerStats.deathsToEnemies[EnemyType.ICE_BOSS] = data.deathsToFrank;
+            playerStats.deathsToEnemies[EnemyType.CHAOS_BOSS] = data.deathsToCeo;
+            playerStats.deathsToEnemies[EnemyType.MINIBOSS_V1] = data.deathsToV1;
+            playerStats.deathsToEnemies[EnemyType.MINIBOSS_V2] = data.deathsToV2;
+            playerStats.deathsToEnemies[EnemyType.MINIBOSS_V3] = data.deathsToV3;
+            playerStats.deathsToEnemies[EnemyType.MINIBOSS_V4] = data.deathsToV4;
+            playerStats.firstFloorEvidence = data.firstFloorEvidence;
+            playerStats.secondFloorEvidence = data.secondFloorEvidence;
+            playerStats.thirdFloorEvidence = data.thirdFloorEvidence;
         }
     }
 

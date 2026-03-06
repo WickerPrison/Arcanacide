@@ -9,6 +9,7 @@ public class ChaosBossTests
 {
     PlayerData playerData;
     MapData mapData;
+    PlayerStats playerStats;
     ChaosBossController bossController;
     EnemyScript enemyScript;
     Dialogue dialogue;
@@ -26,7 +27,8 @@ public class ChaosBossTests
         playerData.hasHealthGem = true;
         playerData.vitality = 30;
         playerData.health = playerData.MaxHealth();
-
+        playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
+        playerStats.ClearData();
         bossController = GameObject.FindObjectOfType<ChaosBossController>();
         enemyScript = bossController.GetComponent<EnemyScript>();
         dialogue = enemyScript.GetComponentInChildren<DialogueTriggerRoomEntrance>().GetComponent<Dialogue>();
@@ -62,5 +64,19 @@ public class ChaosBossTests
         bossController.StartKnightsAttack();
         yield return new WaitForSeconds(3);
         Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator TrackPlayerKills()
+    {
+        enemyScript.transform.position = new Vector3(6f, 0, 3f);
+        playerData.health = 1;
+        yield return null;
+        dialogue.CloseDialogue();
+        bossController.attackTime = 60;
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.CHAOS_BOSS));
+        bossController.StartKnightsAttack();
+        yield return new WaitForSeconds(3f);
+        Assert.AreEqual(1, playerStats.deathsToEnemies[EnemyType.CHAOS_BOSS]);
     }
 }

@@ -60,6 +60,7 @@ public class HealingGemMenu : MonoBehaviour
         {
             refundStones[i].EmpowerGem(i);
         }
+        GlobalEvents.instance.EmpowerRefundShard();
     }
 
     public void OpenRestMenu()
