@@ -9,6 +9,7 @@ public class MinibossV4Tests
 {
     PlayerData playerData;
     MapData mapData;
+    PlayerStats playerStats;
     GameObject minibossPrefab;
     GameObject dronePrefab;
     TestingTrigger triggerPrefab;
@@ -31,6 +32,8 @@ public class MinibossV4Tests
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.miniboss3Killed = false;
         mapData.miniboss4Killed = false;
+        playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
+        playerStats.ClearData();
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV4");
         dronePrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossDrone");
 
@@ -122,5 +125,18 @@ public class MinibossV4Tests
         Assert.IsTrue(droneController1 == null);
         Assert.IsTrue(droneController0 == null);
         Assert.IsTrue(minibossAbilities == null);
+    }
+
+    [UnityTest]
+    public IEnumerator TrackPlayerKills()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-3.5f, 0, -3.5f);
+        playerData.health = 1;
+        yield return null;
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.MINIBOSS_V4));
+        minibossAbilities.ChestLaser(2);
+        yield return new WaitForSeconds(2);
+        Assert.AreEqual(1, playerStats.deathsToEnemies[EnemyType.MINIBOSS_V4]);
     }
 }

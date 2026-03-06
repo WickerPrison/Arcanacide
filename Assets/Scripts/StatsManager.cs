@@ -59,10 +59,12 @@ public class StatsManager : MonoBehaviour
                 dialogueData.directorQueue.Add(1);
                 break;
         }
+        SteamAchievements.UpdateDeaths(playerStats.totalDeaths);
 
         if(killedBy != null && killedBy.enemyType != EnemyType.UNDECLARED)
         {
             int count = playerStats.IncrementDeathsToEnemy(killedBy.enemyType);
+            SteamAchievements.UpdateDeathsToEnemy(killedBy.enemyType, playerStats.deathsToEnemies[killedBy.enemyType]);
             switch((killedBy.enemyType, count))
             {
                 case (EnemyType.FIRE_BOSS, 7):
@@ -84,7 +86,7 @@ public class StatsManager : MonoBehaviour
     private void Global_onGainWeapon(object sender, EventArgs e)
     {
         int unlockedWeaponsCount = playerData.unlockedSwords.Count + playerData.unlockedLanterns.Count + playerData.unlockedKnives.Count + playerData.unlockedClaws.Count;
-        playerStats.UnlockedWeapons(unlockedWeaponsCount);
+        SteamAchievements.UpdateWeaponsUnlocked(unlockedWeaponsCount);
         if (!dialogueData.smackGPTPreviousConversations.Contains(7)) dialogueData.smackGPTQueue.Add(7);
     }
 
@@ -95,6 +97,18 @@ public class StatsManager : MonoBehaviour
         dialogueData.smackGPTQueue.Add(8);
     }
 
+    private void Global_onCollectEvidence(object sender, EvidenceFloor evidenceFloor)
+    {
+        int floorEvidence = playerStats.IncrementEvidenceForFloor(evidenceFloor);
+        SteamAchievements.UpdateFloorEvidence(evidenceFloor, floorEvidence);
+        SteamAchievements.UpdateTotalEvidence(playerStats.GetTotalEvidence());
+    }
+
+    private void Global_onEmpowerRefundShard(object sender, EventArgs e)
+    {
+        SteamAchievements.UpdateRefundStoneUpgrades(playerData.healCharges - 1);
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onEnemyKilled += onEnemyKilled;
@@ -102,6 +116,8 @@ public class StatsManager : MonoBehaviour
         GlobalEvents.instance.onPlayerDeath += Global_onPlayerDeath;
         GlobalEvents.instance.onGainWeapon += Global_onGainWeapon;
         GlobalEvents.instance.onGainWeaponOfSameType += Global_onGainWeaponOfSameType;
+        GlobalEvents.instance.onCollectEvidence += Global_onCollectEvidence;
+        GlobalEvents.instance.onEmpowerRefundShard += Global_onEmpowerRefundShard;
     }
 
     private void OnDisable()
@@ -111,5 +127,7 @@ public class StatsManager : MonoBehaviour
         GlobalEvents.instance.onPlayerDeath -= Global_onPlayerDeath;
         GlobalEvents.instance.onGainWeapon -= Global_onGainWeapon;
         GlobalEvents.instance.onGainWeaponOfSameType -= Global_onGainWeaponOfSameType;
+        GlobalEvents.instance.onCollectEvidence -= Global_onCollectEvidence;
+        GlobalEvents.instance.onEmpowerRefundShard -= Global_onEmpowerRefundShard;
     }
 }

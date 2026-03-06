@@ -10,6 +10,7 @@ public class MinibossV2Tests
 {
     PlayerData playerData;
     MapData mapData;
+    PlayerStats playerStats;
     GameObject minibossPrefab;
     TestingTrigger triggerPrefab;
     GameObject ellipsePrefab;
@@ -27,6 +28,8 @@ public class MinibossV2Tests
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.miniboss2Killed = false;
+        playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
+        playerStats.ClearData();
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV2");
 
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
@@ -199,5 +202,18 @@ public class MinibossV2Tests
         yield return new WaitForSeconds(10);
         HarpoonManager harpoonManager = minibossAbilities.GetComponent<HarpoonManager>();
         Assert.Greater(harpoonManager.harpoons.Count, 0);
+    }
+
+    [UnityTest]
+    public IEnumerator TrackPlayerKills()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-3.5f, 0, -3.5f);
+        playerData.health = 1;
+        yield return null;
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.MINIBOSS_V2));
+        minibossAbilities.ChestLaser(2);
+        yield return new WaitForSeconds(2);
+        Assert.AreEqual(1, playerStats.deathsToEnemies[EnemyType.MINIBOSS_V2]);
     }
 }

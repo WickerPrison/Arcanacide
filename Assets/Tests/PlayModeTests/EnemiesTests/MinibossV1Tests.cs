@@ -9,6 +9,7 @@ public class MinibossV1Tests
 {
     PlayerData playerData;
     MapData mapData;
+    PlayerStats playerStats;
     GameObject minibossPrefab;
     TestingTrigger triggerPrefab;
     GameObject ellipsePrefab;
@@ -24,6 +25,8 @@ public class MinibossV1Tests
         playerData.health = playerData.MaxHealth();
         mapData = Resources.Load<MapData>("Data/MapData");
         mapData.miniboss1Killed = false;
+        playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
+        playerStats.ClearData();
         minibossPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Miniboss/MinibossV1");
         triggerPrefab = Resources.Load<TestingTrigger>("Prefabs/Testing/TestingTrigger");
         ellipsePrefab = Resources.Load<GameObject>("Prefabs/Layout/EllipseV1");
@@ -300,5 +303,18 @@ public class MinibossV1Tests
 
         yield return new WaitForSeconds(2);
         
+    }
+
+    [UnityTest]
+    public IEnumerator TrackPlayerKills()
+    {
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(-3.5f, 0, -3.5f);
+        playerData.health = 1;
+        yield return null;
+        Assert.IsFalse(playerStats.deathsToEnemies.ContainsKey(EnemyType.MINIBOSS_V1));
+        minibossAbilities.ChestLaser(2);
+        yield return new WaitForSeconds(2);
+        Assert.AreEqual(1, playerStats.deathsToEnemies[EnemyType.MINIBOSS_V1]);
     }
 }

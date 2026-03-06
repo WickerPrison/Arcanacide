@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CollectEvidence : MonoBehaviour
 {
+    [SerializeField] EvidenceFloor evidenceFloor;
     [SerializeField] string evidenceName;
     [SerializeField] GameObject message;
     [SerializeField] float interactDistance = 2;
@@ -70,6 +71,7 @@ public class CollectEvidence : MonoBehaviour
             hasCollectedEvidence = true;
             if(wayFaerie!= null) wayFaerie.Stop();
             dialogue.StartConversation();
+            GlobalEvents.instance.CollectEvidence(evidenceFloor);
         }
     }
 
