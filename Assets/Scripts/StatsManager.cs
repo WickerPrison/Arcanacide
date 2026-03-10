@@ -87,7 +87,10 @@ public class StatsManager : MonoBehaviour
     {
         int unlockedWeaponsCount = playerData.unlockedSwords.Count + playerData.unlockedLanterns.Count + playerData.unlockedKnives.Count + playerData.unlockedClaws.Count;
         SteamAchievements.UpdateWeaponsUnlocked(unlockedWeaponsCount);
-        if (!dialogueData.smackGPTPreviousConversations.Contains(7)) dialogueData.smackGPTQueue.Add(7);
+        if (!dialogueData.smackGPTPreviousConversations.Contains(7) && !dialogueData.smackGPTQueue.Contains(7))
+        {
+            dialogueData.smackGPTQueue.Add(7);
+        }
     }
 
     private void Global_onGainWeaponOfSameType(object sender, int weaponId)

@@ -121,7 +121,7 @@ public class MusicPlayer : MonoBehaviour
         musicInstance.release();
     }
 
-    public void UpdateBossHealth(int healthPercent)
+    public void UpdateBossHealth(float healthPercent)
     {
         musicInstance.setParameterByName("BOSS HEALTH", healthPercent);
     }

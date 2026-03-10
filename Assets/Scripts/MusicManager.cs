@@ -67,7 +67,7 @@ public class MusicManager : MonoBehaviour
         musicPlayer.ChangeState(state);
     }
 
-    public void UpdateBossHealth(int healthPercent)
+    public void UpdateBossHealth(float healthPercent)
     {
         musicPlayer.UpdateBossHealth(healthPercent);
     }
