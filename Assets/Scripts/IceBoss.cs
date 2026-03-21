@@ -113,9 +113,6 @@ public class IceBoss : EnemyController, IEndDialogue
 
         if (state == EnemyState.UNAWARE) return;
 
-        healthPercent = Mathf.RoundToInt(enemyScript.health / enemyScript.maxHealth * 100);
-        musicManager.UpdateBossHealth(healthPercent);
-
         playerDistance = Vector3.Distance(transform.position, playerScript.transform.position);
 
         if (!icicleDelay && playerDistance > tooFarAway && state != EnemyState.DYING)
@@ -309,7 +306,9 @@ public class IceBoss : EnemyController, IEndDialogue
     void TakeDamage(object sender, System.EventArgs e)
     {
         float enemyPercentHealth = (float)enemyScript.health / (float)enemyScript.maxHealth;
-        for(int i = currentLimb; i < limbTransitions.Length; i++)
+        Debug.Log(enemyPercentHealth * 100f);
+        musicManager.UpdateBossHealth(enemyPercentHealth * 100f);
+        for (int i = currentLimb; i < limbTransitions.Length; i++)
         {
             if(enemyPercentHealth < limbTransitions[i])
             {

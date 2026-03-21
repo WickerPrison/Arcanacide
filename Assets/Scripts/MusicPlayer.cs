@@ -30,6 +30,7 @@ public class MusicPlayer : MonoBehaviour
     Dictionary<OptBossState, string> optBossStateDict;
     Dictionary<Music, string> parameterNameDict;
     EventInstance musicInstance;
+    bool combat;
 
     private void Awake()
     {
@@ -90,6 +91,11 @@ public class MusicPlayer : MonoBehaviour
         musicInstance.setParameterByNameWithLabel("OB MUSICSTATE", optBossStateDict[state]);
     }
 
+    public void SetCombat(bool inCombat)
+    {
+        RuntimeManager.StudioSystem.setParameterByName("COMBAT STATE", inCombat ? 1f : 0f);
+    }
+
     public void PlayMusic(Music musicOption)
     {
         musicInstance.release();
@@ -115,7 +121,7 @@ public class MusicPlayer : MonoBehaviour
         musicInstance.release();
     }
 
-    public void UpdateBossHealth(int healthPercent)
+    public void UpdateBossHealth(float healthPercent)
     {
         musicInstance.setParameterByName("BOSS HEALTH", healthPercent);
     }

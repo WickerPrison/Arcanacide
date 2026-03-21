@@ -67,7 +67,7 @@ public class MusicManager : MonoBehaviour
         musicPlayer.ChangeState(state);
     }
 
-    public void UpdateBossHealth(int healthPercent)
+    public void UpdateBossHealth(float healthPercent)
     {
         musicPlayer.UpdateBossHealth(healthPercent);
     }
@@ -93,14 +93,19 @@ public class MusicManager : MonoBehaviour
         musicPlayer.ChangeOptBossState(OptBossState.COMBAT);
     }
 
+    private void Global_onAwareEnemiesChange(object sender, int awareEnemiesCount)
+    {
+        musicPlayer.SetCombat(awareEnemiesCount != 0);
+    }
+
     private void OnEnable()
     {
         GlobalEvents.instance.onBossKilled += onBossKilled;
         GlobalEvents.instance.onPlayerDeath += onPlayerDeath;
         GlobalEvents.instance.onMinibossKilled += Global_onMinibossKilled;
         GlobalEvents.instance.onMinibossEndDialogue += Global_onMinibossEndDialogue;
+        GlobalEvents.instance.onAwareEnemiesChange += Global_onAwareEnemiesChange;
     }
-
 
     private void OnDisable()
     {
@@ -108,6 +113,7 @@ public class MusicManager : MonoBehaviour
         GlobalEvents.instance.onPlayerDeath -= onPlayerDeath;
         GlobalEvents.instance.onMinibossKilled -= Global_onMinibossKilled;
         GlobalEvents.instance.onMinibossEndDialogue -= Global_onMinibossEndDialogue;
+        GlobalEvents.instance.onAwareEnemiesChange -= Global_onAwareEnemiesChange;
     }
 
 }
