@@ -7,6 +7,7 @@ public class MainMenuButtons : MonoBehaviour
 {
     [SerializeField] GameManager gm;
     [SerializeField] PlayerData playerData;
+    [SerializeField] MapData mapData;
     [SerializeField] MenuData menuData;
     [SerializeField] BuildMode buildMode;
     [SerializeField] GameObject optionsMenuPrefab;
@@ -65,6 +66,31 @@ public class MainMenuButtons : MonoBehaviour
         gm.StartAtFloor4();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
         SceneManager.LoadScene("IceElevator2");
+    }
+
+    public void TestMinibossV1()
+    {
+        ButtonSound();
+        gm.NewGame(4);
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += 500;
+        mapData.UnlockAllDoors();
+        playerData.hasHealthGem = true;
+        playerData.UnlockAllWeapons();
+        SceneManager.LoadScene("FireHub1");
+    }
+
+    public void TestFireBoss()
+    {
+        ButtonSound();
+        gm.NewGame(4);
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += 800;
+        mapData.UnlockAllDoors();
+        mapData.ticketFiled = true;
+        playerData.UnlockAllWeapons();
+        playerData.hasHealthGem = true;
+        SceneManager.LoadScene("FireHub2");
     }
 
     public void QuitGame()
