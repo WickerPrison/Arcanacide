@@ -49,7 +49,7 @@ public class IceBossAnimationEvents : MeleeEnemyAnimationEvents
 
     public void StartIceBreath()
     {
-        iceBreath.StartIceBreath();
+        iceBreath.StartIceBreath(bossController.fullyTransformed);
     }
 
     public void StopIceBreath()
