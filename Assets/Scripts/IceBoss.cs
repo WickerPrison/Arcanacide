@@ -48,7 +48,7 @@ public class IceBoss : EnemyController, IEndDialogue
     float gradientOffset = .4f;
     Vector3 away = new Vector3(100, 100, 100);
     [System.NonSerialized] public bool justTransformed = false;
-    bool fullyTransformed = false;
+    [System.NonSerialized] public bool fullyTransformed = false;
     MusicManager musicManager;
     int healthPercent;
 
@@ -306,7 +306,6 @@ public class IceBoss : EnemyController, IEndDialogue
     void TakeDamage(object sender, System.EventArgs e)
     {
         float enemyPercentHealth = (float)enemyScript.health / (float)enemyScript.maxHealth;
-        Debug.Log(enemyPercentHealth * 100f);
         musicManager.UpdateBossHealth(enemyPercentHealth * 100f);
         for (int i = currentLimb; i < limbTransitions.Length; i++)
         {
@@ -345,6 +344,7 @@ public class IceBoss : EnemyController, IEndDialogue
         HideIndicators();
         frontAnimator.Play("Torso");
         backAnimator.Play("Torso");
+        fullyTransformed = true;
         postDialogue.StartWithCallback(StartFinalPhase);
     }
 

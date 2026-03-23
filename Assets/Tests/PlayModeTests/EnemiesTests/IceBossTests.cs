@@ -80,6 +80,40 @@ public class IceBossTests
     }
 
     [UnityTest]
+    public IEnumerator BreathAttack()
+    {
+        Time.timeScale = 1f;
+        SpawnFrank();
+        enemyScript.transform.position = new Vector3(3f, 0, 1f);
+        hud.EnableBossHealthbar(enemyScript.GetComponent<EnemyEvents>());
+        yield return null;
+        dialogue.CloseDialogue();
+        yield return null;
+        bossController.BreathAttack();
+        bossController.attackTime = 1000;
+        yield return new WaitForSeconds(3);
+        enemyScript.transform.position = new Vector3(3f, 0, -1f);
+        bossController.BreathAttack();
+        yield return new WaitForSeconds(3);
+        yield return BossTransition(3);
+        enemyScript.LoseHealthUnblockable(enemyScript.maxHealth, 2);
+        bossController.attackTime = 1000;
+        yield return new WaitForSeconds(2);
+        enemyScript.GetComponent<Dialogue>().CloseDialogue();
+        bossController.BreathAttack();
+        yield return new WaitForSeconds(3);
+        enemyScript.transform.position = new Vector3(3f, 0, 1f);
+        bossController.BreathAttack();
+        yield return new WaitForSeconds(3);
+        enemyScript.transform.position = new Vector3(-3f, 0, 1f);
+        bossController.BreathAttack();
+        yield return new WaitForSeconds(3);
+        enemyScript.transform.position = new Vector3(-3f, 0, -1f);
+        bossController.BreathAttack();
+        yield return new WaitForSeconds(3);
+    }
+
+    [UnityTest]
     public IEnumerator Death()
     {
         SpawnFrank();

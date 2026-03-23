@@ -11,6 +11,7 @@ public class BossIceBreath : MonoBehaviour
     [SerializeField] AttackArcGenerator attackArc;
     [SerializeField] EventReference damageSFX;
     [SerializeField] EventReference fmodEvent;
+    [SerializeField] Transform origin2;
     EventInstance fmodInstance;
     WaitForSeconds damageSFXdelay = new WaitForSeconds(.6f);
     bool canPlaySound = true;
@@ -71,8 +72,12 @@ public class BossIceBreath : MonoBehaviour
         canPlaySound = true;
     }
 
-    public void StartIceBreath()
+    public void StartIceBreath(bool fullyTransformed)
     {
+        if(fullyTransformed)
+        {
+            transform.position = origin2.transform.position;
+        }
         iceBreathOn = true;
         vfx.Play();
         fmodInstance.start();
