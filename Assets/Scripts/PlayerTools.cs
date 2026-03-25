@@ -46,5 +46,17 @@ public static class PlayerTools
         playerData.currentWeapon = 0;
         EditorUtility.SetDirty(playerData);
     }
+
+    [MenuItem("Tools/Unlock All Patches")]
+    public static void UnlockAllPatches()
+    {
+        playerData.UnlockAllPatches();
+    }
+
+    [MenuItem("Tools/Reset Patches")]
+    public static void ResetPatches()
+    {
+        playerData.patches.Clear();
+    }
 #endif
 }

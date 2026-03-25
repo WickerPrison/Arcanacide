@@ -244,4 +244,17 @@ public class PlayerData : ScriptableObject
         EditorUtility.SetDirty(this);
 #endif
     }
+
+    public void UnlockAllPatches()
+    {
+        patches.Clear();
+        equippedPatches.Clear();
+        foreach(Patches patch in System.Enum.GetValues(typeof(Patches)))
+        {
+            patches.Add(patch);
+        }
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+#endif
+    }
 }

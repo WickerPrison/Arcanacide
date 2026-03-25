@@ -78,6 +78,7 @@ public class MainMenuButtons : MonoBehaviour
         mapData.UnlockAllDoors();
         playerData.hasHealthGem = true;
         playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
         SceneManager.LoadScene("FireHub1");
     }
 
@@ -90,6 +91,7 @@ public class MainMenuButtons : MonoBehaviour
         mapData.UnlockAllDoors();
         mapData.ticketFiled = true;
         playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
         playerData.hasHealthGem = true;
         SceneManager.LoadScene("FireHub2");
     }
@@ -102,6 +104,7 @@ public class MainMenuButtons : MonoBehaviour
         playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
         SceneManager.LoadScene("ElectricHub2");
     }
 
@@ -113,6 +116,7 @@ public class MainMenuButtons : MonoBehaviour
         playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
         mapData.carolsDeadFriends.Add("Jeff");
         mapData.carolsDeadFriends.Add("Harold");
         mapData.carolsDeadFriends.Add("Arnold");
@@ -128,6 +132,7 @@ public class MainMenuButtons : MonoBehaviour
         mapData.UnlockAllDoors();
         mapData.hasRemoteAC = true;
         playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
         SceneManager.LoadScene("IceHub1");
     }
 
@@ -140,6 +145,7 @@ public class MainMenuButtons : MonoBehaviour
         mapData.UnlockAllDoors();
         mapData.hasRemoteAC = true;
         playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
         SceneManager.LoadScene("IceHub1");
     }
 
@@ -152,6 +158,7 @@ public class MainMenuButtons : MonoBehaviour
         mapData.UnlockAllDoors();
         mapData.hasRemoteAC = true;
         playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
         SceneManager.LoadScene("ChaosHub3");
     }
 
@@ -164,6 +171,7 @@ public class MainMenuButtons : MonoBehaviour
         mapData.UnlockAllDoors();
         mapData.hasRemoteAC = true;
         playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
         SceneManager.LoadScene("ChaosHub1");
     }
 
