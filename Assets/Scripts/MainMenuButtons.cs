@@ -74,7 +74,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.NewGame(4);
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        playerData.money += 500;
+        playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         playerData.hasHealthGem = true;
         playerData.UnlockAllWeapons();
@@ -86,7 +86,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.NewGame(4);
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        playerData.money += 800;
+        playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         mapData.ticketFiled = true;
         playerData.UnlockAllWeapons();
@@ -99,7 +99,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.StartAtFloor2();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        playerData.money += 2000;
+        playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         playerData.UnlockAllWeapons();
         SceneManager.LoadScene("ElectricHub2");
@@ -110,7 +110,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.StartAtFloor2();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        playerData.money += 3000;
+        playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         playerData.UnlockAllWeapons();
         mapData.carolsDeadFriends.Add("Jeff");
@@ -124,7 +124,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.StartAtFloor3();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        playerData.money += 10000;
+        playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         mapData.hasRemoteAC = true;
         playerData.UnlockAllWeapons();
@@ -136,7 +136,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.StartAtFloor3();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        playerData.money += 15000;
+        playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         mapData.hasRemoteAC = true;
         playerData.UnlockAllWeapons();
@@ -148,7 +148,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.StartAtFloor4();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        playerData.money += 15000;
+        playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         mapData.hasRemoteAC = true;
         playerData.UnlockAllWeapons();
@@ -160,7 +160,7 @@ public class MainMenuButtons : MonoBehaviour
         ButtonSound();
         gm.StartAtFloor4();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
-        playerData.money += 20000;
+        playerData.money += extraMoney;
         mapData.UnlockAllDoors();
         mapData.hasRemoteAC = true;
         playerData.UnlockAllWeapons();
