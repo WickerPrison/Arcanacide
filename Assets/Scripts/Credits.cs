@@ -13,6 +13,7 @@ public class Credits : MonoBehaviour
     [SerializeField] TextMeshProUGUI coby;
     [SerializeField] TextMeshProUGUI humanDLC;
     [SerializeField] TextMeshProUGUI jacob;
+    [SerializeField] TextMeshProUGUI fmod;
     Color invisible = new Color(1, 1, 1, 0);
     float timer;
     Color fadeColor;
@@ -45,6 +46,28 @@ public class Credits : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         float creditsFadeIn = 2;
+        float fmodFadeInOut = 1;
+
+        timer = fmodFadeInOut;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            fadeColor = Color.Lerp(Color.white, invisible, timer / fmodFadeInOut);
+            fmod.color = fadeColor;
+            yield return endOfFrame;
+        }
+
+        yield return new WaitForSeconds(2);
+
+        timer = fmodFadeInOut;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            fadeColor = Color.Lerp(invisible, Color.white, timer / fmodFadeInOut);
+            fmod.color = fadeColor;
+            yield return endOfFrame;
+        }
+
         timer = creditsFadeIn;
         while(timer > 0)
         {
