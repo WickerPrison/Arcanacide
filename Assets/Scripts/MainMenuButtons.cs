@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class MainMenuButtons : MonoBehaviour
 {
     [SerializeField] GameManager gm;
     [SerializeField] PlayerData playerData;
+    [SerializeField] MapData mapData;
     [SerializeField] MenuData menuData;
     [SerializeField] BuildMode buildMode;
     [SerializeField] GameObject optionsMenuPrefab;
@@ -65,6 +67,112 @@ public class MainMenuButtons : MonoBehaviour
         gm.StartAtFloor4();
         gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
         SceneManager.LoadScene("IceElevator2");
+    }
+
+    public void TestMinibossV1(int extraMoney)
+    {
+        ButtonSound();
+        gm.NewGame(4);
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += extraMoney;
+        mapData.UnlockAllDoors();
+        playerData.hasHealthGem = true;
+        playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
+        SceneManager.LoadScene("FireHub1");
+    }
+
+    public void TestFireBoss(int extraMoney)
+    {
+        ButtonSound();
+        gm.NewGame(4);
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += extraMoney;
+        mapData.UnlockAllDoors();
+        mapData.ticketFiled = true;
+        playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
+        playerData.hasHealthGem = true;
+        SceneManager.LoadScene("FireHub2");
+    }
+
+    public void TestMinibossV2(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor2();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += extraMoney;
+        mapData.UnlockAllDoors();
+        playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
+        SceneManager.LoadScene("ElectricHub2");
+    }
+
+    public void TestElectricBoss(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor2();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += extraMoney;
+        mapData.UnlockAllDoors();
+        playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
+        mapData.carolsDeadFriends.Add("Jeff");
+        mapData.carolsDeadFriends.Add("Harold");
+        mapData.carolsDeadFriends.Add("Arnold");
+        SceneManager.LoadScene("ElectricHub");
+    }
+
+    public void TestMinibossV3(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor3();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += extraMoney;
+        mapData.UnlockAllDoors();
+        mapData.hasRemoteAC = true;
+        playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
+        SceneManager.LoadScene("IceHub1");
+    }
+
+    public void TestIceBoss(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor3();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += extraMoney;
+        mapData.UnlockAllDoors();
+        mapData.hasRemoteAC = true;
+        playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
+        SceneManager.LoadScene("IceHub1");
+    }
+
+    public void TestMinibossV4(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor4();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += extraMoney;
+        mapData.UnlockAllDoors();
+        mapData.hasRemoteAC = true;
+        playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
+        SceneManager.LoadScene("ChaosHub3");
+    }
+
+    public void TestChaosBoss(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor4();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += extraMoney;
+        mapData.UnlockAllDoors();
+        mapData.hasRemoteAC = true;
+        playerData.UnlockAllWeapons();
+        playerData.UnlockAllPatches();
+        SceneManager.LoadScene("ChaosHub1");
     }
 
     public void QuitGame()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum FireSuppressionState
@@ -62,5 +63,13 @@ public class MapData : ScriptableObject
         unlockedDoors.Clear();
         usedCoolers.Clear();
         fireBossKilled = false;
+    }
+
+    public void UnlockAllDoors()
+    {
+        unlockedDoors.Clear();
+        unlockedDoors = Enumerable.Range(1, 15).ToList();
+        powerSwitchesFlipped.Clear();
+        powerSwitchesFlipped = Enumerable.Range(1, 3).ToList();
     }
 }
