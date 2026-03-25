@@ -69,5 +69,7 @@ public class MapData : ScriptableObject
     {
         unlockedDoors.Clear();
         unlockedDoors = Enumerable.Range(1, 15).ToList();
+        powerSwitchesFlipped.Clear();
+        powerSwitchesFlipped = Enumerable.Range(1, 3).ToList();
     }
 }

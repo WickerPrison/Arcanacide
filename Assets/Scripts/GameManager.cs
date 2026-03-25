@@ -341,7 +341,7 @@ public class GameManager : MonoBehaviour
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
         mapData.itWorkerQuestStarted = false;
-        mapData.resetPasswords = null;
+        mapData.resetPasswords.Clear();
         mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 
@@ -441,7 +441,7 @@ public class GameManager : MonoBehaviour
         mapData.hasRemoteAC = false;
         mapData.outsideFrankBossfight = false;
         mapData.itWorkerQuestStarted = false;
-        mapData.resetPasswords = null;
+        mapData.resetPasswords.Clear();
         mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 
@@ -549,7 +549,7 @@ public class GameManager : MonoBehaviour
         mapData.hasRemoteAC = true;
         mapData.outsideFrankBossfight = true;
         mapData.itWorkerQuestStarted = false;
-        mapData.resetPasswords = null;
+        mapData.resetPasswords.Clear();
         mapData.itWorkerQuestComplete = false;
         mapData.whistleblowerArrested = false;
 

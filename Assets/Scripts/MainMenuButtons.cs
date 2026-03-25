@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,7 +69,7 @@ public class MainMenuButtons : MonoBehaviour
         SceneManager.LoadScene("IceElevator2");
     }
 
-    public void TestMinibossV1()
+    public void TestMinibossV1(int extraMoney)
     {
         ButtonSound();
         gm.NewGame(4);
@@ -80,7 +81,7 @@ public class MainMenuButtons : MonoBehaviour
         SceneManager.LoadScene("FireHub1");
     }
 
-    public void TestFireBoss()
+    public void TestFireBoss(int extraMoney)
     {
         ButtonSound();
         gm.NewGame(4);
@@ -91,6 +92,79 @@ public class MainMenuButtons : MonoBehaviour
         playerData.UnlockAllWeapons();
         playerData.hasHealthGem = true;
         SceneManager.LoadScene("FireHub2");
+    }
+
+    public void TestMinibossV2(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor2();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += 2000;
+        mapData.UnlockAllDoors();
+        playerData.UnlockAllWeapons();
+        SceneManager.LoadScene("ElectricHub2");
+    }
+
+    public void TestElectricBoss(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor2();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += 3000;
+        mapData.UnlockAllDoors();
+        playerData.UnlockAllWeapons();
+        mapData.carolsDeadFriends.Add("Jeff");
+        mapData.carolsDeadFriends.Add("Harold");
+        mapData.carolsDeadFriends.Add("Arnold");
+        SceneManager.LoadScene("ElectricHub");
+    }
+
+    public void TestMinibossV3(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor3();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += 10000;
+        mapData.UnlockAllDoors();
+        mapData.hasRemoteAC = true;
+        playerData.UnlockAllWeapons();
+        SceneManager.LoadScene("IceHub1");
+    }
+
+    public void TestIceBoss(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor3();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += 15000;
+        mapData.UnlockAllDoors();
+        mapData.hasRemoteAC = true;
+        playerData.UnlockAllWeapons();
+        SceneManager.LoadScene("IceHub1");
+    }
+
+    public void TestMinibossV4(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor4();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += 15000;
+        mapData.UnlockAllDoors();
+        mapData.hasRemoteAC = true;
+        playerData.UnlockAllWeapons();
+        SceneManager.LoadScene("ChaosHub3");
+    }
+
+    public void TestChaosBoss(int extraMoney)
+    {
+        ButtonSound();
+        gm.StartAtFloor4();
+        gm.GetComponent<MusicManager>().ChangeMusicState(MusicState.OUTRO);
+        playerData.money += 20000;
+        mapData.UnlockAllDoors();
+        mapData.hasRemoteAC = true;
+        playerData.UnlockAllWeapons();
+        SceneManager.LoadScene("ChaosHub1");
     }
 
     public void QuitGame()

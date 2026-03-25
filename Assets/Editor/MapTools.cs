@@ -38,12 +38,14 @@ public static class MapTools
     {
         mapData.unlockedDoors.Clear();
         mapData.unlockedDoors = Enumerable.Range(1, 15).ToList();
+        mapData.powerSwitchesFlipped = Enumerable.Range(1, 4).ToList();
     }
 
     [MenuItem("Tools/Lock All Doors")]
     public static void LockAllDoors()
     {
         mapData.unlockedDoors.Clear();
+        mapData.powerSwitchesFlipped.Clear();
     }
 
     [MenuItem("Tools/Respawn All Enemies")]
