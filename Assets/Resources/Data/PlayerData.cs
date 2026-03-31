@@ -251,7 +251,10 @@ public class PlayerData : ScriptableObject
         equippedPatches.Clear();
         foreach(Patches patch in System.Enum.GetValues(typeof(Patches)))
         {
-            patches.Add(patch);
+            if(patch != Patches.NONE)
+            {
+                patches.Add(patch);
+            }
         }
 #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
