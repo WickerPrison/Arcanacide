@@ -39,6 +39,15 @@ public class ChaosBossTests
         Time.timeScale = 1f;
     }
 
+    IEnumerator BossSetup()
+    {
+        enemyScript.transform.position = new Vector3(6f, 0, 3f);
+        yield return null;
+        dialogue.CloseDialogue();
+        bossController.attackTime = 60;
+        yield return new WaitForSeconds(0.3f);
+    }
+
     [UnityTest]
     public IEnumerator Death()
     {
@@ -63,6 +72,15 @@ public class ChaosBossTests
         yield return new WaitForSeconds(0.3f);
         bossController.StartKnightsAttack();
         yield return new WaitForSeconds(3);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator IceRings()
+    {
+        yield return BossSetup();
+        bossController.IceRings();
+        yield return new WaitForSeconds(15);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
 

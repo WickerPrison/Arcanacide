@@ -66,12 +66,12 @@ public class AssistantSkybeam : MonoBehaviour
 
     private void OnEnable()
     {
-        bossEvents.freezeAssistant += freezeAssistant;
+        //bossEvents.freezeAssistant += freezeAssistant;
     }
 
     private void OnDisable()
     {
-        bossEvents.freezeAssistant -= freezeAssistant;
+        //bossEvents.freezeAssistant -= freezeAssistant;
     }
 
     private void freezeAssistant(object sender, System.EventArgs e)

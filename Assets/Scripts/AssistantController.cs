@@ -147,22 +147,27 @@ public class AssistantController : MonoBehaviour
 
     public void IceRings()
     {
-        float randomAngle = UnityEngine.Random.Range(0, 360);
-        for(int i = 0; i < 3; i++)
-        {
-            Vector3 direction = RotateDirection(Vector3.right, randomAngle + i * 120);
+        //float randomAngle = UnityEngine.Random.Range(0, 360);
+        //for(int i = 0; i < 3; i++)
+        //{
+        //    Vector3 direction = RotateDirection(Vector3.right, randomAngle + i * 120);
 
-            RaycastHit hit;
-            Physics.Raycast(bossController.transform.position + Vector3.up, direction, out hit, skybeamDistance, defaultMask);
+        //    RaycastHit hit;
+        //    Physics.Raycast(bossController.transform.position + Vector3.up, direction, out hit, skybeamDistance, defaultMask);
 
-            if (hit.collider == null || !hit.collider.CompareTag("Wall"))
-            {
-                Transform skybeam = Instantiate(ACPrefab).transform;
-                skybeam.position = bossController.transform.position + direction * skybeamDistance;
+        //    if (hit.collider == null || !hit.collider.CompareTag("Wall"))
+        //    {
+        //        Transform skybeam = Instantiate(ACPrefab).transform;
+        //        skybeam.position = bossController.transform.position + direction * skybeamDistance;
 
-            }
+        //    }
 
-        }
+        //}
+
+        Transform skybeam = Instantiate(ACPrefab).transform;
+        skybeam.position = new Vector3(6f, 0, 0);
+        skybeam = Instantiate(ACPrefab).transform;
+        skybeam.position = new Vector3(-6f, 0, 0);
     }
 
     public void ThrowAC()

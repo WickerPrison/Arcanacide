@@ -102,13 +102,14 @@ public class ChaosBossController : EnemyController, IEndDialogue
         int randInt;
         if(playerDistance < meleeRange)
         {
-            randInt = UnityEngine.Random.Range(1, 5);
+            randInt = UnityEngine.Random.Range(1, 6);
         }
         else
         {
-            randInt = UnityEngine.Random.Range(0, 4);
+            randInt = UnityEngine.Random.Range(0, 5);
         }
         attackTime = 3;
+        randInt = 4;
         switch (randInt)
         {
             case 0:
@@ -125,6 +126,9 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 StartKnightsAttack();
                 break;
             case 4:
+                IceRings();
+                break;
+            case 5:
                 state = EnemyState.ATTACKING;
                 frontAnimator.Play("Combo");
                 backAnimator.Play("Combo");
@@ -175,6 +179,11 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 }));
                 break;
         }
+    }
+
+    public void IceRings()
+    {
+        assistant.CallAnimation("IceRings");
     }
 
     public void StartKnightsAttack()
