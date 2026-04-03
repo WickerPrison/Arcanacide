@@ -15,11 +15,12 @@ public class ChaosBossTests
     Dialogue dialogue;
     HUD hud;
     AssistantController assistantController;
+    PlayerScript playerScript;
 
     [UnitySetUp]
     public IEnumerator Setup()
     {
-        SceneManager.LoadScene("FinalBossTests");
+        SceneManager.LoadScene("ChaosBossfight");
         yield return null;
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
@@ -33,7 +34,8 @@ public class ChaosBossTests
         enemyScript = bossController.GetComponent<EnemyScript>();
         dialogue = enemyScript.GetComponentInChildren<DialogueTriggerRoomEntrance>().GetComponent<Dialogue>();
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
-
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = Vector3.zero;
 
         yield return null;
         Time.timeScale = 1f;
@@ -41,6 +43,7 @@ public class ChaosBossTests
 
     IEnumerator BossSetup()
     {
+        
         enemyScript.transform.position = new Vector3(6f, 0, 3f);
         yield return null;
         dialogue.CloseDialogue();
@@ -96,5 +99,43 @@ public class ChaosBossTests
         bossController.StartKnightsAttack();
         yield return new WaitForSeconds(3f);
         Assert.AreEqual(1, playerStats.deathsToEnemies[EnemyType.CHAOS_BOSS]);
+    }
+
+    [UnityTest]
+    public IEnumerator FireWaves()
+    {
+        yield return BossSetup();
+        playerScript.transform.position = new Vector3(3f, 0, 3f);
+        enemyScript.transform.position = new Vector3(-3f, 0, 3f);
+        yield return null;
+        bossController.StartFireWaves();
+        yield return new WaitForSeconds(10f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator DoubleFireWaves()
+    {
+        yield return BossSetup();
+        playerScript.transform.position = new Vector3(3f, 0, 3f);
+        enemyScript.transform.position = new Vector3(0.8f, 0, 0);
+        yield return null;
+        bossController.StartFireWaves();
+        yield return new WaitForSeconds(15f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator FireWavesStagger()
+    {
+        yield return BossSetup();
+        playerScript.transform.position = new Vector3(3f, 0, 3f);
+        enemyScript.transform.position = new Vector3(-3f, 0, 3f);
+        yield return null;
+        bossController.StartFireWaves();
+        yield return new WaitForSeconds(0.5f);
+        enemyScript.LoseHealthUnblockable(1, 10);
+        yield return new WaitForSeconds(15f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
     }
 }

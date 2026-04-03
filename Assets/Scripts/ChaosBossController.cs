@@ -11,6 +11,8 @@ public class ChaosBossController : EnemyController, IEndDialogue
     float fleeRadiusMin = 0;
     float fleeRadiusMax = 12;
     Vector3 fleePoint;
+    [SerializeField] float walkSpeed;
+    [SerializeField] float runSpeed;
     float meleeRange = 3f;
     [System.NonSerialized] public int phase = 1;
     float phaseTriggerPercent = 0.6f;
@@ -23,6 +25,10 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     [SerializeField] KnightSummon[] knightSummons;
     [System.NonSerialized] public Queue<KnightSummon> knights = new Queue<KnightSummon>();
+
+    public event EventHandler<int> onFireWaves;
+    WaitForSeconds waveDelay = new WaitForSeconds(1f);
+    WaitForSeconds finalWaveDelay = new WaitForSeconds(3f);
 
     public override void Awake()
     {
@@ -51,6 +57,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
             knight.enemyScript = enemyScript;
             knights.Enqueue(knight);
         }
+        enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
     }
 
     public override void EnemyAI()
@@ -83,11 +90,14 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
         if (state == EnemyState.SPECIAL)
         {
+            Debug.Log("State: Special");
             facePlayer.SetDestination(fleePoint);
+            navAgent.SetDestination(Vector3.zero);
             float distance = Vector3.Distance(transform.position, fleePoint);
             if (distance <= navAgent.stoppingDistance)
             {
-                state = EnemyState.IDLE;
+                Debug.Log("close enough");
+                FireWaves();
             }
         }
 
@@ -126,7 +136,8 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 StartKnightsAttack();
                 break;
             case 4:
-                IceRings();
+                //IceRings();
+                StartFireWaves();
                 break;
             case 5:
                 state = EnemyState.ATTACKING;
@@ -184,6 +195,55 @@ public class ChaosBossController : EnemyController, IEndDialogue
     public void IceRings()
     {
         assistant.CallAnimation("IceRings");
+    }
+
+    public void StartFireWaves()
+    {
+        Debug.Log("StartFireWaves");
+        if(transform.position.magnitude <= 0.5f)
+        {
+            FireWaves();
+            return;
+        }
+        fleePoint = Vector3.zero;
+        state = EnemyState.SPECIAL;
+        navAgent.speed = runSpeed;
+        navAgent.stoppingDistance = 0.5f;
+        frontAnimator.Play("Run");
+        backAnimator.Play("Run");
+    }
+
+    public void FireWaves()
+    {
+        Debug.Log("FireWaves");
+        state = EnemyState.IDLE;
+        attackTime = 10;
+        navAgent.speed = 0;
+        frontAnimator.Play("Idle");
+        backAnimator.Play("Idle");
+        facePlayer.ResetDestination();
+        StartCoroutine(WavePattern());
+    }
+
+    IEnumerator WavePattern()
+    {
+        onFireWaves?.Invoke(this, 1);
+        yield return waveDelay;
+        onFireWaves?.Invoke(this, 2);
+        yield return waveDelay;
+        onFireWaves?.Invoke(this, 3);
+        yield return waveDelay;
+        onFireWaves?.Invoke(this, 4);
+        if(phase == 2)
+        {
+            yield return waveDelay;
+            onFireWaves?.Invoke(this, 0);
+        }
+        yield return finalWaveDelay;
+        navAgent.stoppingDistance = 4;
+        navAgent.speed = walkSpeed;
+        attackTime = attackMaxTime;
+        navAgent.enabled = true;
     }
 
     public void StartKnightsAttack()
