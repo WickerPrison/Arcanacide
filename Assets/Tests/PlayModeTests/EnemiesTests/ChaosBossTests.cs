@@ -138,4 +138,15 @@ public class ChaosBossTests
         yield return new WaitForSeconds(15f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
+
+    [UnityTest]
+    public IEnumerator Combo()
+    {
+        yield return BossSetup();
+        enemyScript.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        bossController.Combo();
+        yield return new WaitForSeconds(5f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 }

@@ -12,7 +12,10 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
 {
     FacePlayer facePlayer;
     [SerializeField] ChaosBossController chaosBossController;
+    [SerializeField] GameObject lightningOrbPrefab;
     FinalBossEvents events;
+    float spawnRadius = 1.5f;
+    WaitForSeconds orbDelay = new WaitForSeconds(0.1f);
 
     public override void Start()
     {
@@ -68,5 +71,20 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
     public void StartFireWaves()
     {
         StartCoroutine(chaosBossController.WavePattern());
+    }
+
+    public void SummonLightningOrbs()
+    {
+        SummonOrb(1, 0);
+        SummonOrb(-1, 0);
+        SummonOrb(0, 1);
+        SummonOrb(0, -1);
+    }
+
+    void SummonOrb(float x, float z)
+    {
+        LightningOrbController orb = Instantiate(lightningOrbPrefab).GetComponent<LightningOrbController>();
+        orb.transform.position = chaosBossController.transform.position + new Vector3(x, 0, z).normalized * spawnRadius;
+        orb.spellAttackDamage = chaosBossController.orbDamage;
     }
 }

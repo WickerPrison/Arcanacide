@@ -30,6 +30,8 @@ public class ChaosBossController : EnemyController, IEndDialogue
     WaitForSeconds waveDelay = new WaitForSeconds(1f);
     WaitForSeconds finalWaveDelay = new WaitForSeconds(3f);
 
+    public int orbDamage;
+
     public override void Awake()
     {
         base.Awake();
@@ -140,9 +142,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 StartFireWaves();
                 break;
             case 5:
-                state = EnemyState.ATTACKING;
-                frontAnimator.Play("Combo");
-                backAnimator.Play("Combo");
+                Combo();
                 break;
         }
     }
@@ -190,6 +190,13 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 }));
                 break;
         }
+    }
+
+    public void Combo()
+    {
+        state = EnemyState.ATTACKING;
+        frontAnimator.Play("Combo");
+        backAnimator.Play("Combo");
     }
 
     public void IceRings()
