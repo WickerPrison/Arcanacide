@@ -215,17 +215,15 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public void FireWaves()
     {
-        Debug.Log("FireWaves");
+        navAgent.stoppingDistance = 4;
+        navAgent.speed = walkSpeed;
         state = EnemyState.IDLE;
         attackTime = 10;
-        navAgent.speed = 0;
-        frontAnimator.Play("Idle");
-        backAnimator.Play("Idle");
-        facePlayer.ResetDestination();
-        StartCoroutine(WavePattern());
+        frontAnimator.Play("FireWaves");
+        backAnimator.Play("FireWaves");
     }
 
-    IEnumerator WavePattern()
+    public IEnumerator WavePattern()
     {
         onFireWaves?.Invoke(this, 1);
         yield return waveDelay;
@@ -240,10 +238,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
             onFireWaves?.Invoke(this, 0);
         }
         yield return finalWaveDelay;
-        navAgent.stoppingDistance = 4;
-        navAgent.speed = walkSpeed;
         attackTime = attackMaxTime;
-        navAgent.enabled = true;
     }
 
     public void StartKnightsAttack()

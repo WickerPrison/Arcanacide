@@ -64,4 +64,9 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
     {
         chaosBossController.SetAttackTime(time);
     }
+
+    public void StartFireWaves()
+    {
+        StartCoroutine(chaosBossController.WavePattern());
+    }
 }
