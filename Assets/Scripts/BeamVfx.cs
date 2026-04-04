@@ -12,7 +12,7 @@ public class BeamVfx : MonoBehaviour
     Gradient gradient;
     float alpha = 1;
     float aimValue;
-    float maxAimValue = 3;
+    [SerializeField] float maxAimValue;
     float gradientOffset = .4f;
     Vector3 away = new Vector3(100, 100, 100);
     [SerializeField] LayerMask layerMask;

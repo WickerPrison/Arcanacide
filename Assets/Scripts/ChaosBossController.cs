@@ -128,7 +128,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
             randInt = UnityEngine.Random.Range(0, 5);
         }
         attackTime = 3;
-        randInt = 4;
+        //randInt = 4;
         switch (randInt)
         {
             case 0:
@@ -286,13 +286,20 @@ public class ChaosBossController : EnemyController, IEndDialogue
     {
         state = EnemyState.ATTACKING;
         frontAnimator.Play("SummonSnipers");
+        backAnimator.Play("SummonSnipers");
     }
 
     public void SummonSniper(int whichSide)
     {
+        int selectSide = facePlayer.faceDirectionID switch
+        {
+            0 or 2 => whichSide * -1,
+            1 or 3 => whichSide,
+            _ => 0,
+        };
         IceSniperSummon sniper = snipers.Dequeue();
         Vector3 direction = facePlayer.attackPoint.position - transform.position;
-        sniper.GetSummoned(whichSide, direction.normalized);
+        sniper.GetSummoned(selectSide, direction.normalized);
     }
 
     public void SetAttackTime(float newTime = -1)

@@ -155,7 +155,8 @@ public class ChaosBossTests
     public IEnumerator SummonSnipers()
     {
         yield return BossSetup();
-        enemyScript.transform.position = new Vector3(3f, 0, 3f);
+        bossController.attackTime = 100;
+        enemyScript.transform.position = new Vector3(3f, 0, -3f);
         yield return null;
         bossController.StartSummonSnipers();
         yield return new WaitForSeconds(7f);
