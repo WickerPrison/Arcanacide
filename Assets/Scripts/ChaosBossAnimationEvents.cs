@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum BossSummons
 {
-    FATMAN1, FATMAN2, KNIGHT
+    FATMAN1, FATMAN2, KNIGHT, SNIPER_LEFT, SNIPER_RIGHT
 }
 
 [System.Serializable]
@@ -41,6 +41,12 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
                 break;
             case BossSummons.KNIGHT:
                 chaosBossController.SummonKnight();
+                break;
+            case BossSummons.SNIPER_LEFT:
+                chaosBossController.SummonSniper(-1);
+                break;
+            case BossSummons.SNIPER_RIGHT:
+                chaosBossController.SummonSniper(1);
                 break;
         }
 

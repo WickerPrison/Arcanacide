@@ -26,7 +26,7 @@ public class ChaosBossTests
         playerData.ClearData();
         playerData.tutorials.Clear();
         playerData.hasHealthGem = true;
-        playerData.vitality = 30;
+        playerData.vitality = 60;
         playerData.health = playerData.MaxHealth();
         playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
         playerStats.ClearData();
@@ -146,6 +146,18 @@ public class ChaosBossTests
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
         bossController.Combo();
+        bossController.attackTime = 100f;
+        yield return new WaitForSeconds(5f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator SummonSnipers()
+    {
+        yield return BossSetup();
+        enemyScript.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        bossController.StartSummonSnipers();
         yield return new WaitForSeconds(5f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }

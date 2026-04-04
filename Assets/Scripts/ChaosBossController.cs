@@ -26,6 +26,9 @@ public class ChaosBossController : EnemyController, IEndDialogue
     [SerializeField] KnightSummon[] knightSummons;
     [System.NonSerialized] public Queue<KnightSummon> knights = new Queue<KnightSummon>();
 
+    [SerializeField] IceSniperSummon[] iceSniperSummons;
+    [System.NonSerialized] public Queue<IceSniperSummon> snipers = new Queue<IceSniperSummon>();
+
     public event EventHandler<int> onFireWaves;
     WaitForSeconds waveDelay = new WaitForSeconds(1f);
     WaitForSeconds finalWaveDelay = new WaitForSeconds(3f);
@@ -58,6 +61,11 @@ public class ChaosBossController : EnemyController, IEndDialogue
             knight.bossController = this;
             knight.enemyScript = enemyScript;
             knights.Enqueue(knight);
+        }
+        foreach(IceSniperSummon sniper in iceSniperSummons)
+        {
+            sniper.enemyScript = enemyScript;
+            snipers.Enqueue(sniper);
         }
         enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
     }
@@ -92,13 +100,11 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
         if (state == EnemyState.SPECIAL)
         {
-            Debug.Log("State: Special");
             facePlayer.SetDestination(fleePoint);
             navAgent.SetDestination(Vector3.zero);
             float distance = Vector3.Distance(transform.position, fleePoint);
             if (distance <= navAgent.stoppingDistance)
             {
-                Debug.Log("close enough");
                 FireWaves();
             }
         }
@@ -273,6 +279,19 @@ public class ChaosBossController : EnemyController, IEndDialogue
     {
         KnightSummon knight = knights.Dequeue();
         knight.GetSummoned();
+    }
+
+    public void StartSummonSnipers()
+    {
+        state = EnemyState.ATTACKING;
+        frontAnimator.Play("SummonSnipers");
+    }
+
+    public void SummonSniper(int whichSide)
+    {
+        IceSniperSummon sniper = snipers.Dequeue();
+        Vector3 direction = facePlayer.attackPoint.position - transform.position;
+        sniper.GetSummoned(whichSide, direction.normalized);
     }
 
     public void SetAttackTime(float newTime = -1)
