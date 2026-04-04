@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteMaterial: {fileID: 2100000, guid: b6e29a91be7c9fc479d996ddbb29d41f, type: 2}
-  colorChange: 0
+  colorChange: 1
   colorChangeThreshold: 0.1
   originalColor: {r: 0.4156863, g: 0.9294118, b: 0.9921569, a: 1}
   newFloorColor: 0
@@ -167,6 +167,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontAnimator: {fileID: 0}
   backAnimator: {fileID: 0}
+  beamVfx: {fileID: 7358711688882867560}
+  changeColor: 1
+  projectilePrefab: {fileID: 5673668488862911417, guid: f35424969b7c0ff4a8057f658f4767bc, type: 3}
+  spriteEffects: {fileID: 8529709387156204016}
 --- !u!1 &7927696911723721095
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,3 +442,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6846475978225330211, guid: f715003e1bb3a474c83fc2928c2f4c92, type: 3}
   m_PrefabInstance: {fileID: 2216654342627654186}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7358711688882867560 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8708912932714788674, guid: f715003e1bb3a474c83fc2928c2f4c92, type: 3}
+  m_PrefabInstance: {fileID: 2216654342627654186}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85aa7734865a2eb47898588c3e0c07f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -158,7 +158,11 @@ public class ChaosBossTests
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
         bossController.StartSummonSnipers();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
+        int health = playerData.health;
         Assert.Less(playerData.health, playerData.MaxHealth());
+        bossController.StartSummonSnipers();
+        yield return new WaitForSeconds(7f);
+        Assert.Less(playerData.health, health);
     }
 }

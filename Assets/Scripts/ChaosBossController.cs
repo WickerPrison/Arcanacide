@@ -65,6 +65,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         foreach(IceSniperSummon sniper in iceSniperSummons)
         {
             sniper.enemyScript = enemyScript;
+            sniper.bossController = this;
             snipers.Enqueue(sniper);
         }
         enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
