@@ -118,39 +118,26 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     void Phase1Attacks()
     {
-        int randInt;
+        attackTime = 100;
+        float randFloat;
         if(playerDistance < meleeRange)
         {
-            randInt = UnityEngine.Random.Range(1, 6);
+            randFloat = UnityEngine.Random.Range(0.4f, 1.4f);
         }
         else
         {
-            randInt = UnityEngine.Random.Range(0, 5);
+            randFloat = UnityEngine.Random.Range(0f, 1.2f);
         }
-        attackTime = 3;
-        //randInt = 4;
-        switch (randInt)
+        switch (randFloat)
         {
-            case 0:
-                assistant.CallAnimation("Beams");
-                break;
-            case 1:
-                assistant.CallAnimation("ThrowBombs");
-                break;
-            case 2:
-                assistant.CallAnimation("Bolts");
-                attackTime = 5;
-                break;
-            case 3:
-                StartKnightsAttack();
-                break;
-            case 4:
-                //IceRings();
-                StartFireWaves();
-                break;
-            case 5:
-                Combo();
-                break;
+            case <= 0.2f: assistant.CallAnimation("Beams"); break;
+            case <= 0.4f: StartSummonSnipers(); break;
+            case <= 0.6f: IceRings(); break;
+            case <= 0.8f: assistant.CallAnimation("ThrowBombs"); break;
+            case <= 1.0f: StartKnightsAttack(); break;
+            case <= 1.2f: StartFireWaves(); break;
+            case <= 1.4f: Combo(); break;
+            //default: Bolts(); break;
         }
     }
 
@@ -211,9 +198,13 @@ public class ChaosBossController : EnemyController, IEndDialogue
         assistant.CallAnimation("IceRings");
     }
 
+    public void Bolts()
+    {
+        assistant.CallAnimation("Bolts");
+    }
+
     public void StartFireWaves()
     {
-        Debug.Log("StartFireWaves");
         if(transform.position.magnitude <= 0.5f)
         {
             FireWaves();

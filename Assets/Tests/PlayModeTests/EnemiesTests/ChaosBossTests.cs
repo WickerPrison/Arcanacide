@@ -166,4 +166,16 @@ public class ChaosBossTests
         yield return new WaitForSeconds(7f);
         Assert.Less(playerData.health, health);
     }
+
+    [UnityTest]
+    public IEnumerator Bolts()
+    {
+        yield return BossSetup();
+        bossController.attackTime = 100;
+        enemyScript.transform.position = new Vector3(3f, 0, -3f);
+        yield return null;
+        bossController.Bolts();
+        yield return new WaitForSeconds(15f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 }

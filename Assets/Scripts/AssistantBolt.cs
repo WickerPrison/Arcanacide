@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class AssistantBolt : MonoBehaviour
 {
+    [SerializeField] float rotateSpeed;
+    [SerializeField] float acceleration;
     AssistantController controller;
     Transform origin;
     PlayerScript playerScript;
@@ -22,6 +24,8 @@ public class AssistantBolt : MonoBehaviour
     float offset = 5;
     bool hittingPlayer = false;
     float moveSpeed = 6;
+    bool launching = false;
+    Vector3 launchDirection;
 
 
     private void Awake()
@@ -40,31 +44,26 @@ public class AssistantBolt : MonoBehaviour
         origin = controller.boltOrigin;
         rb = GetComponent<Rigidbody>();
 
-        FindRandomPosition();
+        transform.position = CirclePosition();
     }
 
     private void Update()
     {
         bolts.SetPositions(origin.position, transform.position);
-
-        Vector3 destination = playerScript.transform.position;
-        if(pathfindingMethod == 1)
-        {
-            destination += playerMovement.lastMoveDir * 3;
-        }
-        else if(pathfindingMethod == 2)
-        {
-            destination -= playerMovement.lastMoveDir * 3;
-        }
-
-        Vector3 direction = destination - transform.position;
-        rb.velocity += direction.normalized + Vector3.right * 0.1f;
-        rb.velocity = rb.velocity.normalized * moveSpeed;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (launching)
+        {
+            rb.velocity += launchDirection * acceleration;
+        }
+        else
+        {
+            transform.position = CirclePosition();
+        }
+
         hittingPlayer = false;
         foreach(Collider collider in colliders)
         {
@@ -89,48 +88,43 @@ public class AssistantBolt : MonoBehaviour
         }
     }
 
-    Vector3 FindDestination()
+    Vector3 CirclePosition()
     {
-        Vector3 predictDir;
-        switch (pathfindingMethod)
+        Vector3 direction = Utils.RotateDirection(Vector3.right, Time.time * rotateSpeed + 120 * pathfindingMethod).normalized;
+        Vector3 position = playerScript.transform.position + direction * 3f;
+        NavMeshHit hit;
+        if(NavMesh.SamplePosition(position, out hit, 3f, NavMesh.AllAreas))
         {
-            case 0:
-                return playerScript.transform.position;
-            case 1:
-                predictDir = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y).normalized * offset;
-                return playerScript.transform.position + predictDir;
-            case 2:
-                predictDir = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y).normalized * -offset;
-                return playerScript.transform.position + predictDir;
-            default:
-                return playerScript.transform.position;
+            return hit.position;
         }
-    }
-
-    void FindRandomPosition()
-    {
-        float xPos = Random.Range(-10, 10);
-        float zPos = Random.Range(-10, 10);
-        transform.position = new Vector3(xPos, 0, zPos);
-
-        if(Vector3.Distance(transform.position, playerScript.transform.position) < 5)
-        {
-            FindRandomPosition();
-        }
+        return position;
     }
 
     private void OnEnable()
     {
         controller.onEndBolts += onEndBolts;
+        controller.onLaunchBolt += Controller_onLaunchBolt;
     }
 
     private void OnDisable()
     {
         controller.onEndBolts -= onEndBolts;
+        controller.onLaunchBolt -= Controller_onLaunchBolt;
     }
 
     private void onEndBolts(object sender, System.EventArgs e)
     {
         Destroy(gameObject);
+    }
+
+    private void Controller_onLaunchBolt(object sender, int index)
+    {
+        if(index == pathfindingMethod)
+        {
+            Debug.Log("launch bolt");
+            launchDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
+            launching = true;
+            rb.velocity = Vector3.zero;
+        }
     }
 }

@@ -33,12 +33,15 @@ public class AssistantController : MonoBehaviour
     float attackTimer = 0;
     int beamsNum = 5;
     int boltsNum = 3;
+    WaitForSeconds boltInitialDelay = new WaitForSeconds(1f);
+    WaitForSeconds boltDelay = new WaitForSeconds(0.5f);
     float skybeamDistance = 9f;
     LayerMask defaultMask;
     StudioEventEmitter sfx;
     [System.NonSerialized] public List<AssistantBolt> assistantBolts = new List<AssistantBolt>();
 
     public event System.EventHandler onEndBolts;
+    public event System.EventHandler<int> onLaunchBolt;
 
     private void Awake()
     {
@@ -132,6 +135,18 @@ public class AssistantController : MonoBehaviour
             assistantBolts.Add(bolt);
             bolt.pathfindingMethod = i;
         }
+        StartCoroutine(LaunchBolts());
+    }
+
+    IEnumerator LaunchBolts()
+    {
+        yield return boltInitialDelay;
+        onLaunchBolt?.Invoke(this, 0);
+        yield return boltDelay;
+        onLaunchBolt?.Invoke(this, 1);
+        yield return boltDelay;
+        onLaunchBolt?.Invoke(this, 2);
+        yield return boltDelay;
     }
 
     public void EndBolts()
