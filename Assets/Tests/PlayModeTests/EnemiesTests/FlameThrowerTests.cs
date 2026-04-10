@@ -17,6 +17,8 @@ public class FlameThrowerTests
         SceneManager.LoadScene("Testing");
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
+        playerData.vitality = 30;
+        playerData.health = playerData.MaxHealth();
         playerData.hasHealthGem = true;
         mapData = Resources.Load<MapData>("Data/MapData");
         flamethrowerPrefab = Resources.Load<GameObject>("Prefabs/Enemies/FlameThrower");
@@ -68,5 +70,18 @@ public class FlameThrowerTests
         enemyScript.LoseHealthUnblockable(0, 1000);
         yield return new WaitForSeconds(0.2f);
         Assert.IsFalse(flamethrower.isShooting);
+    }
+
+    [UnityTest]
+    public IEnumerator DoubleGroundFire()
+    {
+        Flamethrower flamethrower = GameObject.Instantiate(flamethrowerPrefab).GetComponent<Flamethrower>();
+        flamethrower.transform.position = new Vector3(1f, 0, 1f).normalized * flamethrower.selfDestructRange * 0.95f;
+        yield return null;
+        flamethrower.Artillery();
+        yield return new WaitForSeconds(2);
+        flamethrower.Artillery();
+        yield return new WaitForSeconds(3);
+        Assert.Less(playerData.health, playerData.MaxHealth());
     }
 }

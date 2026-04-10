@@ -133,7 +133,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
             case <= 0.2f: assistant.CallAnimation("Beams"); break;
             case <= 0.4f: StartSummonSnipers(); break;
             case <= 0.6f: IceRings(); break;
-            case <= 0.8f: assistant.CallAnimation("ThrowBombs"); break;
+            case <= 0.8f: ThrowBombs(); break;
             case <= 1.0f: StartKnightsAttack(); break;
             case <= 1.2f: StartFireWaves(); break;
             case <= 1.4f: Combo(); break;
@@ -184,6 +184,11 @@ public class ChaosBossController : EnemyController, IEndDialogue
                 }));
                 break;
         }
+    }
+
+    public void ThrowBombs()
+    {
+        assistant.CallAnimation("ThrowBombs");
     }
 
     public void Combo()
@@ -324,6 +329,12 @@ public class ChaosBossController : EnemyController, IEndDialogue
         GetComponent<FinalDialogue>().StartConversation();
         frontAnimator.Play("StartDying");
         backAnimator.Play("StartDying");   
+    }
+
+    public override void EndStagger()
+    {
+        base.EndStagger();
+        attackTime = attackMaxTime;
     }
 
     public override void OnEnable()

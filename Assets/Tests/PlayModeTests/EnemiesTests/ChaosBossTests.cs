@@ -178,4 +178,29 @@ public class ChaosBossTests
         yield return new WaitForSeconds(15f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
+
+    [UnityTest]
+    public IEnumerator ThrowBombs()
+    {
+        yield return BossSetup();
+        enemyScript.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        bossController.ThrowBombs();
+        bossController.attackTime = 100f;
+        yield return new WaitForSeconds(5f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator ThrowBombsPhase2()
+    {
+        yield return BossSetup();
+        bossController.phase = 2;
+        enemyScript.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        bossController.ThrowBombs();
+        bossController.attackTime = 100f;
+        yield return new WaitForSeconds(5f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 }
