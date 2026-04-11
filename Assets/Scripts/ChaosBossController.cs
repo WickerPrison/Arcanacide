@@ -144,19 +144,20 @@ public class ChaosBossController : EnemyController, IEndDialogue
         float randFloat;
         if (playerDistance < meleeRange)
         {
-            randFloat = UnityEngine.Random.Range(0.4f, 1.4f);
+            randFloat = UnityEngine.Random.Range(0.4f, 1.2f);
         }
         else
         {
-            randFloat = UnityEngine.Random.Range(0f, 1.2f);
+            randFloat = UnityEngine.Random.Range(0f, 1.0f);
         }
         switch (randFloat)
         {
             case <= 0.2f: Beams(); break;
             case <= 0.4f: StartSummonSnipers(); break;
-            case <= 0.6f: IceRings(); break;
-            case <= 1.2f: StartFireWaves(); break;
-            case <= 1.4f: Combo(); break;
+            case <= 0.6f: ThrowBombs(); break;
+            case <= 0.8f: IceRings(); break;
+            case <= 1.0f: StartFireWaves(); break;
+            case <= 1.2f: Combo(); break;
                 //default: Bolts(); break;
         }
     }
@@ -231,13 +232,6 @@ public class ChaosBossController : EnemyController, IEndDialogue
         state = EnemyState.ATTACKING;
         frontAnimator.Play("Combo");
         backAnimator.Play("Combo");
-        if(phase == 2)
-        {
-            StartCoroutine(DelayAttack(0.4f, () =>
-            {
-                ThrowBombs();
-            }));
-        }
     }
 
     public void IceRings()
@@ -355,6 +349,14 @@ public class ChaosBossController : EnemyController, IEndDialogue
             attackTime = newTime;
         }
         else attackTime = attackMaxTime;
+    }
+
+    public override void EndStagger()
+    {
+        base.EndStagger();
+        navAgent.stoppingDistance = 4;
+        navAgent.speed = walkSpeed;
+        facePlayer.ResetDestination();
     }
 
     public void EndDialogue()

@@ -6,23 +6,16 @@ using UnityEngine.AI;
 
 public class AssistantBolt : MonoBehaviour
 {
-    [SerializeField] float rotateSpeed;
     [SerializeField] float acceleration;
     [SerializeField] int damage;
     [SerializeField] float poiseDamage;
     AssistantController controller;
     Transform origin;
     PlayerScript playerScript;
-    PlayerMovement playerMovement;
     Rigidbody rb;
-    List<Collider> colliders;
     Bolts bolts;
-    float dps = 50;
-    float damageCounter = 0;
     [System.NonSerialized] public int pathfindingMethod;
     [SerializeField] PlayerData playerData;
-    float offset = 5;
-    float moveSpeed = 6;
     bool launching = false;
     Vector3 launchDirection;
     [SerializeField] EventReference electricImpact;
@@ -37,7 +30,6 @@ public class AssistantBolt : MonoBehaviour
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        playerMovement = playerScript.GetComponent<PlayerMovement>();
         bolts = GetComponentInChildren<Bolts>();
         origin = controller.boltOrigin;
         rb = GetComponent<Rigidbody>();

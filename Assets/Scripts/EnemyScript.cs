@@ -161,7 +161,6 @@ public class EnemyScript : MonoBehaviour
             return;
         }
         enemyEvents.LosePoise();
-        Debug.Log(enemyController.state);
         if (!nonStaggerableStates.Contains(enemyController.state))
         {
             StartStagger(0.2f);
