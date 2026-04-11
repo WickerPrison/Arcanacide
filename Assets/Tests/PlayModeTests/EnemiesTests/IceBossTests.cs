@@ -80,6 +80,21 @@ public class IceBossTests
     }
 
     [UnityTest]
+    public IEnumerator RangedStuff()
+    {
+        SpawnFrank();
+        enemyScript.transform.position = new Vector3(7.5f, 0, -5f);
+        bossController.attackTime = 100f;
+        bossController.navAgent.speed = 0;
+        Time.timeScale = 1;
+        hud.EnableBossHealthbar(enemyScript.GetComponent<EnemyEvents>());
+        yield return null;
+        dialogue.CloseDialogue();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
     public IEnumerator BreathAttack()
     {
         Time.timeScale = 1f;

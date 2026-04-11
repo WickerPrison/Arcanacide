@@ -192,13 +192,6 @@ public class AssistantController : MonoBehaviour
         ac.endPoint = playerScript.transform.position;
     }
 
-    public void EndAttack(float time)
-    {
-        state = AssistantState.IDLE;
-        attackTimer = time;
-        bossController.SetAttackTime(time);
-    }
-
     private void onCombo(object sender, EventArgs e)
     {
         frontAnimator.Play("ThrowBombs");

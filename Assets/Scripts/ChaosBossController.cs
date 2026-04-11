@@ -209,7 +209,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public void Beams()
     {
-        attackTime = 3.5f;
+        attackTime = attackMaxTime + 3.5f;
         assistant.CallAnimation("Beams");
         if(phase == 2)
         {
@@ -222,13 +222,13 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public void ThrowBombs()
     {
-        attackTime = 6f;
+        attackTime = attackMaxTime + 6f;
         assistant.CallAnimation("ThrowBombs");
     }
 
     public void Combo()
     {
-        attackTime = 3f;
+        attackTime = attackMaxTime + 3f;
         state = EnemyState.ATTACKING;
         frontAnimator.Play("Combo");
         backAnimator.Play("Combo");
@@ -236,7 +236,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public void IceRings()
     {
-        attackTime = 8.5f;
+        attackTime = attackMaxTime + 8.5f;
         assistant.CallAnimation("IceRings");
     }
 
@@ -265,7 +265,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         navAgent.stoppingDistance = 4;
         navAgent.speed = walkSpeed;
         state = EnemyState.ATTACKING;
-        attackTime = 10;
+        attackTime = attackMaxTime + 10;
         frontAnimator.Play("FireWaves");
         backAnimator.Play("FireWaves");
     }
@@ -285,12 +285,12 @@ public class ChaosBossController : EnemyController, IEndDialogue
             onFireWaves?.Invoke(this, 0);
         }
         yield return finalWaveDelay;
-        attackTime = attackMaxTime;
+        attackTime = attackMaxTime + 2;
     }
 
     public void StartKnightsAttack()
     {
-        attackTime = 3f;
+        attackTime = attackMaxTime + 3f;
         state = EnemyState.ATTACKING;
         frontAnimator.Play("Knights");
         backAnimator.Play("Knights");
@@ -323,7 +323,7 @@ public class ChaosBossController : EnemyController, IEndDialogue
         {
             assistant.CallAnimation("Bolts");
         }
-        attackTime = 7.5f;
+        attackTime = attackMaxTime + 7.5f;
         state = EnemyState.ATTACKING;
         frontAnimator.Play("SummonSnipers");
         backAnimator.Play("SummonSnipers");
@@ -340,15 +340,6 @@ public class ChaosBossController : EnemyController, IEndDialogue
         IceSniperSummon sniper = snipers.Dequeue();
         Vector3 direction = facePlayer.attackPoint.position - transform.position;
         sniper.GetSummoned(selectSide, direction.normalized);
-    }
-
-    public void SetAttackTime(float newTime = -1)
-    {
-        if (newTime >= 0)
-        {
-            attackTime = newTime;
-        }
-        else attackTime = attackMaxTime;
     }
 
     public override void EndStagger()
