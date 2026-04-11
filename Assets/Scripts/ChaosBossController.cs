@@ -118,9 +118,31 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     void Phase1Attacks()
     {
-        attackTime = 100;
         float randFloat;
         if(playerDistance < meleeRange)
+        {
+            randFloat = UnityEngine.Random.Range(0.4f, 1.2f);
+        }
+        else
+        {
+            randFloat = UnityEngine.Random.Range(0f, 1.0f);
+        }
+        switch (randFloat)
+        {
+            case <= 0.2f: Beams(); break;
+            case <= 0.4f: StartSummonSnipers(); break;
+            case <= 0.6f: ThrowBombs(); break;
+            case <= 0.8f: StartKnightsAttack(); break;
+            case <= 1.0f: StartFireWaves(); break;
+            case <= 1.2f: Combo(); break;
+            //default: Bolts(); break;
+        }
+    }
+
+    void Phase2Attacks()
+    {
+        float randFloat;
+        if (playerDistance < meleeRange)
         {
             randFloat = UnityEngine.Random.Range(0.4f, 1.4f);
         }
@@ -133,68 +155,73 @@ public class ChaosBossController : EnemyController, IEndDialogue
             case <= 0.2f: Beams(); break;
             case <= 0.4f: StartSummonSnipers(); break;
             case <= 0.6f: IceRings(); break;
-            case <= 0.8f: ThrowBombs(); break;
-            case <= 1.0f: StartKnightsAttack(); break;
             case <= 1.2f: StartFireWaves(); break;
             case <= 1.4f: Combo(); break;
-            //default: Bolts(); break;
+                //default: Bolts(); break;
         }
     }
 
-    void Phase2Attacks()
-    {
-        int randInt;
-        if (playerDistance < meleeRange)
-        {
-            randInt = UnityEngine.Random.Range(1, 5);
-        }
-        else
-        {
-            randInt = UnityEngine.Random.Range(0, 4);
-        }
-        attackTime = 3;
-        switch (randInt)
-        {
-            case 0:
-                assistant.CallAnimation("Beams");
-                StartCoroutine(DelayAttack(0.4f, () =>
-                {
-                    state = EnemyState.ATTACKING;
-                    frontAnimator.Play("Knights");
-                    backAnimator.Play("Knights");
-                }));
-                break;
-            case 1:
-                assistant.CallAnimation("ThrowBombs");
-                break;
-            case 2:
-                assistant.CallAnimation("Bolts");
-                attackTime = 5;
-                break;
-            case 3:
-                StartKnightsAttack();
-                break;
-            case 4:
-                state = EnemyState.ATTACKING;
-                StartCoroutine(DelayAttack(0.4f, () =>
-                {
-                    frontAnimator.Play("Combo");
-                    backAnimator.Play("Combo");
-                    assistant.CallAnimation("ThrowBombs");
-                }));
-                break;
-        }
-    }
+    //void Phase2Attacks()
+    //{
+    //    int randInt;
+    //    if (playerDistance < meleeRange)
+    //    {
+    //        randInt = UnityEngine.Random.Range(1, 5);
+    //    }
+    //    else
+    //    {
+    //        randInt = UnityEngine.Random.Range(0, 4);
+    //    }
+    //    attackTime = 3;
+    //    switch (randInt)
+    //    {
+    //        case 0:
+    //            assistant.CallAnimation("Beams");
+    //            StartCoroutine(DelayAttack(0.4f, () =>
+    //            {
+    //                state = EnemyState.ATTACKING;
+    //                frontAnimator.Play("Knights");
+    //                backAnimator.Play("Knights");
+    //            }));
+    //            break;
+    //        case 1:
+    //            assistant.CallAnimation("ThrowBombs");
+    //            break;
+    //        case 2:
+    //            assistant.CallAnimation("Bolts");
+    //            attackTime = 5;
+    //            break;
+    //        case 3:
+    //            StartKnightsAttack();
+    //            break;
+    //        case 4:
+    //            state = EnemyState.ATTACKING;
+    //            StartCoroutine(DelayAttack(0.4f, () =>
+    //            {
+    //                frontAnimator.Play("Combo");
+    //                backAnimator.Play("Combo");
+    //                assistant.CallAnimation("ThrowBombs");
+    //            }));
+    //            break;
+    //    }
+    //}
 
     public void Beams()
     {
         attackTime = 3.5f;
         assistant.CallAnimation("Beams");
+        if(phase == 2)
+        {
+            StartCoroutine(DelayAttack(0.4f, () =>
+            {
+                StartKnightsAttack();
+            }));
+        }
     }
 
     public void ThrowBombs()
     {
-        attackTime = 5f;
+        attackTime = 6f;
         assistant.CallAnimation("ThrowBombs");
     }
 
@@ -204,6 +231,13 @@ public class ChaosBossController : EnemyController, IEndDialogue
         state = EnemyState.ATTACKING;
         frontAnimator.Play("Combo");
         backAnimator.Play("Combo");
+        if(phase == 2)
+        {
+            StartCoroutine(DelayAttack(0.4f, () =>
+            {
+                ThrowBombs();
+            }));
+        }
     }
 
     public void IceRings()
@@ -291,6 +325,10 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public void StartSummonSnipers()
     {
+        if(phase == 2)
+        {
+            assistant.CallAnimation("Bolts");
+        }
         attackTime = 7.5f;
         state = EnemyState.ATTACKING;
         frontAnimator.Play("SummonSnipers");

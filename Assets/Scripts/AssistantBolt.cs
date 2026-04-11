@@ -8,24 +8,24 @@ public class AssistantBolt : MonoBehaviour
 {
     [SerializeField] float rotateSpeed;
     [SerializeField] float acceleration;
+    [SerializeField] int damage;
+    [SerializeField] float poiseDamage;
     AssistantController controller;
     Transform origin;
     PlayerScript playerScript;
     PlayerMovement playerMovement;
-    TouchingCollider touchingCollider;
     Rigidbody rb;
     List<Collider> colliders;
     Bolts bolts;
-    int damage;
     float dps = 50;
     float damageCounter = 0;
     [System.NonSerialized] public int pathfindingMethod;
     [SerializeField] PlayerData playerData;
     float offset = 5;
-    bool hittingPlayer = false;
     float moveSpeed = 6;
     bool launching = false;
     Vector3 launchDirection;
+    [SerializeField] EventReference electricImpact;
 
 
     private void Awake()
@@ -38,13 +38,11 @@ public class AssistantBolt : MonoBehaviour
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerMovement = playerScript.GetComponent<PlayerMovement>();
-        touchingCollider = GetComponentInChildren<TouchingCollider>();
-        colliders = touchingCollider.GetTouchingObjects();
         bolts = GetComponentInChildren<Bolts>();
         origin = controller.boltOrigin;
         rb = GetComponent<Rigidbody>();
 
-        transform.position = CirclePosition();
+        FindRandomPosition();
     }
 
     private void Update()
@@ -59,45 +57,35 @@ public class AssistantBolt : MonoBehaviour
         {
             rb.velocity += launchDirection * acceleration;
         }
-        else
-        {
-            transform.position = CirclePosition();
-        }
+    }
 
-        hittingPlayer = false;
-        foreach(Collider collider in colliders)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            if (collider.gameObject.CompareTag("Player") && collider.gameObject.layer == 3)
+            playerScript.HitPlayer(() =>
             {
-                hittingPlayer = true;
-                bolts.SoundOn();
-                damageCounter += dps * Time.deltaTime;
-                if(damageCounter > 1)
-                {
-                    damage = Mathf.FloorToInt(damageCounter);
-                    playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
-                    playerScript.LosePoise(damage);
-                    damageCounter -= damage;
-                }
-            }
-        }
-
-        if (!hittingPlayer)
-        {
-            bolts.SoundOff();
+                playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
+                playerScript.LosePoise(poiseDamage);
+                FmodUtils.PlayOneShot(electricImpact, 1);
+                playerScript.StartStagger(0.2f);
+            }, () =>
+            {
+                playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE);
+            });
         }
     }
 
-    Vector3 CirclePosition()
+    void FindRandomPosition()
     {
-        Vector3 direction = Utils.RotateDirection(Vector3.right, Time.time * rotateSpeed + 120 * pathfindingMethod).normalized;
-        Vector3 position = playerScript.transform.position + direction * 3f;
-        NavMeshHit hit;
-        if(NavMesh.SamplePosition(position, out hit, 3f, NavMesh.AllAreas))
+        float xPos = Random.Range(-10, 10);
+        float zPos = Random.Range(-10, 10);
+        transform.position = new Vector3(xPos, 0, zPos);
+
+        if (Vector3.Distance(transform.position, playerScript.transform.position) < 5)
         {
-            return hit.position;
+            FindRandomPosition();
         }
-        return position;
     }
 
     private void OnEnable()
@@ -121,7 +109,6 @@ public class AssistantBolt : MonoBehaviour
     {
         if(index == pathfindingMethod)
         {
-            Debug.Log("launch bolt");
             launchDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
             launching = true;
             rb.velocity = Vector3.zero;

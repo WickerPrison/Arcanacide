@@ -11,8 +11,8 @@ public class AssistantBeam : MonoBehaviour
     LayerMask mask;
     LayerMask playerMask;
     float chargeIndicatorWidth = 1.2f;
-    int damage = 50;
-    float poiseDamage = 50;
+    [SerializeField] int damage = 50;
+    [SerializeField] float poiseDamage = 50;
     float extensionLength = 0.11f;
     [SerializeField] ParticleSystem particleSys;
     [SerializeField] float randomRange = 12f;

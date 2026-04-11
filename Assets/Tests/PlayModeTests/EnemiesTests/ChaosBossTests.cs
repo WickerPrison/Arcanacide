@@ -26,7 +26,7 @@ public class ChaosBossTests
         playerData.ClearData();
         playerData.tutorials.Clear();
         playerData.hasHealthGem = true;
-        playerData.vitality = 60;
+        playerData.vitality = 100;
         playerData.health = playerData.MaxHealth();
         playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
         playerStats.ClearData();
@@ -82,6 +82,15 @@ public class ChaosBossTests
     public IEnumerator Beams()
     {
         yield return BossSetup();
+        bossController.Beams();
+        yield return new WaitForSeconds(5);
+    }
+
+    [UnityTest]
+    public IEnumerator BeamsPhase2()
+    {
+        yield return BossSetup();
+        bossController.phase = 2;
         bossController.Beams();
         yield return new WaitForSeconds(5);
     }
@@ -159,6 +168,18 @@ public class ChaosBossTests
     }
 
     [UnityTest]
+    public IEnumerator ComboPhase2()
+    {
+        yield return BossSetup();
+        bossController.phase = 2;
+        enemyScript.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        bossController.Combo();
+        yield return new WaitForSeconds(7f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
     public IEnumerator StaggerDuringCombo()
     {
         yield return BossSetup();
@@ -187,13 +208,25 @@ public class ChaosBossTests
     }
 
     [UnityTest]
+    public IEnumerator SummonSnipersPhase2()
+    {
+        yield return BossSetup();
+        enemyScript.transform.position = new Vector3(3f, 0, -3f);
+        bossController.phase = 2;
+        yield return null;
+        bossController.StartSummonSnipers();
+        yield return new WaitForSeconds(7f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
     public IEnumerator Bolts()
     {
         yield return BossSetup();
         enemyScript.transform.position = new Vector3(3f, 0, -3f);
         yield return null;
         bossController.Bolts();
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(5f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
 
