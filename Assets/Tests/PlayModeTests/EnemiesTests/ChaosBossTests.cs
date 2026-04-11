@@ -79,6 +79,14 @@ public class ChaosBossTests
     }
 
     [UnityTest]
+    public IEnumerator Beams()
+    {
+        yield return BossSetup();
+        bossController.Beams();
+        yield return new WaitForSeconds(5);
+    }
+
+    [UnityTest]
     public IEnumerator IceRings()
     {
         yield return BossSetup();
@@ -146,8 +154,20 @@ public class ChaosBossTests
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
         bossController.Combo();
-        bossController.attackTime = 100f;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
+
+    [UnityTest]
+    public IEnumerator StaggerDuringCombo()
+    {
+        yield return BossSetup();
+        enemyScript.transform.position = new Vector3(3f, 0, 3f);
+        yield return null;
+        bossController.Combo();
+        yield return new WaitForSeconds(0.5f);
+        enemyScript.LoseHealthUnblockable(5, 700);
+        yield return new WaitForSeconds(5);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
 
@@ -155,7 +175,6 @@ public class ChaosBossTests
     public IEnumerator SummonSnipers()
     {
         yield return BossSetup();
-        bossController.attackTime = 100;
         enemyScript.transform.position = new Vector3(3f, 0, -3f);
         yield return null;
         bossController.StartSummonSnipers();
@@ -171,7 +190,6 @@ public class ChaosBossTests
     public IEnumerator Bolts()
     {
         yield return BossSetup();
-        bossController.attackTime = 100;
         enemyScript.transform.position = new Vector3(3f, 0, -3f);
         yield return null;
         bossController.Bolts();
@@ -186,8 +204,7 @@ public class ChaosBossTests
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
         bossController.ThrowBombs();
-        bossController.attackTime = 100f;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(6f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
 
@@ -199,7 +216,6 @@ public class ChaosBossTests
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
         bossController.ThrowBombs();
-        bossController.attackTime = 100f;
         yield return new WaitForSeconds(5f);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
