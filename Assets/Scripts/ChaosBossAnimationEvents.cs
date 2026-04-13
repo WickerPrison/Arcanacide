@@ -87,5 +87,6 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
         LightningOrbController orb = Instantiate(lightningOrbPrefab).GetComponent<LightningOrbController>();
         orb.transform.position = chaosBossController.transform.position + new Vector3(x, 0, z).normalized * spawnRadius;
         orb.spellAttackDamage = chaosBossController.orbDamage;
+        orb.colorChange = true;
     }
 }

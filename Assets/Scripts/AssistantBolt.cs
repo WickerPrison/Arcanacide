@@ -19,6 +19,7 @@ public class AssistantBolt : MonoBehaviour
     bool launching = false;
     Vector3 launchDirection;
     [SerializeField] EventReference electricImpact;
+    [SerializeField] float staggerDuration;
 
 
     private void Awake()
@@ -60,7 +61,7 @@ public class AssistantBolt : MonoBehaviour
                 playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
                 playerScript.LosePoise(poiseDamage);
                 FmodUtils.PlayOneShot(electricImpact, 1);
-                playerScript.StartStagger(0.2f);
+                playerScript.StartStagger(staggerDuration);
             }, () =>
             {
                 playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE);

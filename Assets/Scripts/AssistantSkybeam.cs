@@ -13,6 +13,8 @@ public class AssistantSkybeam : MonoBehaviour
     [SerializeField] float rippleDelayTime;
     [SerializeField] Color rippleColor;
     [SerializeField] EventReference castSFX;
+    [SerializeField] int damage;
+    [SerializeField] float poiseDamage;
     WaitForSeconds rippleDelay;
     WaitForEndOfFrame endOfFrame;
     FinalBossEvents bossEvents;
@@ -58,6 +60,8 @@ public class AssistantSkybeam : MonoBehaviour
             ripple.rippleSpeed = 5;
             ripple.lifeTime = 3;
             ripple.boxColor = rippleColor;
+            ripple.damage = damage;
+            ripple.poiseDamage = poiseDamage;
             yield return rippleDelay;
         }
         yield return rippleDelay;

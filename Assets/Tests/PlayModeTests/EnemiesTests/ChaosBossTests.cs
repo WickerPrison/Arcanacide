@@ -20,8 +20,6 @@ public class ChaosBossTests
     [UnitySetUp]
     public IEnumerator Setup()
     {
-        SceneManager.LoadScene("ChaosBossfight");
-        yield return null;
         playerData = Resources.Load<PlayerData>("Data/PlayerData");
         playerData.ClearData();
         playerData.tutorials.Clear();
@@ -30,6 +28,8 @@ public class ChaosBossTests
         playerData.health = playerData.MaxHealth();
         playerStats = Resources.Load<PlayerStats>("Data/PlayerStats");
         playerStats.ClearData();
+        SceneManager.LoadScene("ChaosBossfight");
+        yield return null;
         bossController = GameObject.FindObjectOfType<ChaosBossController>();
         enemyScript = bossController.GetComponent<EnemyScript>();
         dialogue = enemyScript.GetComponentInChildren<DialogueTriggerRoomEntrance>().GetComponent<Dialogue>();
