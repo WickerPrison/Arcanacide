@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum BossSummons
 {
-    FATMAN1, FATMAN2, KNIGHT
+    FATMAN1, FATMAN2, KNIGHT, SNIPER_LEFT, SNIPER_RIGHT
 }
 
 [System.Serializable]
@@ -12,7 +12,10 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
 {
     FacePlayer facePlayer;
     [SerializeField] ChaosBossController chaosBossController;
+    [SerializeField] GameObject lightningOrbPrefab;
     FinalBossEvents events;
+    float spawnRadius = 1.5f;
+    WaitForSeconds orbDelay = new WaitForSeconds(0.1f);
 
     public override void Start()
     {
@@ -23,7 +26,7 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
 
     public void TurnTowardsPlayer()
     {
-        //facePlayer.SetDestination(new Vector3(6, 0, -9));
+        facePlayer.ResetDestination();
     }
 
     public void Summon(BossSummons summon)
@@ -38,6 +41,12 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
                 break;
             case BossSummons.KNIGHT:
                 chaosBossController.SummonKnight();
+                break;
+            case BossSummons.SNIPER_LEFT:
+                chaosBossController.SummonSniper(-1);
+                break;
+            case BossSummons.SNIPER_RIGHT:
+                chaosBossController.SummonSniper(1);
                 break;
         }
 
@@ -60,8 +69,24 @@ public class ChaosBossAnimationEvents : EnemyAnimationEvents
         }
     }
 
-    public void EndAttack(float time = -1)
+    public void StartFireWaves()
     {
-        chaosBossController.SetAttackTime(time);
+        StartCoroutine(chaosBossController.WavePattern());
+    }
+
+    public void SummonLightningOrbs()
+    {
+        SummonOrb(1, 0);
+        SummonOrb(-1, 0);
+        SummonOrb(0, 1);
+        SummonOrb(0, -1);
+    }
+
+    void SummonOrb(float x, float z)
+    {
+        LightningOrbController orb = Instantiate(lightningOrbPrefab).GetComponent<LightningOrbController>();
+        orb.transform.position = chaosBossController.transform.position + new Vector3(x, 0, z).normalized * spawnRadius;
+        orb.spellAttackDamage = chaosBossController.orbDamage;
+        orb.colorChange = true;
     }
 }

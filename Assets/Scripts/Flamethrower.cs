@@ -78,7 +78,7 @@ public class Flamethrower : EnemyController
         backAnimator.Play("Attack");
     }
 
-    void Artillery()
+    public void Artillery()
     {
         state = EnemyState.ATTACKING;
         attackTime = attackMaxTime;

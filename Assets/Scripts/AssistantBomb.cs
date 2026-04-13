@@ -14,6 +14,7 @@ public class AssistantBomb : ArcProjectile
     [System.NonSerialized] public int phase = 1;
     [SerializeField] float initialAngle;
     [SerializeField] float finalAngle;
+    [SerializeField] GameObject fireCirclePrefab;
 
     // Start is called before the first frame update
     public override void Start()
@@ -38,6 +39,9 @@ public class AssistantBomb : ArcProjectile
 
     public override void Explosion()
     {
+        GameObject fireCircle = Instantiate(fireCirclePrefab);
+        fireCircle.transform.position = transform.position;
+
         if(phase == 1)
         {
             base.Explosion();

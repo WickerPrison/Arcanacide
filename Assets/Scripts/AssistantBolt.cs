@@ -6,22 +6,20 @@ using UnityEngine.AI;
 
 public class AssistantBolt : MonoBehaviour
 {
+    [SerializeField] float acceleration;
+    [SerializeField] int damage;
+    [SerializeField] float poiseDamage;
     AssistantController controller;
     Transform origin;
     PlayerScript playerScript;
-    PlayerMovement playerMovement;
-    TouchingCollider touchingCollider;
     Rigidbody rb;
-    List<Collider> colliders;
     Bolts bolts;
-    int damage;
-    float dps = 50;
-    float damageCounter = 0;
     [System.NonSerialized] public int pathfindingMethod;
     [SerializeField] PlayerData playerData;
-    float offset = 5;
-    bool hittingPlayer = false;
-    float moveSpeed = 6;
+    bool launching = false;
+    Vector3 launchDirection;
+    [SerializeField] EventReference electricImpact;
+    [SerializeField] float staggerDuration;
 
 
     private void Awake()
@@ -33,9 +31,6 @@ public class AssistantBolt : MonoBehaviour
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        playerMovement = playerScript.GetComponent<PlayerMovement>();
-        touchingCollider = GetComponentInChildren<TouchingCollider>();
-        colliders = touchingCollider.GetTouchingObjects();
         bolts = GetComponentInChildren<Bolts>();
         origin = controller.boltOrigin;
         rb = GetComponent<Rigidbody>();
@@ -46,64 +41,31 @@ public class AssistantBolt : MonoBehaviour
     private void Update()
     {
         bolts.SetPositions(origin.position, transform.position);
-
-        Vector3 destination = playerScript.transform.position;
-        if(pathfindingMethod == 1)
-        {
-            destination += playerMovement.lastMoveDir * 3;
-        }
-        else if(pathfindingMethod == 2)
-        {
-            destination -= playerMovement.lastMoveDir * 3;
-        }
-
-        Vector3 direction = destination - transform.position;
-        rb.velocity += direction.normalized + Vector3.right * 0.1f;
-        rb.velocity = rb.velocity.normalized * moveSpeed;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        hittingPlayer = false;
-        foreach(Collider collider in colliders)
+        if (launching)
         {
-            if (collider.gameObject.CompareTag("Player") && collider.gameObject.layer == 3)
-            {
-                hittingPlayer = true;
-                bolts.SoundOn();
-                damageCounter += dps * Time.deltaTime;
-                if(damageCounter > 1)
-                {
-                    damage = Mathf.FloorToInt(damageCounter);
-                    playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
-                    playerScript.LosePoise(damage);
-                    damageCounter -= damage;
-                }
-            }
-        }
-
-        if (!hittingPlayer)
-        {
-            bolts.SoundOff();
+            rb.velocity += launchDirection * acceleration;
         }
     }
 
-    Vector3 FindDestination()
+    private void OnTriggerEnter(Collider other)
     {
-        Vector3 predictDir;
-        switch (pathfindingMethod)
+        if (other.CompareTag("Player"))
         {
-            case 0:
-                return playerScript.transform.position;
-            case 1:
-                predictDir = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y).normalized * offset;
-                return playerScript.transform.position + predictDir;
-            case 2:
-                predictDir = new Vector3(playerData.moveDir.x, 0, playerData.moveDir.y).normalized * -offset;
-                return playerScript.transform.position + predictDir;
-            default:
-                return playerScript.transform.position;
+            playerScript.HitPlayer(() =>
+            {
+                playerScript.LoseHealth(damage, EnemyAttackType.NONPARRIABLE, null);
+                playerScript.LosePoise(poiseDamage);
+                FmodUtils.PlayOneShot(electricImpact, 1);
+                playerScript.StartStagger(staggerDuration);
+            }, () =>
+            {
+                playerScript.PerfectDodge(EnemyAttackType.NONPARRIABLE);
+            });
         }
     }
 
@@ -113,7 +75,7 @@ public class AssistantBolt : MonoBehaviour
         float zPos = Random.Range(-10, 10);
         transform.position = new Vector3(xPos, 0, zPos);
 
-        if(Vector3.Distance(transform.position, playerScript.transform.position) < 5)
+        if (Vector3.Distance(transform.position, playerScript.transform.position) < 5)
         {
             FindRandomPosition();
         }
@@ -122,15 +84,27 @@ public class AssistantBolt : MonoBehaviour
     private void OnEnable()
     {
         controller.onEndBolts += onEndBolts;
+        controller.onLaunchBolt += Controller_onLaunchBolt;
     }
 
     private void OnDisable()
     {
         controller.onEndBolts -= onEndBolts;
+        controller.onLaunchBolt -= Controller_onLaunchBolt;
     }
 
     private void onEndBolts(object sender, System.EventArgs e)
     {
         Destroy(gameObject);
+    }
+
+    private void Controller_onLaunchBolt(object sender, int index)
+    {
+        if(index == pathfindingMethod)
+        {
+            launchDirection = Vector3.Normalize(playerScript.transform.position - transform.position);
+            launching = true;
+            rb.velocity = Vector3.zero;
+        }
     }
 }

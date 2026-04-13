@@ -13,9 +13,12 @@ public class AssistantSkybeam : MonoBehaviour
     [SerializeField] float rippleDelayTime;
     [SerializeField] Color rippleColor;
     [SerializeField] EventReference castSFX;
+    [SerializeField] int damage;
+    [SerializeField] float poiseDamage;
     WaitForSeconds rippleDelay;
     WaitForEndOfFrame endOfFrame;
     FinalBossEvents bossEvents;
+    [SerializeField] ParticleSystem cloudVfx;
 
     private void Awake()
     {
@@ -41,15 +44,28 @@ public class AssistantSkybeam : MonoBehaviour
 
             yield return endOfFrame;
         }
-        StartCoroutine(Ripples());
+        yield return Ripples();
+        timer = skybeamTime;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            skybeam.localScale = Vector3.Lerp(new Vector3(1, 0, 1), Vector3.one, timer / skybeamTime);
+
+            yield return endOfFrame;
+        }
+        cloudVfx.Stop();
+        skybeam.gameObject.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
     IEnumerator Ripples()
     {
         rippleDelay = new WaitForSeconds(rippleDelayTime);
-        RuntimeManager.PlayOneShot(castSFX);
         for (int i = 0; i < rippleNum; i++)
         {
+            RuntimeManager.PlayOneShot(castSFX);
             IceRipple ripple = Instantiate(ripplePrefab).GetComponent<IceRipple>();
             ripple.transform.position = transform.position + Vector3.up;
             ripple.transform.localScale = Vector3.one * 0.5f;
@@ -58,20 +74,20 @@ public class AssistantSkybeam : MonoBehaviour
             ripple.rippleSpeed = 5;
             ripple.lifeTime = 3;
             ripple.boxColor = rippleColor;
+            ripple.damage = damage;
+            ripple.poiseDamage = poiseDamage;
             yield return rippleDelay;
         }
-        yield return rippleDelay;
-        Destroy(gameObject);
     }
 
     private void OnEnable()
     {
-        bossEvents.freezeAssistant += freezeAssistant;
+        //bossEvents.freezeAssistant += freezeAssistant;
     }
 
     private void OnDisable()
     {
-        bossEvents.freezeAssistant -= freezeAssistant;
+        //bossEvents.freezeAssistant -= freezeAssistant;
     }
 
     private void freezeAssistant(object sender, System.EventArgs e)

@@ -12,10 +12,11 @@ public class BeamVfx : MonoBehaviour
     Gradient gradient;
     float alpha = 1;
     float aimValue;
-    float maxAimValue = 3;
+    [SerializeField] float maxAimValue;
     float gradientOffset = .4f;
     Vector3 away = new Vector3(100, 100, 100);
     [SerializeField] LayerMask layerMask;
+    bool flashing = false;
 
     private void Start()
     {
@@ -58,13 +59,42 @@ public class BeamVfx : MonoBehaviour
 
     public void DecrementAimValue(Action chargedCallback)
     {
+        if (flashing) return;
         aimValue -= Time.deltaTime;
         if(aimValue < -gradientOffset)
         {
-            chargedCallback();
-            aimValue = maxAimValue;
+            StartCoroutine(Flash(chargedCallback));
         }
         UpdateGradient();
+    }
+
+    IEnumerator Flash(Action chargedCallback)
+    {
+        flashing = true;
+        float time = 0.2f;
+        float timer = time;
+
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            line.widthMultiplier = Mathf.Lerp(2, 1, timer / time);
+
+            yield return null;
+        }
+        timer = time;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            line.widthMultiplier = Mathf.Lerp(1, 2, timer / time);
+
+            yield return null;
+        }
+
+        flashing = false;
+        aimValue = maxAimValue;
+        chargedCallback();
     }
 
     public void ResetAimValue()

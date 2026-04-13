@@ -22,6 +22,11 @@ public class WaveBox : MonoBehaviour
         if(fireWave = GetComponentInParent<FireWave>())
         {
             enemyOfOrigin = fireWave.enemyOfOrigin;
+            if (fireWave.overrideDamage)
+            {
+                damage = fireWave.damage;
+                poiseDamage = fireWave.poiseDamage;
+            }
         }
     }
 

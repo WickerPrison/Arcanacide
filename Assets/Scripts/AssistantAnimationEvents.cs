@@ -13,11 +13,6 @@ public class AssistantAnimationEvents : MonoBehaviour
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
     }
 
-    public void EndAttack(float attackTime)
-    {
-        controller.EndAttack(attackTime);
-    }
-
     public void ThrowBomb(int hand)
     {
         controller.ThrowBomb(hand);

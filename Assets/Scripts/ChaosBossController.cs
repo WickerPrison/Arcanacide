@@ -11,6 +11,8 @@ public class ChaosBossController : EnemyController, IEndDialogue
     float fleeRadiusMin = 0;
     float fleeRadiusMax = 12;
     Vector3 fleePoint;
+    [SerializeField] float walkSpeed;
+    [SerializeField] float runSpeed;
     float meleeRange = 3f;
     [System.NonSerialized] public int phase = 1;
     float phaseTriggerPercent = 0.6f;
@@ -23,6 +25,15 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     [SerializeField] KnightSummon[] knightSummons;
     [System.NonSerialized] public Queue<KnightSummon> knights = new Queue<KnightSummon>();
+
+    [SerializeField] IceSniperSummon[] iceSniperSummons;
+    [System.NonSerialized] public Queue<IceSniperSummon> snipers = new Queue<IceSniperSummon>();
+
+    public event EventHandler<int> onFireWaves;
+    WaitForSeconds waveDelay = new WaitForSeconds(1f);
+    WaitForSeconds finalWaveDelay = new WaitForSeconds(3f);
+
+    public int orbDamage;
 
     public override void Awake()
     {
@@ -51,6 +62,13 @@ public class ChaosBossController : EnemyController, IEndDialogue
             knight.enemyScript = enemyScript;
             knights.Enqueue(knight);
         }
+        foreach(IceSniperSummon sniper in iceSniperSummons)
+        {
+            sniper.enemyScript = enemyScript;
+            sniper.bossController = this;
+            snipers.Enqueue(sniper);
+        }
+        enemyScript.nonStaggerableStates.Add(EnemyState.SPECIAL);
     }
 
     public override void EnemyAI()
@@ -84,10 +102,11 @@ public class ChaosBossController : EnemyController, IEndDialogue
         if (state == EnemyState.SPECIAL)
         {
             facePlayer.SetDestination(fleePoint);
+            navAgent.SetDestination(Vector3.zero);
             float distance = Vector3.Distance(transform.position, fleePoint);
             if (distance <= navAgent.stoppingDistance)
             {
-                state = EnemyState.IDLE;
+                FireWaves();
             }
         }
 
@@ -99,86 +118,179 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     void Phase1Attacks()
     {
-        int randInt;
+        float randFloat;
         if(playerDistance < meleeRange)
         {
-            randInt = UnityEngine.Random.Range(1, 5);
+            randFloat = UnityEngine.Random.Range(0.4f, 1.2f);
         }
         else
         {
-            randInt = UnityEngine.Random.Range(0, 4);
+            randFloat = UnityEngine.Random.Range(0f, 1.0f);
         }
-        attackTime = 3;
-        switch (randInt)
+        switch (randFloat)
         {
-            case 0:
-                assistant.CallAnimation("Beams");
-                break;
-            case 1:
-                assistant.CallAnimation("ThrowBombs");
-                break;
-            case 2:
-                assistant.CallAnimation("Bolts");
-                attackTime = 5;
-                break;
-            case 3:
-                StartKnightsAttack();
-                break;
-            case 4:
-                state = EnemyState.ATTACKING;
-                frontAnimator.Play("Combo");
-                backAnimator.Play("Combo");
-                break;
+            case <= 0.2f: Beams(); break;
+            case <= 0.4f: StartSummonSnipers(); break;
+            case <= 0.6f: ThrowBombs(); break;
+            case <= 0.8f: StartKnightsAttack(); break;
+            case <= 1.0f: StartFireWaves(); break;
+            case <= 1.2f: Combo(); break;
+            //default: Bolts(); break;
         }
     }
 
     void Phase2Attacks()
     {
-        int randInt;
+        float randFloat;
         if (playerDistance < meleeRange)
         {
-            randInt = UnityEngine.Random.Range(1, 5);
+            randFloat = UnityEngine.Random.Range(0.4f, 1.2f);
         }
         else
         {
-            randInt = UnityEngine.Random.Range(0, 4);
+            randFloat = UnityEngine.Random.Range(0f, 1.0f);
         }
-        attackTime = 3;
-        switch (randInt)
+        switch (randFloat)
         {
-            case 0:
-                assistant.CallAnimation("Beams");
-                StartCoroutine(DelayAttack(0.4f, () =>
-                {
-                    state = EnemyState.ATTACKING;
-                    frontAnimator.Play("Knights");
-                    backAnimator.Play("Knights");
-                }));
-                break;
-            case 1:
-                assistant.CallAnimation("ThrowBombs");
-                break;
-            case 2:
-                assistant.CallAnimation("Bolts");
-                attackTime = 5;
-                break;
-            case 3:
-                StartKnightsAttack();
-                break;
-            case 4:
-                state = EnemyState.ATTACKING;
-                StartCoroutine(DelayAttack(0.4f, () =>
-                {
-                    frontAnimator.Play("Combo");
-                    backAnimator.Play("Combo");
-                    assistant.CallAnimation("ThrowBombs");
-                }));
-                break;
+            case <= 0.2f: Beams(); break;
+            case <= 0.4f: StartSummonSnipers(); break;
+            case <= 0.6f: ThrowBombs(); break;
+            case <= 0.8f: IceRings(); break;
+            case <= 1.0f: StartFireWaves(); break;
+            case <= 1.2f: Combo(); break;
+                //default: Bolts(); break;
         }
+    }
+
+    //void Phase2Attacks()
+    //{
+    //    int randInt;
+    //    if (playerDistance < meleeRange)
+    //    {
+    //        randInt = UnityEngine.Random.Range(1, 5);
+    //    }
+    //    else
+    //    {
+    //        randInt = UnityEngine.Random.Range(0, 4);
+    //    }
+    //    attackTime = 3;
+    //    switch (randInt)
+    //    {
+    //        case 0:
+    //            assistant.CallAnimation("Beams");
+    //            StartCoroutine(DelayAttack(0.4f, () =>
+    //            {
+    //                state = EnemyState.ATTACKING;
+    //                frontAnimator.Play("Knights");
+    //                backAnimator.Play("Knights");
+    //            }));
+    //            break;
+    //        case 1:
+    //            assistant.CallAnimation("ThrowBombs");
+    //            break;
+    //        case 2:
+    //            assistant.CallAnimation("Bolts");
+    //            attackTime = 5;
+    //            break;
+    //        case 3:
+    //            StartKnightsAttack();
+    //            break;
+    //        case 4:
+    //            state = EnemyState.ATTACKING;
+    //            StartCoroutine(DelayAttack(0.4f, () =>
+    //            {
+    //                frontAnimator.Play("Combo");
+    //                backAnimator.Play("Combo");
+    //                assistant.CallAnimation("ThrowBombs");
+    //            }));
+    //            break;
+    //    }
+    //}
+
+    public void Beams()
+    {
+        attackTime = attackMaxTime + 3.5f;
+        assistant.CallAnimation("Beams");
+        if(phase == 2)
+        {
+            StartCoroutine(DelayAttack(0.4f, () =>
+            {
+                StartKnightsAttack();
+            }));
+        }
+    }
+
+    public void ThrowBombs()
+    {
+        attackTime = attackMaxTime + 6f;
+        assistant.CallAnimation("ThrowBombs");
+    }
+
+    public void Combo()
+    {
+        attackTime = attackMaxTime + 3f;
+        state = EnemyState.ATTACKING;
+        frontAnimator.Play("Combo");
+        backAnimator.Play("Combo");
+    }
+
+    public void IceRings()
+    {
+        attackTime = attackMaxTime + 8.5f;
+        assistant.CallAnimation("IceRings");
+    }
+
+    public void Bolts()
+    {
+        assistant.CallAnimation("Bolts");
+    }
+
+    public void StartFireWaves()
+    {
+        if(transform.position.magnitude <= 0.5f)
+        {
+            FireWaves();
+            return;
+        }
+        fleePoint = Vector3.zero;
+        state = EnemyState.SPECIAL;
+        navAgent.speed = runSpeed;
+        navAgent.stoppingDistance = 0.5f;
+        frontAnimator.Play("Run");
+        backAnimator.Play("Run");
+    }
+
+    public void FireWaves()
+    {
+        navAgent.stoppingDistance = 4;
+        navAgent.speed = walkSpeed;
+        state = EnemyState.ATTACKING;
+        attackTime = attackMaxTime + 10;
+        frontAnimator.Play("FireWaves");
+        backAnimator.Play("FireWaves");
+    }
+
+    public IEnumerator WavePattern()
+    {
+        onFireWaves?.Invoke(this, 1);
+        yield return waveDelay;
+        onFireWaves?.Invoke(this, 2);
+        yield return waveDelay;
+        onFireWaves?.Invoke(this, 3);
+        yield return waveDelay;
+        onFireWaves?.Invoke(this, 4);
+        if(phase == 2)
+        {
+            yield return waveDelay;
+            onFireWaves?.Invoke(this, 0);
+        }
+        yield return finalWaveDelay;
+        attackTime = attackMaxTime + 2;
     }
 
     public void StartKnightsAttack()
     {
+        attackTime = attackMaxTime + 3f;
         state = EnemyState.ATTACKING;
         frontAnimator.Play("Knights");
         backAnimator.Play("Knights");
@@ -200,17 +312,42 @@ public class ChaosBossController : EnemyController, IEndDialogue
 
     public void SummonKnight()
     {
+        state = EnemyState.ATTACKING;
         KnightSummon knight = knights.Dequeue();
         knight.GetSummoned();
     }
 
-    public void SetAttackTime(float newTime = -1)
+    public void StartSummonSnipers()
     {
-        if (newTime >= 0)
+        if(phase == 2)
         {
-            attackTime = newTime;
+            assistant.CallAnimation("Bolts");
         }
-        else attackTime = attackMaxTime;
+        attackTime = attackMaxTime + 7.5f;
+        state = EnemyState.ATTACKING;
+        frontAnimator.Play("SummonSnipers");
+        backAnimator.Play("SummonSnipers");
+    }
+
+    public void SummonSniper(int whichSide)
+    {
+        int selectSide = facePlayer.faceDirectionID switch
+        {
+            0 or 2 => whichSide * -1,
+            1 or 3 => whichSide,
+            _ => 0,
+        };
+        IceSniperSummon sniper = snipers.Dequeue();
+        Vector3 direction = facePlayer.attackPoint.position - transform.position;
+        sniper.GetSummoned(selectSide, direction.normalized);
+    }
+
+    public override void EndStagger()
+    {
+        base.EndStagger();
+        navAgent.stoppingDistance = 4;
+        navAgent.speed = walkSpeed;
+        facePlayer.ResetDestination();
     }
 
     public void EndDialogue()

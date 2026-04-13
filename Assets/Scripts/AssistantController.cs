@@ -33,12 +33,15 @@ public class AssistantController : MonoBehaviour
     float attackTimer = 0;
     int beamsNum = 5;
     int boltsNum = 3;
+    WaitForSeconds boltInitialDelay = new WaitForSeconds(1f);
+    WaitForSeconds boltDelay = new WaitForSeconds(0.5f);
     float skybeamDistance = 9f;
     LayerMask defaultMask;
     StudioEventEmitter sfx;
     [System.NonSerialized] public List<AssistantBolt> assistantBolts = new List<AssistantBolt>();
 
     public event System.EventHandler onEndBolts;
+    public event System.EventHandler<int> onLaunchBolt;
 
     private void Awake()
     {
@@ -132,6 +135,18 @@ public class AssistantController : MonoBehaviour
             assistantBolts.Add(bolt);
             bolt.pathfindingMethod = i;
         }
+        StartCoroutine(LaunchBolts());
+    }
+
+    IEnumerator LaunchBolts()
+    {
+        yield return boltInitialDelay;
+        onLaunchBolt?.Invoke(this, 0);
+        yield return boltDelay;
+        onLaunchBolt?.Invoke(this, 1);
+        yield return boltDelay;
+        onLaunchBolt?.Invoke(this, 2);
+        yield return boltDelay;
     }
 
     public void EndBolts()
@@ -147,22 +162,27 @@ public class AssistantController : MonoBehaviour
 
     public void IceRings()
     {
-        float randomAngle = UnityEngine.Random.Range(0, 360);
-        for(int i = 0; i < 3; i++)
-        {
-            Vector3 direction = RotateDirection(Vector3.right, randomAngle + i * 120);
+        //float randomAngle = UnityEngine.Random.Range(0, 360);
+        //for(int i = 0; i < 3; i++)
+        //{
+        //    Vector3 direction = RotateDirection(Vector3.right, randomAngle + i * 120);
 
-            RaycastHit hit;
-            Physics.Raycast(bossController.transform.position + Vector3.up, direction, out hit, skybeamDistance, defaultMask);
+        //    RaycastHit hit;
+        //    Physics.Raycast(bossController.transform.position + Vector3.up, direction, out hit, skybeamDistance, defaultMask);
 
-            if (hit.collider == null || !hit.collider.CompareTag("Wall"))
-            {
-                Transform skybeam = Instantiate(ACPrefab).transform;
-                skybeam.position = bossController.transform.position + direction * skybeamDistance;
+        //    if (hit.collider == null || !hit.collider.CompareTag("Wall"))
+        //    {
+        //        Transform skybeam = Instantiate(ACPrefab).transform;
+        //        skybeam.position = bossController.transform.position + direction * skybeamDistance;
 
-            }
+        //    }
 
-        }
+        //}
+
+        Transform skybeam = Instantiate(ACPrefab).transform;
+        skybeam.position = new Vector3(6f, 0, 0);
+        skybeam = Instantiate(ACPrefab).transform;
+        skybeam.position = new Vector3(-6f, 0, 0);
     }
 
     public void ThrowAC()
@@ -170,13 +190,6 @@ public class AssistantController : MonoBehaviour
         ArcProjectile ac = Instantiate(ACPrefab).GetComponent<ArcProjectile>();
         ac.transform.position = ACorigin.position;
         ac.endPoint = playerScript.transform.position;
-    }
-
-    public void EndAttack(float time)
-    {
-        state = AssistantState.IDLE;
-        attackTimer = time;
-        bossController.SetAttackTime(time);
     }
 
     private void onCombo(object sender, EventArgs e)

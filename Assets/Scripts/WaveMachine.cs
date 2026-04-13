@@ -13,6 +13,7 @@ public class WaveMachine : MonoBehaviour
     [SerializeField] SpriteRenderer grate;
     [SerializeField] Color redColor;
     [SerializeField] float fireWaveSpeed;
+    [SerializeField] float spawnOffset;
     float waveTime;
     int waveNum = 2;
 
@@ -23,7 +24,7 @@ public class WaveMachine : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if(waveTime > 0)
         {
@@ -49,11 +50,12 @@ public class WaveMachine : MonoBehaviour
         }
     }
 
-    void FireWave()
+    public void FireWave()
     {
         GameObject fireWave;
         fireWave = Instantiate(fireWavePrefab);
-        fireWave.transform.position = transform.position;
+        Vector3 direction = Vector3.Normalize(target.position - transform.position);
+        fireWave.transform.position = transform.position + direction * spawnOffset;
         FireWave fireWaveScript;
         fireWaveScript = fireWave.GetComponent<FireWave>();
         fireWaveScript.target = target.position;
