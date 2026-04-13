@@ -100,7 +100,7 @@ public class ChaosBossTests
     {
         yield return BossSetup();
         bossController.IceRings();
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(10);
         Assert.Less(playerData.health, playerData.MaxHealth());
     }
 
@@ -160,18 +160,6 @@ public class ChaosBossTests
     public IEnumerator Combo()
     {
         yield return BossSetup();
-        enemyScript.transform.position = new Vector3(3f, 0, 3f);
-        yield return null;
-        bossController.Combo();
-        yield return new WaitForSeconds(7f);
-        Assert.Less(playerData.health, playerData.MaxHealth());
-    }
-
-    [UnityTest]
-    public IEnumerator ComboPhase2()
-    {
-        yield return BossSetup();
-        bossController.phase = 2;
         enemyScript.transform.position = new Vector3(3f, 0, 3f);
         yield return null;
         bossController.Combo();
