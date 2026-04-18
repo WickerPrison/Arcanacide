@@ -320,7 +320,14 @@ AnimationClip:
     path: PlayerFront/Body1/Body2/Head
   m_ScaleCurves: []
   m_FloatCurves: []
-  m_PPtrCurves: []
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: -38073210, guid: b44773972ea411f4da18cafe2d6adb76, type: 3}
+    attribute: m_Sprite
+    path: PlayerFront/Body1/Body2/BackArm/Arm1/Arm2/BackClaws
+    classID: 212
+    script: {fileID: 0}
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -356,6 +363,13 @@ AnimationClip:
       typeID: 4
       customType: 4
       isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 356399715
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
     - serializedVersion: 2
       path: 714199893
       attribute: 1
@@ -433,7 +447,8 @@ AnimationClip:
       typeID: 4
       customType: 4
       isPPtrCurve: 0
-    pptrCurveMapping: []
+    pptrCurveMapping:
+    - {fileID: -38073210, guid: b44773972ea411f4da18cafe2d6adb76, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
