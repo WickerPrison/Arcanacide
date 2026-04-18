@@ -139,4 +139,21 @@ public class MinibossV4Tests
         yield return new WaitForSeconds(2);
         Assert.AreEqual(1, playerStats.deathsToEnemies[EnemyType.MINIBOSS_V4]);
     }
+
+    [UnityTest]
+    public IEnumerator BladeAttacksFrontRight()
+    {
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript.transform.position = new Vector3(0, 0, 0);
+
+        MinibossAbilities minibossAbilities = GameObject.Instantiate(minibossPrefab).GetComponent<MinibossAbilities>();
+        minibossAbilities.transform.position = new Vector3(2, 0, 2);
+        EnemyController enemyController = minibossAbilities.GetComponent<EnemyController>();
+        enemyController.attackTime = 1000;
+        yield return null;
+
+        minibossAbilities.MeleeBlade();
+        yield return new WaitForSeconds(5);
+        Assert.Less(playerData.health, playerData.MaxHealth());
+    }
 }
