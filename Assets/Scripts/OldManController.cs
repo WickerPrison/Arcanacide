@@ -126,7 +126,7 @@ public class OldManController : EnemyController
         }
     }
 
-    void Charge()
+    public void Charge()
     { 
         Vector3 playerDirection = playerScript.transform.position - transform.position;
         playerDirection.y = 0;

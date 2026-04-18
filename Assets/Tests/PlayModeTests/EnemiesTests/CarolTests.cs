@@ -37,7 +37,7 @@ public class CarolTests
         dialogueData.smackGPTPreviousConversations.Clear();
         carolPrefab = Resources.Load<GameObject>("Prefabs/Enemies/ElectricBoss");
         filingCabinetPrefab = Resources.Load<GameObject>("Prefabs/Layout/FilingCabinet");
-        Time.timeScale = 4f;
+        Time.timeScale = 1f;
     }
 
     void SpawnCarol()
@@ -150,6 +150,27 @@ public class CarolTests
         mapData.carolsDeadFriends.Add("Jeff");
         SpawnCarol();
         enemyScript.transform.position = new Vector3(4f, 0, 3f);
+        yield return null;
+        dialogue.CloseDialogue();
+        yield return null;
+        bossController.abilityTime = 1000;
+        bossController.attackTime = 1000;
+        bossController.Charge();
+        yield return new WaitForSeconds(2.5f);
+        float expectedDamage = bossController.chargeDamage * 1.666666f + bossController.chargeBurstDamage * 1.6666666f;
+        float expectedHealth = playerData.MaxHealth() - expectedDamage;
+        Assert.LessOrEqual(Mathf.Abs(playerData.health - expectedHealth), 2);
+    }
+
+    [UnityTest]
+    public IEnumerator ChargeBounce()
+    {
+        mapData.carolsDeadFriends.Add("Jeff");
+        SpawnCarol();
+        enemyScript.transform.position = new Vector3(4f, 0, 3f);
+        yield return null;
+        Transform filingCabinet = GameObject.Instantiate(filingCabinetPrefab).transform;
+        filingCabinet.position = new Vector3(-4f, 1.2f, -3f);
         yield return null;
         dialogue.CloseDialogue();
         yield return null;

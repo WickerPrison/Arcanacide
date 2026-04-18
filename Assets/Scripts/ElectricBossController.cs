@@ -366,6 +366,7 @@ public class ElectricBossController : EnemyController, IEndDialogue
         }
         else
         {
+            Debug.Log(hit.collider.gameObject.name);
             finalPosition = initialPosition + direction.normalized * hit.distance;
             chargeDistance -= hit.distance;
         }
