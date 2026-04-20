@@ -40,6 +40,7 @@ public class GlobalEvents : MonoBehaviour
     public event EventHandler<int> onGainWeaponOfSameType;
     public event EventHandler<EvidenceFloor> onCollectEvidence;
     public event EventHandler onEmpowerRefundShard;
+    public event EventHandler onDespawnEnemyAtLoad;
 
 
     private void Awake()
@@ -206,5 +207,10 @@ public class GlobalEvents : MonoBehaviour
     public void EmpowerRefundShard()
     {
         onEmpowerRefundShard?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void DespawnEnemyAtLoad()
+    {
+        onDespawnEnemyAtLoad?.Invoke(this, EventArgs.Empty);
     }
 }

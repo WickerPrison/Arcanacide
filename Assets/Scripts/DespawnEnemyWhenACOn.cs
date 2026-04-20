@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class DespawnEnemyWhenACOn : MonoBehaviour
 {
     [SerializeField] MapData mapData;
+    [SerializeField] GameObject[] hideObjects;
     Vector3 away = Vector3.one * 100f;
     Vector3 spawnPos;
     EnemyController enemyController;
@@ -18,12 +19,20 @@ public class DespawnEnemyWhenACOn : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         gm = GlobalEvents.instance.gameObject.GetComponent<GameManager>();
         spawnPos = transform.position;
+        foreach(GameObject hideObject in hideObjects)
+        {
+            hideObject.SetActive(false);
+        }
         StartCoroutine(LateStart());
     }
 
     IEnumerator LateStart()
     {
         yield return null;
+        foreach (GameObject hideObject in hideObjects)
+        {
+            hideObject.SetActive(true);
+        }
         if (mapData.ACOn)
         {
             DisableEnemy();
@@ -39,6 +48,7 @@ public class DespawnEnemyWhenACOn : MonoBehaviour
         }
         enemyController.state = EnemyState.DISABLED;
         navAgent.enabled = false;
+        GlobalEvents.instance.DespawnEnemyAtLoad();
     }
 
     void EnableEnemy()

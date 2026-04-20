@@ -33,6 +33,7 @@ public class LockOn : MonoBehaviour
         if (closestEnemy == null)
         {
             playerMovement.InitialFacePlayer(Vector3.zero);
+            TargetEnemy(null);
             return;
         }
 
@@ -135,6 +136,7 @@ public class LockOn : MonoBehaviour
     private void OnEnable()
     {
         GlobalEvents.instance.onEnemyKilled += Global_onEnemyKilled;
+        GlobalEvents.instance.onDespawnEnemyAtLoad += Global_onDespawnEnemyAtLoad;
     }
 
     private void OnDisable()
@@ -148,5 +150,10 @@ public class LockOn : MonoBehaviour
         {
             TargetClosestEnemy();
         }
+    }
+
+    private void Global_onDespawnEnemyAtLoad(object sender, System.EventArgs e)
+    {
+        InitialFace();
     }
 }
