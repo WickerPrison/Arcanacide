@@ -50,11 +50,11 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
                     {
                         abilities.MissileAttack(MissilePattern.RADIAL);
                     }
-                    else if (randFloat > 0.4f)
+                    else if (randFloat > 0.3f)
                     {
                         abilities.DroneCharge();
                     }
-                    else if (randFloat > 0.2f)
+                    else if (randFloat > 0.1f)
                     {
                         StartLasers();
                     }
@@ -77,11 +77,11 @@ public class MinibossV4Controller : EnemyController, IEndDialogue
                     {
                         abilities.DashAway(() => abilities.DroneCharge());
                     }
-                    else if (randFloat > 0.4f)
+                    else if (randFloat > 0.3f)
                     {
                         abilities.MeleeBlade();
                     }
-                    else if (randFloat > 0.2f)
+                    else if (randFloat > 0.1f)
                     {
                         StartLasers();
                     }

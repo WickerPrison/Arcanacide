@@ -19,20 +19,14 @@ public class DespawnEnemyWhenACOn : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         gm = GlobalEvents.instance.gameObject.GetComponent<GameManager>();
         spawnPos = transform.position;
-        foreach(GameObject hideObject in hideObjects)
-        {
-            hideObject.SetActive(false);
-        }
+        ShowEnemy(false);
         StartCoroutine(LateStart());
     }
 
     IEnumerator LateStart()
     {
         yield return null;
-        foreach (GameObject hideObject in hideObjects)
-        {
-            hideObject.SetActive(true);
-        }
+        ShowEnemy(true);
         if (mapData.ACOn)
         {
             DisableEnemy();
@@ -56,6 +50,15 @@ public class DespawnEnemyWhenACOn : MonoBehaviour
         transform.position = spawnPos;
         enemyController.state = EnemyState.UNAWARE;
         navAgent.enabled = true;
+    }
+
+    void ShowEnemy(bool show)
+    {
+        if (hideObjects == null) return;
+        foreach (GameObject hideObject in hideObjects)
+        {
+            hideObject.SetActive(show);
+        }
     }
 
     private void OnEnable()
