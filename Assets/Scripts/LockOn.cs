@@ -116,7 +116,9 @@ public class LockOn : MonoBehaviour
 
     List<(float, EnemyScript)> GetEnemyScreenList()
     {
-        List<(float screenPos, EnemyScript enemy)> screenEnemies = gm.enemies.Select(enemy => GetEnemyScreenSpace(enemy)).ToList();
+        List<(float screenPos, EnemyScript enemy)> screenEnemies = gm.enemies
+            .Where(enemy => Vector3.Distance(enemy.transform.position, transform.position) < 10)
+            .Select(enemy => GetEnemyScreenSpace(enemy)).ToList();
         return screenEnemies.OrderBy(enemy => enemy.screenPos).ToList();
     }
 
