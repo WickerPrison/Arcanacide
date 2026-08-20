@@ -127,11 +127,7 @@ public class BossController : EnemyController, IEndDialogue
                 }
                 else if (bonfireCD <= 0)
                 {
-                    state = EnemyState.ATTACKING;
-                    pauseTimer = true;
-                    frontAnimator.Play("Bonfires");
-                    backAnimator.Play("Bonfires");
-                    bonfireCD = bonfireMaxCD;
+                    StartBonfires();
                 }
                 else if(playerDistance <= attackRange)
                 {
@@ -235,6 +231,14 @@ public class BossController : EnemyController, IEndDialogue
         pauseTimer = false;
     }
 
+    public void StartBonfires()
+    {
+        state = EnemyState.ATTACKING;
+        pauseTimer = true;
+        frontAnimator.Play("Bonfires");
+        backAnimator.Play("Bonfires");
+        bonfireCD = bonfireMaxCD;
+    }
 
     public void Bonfire()
     {

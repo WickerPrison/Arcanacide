@@ -11,7 +11,7 @@ public class Bonfire : MonoBehaviour
     EventInstance fmodInstance;
     public EnemyScript enemyOfOrigin;
     BossController bossController;
-    Transform player;
+    PlayerScript player;
     float duration = 7;
     int damage = 20;
     float poiseDamage = 70;
@@ -26,7 +26,7 @@ public class Bonfire : MonoBehaviour
         fmodInstance = RuntimeManager.CreateInstance(fireSound);
         fmodInstance.start();
         fmodInstance.setTimelinePosition(Random.Range(0, 2000));
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         bossController = enemyOfOrigin.GetComponent<BossController>();
         StartCoroutine(Activate());
     }
@@ -44,32 +44,25 @@ public class Bonfire : MonoBehaviour
         active = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void CollideWithPlayer()
     {
-        if (!active) return;
-        if (other.gameObject.CompareTag("Player"))
+        if (Vector3.Distance(transform.position, player.transform.position) > 0.5f) return;
+        player.HitPlayer(() =>
         {
-            if(other.gameObject.layer == 3)
-            {
-                PlayerScript playerScript;
-                playerScript = other.gameObject.GetComponent<PlayerScript>();
-                playerScript.LoseHealth(damage,EnemyAttackType.PROJECTILE, enemyOfOrigin);
-                playerScript.LosePoise(poiseDamage);
-                FmodUtils.PlayOneShot(impactSound, 0.5f, transform.position);
-                Destroy(gameObject);
-            }
-            else if(other.gameObject.layer == 8)
-            {
-                PlayerScript playerScript;
-                playerScript = other.gameObject.GetComponent<PlayerScript>();
-                playerScript.PerfectDodge(EnemyAttackType.PROJECTILE, enemyOfOrigin, gameObject);
-            }
-        }
+            player.LoseHealth(damage, EnemyAttackType.PROJECTILE, enemyOfOrigin);
+            player.LosePoise(poiseDamage);
+            FmodUtils.PlayOneShot(impactSound, 0.5f, transform.position);
+            Destroy(gameObject);
+        }, () =>
+        {
+            player.PerfectDodge(EnemyAttackType.PROJECTILE, enemyOfOrigin, gameObject);
+        });
     }
 
     private void Update()
     {
         if (!active) return;
+        CollideWithPlayer();
 
         duration -= Time.deltaTime;
         if(duration <= 0)
@@ -87,7 +80,7 @@ public class Bonfire : MonoBehaviour
     {
         if(!active) return;
 
-        Vector3 direction = player.position - transform.position;
+        Vector3 direction = player.transform.position - transform.position;
         transform.Translate(direction.normalized * Time.fixedDeltaTime * speed);
     }
 

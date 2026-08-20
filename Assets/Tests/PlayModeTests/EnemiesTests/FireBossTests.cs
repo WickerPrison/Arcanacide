@@ -51,6 +51,19 @@ public class FireBossTests
     }
 
     [UnityTest]
+    public IEnumerator Bonfires()
+    {
+        SpawnBoss();
+        yield return null;
+        bossController.attackTime = 100f;
+        dialogue.CloseDialogue();
+        int health = playerData.health;
+        bossController.StartBonfires();
+        yield return new WaitForSeconds(8);
+        Assert.Less(playerData.health, health);
+    }
+
+    [UnityTest]
     public IEnumerator GroundFireAfterDeath()
     {
         SpawnBoss();
