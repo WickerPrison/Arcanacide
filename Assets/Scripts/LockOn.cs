@@ -57,6 +57,7 @@ public class LockOn : MonoBehaviour
 
     public void ToggleLockOn()
     {
+        if (settingsData.autoLock) return;
         lockOn = !lockOn;
         if (lockOn)
         {
