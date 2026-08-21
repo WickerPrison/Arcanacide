@@ -15,7 +15,7 @@ public class EnemyBodyVFX : MonoBehaviour
     [SerializeField] ParticleSystem dot;
     [SerializeField] ParticleSystem hitVFX;
     [SerializeField] ParticleSystem shockVFX;
-    [SerializeField] SpriteRenderer lockOnIcon;
+    [SerializeField] LockOnIndicator lockOnIcon;
     EnemyEvents enemyEvents;
     EnemyController enemyController;
     EnemyScript enemyScript;
@@ -102,11 +102,11 @@ public class EnemyBodyVFX : MonoBehaviour
     {
         if(target != null && target == enemyScript)
         {
-            lockOnIcon.enabled = true;
+            lockOnIcon.SetTarget(true);
         }
         else
         {
-            lockOnIcon.enabled = false;
+            lockOnIcon.SetTarget(false);
         }
     }
 

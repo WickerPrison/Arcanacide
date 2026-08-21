@@ -27,6 +27,14 @@ public class LockOn : MonoBehaviour
         InitialFace();
     }
 
+    private void Update()
+    {
+        if (settingsData.autoLock)
+        {
+            TargetClosestEnemy();
+        }
+    }
+
     void InitialFace()
     {
         EnemyScript closestEnemy = GetClosestEnemy(15);
@@ -49,6 +57,7 @@ public class LockOn : MonoBehaviour
 
     public void ToggleLockOn()
     {
+        if (settingsData.autoLock) return;
         lockOn = !lockOn;
         if (lockOn)
         {
@@ -83,9 +92,9 @@ public class LockOn : MonoBehaviour
         return currentTarget;
     }
 
-    public void TargetEnemy(EnemyScript enemyScript)
+    void TargetEnemy(EnemyScript enemyScript)
     {
-        lockOn = true; 
+        lockOn = enemyScript != null; 
         target = enemyScript;
         GlobalEvents.instance.LockOnTarget(target);
     }

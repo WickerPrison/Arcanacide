@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] PlayerData playerData;
+    [SerializeField] SettingsData settingsData;
     InputManager im;
     SoundManager sm;
     [System.NonSerialized] public GameObject currentMessage;
@@ -14,6 +15,8 @@ public class TutorialManager : MonoBehaviour
     string texts = "Texts";
     [SerializeField] GameObject attackTutorial;
     string attack = "Attack";
+    [SerializeField] GameObject lockonTutorial;
+    string lockOn = "Lock On";
     [SerializeField] GameObject healTutorial;
     string heal = "Heal";
     [SerializeField] GameObject dodgeTutorial;
@@ -56,6 +59,10 @@ public class TutorialManager : MonoBehaviour
         im.controls.Tutorial.TutorialSelect.performed += ctx => NextMessage();
         SetupTutorialDictionary();
         TutorialList();
+        if(!settingsData.autoLock && playerData.tutorials.Contains(lockOn))
+        {
+            Tutorial(lockOn);
+        }
     }
 
     public void NextMessage()
@@ -131,6 +138,7 @@ public class TutorialManager : MonoBehaviour
         allTutorials.Clear();
         allTutorials.Add(texts);
         allTutorials.Add(attack);
+        allTutorials.Add(lockOn);
         allTutorials.Add(heal);
         allTutorials.Add(broken_gem);
         allTutorials.Add(dodge);
@@ -153,6 +161,7 @@ public class TutorialManager : MonoBehaviour
         {
             {"", null },
             {attack, attackTutorial },
+            {lockOn, lockonTutorial },
             {heal, healTutorial },
             {broken_gem, brokenGemTutorial },
             {dodge, dodgeTutorial },
