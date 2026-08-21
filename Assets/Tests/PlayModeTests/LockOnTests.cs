@@ -19,6 +19,8 @@ public class LockOnTests
         testDummyPrefab = Resources.Load<GameObject>("Prefabs/Testing/TestDummy");
         playerData.ClearData();
         playerData.hasHealthGem = true;
+        playerData.tutorials.Clear();
+        Resources.Load<SettingsData>("Data/SettingsData").autoLock = false;
 
         yield return null;
         lockOn = GameObject.FindGameObjectWithTag("Player").GetComponent<LockOn>();

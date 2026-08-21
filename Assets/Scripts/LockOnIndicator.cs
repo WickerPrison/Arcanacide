@@ -7,9 +7,11 @@ public class LockOnIndicator : MonoBehaviour
     Vector3 startScale;
     bool isTargeted = false;
     float transitionTime = 0.2f;
+    EnemyScript enemyScript;
 
     private void Start()
     {
+        enemyScript = GetComponentInParent<EnemyScript>();
         startScale = transform.localScale;
         transform.localScale = Vector3.zero;
     }
@@ -56,5 +58,27 @@ public class LockOnIndicator : MonoBehaviour
         }
 
         transform.localScale = Vector3.zero;
+    }
+
+    private void Global_onLockOnTarget(object sender, EnemyScript target)
+    {
+        if (target != null && target == enemyScript)
+        {
+            SetTarget(true);
+        }
+        else
+        {
+            SetTarget(false);
+        }
+    }
+
+    private void OnEnable()
+    {
+        GlobalEvents.instance.onLockOnTarget += Global_onLockOnTarget;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.instance.onLockOnTarget -= Global_onLockOnTarget;
     }
 }

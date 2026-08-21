@@ -8,7 +8,6 @@ public class LockOn : MonoBehaviour
     [SerializeField] SettingsData settingsData;
     GameManager gm;
     InputManager im;
-    bool lockOn = false;
     public EnemyScript target { get; private set; }
     Camera mainCamera;
     PlayerMovement playerMovement;
@@ -58,8 +57,7 @@ public class LockOn : MonoBehaviour
     public void ToggleLockOn()
     {
         if (settingsData.autoLock) return;
-        lockOn = !lockOn;
-        if (lockOn)
+        if (target == null)
         {
             TargetClosestEnemy();
         }
@@ -88,20 +86,18 @@ public class LockOn : MonoBehaviour
                 currentDistance = Vector3.Distance(transform.position, gm.enemies[enemy].transform.position);
             }
         }
-        if (currentTarget == null) lockOn = false;
         return currentTarget;
     }
 
     void TargetEnemy(EnemyScript enemyScript)
     {
-        lockOn = enemyScript != null; 
         target = enemyScript;
         GlobalEvents.instance.LockOnTarget(target);
     }
 
     public void SwapTarget(bool right)
     {
-        if (target == null) return;
+        if (settingsData.autoLock || target == null) return;
         if (gm.enemies.Count == 0)
         {
             target = null;

@@ -59,7 +59,7 @@ public class TutorialManager : MonoBehaviour
         im.controls.Tutorial.TutorialSelect.performed += ctx => NextMessage();
         SetupTutorialDictionary();
         TutorialList();
-        if(!settingsData.autoLock && playerData.tutorials.Contains(lockOn))
+        if(!settingsData.autoLock && playerData.tutorials.Contains(lockOn) && GameObject.FindGameObjectWithTag("Player"))
         {
             Tutorial(lockOn);
         }
