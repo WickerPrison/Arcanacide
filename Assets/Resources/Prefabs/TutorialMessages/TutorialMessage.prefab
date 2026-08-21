@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Text
+  m_text: When Auto Lock-On is disabled press | to toggle Lock-On and *
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
   m_sharedMaterial: {fileID: -4503134213540977879, guid: 4aecbda1c297f0b49be60781baa8b0c5, type: 2}
@@ -328,11 +328,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialMessage: {fileID: 1708909982141469225}
-  actions: []
-  tutorialText: 
+  actions:
+  - {fileID: 5953865807984049366, guid: 48b9d942940926740999cc3fa4bc0d46, type: 3}
+  kbmActions:
+  - {fileID: -5637876354349736622, guid: 48b9d942940926740999cc3fa4bc0d46, type: 3}
+  - {fileID: 8447876916753439697, guid: 48b9d942940926740999cc3fa4bc0d46, type: 3}
+  tutorialText: When Auto Lock-On is disabled press | to toggle Lock-On and *
   settingsData: {fileID: 11400000, guid: 86eec6c6b27d8b14ca6b0930c54b0630, type: 2}
-  gamepadText: []
-  keyboardText: []
+  gamepadText:
+  - use the right stick to swap targets
+  keyboardText:
+  - use | and | to swap targets
 --- !u!1 &7772525241210482669
 GameObject:
   m_ObjectHideFlags: 0
