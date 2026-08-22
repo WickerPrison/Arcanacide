@@ -32,8 +32,6 @@ public class GameManager : MonoBehaviour
 
 
     //These are the set of saved values that are used when creating a new game
-    int money = 0;
-    int lostMoney = 0;
     string deathRoom = "none";
     Vector3 deathPosition = Vector3.zero;
     bool ticketFiled = false;
@@ -51,10 +49,16 @@ public class GameManager : MonoBehaviour
             Resolution currentResolution = Screen.currentResolution;
             Screen.SetResolution(currentResolution.width, currentResolution.height, FullScreenMode.FullScreenWindow);
             QualitySettings.vSyncCount = 1;
+            SettingsData.InitialSetVolume(VolumeChannel.MASTER, 1);
+            SettingsData.InitialSetVolume(VolumeChannel.SFX, 1);
+            SettingsData.InitialSetVolume(VolumeChannel.MUSIC, 1);
         }
         else
         {
             QualitySettings.vSyncCount = data.noVsync ? 0 : 1;
+            SettingsData.InitialSetVolume(VolumeChannel.MASTER, data.masterVol);
+            SettingsData.InitialSetVolume(VolumeChannel.SFX, data.sfxVol);
+            SettingsData.InitialSetVolume(VolumeChannel.MUSIC, data.musicVol);
             if (data.fullscreenMode)
             {
                 Screen.fullScreen = true;

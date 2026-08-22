@@ -103,6 +103,21 @@ public class SettingsData : ScriptableObject
         }
     }
 
+    public static void InitialSetVolume(VolumeChannel channel, float normalizedVolume)
+    {
+        switch (channel)
+        {
+            case VolumeChannel.MASTER:
+                RuntimeManager.GetBus("bus:/").setVolume(normalizedVolume);
+                break;
+            case VolumeChannel.SFX:
+                RuntimeManager.GetBus("bus:/SFX").setVolume(normalizedVolume);
+                break;
+            case VolumeChannel.MUSIC:
+                RuntimeManager.GetBus("bus:/Music").setVolume(normalizedVolume);
+                break;
+        }
+    }
 
     public void SetVolume(VolumeChannel channel, float normalizedVolume)
     {
