@@ -252,18 +252,18 @@ public class SettingsData : ScriptableObject
         controllerType = ControllerType.PLAYSTATION;
         spriteDict = new Dictionary<string, Sprite>
         {
-            {"<Gamepad>/buttonNorth", buttonIconSprites[0] },
-            {"<Gamepad>/buttonEast", buttonIconSprites[1] },
-            {"<Gamepad>/buttonSouth", buttonIconSprites[2] },
-            {"<Gamepad>/buttonWest", buttonIconSprites[3] }
+            {"Triangle", buttonIconSprites[0] },
+            {"Circle", buttonIconSprites[1] },
+            {"Cross", buttonIconSprites[2] },
+            {"Square", buttonIconSprites[3] }
         };
 
         displayStringDict = new Dictionary<string, string>
         {
-            {"<Gamepad>/buttonNorth", "" },
-            {"<Gamepad>/buttonEast", "" },
-            {"<Gamepad>/buttonSouth", "" },
-            {"<Gamepad>/buttonWest", "" }
+            {"Triangle", "" },
+            {"Circle", "" },
+            {"Cross", "" },
+            {"Square", "" }
 
         };
     }

@@ -55,6 +55,7 @@ public class InputManager : MonoBehaviour
         for (int i = 0; i < inputAction.bindings.Count; i++)
         {
             string key = inputAction.actionMap + inputAction.name + i;
+            Debug.Log(key);
 
             if (inputAction.bindings[i].overridePath != null)
             {
